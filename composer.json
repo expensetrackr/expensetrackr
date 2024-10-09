@@ -1,0 +1,89 @@
+{
+	"name": "expensetrackr/expensetrackr.app",
+	"type": "project",
+	"description": "A comprehensive web application for effortless expense management, supporting both personal and business finance tracking. Features include account organization, transaction categorization, team collaboration, insightful graphics, and financial reporting.",
+	"keywords": [
+		"expense-tracker",
+		"finance-management",
+		"budget-planner",
+		"personal-finance",
+		"business-finance",
+		"financial-reporting",
+		"team-collaboration",
+		"laravel",
+		"web-application",
+		"financial-analytics"
+	],
+	"license": "GPL-3.0-or-later",
+	"require": {
+		"php": "^8.2",
+		"inertiajs/inertia-laravel": "1.3.0",
+		"joelbutcher/socialstream": "6.1.9",
+		"laravel/fortify": "1.24.2",
+		"laravel/framework": "11.27.2",
+		"laravel/octane": "2.5.9",
+		"laravel/sanctum": "4.0.3",
+		"laravel/tinker": "2.10.0",
+		"league/flysystem-aws-s3-v3": "3.29.0",
+		"mobiledetect/mobiledetectlib": "4.8.06",
+		"tightenco/ziggy": "2.3.0"
+	},
+	"require-dev": {
+		"fakerphp/faker": "1.23.1",
+		"laravel/pint": "1.18.1",
+		"laravel/sail": "1.35.0",
+		"mockery/mockery": "1.6.12",
+		"nunomaduro/collision": "8.4.0",
+		"pestphp/pest": "3.3.0",
+		"pestphp/pest-plugin-laravel": "3.0.0",
+		"pestphp/pest-plugin-type-coverage": "3.1.0",
+		"rector/rector": "1.2.6"
+	},
+	"autoload": {
+		"psr-4": {
+			"App\\": "app/",
+			"Database\\Factories\\": "database/factories/",
+			"Database\\Seeders\\": "database/seeders/",
+			"Workspaces\\": "workspaces/src/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Tests\\": "tests/"
+		}
+	},
+	"scripts": {
+		"post-autoload-dump": [
+			"Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+			"@php artisan package:discover --ansi"
+		],
+		"post-update-cmd": ["@php artisan vendor:publish --tag=laravel-assets --ansi --force"],
+		"post-root-package-install": ["@php -r \"file_exists('.env') || copy('.env.example', '.env');\""],
+		"post-create-project-cmd": [
+			"@php artisan key:generate --ansi",
+			"@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
+			"@php artisan migrate --graceful --ansi"
+		],
+		"lint": "pint",
+		"refactor": "rector",
+		"test:lint": "pint --test",
+		"test:refactor": "rector --dry-run"
+	},
+	"extra": {
+		"laravel": {
+			"dont-discover": [],
+			"providers": "Workspaces\\WorkspacesServiceProvider"
+		}
+	},
+	"config": {
+		"optimize-autoloader": true,
+		"preferred-install": "dist",
+		"sort-packages": true,
+		"allow-plugins": {
+			"pestphp/pest-plugin": true,
+			"php-http/discovery": true
+		}
+	},
+	"minimum-stability": "dev",
+	"prefer-stable": true
+}

@@ -1,0 +1,19 @@
+{
+	"[javascript]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"editor.codeActionsOnSave": {
+		"quickfix.biome": "always",
+		"source.organizeImports.biome": "always"
+	},
+	"editor.defaultFormatter": "biomejs.biome",
+	"tailwindCSS.experimental.classRegex": [
+		// HeadlessUI Transition (React)
+		"(?:enter|leave)(?:From|To)?=\\s*(?:\"|'|{`)([^(?:\"|'|`})]*)",
+		// CVA
+		["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+		["cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"],
+		// Plain Javascript Object
+		":\\s*?[\"'`]([^\"'`]*).*?,"
+	]
+}

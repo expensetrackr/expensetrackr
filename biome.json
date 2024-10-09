@@ -1,0 +1,59 @@
+{
+	"$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+	"vcs": {
+		"clientKind": "git",
+		"enabled": true,
+		"useIgnoreFile": true
+	},
+	"organizeImports": {
+		"enabled": true
+	},
+	"formatter": {
+		"enabled": true,
+		"formatWithErrors": true,
+		"indentStyle": "tab",
+		"indentWidth": 2,
+		"lineEnding": "lf",
+		"lineWidth": 120,
+		"ignore": [
+			"**/node_modules/**",
+			"**/build/**",
+			"**/.idea/**",
+			"**/.github/**",
+			"**/.husky/**",
+			"**/.million/**",
+			"./package.json",
+			"./resources/js/ssr.tsx",
+			"./resources/css/app.css"
+		]
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true,
+			"nursery": {
+				"useSortedClasses": {
+					"level": "warn",
+					"options": {
+						"attributes": ["class", "className"],
+						"functions": ["cva", "cx"]
+					}
+				}
+			},
+			"suspicious": {
+				"noGlobalAssign": "off"
+			}
+		},
+		"ignore": [
+			"**/node_modules/**",
+			"**/build/**",
+			"**/.idea/**",
+			"**/.github/**",
+			"**/.husky/**",
+			"**/.million/**",
+			"./package.json",
+			"./resources/js/ssr.tsx",
+			"./resources/css/app.css"
+		]
+	}
+}

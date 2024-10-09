@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+php "$APP_BASE_DIR/artisan" inertia:start-ssr --runtime=bun
