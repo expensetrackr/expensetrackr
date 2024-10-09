@@ -24,7 +24,8 @@
 			"**/.million/**",
 			"./package.json",
 			"./resources/js/ssr.tsx",
-			"./resources/css/app.css"
+			"./resources/css/app.css",
+			"./resources/css/tailwind.css"
 		]
 	},
 	"linter": {
@@ -53,7 +54,8 @@
 			"**/.million/**",
 			"./package.json",
 			"./resources/js/ssr.tsx",
-			"./resources/css/app.css"
+			"./resources/css/app.css",
+			"./resources/css/tailwind.css"
 		]
 	}
 }
