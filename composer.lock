@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "73df8d7d09c7f1b2e43b27ca002e14c3",
+    "content-hash": "4b95e60fbf2da2ab2747c68c57d6d6ba",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -1375,28 +1375,29 @@
         },
         {
             "name": "inertiajs/inertia-laravel",
-            "version": "v1.3.0",
+            "version": "2.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/inertiajs/inertia-laravel.git",
-                "reference": "36730d13b1dab9017069004fd458b3e67449a326"
+                "reference": "141256b2ed1833158852c9d239d00abec8ff4942"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/inertiajs/inertia-laravel/zipball/36730d13b1dab9017069004fd458b3e67449a326",
-                "reference": "36730d13b1dab9017069004fd458b3e67449a326",
+                "url": "https://api.github.com/repos/inertiajs/inertia-laravel/zipball/141256b2ed1833158852c9d239d00abec8ff4942",
+                "reference": "141256b2ed1833158852c9d239d00abec8ff4942",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "laravel/framework": "^8.74|^9.0|^10.0|^11.0",
-                "php": "^7.3|~8.0.0|~8.1.0|~8.2.0|~8.3.0",
+                "laravel/framework": "^10.0|^11.0",
+                "php": "^8.1.0",
                 "symfony/console": "^5.3|^6.0|^7.0"
             },
             "require-dev": {
+                "laravel/pint": "^1.16",
                 "mockery/mockery": "^1.3.3",
-                "orchestra/testbench": "^6.4|^7.0|^8.0|^9.0",
-                "phpunit/phpunit": "^8.0|^9.5.8|^10.4",
+                "orchestra/testbench": "^8.0|^9.0",
+                "phpunit/phpunit": "^10.4|^11.0",
                 "roave/security-advisories": "dev-master"
             },
             "suggest": {
@@ -1439,7 +1440,7 @@
             ],
             "support": {
                 "issues": "https://github.com/inertiajs/inertia-laravel/issues",
-                "source": "https://github.com/inertiajs/inertia-laravel/tree/v1.3.0"
+                "source": "https://github.com/inertiajs/inertia-laravel/tree/2.x"
             },
             "funding": [
                 {
@@ -1447,7 +1448,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-06-13T01:25:09+00:00"
+            "time": "2024-10-10T13:16:21+00:00"
         },
         {
             "name": "joelbutcher/socialstream",
@@ -10485,7 +10486,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {},
+    "stability-flags": {
+        "inertiajs/inertia-laravel": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
