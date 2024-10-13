@@ -10,7 +10,18 @@
     "dev": "vite",
     "format": "biome format",
     "lint": "biome check",
+    "prepare": "husky",
     "typecheck": "tsc"
+  },
+  "lint-staged": {
+    "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}": [
+      "biome check --files-ignore-unknown=true",
+      "biome check --write --no-errors-on-unmatched",
+      "biome check --write --organize-imports-enabled=false --no-errors-on-unmatched",
+      "biome check --write --unsafe --no-errors-on-unmatched",
+      "biome format --write --no-errors-on-unmatched",
+      "biome lint --write --no-errors-on-unmatched"
+    ]
   },
   "dependencies": {
     "@headlessui/react": "2.1.10",
@@ -42,7 +53,9 @@
     "@vitejs/plugin-react": "4.3.2",
     "autoprefixer": "10.4.20",
     "axios": "1.7.7",
+    "husky": "9.1.6",
     "laravel-vite-plugin": "1.0.5",
+    "lint-staged": "15.2.10",
     "postcss": "8.4.47",
     "tailwindcss": "4.0.0-alpha.26",
     "tailwindcss-animate": "1.0.7",
