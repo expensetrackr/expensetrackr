@@ -19,3 +19,5 @@ RUN composer install --no-interaction --optimize-autoloader --no-dev
 
 RUN bun install --frozen-lockfile
 RUN bun run build
+
+RUN php artisan storage:link
