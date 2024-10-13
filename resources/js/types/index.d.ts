@@ -17,7 +17,7 @@ export interface User {
 	name: string;
 	email: string;
 	email_verified_at: string;
-	current_workspace_id: Nullable<number>;
+	current_workspace_id: number;
 	profile_photo_path: Nullable<string>;
 	profile_photo_url: string;
 	two_factor_enabled: boolean;
@@ -29,8 +29,8 @@ export interface User {
 export interface Auth {
 	user: Nullable<
 		User & {
-			all_workspaces?: Array<Workspace>;
-			current_workspace?: Workspace;
+			all_workspaces: Array<Workspace>;
+			current_workspace: Workspace;
 		}
 	>;
 }

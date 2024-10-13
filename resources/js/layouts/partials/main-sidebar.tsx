@@ -75,7 +75,7 @@ export function MainSidebar({
 							alt="ExpenseTrackr logo"
 							className="!size-10 inline-flex items-center justify-center bg-primary p-1"
 						/>
-						<SidebarLabel className="flex-1 text-label-sm">{user?.current_workspace?.name}</SidebarLabel>
+						<SidebarLabel className="flex-1 text-label-sm">{user?.current_workspace.name}</SidebarLabel>
 						{/* @ts-expect-error - TODO: this type is wrong (Headless UI side) */}
 						<CompactButton as="span" className="ml-auto">
 							<ExpandUpDownIcon />
@@ -85,10 +85,10 @@ export function MainSidebar({
 						className="min-w-80 lg:min-w-64 data-[anchor~=start]:[--anchor-offset:0] sm:data-[anchor~=start]:[--anchor-offset:0]"
 						anchor="bottom start"
 					>
-						{workspaces.hasWorkspaceFeatures && (
+						{user && workspaces.hasWorkspaceFeatures && (
 							<DropdownSection>
 								<DropdownHeading>Manage workspace</DropdownHeading>
-								<DropdownItem href={route("workspaces.show", [user?.current_workspace])}>
+								<DropdownItem href={route("workspaces.show", { workspace: user?.current_workspace.id })}>
 									<Settings2Icon />
 									<DropdownLabel>Settings</DropdownLabel>
 								</DropdownItem>

@@ -25,3 +25,7 @@ frankenphp-worker.php
 
 # Million Lint
 .million/*
+
+# ziggy
+ziggy.d.ts
+ziggy.js
