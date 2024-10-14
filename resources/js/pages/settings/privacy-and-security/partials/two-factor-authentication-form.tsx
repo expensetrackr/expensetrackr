@@ -26,7 +26,6 @@ export function TwoFactorAuthenticationForm({ requiresConfirmation, ...props }: 
 	});
 	const twoFactorEnabled = !enabling && page.props?.auth?.user?.two_factor_enabled;
 
-	console.info({ props });
 	function enableTwoFactorAuthentication() {
 		setEnabling(true);
 
@@ -111,7 +110,6 @@ export function TwoFactorAuthenticationForm({ requiresConfirmation, ...props }: 
 		return "Add an extra layer of protection to your account.";
 	};
 
-	console.info({ qrCode });
 	return (
 		<ActionSection
 			title="Two-factor Authentication"

@@ -83,7 +83,8 @@ const buttonVariants = cva({
 				"data-[focus]:outline-neutral-alpha-16 data-[focus]:[--btn-stroke-border:var(--stroke-strong-950)] data-[focus]:[--btn-stroke-text:var(--text-strong-950)] data-[focus]:[--btn-text:var(--text-strong-950)]",
 			],
 			error: [
-				"[--btn-bg:var(--state-error-base)] [--btn-border:var(--state-error-base)] [--btn-hover-overlay:var(--red-700)] [--btn-stroke-border:var(--state-error-base)] [--btn-stroke-hover:var(--red-alpha-10)] [--btn-stroke-text:var(--state-error-base)] [--btn-text:var(--color-white)]",
+				"[--btn-bg:var(--state-error-base)] [--btn-border:var(--state-error-base)] [--btn-hover-overlay:var(--color-red-700)] [--btn-stroke-border:var(--state-error-base)] [--btn-stroke-hover:var(--color-red-alpha-10)] [--btn-stroke-text:var(--state-error-base)] [--btn-text:var(--color-white)]",
+				"data-[hover]:[--btn-stroke-border:transparent]",
 				"[--btn-icon:var(--color-white)]",
 				"data-[focus]:outline-red-alpha-16",
 			],

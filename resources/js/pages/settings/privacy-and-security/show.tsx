@@ -7,6 +7,7 @@ import { AppLayout } from "#/layouts/app-layout";
 import { SettingsSidebar } from "#/layouts/partials/settings-sidebar";
 import { SetPasswordForm } from "#/pages/settings/privacy-and-security/partials/set-password-form";
 import type { InertiaSharedProps, Session } from "#/types";
+import { LogoutOtherBrowserSessionsForm } from "./partials/logout-other-browser-sessions-form";
 import { TwoFactorAuthenticationForm } from "./partials/two-factor-authentication-form";
 import { UpdatePasswordForm } from "./partials/update-password-form";
 
@@ -18,12 +19,9 @@ interface PrivacyAndSecurityShowProps {
 export default function PrivacyAndSecurityShow({
 	sessions,
 	confirmsTwoFactorAuthentication,
-	...props
 }: PrivacyAndSecurityShowProps) {
 	const page = usePage<InertiaSharedProps>();
 	const canUpdatePassword = page.props.workspaces.canUpdatePassword && page.props.socialstream.hasPassword;
-
-	console.info({ props });
 
 	return (
 		<AppLayout subSidebar={<SettingsSidebar />}>
@@ -60,6 +58,10 @@ export default function PrivacyAndSecurityShow({
 						<TwoFactorAuthenticationForm requiresConfirmation={confirmsTwoFactorAuthentication} />
 					</>
 				)}
+
+				<Divider />
+
+				<LogoutOtherBrowserSessionsForm sessions={sessions} />
 			</div>
 		</AppLayout>
 	);
