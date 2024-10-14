@@ -1,7 +1,5 @@
 import ArrowRightSIcon from "virtual:icons/ri/arrow-right-s-line";
-import { useForm, usePage } from "@inertiajs/react";
-import type * as React from "react";
-import { useState } from "react";
+import { router, useForm, usePage } from "@inertiajs/react";
 
 import { Button } from "#/components/button";
 import { ErrorMessage, Field, Label } from "#/components/fieldset";
@@ -11,7 +9,6 @@ import { StyledLink } from "#/components/link";
 import type { InertiaSharedProps } from "#/types";
 
 export function UpdateNameForm() {
-	const [editMode, setEditMode] = useState(false);
 	const page = usePage<InertiaSharedProps>();
 	const user = page.props.auth.user;
 	const { data, setData, errors, ...form } = useForm({
@@ -19,6 +16,7 @@ export function UpdateNameForm() {
 		name: user?.name,
 		email: user?.email,
 	});
+	const isEditMode = page.props.ziggy?.query?.edit === "name";
 
 	function onSubmit(e: React.FormEvent) {
 		e.preventDefault();
@@ -26,13 +24,13 @@ export function UpdateNameForm() {
 		form.post(route("user-profile-information.update"), {
 			errorBag: "updateProfileInformation",
 			preserveScroll: true,
-			onSuccess: () => setEditMode(false),
+			onSuccess: () => router.visit(route("settings.show")),
 		});
 	}
 
 	return (
 		<FormSection title="Full name" description="Use your real name to build trust with others.">
-			{editMode ? (
+			{isEditMode ? (
 				<form className="flex w-full flex-col gap-4" onSubmit={onSubmit}>
 					<Field>
 						<Label className="sr-only">Full name</Label>
@@ -50,13 +48,7 @@ export function UpdateNameForm() {
 					</Field>
 
 					<div className="flex items-center justify-end gap-2">
-						<Button
-							$color="neutral"
-							$variant="stroke"
-							$size="sm"
-							className="px-4"
-							onClick={() => setEditMode(!editMode)}
-						>
+						<Button $color="neutral" $variant="stroke" $size="sm" href={route("settings.show")} className="px-2">
 							Cancel
 						</Button>
 						<Button $size="sm" className="px-4" type="submit">
@@ -70,13 +62,10 @@ export function UpdateNameForm() {
 
 					<StyledLink
 						$color="primary"
-						as="button"
 						className="gap-1 [&>[data-slot=icon]]:sm:size-5"
-						href="#!"
-						onClick={(e) => {
-							e.preventDefault();
-							setEditMode(true);
-						}}
+						href={route("settings.show", {
+							edit: "name",
+						})}
 					>
 						<span>Edit</span>
 						<ArrowRightSIcon />

@@ -72,6 +72,7 @@ export type InertiaSharedProps<T extends Record<string, unknown> = Record<string
 		connectedAccounts: Array<ConnectedAccountType>;
 		hasPassword: boolean;
 	};
+	ziggy: Config & { location: string; query: Record<string, string> };
 };
 
 export interface Session {
@@ -90,5 +91,5 @@ export type PageProps<T extends Record<string, unknown> = Record<string, unknown
 	auth: {
 		user: User;
 	};
-	ziggy: Config & { location: string };
+	ziggy: Config & { location: string; query: Record<string, string> };
 };
