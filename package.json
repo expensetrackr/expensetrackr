@@ -30,13 +30,13 @@
     "react-dom": "18.3.1",
     "react-twc": "1.4.2",
     "sonner": "1.5.0",
-    "tailwind-merge": "2.5.3"
+    "tailwind-merge": "2.5.4"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.2",
     "@headlessui/tailwindcss": "0.2.1",
     "@iconify-json/flat-color-icons": "1.2.0",
-    "@iconify-json/lucide": "1.2.8",
+    "@iconify-json/lucide": "1.2.9",
     "@iconify-json/ri": "1.2.1",
     "@svgr/core": "8.1.0",
     "@svgr/plugin-jsx": "8.1.0",
