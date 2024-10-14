@@ -21,7 +21,7 @@ export function Dialog({
 					<Headless.DialogPanel
 						transition
 						className={cx(
-							"row-start-2 w-full min-w-0 rounded-t-20 bg-[var(--bg-white-0)] py-6 shadow-md ring-1 ring-[var(--stroke-soft-200)] sm:mb-auto sm:rounded-20 forced-colors:outline",
+							"row-start-2 w-full min-w-0 rounded-t-20 bg-[var(--bg-white-0)] py-6 shadow-md ring-1 ring-[var(--stroke-soft-200)] sm:m-auto sm:mb-auto sm:max-w-md sm:rounded-20 forced-colors:outline",
 							"transition duration-100 data-[closed]:translate-y-12 data-[closed]:opacity-0 data-[enter]:ease-out data-[leave]:ease-in sm:data-[closed]:data-[enter]:scale-95 sm:data-[closed]:translate-y-0",
 							className,
 						)}
@@ -36,7 +36,7 @@ export function Dialog({
 
 export const DialogHeader = twc.div`flex items-center gap-4 px-4`;
 
-export const DialogIcon = twc.div`flex size-11 items-center text-[var(--icon-sub-600)] justify-center rounded-full border bg-[var(--bg-white-0)]`;
+export const DialogIcon = twc.div`flex size-11 items-center text-[var(--icon-sub-600)] justify-center rounded-full border border-[var(--stroke-soft-200)] bg-[var(--bg-white-0)]`;
 
 export const DialogTitle = twc(Headless.DialogTitle)`text-label-md`;
 

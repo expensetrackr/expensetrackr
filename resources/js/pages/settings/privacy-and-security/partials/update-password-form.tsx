@@ -1,8 +1,8 @@
 import LockPasswordIcon from "virtual:icons/ri/lock-password-line";
+import { useForm } from "@inertiajs/react";
 import type * as React from "react";
 import { useRef, useState } from "react";
 
-import { useForm } from "@inertiajs/react";
 import { ActionSection } from "#/components/action-section";
 import { Button } from "#/components/button";
 import {
@@ -60,7 +60,7 @@ export function UpdatePasswordForm() {
 					<Button $color="neutral" $variant="stroke" className="px-2" onClick={() => setOpen(true)}>
 						Update password
 					</Button>
-					<Dialog open={isOpen} onClose={setOpen} className="sm:m-auto sm:max-w-[400px]">
+					<Dialog open={isOpen} onClose={setOpen}>
 						<DialogHeader>
 							<DialogIcon>
 								<LockPasswordIcon className="size-6 text-[var(--icon-sub-600)]" />

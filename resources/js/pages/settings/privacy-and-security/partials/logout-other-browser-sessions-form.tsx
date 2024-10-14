@@ -1,6 +1,6 @@
 import ChromeIcon from "virtual:icons/ri/chrome-line";
 import FirefoxIcon from "virtual:icons/ri/firefox-line";
-import LockPasswordIcon from "virtual:icons/ri/lock-password-line";
+import LogoutCircleRIcon from "virtual:icons/ri/logout-circle-r-line";
 import { useForm } from "@inertiajs/react";
 import { useRef, useState } from "react";
 
@@ -15,8 +15,7 @@ import {
 	DialogIcon,
 	DialogTitle,
 } from "#/components/dialog";
-import { ErrorMessage } from "#/components/fieldset";
-import { Field, Label } from "#/components/fieldset";
+import { ErrorMessage, Field, Label } from "#/components/fieldset";
 import { Input } from "#/components/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "#/components/table";
 import type { Session } from "#/types";
@@ -27,10 +26,10 @@ interface LogoutOtherBrowserSessionsFormProps {
 
 export function LogoutOtherBrowserSessionsForm({ sessions }: LogoutOtherBrowserSessionsFormProps) {
 	const [isOpen, setOpen] = useState(false);
-	const passwordRef = useRef<HTMLInputElement>(null);
 	const form = useForm({
 		password: "",
 	});
+	const passwordRef = useRef<HTMLInputElement>(null);
 
 	function onSubmit(e: React.FormEvent<HTMLFormElement>) {
 		e.preventDefault();
@@ -59,10 +58,10 @@ export function LogoutOtherBrowserSessionsForm({ sessions }: LogoutOtherBrowserS
 						Log out all sessions
 					</Button>
 
-					<Dialog open={isOpen} onClose={setOpen} className="sm:m-auto sm:max-w-[400px]">
+					<Dialog open={isOpen} onClose={setOpen}>
 						<DialogHeader>
 							<DialogIcon>
-								<LockPasswordIcon className="size-6 text-[var(--icon-sub-600)]" />
+								<LogoutCircleRIcon className="size-6 text-[var(--icon-sub-600)]" />
 							</DialogIcon>
 
 							<div className="flex flex-1 flex-col gap-1">
@@ -87,6 +86,7 @@ export function LogoutOtherBrowserSessionsForm({ sessions }: LogoutOtherBrowserS
 										onChange={(e) => form.setData("password", e.target.value)}
 										placeholder="Enter your password"
 										value={form.data.password}
+										ref={passwordRef}
 									/>
 									{form.errors.password && <ErrorMessage>{form.errors.password}</ErrorMessage>}
 								</Field>

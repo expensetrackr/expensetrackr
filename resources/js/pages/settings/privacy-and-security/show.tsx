@@ -7,6 +7,7 @@ import { AppLayout } from "#/layouts/app-layout";
 import { SettingsSidebar } from "#/layouts/partials/settings-sidebar";
 import { SetPasswordForm } from "#/pages/settings/privacy-and-security/partials/set-password-form";
 import type { InertiaSharedProps, Session } from "#/types";
+import { DeleteUserForm } from "./partials/delete-user-form";
 import { LogoutOtherBrowserSessionsForm } from "./partials/logout-other-browser-sessions-form";
 import { TwoFactorAuthenticationForm } from "./partials/two-factor-authentication-form";
 import { UpdatePasswordForm } from "./partials/update-password-form";
@@ -21,7 +22,8 @@ export default function PrivacyAndSecurityShow({
 	confirmsTwoFactorAuthentication,
 }: PrivacyAndSecurityShowProps) {
 	const page = usePage<InertiaSharedProps>();
-	const canUpdatePassword = page.props.workspaces.canUpdatePassword && page.props.socialstream.hasPassword;
+	const workspaces = page.props.workspaces;
+	const canUpdatePassword = workspaces.canUpdatePassword && page.props.socialstream.hasPassword;
 
 	return (
 		<AppLayout subSidebar={<SettingsSidebar />}>
@@ -43,7 +45,7 @@ export default function PrivacyAndSecurityShow({
 					</PageHeader.Content>
 				</PageHeader>
 
-				{page.props.workspaces.canUpdatePassword && (
+				{workspaces.canUpdatePassword && (
 					<>
 						<Divider />
 
@@ -51,7 +53,7 @@ export default function PrivacyAndSecurityShow({
 					</>
 				)}
 
-				{page.props.workspaces.canManageTwoFactorAuthentication && (
+				{workspaces.canManageTwoFactorAuthentication && (
 					<>
 						<Divider />
 
@@ -62,6 +64,14 @@ export default function PrivacyAndSecurityShow({
 				<Divider />
 
 				<LogoutOtherBrowserSessionsForm sessions={sessions} />
+
+				{workspaces.hasAccountDeletionFeatures && (
+					<>
+						<Divider />
+
+						<DeleteUserForm />
+					</>
+				)}
 			</div>
 		</AppLayout>
 	);

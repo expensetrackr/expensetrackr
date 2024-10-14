@@ -1,6 +1,7 @@
 import LockPasswordIcon from "virtual:icons/ri/lock-password-line";
 import { useForm } from "@inertiajs/react";
 import { useRef, useState } from "react";
+
 import { ActionSection } from "#/components/action-section";
 import { Button } from "#/components/button";
 import {
@@ -52,7 +53,7 @@ export function SetPasswordForm() {
 						Set password
 					</Button>
 
-					<Dialog open={isOpen} onClose={setOpen} className="sm:m-auto sm:max-w-[400px]">
+					<Dialog open={isOpen} onClose={setOpen}>
 						<DialogHeader>
 							<DialogIcon>
 								<LockPasswordIcon className="size-6 text-[var(--icon-sub-600)]" />

@@ -56,7 +56,7 @@ export function ConfirmsPassword({ onConfirm, children }: ConfirmsPasswordProps)
 				{children}
 			</span>
 
-			<Dialog open={isOpen} onClose={setOpen} className="sm:m-auto sm:max-w-[400px]">
+			<Dialog open={isOpen} onClose={setOpen}>
 				<DialogHeader>
 					<DialogIcon>
 						<LockPasswordIcon className="size-6 text-[var(--icon-sub-600)]" />
