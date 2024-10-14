@@ -1,3 +1,5 @@
+import ChromeIcon from "virtual:icons/ri/chrome-line";
+import FirefoxIcon from "virtual:icons/ri/firefox-line";
 import LockPasswordIcon from "virtual:icons/ri/lock-password-line";
 import { useForm } from "@inertiajs/react";
 import { useRef, useState } from "react";
@@ -16,6 +18,7 @@ import {
 import { ErrorMessage } from "#/components/fieldset";
 import { Field, Label } from "#/components/fieldset";
 import { Input } from "#/components/input";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "#/components/table";
 import type { Session } from "#/types";
 
 interface LogoutOtherBrowserSessionsFormProps {
@@ -115,6 +118,35 @@ export function LogoutOtherBrowserSessionsForm({ sessions }: LogoutOtherBrowserS
 					</Dialog>
 				</>
 			}
-		/>
+		>
+			{sessions.length ? (
+				<Table bleed>
+					<TableHead>
+						<TableRow>
+							<TableHeader>Browser</TableHeader>
+							<TableHeader>Most recent activity</TableHeader>
+							<TableHeader>IP Address</TableHeader>
+						</TableRow>
+					</TableHead>
+					<TableBody>
+						{sessions.map((session) => (
+							<TableRow key={session.id}>
+								<TableCell>
+									<p className="inline-flex items-center gap-3">
+										<span className="inline-flex rounded-full bg-[var(--state-faded-lighter)] p-1.5">
+											{session.agent.browser === "Firefox" ? <FirefoxIcon className="size-5" /> : null}
+											{session.agent.browser === "Chrome" ? <ChromeIcon className="size-5" /> : null}
+										</span>
+										<span>{session.agent.browser}</span>
+									</p>
+								</TableCell>
+								<TableCell>{session.is_current_device ? "Current Session" : session.last_active}</TableCell>
+								<TableCell>{session.ip_address}</TableCell>
+							</TableRow>
+						))}
+					</TableBody>
+				</Table>
+			) : null}
+		</ActionSection>
 	);
 }

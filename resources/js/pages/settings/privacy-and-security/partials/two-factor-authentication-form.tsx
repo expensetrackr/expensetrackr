@@ -119,32 +119,32 @@ export function TwoFactorAuthenticationForm({ requiresConfirmation, ...props }: 
 					<>
 						{recoveryCodes.length > 0 && !confirming ? (
 							<ConfirmsPassword onConfirm={regenerateRecoveryCodes}>
-								<Button $color="error" $variant="stroke" className="px-4">
+								<Button $color="error" $variant="stroke" className="px-2">
 									Regenerate recovery codes
 								</Button>
 							</ConfirmsPassword>
 						) : null}
 						{confirming ? (
 							<ConfirmsPassword onConfirm={disableTwoFactorAuthentication}>
-								<Button $color="neutral" $variant="stroke" className="px-4" disabled={disabling}>
+								<Button $color="neutral" $variant="stroke" className="px-2" disabled={disabling}>
 									Cancel
 								</Button>
 							</ConfirmsPassword>
 						) : (
 							<ConfirmsPassword onConfirm={disableTwoFactorAuthentication}>
-								<Button $color="error" $variant="stroke" className="px-4" disabled={disabling}>
+								<Button $color="error" $variant="stroke" className="px-2" disabled={disabling}>
 									Disable 2FA
 								</Button>
 							</ConfirmsPassword>
 						)}
 						{confirming ? (
 							<ConfirmsPassword onConfirm={confirmTwoFactorAuthentication}>
-								<Button className="px-4">Finish setup</Button>
+								<Button className="px-2">Finish setup</Button>
 							</ConfirmsPassword>
 						) : null}
 						{recoveryCodes.length === 0 && !confirming ? (
 							<ConfirmsPassword onConfirm={showRecoveryCodes}>
-								<Button $color="neutral" $variant="stroke" className="px-4">
+								<Button $color="neutral" $variant="stroke" className="px-2">
 									Show recovery codes
 								</Button>
 							</ConfirmsPassword>
@@ -152,7 +152,7 @@ export function TwoFactorAuthenticationForm({ requiresConfirmation, ...props }: 
 					</>
 				) : (
 					<ConfirmsPassword onConfirm={enableTwoFactorAuthentication}>
-						<Button $color="neutral" $variant="stroke" className="px-4" disabled={enabling}>
+						<Button $color="neutral" $variant="stroke" className="px-2" disabled={enabling}>
 							Enable 2FA
 						</Button>
 					</ConfirmsPassword>

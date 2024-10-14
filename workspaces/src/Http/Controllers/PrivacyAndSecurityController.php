@@ -47,6 +47,7 @@ final class PrivacyAndSecurityController extends Controller
                 $agent = $this->createAgent($session);
 
                 return (object) [
+                    'id' => $session->id,
                     'agent' => [
                         'is_desktop' => $agent->isDesktop(),
                         'platform' => $agent->platform(),

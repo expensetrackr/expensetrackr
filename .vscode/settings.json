@@ -15,5 +15,8 @@
 		["cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"],
 		// Plain Javascript Object
 		":\\s*?[\"'`]([^\"'`]*).*?,"
-	]
+	],
+	"[jsonc]": {
+		"editor.defaultFormatter": "vscode.json-language-features"
+	}
 }
