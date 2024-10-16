@@ -24,7 +24,7 @@
     "@headlessui/react": "2.1.10",
     "@inertiajs/react": "2.0.0-beta.1",
     "cva": "1.0.0-beta.1",
-    "framer-motion": "11.11.8",
+    "framer-motion": "11.11.9",
     "input-otp": "1.2.4",
     "react": "18.3.1",
     "react-dom": "18.3.1",
@@ -33,7 +33,7 @@
     "tailwind-merge": "2.5.4"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.9.2",
+    "@biomejs/biome": "1.9.3",
     "@headlessui/tailwindcss": "0.2.1",
     "@iconify-json/flat-color-icons": "1.2.0",
     "@iconify-json/lucide": "1.2.9",
