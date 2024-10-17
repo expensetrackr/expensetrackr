@@ -20,7 +20,7 @@
 		"inertiajs/inertia-laravel": "2.x-dev",
 		"joelbutcher/socialstream": "6.1.9",
 		"laravel/fortify": "1.24.2",
-		"laravel/framework": "11.28.0",
+		"laravel/framework": "11.28.1",
 		"laravel/octane": "2.5.9",
 		"laravel/sanctum": "4.0.3",
 		"laravel/tinker": "2.10.0",
