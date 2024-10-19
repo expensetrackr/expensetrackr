@@ -33,7 +33,7 @@
     "tailwind-merge": "2.5.4"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.9.2",
+    "@biomejs/biome": "1.9.4",
     "@headlessui/tailwindcss": "0.2.1",
     "@iconify-json/flat-color-icons": "1.2.0",
     "@iconify-json/lucide": "1.2.10",
@@ -47,7 +47,7 @@
     "@types/node": "20",
     "@types/react": "18.3.11",
     "@types/react-dom": "18.3.1",
-    "@vitejs/plugin-react": "4.3.2",
+    "@vitejs/plugin-react": "4.3.3",
     "autoprefixer": "10.4.20",
     "axios": "1.7.7",
     "husky": "9.1.6",
