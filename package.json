@@ -36,6 +36,7 @@
     "@biomejs/biome": "1.9.4",
     "@headlessui/tailwindcss": "0.2.1",
     "@iconify-json/flat-color-icons": "1.2.0",
+    "@iconify-json/logos": "1.2.3",
     "@iconify-json/lucide": "1.2.10",
     "@iconify-json/ri": "1.2.1",
     "@svgr/core": "8.1.0",

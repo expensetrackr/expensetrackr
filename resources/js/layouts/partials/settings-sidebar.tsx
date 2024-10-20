@@ -1,4 +1,5 @@
 import ArrowRightSIcon from "virtual:icons/ri/arrow-right-s-line";
+import EqualizerIcon from "virtual:icons/ri/equalizer-line";
 import ShieldUserIcon from "virtual:icons/ri/shield-user-line";
 import UserSettingsIcon from "virtual:icons/ri/user-settings-line";
 
@@ -34,6 +35,20 @@ export function SettingsMenu() {
 				<SidebarLabel>Privacy & Security</SidebarLabel>
 
 				{route().current("settings.privacy-and-security.show") && (
+					<span className="ml-auto inline-flex rounded-full bg-[var(--bg-white-0)] p-px shadow-xs">
+						<ArrowRightSIcon className="size-[18px]" />
+					</span>
+				)}
+			</SidebarItem>
+			<SidebarItem
+				href={route("settings.connected-accounts.show")}
+				current={route().current("settings.connected-accounts.show")}
+				currentIndicator={false}
+			>
+				<EqualizerIcon />
+				<SidebarLabel>Connected accounts</SidebarLabel>
+
+				{route().current("settings.connected-accounts.show") && (
 					<span className="ml-auto inline-flex rounded-full bg-[var(--bg-white-0)] p-px shadow-xs">
 						<ArrowRightSIcon className="size-[18px]" />
 					</span>

@@ -4,7 +4,7 @@ export function ActionSection({
 	action,
 	children,
 }: {
-	title: string;
+	title?: string;
 	description?: string;
 	action?: React.ReactNode;
 	children?: React.ReactNode;

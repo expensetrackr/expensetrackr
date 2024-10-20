@@ -28,7 +28,11 @@ Route::middleware([
         Route::get('/', function () {
             return Inertia::render('settings/show');
         })->name('settings.show');
+
+        Route::get('/connected-accounts', function () {
+            return Inertia::render('settings/connected-accounts/show');
+        })->name('settings.connected-accounts.show');
     });
 });
 
-require __DIR__.'/socialstream.php';
+require __DIR__ . '/socialstream.php';

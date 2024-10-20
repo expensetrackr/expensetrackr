@@ -73,7 +73,7 @@ const buttonVariants = cva({
 		},
 		$color: {
 			primary: [
-				"[--btn-bg:var(--color-primary)] [--btn-border:var(--color-primary)] [--btn-hover-overlay:var(--color-primary-dark)] [--btn-text:var(--color-white)]",
+				"[--btn-bg:var(--color-primary)] [--btn-border:var(--color-primary)] [--btn-hover-overlay:var(--color-primary-dark)] [--btn-stroke-border:var(--color-primary)] [--btn-stroke-hover:var(--color-primary-lighter)] [--btn-stroke-text:var(--color-primary)] [--btn-text:var(--color-white)]",
 				"[--btn-icon:var(--color-white)]",
 				"data-[focus]:outline-primary-lighter",
 			],

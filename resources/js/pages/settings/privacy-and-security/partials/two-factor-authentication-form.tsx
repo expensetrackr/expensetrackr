@@ -13,7 +13,7 @@ interface TwoFactorAuthenticationFormProps {
 	requiresConfirmation: boolean;
 }
 
-export function TwoFactorAuthenticationForm({ requiresConfirmation, ...props }: TwoFactorAuthenticationFormProps) {
+export function TwoFactorAuthenticationForm({ requiresConfirmation }: TwoFactorAuthenticationFormProps) {
 	const page = usePage<PageProps>();
 	const [enabling, setEnabling] = useState(false);
 	const [disabling, setDisabling] = useState(false);
