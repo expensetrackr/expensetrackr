@@ -1,7 +1,9 @@
 import ArrowRightSIcon from "virtual:icons/ri/arrow-right-s-line";
 import EqualizerIcon from "virtual:icons/ri/equalizer-line";
+import PlanetIcon from "virtual:icons/ri/planet-line";
 import ShieldUserIcon from "virtual:icons/ri/shield-user-line";
 import UserSettingsIcon from "virtual:icons/ri/user-settings-line";
+import { usePage } from "@inertiajs/react";
 
 import {
 	Sidebar,
@@ -12,8 +14,12 @@ import {
 	SidebarLabel,
 	SidebarSection,
 } from "#/components/sidebar";
+import type { InertiaSharedProps } from "#/types";
 
 export function SettingsMenu() {
+	const page = usePage<InertiaSharedProps>();
+	const user = page.props.auth.user;
+
 	return (
 		<>
 			<SidebarItem href={route("settings.show")} current={route().current("settings.show")} currentIndicator={false}>
@@ -21,6 +27,20 @@ export function SettingsMenu() {
 				<SidebarLabel>Profile</SidebarLabel>
 
 				{route().current("settings.show") && (
+					<span className="ml-auto inline-flex rounded-full bg-[var(--bg-white-0)] p-px shadow-xs">
+						<ArrowRightSIcon className="size-[18px]" />
+					</span>
+				)}
+			</SidebarItem>
+			<SidebarItem
+				href={route("workspaces.show", { workspace: Number(user?.current_workspace_id) })}
+				current={route().current("workspaces.show", { workspace: Number(user?.current_workspace_id) })}
+				currentIndicator={false}
+			>
+				<PlanetIcon />
+				<SidebarLabel>Workspace</SidebarLabel>
+
+				{route().current("workspaces.show", { workspace: Number(user?.current_workspace_id) }) && (
 					<span className="ml-auto inline-flex rounded-full bg-[var(--bg-white-0)] p-px shadow-xs">
 						<ArrowRightSIcon className="size-[18px]" />
 					</span>

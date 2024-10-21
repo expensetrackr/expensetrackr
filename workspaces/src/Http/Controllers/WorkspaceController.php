@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Workspaces\Http\Controllers;
 
-use Actions\ValidateWorkspaceDeletion;
-use Contracts\CreatesWorkspaces;
-use Contracts\DeletesWorkspaces;
-use Contracts\UpdatesWorkspaceNames;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Response;
+use Workspaces\Actions\ValidateWorkspaceDeletion;
+use Workspaces\Contracts\CreatesWorkspaces;
+use Workspaces\Contracts\DeletesWorkspaces;
+use Workspaces\Contracts\UpdatesWorkspaceNames;
 use Workspaces\RedirectsActions;
 use Workspaces\Workspaces;
 
@@ -29,7 +29,7 @@ final class WorkspaceController extends Controller
 
         Gate::authorize('view', $workspace);
 
-        return Workspaces::inertia()->render($request, 'Workspaces/Show', [
+        return Workspaces::inertia()->render($request, 'workspaces/show', [
             'workspace' => $workspace->load('owner', 'users', 'workspaceInvitations'),
             'availableRoles' => array_values(Workspaces::$roles),
             'availablePermissions' => Workspaces::$permissions,

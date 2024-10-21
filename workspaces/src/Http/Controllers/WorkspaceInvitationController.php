@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Workspaces\Http\Controllers;
 
-use Contracts\AddsWorkspaceMembers;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Gate;
+use Workspaces\Contracts\AddsWorkspaceMembers;
 use Workspaces\Workspaces;
 
 final class WorkspaceInvitationController extends Controller

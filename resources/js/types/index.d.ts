@@ -87,6 +87,29 @@ export interface Session {
 	last_active: DateTime;
 }
 
+export interface WorkspacePermissions {
+	canAddWorkspaceMembers: boolean;
+	canDeleteWorkspace: boolean;
+	canRemoveWorkspaceMembers: boolean;
+	canUpdateWorkspace: boolean;
+}
+
+export interface Role {
+	key: string;
+	name: string;
+	permissions: string[];
+	description: string;
+}
+
+export interface WorkspaceInvitation {
+	id: number;
+	workspace_id: number;
+	email: string;
+	role: Nullable<string>;
+	created_at: DateTime;
+	updated_at: DateTime;
+}
+
 export type PageProps<T extends Record<string, unknown> = Record<string, unknown>> = T & {
 	auth: {
 		user: User;

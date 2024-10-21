@@ -42,12 +42,12 @@ final class HandleInertiaRequests extends Middleware
 
         return array_merge(parent::share($request), [
             'auth' => [
-                'user' => fn() => [
+                'user' => fn () => [
                     ...$user ? $user->toArray() : [],
                     'has_password' => $user?->getAuthPassword() !== null,
                 ],
             ],
-            'ziggy' => fn() => [
+            'ziggy' => fn () => [
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),
                 'query' => $request->query(),

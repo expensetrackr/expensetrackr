@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Workspaces\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
@@ -16,7 +15,7 @@ final class TermsOfServiceController extends Controller
     /**
      * Show the terms of service for the application.
      */
-    public function show(Request $request): Response
+    public function show(): Response
     {
         $termsFile = Workspaces::localizedMarkdownPath('terms.md');
 

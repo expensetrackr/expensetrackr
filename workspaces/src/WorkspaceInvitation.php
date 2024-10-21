@@ -7,7 +7,7 @@ namespace Workspaces;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-final class WorkspaceInvitation extends Model
+class WorkspaceInvitation extends Model
 {
     /**
      * The attributes that are mass assignable.

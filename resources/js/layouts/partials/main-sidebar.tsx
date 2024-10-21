@@ -148,7 +148,11 @@ export function MainSidebar({
 				</SidebarSection>
 				<SidebarSection>
 					<SidebarHeading className="pb-3">Other</SidebarHeading>
-					<SidebarItem href={route("settings.show")} current={route().current("settings.*")} className="max-lg:hidden">
+					<SidebarItem
+						href={route("settings.show")}
+						current={route().current("settings.*") || route().current("workspaces.show")}
+						className="max-lg:hidden"
+					>
 						<Settings2Icon />
 						<SidebarLabel>Settings</SidebarLabel>
 					</SidebarItem>

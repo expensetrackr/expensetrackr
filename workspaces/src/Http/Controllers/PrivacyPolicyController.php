@@ -6,7 +6,6 @@ namespace Http\Controllers;
 
 namespace Workspaces\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
@@ -18,7 +17,7 @@ final class PrivacyPolicyController extends Controller
     /**
      * Show the privacy policy for the application.
      */
-    public function show(Request $request): Response
+    public function show(): Response
     {
         $policyFile = Workspaces::localizedMarkdownPath('policy.md');
 
