@@ -5,8 +5,9 @@ import "../css/app.css";
 
 import { createInertiaApp } from "@inertiajs/react";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
-import { NuqsAdapter } from "nuqs/adapters/react";
 import { createRoot, hydrateRoot } from "react-dom/client";
+
+import { NuqsAdapter } from "#/utils/nuqs-adapter";
 
 const appName = import.meta.env.VITE_APP_NAME || "ExpenseTrackr";
 
