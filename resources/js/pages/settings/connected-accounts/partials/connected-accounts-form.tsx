@@ -1,14 +1,24 @@
+import ShareIcon from "virtual:icons/ri/share-line";
 import { useForm, usePage } from "@inertiajs/react";
-import { useState } from "react";
+import { useQueryState } from "nuqs";
+import { route } from "ziggy-js";
 
 import { ActionSection } from "#/components/action-section";
 import { Button } from "#/components/button";
 import { ConnectedAccount } from "#/components/connected-account";
-import type { ConnectedAccountType, InertiaSharedProps } from "#/types";
+import {
+	Dialog,
+	DialogActions,
+	DialogBody,
+	DialogDescription,
+	DialogHeader,
+	DialogIcon,
+	DialogTitle,
+} from "#/components/dialog.tsx";
+import type { InertiaSharedProps } from "#/types";
 
 export default function ConnectedAccountsForm() {
-	const [isOpen, setOpen] = useState(false);
-	const [accountId, setAccountId] = useState<number>();
+	const [action, setAction] = useQueryState("action");
 	const page = usePage<InertiaSharedProps>();
 	const form = useForm({
 		_method: "DELETE",
@@ -16,11 +26,16 @@ export default function ConnectedAccountsForm() {
 	});
 	const socialStream = page.props.socialstream;
 
-	function removeConnectedAccount(id: ConnectedAccountType["id"]) {
+	function onSubmit(e: React.FormEvent) {
+		e.preventDefault();
+
+		const id = action?.split("destroy:connected-accounts:")[1];
+		if (!id) return;
+
 		form.post(route("connected-accounts.destroy", { id }), {
 			preserveScroll: true,
-			onSuccess: () => {
-				setOpen(false);
+			async onSuccess() {
+				await setAction(null);
 			},
 		});
 	}
@@ -35,16 +50,11 @@ export default function ConnectedAccountsForm() {
 		}
 	}
 
-	function confirmRemove(id: ConnectedAccountType["id"]) {
-		setAccountId(id);
-		setOpen(true);
-	}
-
 	function onRemoveAccount(provider: string) {
 		const account = getAccountForProvider(provider);
 
 		if (account) {
-			return confirmRemove(account.id);
+			return setAction(`destroy:connected-accounts:${account.id}`);
 		}
 	}
 	return (
@@ -83,6 +93,48 @@ export default function ConnectedAccountsForm() {
 									Connect account
 								</Button>
 							)}
+
+							<Dialog open={action === `destroy:connected-accounts:${provider.id}`} onClose={() => setAction(null)}>
+								<DialogHeader>
+									<DialogIcon>
+										<ShareIcon className="size-6 text-[var(--icon-sub-600)]" />
+									</DialogIcon>
+
+									<div className="flex flex-1 flex-col gap-1">
+										<DialogTitle>Are you sure you want to remove this account?</DialogTitle>
+										<DialogDescription>
+											This will remove the account from your connected accounts list.
+										</DialogDescription>
+									</div>
+								</DialogHeader>
+
+								<DialogBody>
+									<form id={`destroy-connected-accounts-${provider.id}-form`} onSubmit={onSubmit} className="sr-only" />
+								</DialogBody>
+
+								<DialogActions>
+									<Button
+										$color="neutral"
+										$variant="stroke"
+										$size="sm"
+										disabled={form.processing}
+										className="w-full"
+										onClick={() => setAction(null)}
+									>
+										Cancel
+									</Button>
+									<Button
+										$color="error"
+										$size="sm"
+										disabled={form.processing}
+										form={`destroy-connected-accounts-${provider.id}-form`}
+										type="submit"
+										className="w-full"
+									>
+										{form.processing ? "Removing..." : "Yes, remove it"}
+									</Button>
+								</DialogActions>
+							</Dialog>
 						</ConnectedAccount>
 					);
 				})}
