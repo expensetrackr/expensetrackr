@@ -6,7 +6,7 @@ interface FormSectionProps {
 
 export function FormSection({ title, description, children }: FormSectionProps) {
 	return (
-		<div className="grid grid-cols-12 gap-4 py-5">
+		<div className="grid grid-cols-12 gap-4">
 			<div className="col-span-12 md:col-span-5">
 				{(title || description) && (
 					<div className="flex flex-col gap-1">

@@ -16,7 +16,7 @@ export function ActionSection({
 					<header className="flex flex-1 flex-col gap-1">
 						{title && <h2 className="text-label-sm">{title}</h2>}
 
-						{description && <p className="text-[var(--text-sub-600)] text-paragraph-sm">{description}</p>}
+						{description && <p className="text-[var(--text-sub-600)] text-paragraph-xs">{description}</p>}
 					</header>
 				)}
 

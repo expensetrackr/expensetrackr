@@ -23,19 +23,19 @@ const inputVariants = cva({
 		// Basic layout
 		"relative block w-full appearance-none transition",
 		// Typography
-		"text-paragraph-sm placeholder:text-[var(--text-soft-400)] placeholder:transition-colors hover:placeholder:text-[var(--text-sub-600)] focus-visible:placeholder:text-[var(--text-strong-950)]",
+		"text-paragraph-sm placeholder:text-[var(--text-soft-400)] placeholder:transition-colors focus-visible:placeholder:text-[var(--text-strong-950)] data-hover:placeholder:text-[var(--text-sub-600)]",
 		// Border
-		"border border-[var(--stroke-soft-200)] focus-visible:border-[var(--stroke-strong-950)]",
+		"border border-[var(--stroke-soft-200)] focus-visible:border-[var(--stroke-strong-950)] data-hover:border-[var(--bg-weak-50)]",
 		// Background color
-		"bg-[var(--bg-white-0)] hover:bg-[var(--bg-weak-50)] focus-visible:border-[var(--stroke-strong-950)]",
+		"bg-[var(--bg-white-0)] focus-visible:border-[var(--stroke-strong-950)] data-hover:bg-[var(--bg-weak-50)]",
 		// Hide default focus styles
 		"focus:outline-none",
 		// Focus ring
 		"focus-visible:ring-0",
 		// Invalid state
-		"data-[invalid]:border-state-error-base",
+		"data-invalid:border-state-error-base",
 		// Disabled state
-		"ui-disabled:bg-[var(--bg-weak-50)] ui-disabled:text-[var(--text-disabled-300)]",
+		"data-disabled:bg-[var(--bg-weak-50)] data-disabled:text-[var(--text-disabled-300)]",
 	],
 	variants: {
 		$size: {
@@ -79,9 +79,9 @@ export const Input = forwardRef(function Input(
 				($size === "xs" || $size === "sm") && "after:rounded-8",
 				$size === "md" && "after:rounded-10",
 				// Disabled state
-				"has-[[data-disabled]]:opacity-50 has-[[data-disabled]]:before:bg-[var(--bg-weak-50)] has-[[data-disabled]]:before:shadow-none",
+				"has-data-disabled:opacity-50 has-data-disabled:before:bg-[var(--bg-weak-50)] has-data-disabled:before:shadow-none",
 				// Invalid state
-				"has-[[data-invalid]]:before:shadow-red-500/10",
+				"has-data-invalid:before:shadow-red-500/10",
 			])}
 		>
 			<Headless.Input

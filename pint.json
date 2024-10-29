@@ -9,7 +9,6 @@
 		"lowercase_static_reference": true,
 		"final_class": true,
 		"final_internal_class": {
-			"allow": ["Illuminate\\Database\\Eloquent\\Model"],
 			"annotation_exclude": [
 				"@final",
 				"@Entity",

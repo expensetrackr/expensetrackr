@@ -35,11 +35,12 @@ final class WorkspaceInvitationMail extends Mailable
 
     public function content(): Content
     {
+
         return new Content(
             markdown: 'emails.workspace-invitation',
             with: [
                 'acceptUrl' => URL::signedRoute('workspace-invitations.accept', [
-                    'invitation' => $this->invitation->prefixed_id,
+                    'invitation' => $this->invitation,
                 ]),
             ]
         );

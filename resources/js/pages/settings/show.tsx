@@ -14,30 +14,32 @@ export default function SettingsShow() {
 		<AppLayout subSidebar={<SettingsSidebar />}>
 			<Head title="Profile settings" />
 
-			<PageHeader>
-				<PageHeader.Content>
-					<PageHeader.Icon>
-						<UserIcon className="size-6" />
-					</PageHeader.Icon>
+			<div className="flex flex-col gap-5">
+				<PageHeader className="-mb-5">
+					<PageHeader.Content>
+						<PageHeader.Icon>
+							<UserIcon className="size-6" />
+						</PageHeader.Icon>
 
-					<div className="flex flex-1 flex-col gap-1">
-						<PageHeader.Title>Profile Settings</PageHeader.Title>
-						<PageHeader.Description>Customize and edit essential profile details.</PageHeader.Description>
-					</div>
-				</PageHeader.Content>
-			</PageHeader>
+						<div className="flex flex-1 flex-col gap-1">
+							<PageHeader.Title>Profile Settings</PageHeader.Title>
+							<PageHeader.Description>Customize and edit essential profile details.</PageHeader.Description>
+						</div>
+					</PageHeader.Content>
+				</PageHeader>
 
-			<Divider />
+				<Divider />
 
-			<UpdateProfilePictureForm />
+				<UpdateProfilePictureForm />
 
-			<Divider className="my-[1.5px]" />
+				<Divider />
 
-			<UpdateNameForm />
+				<UpdateNameForm />
 
-			<Divider className="my-[1.5px]" />
+				<Divider />
 
-			<UpdateEmailForm />
+				<UpdateEmailForm />
+			</div>
 		</AppLayout>
 	);
 }
