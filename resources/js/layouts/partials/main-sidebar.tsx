@@ -130,7 +130,7 @@ export function MainSidebar({
 				</Dropdown>
 			</SidebarHeader>
 
-			<SidebarDivider className="mx-5" />
+			<SidebarDivider className="mx-5 my-1.5" />
 
 			<SidebarBody>
 				<SidebarSection>
