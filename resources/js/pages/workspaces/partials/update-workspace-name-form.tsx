@@ -19,7 +19,7 @@ export function UpdateWorkspaceNameForm({ workspace, permissions }: UpdateWorksp
 	const form = useForm({
 		name: workspace.name,
 	});
-	const debouncedName = useDebounce(form.data.name, 500);
+	const debouncedName = useDebounce(form.data.name, 1000);
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: we only want to update the workspace name when the debounced name changes
 	useEffect(() => {
