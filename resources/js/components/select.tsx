@@ -7,7 +7,7 @@ import { cva, cx } from "#/utils/cva.ts";
 const selectVariants = cva({
 	base: [
 		// Basic layout
-		"relative block w-full appearance-none shadow-none transition",
+		"relative block w-full appearance-none shadow-none ring-0 transition",
 		// Typography
 		"text-paragraph-sm placeholder:text-[var(--text-soft-400)] placeholder:transition-colors focus-visible:placeholder:text-[var(--text-strong-950)] data-hover:placeholder:text-[var(--text-sub-600)]",
 		// Border

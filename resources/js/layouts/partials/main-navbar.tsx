@@ -20,11 +20,9 @@ import type { Auth } from "#/types";
 
 export function MainNavbar({
 	user,
-	initials,
 	logout,
 }: {
 	user: Auth["user"];
-	initials?: string;
 	logout: (e: React.FormEvent) => void;
 }) {
 	return (
@@ -40,9 +38,9 @@ export function MainNavbar({
 				<Dropdown>
 					<DropdownButton as={NavbarItem}>
 						<Avatar
+							user={user}
 							src={user?.profile_photo_url}
 							alt={user?.name}
-							initials={initials}
 							className="size-10"
 							imageProps={{ className: "size-7 object-cover object-top sm:size-6" }}
 						/>

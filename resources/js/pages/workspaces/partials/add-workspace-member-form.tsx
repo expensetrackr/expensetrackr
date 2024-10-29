@@ -1,7 +1,8 @@
 import TeamIcon from "virtual:icons/ri/team-line";
 import { useForm } from "@inertiajs/react";
-import { useState } from "react";
+import { route } from "ziggy-js";
 
+import { useQueryState } from "nuqs";
 import { Button } from "#/components/button";
 import {
 	Dialog,
@@ -15,7 +16,7 @@ import {
 import { ErrorMessage, Field, Label } from "#/components/fieldset";
 import { Input } from "#/components/input";
 import { Select } from "#/components/select.tsx";
-import type { Nullable, Role, Workspace } from "#/types";
+import type { Role, Workspace } from "#/types";
 
 interface AddWorkspaceMemberFormProps {
 	workspace: Workspace;
@@ -23,10 +24,10 @@ interface AddWorkspaceMemberFormProps {
 }
 
 export function AddWorkspaceMemberForm({ workspace, availableRoles }: AddWorkspaceMemberFormProps) {
-	const [isOpen, setOpen] = useState(false);
+	const [action, setAction] = useQueryState("action");
 	const form = useForm({
 		email: "",
-		role: null as Nullable<string>,
+		role: availableRoles[0]?.key,
 	});
 
 	function onSubmit(e: React.FormEvent) {
@@ -35,17 +36,20 @@ export function AddWorkspaceMemberForm({ workspace, availableRoles }: AddWorkspa
 		form.post(route("workspace-members.store", [workspace.id]), {
 			errorBag: "addWorkspaceMember",
 			preserveScroll: true,
-			onSuccess: () => form.reset(),
+			onSuccess: async () => {
+				form.reset();
+				await setAction(null);
+			},
 		});
 	}
 
 	return (
 		<>
-			<Button $size="sm" className="px-4" onClick={() => setOpen(true)}>
+			<Button $size="sm" className="px-4" onClick={() => setAction("create:workspace-members")}>
 				Add workspace member
 			</Button>
 
-			<Dialog open={isOpen} onClose={setOpen}>
+			<Dialog open={action === "create:workspace-members"} onClose={() => setAction(null)}>
 				<DialogHeader>
 					<DialogIcon>
 						<TeamIcon className="size-6 text-[var(--icon-sub-600)]" />
@@ -78,7 +82,12 @@ export function AddWorkspaceMemberForm({ workspace, availableRoles }: AddWorkspa
 						{availableRoles.length > 0 ? (
 							<Field>
 								<Label>Role</Label>
-								<Select name="role" invalid={!!form.errors.role} onChange={(e) => form.setData("role", e.target.value)}>
+								<Select
+									name="role"
+									invalid={!!form.errors.role}
+									onChange={(e) => form.setData("role", e.target.value)}
+									value={form.data.role}
+								>
 									{availableRoles.map((role) => (
 										<option key={role.key} value={role.key}>
 											{role.name}
@@ -99,7 +108,7 @@ export function AddWorkspaceMemberForm({ workspace, availableRoles }: AddWorkspa
 						$size="sm"
 						disabled={form.processing}
 						className="w-full"
-						onClick={() => setOpen(false)}
+						onClick={() => setAction(null)}
 					>
 						Cancel
 					</Button>

@@ -83,7 +83,7 @@ export function UpdateProfilePictureForm() {
 						<div className="flex items-center gap-5">
 							<div className="relative size-40">
 								<Avatar
-									initials={user?.name?.slice(0, 1)}
+									user={user}
 									src={photoPreview || user?.profile_photo_url}
 									className="size-40"
 									imageProps={{

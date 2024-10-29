@@ -1,10 +1,11 @@
-import { createInertiaApp } from "@inertiajs/react";
+import {createInertiaApp} from "@inertiajs/react";
 import createServer from "@inertiajs/react/server";
-import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
+import {resolvePageComponent} from "laravel-vite-plugin/inertia-helpers";
+import {NuqsAdapter} from "nuqs/adapters/react";
 import ReactDOMServer from "react-dom/server";
-import type { RouteName } from "ziggy-js";
+import type {RouteName} from "ziggy-js";
 
-import { route } from "../../vendor/tightenco/ziggy";
+import {route} from "../../vendor/tightenco/ziggy";
 
 const appName = import.meta.env.VITE_APP_NAME || "ExpenseTrackr";
 
@@ -23,7 +24,7 @@ createServer((page) =>
 					location: new URL(page.props.ziggy.location),
 				});
 
-			return <App {...props} />;
+			return <NuqsAdapter>{<App {...props} />}</NuqsAdapter>;
 		},
 	}),
 );

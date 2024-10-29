@@ -17,7 +17,7 @@ final class WorkspaceInvitationController extends Controller
     /**
      * Accept a workspace invitation.
      */
-    public function accept(Request $request, int $invitationId): RedirectResponse
+    public function accept(int $invitationId): RedirectResponse
     {
         $model = Workspaces::workspaceInvitationModel();
 

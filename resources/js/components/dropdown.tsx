@@ -55,11 +55,11 @@ const dropdownItemClasses = cx(
 	// Text styles
 	"text-left text-paragraph-sm forced-colors:text-[CanvasText]",
 	// Focus
-	"data-[focus]:bg-[var(--bg-weak-50)]",
+	"data-focus:bg-[var(--bg-weak-50)]",
 	// Disabled state
-	"data-[disabled]:opacity-50",
+	"data-disabled:opacity-50",
 	// Forced colors mode
-	"forced-color-adjust-none forced-colors:data-[focus]:bg-[Highlight] forced-colors:data-[focus]:text-[HighlightText] forced-colors:[&>[data-slot=icon]]:data-[focus]:text-[HighlightText]",
+	"forced-color-adjust-none forced-colors:data-focus:bg-[Highlight] forced-colors:data-focus:text-[HighlightText] forced-colors:[&>[data-slot=icon]]:data-focus:text-[HighlightText]",
 	// Use subgrid when available but fallback to an explicit grid layout if not
 	"col-span-full grid grid-cols-[auto_1fr_1.5rem_0.5rem_auto] items-center supports-[grid-template-columns:subgrid]:grid-cols-subgrid",
 	// Icons
@@ -103,7 +103,7 @@ export const DropdownLabel = twc(Headless.Label).attrs({
 
 export const DropdownDescription = twc(Headless.Description).attrs({
 	"data-slot": "description",
-})`col-span-2 col-start-2 row-start-2 text-sm/5 text-zinc-500 dark:text-zinc-400 forced-colors:group-data-[focus]:text-[HighlightText] group-data-[focus]:text-white sm:text-xs/5`;
+})`col-span-2 col-start-2 row-start-2 text-sm/5 text-zinc-500 dark:text-zinc-400 forced-colors:group-data-focus:text-[HighlightText] group-data-focus:text-white sm:text-xs/5`;
 
 export function DropdownShortcut({
 	keys,
@@ -121,7 +121,7 @@ export function DropdownShortcut({
 					// biome-ignore lint/suspicious/noArrayIndexKey: it's safe to use the index as a key here
 					key={index}
 					className={cx([
-						"min-w-[2ch] text-center font-sans text-zinc-400 capitalize group-data-[focus]:text-white forced-colors:group-data-[focus]:text-[HighlightText]",
+						"min-w-[2ch] text-center font-sans text-zinc-400 capitalize group-data-focus:text-white forced-colors:group-data-focus:text-[HighlightText]",
 						// Make sure key names that are longer than one character (like "Tab") have extra space
 						index > 0 && char.length > 1 && "pl-1",
 					])}

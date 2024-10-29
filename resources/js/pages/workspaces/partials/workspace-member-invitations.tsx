@@ -1,7 +1,9 @@
-import DeleteBinIcon from "virtual:icons/ri/delete-bin-line";
+import MailCloseIcon from "virtual:icons/ri/mail-close-line";
 import { router } from "@inertiajs/react";
 import { useState } from "react";
+import { route } from "ziggy-js";
 
+import { useQueryState } from "nuqs";
 import { ActionSection } from "#/components/action-section";
 import { Button } from "#/components/button";
 import { Dialog, DialogActions, DialogDescription, DialogHeader, DialogIcon, DialogTitle } from "#/components/dialog";
@@ -68,29 +70,37 @@ export function WorkspaceMemberInvitations({ workspace, permissions }: Workspace
 }
 
 function CancelInvitation({ invitation }: { invitation: WorkspaceInvitation }) {
-	const [isOpen, setOpen] = useState(false);
+	const [action, setAction] = useQueryState("action");
 	const [isCancelling, setCancelling] = useState(false);
 
 	function cancelWorkspaceInvitation(invitation: WorkspaceInvitation) {
 		setCancelling(true);
-		router.delete(route("workspace-invitations.destroy", [invitation]), {
+
+		router.delete(route("workspace-invitations.destroy", [invitation.id]), {
 			preserveScroll: true,
+			onSuccess: async () => {
+				await setAction(null);
+			},
 		});
 
-		setOpen(false);
 		setCancelling(false);
 	}
 
 	return (
 		<>
-			<Button $color="error" $variant="stroke" $size="sm" onClick={() => setOpen(true)}>
+			<Button
+				$color="error"
+				$variant="stroke"
+				$size="sm"
+				onClick={() => setAction(`destroy:workspace-invitations:${invitation.id}`)}
+			>
 				Cancel invitation
 			</Button>
 
-			<Dialog open={isOpen} onClose={setOpen}>
+			<Dialog open={action === `destroy:workspace-invitations:${invitation.id}`} onClose={() => setAction(null)}>
 				<DialogHeader>
 					<DialogIcon>
-						<DeleteBinIcon className="size-6 text-[var(--icon-sub-600)]" />
+						<MailCloseIcon className="size-6 text-[var(--icon-sub-600)]" />
 					</DialogIcon>
 
 					<div className="flex flex-1 flex-col gap-1">
@@ -106,7 +116,7 @@ function CancelInvitation({ invitation }: { invitation: WorkspaceInvitation }) {
 						$size="sm"
 						className="w-full"
 						disabled={isCancelling}
-						onClick={() => setOpen(false)}
+						onClick={() => setAction(null)}
 					>
 						Cancel
 					</Button>
@@ -117,7 +127,7 @@ function CancelInvitation({ invitation }: { invitation: WorkspaceInvitation }) {
 						disabled={isCancelling}
 						onClick={() => cancelWorkspaceInvitation(invitation)}
 					>
-						{isCancelling ? "Cancelling..." : "Cancel invitation"}
+						{isCancelling ? "Cancelling..." : "Yes, cancel it"}
 					</Button>
 				</DialogActions>
 			</Dialog>

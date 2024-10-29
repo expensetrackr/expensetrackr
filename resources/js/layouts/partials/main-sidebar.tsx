@@ -44,12 +44,10 @@ import { SettingsMenu } from "./settings-sidebar";
 export function MainSidebar({
 	user,
 	workspaces,
-	initials,
 	logout,
 }: {
 	user: Auth["user"];
 	workspaces: InertiaSharedProps["workspaces"];
-	initials?: string;
 	logout: (e: React.FormEvent) => void;
 }) {
 	function switchToWorkspace(e: React.FormEvent, workspace: Workspace) {
@@ -184,7 +182,7 @@ export function MainSidebar({
 					<DropdownButton as={SidebarItem} className="-mx-4 rounded-10">
 						<span className="flex min-w-0 items-center gap-3">
 							<Avatar
-								initials={initials}
+								user={user}
 								src={user?.profile_photo_url}
 								className="size-10"
 								imageProps={{ className: "size-10 object-cover object-top" }}

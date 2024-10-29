@@ -7,7 +7,7 @@ namespace Workspaces;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class WorkspaceInvitation extends Model
+abstract class WorkspaceInvitation extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -20,7 +20,7 @@ class WorkspaceInvitation extends Model
     /**
      * Get the workspace that the invitation belongs to.
      */
-    public function workspace(): BelongsTo
+    final public function workspace(): BelongsTo
     {
         return $this->belongsTo(Workspaces::workspaceModel());
     }

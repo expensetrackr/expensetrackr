@@ -15,11 +15,6 @@ export function AppLayout({
 	const page = usePage<InertiaSharedProps>();
 	const user = page.props.auth.user;
 	const workspaces = page.props.workspaces;
-	const initials =
-		user?.name
-			?.split(" ")
-			?.map((word) => word.charAt(0))
-			.join("") || user?.name?.charAt(0);
 
 	function logout(e: React.FormEvent) {
 		e.preventDefault();
@@ -28,8 +23,8 @@ export function AppLayout({
 
 	return (
 		<SidebarLayout
-			navbar={<MainNavbar user={user} initials={initials} logout={logout} />}
-			sidebar={<MainSidebar user={user} workspaces={workspaces} initials={initials} logout={logout} />}
+			navbar={<MainNavbar user={user} logout={logout} />}
+			sidebar={<MainSidebar user={user} workspaces={workspaces} logout={logout} />}
 			subSidebar={subSidebar}
 		>
 			{children}

@@ -2,6 +2,7 @@ import * as Headless from "@headlessui/react";
 import type { VariantProps } from "cva";
 import * as React from "react";
 
+import type { Nullable, User } from "#/types";
 import { cva, cx } from "#/utils/cva";
 import { TouchTarget } from "./button";
 import { Link } from "./link";
@@ -25,6 +26,7 @@ type BaseAvatarProps = {
 	alt?: string;
 	className?: string;
 	imageProps?: React.ComponentPropsWithoutRef<"img">;
+	user?: Nullable<User>;
 };
 
 type AvatarProps = React.ComponentPropsWithoutRef<"span"> & VariantProps<typeof avatarVariants> & BaseAvatarProps;
@@ -32,7 +34,11 @@ type AvatarProps = React.ComponentPropsWithoutRef<"span"> & VariantProps<typeof 
 export function Avatar({
 	$square = false,
 	src = null,
-	initials,
+	user,
+	initials = user?.name
+		?.split(" ")
+		?.map((word) => word.charAt(0))
+		.join("") || user?.name?.charAt(0),
 	alt = "",
 	className,
 	imageProps,

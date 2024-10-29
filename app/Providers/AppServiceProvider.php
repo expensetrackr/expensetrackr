@@ -26,9 +26,7 @@ final class AppServiceProvider extends ServiceProvider
             $url->forceScheme('https');
         }
 
-        Vite::useWaterfallPrefetching(concurrency: 10);
-        Vite::useAggressivePrefetching();
-        Vite::usePrefetchStrategy('aggressive', ['concurrency' => 1]);
+        Vite::prefetch(concurrency: 3);
     }
 
     /**

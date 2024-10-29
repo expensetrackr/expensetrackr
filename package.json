@@ -23,9 +23,11 @@
   "dependencies": {
     "@headlessui/react": "2.1.10",
     "@inertiajs/react": "2.0.0-beta.1",
+    "@uidotdev/usehooks": "2.4.1",
     "cva": "1.0.0-beta.1",
     "framer-motion": "11.11.9",
     "input-otp": "1.2.4",
+    "nuqs": "2.0.4",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-twc": "1.4.2",
