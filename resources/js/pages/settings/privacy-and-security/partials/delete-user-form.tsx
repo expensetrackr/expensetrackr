@@ -1,6 +1,7 @@
 import DeleteBinIcon from "virtual:icons/ri/delete-bin-line";
 import { useForm } from "@inertiajs/react";
-import { useRef, useState } from "react";
+import { useQueryState } from "nuqs";
+import { useRef } from "react";
 
 import { ActionSection } from "#/components/action-section";
 import { Button } from "#/components/button";
@@ -17,7 +18,7 @@ import { ErrorMessage, Field, Label } from "#/components/fieldset";
 import { Input } from "#/components/input";
 
 export function DeleteUserForm() {
-	const [isOpen, setOpen] = useState(false);
+	const [action, setAction] = useQueryState("action");
 	const form = useForm({
 		password: "",
 	});
@@ -34,8 +35,8 @@ export function DeleteUserForm() {
 		});
 	}
 
-	function closeModal() {
-		setOpen(false);
+	async function closeModal() {
+		await setAction(null);
 
 		form.reset();
 	}
@@ -46,11 +47,11 @@ export function DeleteUserForm() {
 			description="Permanently delete your account."
 			action={
 				<>
-					<Button $color="error" $variant="stroke" className="px-2" onClick={() => setOpen(true)}>
+					<Button $color="error" $variant="stroke" className="px-2" onClick={() => setAction("destroy:current-user")}>
 						Delete account
 					</Button>
 
-					<Dialog open={isOpen} onClose={setOpen}>
+					<Dialog open={action === "destroy:current-user"} onClose={() => setAction(null)}>
 						<DialogHeader>
 							<DialogIcon>
 								<DeleteBinIcon className="size-6 text-[var(--icon-sub-600)]" />

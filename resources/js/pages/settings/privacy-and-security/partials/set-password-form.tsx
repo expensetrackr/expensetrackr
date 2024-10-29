@@ -1,6 +1,7 @@
 import LockPasswordIcon from "virtual:icons/ri/lock-password-line";
 import { useForm } from "@inertiajs/react";
-import { useRef, useState } from "react";
+import { useQueryState } from "nuqs";
+import { useRef } from "react";
 
 import { ActionSection } from "#/components/action-section";
 import { Button } from "#/components/button";
@@ -17,7 +18,7 @@ import { ErrorMessage, Field, Label } from "#/components/fieldset";
 import { Input } from "#/components/input";
 
 export function SetPasswordForm() {
-	const [isOpen, setOpen] = useState(false);
+	const [action, setAction] = useQueryState("action");
 	const { data, setData, errors, ...form } = useForm({
 		password: "",
 		password_confirmation: "",
@@ -32,7 +33,7 @@ export function SetPasswordForm() {
 			preserveScroll: true,
 			onSuccess: () => {
 				form.reset();
-				setTimeout(() => setOpen(false), 100);
+				setTimeout(() => setAction(null), 100);
 			},
 			onError: () => {
 				if (errors.password) {
@@ -49,11 +50,11 @@ export function SetPasswordForm() {
 			description="Create a password for enhanced account security."
 			action={
 				<>
-					<Button $color="neutral" $variant="stroke" className="px-2" onClick={() => setOpen(true)}>
+					<Button $color="neutral" $variant="stroke" className="px-2" onClick={() => setAction(null)}>
 						Set password
 					</Button>
 
-					<Dialog open={isOpen} onClose={setOpen}>
+					<Dialog open={action === "set:user-password"} onClose={() => setAction(null)}>
 						<DialogHeader>
 							<DialogIcon>
 								<LockPasswordIcon className="size-6 text-[var(--icon-sub-600)]" />
@@ -102,7 +103,7 @@ export function SetPasswordForm() {
 								$size="sm"
 								disabled={form.processing}
 								className="w-full"
-								onClick={() => setOpen(false)}
+								onClick={() => setAction(null)}
 							>
 								Cancel
 							</Button>

@@ -137,17 +137,18 @@ p {
     border-radius: var(--radius-8);
     background: conic-gradient(
         transparent 30deg,
-        var(--primary-base) 45deg,
+        var(--color-primary) 45deg,
         transparent 60deg,
         transparent 120deg,
-        var(--primary-base) 135deg,
+        var(--color-primary) 135deg,
         transparent 150deg,
         transparent 210deg,
-        var(--primary-base) 225deg,
+        var(--color-primary) 225deg,
         transparent 240deg,
         transparent 300deg,
-        var(--primary-base) 315deg,
+        var(--color-primary) 315deg,
         transparent 330deg
     );
+    animation: var(--animate-spin);
     animation-duration: 20s;
 }

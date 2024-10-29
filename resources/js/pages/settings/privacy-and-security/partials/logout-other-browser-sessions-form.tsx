@@ -2,7 +2,8 @@ import ChromeIcon from "virtual:icons/ri/chrome-line";
 import FirefoxIcon from "virtual:icons/ri/firefox-line";
 import LogoutCircleRIcon from "virtual:icons/ri/logout-circle-r-line";
 import { useForm } from "@inertiajs/react";
-import { useRef, useState } from "react";
+import { useQueryState } from "nuqs";
+import { useRef } from "react";
 
 import { ActionSection } from "#/components/action-section";
 import { Button } from "#/components/button";
@@ -25,7 +26,7 @@ interface LogoutOtherBrowserSessionsFormProps {
 }
 
 export function LogoutOtherBrowserSessionsForm({ sessions }: LogoutOtherBrowserSessionsFormProps) {
-	const [isOpen, setOpen] = useState(false);
+	const [action, setAction] = useQueryState("action");
 	const form = useForm({
 		password: "",
 	});
@@ -42,8 +43,8 @@ export function LogoutOtherBrowserSessionsForm({ sessions }: LogoutOtherBrowserS
 		});
 	}
 
-	function closeModal() {
-		setOpen(false);
+	async function closeModal() {
+		await setAction(null);
 
 		form.reset();
 	}
@@ -54,11 +55,16 @@ export function LogoutOtherBrowserSessionsForm({ sessions }: LogoutOtherBrowserS
 			description="Manage and log out your active sessions on other browsers and devices."
 			action={
 				<>
-					<Button $color="error" $variant="stroke" className="px-2" onClick={() => setOpen(true)}>
+					<Button
+						$color="error"
+						$variant="stroke"
+						className="px-2"
+						onClick={() => setAction("destroy:other-browser-sessions")}
+					>
 						Log out all sessions
 					</Button>
 
-					<Dialog open={isOpen} onClose={setOpen}>
+					<Dialog open={action === "destroy:other-browser-sessions"} onClose={() => setAction(null)}>
 						<DialogHeader>
 							<DialogIcon>
 								<LogoutCircleRIcon className="size-6 text-[var(--icon-sub-600)]" />

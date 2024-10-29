@@ -1,7 +1,8 @@
 import LockPasswordIcon from "virtual:icons/ri/lock-password-line";
 import { useForm } from "@inertiajs/react";
 import axios from "axios";
-import { useRef, useState } from "react";
+import { useQueryState } from "nuqs";
+import { useRef } from "react";
 
 import { Button } from "./button";
 import { Dialog, DialogActions, DialogBody, DialogDescription, DialogHeader, DialogIcon, DialogTitle } from "./dialog";
@@ -14,18 +15,18 @@ interface ConfirmsPasswordProps {
 }
 
 export function ConfirmsPassword({ onConfirm, children }: ConfirmsPasswordProps) {
-	const [isOpen, setOpen] = useState(false);
+	const [action, setAction] = useQueryState("action");
 	const { data, setData, errors, ...form } = useForm({
 		password: "",
 	});
 	const passwordRef = useRef<HTMLInputElement>(null);
 
 	function startConfirmingPassword() {
-		axios.get(route("password.confirmation")).then((response) => {
+		axios.get(route("password.confirmation")).then(async (response) => {
 			if (response.data.confirmed) {
 				onConfirm?.();
 			} else {
-				setOpen(true);
+				await setAction("confirming:password");
 			}
 		});
 	}
@@ -36,8 +37,8 @@ export function ConfirmsPassword({ onConfirm, children }: ConfirmsPasswordProps)
 		form.post(route("password.confirm"), {
 			errorBag: "password",
 			preserveScroll: true,
-			onSuccess: () => {
-				setOpen(false);
+			async onSuccess() {
+				await setAction(null);
 				form.reset();
 				setTimeout(() => onConfirm?.(), 250);
 			},
@@ -56,7 +57,7 @@ export function ConfirmsPassword({ onConfirm, children }: ConfirmsPasswordProps)
 				{children}
 			</span>
 
-			<Dialog open={isOpen} onClose={setOpen}>
+			<Dialog open={action === "confirming:password"} onClose={() => setAction(null)}>
 				<DialogHeader>
 					<DialogIcon>
 						<LockPasswordIcon className="size-6 text-[var(--icon-sub-600)]" />
@@ -94,7 +95,7 @@ export function ConfirmsPassword({ onConfirm, children }: ConfirmsPasswordProps)
 						$size="sm"
 						disabled={form.processing}
 						className="w-full"
-						onClick={() => setOpen(false)}
+						onClick={() => setAction(null)}
 					>
 						Cancel
 					</Button>
