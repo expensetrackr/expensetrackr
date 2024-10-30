@@ -1,5 +1,5 @@
 import { Head, useForm } from "@inertiajs/react";
-import { useEffect } from "react";
+import { route } from "ziggy-js";
 
 import { Button } from "#/components/button.tsx";
 import { Checkbox, CheckboxField } from "#/components/checkbox.tsx";
@@ -20,16 +20,14 @@ export default function Register({ socialstream }: InertiaSharedProps) {
         remember: false,
     });
 
-    useEffect(() => {
-        return () => {
-            reset("password", "password_confirmation");
-        };
-    }, [reset]);
-
     const submit: React.FormEventHandler = (e) => {
         e.preventDefault();
 
-        post(route("register"));
+        post(route("register"), {
+            onSuccess() {
+                reset("password", "password_confirmation");
+            },
+        });
     };
 
     return (

@@ -1,5 +1,5 @@
 import { Head, useForm } from "@inertiajs/react";
-import { useEffect } from "react";
+import { route } from "ziggy-js";
 
 import { Button } from "#/components/button.tsx";
 import { ErrorMessage, Field, Label } from "#/components/fieldset.tsx";
@@ -11,16 +11,14 @@ export default function ConfirmPassword() {
         password: "",
     });
 
-    useEffect(() => {
-        return () => {
-            reset("password");
-        };
-    }, [reset]);
-
     const submit: React.FormEventHandler = (e) => {
         e.preventDefault();
 
-        post(route("password.confirm"));
+        post(route("password.confirm"), {
+            onSuccess() {
+                reset("password");
+            },
+        });
     };
 
     return (

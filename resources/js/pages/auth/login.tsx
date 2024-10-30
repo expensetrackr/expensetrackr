@@ -1,6 +1,7 @@
 import { Head, useForm } from "@inertiajs/react";
 import { useEffect } from "react";
 import { toast } from "sonner";
+import { route } from "ziggy-js";
 
 import { Button } from "#/components/button.tsx";
 import { Checkbox, CheckboxField } from "#/components/checkbox.tsx";
@@ -23,12 +24,6 @@ export default function Login({
     });
 
     useEffect(() => {
-        return () => {
-            reset("password");
-        };
-    }, [reset]);
-
-    useEffect(() => {
         if (status) {
             toast.info(status);
         }
@@ -37,7 +32,11 @@ export default function Login({
     const submit: React.FormEventHandler = (e) => {
         e.preventDefault();
 
-        post(route("login"));
+        post(route("login"), {
+            onSuccess() {
+                reset("password");
+            },
+        });
     };
 
     return (

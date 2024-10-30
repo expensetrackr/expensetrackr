@@ -1,6 +1,7 @@
 import { Head, useForm } from "@inertiajs/react";
 import { REGEXP_ONLY_DIGITS } from "input-otp";
 import { useState } from "react";
+import { route } from "ziggy-js";
 
 import { Button } from "#/components/button.tsx";
 import { ErrorMessage, Field, Label } from "#/components/fieldset.tsx";

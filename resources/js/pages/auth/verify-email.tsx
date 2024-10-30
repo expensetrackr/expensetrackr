@@ -1,6 +1,7 @@
 import { Head, useForm } from "@inertiajs/react";
 import { useEffect } from "react";
 import { toast } from "sonner";
+import { route } from "ziggy-js";
 
 import { Button } from "#/components/button.tsx";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";
