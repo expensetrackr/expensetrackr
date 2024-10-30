@@ -6,42 +6,42 @@ import { useEffect, useState } from "react";
 const emitter = mitt<{ update: URLSearchParams }>();
 
 function updateUrl(search: URLSearchParams, options: unstable_AdapterOptions) {
-	const url = new URL(window.location.href);
-	url.search = renderQueryString(search);
-	router.visit(url, {
-		replace: options.history === "replace",
-		preserveScroll: !options.scroll,
-		preserveState: options.shallow,
-	});
-	emitter.emit("update", search);
+    const url = new URL(window.location.href);
+    url.search = renderQueryString(search);
+    router.visit(url, {
+        replace: options.history === "replace",
+        preserveScroll: !options.scroll,
+        preserveState: options.shallow,
+    });
+    emitter.emit("update", search);
 }
 
 function useNuqsInertiaAdapter() {
-	const [searchParams, setSearchParams] = useState(() => {
-		if (typeof location === "undefined") {
-			return new URLSearchParams();
-		}
-		return new URLSearchParams(location.search);
-	});
+    const [searchParams, setSearchParams] = useState(() => {
+        if (typeof location === "undefined") {
+            return new URLSearchParams();
+        }
+        return new URLSearchParams(location.search);
+    });
 
-	useEffect(() => {
-		// Popstate event is only fired when the user navigates
-		// via the browser's back/forward buttons.
-		const onPopState = () => {
-			setSearchParams(new URLSearchParams(location.search));
-		};
-		emitter.on("update", setSearchParams);
-		window.addEventListener("popstate", onPopState);
-		return () => {
-			emitter.off("update", setSearchParams);
-			window.removeEventListener("popstate", onPopState);
-		};
-	}, []);
+    useEffect(() => {
+        // Popstate event is only fired when the user navigates
+        // via the browser's back/forward buttons.
+        const onPopState = () => {
+            setSearchParams(new URLSearchParams(location.search));
+        };
+        emitter.on("update", setSearchParams);
+        window.addEventListener("popstate", onPopState);
+        return () => {
+            emitter.off("update", setSearchParams);
+            window.removeEventListener("popstate", onPopState);
+        };
+    }, []);
 
-	return {
-		searchParams,
-		updateUrl,
-	};
+    return {
+        searchParams,
+        updateUrl,
+    };
 }
 
 export const NuqsAdapter = unstable_createAdapterProvider(useNuqsInertiaAdapter);

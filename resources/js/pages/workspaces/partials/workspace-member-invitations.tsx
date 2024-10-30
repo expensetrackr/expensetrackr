@@ -1,143 +1,145 @@
-import MailCloseIcon from "virtual:icons/ri/mail-close-line";
 import { router } from "@inertiajs/react";
 import { useQueryState } from "nuqs";
 import { useState } from "react";
+import MailCloseIcon from "virtual:icons/ri/mail-close-line";
 import { route } from "ziggy-js";
 
 import { ActionSection } from "#/components/action-section.tsx";
 import { Button } from "#/components/button.tsx";
 import {
-	Dialog,
-	DialogActions,
-	DialogDescription,
-	DialogHeader,
-	DialogIcon,
-	DialogTitle,
+    Dialog,
+    DialogActions,
+    DialogDescription,
+    DialogHeader,
+    DialogIcon,
+    DialogTitle,
 } from "#/components/dialog.tsx";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "#/components/table.tsx";
-import type { User, Workspace, WorkspaceInvitation, WorkspacePermissions } from "#/types/index.d.ts";
+import { type User, type Workspace, type WorkspaceInvitation, type WorkspacePermissions } from "#/types/index.ts";
 
 interface UserMembership extends User {
-	membership: {
-		role: string;
-	};
+    membership: {
+        role: string;
+    };
 }
 
 interface WorkspaceMemberInvitationsProps {
-	workspace: Workspace & {
-		owner: User;
-		workspace_invitations: WorkspaceInvitation[];
-		users: UserMembership[];
-	};
-	permissions: WorkspacePermissions;
+    workspace: Workspace & {
+        owner: User;
+        workspace_invitations: WorkspaceInvitation[];
+        users: UserMembership[];
+    };
+    permissions: WorkspacePermissions;
 }
 
 export function WorkspaceMemberInvitations({ workspace, permissions }: WorkspaceMemberInvitationsProps) {
-	return (
-		<ActionSection
-			title="Pending workspace invitations"
-			description="These people have been invited to your workspace and have been sent an invitation email. They may join the workspace by accepting the email invitation."
-		>
-			<Table bleed>
-				<TableHead>
-					<TableRow>
-						<TableHeader>Email address</TableHeader>
-						{permissions.canRemoveWorkspaceMembers ? (
-							<TableHeader className="relative w-0">
-								<span className="sr-only">Actions</span>
-							</TableHeader>
-						) : null}
-					</TableRow>
-				</TableHead>
-				<TableBody>
-					{workspace.workspace_invitations.length > 0 ? (
-						workspace.workspace_invitations?.map((invitation) => (
-							<TableRow key={invitation.id}>
-								<TableCell>{invitation.email}</TableCell>
-								{permissions.canRemoveWorkspaceMembers ? (
-									<TableCell>
-										<CancelInvitation invitation={invitation} />
-									</TableCell>
-								) : null}
-							</TableRow>
-						))
-					) : (
-						<TableRow>
-							<TableCell colSpan={3}>
-								<div className="flex justify-center py-12">
-									<p className="text-[var(--text-sub-600)] text-paragraph-sm">There are no pending invitations.</p>
-								</div>
-							</TableCell>
-						</TableRow>
-					)}
-				</TableBody>
-			</Table>
-		</ActionSection>
-	);
+    return (
+        <ActionSection
+            title="Pending workspace invitations"
+            description="These people have been invited to your workspace and have been sent an invitation email. They may join the workspace by accepting the email invitation."
+        >
+            <Table bleed>
+                <TableHead>
+                    <TableRow>
+                        <TableHeader>Email address</TableHeader>
+                        {permissions.canRemoveWorkspaceMembers ? (
+                            <TableHeader className="relative w-0">
+                                <span className="sr-only">Actions</span>
+                            </TableHeader>
+                        ) : null}
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {workspace.workspace_invitations.length > 0 ? (
+                        workspace.workspace_invitations?.map((invitation) => (
+                            <TableRow key={invitation.id}>
+                                <TableCell>{invitation.email}</TableCell>
+                                {permissions.canRemoveWorkspaceMembers ? (
+                                    <TableCell>
+                                        <CancelInvitation invitation={invitation} />
+                                    </TableCell>
+                                ) : null}
+                            </TableRow>
+                        ))
+                    ) : (
+                        <TableRow>
+                            <TableCell colSpan={3}>
+                                <div className="flex justify-center py-12">
+                                    <p className="text-paragraph-sm text-[var(--text-sub-600)]">
+                                        There are no pending invitations.
+                                    </p>
+                                </div>
+                            </TableCell>
+                        </TableRow>
+                    )}
+                </TableBody>
+            </Table>
+        </ActionSection>
+    );
 }
 
 function CancelInvitation({ invitation }: { invitation: WorkspaceInvitation }) {
-	const [action, setAction] = useQueryState("action");
-	const [isCancelling, setCancelling] = useState(false);
+    const [action, setAction] = useQueryState("action");
+    const [isCancelling, setCancelling] = useState(false);
 
-	function cancelWorkspaceInvitation(invitation: WorkspaceInvitation) {
-		setCancelling(true);
+    function cancelWorkspaceInvitation(invitation: WorkspaceInvitation) {
+        setCancelling(true);
 
-		router.delete(route("workspace-invitations.destroy", [invitation.id]), {
-			preserveScroll: true,
-			onSuccess: async () => {
-				await setAction(null);
-			},
-		});
+        router.delete(route("workspace-invitations.destroy", [invitation.id]), {
+            preserveScroll: true,
+            onSuccess: async () => {
+                await setAction(null);
+            },
+        });
 
-		setCancelling(false);
-	}
+        setCancelling(false);
+    }
 
-	return (
-		<>
-			<Button
-				$color="error"
-				$variant="stroke"
-				$size="sm"
-				onClick={() => setAction(`destroy:workspace-invitations:${invitation.id}`)}
-			>
-				Cancel invitation
-			</Button>
+    return (
+        <>
+            <Button
+                $color="error"
+                $variant="stroke"
+                $size="sm"
+                onClick={() => setAction(`destroy:workspace-invitations:${invitation.id}`)}
+            >
+                Cancel invitation
+            </Button>
 
-			<Dialog open={action === `destroy:workspace-invitations:${invitation.id}`} onClose={() => setAction(null)}>
-				<DialogHeader>
-					<DialogIcon>
-						<MailCloseIcon className="size-6 text-[var(--icon-sub-600)]" />
-					</DialogIcon>
+            <Dialog open={action === `destroy:workspace-invitations:${invitation.id}`} onClose={() => setAction(null)}>
+                <DialogHeader>
+                    <DialogIcon>
+                        <MailCloseIcon className="size-6 text-[var(--icon-sub-600)]" />
+                    </DialogIcon>
 
-					<div className="flex flex-1 flex-col gap-1">
-						<DialogTitle>Cancel invitation</DialogTitle>
-						<DialogDescription>Are you sure you want to cancel this invitation?</DialogDescription>
-					</div>
-				</DialogHeader>
+                    <div className="flex flex-1 flex-col gap-1">
+                        <DialogTitle>Cancel invitation</DialogTitle>
+                        <DialogDescription>Are you sure you want to cancel this invitation?</DialogDescription>
+                    </div>
+                </DialogHeader>
 
-				<DialogActions>
-					<Button
-						$color="neutral"
-						$variant="stroke"
-						$size="sm"
-						className="w-full"
-						disabled={isCancelling}
-						onClick={() => setAction(null)}
-					>
-						Cancel
-					</Button>
-					<Button
-						$color="error"
-						$size="sm"
-						className="w-full"
-						disabled={isCancelling}
-						onClick={() => cancelWorkspaceInvitation(invitation)}
-					>
-						{isCancelling ? "Cancelling..." : "Yes, cancel it"}
-					</Button>
-				</DialogActions>
-			</Dialog>
-		</>
-	);
+                <DialogActions>
+                    <Button
+                        $color="neutral"
+                        $variant="stroke"
+                        $size="sm"
+                        className="w-full"
+                        disabled={isCancelling}
+                        onClick={() => setAction(null)}
+                    >
+                        Cancel
+                    </Button>
+                    <Button
+                        $color="error"
+                        $size="sm"
+                        className="w-full"
+                        disabled={isCancelling}
+                        onClick={() => cancelWorkspaceInvitation(invitation)}
+                    >
+                        {isCancelling ? "Cancelling..." : "Yes, cancel it"}
+                    </Button>
+                </DialogActions>
+            </Dialog>
+        </>
+    );
 }

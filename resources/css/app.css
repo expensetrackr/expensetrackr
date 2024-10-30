@@ -1,21 +1,21 @@
 :root {
-	--font-family: Inter;
+    --font-family: Inter;
 }
 
 @supports (font-variation-settings: normal) {
-	:root {
-		--font-family: InterVariable;
-	}
+    :root {
+        --font-family: InterVariable;
+    }
 }
 
 :root,
 .light,
 html[data-theme="light"] {
-	color-scheme: light;
-	--light: initial;
-	--dark: ;
+    color-scheme: light;
+    --light: initial;
+    --dark: ;
 
-	/* neutral colors */
+    /* neutral colors */
     --bg-strong-950: var(--light, var(--color-neutral-950)) var(--dark, var(--color-neutral-0));
     --bg-surface-800: var(--light, var(--color-neutral-800)) var(--dark, var(--color-neutral-200));
     --bg-sub-300: var(--light, var(--color-neutral-300)) var(--dark, var(--color-neutral-600));
@@ -94,40 +94,44 @@ html[data-theme="light"] {
 
 .dark,
 [data-theme="dark"] {
-	color-scheme: dark;
-	--light: ;
-	--dark: initial;
+    color-scheme: dark;
+    --light: ;
+    --dark: initial;
 }
 
 * {
     /* Prevent grid and flex items from spilling out their container. */
-	min-width: 0;
+    min-width: 0;
 
-	font-feature-settings: "ss11" 1, "cv09" 1, "liga" 0, "calt" 0;
+    font-feature-settings:
+        "ss11" 1,
+        "cv09" 1,
+        "liga" 0,
+        "calt" 0;
 }
 
 body {
     border-color: var(--stroke-soft-200);
 
-	/* Ensure that the body fills the entire viewport. */
-	@apply min-h-dvh;
+    /* Ensure that the body fills the entire viewport. */
+    @apply min-h-dvh;
 }
 
 h1,
 h2,
 h3,
 h4 {
-	/* Balance headings across multiple lines into an even block. */
-	@apply text-balance;
+    /* Balance headings across multiple lines into an even block. */
+    @apply text-balance;
 }
 
 p {
-	/* Prevent text orphans (single words on last line). */
-	@apply text-pretty;
+    /* Prevent text orphans (single words on last line). */
+    @apply text-pretty;
 }
 
 .dark #filter {
-	background: linear-gradient(0deg, rgba(12, 17, 29, 0.5), rgba(12, 17, 29, 0.5)), #1570ef;
+    background: linear-gradient(0deg, rgba(12, 17, 29, 0.5), rgba(12, 17, 29, 0.5)), #1570ef;
 }
 
 .qr-container::before {

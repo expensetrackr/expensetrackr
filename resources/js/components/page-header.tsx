@@ -13,9 +13,9 @@ const PageHeaderDescription = twc.p`text-[var(--text-sub-600)] text-paragraph-sm
 const PageHeaderActions = twc.div`flex w-full items-center gap-3 sm:w-auto`;
 
 export const PageHeader = Object.assign(PageHeaderRoot, {
-	Content: PageHeaderContent,
-	Icon: PageHeaderIcon,
-	Title: PageHeaderTitle,
-	Description: PageHeaderDescription,
-	Actions: PageHeaderActions,
+    Content: PageHeaderContent,
+    Icon: PageHeaderIcon,
+    Title: PageHeaderTitle,
+    Description: PageHeaderDescription,
+    Actions: PageHeaderActions,
 });

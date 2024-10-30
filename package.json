@@ -8,17 +8,14 @@
 	"scripts": {
 		"build": "vite build && vite build --ssr",
 		"dev": "vite",
-		"format": "biome format",
-		"lint": "biome check",
+		"format": "prettier --write ./resources",
+		"lint": "eslint ./resources",
 		"prepare": "husky",
 		"typecheck": "tsc"
 	},
 	"lint-staged": {
-		"*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}": [
-			"biome check --files-ignore-unknown=true",
-			"biome format --write --no-errors-on-unmatched",
-			"biome lint --write --unsafe --no-errors-on-unmatched"
-		]
+		"*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}": "eslint --fix",
+        "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,blade.php}": "prettier --write"
 	},
 	"dependencies": {
 		"@headlessui/react": "2.2.0",
@@ -36,7 +33,7 @@
 		"tailwind-merge": "2.5.4"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "1.9.4",
+		"@epic-web/config": "1.15.0",
 		"@headlessui/tailwindcss": "0.2.1",
 		"@iconify-json/flat-color-icons": "1.2.0",
 		"@iconify-json/logos": "1.2.3",
@@ -55,11 +52,15 @@
 		"autoprefixer": "10.4.20",
 		"axios": "1.7.7",
 		"babel-plugin-react-compiler": "19.0.0-beta-6fc168f-20241025",
+		"eslint": "9.13.0",
 		"eslint-plugin-react-compiler": "19.0.0-beta-6fc168f-20241025",
 		"husky": "9.1.6",
 		"laravel-vite-plugin": "1.0.5",
 		"lint-staged": "15.2.10",
 		"postcss": "8.4.47",
+		"prettier": "3.3.3",
+		"prettier-plugin-blade": "2.1.19",
+		"prettier-plugin-tailwindcss": "0.6.8",
 		"tailwindcss": "4.0.0-alpha.30",
 		"tailwindcss-animate": "1.0.7",
 		"tailwindcss-aria-attributes": "2.0.1",

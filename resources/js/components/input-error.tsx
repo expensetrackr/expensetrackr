@@ -1,15 +1,15 @@
-import type { HTMLAttributes } from "react";
+import { type HTMLAttributes } from "react";
 
 import { cx } from "#/utils/cva.ts";
 
 export default function InputError({
-	message,
-	className,
-	...props
+    message,
+    className,
+    ...props
 }: HTMLAttributes<HTMLParagraphElement> & { message?: string }) {
-	return message ? (
-		<p {...props} className={cx("text-red-600 text-sm", className)}>
-			{message}
-		</p>
-	) : null;
+    return message ? (
+        <p {...props} className={cx("text-sm text-red-600", className)}>
+            {message}
+        </p>
+    ) : null;
 }

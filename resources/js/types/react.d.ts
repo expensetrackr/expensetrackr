@@ -1,7 +1,7 @@
 import "react";
 
 declare module "react" {
-	interface CSSProperties {
-		"--width"?: string;
-	}
+    interface CSSProperties {
+        "--width"?: string;
+    }
 }
