@@ -14,8 +14,8 @@
 		"typecheck": "tsc"
 	},
 	"lint-staged": {
-		"*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}": "eslint --fix",
-        "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,blade.php}": "prettier --write"
+		"*.{js,ts,jsx,tsx}": "eslint --fix --max-warnings 0",
+        "*.{js,ts,jsx,tsx,blade.php}": "prettier --write"
 	},
 	"dependencies": {
 		"@headlessui/react": "2.2.0",
