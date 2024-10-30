@@ -2,6 +2,7 @@ import { useForm } from "@inertiajs/react";
 import { useQueryState } from "nuqs";
 import EraserIcon from "virtual:icons/ri/eraser-line";
 import FolderShield2Icon from "virtual:icons/ri/folder-shield-2-line";
+import LogoutCircleRIcon from "virtual:icons/ri/logout-circle-r-line";
 import More2Icon from "virtual:icons/ri/more-2-line";
 import ShieldUserIcon from "virtual:icons/ri/shield-user-line";
 import UserMinusIcon from "virtual:icons/ri/user-minus-line";
@@ -23,6 +24,7 @@ import { Dropdown, DropdownButton, DropdownItem, DropdownLabel, DropdownMenu } f
 import { ErrorMessage, Field, Label } from "#/components/fieldset.tsx";
 import { Select } from "#/components/select.tsx";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "#/components/table.tsx";
+import { useUser } from "#/hooks/use-user.ts";
 import {
     type Role,
     type User,
@@ -50,6 +52,7 @@ interface WorkspaceMemberManagerProps {
 
 export function WorkspaceMemberManager({ workspace, availableRoles, permissions }: WorkspaceMemberManagerProps) {
     const [, setAction] = useQueryState("action");
+    const currentUser = useUser();
 
     function displayableRole(role: string) {
         return availableRoles.find((r) => r.key === role)?.name;
@@ -71,12 +74,9 @@ export function WorkspaceMemberManager({ workspace, availableRoles, permissions 
                         <TableHeader>Member full name</TableHeader>
                         <TableHeader>Email address</TableHeader>
                         <TableHeader>Role</TableHeader>
-                        {(permissions.canAddWorkspaceMembers && availableRoles.length > 0) ||
-                        permissions.canRemoveWorkspaceMembers ? (
-                            <TableHeader className="relative w-0">
-                                <span className="sr-only">Actions</span>
-                            </TableHeader>
-                        ) : null}
+                        <TableHeader className="relative w-0">
+                            <span className="sr-only">Actions</span>
+                        </TableHeader>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -96,53 +96,83 @@ export function WorkspaceMemberManager({ workspace, availableRoles, permissions 
                                 </TableCell>
                                 <TableCell>{user.email}</TableCell>
                                 <TableCell>{displayableRole(user.membership.role)}</TableCell>
-                                <TableCell>
-                                    <div className="-mx-3 -my-1.5 sm:-mx-2.5">
-                                        <Dropdown>
-                                            <DropdownButton
-                                                $color="neutral"
-                                                $variant="ghost"
-                                                $size="xs"
-                                                aria-label="Actions"
-                                            >
-                                                <More2Icon className="size-5" />
-                                            </DropdownButton>
-                                            <DropdownMenu anchor="bottom end">
-                                                {permissions.canAddWorkspaceMembers && availableRoles.length > 0 ? (
-                                                    <DropdownItem
-                                                        onClick={() => setAction(`update:workspace-members:${user.id}`)}
-                                                    >
-                                                        <ShieldUserIcon />
-                                                        <DropdownLabel>Update role</DropdownLabel>
-                                                    </DropdownItem>
-                                                ) : null}
 
-                                                {permissions.canRemoveWorkspaceMembers ? (
-                                                    <DropdownItem
-                                                        onClick={() =>
-                                                            setAction(`destroy:workspace-members:${user.id}`)
-                                                        }
-                                                    >
-                                                        <UserMinusIcon />
-                                                        <DropdownLabel>Remove member</DropdownLabel>
-                                                    </DropdownItem>
-                                                ) : null}
-                                            </DropdownMenu>
-                                        </Dropdown>
+                                {(permissions.canAddWorkspaceMembers && availableRoles.length > 0) ||
+                                permissions.canRemoveWorkspaceMembers ||
+                                currentUser.id === user.id ? (
+                                    <TableCell>
+                                        <div className="-mx-3 -my-1.5 sm:-mx-2.5">
+                                            <Dropdown>
+                                                <DropdownButton
+                                                    $color="neutral"
+                                                    $variant="ghost"
+                                                    $size="xs"
+                                                    aria-label="Actions"
+                                                >
+                                                    <More2Icon className="size-5" />
+                                                </DropdownButton>
+                                                <DropdownMenu anchor="bottom end">
+                                                    {permissions.canAddWorkspaceMembers && availableRoles.length > 0 ? (
+                                                        <DropdownItem
+                                                            onClick={() =>
+                                                                setAction(`update:workspace-members:${user.id}`)
+                                                            }
+                                                        >
+                                                            <ShieldUserIcon />
+                                                            <DropdownLabel>Update role</DropdownLabel>
+                                                        </DropdownItem>
+                                                    ) : null}
 
-                                        {permissions.canAddWorkspaceMembers && availableRoles.length > 0 ? (
-                                            <ManageRoleDialog
-                                                workspace={workspace}
-                                                user={user}
-                                                availableRoles={availableRoles}
-                                            />
-                                        ) : null}
+                                                    {permissions.canRemoveWorkspaceMembers ? (
+                                                        <DropdownItem
+                                                            onClick={() =>
+                                                                setAction(`destroy:workspace-members:${user.id}`)
+                                                            }
+                                                        >
+                                                            <UserMinusIcon />
+                                                            <DropdownLabel>Remove member</DropdownLabel>
+                                                        </DropdownItem>
+                                                    ) : null}
 
-                                        {permissions.canRemoveWorkspaceMembers ? (
-                                            <RemoveMemberDialog workspace={workspace} user={user} />
-                                        ) : null}
-                                    </div>
-                                </TableCell>
+                                                    {currentUser.id === user.id ? (
+                                                        <DropdownItem
+                                                            onClick={() =>
+                                                                setAction(`destroy:workspace-members:${user.id}`)
+                                                            }
+                                                            className="text-state-error-base [&>[data-slot=icon]]:text-state-error-base data-focus:bg-[var(--color-red-alpha-10)]"
+                                                        >
+                                                            <LogoutCircleRIcon />
+                                                            <DropdownLabel>Leave workspace</DropdownLabel>
+                                                        </DropdownItem>
+                                                    ) : null}
+                                                </DropdownMenu>
+                                            </Dropdown>
+
+                                            {permissions.canAddWorkspaceMembers && availableRoles.length > 0 ? (
+                                                <ManageRoleDialog
+                                                    workspace={workspace}
+                                                    user={user}
+                                                    availableRoles={availableRoles}
+                                                />
+                                            ) : null}
+
+                                            {permissions.canRemoveWorkspaceMembers || currentUser.id === user.id ? (
+                                                <RemoveMemberDialog
+                                                    workspace={workspace}
+                                                    user={currentUser.id === user.id ? currentUser : user}
+                                                    {...(currentUser.id === user.id
+                                                        ? {
+                                                              dialogTitle: "Leave workspace",
+                                                              dialogDescription:
+                                                                  "Are you sure you would like to leave this workspace?",
+                                                              dialogSubmitLabel: "Yes, leave it",
+                                                          }
+                                                        : {})}
+                                                />
+                                            ) : null}
+                                        </div>
+                                    </TableCell>
+                                ) : null}
                             </TableRow>
                         ))
                     ) : (
@@ -247,7 +277,19 @@ function ManageRoleDialog({
     );
 }
 
-function RemoveMemberDialog({ workspace, user }: { workspace: Workspace; user: UserMembership }) {
+function RemoveMemberDialog({
+    workspace,
+    user,
+    dialogTitle = "Remove workspace member",
+    dialogDescription = "Are you sure you would like to remove this person from the workspace?",
+    dialogSubmitLabel = "Yes, remove it",
+}: {
+    workspace: Workspace;
+    user: UserMembership | User;
+    dialogTitle?: string;
+    dialogDescription?: string;
+    dialogSubmitLabel?: string;
+}) {
     const [action, setAction] = useQueryState("action");
     const form = useForm({});
 
@@ -273,10 +315,8 @@ function RemoveMemberDialog({ workspace, user }: { workspace: Workspace; user: U
                 </DialogIcon>
 
                 <div className="flex flex-1 flex-col gap-1">
-                    <DialogTitle>Remove workspace member</DialogTitle>
-                    <DialogDescription>
-                        Are you sure you would like to remove this person from the workspace?
-                    </DialogDescription>
+                    <DialogTitle>{dialogTitle}</DialogTitle>
+                    <DialogDescription>{dialogDescription}</DialogDescription>
                 </div>
             </DialogHeader>
 
@@ -303,7 +343,7 @@ function RemoveMemberDialog({ workspace, user }: { workspace: Workspace; user: U
                     type="submit"
                     className="w-full"
                 >
-                    {form.processing ? "Removing..." : "Yes, remove it"}
+                    {form.processing ? "Removing..." : dialogSubmitLabel}
                 </Button>
             </DialogActions>
         </Dialog>
