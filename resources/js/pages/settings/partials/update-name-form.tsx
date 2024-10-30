@@ -1,6 +1,6 @@
-import { router, useForm, usePage } from "@inertiajs/react";
+import { useForm, usePage } from "@inertiajs/react";
 import { useDebounce } from "@uidotdev/usehooks";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { toast } from "sonner";
 
 import { ErrorMessage, Field, Label } from "#/components/fieldset.tsx";
@@ -17,7 +17,6 @@ export function UpdateNameForm() {
 		email: user?.email,
 	});
 	const debouncedName = useDebounce(data.name, 1000);
-	const inputRef = useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
 		if (user?.name === debouncedName) return;
@@ -37,10 +36,6 @@ export function UpdateNameForm() {
 			preserveScroll: true,
 			onSuccess: () => {
 				toast("Profile updated.");
-				router.visit(route("settings.show"), {
-					preserveState: true,
-				});
-				inputRef.current?.focus();
 			},
 		});
 	}
@@ -51,7 +46,6 @@ export function UpdateNameForm() {
 				<Field>
 					<Label className="sr-only">Full name</Label>
 					<Input
-						ref={inputRef}
 						autoComplete="name"
 						invalid={!!errors.name}
 						name="name"

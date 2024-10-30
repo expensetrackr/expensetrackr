@@ -42,12 +42,7 @@ export function UpdateWorkspaceNameForm({ workspace, permissions }: UpdateWorksp
 			errorBag: "updateTeamName",
 			preserveScroll: true,
 			onSuccess: () => {
-				toast.success("Workspace name updated.", {
-					duration: Number.POSITIVE_INFINITY,
-				});
-				router.visit(route("workspaces.show", [workspace.id]), {
-					preserveState: true,
-				});
+				toast("Workspace name updated.");
 			},
 		});
 	}
