@@ -1,14 +1,14 @@
 import { Head, useForm } from "@inertiajs/react";
 import { useEffect } from "react";
 
-import { Button } from "#/components/button";
-import { Checkbox, CheckboxField } from "#/components/checkbox";
-import { Description, ErrorMessage, Field, Label } from "#/components/fieldset";
-import { Input } from "#/components/input";
-import { Link, StyledLink } from "#/components/link";
-import { Socialstream } from "#/components/socialstream";
-import { AuthLayout } from "#/layouts/auth-layout";
-import type { InertiaSharedProps } from "#/types";
+import { Button } from "#/components/button.tsx";
+import { Checkbox, CheckboxField } from "#/components/checkbox.tsx";
+import { Description, ErrorMessage, Field, Label } from "#/components/fieldset.tsx";
+import { Input } from "#/components/input.tsx";
+import { Link, StyledLink } from "#/components/link.tsx";
+import { Socialstream } from "#/components/socialstream.tsx";
+import { AuthLayout } from "#/layouts/auth-layout.tsx";
+import type { InertiaSharedProps } from "#/types/index.d.ts";
 
 export default function Register({ socialstream }: InertiaSharedProps) {
 	const { data, setData, post, processing, errors, reset } = useForm({

@@ -2,10 +2,10 @@ import { router, useForm, usePage } from "@inertiajs/react";
 import { useDebounce } from "@uidotdev/usehooks";
 import { useEffect } from "react";
 
-import { ErrorMessage, Field, Label } from "#/components/fieldset";
-import { FormSection } from "#/components/form-section";
-import { Input } from "#/components/input";
-import type { InertiaSharedProps } from "#/types";
+import { ErrorMessage, Field, Label } from "#/components/fieldset.tsx";
+import { FormSection } from "#/components/form-section.tsx";
+import { Input } from "#/components/input.tsx";
+import type { InertiaSharedProps } from "#/types/index.d.ts";
 
 export function UpdateEmailForm() {
 	const page = usePage<InertiaSharedProps>();

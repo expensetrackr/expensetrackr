@@ -1,12 +1,11 @@
 import GoogleIcon from "virtual:icons/flat-color-icons/google";
 import { usePage } from "@inertiajs/react";
-import * as React from "react";
 
-import type { InertiaSharedProps, ProviderType } from "#/types";
+import type { InertiaSharedProps, ProviderType } from "#/types/index.d.ts";
 
 const socialsIcons = {
 	google: <GoogleIcon className="size-5" />,
-} satisfies Record<ProviderType, JSX.Element>;
+} satisfies Record<ProviderType, React.ReactElement>;
 
 export function Socialstream() {
 	const page = usePage<InertiaSharedProps>();

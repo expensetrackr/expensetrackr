@@ -3,10 +3,10 @@ import { useDebounce } from "@uidotdev/usehooks";
 import { useEffect, useRef } from "react";
 import { toast } from "sonner";
 
-import { ErrorMessage, Field, Label } from "#/components/fieldset";
-import { FormSection } from "#/components/form-section";
-import { Input } from "#/components/input";
-import type { InertiaSharedProps } from "#/types";
+import { ErrorMessage, Field, Label } from "#/components/fieldset.tsx";
+import { FormSection } from "#/components/form-section.tsx";
+import { Input } from "#/components/input.tsx";
+import type { InertiaSharedProps } from "#/types/index.d.ts";
 
 export function UpdateNameForm() {
 	const page = usePage<InertiaSharedProps>();

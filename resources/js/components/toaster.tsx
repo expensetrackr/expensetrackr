@@ -4,7 +4,7 @@ import ErrorWarningFillIcon from "virtual:icons/ri/error-warning-fill";
 import InformationFillIcon from "virtual:icons/ri/information-fill";
 import { Toaster as Sonner, type ToasterProps as SonnerProps } from "sonner";
 
-import { cx } from "#/utils/cva";
+import { cx } from "#/utils/cva.ts";
 
 export function Toaster(props: SonnerProps) {
 	return (

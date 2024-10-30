@@ -13,8 +13,8 @@ import {
 	SidebarItem,
 	SidebarLabel,
 	SidebarSection,
-} from "#/components/sidebar";
-import type { InertiaSharedProps } from "#/types";
+} from "#/components/sidebar.tsx";
+import type { InertiaSharedProps } from "#/types/index.d.ts";
 
 export function SettingsMenu() {
 	const page = usePage<InertiaSharedProps>();

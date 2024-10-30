@@ -1,7 +1,7 @@
 import { Link } from "@inertiajs/react";
 import type { PropsWithChildren } from "react";
 
-import ApplicationLogo from "#/components/application-logo";
+import ApplicationLogo from "#/components/application-logo.tsx";
 
 export default function Guest({ children }: PropsWithChildren) {
 	return (

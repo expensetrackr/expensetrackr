@@ -1,4 +1,4 @@
-import { cx } from "#/utils/cva";
+import { cx } from "#/utils/cva.ts";
 
 export function Divider({ className, ...props }: React.ComponentPropsWithoutRef<"hr">) {
 	return (

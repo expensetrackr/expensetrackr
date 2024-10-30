@@ -1,6 +1,6 @@
 import type { LabelHTMLAttributes } from "react";
 
-import { cx } from "#/utils/cva";
+import { cx } from "#/utils/cva.ts";
 
 export default function InputLabel({
 	value,

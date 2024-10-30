@@ -4,10 +4,10 @@ import { useEffect } from "react";
 import { toast } from "sonner";
 import { route } from "ziggy-js";
 
-import { ErrorMessage, Field, Label } from "#/components/fieldset";
-import { FormSection } from "#/components/form-section";
-import { Input } from "#/components/input";
-import type { User, Workspace, WorkspacePermissions } from "#/types";
+import { ErrorMessage, Field, Label } from "#/components/fieldset.tsx";
+import { FormSection } from "#/components/form-section.tsx";
+import { Input } from "#/components/input.tsx";
+import type { User, Workspace, WorkspacePermissions } from "#/types/index.d.ts";
 
 interface UpdateWorkspaceNameFormProps {
 	workspace: Workspace & {

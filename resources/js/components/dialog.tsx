@@ -1,8 +1,8 @@
 import * as Headless from "@headlessui/react";
 
-import { cx } from "#/utils/cva";
-import { twc } from "#/utils/twc";
-import { Text } from "./text";
+import { cx } from "#/utils/cva.ts";
+import { twc } from "#/utils/twc.ts";
+import { Text } from "./text.tsx";
 
 export function Dialog({
 	className,

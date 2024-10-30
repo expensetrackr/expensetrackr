@@ -1,8 +1,8 @@
 import ErrorWarningFillIcon from "virtual:icons/ri/error-warning-fill";
 import * as Headless from "@headlessui/react";
 
-import { cx } from "#/utils/cva";
-import { twc } from "#/utils/twc";
+import { cx } from "#/utils/cva.ts";
+import { twc } from "#/utils/twc.ts";
 
 export const Fieldset = twc(Headless.Fieldset)`[&>*+[data-slot=control]]:mt-6 [&>[data-slot=text]]:mt-1`;
 

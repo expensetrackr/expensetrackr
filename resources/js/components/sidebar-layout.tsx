@@ -3,8 +3,8 @@ import MenuIcon from "virtual:icons/ri/menu-line";
 import * as Headless from "@headlessui/react";
 import * as React from "react";
 
-import { cx } from "#/utils/cva";
-import { NavbarItem } from "./navbar";
+import { cx } from "#/utils/cva.ts";
+import { NavbarItem } from "./navbar.tsx";
 
 function MobileSidebar({ open, close, children }: React.PropsWithChildren<{ open: boolean; close: () => void }>) {
 	return (

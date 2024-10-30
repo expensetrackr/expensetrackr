@@ -2,10 +2,10 @@ import { Head, useForm } from "@inertiajs/react";
 import { useEffect } from "react";
 import { toast } from "sonner";
 
-import { Button } from "#/components/button";
-import { ErrorMessage, Field, Label } from "#/components/fieldset";
-import { Input } from "#/components/input";
-import { AuthLayout } from "#/layouts/auth-layout";
+import { Button } from "#/components/button.tsx";
+import { ErrorMessage, Field, Label } from "#/components/fieldset.tsx";
+import { Input } from "#/components/input.tsx";
+import { AuthLayout } from "#/layouts/auth-layout.tsx";
 
 export default function ForgotPassword({ status }: { status?: string }) {
 	const { data, setData, post, processing, errors } = useForm({

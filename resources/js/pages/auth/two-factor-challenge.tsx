@@ -2,12 +2,12 @@ import { Head, useForm } from "@inertiajs/react";
 import { REGEXP_ONLY_DIGITS } from "input-otp";
 import { useState } from "react";
 
-import { Button } from "#/components/button";
-import { ErrorMessage, Field, Label } from "#/components/fieldset";
-import { Input } from "#/components/input";
-import { InputOTP, InputOTPGroup, InputOTPSlot } from "#/components/input-otp";
-import { StyledLink } from "#/components/link";
-import { AuthLayout } from "#/layouts/auth-layout";
+import { Button } from "#/components/button.tsx";
+import { ErrorMessage, Field, Label } from "#/components/fieldset.tsx";
+import { InputOTP, InputOTPGroup, InputOTPSlot } from "#/components/input-otp.tsx";
+import { Input } from "#/components/input.tsx";
+import { StyledLink } from "#/components/link.tsx";
+import { AuthLayout } from "#/layouts/auth-layout.tsx";
 
 export default function TwoFactorChallenge() {
 	const [recovery, setRecovery] = useState(false);

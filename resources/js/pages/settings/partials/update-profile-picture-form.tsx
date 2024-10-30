@@ -4,12 +4,12 @@ import PencilIcon from "virtual:icons/ri/pencil-line";
 import { router, useForm, usePage } from "@inertiajs/react";
 import { useRef, useState } from "react";
 
-import { Avatar } from "#/components/avatar";
-import { Dropdown, DropdownButton, DropdownItem, DropdownMenu } from "#/components/dropdown";
-import { ErrorMessage, Field, Label } from "#/components/fieldset";
-import { FormSection } from "#/components/form-section";
-import { Input } from "#/components/input";
-import type { InertiaSharedProps } from "#/types";
+import { Avatar } from "#/components/avatar.tsx";
+import { Dropdown, DropdownButton, DropdownItem, DropdownMenu } from "#/components/dropdown.tsx";
+import { ErrorMessage, Field, Label } from "#/components/fieldset.tsx";
+import { FormSection } from "#/components/form-section.tsx";
+import { Input } from "#/components/input.tsx";
+import type { InertiaSharedProps } from "#/types/index.d.ts";
 
 export function UpdateProfilePictureForm() {
 	const [photoPreview, setPhotoPreview] = useState<string | null>(null);

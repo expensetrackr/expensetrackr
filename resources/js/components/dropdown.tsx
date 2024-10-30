@@ -1,9 +1,9 @@
 import * as Headless from "@headlessui/react";
 
-import { cx } from "#/utils/cva";
-import { twc } from "#/utils/twc";
-import { Button } from "./button";
-import { Link } from "./link";
+import { cx } from "#/utils/cva.ts";
+import { twc } from "#/utils/twc.ts";
+import { Button } from "./button.tsx";
+import { Link } from "./link.tsx";
 
 export function Dropdown(props: Headless.MenuProps) {
 	return <Headless.Menu {...props} />;

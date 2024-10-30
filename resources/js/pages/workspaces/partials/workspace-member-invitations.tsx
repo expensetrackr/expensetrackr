@@ -1,14 +1,21 @@
 import MailCloseIcon from "virtual:icons/ri/mail-close-line";
 import { router } from "@inertiajs/react";
+import { useQueryState } from "nuqs";
 import { useState } from "react";
 import { route } from "ziggy-js";
 
-import { useQueryState } from "nuqs";
-import { ActionSection } from "#/components/action-section";
-import { Button } from "#/components/button";
-import { Dialog, DialogActions, DialogDescription, DialogHeader, DialogIcon, DialogTitle } from "#/components/dialog";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "#/components/table";
-import type { User, Workspace, WorkspaceInvitation, WorkspacePermissions } from "#/types";
+import { ActionSection } from "#/components/action-section.tsx";
+import { Button } from "#/components/button.tsx";
+import {
+	Dialog,
+	DialogActions,
+	DialogDescription,
+	DialogHeader,
+	DialogIcon,
+	DialogTitle,
+} from "#/components/dialog.tsx";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "#/components/table.tsx";
+import type { User, Workspace, WorkspaceInvitation, WorkspacePermissions } from "#/types/index.d.ts";
 
 interface UserMembership extends User {
 	membership: {

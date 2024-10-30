@@ -8,9 +8,9 @@ import { useQueryState } from "nuqs";
 import { useState } from "react";
 import { route } from "ziggy-js";
 
-import { ActionSection } from "#/components/action-section";
-import { Avatar } from "#/components/avatar";
-import { Button } from "#/components/button";
+import { ActionSection } from "#/components/action-section.tsx";
+import { Avatar } from "#/components/avatar.tsx";
+import { Button } from "#/components/button.tsx";
 import {
 	Dialog,
 	DialogActions,
@@ -19,13 +19,13 @@ import {
 	DialogHeader,
 	DialogIcon,
 	DialogTitle,
-} from "#/components/dialog";
-import { Dropdown, DropdownButton, DropdownItem, DropdownLabel, DropdownMenu } from "#/components/dropdown";
-import { ErrorMessage, Field, Label } from "#/components/fieldset";
-import { Select } from "#/components/select";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "#/components/table";
-import type { Role, User, Workspace, WorkspaceInvitation, WorkspacePermissions } from "#/types";
-import { AddWorkspaceMemberForm } from "./add-workspace-member-form";
+} from "#/components/dialog.tsx";
+import { Dropdown, DropdownButton, DropdownItem, DropdownLabel, DropdownMenu } from "#/components/dropdown.tsx";
+import { ErrorMessage, Field, Label } from "#/components/fieldset.tsx";
+import { Select } from "#/components/select.tsx";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "#/components/table.tsx";
+import type { Role, User, Workspace, WorkspaceInvitation, WorkspacePermissions } from "#/types/index.d.ts";
+import { AddWorkspaceMemberForm } from "./add-workspace-member-form.tsx";
 
 interface UserMembership extends User {
 	membership: {

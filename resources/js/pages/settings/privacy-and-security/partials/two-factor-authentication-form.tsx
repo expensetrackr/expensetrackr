@@ -3,12 +3,12 @@ import axios from "axios";
 import { useQueryState } from "nuqs";
 import { useEffect, useState } from "react";
 
-import { ActionSection } from "#/components/action-section";
-import { Button } from "#/components/button";
-import { ConfirmsPassword } from "#/components/confirms-password";
-import { ErrorMessage, Field, Label } from "#/components/fieldset";
-import { Input } from "#/components/input";
-import type { PageProps } from "#/types";
+import { ActionSection } from "#/components/action-section.tsx";
+import { Button } from "#/components/button.tsx";
+import { ConfirmsPassword } from "#/components/confirms-password.tsx";
+import { ErrorMessage, Field, Label } from "#/components/fieldset.tsx";
+import { Input } from "#/components/input.tsx";
+import type { PageProps } from "#/types/index.d.ts";
 
 interface TwoFactorAuthenticationFormProps {
 	requiresConfirmation: boolean;

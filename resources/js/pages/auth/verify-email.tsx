@@ -2,8 +2,8 @@ import { Head, useForm } from "@inertiajs/react";
 import { useEffect } from "react";
 import { toast } from "sonner";
 
-import { Button } from "#/components/button";
-import { AuthLayout } from "#/layouts/auth-layout";
+import { Button } from "#/components/button.tsx";
+import { AuthLayout } from "#/layouts/auth-layout.tsx";
 
 export default function VerifyEmail({ status }: { status?: string }) {
 	const { post, processing } = useForm({});

@@ -1,7 +1,7 @@
 import * as Headless from "@headlessui/react";
+import type { VariantProps } from "cva";
 import { forwardRef } from "react";
 
-import type { VariantProps } from "cva";
 import { cva, cx } from "#/utils/cva.ts";
 
 const selectVariants = cva({

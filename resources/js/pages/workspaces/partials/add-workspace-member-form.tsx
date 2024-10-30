@@ -1,9 +1,9 @@
 import TeamIcon from "virtual:icons/ri/team-line";
 import { useForm } from "@inertiajs/react";
+import { useQueryState } from "nuqs";
 import { route } from "ziggy-js";
 
-import { useQueryState } from "nuqs";
-import { Button } from "#/components/button";
+import { Button } from "#/components/button.tsx";
 import {
 	Dialog,
 	DialogActions,
@@ -12,11 +12,11 @@ import {
 	DialogHeader,
 	DialogIcon,
 	DialogTitle,
-} from "#/components/dialog";
-import { ErrorMessage, Field, Label } from "#/components/fieldset";
-import { Input } from "#/components/input";
+} from "#/components/dialog.tsx";
+import { ErrorMessage, Field, Label } from "#/components/fieldset.tsx";
+import { Input } from "#/components/input.tsx";
 import { Select } from "#/components/select.tsx";
-import type { Role, Workspace } from "#/types";
+import type { Role, Workspace } from "#/types/index.d.ts";
 
 interface AddWorkspaceMemberFormProps {
 	workspace: Workspace;

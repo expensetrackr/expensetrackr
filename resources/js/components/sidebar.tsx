@@ -3,10 +3,10 @@ import clsx from "clsx";
 import { LayoutGroup, motion } from "framer-motion";
 import * as React from "react";
 
-import { cx } from "#/utils/cva";
-import { twc } from "#/utils/twc";
-import { TouchTarget } from "./button";
-import { Link } from "./link";
+import { cx } from "#/utils/cva.ts";
+import { twc } from "#/utils/twc.ts";
+import { TouchTarget } from "./button.tsx";
+import { Link } from "./link.tsx";
 
 export const Sidebar = twc.nav`flex h-full flex-col`;
 

@@ -1,6 +1,6 @@
 import { Head, Link } from "@inertiajs/react";
 
-import { Toaster } from "#/components/toaster";
+import { Toaster } from "#/components/toaster.tsx";
 
 export function AuthLayout({
 	logoOrIcon,

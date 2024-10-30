@@ -2,8 +2,8 @@ import * as Headless from "@headlessui/react";
 import type { VariantProps } from "cva";
 import * as React from "react";
 
-import { cva, cx } from "#/utils/cva";
-import { Link } from "./link";
+import { cva, cx } from "#/utils/cva.ts";
+import { Link } from "./link.tsx";
 
 const buttonVariants = cva({
 	base: [

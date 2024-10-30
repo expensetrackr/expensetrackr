@@ -1,5 +1,5 @@
-import { cx } from "#/utils/cva";
-import { Link } from "./link";
+import { cx } from "#/utils/cva.ts";
+import { Link } from "./link.tsx";
 
 export function Text({ className, ...props }: React.ComponentPropsWithoutRef<"p">) {
 	return <p data-slot="text" {...props} className={cx("text-[var(--text-sub-600)] text-paragraph-sm", className)} />;

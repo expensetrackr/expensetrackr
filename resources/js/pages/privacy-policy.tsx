@@ -1,7 +1,7 @@
 import { Head } from "@inertiajs/react";
 import React from "react";
 
-import AuthenticationCardLogo from "#/components/authentication-card-logo";
+import AuthenticationCardLogo from "#/components/authentication-card-logo.tsx";
 
 interface Props {
 	policy: string;

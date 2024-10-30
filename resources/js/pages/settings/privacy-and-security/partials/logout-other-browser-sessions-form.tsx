@@ -5,8 +5,8 @@ import { useForm } from "@inertiajs/react";
 import { useQueryState } from "nuqs";
 import { useRef } from "react";
 
-import { ActionSection } from "#/components/action-section";
-import { Button } from "#/components/button";
+import { ActionSection } from "#/components/action-section.tsx";
+import { Button } from "#/components/button.tsx";
 import {
 	Dialog,
 	DialogActions,
@@ -15,11 +15,11 @@ import {
 	DialogHeader,
 	DialogIcon,
 	DialogTitle,
-} from "#/components/dialog";
-import { ErrorMessage, Field, Label } from "#/components/fieldset";
-import { Input } from "#/components/input";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "#/components/table";
-import type { Session } from "#/types";
+} from "#/components/dialog.tsx";
+import { ErrorMessage, Field, Label } from "#/components/fieldset.tsx";
+import { Input } from "#/components/input.tsx";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "#/components/table.tsx";
+import type { Session } from "#/types/index.d.ts";
 
 interface LogoutOtherBrowserSessionsFormProps {
 	sessions: Session[];

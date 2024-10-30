@@ -6,7 +6,7 @@ import Settings2Icon from "virtual:icons/ri/settings-2-line";
 import ShieldCheckIcon from "virtual:icons/ri/shield-check-fill";
 import UserSettingsIcon from "virtual:icons/ri/user-settings-line";
 
-import { Avatar } from "#/components/avatar";
+import { Avatar } from "#/components/avatar.tsx";
 import {
 	Dropdown,
 	DropdownButton,
@@ -14,9 +14,9 @@ import {
 	DropdownItem,
 	DropdownLabel,
 	DropdownMenu,
-} from "#/components/dropdown";
-import { Navbar, NavbarItem, NavbarSection, NavbarSpacer } from "#/components/navbar";
-import type { Auth } from "#/types";
+} from "#/components/dropdown.tsx";
+import { Navbar, NavbarItem, NavbarSection, NavbarSpacer } from "#/components/navbar.tsx";
+import type { Auth } from "#/types/index.d.ts";
 
 export function MainNavbar({
 	user,

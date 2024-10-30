@@ -4,10 +4,18 @@ import axios from "axios";
 import { useQueryState } from "nuqs";
 import { useRef } from "react";
 
-import { Button } from "./button";
-import { Dialog, DialogActions, DialogBody, DialogDescription, DialogHeader, DialogIcon, DialogTitle } from "./dialog";
-import { ErrorMessage, Field, Label } from "./fieldset";
-import { Input } from "./input";
+import { Button } from "./button.tsx";
+import {
+	Dialog,
+	DialogActions,
+	DialogBody,
+	DialogDescription,
+	DialogHeader,
+	DialogIcon,
+	DialogTitle,
+} from "./dialog.tsx";
+import { ErrorMessage, Field, Label } from "./fieldset.tsx";
+import { Input } from "./input.tsx";
 
 interface ConfirmsPasswordProps {
 	onConfirm?: () => void;

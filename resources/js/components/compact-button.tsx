@@ -2,9 +2,9 @@ import * as Headless from "@headlessui/react";
 import type { VariantProps } from "cva";
 import * as React from "react";
 
-import { TouchTarget } from "#/components/button";
-import { Link } from "#/components/link";
-import { cva, cx } from "#/utils/cva";
+import { TouchTarget } from "#/components/button.tsx";
+import { Link } from "#/components/link.tsx";
+import { cva, cx } from "#/utils/cva.ts";
 
 const compactButtonVariants = cva({
 	base: [

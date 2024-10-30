@@ -2,10 +2,10 @@ import * as Headless from "@headlessui/react";
 import type { VariantProps } from "cva";
 import * as React from "react";
 
-import type { Nullable, User } from "#/types";
-import { cva, cx } from "#/utils/cva";
-import { TouchTarget } from "./button";
-import { Link } from "./link";
+import type { Nullable, User } from "#/types/index.d.ts";
+import { cva, cx } from "#/utils/cva.ts";
+import { TouchTarget } from "./button.tsx";
+import { Link } from "./link.tsx";
 
 const avatarVariants = cva({
 	base: [

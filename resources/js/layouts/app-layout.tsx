@@ -1,10 +1,10 @@
 import { router, usePage } from "@inertiajs/react";
 
-import { SidebarLayout } from "#/components/sidebar-layout";
-import { Toaster } from "#/components/toaster";
-import type { InertiaSharedProps } from "#/types";
-import { MainNavbar } from "./partials/main-navbar";
-import { MainSidebar } from "./partials/main-sidebar";
+import { SidebarLayout } from "#/components/sidebar-layout.tsx";
+import { Toaster } from "#/components/toaster.tsx";
+import type { InertiaSharedProps } from "#/types/index.d.ts";
+import { MainNavbar } from "./partials/main-navbar.tsx";
+import { MainSidebar } from "./partials/main-sidebar.tsx";
 
 export function AppLayout({
 	children,

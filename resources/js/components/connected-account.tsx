@@ -1,6 +1,6 @@
 import GoogleIcon from "virtual:icons/logos/google-icon";
 
-import type { ConnectedAccountType, Provider } from "#/types";
+import type { ConnectedAccountType, Provider } from "#/types/index.d.ts";
 
 type ConnectedAccountProps = {
 	provider: Provider;

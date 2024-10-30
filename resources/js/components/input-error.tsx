@@ -1,6 +1,6 @@
 import type { HTMLAttributes } from "react";
 
-import { cx } from "#/utils/cva";
+import { cx } from "#/utils/cva.ts";
 
 export default function InputError({
 	message,

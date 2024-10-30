@@ -3,8 +3,8 @@ import SubtractLineIcon from "virtual:icons/ri/subtract-line";
 import * as Headless from "@headlessui/react";
 import type { VariantProps } from "cva";
 
-import { cva, cx } from "#/utils/cva";
-import { twc } from "#/utils/twc";
+import { cva, cx } from "#/utils/cva.ts";
+import { twc } from "#/utils/twc.ts";
 
 export const CheckboxGroup = twc.div.attrs({
 	"data-slot": "control",

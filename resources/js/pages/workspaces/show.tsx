@@ -1,14 +1,14 @@
 import PlanetIcon from "virtual:icons/ri/planet-line";
 import { Head } from "@inertiajs/react";
 
-import { Divider } from "#/components/divider";
-import { PageHeader } from "#/components/page-header";
-import { AppLayout } from "#/layouts/app-layout";
-import { SettingsSidebar } from "#/layouts/partials/settings-sidebar";
+import { Divider } from "#/components/divider.tsx";
+import { PageHeader } from "#/components/page-header.tsx";
+import { AppLayout } from "#/layouts/app-layout.tsx";
+import { SettingsSidebar } from "#/layouts/partials/settings-sidebar.tsx";
 import { WorkspaceMemberInvitations } from "#/pages/workspaces/partials/workspace-member-invitations.tsx";
-import type { Role, User, Workspace, WorkspaceInvitation, WorkspacePermissions } from "#/types";
-import { UpdateWorkspaceNameForm } from "./partials/update-workspace-name-form";
-import { WorkspaceMemberManager } from "./partials/workspace-member-manager";
+import type { Role, User, Workspace, WorkspaceInvitation, WorkspacePermissions } from "#/types/index.d.ts";
+import { UpdateWorkspaceNameForm } from "./partials/update-workspace-name-form.tsx";
+import { WorkspaceMemberManager } from "./partials/workspace-member-manager.tsx";
 
 interface UserMembership extends User {
 	membership: {

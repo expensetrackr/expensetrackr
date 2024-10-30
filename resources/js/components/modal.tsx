@@ -1,7 +1,7 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, type PropsWithChildren } from "react";
 
-import { cx } from "#/utils/cva";
+import { cx } from "#/utils/cva.ts";
 
 export default function Modal({
 	children,

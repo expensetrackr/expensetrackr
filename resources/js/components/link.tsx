@@ -3,7 +3,7 @@ import { Link as InertiaLink, type InertiaLinkProps } from "@inertiajs/react";
 import type { VariantProps } from "cva";
 import * as React from "react";
 
-import { cva } from "#/utils/cva";
+import { cva } from "#/utils/cva.ts";
 
 const linkVariants = cva({
 	base: [

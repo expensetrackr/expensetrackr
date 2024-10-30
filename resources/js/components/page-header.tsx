@@ -1,4 +1,4 @@
-import { twc } from "#/utils/twc";
+import { twc } from "#/utils/twc.ts";
 
 const PageHeaderRoot = twc.div`flex flex-col items-start gap-3 py-5 sm:flex-row sm:items-center`;
 

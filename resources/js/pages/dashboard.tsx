@@ -1,6 +1,6 @@
 import { Head } from "@inertiajs/react";
 
-import { AppLayout } from "#/layouts/app-layout";
+import { AppLayout } from "#/layouts/app-layout.tsx";
 
 export default function Dashboard() {
 	return (

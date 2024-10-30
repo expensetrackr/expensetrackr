@@ -2,8 +2,8 @@ import * as Headless from "@headlessui/react";
 import type { VariantProps } from "cva";
 import { forwardRef } from "react";
 
-import { cva, cx } from "#/utils/cva";
-import { twc } from "#/utils/twc";
+import { cva, cx } from "#/utils/cva.ts";
+import { twc } from "#/utils/twc.ts";
 
 export const InputGroup = twc.span.attrs({
 	"data-slot": "control",

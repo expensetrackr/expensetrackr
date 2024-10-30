@@ -1,6 +1,7 @@
 import { createContext, useContext, useState } from "react";
-import { cx } from "#/utils/cva";
-import { Link } from "./link";
+
+import { cx } from "#/utils/cva.ts";
+import { Link } from "./link.tsx";
 
 const TableContext = createContext<{ bleed: boolean; dense: boolean; grid: boolean; striped: boolean }>({
 	bleed: false,

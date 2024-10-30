@@ -2,10 +2,10 @@ import * as Headless from "@headlessui/react";
 import { LayoutGroup, motion } from "framer-motion";
 import * as React from "react";
 
-import { cx } from "#/utils/cva";
-import { twc } from "#/utils/twc";
-import { TouchTarget } from "./button";
-import { Link } from "./link";
+import { cx } from "#/utils/cva.ts";
+import { twc } from "#/utils/twc.ts";
+import { TouchTarget } from "./button.tsx";
+import { Link } from "./link.tsx";
 
 export const Navbar = twc.nav`flex flex-1 items-center gap-4 py-2.5`;
 

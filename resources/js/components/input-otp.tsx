@@ -1,8 +1,9 @@
 import DotIcon from "virtual:icons/lucide/dot";
 import { OTPInput, OTPInputContext } from "input-otp";
 import * as React from "react";
-import { cx } from "#/utils/cva";
-import { twc } from "#/utils/twc";
+
+import { cx } from "#/utils/cva.ts";
+import { twc } from "#/utils/twc.ts";
 
 export const InputOTP = React.forwardRef<
 	React.ElementRef<typeof OTPInput>,

@@ -1,6 +1,6 @@
 import { type InertiaLinkProps, Link } from "@inertiajs/react";
 
-import { cx } from "#/utils/cva";
+import { cx } from "#/utils/cva.ts";
 
 export default function NavLink({
 	active = false,

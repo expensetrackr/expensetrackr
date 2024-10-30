@@ -1,13 +1,13 @@
 import UserIcon from "virtual:icons/ri/user-line";
 import { Head } from "@inertiajs/react";
 
-import { Divider } from "#/components/divider";
-import { PageHeader } from "#/components/page-header";
-import { AppLayout } from "#/layouts/app-layout";
-import { SettingsSidebar } from "#/layouts/partials/settings-sidebar";
-import { UpdateEmailForm } from "./partials/update-email-form";
-import { UpdateNameForm } from "./partials/update-name-form";
-import { UpdateProfilePictureForm } from "./partials/update-profile-picture-form";
+import { Divider } from "#/components/divider.tsx";
+import { PageHeader } from "#/components/page-header.tsx";
+import { AppLayout } from "#/layouts/app-layout.tsx";
+import { SettingsSidebar } from "#/layouts/partials/settings-sidebar.tsx";
+import { UpdateEmailForm } from "./partials/update-email-form.tsx";
+import { UpdateNameForm } from "./partials/update-name-form.tsx";
+import { UpdateProfilePictureForm } from "./partials/update-profile-picture-form.tsx";
 
 export default function SettingsShow() {
 	return (

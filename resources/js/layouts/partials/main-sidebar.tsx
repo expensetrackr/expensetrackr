@@ -15,8 +15,8 @@ import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/react
 import { router } from "@inertiajs/react";
 import { route } from "ziggy-js";
 
-import { Avatar } from "#/components/avatar";
-import { CompactButton } from "#/components/compact-button";
+import { Avatar } from "#/components/avatar.tsx";
+import { CompactButton } from "#/components/compact-button.tsx";
 import {
 	Dropdown,
 	DropdownButton,
@@ -26,7 +26,7 @@ import {
 	DropdownLabel,
 	DropdownMenu,
 	DropdownSection,
-} from "#/components/dropdown";
+} from "#/components/dropdown.tsx";
 import {
 	Sidebar,
 	SidebarBody,
@@ -38,9 +38,9 @@ import {
 	SidebarLabel,
 	SidebarSection,
 	SidebarSpacer,
-} from "#/components/sidebar";
-import type { Auth, InertiaSharedProps, Workspace } from "#/types";
-import { SettingsMenu } from "./settings-sidebar";
+} from "#/components/sidebar.tsx";
+import type { Auth, InertiaSharedProps, Workspace } from "#/types/index.d.ts";
+import { SettingsMenu } from "./settings-sidebar.tsx";
 
 export function MainSidebar({
 	user,
