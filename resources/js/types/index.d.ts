@@ -21,7 +21,6 @@ export interface User {
 	profile_photo_path: Nullable<string>;
 	profile_photo_url: string;
 	two_factor_enabled: boolean;
-	has_password: boolean;
 	created_at: DateTime;
 	updated_at: DateTime;
 }

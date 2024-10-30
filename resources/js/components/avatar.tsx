@@ -67,14 +67,16 @@ export function Avatar({
 						alignmentBaseline="middle"
 						dominantBaseline="middle"
 						textAnchor="middle"
-						dy=".125em"
-						className="text-[48px]"
+						dy=".075em"
+						className="text-[48px]/[24px]"
 					>
 						{initials}
 					</text>
 				</svg>
 			)}
-			{src && <img {...imageProps} className={cx(imageProps?.className, "rounded-full")} src={src} alt={alt} />}
+			{src && (
+				<img {...imageProps} className={cx(imageProps?.className, "!min-w-full rounded-full")} src={src} alt={alt} />
+			)}
 		</span>
 	);
 }

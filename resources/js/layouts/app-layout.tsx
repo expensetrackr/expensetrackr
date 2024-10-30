@@ -1,6 +1,7 @@
 import { router, usePage } from "@inertiajs/react";
 
 import { SidebarLayout } from "#/components/sidebar-layout";
+import { Toaster } from "#/components/toaster";
 import type { InertiaSharedProps } from "#/types";
 import { MainNavbar } from "./partials/main-navbar";
 import { MainSidebar } from "./partials/main-sidebar";
@@ -21,6 +22,8 @@ export function AppLayout({
 		router.post(route("logout"));
 	}
 
+	console.info(page);
+
 	return (
 		<SidebarLayout
 			navbar={<MainNavbar user={user} logout={logout} />}
@@ -28,6 +31,8 @@ export function AppLayout({
 			subSidebar={subSidebar}
 		>
 			{children}
+
+			<Toaster position="bottom-center" />
 		</SidebarLayout>
 	);
 }

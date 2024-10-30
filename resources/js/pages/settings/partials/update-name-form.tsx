@@ -1,6 +1,7 @@
 import { router, useForm, usePage } from "@inertiajs/react";
 import { useDebounce } from "@uidotdev/usehooks";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import { toast } from "sonner";
 
 import { ErrorMessage, Field, Label } from "#/components/fieldset";
 import { FormSection } from "#/components/form-section";
@@ -16,25 +17,31 @@ export function UpdateNameForm() {
 		email: user?.email,
 	});
 	const debouncedName = useDebounce(data.name, 1000);
+	const inputRef = useRef<HTMLInputElement>(null);
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: we only want to update the workspace name when the debounced name changes
 	useEffect(() => {
 		if (user?.name === debouncedName) return;
 
-		form.post(route("user-profile-information.update"), {
-			errorBag: "updateProfileInformation",
-			preserveScroll: true,
-			onSuccess: () => router.visit(route("settings.show")),
-		});
+		sendRequest();
 	}, [debouncedName, user?.name]);
 
 	function onSubmit(e: React.FormEvent) {
 		e.preventDefault();
 
+		sendRequest();
+	}
+
+	function sendRequest() {
 		form.post(route("user-profile-information.update"), {
 			errorBag: "updateProfileInformation",
 			preserveScroll: true,
-			onSuccess: () => router.visit(route("settings.show")),
+			onSuccess: () => {
+				toast("Profile updated.");
+				router.visit(route("settings.show"), {
+					preserveState: true,
+				});
+				inputRef.current?.focus();
+			},
 		});
 	}
 
@@ -44,6 +51,7 @@ export function UpdateNameForm() {
 				<Field>
 					<Label className="sr-only">Full name</Label>
 					<Input
+						ref={inputRef}
 						autoComplete="name"
 						invalid={!!errors.name}
 						name="name"

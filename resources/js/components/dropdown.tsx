@@ -25,6 +25,7 @@ export function DropdownMenu({
 		<Headless.Transition leave="duration-100 ease-in" leaveTo="opacity-0">
 			<Headless.MenuItems
 				{...props}
+				transition
 				anchor={anchor}
 				className={cx(
 					// Anchor positioning
@@ -36,11 +37,13 @@ export function DropdownMenu({
 					// Handle scrolling when menu won't fit in viewport
 					"overflow-y-auto",
 					// Popover background
-					"bg-neutral-0/75 backdrop-blur-xl dark:bg-neutral-950/75",
+					"backdrop-blur-xl",
 					// Shadows
 					"shadow-md ring-1 ring-[var(--stroke-soft-200)]",
 					// Define grid at the menu level if subgrid is supported
 					"supports-[grid-template-columns:subgrid]:grid supports-[grid-template-columns:subgrid]:grid-cols-[auto_1fr_1.5rem_0.5rem_auto]",
+					// Transitions
+					"transition data-closed:data-leave:opacity-0 data-leave:duration-100 data-leave:ease-in",
 					// Put className last to allow overriding
 					className,
 				)}

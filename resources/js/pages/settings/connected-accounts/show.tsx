@@ -1,10 +1,11 @@
 import EqualizerIcon from "virtual:icons/ri/equalizer-line";
 import { Head } from "@inertiajs/react";
 
-import { PageHeader } from "#/components/page-header";
-import { AppLayout } from "#/layouts/app-layout";
-import { SettingsSidebar } from "#/layouts/partials/settings-sidebar";
-import ConnectedAccountsForm from "./partials/connected-accounts-form";
+import { Divider } from "#/components/divider.tsx";
+import { PageHeader } from "#/components/page-header.tsx";
+import { AppLayout } from "#/layouts/app-layout.tsx";
+import { SettingsSidebar } from "#/layouts/partials/settings-sidebar.tsx";
+import ConnectedAccountsForm from "./partials/connected-accounts-form.tsx";
 
 export default function SocialAccountsShow() {
 	return (
@@ -23,6 +24,8 @@ export default function SocialAccountsShow() {
 					</div>
 				</PageHeader.Content>
 			</PageHeader>
+
+			<Divider />
 
 			<ConnectedAccountsForm />
 		</AppLayout>

@@ -1,6 +1,7 @@
 import { router, useForm } from "@inertiajs/react";
 import { useDebounce } from "@uidotdev/usehooks";
 import { useEffect } from "react";
+import { toast } from "sonner";
 import { route } from "ziggy-js";
 
 import { ErrorMessage, Field, Label } from "#/components/fieldset";
@@ -25,11 +26,7 @@ export function UpdateWorkspaceNameForm({ workspace, permissions }: UpdateWorksp
 	useEffect(() => {
 		if (!permissions.canUpdateWorkspace || workspace.name === debouncedName) return;
 
-		form.put(route("workspaces.update", [workspace.id]), {
-			errorBag: "updateTeamName",
-			preserveScroll: true,
-			onSuccess: () => router.visit(route("workspaces.show", [workspace.id])),
-		});
+		sendRequest();
 	}, [debouncedName, workspace.name]);
 
 	function onSubmit(e: React.FormEvent) {
@@ -37,10 +34,21 @@ export function UpdateWorkspaceNameForm({ workspace, permissions }: UpdateWorksp
 
 		if (!permissions.canUpdateWorkspace) return;
 
+		sendRequest();
+	}
+
+	function sendRequest() {
 		form.put(route("workspaces.update", [workspace.id]), {
 			errorBag: "updateTeamName",
 			preserveScroll: true,
-			onSuccess: () => router.visit(route("workspaces.show", [workspace.id])),
+			onSuccess: () => {
+				toast.success("Workspace name updated.", {
+					duration: Number.POSITIVE_INFINITY,
+				});
+				router.visit(route("workspaces.show", [workspace.id]), {
+					preserveState: true,
+				});
+			},
 		});
 	}
 

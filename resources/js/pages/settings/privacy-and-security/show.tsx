@@ -1,16 +1,16 @@
 import ShieldUserIcon from "virtual:icons/ri/shield-user-line";
 import { Head, usePage } from "@inertiajs/react";
 
-import { Divider } from "#/components/divider";
-import { PageHeader } from "#/components/page-header";
-import { AppLayout } from "#/layouts/app-layout";
-import { SettingsSidebar } from "#/layouts/partials/settings-sidebar";
-import { SetPasswordForm } from "#/pages/settings/privacy-and-security/partials/set-password-form";
-import type { InertiaSharedProps, Session } from "#/types";
-import { DeleteUserForm } from "./partials/delete-user-form";
-import { LogoutOtherBrowserSessionsForm } from "./partials/logout-other-browser-sessions-form";
-import { TwoFactorAuthenticationForm } from "./partials/two-factor-authentication-form";
-import { UpdatePasswordForm } from "./partials/update-password-form";
+import { Divider } from "#/components/divider.tsx";
+import { PageHeader } from "#/components/page-header.tsx";
+import { AppLayout } from "#/layouts/app-layout.tsx";
+import { SettingsSidebar } from "#/layouts/partials/settings-sidebar.tsx";
+import { SetPasswordForm } from "#/pages/settings/privacy-and-security/partials/set-password-form.tsx";
+import type { InertiaSharedProps, Session } from "#/types/index.d.ts";
+import { DeleteUserForm } from "./partials/delete-user-form.tsx";
+import { LogoutOtherBrowserSessionsForm } from "./partials/logout-other-browser-sessions-form.tsx";
+import { TwoFactorAuthenticationForm } from "./partials/two-factor-authentication-form.tsx";
+import { UpdatePasswordForm } from "./partials/update-password-form.tsx";
 
 interface PrivacyAndSecurityShowProps {
 	sessions: Session[];

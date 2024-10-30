@@ -13,6 +13,7 @@ import Sparkling2Icon from "virtual:icons/ri/sparkling-2-fill";
 import UserSettingsIcon from "virtual:icons/ri/user-settings-line";
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/react";
 import { router } from "@inertiajs/react";
+import { route } from "ziggy-js";
 
 import { Avatar } from "#/components/avatar";
 import { CompactButton } from "#/components/compact-button";
@@ -50,8 +51,7 @@ export function MainSidebar({
 	workspaces: InertiaSharedProps["workspaces"];
 	logout: (e: React.FormEvent) => void;
 }) {
-	function switchToWorkspace(e: React.FormEvent, workspace: Workspace) {
-		e.preventDefault();
+	function switchToWorkspace(workspace: Workspace) {
 		router.put(
 			route("current-workspace.update"),
 			{
@@ -101,17 +101,15 @@ export function MainSidebar({
 									<DropdownHeading>Switch workspace</DropdownHeading>
 
 									{user.all_workspaces.map((workspace) => (
-										<form key={workspace.id} onSubmit={(e) => switchToWorkspace(e, workspace)}>
-											<DropdownItem>
-												{workspace.id === user.current_workspace_id ? (
-													<CheckIcon />
-												) : (
-													<Avatar slot="icon" initials={workspace.name.slice(0, 1)} alt={workspace.name} />
-												)}
+										<DropdownItem key={workspace.id} onClick={() => switchToWorkspace(workspace)}>
+											{workspace.id === user.current_workspace_id ? (
+												<CheckIcon />
+											) : (
+												<Avatar slot="icon" initials={workspace.name.slice(0, 1)} alt={workspace.name} />
+											)}
 
-												<DropdownLabel>{workspace.name}</DropdownLabel>
-											</DropdownItem>
-										</form>
+											<DropdownLabel>{workspace.name}</DropdownLabel>
+										</DropdownItem>
 									))}
 								</DropdownSection>
 							</>

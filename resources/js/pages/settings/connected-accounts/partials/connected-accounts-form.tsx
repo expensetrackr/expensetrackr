@@ -3,9 +3,9 @@ import { useForm, usePage } from "@inertiajs/react";
 import { useQueryState } from "nuqs";
 import { route } from "ziggy-js";
 
-import { ActionSection } from "#/components/action-section";
-import { Button } from "#/components/button";
-import { ConnectedAccount } from "#/components/connected-account";
+import { ActionSection } from "#/components/action-section.tsx";
+import { Button } from "#/components/button.tsx";
+import { ConnectedAccount } from "#/components/connected-account.tsx";
 import {
 	Dialog,
 	DialogActions,
@@ -15,7 +15,7 @@ import {
 	DialogIcon,
 	DialogTitle,
 } from "#/components/dialog.tsx";
-import type { InertiaSharedProps } from "#/types";
+import type { InertiaSharedProps } from "#/types/index.d.ts";
 
 export default function ConnectedAccountsForm() {
 	const [action, setAction] = useQueryState("action");

@@ -41,12 +41,6 @@ final class HandleInertiaRequests extends Middleware
         $user = $request->user();
 
         return array_merge(parent::share($request), [
-            'auth' => [
-                'user' => fn () => [
-                    ...$user ? $user->toArray() : [],
-                    'has_password' => $user?->getAuthPassword() !== null,
-                ],
-            ],
             'ziggy' => fn () => [
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),
