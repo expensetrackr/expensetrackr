@@ -125,6 +125,7 @@ export function WorkspaceMemberManager({ workspace, availableRoles, permissions 
 
                                                     {permissions.canRemoveWorkspaceMembers ? (
                                                         <DropdownItem
+                                                            className="text-state-error-base [&>[data-slot=icon]]:text-state-error-base data-focus:bg-[var(--color-red-alpha-10)]"
                                                             onClick={() =>
                                                                 setAction(`destroy:workspace-members:${user.id}`)
                                                             }
@@ -136,10 +137,10 @@ export function WorkspaceMemberManager({ workspace, availableRoles, permissions 
 
                                                     {currentUser.id === user.id ? (
                                                         <DropdownItem
+                                                            className="text-state-error-base [&>[data-slot=icon]]:text-state-error-base data-focus:bg-[var(--color-red-alpha-10)]"
                                                             onClick={() =>
                                                                 setAction(`destroy:workspace-members:${user.id}`)
                                                             }
-                                                            className="text-state-error-base [&>[data-slot=icon]]:text-state-error-base data-focus:bg-[var(--color-red-alpha-10)]"
                                                         >
                                                             <LogoutCircleRIcon />
                                                             <DropdownLabel>Leave workspace</DropdownLabel>
@@ -339,7 +340,7 @@ function RemoveMemberDialog({
                     $color="error"
                     $size="sm"
                     disabled={form.processing}
-                    form={`remove-member-form-${user.id}`}
+                    form={`destroy-workspace-members-${user.id}-form`}
                     type="submit"
                     className="w-full"
                 >

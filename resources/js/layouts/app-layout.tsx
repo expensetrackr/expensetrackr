@@ -16,8 +16,6 @@ export function AppLayout({ children, subSidebar }: { children: React.ReactNode;
         router.post(route("logout"));
     }
 
-    console.info(page);
-
     return (
         <SidebarLayout
             navbar={<MainNavbar user={user} logout={logout} />}
