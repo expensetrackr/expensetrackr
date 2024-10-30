@@ -4,6 +4,7 @@ import EqualizerIcon from "virtual:icons/ri/equalizer-line";
 import PlanetIcon from "virtual:icons/ri/planet-line";
 import ShieldUserIcon from "virtual:icons/ri/shield-user-line";
 import UserSettingsIcon from "virtual:icons/ri/user-settings-line";
+import { route } from "ziggy-js";
 
 import {
     Sidebar,

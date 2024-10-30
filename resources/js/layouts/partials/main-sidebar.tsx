@@ -161,10 +161,10 @@ export function MainSidebar({
                         <SidebarLabel>Settings</SidebarLabel>
                     </SidebarItem>
 
-                    <Disclosure defaultOpen={route().current("settings.*")}>
+                    <Disclosure defaultOpen={route().current("settings.*") || route().current("workspaces.show")}>
                         <DisclosureButton
                             as={SidebarItem}
-                            current={route().current("settings.*")}
+                            current={route().current("settings.*") || route().current("workspaces.show")}
                             className="lg:hidden"
                         >
                             <Settings2Icon />
