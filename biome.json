@@ -22,7 +22,6 @@
 			"**/.github/**",
 			"**/.husky/**",
 			"**/.million/**",
-			"./package.json",
 			"./resources/js/ssr.tsx",
 			"./resources/css/app.css",
 			"./resources/css/tailwind.css"
