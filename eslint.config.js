@@ -12,4 +12,7 @@ export default [
             "react-compiler/react-compiler": "error",
         },
     },
+    {
+        ignores: ["vite.config.ts"],
+    },
 ];

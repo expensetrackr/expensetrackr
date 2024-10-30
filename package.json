@@ -14,7 +14,7 @@
 		"typecheck": "tsc"
 	},
 	"lint-staged": {
-		"*.{js,ts,jsx,tsx}": "eslint --fix --max-warnings 0",
+		"*.{js,ts,jsx,tsx}": "eslint --fix --max-warnings 0 --no-warn-ignored",
         "*.{js,ts,jsx,tsx,blade.php}": "prettier --write"
 	},
 	"dependencies": {
