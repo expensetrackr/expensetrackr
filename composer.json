@@ -28,10 +28,12 @@
 		"laravel/tinker": "2.10.0",
 		"league/flysystem-aws-s3-v3": "3.29.0",
 		"mobiledetect/mobiledetectlib": "4.8.06",
+		"pinkary-project/type-guard": "^0.1.0",
 		"tightenco/ziggy": "2.3.1"
 	},
 	"require-dev": {
 		"fakerphp/faker": "1.23.1",
+		"larastan/larastan": "2.9.9",
 		"laravel/pint": "1.18.1",
 		"laravel/sail": "1.37.1",
 		"mockery/mockery": "1.6.12",
@@ -69,8 +71,9 @@
 		"lint": "pint",
 		"refactor": "rector",
 		"test:lint": "pint --test",
-		"test:refactor": "rector --dry-run"
-	},
+		"test:refactor": "rector --dry-run",
+        "test:types": "phpstan analyse"
+    },
 	"extra": {
 		"laravel": {
 			"dont-discover": [],

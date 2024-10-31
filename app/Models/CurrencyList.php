@@ -8,6 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 
 final class CurrencyList extends Model
 {
+    /**
+     * The attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
     protected function casts(): array
     {
         return [

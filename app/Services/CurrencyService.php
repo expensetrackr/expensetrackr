@@ -27,6 +27,8 @@ final readonly class CurrencyService
 
     /**
      * Get the supported currencies.
+     *
+     * @return array<string>|null
      */
     public function getSupportedCurrencies(): ?array
     {
@@ -34,6 +36,7 @@ final readonly class CurrencyService
             return null;
         }
 
+        /** @var array<string>|null */
         return Cache::remember('supported_currency_codes', now()->addMonth(), function () {
             $response = $this->client->get("{$this->baseUrl}/currencies", [
                 'headers' => [
@@ -42,6 +45,23 @@ final readonly class CurrencyService
             ]);
 
             if ($response->getStatusCode() === 200) {
+                /**
+                 * @var array{data: array<int, array{
+                 *     iso_code: string,
+                 *     iso_numeric: int,
+                 *     name: string,
+                 *     country: string,
+                 *     symbol: string,
+                 *     symbol_alternatives: array<int, string>,
+                 *     disambiguated_symbol: string|null,
+                 *     decimal_character: string,
+                 *     thousands_character: string
+                 * }>, meta: array{
+                 *     total_records: int,
+                 *     credits_used: int,
+                 *     credits_remaining: int
+                 * }} $responseData
+                 */
                 $responseData = json_decode($response->getBody()->getContents(), true);
 
                 if (filled($responseData['data'])) {
@@ -66,13 +86,17 @@ final readonly class CurrencyService
 
     /**
      * Get the exchange rates for the given base currency and target currencies.
+     *
+     * @param  array<string>  $targetCurrencies
+     * @return array<string, float>|null
      */
     public function getExchangeRates(string $baseCurrency, array $targetCurrencies): ?array
     {
         $cacheKey = "currency_rates_{$baseCurrency}";
+        /** @var array<string, float>|null $cachedRates */
         $cachedRates = Cache::get($cacheKey);
 
-        if (Cache::missing($cachedRates)) {
+        if (Cache::missing($cacheKey)) {
             $cachedRates = $this->updateCurrencyRatesCache($baseCurrency);
 
             if (empty($cachedRates)) {
@@ -80,7 +104,7 @@ final readonly class CurrencyService
             }
         }
 
-        $filteredRates = array_intersect_key($cachedRates, array_flip($targetCurrencies));
+        $filteredRates = array_intersect_key($cachedRates ?? [], array_flip($targetCurrencies));
         $filteredRates = array_filter($filteredRates);
 
         $filteredCurrencies = array_keys($filteredRates);
@@ -95,6 +119,9 @@ final readonly class CurrencyService
 
     /**
      * Get the cached exchange rates for the given base currency and target currencies.
+     *
+     * @param  array<string>  $targetCurrencies
+     * @return array<string, float>|null
      */
     public function getCachedExchangeRates(string $baseCurrency, array $targetCurrencies): ?array
     {
@@ -121,6 +148,8 @@ final readonly class CurrencyService
 
     /**
      * Update the currency rates cache for the given base currency.
+     *
+     * @return array<string, float>|null
      */
     public function updateCurrencyRatesCache(string $baseCurrency): ?array
     {
@@ -133,6 +162,21 @@ final readonly class CurrencyService
             ]);
 
             if ($response->getStatusCode() === 200) {
+                /**
+                 * @var array{
+                 *     data: array{
+                 *         date: string,
+                 *         time: string,
+                 *         source: string,
+                 *         rates: array<string, float>|null
+                 *     },
+                 *     meta: array{
+                 *         total_records: int,
+                 *         credits_used: int,
+                 *         credits_remaining: int
+                 *     }
+                 * } $responseData
+                 */
                 $responseData = json_decode($response->getBody()->getContents(), true);
 
                 if (isset($responseData['data']['rates'])) {

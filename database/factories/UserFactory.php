@@ -58,7 +58,7 @@ final class UserFactory extends Factory
 
         return $this->has(
             Workspace::factory()
-                ->state(fn (array $attributes, User $user): array => [
+                ->state(fn (array $attributes, User $user): array => [ // @phpstan-ignore-line
                     'name' => $user->name.'\'s Workspace',
                     'user_id' => $user->id,
                     'personal_workspace' => true,
@@ -79,7 +79,7 @@ final class UserFactory extends Factory
 
         return $this->has(
             ConnectedAccount::factory()
-                ->state(fn (array $attributes, User $user): array => [
+                ->state(fn (array $attributes, User $user): array => [ // @phpstan-ignore-line
                     'provider' => $provider,
                     'user_id' => $user->id,
                 ])

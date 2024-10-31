@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Actions\Workspaces;
 
 use App\Models\User;
+use App\Models\Workspace;
 use Illuminate\Support\Facades\DB;
 use Workspaces\Contracts\DeletesUsers;
 
@@ -37,12 +38,12 @@ final readonly class DeleteUser implements DeletesUsers
     /**
      * Delete the workspaces and workspace associations attached to the user.
      */
-    private function deleteWorkspaces(mixed $user): void
+    private function deleteWorkspaces(User $user): void
     {
         $user->workspaces()->detach();
 
         $user->ownedWorkspaces->each(function ($workspace): void {
-            $this->deleteWorkspaces->delete($workspace);
+            $this->deleteWorkspaces->delete(type($workspace)->as(Workspace::class));
         });
     }
 }

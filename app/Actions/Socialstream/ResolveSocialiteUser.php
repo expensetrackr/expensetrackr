@@ -19,7 +19,7 @@ final class ResolveSocialiteUser implements ResolvesSocialiteUsers
         $user = Socialite::driver($provider)->user();
 
         if (Socialstream::generatesMissingEmails()) {
-            $user->email = $user->getEmail() ?? ("{$user->id}@{$provider}".config('app.domain'));
+            $user->email = $user->getEmail() ?? ("{$user->id}@{$provider}".config('app.domain')); // @phpstan-ignore-line
         }
 
         return $user;

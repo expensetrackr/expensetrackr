@@ -44,7 +44,7 @@ final class RemoveWorkspaceMember implements RemovesWorkspaceMembers
      */
     private function ensureUserDoesNotOwnWorkspace(User $workspaceMember, Workspace $workspace): void
     {
-        if ($workspaceMember->id === $workspace->owner->id) {
+        if ($workspaceMember->id === $workspace->owner->id) { // @phpstan-ignore-line
             throw ValidationException::withMessages([
                 'workspace' => [__('You may not leave a workspace that you created.')],
             ])->errorBag('removeWorkspaceMember');

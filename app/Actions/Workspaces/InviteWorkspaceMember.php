@@ -7,12 +7,14 @@ namespace App\Actions\Workspaces;
 use App\Mail\WorkspaceInvitationMail;
 use App\Models\User;
 use App\Models\Workspace;
+use App\Models\WorkspaceInvitation;
 use Closure;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Unique;
 use Workspaces\Contracts\InvitesWorkspaceMembers;
 use Workspaces\Events\InvitingWorkspaceMember;
 use Workspaces\Rules\Role;
@@ -31,10 +33,10 @@ final class InviteWorkspaceMember implements InvitesWorkspaceMembers
 
         InvitingWorkspaceMember::dispatch($workspace, $email, $role);
 
-        $invitation = $workspace->workspaceInvitations()->create([
+        $invitation = type($workspace->workspaceInvitations()->create([
             'email' => $email,
             'role' => $role,
-        ]);
+        ]))->as(WorkspaceInvitation::class);
 
         Mail::to($email)->send(new WorkspaceInvitationMail($invitation));
     }
@@ -56,6 +58,8 @@ final class InviteWorkspaceMember implements InvitesWorkspaceMembers
 
     /**
      * Get the validation rules for inviting a workspace member.
+     *
+     * @return array<string, array<int, Unique|string|Role>>
      */
     private function rules(Workspace $workspace): array
     {

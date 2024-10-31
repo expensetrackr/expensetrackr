@@ -7,7 +7,6 @@ namespace App\Actions\Workspaces;
 use App\Models\User;
 use App\Models\Workspace;
 use Closure;
-use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use Workspaces\Contracts\AddsWorkspaceMembers;
@@ -56,7 +55,7 @@ final class AddWorkspaceMember implements AddsWorkspaceMembers
     /**
      * Get the validation rules for adding a workspace member.
      *
-     * @return array<string, ValidationRule|array|string>
+     * @return array<string, array<int, string|Role>>
      */
     private function rules(): array
     {

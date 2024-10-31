@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Database\Factories\UserFactory;
+use Illuminate\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -17,26 +19,17 @@ use Workspaces\HasWorkspaces;
 
 final class User extends Authenticatable
 {
-    use HasApiTokens, HasConnectedAccounts, HasFactory, HasWorkspaces, Notifiable, SetsProfilePhotoFromUrl, TwoFactorAuthenticatable;
+    /** @use HasFactory<UserFactory> */
+    use HasApiTokens, HasConnectedAccounts, HasFactory, HasWorkspaces, MustVerifyEmail, Notifiable, SetsProfilePhotoFromUrl, TwoFactorAuthenticatable;
+
     use HasProfilePhoto {
         HasProfilePhoto::profilePhotoUrl as getPhotoUrl;
     }
 
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
-
-    /**
      * The attributes that should be hidden for arrays.
      *
-     * @var array<int, string>
+     * @var list<string>
      */
     protected $hidden = [
         'password',
@@ -48,28 +41,37 @@ final class User extends Authenticatable
     /**
      * The accessors to append to the model's array form.
      *
-     * @var array<int, string>
+     * @var list<string>
      */
     protected $appends = [
         'profile_photo_url',
     ];
 
     /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
-
-    /**
      * Get the URL to the user's profile photo.
+     *
+     * @return Attribute<string, never>
      */
     public function profilePhotoUrl(): Attribute
     {
         return filter_var($this->profile_photo_path, FILTER_VALIDATE_URL)
             ? Attribute::get(fn () => $this->profile_photo_path)
             : $this->getPhotoUrl();
+    }
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'password' => 'hashed',
+            'email_verified_at' => 'datetime',
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
+            'two_factor_confirmed_at' => 'datetime',
+        ];
     }
 }

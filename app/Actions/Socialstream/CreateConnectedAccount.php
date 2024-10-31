@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Actions\Socialstream;
 
+use App\Models\User;
 use JoelButcher\Socialstream\ConnectedAccount;
 use JoelButcher\Socialstream\Contracts\CreatesConnectedAccounts;
 use JoelButcher\Socialstream\Socialstream;
@@ -13,6 +14,8 @@ final class CreateConnectedAccount implements CreatesConnectedAccounts
 {
     /**
      * Create a connected account for a given user.
+     *
+     * @param  User  $user
      */
     public function create(mixed $user, string $provider, ProviderUser $providerUser): ConnectedAccount
     {
@@ -24,7 +27,7 @@ final class CreateConnectedAccount implements CreatesConnectedAccounts
             'nickname' => $providerUser->getNickname(),
             'email' => $providerUser->getEmail(),
             'avatar_path' => $providerUser->getAvatar(),
-            'token' => $providerUser->token,
+            'token' => $providerUser->token ?? null,
             'secret' => $providerUser->tokenSecret ?? null,
             'refresh_token' => $providerUser->refreshToken ?? null,
             'expires_at' => property_exists($providerUser, 'expiresIn') ? now()->addSeconds($providerUser->expiresIn) : null,

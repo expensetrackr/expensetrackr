@@ -14,6 +14,8 @@ final class UpdateWorkspaceName implements UpdatesWorkspaceNames
 {
     /**
      * Validate and update the given workspaces name.
+     *
+     * @param  array<string, mixed>  $input
      */
     public function update(User $user, Workspace $workspace, array $input): void
     {

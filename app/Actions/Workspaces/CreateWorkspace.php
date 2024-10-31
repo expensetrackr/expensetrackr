@@ -6,6 +6,7 @@ namespace App\Actions\Workspaces;
 
 use App\Models\User;
 use App\Models\Workspace;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use Workspaces\Contracts\CreatesWorkspaces;
@@ -18,7 +19,7 @@ final class CreateWorkspace implements CreatesWorkspaces
      *
      * @param  array<string, string>  $input
      */
-    public function create(User $user, array $input): Workspace
+    public function create(User $user, array $input): Workspace|Model
     {
         Gate::forUser($user)->authorize('create', new Workspace);
 

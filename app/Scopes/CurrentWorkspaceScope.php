@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Context;
 
 final class CurrentWorkspaceScope implements Scope
 {
+    /**
+     * @param  Builder<Model>  $builder
+     */
     public function apply(Builder $builder, Model $model): void
     {
         if (Auth::check() && Context::has('currentWorkspace')) {

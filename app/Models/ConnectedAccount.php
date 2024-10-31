@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Database\Factories\ConnectedAccountFactory;
 use Illuminate\Database\Eloquent\Concerns\HasTimestamps;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use JoelButcher\Socialstream\ConnectedAccount as SocialstreamConnectedAccount;
@@ -13,44 +14,30 @@ use JoelButcher\Socialstream\Events\ConnectedAccountUpdated;
 
 final class ConnectedAccount extends SocialstreamConnectedAccount
 {
+    /** @use HasFactory<ConnectedAccountFactory> */
     use HasFactory, HasTimestamps;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'provider',
-        'provider_id',
-        'name',
-        'nickname',
-        'email',
-        'avatar_path',
-        'token',
-        'secret',
-        'refresh_token',
-        'expires_at',
-    ];
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'created_at' => 'datetime',
-        'expires_at' => 'datetime',
-    ];
 
     /**
      * The event map for the model.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $dispatchesEvents = [
         'created' => ConnectedAccountCreated::class,
         'updated' => ConnectedAccountUpdated::class,
         'deleted' => ConnectedAccountDeleted::class,
     ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'created_at' => 'datetime',
+            'expires_at' => 'datetime',
+        ];
+    }
 }

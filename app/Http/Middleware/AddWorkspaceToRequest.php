@@ -15,7 +15,7 @@ final class AddWorkspaceToRequest
     public function handle(Request $request, Closure $next): Response
     {
         if (Auth::check() && ! Context::has('currentWorkspace')) {
-            Context::add('currentWorkspace', $request->user()->currentWorkspace?->getKey());
+            Context::add('currentWorkspace', $request->user()?->currentWorkspace?->getKey());
         }
 
         return $next($request);
