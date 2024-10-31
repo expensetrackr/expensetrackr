@@ -17,6 +17,7 @@
 	"license": "GPL-3.0-or-later",
 	"require": {
 		"php": "^8.2",
+		"hirethunk/verbs": "0.6.4",
 		"inertiajs/inertia-laravel": "2.x-dev",
 		"joelbutcher/socialstream": "6.1.9",
 		"laravel/fortify": "1.24.4",
