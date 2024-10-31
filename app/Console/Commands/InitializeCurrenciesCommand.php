@@ -41,7 +41,7 @@ final class InitializeCurrenciesCommand extends Command
             return;
         }
 
-        if (empty($apiSupportedCurrencies)) {
+        if ($apiSupportedCurrencies === null || $apiSupportedCurrencies === []) {
             $this->error('Failed to fetch supported currencies from the API.');
 
             return;

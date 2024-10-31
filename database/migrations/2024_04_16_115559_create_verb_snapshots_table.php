@@ -13,7 +13,7 @@ use Thunk\Verbs\Facades\Id;
 
 return new class extends Migration
 {
-    public function up()
+    public function up(): void
     {
         // If we migrated before Verbs 0.5.0 we need to do a little extra work
         $migrating = Schema::connection($this->connectionName())->hasTable($this->tableName());
@@ -22,7 +22,7 @@ return new class extends Migration
             Schema::connection($this->connectionName())->rename($this->tableName(), '__verbs_snapshots_pre_050');
         }
 
-        Schema::connection($this->connectionName())->create($this->tableName(), function (Blueprint $table) {
+        Schema::connection($this->connectionName())->create($this->tableName(), function (Blueprint $table): void {
             $table->snowflakeId();
 
             // The 'state_id' column needs to be set up differently depending on
@@ -48,7 +48,7 @@ return new class extends Migration
         }
     }
 
-    public function down()
+    public function down(): void
     {
         Schema::connection($this->connectionName())->dropIfExists($this->tableName());
 
@@ -59,7 +59,7 @@ return new class extends Migration
 
     protected function migrateChunk(Collection $chunk): void
     {
-        $rows = $chunk->map(fn ($row) => [
+        $rows = $chunk->map(fn ($row): array => [
             'id' => app(MakesSnowflakes::class)->makeFromTimestamp(Date::parse($row->created_at))->id(),
             'type' => $row->type,
             'state_id' => $row->id,

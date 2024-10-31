@@ -13,7 +13,7 @@ final class CurrencyServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        $this->app->singleton(CurrencyService::class, function (Application $app) {
+        $this->app->singleton(CurrencyService::class, function (Application $app): CurrencyService {
             $apiKey = type(config('services.currency_api.key'))->asString();
             $baseUrl = type(config('services.currency_api.base_url'))->asString();
             $client = $app->make(Client::class);

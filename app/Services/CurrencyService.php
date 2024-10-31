@@ -12,9 +12,9 @@ use Illuminate\Support\Facades\Log;
 final readonly class CurrencyService
 {
     public function __construct(
-        protected ?string $apiKey,
-        protected ?string $baseUrl,
-        protected Client $client
+        private ?string $apiKey,
+        private ?string $baseUrl,
+        private Client $client
     ) {}
 
     /**
@@ -37,7 +37,7 @@ final readonly class CurrencyService
         }
 
         /** @var array<string>|null */
-        return Cache::remember('supported_currency_codes', now()->addMonth(), function () {
+        return Cache::remember('supported_currency_codes', now()->addMonth(), function (): ?array {
             $response = $this->client->get("{$this->baseUrl}/currencies", [
                 'headers' => [
                     'Authorization' => "Bearer {$this->apiKey}",
@@ -65,7 +65,7 @@ final readonly class CurrencyService
                 $responseData = json_decode($response->getBody()->getContents(), true);
 
                 if (filled($responseData['data'])) {
-                    return array_map(function ($currency) {
+                    return array_map(function (array $currency): string {
                         if ($currency['iso_code'] === 'veb') {
                             return 'VES';
                         }
@@ -99,7 +99,7 @@ final readonly class CurrencyService
         if (Cache::missing($cacheKey)) {
             $cachedRates = $this->updateCurrencyRatesCache($baseCurrency);
 
-            if (empty($cachedRates)) {
+            if ($cachedRates === null || $cachedRates === []) {
                 return null;
             }
         }

@@ -8,14 +8,14 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public function up()
+    public function up(): void
     {
         // If they've already migrated under the previous migration name, just skip
         if (Schema::connection($this->connectionName())->hasTable($this->tableName())) {
             return;
         }
 
-        Schema::connection($this->connectionName())->create($this->tableName(), function (Blueprint $table) {
+        Schema::connection($this->connectionName())->create($this->tableName(), function (Blueprint $table): void {
             $table->snowflakeId();
 
             $table->string('type')->index();
@@ -26,7 +26,7 @@ return new class extends Migration
         });
     }
 
-    public function down()
+    public function down(): void
     {
         Schema::connection($this->connectionName())->dropIfExists($this->tableName());
     }
