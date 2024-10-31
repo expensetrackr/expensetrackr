@@ -21,12 +21,11 @@ final class AppServiceProvider extends ServiceProvider
         $this->configureModels();
         $this->configurePasswordValidation();
         $this->configureDates();
+        $this->configureVite();
 
         if (config('app.env') !== 'local') {
             $url->forceScheme('https');
         }
-
-        Vite::prefetch(concurrency: 3);
     }
 
     /**
@@ -62,5 +61,13 @@ final class AppServiceProvider extends ServiceProvider
     private function configureDates(): void
     {
         Date::use(CarbonImmutable::class);
+    }
+
+    /**
+     * Configure Vite for the application.
+     */
+    private function configureVite(): void
+    {
+        Vite::prefetch(concurrency: 3);
     }
 }

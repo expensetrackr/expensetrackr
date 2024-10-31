@@ -8,4 +8,5 @@ return [
     App\Providers\SocialstreamServiceProvider::class,
     Workspaces\WorkspacesServiceProvider::class,
     App\Providers\WorkspacesServiceProvider::class,
+    App\Providers\CurrencyServiceProvider::class,
 ];
