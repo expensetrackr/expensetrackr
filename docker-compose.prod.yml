@@ -11,6 +11,7 @@ services:
       - APP_ENV
       - APP_KEY
       - APP_URL
+      - APP_DEBUG
       - APP_LOCALE
       - APP_FALLBACK_LOCALE
       - APP_FAKER_LOCALE
