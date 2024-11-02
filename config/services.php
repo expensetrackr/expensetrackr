@@ -44,7 +44,7 @@ return [
     ],
 
     'currency_api' => [
-        'key' => env('CURRENCY_API_KEY'),
+        'key' => env('CURRENCY_API_KEY', '34h2234ff...'),
         'base_url' => 'https://api.synthfinance.com',
     ],
 
