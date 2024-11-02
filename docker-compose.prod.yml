@@ -60,15 +60,15 @@ services:
       - SSR_URL=http://ssr:13714
     networks:
       - app_network
-  scheduler:
+  queue:
     build:
       context: .
       dockerfile: Dockerfile
-    command: [ "php", "/var/www/html/artisan", "schedule:work" ]
+    command: [ "php", "/var/www/html/artisan", "queue:work", "--sleep=3", "--tries=3", "--max-time=3600" ]
     volumes:
       - './storage:/var/www/html/storage'
     environment:
-      PHP_FPM_POOL_NAME: app_scheduler
+      PHP_FPM_POOL_NAME: app_queue
   ssr:
     build:
       context: .
