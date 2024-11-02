@@ -65,6 +65,11 @@ services:
       context: .
       dockerfile: Dockerfile
     command: [ "php", "/var/www/html/artisan", "queue:work", "--sleep=3", "--tries=3", "--max-time=3600" ]
+    stop_signal: SIGTERM # Set this for graceful shutdown if you're using fpm-apache or fpm-nginx
+    healthcheck:
+      # This is our native healthcheck script for the queue
+      test: ["CMD", "healthcheck-queue"]
+      start_period: 10s
     volumes:
       - './storage:/var/www/html/storage'
     environment:
