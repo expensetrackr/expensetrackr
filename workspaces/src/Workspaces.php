@@ -190,7 +190,7 @@ final class Workspaces
     /**
      * Get a new instance of the user model.
      */
-    public static function newUserModel(): mixed
+    public static function newUserModel()
     {
         $model = self::userModel();
 

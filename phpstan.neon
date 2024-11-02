@@ -13,3 +13,4 @@ parameters:
         - bootstrap
         - database/factories
         - routes
+        - workspaces

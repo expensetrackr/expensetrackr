@@ -131,7 +131,7 @@ final class WorkspacesServiceProvider extends ServiceProvider
 
         Event::listen(function (PasswordUpdatedViaController $event) {
             if (request()->hasSession()) {
-                request()->session()->put(['password_hash_sanctum' => Auth::user()->getAuthPassword()]);
+                request()->session()->put(['password_hash_sanctum' => Auth::user()?->getAuthPassword()]);
             }
         });
 

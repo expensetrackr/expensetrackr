@@ -52,8 +52,6 @@ services:
       - AWS_URL
       - AWS_ENDPOINT
       - VITE_APP_NAME
-      - OCTANE_SERVER
-      - OCTANE_HTTPS
       - GOOGLE_CLIENT_ID
       - GOOGLE_CLIENT_SECRET
       - GOOGLE_CALLBACK_URL
@@ -71,15 +69,6 @@ services:
       - './storage:/var/www/html/storage'
     environment:
       PHP_FPM_POOL_NAME: app_scheduler
-  octane:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    command: [ "php", "/var/www/html/artisan", "octane:start" ]
-    volumes:
-      - './storage:/var/www/html/storage'
-    environment:
-      PHP_FPM_POOL_NAME: app_octane
   ssr:
     build:
       context: .
