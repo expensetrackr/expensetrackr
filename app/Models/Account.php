@@ -11,11 +11,12 @@ use App\Concerns\WorkspaceOwned;
 use Database\Factories\AccountFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
 
 final class Account extends Model
 {
     /** @use HasFactory<AccountFactory> */
-    use Blamable, HasFactory, WorkspaceOwned;
+    use Blamable, HasFactory, HasPrefixedId, WorkspaceOwned;
 
     /**
      * The attributes that should be cast.
