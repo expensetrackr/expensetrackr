@@ -23,14 +23,14 @@ Route::group(['middleware' => config('workspaces.middleware', ['web'])], functio
     }
 
     $authMiddleware = config('workspaces.guard')
-        ? 'auth:'.config('workspaces.guard')
+        ? 'auth:'.type(config('workspaces.guard'))->asString()
         : 'auth';
 
     $authSessionMiddleware = config('workspaces.auth_session', false)
         ? config('workspaces.auth_session')
         : null;
 
-    Route::group(['middleware' => array_values(array_filter([$authMiddleware, $authSessionMiddleware]))], function () {
+    Route::group(['middleware' => array_filter([$authMiddleware, $authSessionMiddleware])], function () {
         Route::prefix('settings')->group(function () {
             Route::get('/privacy-and-security', [PrivacyAndSecurityController::class, 'show'])->name('settings.privacy-and-security.show');
         });

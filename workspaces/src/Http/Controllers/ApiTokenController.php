@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Workspaces\Http\Controllers;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Inertia\Response;
+use Laravel\Sanctum\PersonalAccessToken;
 use Workspaces\Workspaces;
 
 final class ApiTokenController extends Controller
@@ -18,8 +20,8 @@ final class ApiTokenController extends Controller
     public function index(Request $request): Response
     {
         return Workspaces::inertia()->render($request, 'API/Index', [
-            'tokens' => $request->user()->tokens->map(fn ($token) => $token->toArray() + [
-                'last_used_ago' => optional($token->last_used_at)->diffForHumans(),
+            'tokens' => $request->user()?->tokens->map(fn (Model $token) => $token->toArray() + [
+                'last_used_ago' => type($token)->as(PersonalAccessToken::class)->last_used_at?->diffForHumans(),
             ]),
             'availablePermissions' => Workspaces::$permissions,
             'defaultPermissions' => Workspaces::$defaultPermissions,
@@ -35,10 +37,16 @@ final class ApiTokenController extends Controller
             'name' => ['required', 'string', 'max:255'],
         ]);
 
-        $token = $request->user()->createToken(
-            $request->name,
-            Workspaces::validPermissions($request->input('permissions', []))
+        $token = $request->user()?->createToken(
+            type($request->name)->asString(),
+            Workspaces::validPermissions(type($request->input('permissions', []))->asArray())
         );
+
+        if ($token === null) {
+            return back()->withErrors([
+                'name' => 'The token could not be created.',
+            ]);
+        }
 
         return back()->with('flash', [
             'token' => explode('|', $token->plainTextToken, 2)[1],
@@ -55,10 +63,10 @@ final class ApiTokenController extends Controller
             'permissions.*' => 'string',
         ]);
 
-        $token = $request->user()->tokens()->where('id', $tokenId)->firstOrFail();
+        $token = $request->user()?->tokens()->where('id', $tokenId)->firstOrFail();
 
-        $token->forceFill([
-            'abilities' => Workspaces::validPermissions($request->input('permissions', [])),
+        $token?->forceFill([
+            'abilities' => Workspaces::validPermissions(type($request->input('permissions', []))->asArray()),
         ])->save();
 
         return back(303);
@@ -69,7 +77,7 @@ final class ApiTokenController extends Controller
      */
     public function destroy(Request $request, string $tokenId): RedirectResponse
     {
-        $request->user()->tokens()->where('id', $tokenId)->first()->delete();
+        $request->user()?->tokens()->where('id', $tokenId)->first()?->delete();
 
         return back(303);
     }

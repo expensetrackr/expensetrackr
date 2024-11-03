@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace Workspaces\Http\Controllers;
 
+use App\Models\User;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Response;
 use Workspaces\Actions\ValidateWorkspaceDeletion;
@@ -47,11 +50,11 @@ final class WorkspaceController extends Controller
     /**
      * Create a new workspace.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request): Application|RedirectResponse|\Illuminate\Http\Response|Redirector|Response
     {
         $creator = app(CreatesWorkspaces::class);
 
-        $creator->create($request->user(), $request->all());
+        $creator->create(type($request->user())->as(User::class), $request->all());
 
         return $this->redirectPath($creator);
     }
@@ -75,7 +78,7 @@ final class WorkspaceController extends Controller
     {
         $workspace = Workspaces::newWorkspaceModel()->findOrFail($workspaceId);
 
-        app(UpdatesWorkspaceNames::class)->update($request->user(), $workspace, $request->all());
+        app(UpdatesWorkspaceNames::class)->update(type($request->user())->as(User::class), $workspace, $request->all());
 
         return back(303);
     }
@@ -83,11 +86,11 @@ final class WorkspaceController extends Controller
     /**
      * Delete the given workspace.
      */
-    public function destroy(Request $request, int $workspaceId): RedirectResponse
+    public function destroy(Request $request, int $workspaceId): Application|RedirectResponse|\Illuminate\Http\Response|Redirector|Response
     {
         $workspace = Workspaces::newWorkspaceModel()->findOrFail($workspaceId);
 
-        app(ValidateWorkspaceDeletion::class)->validate($request->user(), $workspace);
+        app(ValidateWorkspaceDeletion::class)->validate(type($request->user())->as(User::class), $workspace);
 
         $deleter = app(DeletesWorkspaces::class);
 

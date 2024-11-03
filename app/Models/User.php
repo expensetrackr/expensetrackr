@@ -17,6 +17,9 @@ use Laravel\Sanctum\HasApiTokens;
 use Workspaces\HasProfilePhoto;
 use Workspaces\HasWorkspaces;
 
+/**
+ * @property Membership $membership
+ */
 final class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
@@ -50,7 +53,7 @@ final class User extends Authenticatable
     /**
      * Get the URL to the user's profile photo.
      *
-     * @return Attribute<string, never>
+     * @return Attribute<string|null, never>
      */
     public function profilePhotoUrl(): Attribute
     {

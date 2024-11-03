@@ -18,6 +18,7 @@ final class ShareInertiaData
      */
     public function handle(Request $request, callable $next): mixed
     {
+        // @phpstan-ignore-next-line
         Inertia::share(array_filter([
             'workspaces' => function () use ($request) {
                 $user = $request->user();
@@ -41,13 +42,13 @@ final class ShareInertiaData
             'auth' => [
                 'user' => function () use ($request) {
                     if (! $user = $request->user()) {
-                        return;
+                        return null;
                     }
 
                     $userHasWorkspaceFeatures = Workspaces::userHasWorkspaceFeatures($user);
 
                     if ($userHasWorkspaceFeatures) {
-                        $user->currentWorkspace;
+                        $user->currentWorkspace; // @phpstan-ignore-line
                     }
 
                     return array_merge($user->toArray(), array_filter([
@@ -59,7 +60,7 @@ final class ShareInertiaData
                 },
             ],
             'errorBags' => function () {
-                return collect(optional(Session::get('errors'))->getBags() ?: [])->mapWithKeys(fn ($bag, $key) => [$key => $bag->messages()])->all();
+                return collect(optional(Session::get('errors'))->getBags() ?: [])->mapWithKeys(fn ($bag, $key) => [$key => $bag->messages()])->all();  // @phpstan-ignore-line
             },
         ]));
 

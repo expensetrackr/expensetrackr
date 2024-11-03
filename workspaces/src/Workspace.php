@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 
-abstract class Workspace extends Model
+class Workspace extends Model
 {
     /**
      * Determine if the given user belongs to the workspace.
@@ -26,15 +26,17 @@ abstract class Workspace extends Model
      */
     final public function hasUserWithEmail(string $email): bool
     {
-        return $this->allUsers()->contains(fn ($user) => $user->email === $email);
+        return $this->allUsers()->contains(fn($user) => $user->email === $email);
     }
 
     /**
      * Get all the workspaces users including its owner.
+     *
+     * @return Collection<int, User>
      */
     final public function allUsers(): Collection
     {
-        return $this->users->merge([$this->owner]);
+        return $this->users->merge([type($this->owner)->as(User::class)]);
     }
 
     /**
@@ -47,10 +49,12 @@ abstract class Workspace extends Model
 
     /**
      * Get all the pending user invitations for the workspace.
+     *
+     * @return HasMany<WorkspaceInvitation, covariant $this>
      */
     final public function workspaceInvitations(): HasMany
     {
-        return $this->hasMany(Workspaces::workspaceInvitationModel());
+        return $this->hasMany(WorkspaceInvitation::class);
     }
 
     /**
@@ -69,10 +73,12 @@ abstract class Workspace extends Model
 
     /**
      * Get all the users that belong to the workspace.
+     *
+     * @return BelongsToMany<User, covariant $this>
      */
     final public function users(): BelongsToMany
     {
-        return $this->belongsToMany(Workspaces::userModel(), Workspaces::membershipModel())
+        return $this->belongsToMany(User::class, Membership::class)
             ->withPivot('role')
             ->withTimestamps()
             ->as('membership');
@@ -96,9 +102,11 @@ abstract class Workspace extends Model
 
     /**
      * Get the owner of the workspace.
+     *
+     * @return BelongsTo<User, covariant $this>
      */
     final public function owner(): BelongsTo
     {
-        return $this->belongsTo(Workspaces::userModel(), 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

@@ -12,11 +12,15 @@ final class InertiaManager
 {
     /**
      * The registered rendering callbacks.
+     *
+     * @var array<string, array<callable>>
      */
     private array $renderingCallbacks = [];
 
     /**
      * Render the given Inertia page.
+     *
+     * @param  array<string, mixed>  $data
      */
     public function render(Request $request, string $page, array $data = []): Response
     {

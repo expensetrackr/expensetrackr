@@ -17,10 +17,10 @@ final class TermsOfServiceController extends Controller
      */
     public function show(): Response
     {
-        $termsFile = Workspaces::localizedMarkdownPath('terms.md');
+        $termsFile = type(Workspaces::localizedMarkdownPath('terms.md'))->asString();
 
         return Inertia::render('TermsOfService', [
-            'terms' => Str::markdown(file_get_contents($termsFile)),
+            'terms' => Str::markdown(type(file_get_contents($termsFile))->asString()),
         ]);
     }
 }

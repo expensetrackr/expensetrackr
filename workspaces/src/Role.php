@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Workspaces;
 
 use JsonSerializable;
+use ReturnTypeWillChange;
 
-final class Role implements JsonSerializable
+class Role implements JsonSerializable
 {
     /**
      * The key identifier for the role.
@@ -20,6 +21,8 @@ final class Role implements JsonSerializable
 
     /**
      * The role's permissions.
+     *
+     * @var array<string>
      */
     public array $permissions;
 
@@ -30,6 +33,8 @@ final class Role implements JsonSerializable
 
     /**
      * Create a new role instance.
+     *
+     * @param  array<string>  $permissions
      */
     public function __construct(string $key, string $name, array $permissions)
     {
@@ -41,7 +46,7 @@ final class Role implements JsonSerializable
     /**
      * Describe the role.
      */
-    public function description(string $description): self
+    final public function description(string $description): self
     {
         $this->description = $description;
 
@@ -50,9 +55,11 @@ final class Role implements JsonSerializable
 
     /**
      * Get the JSON serializable representation of the object.
+     *
+     * @return array<string, string|array<string>>
      */
     #[ReturnTypeWillChange]
-    public function jsonSerialize(): array
+    final public function jsonSerialize(): array
     {
         return [
             'key' => $this->key,

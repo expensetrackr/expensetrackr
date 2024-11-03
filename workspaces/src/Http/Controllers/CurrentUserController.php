@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Workspaces\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -20,10 +21,11 @@ final class CurrentUserController extends Controller
      */
     public function destroy(Request $request, StatefulGuard $guard): Response
     {
+        $user = type($request->user())->as(User::class);
         $confirmed = app(ConfirmPassword::class)(
             $guard,
-            $request->user(),
-            $request->password
+            $user,
+            type($request->password)->asString()
         );
 
         if (! $confirmed) {
@@ -32,7 +34,7 @@ final class CurrentUserController extends Controller
             ]);
         }
 
-        app(DeletesUsers::class)->delete($request->user()->fresh());
+        app(DeletesUsers::class)->delete(type($user->fresh())->as(User::class));
 
         $guard->logout();
 

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Workspaces\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -20,7 +21,7 @@ final class OtherBrowserSessionsController extends Controller
     public function destroy(Request $request, StatefulGuard $guard): RedirectResponse
     {
         $confirmed = app(ConfirmPassword::class)(
-            $guard, $request->user(), $request->password
+            $guard, type($request->user())->as(User::class), type($request->password)->asString()
         );
 
         if (! $confirmed) {
@@ -29,7 +30,7 @@ final class OtherBrowserSessionsController extends Controller
             ]);
         }
 
-        $guard->logoutOtherDevices($request->password);
+        $guard->logoutOtherDevices(type($request->password)->asString());
 
         $this->deleteOtherSessionRecords($request);
 
@@ -47,8 +48,8 @@ final class OtherBrowserSessionsController extends Controller
             return;
         }
 
-        DB::connection(config('session.connection'))->table(config('session.table', 'sessions'))
-            ->where('user_id', $request->user()->getAuthIdentifier())
+        DB::connection(type(config('session.connection'))->asString())->table(type(config('session.table', 'sessions'))->asString())
+            ->where('user_id', $request->user()?->getAuthIdentifier())
             ->where('id', '!=', $request->session()->getId())
             ->delete();
     }

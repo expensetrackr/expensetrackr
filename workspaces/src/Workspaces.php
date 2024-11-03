@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Workspaces;
 
+use App\Models\User;
+use App\Models\Workspace;
+use App\Models\WorkspaceInvitation;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Workspaces\Contracts\AddsWorkspaceMembers;
@@ -23,38 +26,24 @@ final class Workspaces
 
     /**
      * The roles that are available to assign to users.
+     *
+     * @var array<string, Role>
      */
     public static array $roles = [];
 
     /**
      * The permissions that exist within the application.
+     *
+     * @var array<string>
      */
     public static array $permissions = [];
 
     /**
      * The default permissions that should be available to new entities.
+     *
+     * @var array<string>
      */
     public static array $defaultPermissions = [];
-
-    /**
-     * The user model that should be used by Workspaces.
-     */
-    public static string $userModel = 'App\\Models\\User';
-
-    /**
-     * The workspace model that should be used by Workspaces.
-     */
-    public static string $workspaceModel = 'App\\Models\\Workspace';
-
-    /**
-     * The membership model that should be used by Workspaces.
-     */
-    public static string $membershipModel = 'App\\Models\\Membership';
-
-    /**
-     * The workspace invitation model that should be used by Workspaces.
-     */
-    public static string $workspaceInvitationModel = 'App\\Models\\WorkspaceInvitation';
 
     /**
      * The Inertia manager instance.
@@ -79,6 +68,8 @@ final class Workspaces
 
     /**
      * Define a role.
+     *
+     * @param  array<string>  $permissions
      */
     public static function role(string $key, string $name, array $permissions): Role
     {
@@ -89,7 +80,7 @@ final class Workspaces
             ->all();
 
         return tap(new Role($key, $name, $permissions), function ($role) use ($key) {
-            static::$roles[$key] = $role;
+            self::$roles[$key] = $role;
         });
     }
 
@@ -103,6 +94,8 @@ final class Workspaces
 
     /**
      * Define the available API token permissions.
+     *
+     * @param  array<string>  $permissions
      */
     public static function permissions(array $permissions): self
     {
@@ -113,6 +106,8 @@ final class Workspaces
 
     /**
      * Define the default permissions that should be available to new API tokens.
+     *
+     * @param  array<string>  $permissions
      */
     public static function defaultApiTokenPermissions(array $permissions): self
     {
@@ -123,6 +118,9 @@ final class Workspaces
 
     /**
      * Return the permissions in the given list that are actually defined permissions for the application.
+     *
+     * @param  array<string>  $permissions
+     * @return array<string>
      */
     public static function validPermissions(array $permissions): array
     {
@@ -151,7 +149,7 @@ final class Workspaces
     public static function userHasWorkspaceFeatures(Model $user): bool
     {
         return (array_key_exists(HasWorkspaces::class, class_uses_recursive($user)) ||
-                method_exists($user, 'currentWorkspace')) &&
+            method_exists($user, 'currentWorkspace')) &&
             self::hasWorkspaceFeatures();
     }
 
@@ -182,7 +180,7 @@ final class Workspaces
     /**
      * Find a user instance by the given ID.
      */
-    public static function findUserByIdOrFail(int $id): mixed
+    public static function findUserByIdOrFail(int $id): User
     {
         return self::newUserModel()->where('id', $id)->firstOrFail();
     }
@@ -190,103 +188,33 @@ final class Workspaces
     /**
      * Get a new instance of the user model.
      */
-    public static function newUserModel()
+    public static function newUserModel(): User
     {
-        $model = self::userModel();
-
-        return new $model;
-    }
-
-    /**
-     * Get the name of the user model used by the application.
-     */
-    public static function userModel(): string
-    {
-        return self::$userModel;
+        return new User;
     }
 
     /**
      * Find a user instance by the given email address or fail.
      */
-    public static function findUserByEmailOrFail(string $email): mixed
+    public static function findUserByEmailOrFail(string $email): User
     {
         return self::newUserModel()->where('email', $email)->firstOrFail();
     }
 
     /**
-     * Specify the user model that should be used by Workspaces.
-     */
-    public static function useUserModel(string $model): self
-    {
-        self::$userModel = $model;
-
-        return new self;
-    }
-
-    /**
      * Get a new instance of the workspace model.
      */
-    public static function newWorkspaceModel(): mixed
+    public static function newWorkspaceModel(): Workspace
     {
-        $model = self::workspaceModel();
-
-        return new $model;
-    }
-
-    /**
-     * Get the name of the workspace model used by the application.
-     */
-    public static function workspaceModel(): string
-    {
-        return self::$workspaceModel;
-    }
-
-    /**
-     * Specify the workspace model that should be used by Workspaces.
-     *
-     * @return static
-     */
-    public static function useWorkspaceModel(string $model): self
-    {
-        self::$workspaceModel = $model;
-
-        return new self;
-    }
-
-    /**
-     * Get the name of the membership model used by the application.
-     */
-    public static function membershipModel(): string
-    {
-        return self::$membershipModel;
-    }
-
-    /**
-     * Specify the membership model that should be used by Workspaces.
-     */
-    public static function useMembershipModel(string $model): self
-    {
-        self::$membershipModel = $model;
-
-        return new self;
+        return new Workspace;
     }
 
     /**
      * Get the name of the workspace invitation model used by the application.
      */
-    public static function workspaceInvitationModel(): string
+    public static function workspaceInvitationModel(): WorkspaceInvitation
     {
-        return self::$workspaceInvitationModel;
-    }
-
-    /**
-     * Specify the workspace invitation model that should be used by Workspaces.
-     */
-    public static function useWorkspaceInvitationModel(string $model): self
-    {
-        self::$workspaceInvitationModel = $model;
-
-        return new self;
+        return new WorkspaceInvitation;
     }
 
     /**

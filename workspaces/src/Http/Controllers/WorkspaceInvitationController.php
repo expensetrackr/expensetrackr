@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Workspaces\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Workspace;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -23,17 +25,19 @@ final class WorkspaceInvitationController extends Controller
 
         $invitation = $model::whereKey($invitationId)->firstOrFail();
 
+        $workspace = type($invitation->workspace)->as(Workspace::class);
+
         app(AddsWorkspaceMembers::class)->add(
-            $invitation->workspace->owner,
-            $invitation->workspace,
+            type($workspace->owner)->as(User::class),
+            $workspace,
             $invitation->email,
             $invitation->role
         );
 
         $invitation->delete();
 
-        return redirect(config('fortify.home'))->banner(
-            __('Great! You have accepted the invitation to join the :workspace workspace.', ['workspace' => $invitation->workspace->name]),
+        return redirect(type(config('fortify.home'))->asString())->banner(
+            __('Great! You have accepted the invitation to join the :workspace workspace.', ['workspace' => $workspace->name]),
         );
     }
 

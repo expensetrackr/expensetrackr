@@ -16,11 +16,11 @@ trait RedirectsActions
      */
     public function redirectPath(mixed $action): Application|RedirectResponse|Redirector|Response
     {
-        if (method_exists($action, 'redirectTo')) {
-            $response = $action->redirectTo();
+        if (method_exists($action, 'redirectTo')) { // @phpstan-ignore-line
+            $response = $action->redirectTo(); // @phpstan-ignore-line
         } else {
-            $response = property_exists($action, 'redirectTo')
-                ? $action->redirectTo
+            $response = property_exists($action, 'redirectTo') // @phpstan-ignore-line
+                ? $action->redirectTo // @phpstan-ignore-line
                 : config('fortify.home');
         }
 

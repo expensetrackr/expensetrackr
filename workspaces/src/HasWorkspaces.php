@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Workspaces;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -16,13 +17,15 @@ trait HasWorkspaces
     /**
      * Determine if the given workspace is the current workspace.
      */
-    public function isCurrentWorkspace(mixed $workspace): bool
+    public function isCurrentWorkspace(Workspace $workspace): bool
     {
-        return $workspace->id === $this->currentWorkspace->id;
+        return $workspace->id === $this->currentWorkspace?->id;
     }
 
     /**
      * Get the current workspace of the user's context.
+     *
+     * @return BelongsTo<Workspace, covariant $this>
      */
     public function currentWorkspace(): BelongsTo
     {
@@ -30,13 +33,13 @@ trait HasWorkspaces
             $this->switchWorkspace($this->personalWorkspace());
         }
 
-        return $this->belongsTo(Workspaces::workspaceModel(), 'current_workspace_id');
+        return $this->belongsTo(Workspace::class, 'current_workspace_id');
     }
 
     /**
      * Switch the user's context to the given workspace.
      */
-    public function switchWorkspace(mixed $workspace): bool
+    public function switchWorkspace(Workspace $workspace): bool
     {
         if (! $this->belongsToWorkspace($workspace)) {
             return false;
@@ -54,7 +57,7 @@ trait HasWorkspaces
     /**
      * Determine if the user belongs to the given workspace.
      */
-    public function belongsToWorkspace(mixed $workspace): bool
+    public function belongsToWorkspace(?Workspace $workspace): bool
     {
         if (is_null($workspace)) {
             return false;
@@ -66,7 +69,7 @@ trait HasWorkspaces
     /**
      * Determine if the user owns the given workspace.
      */
-    public function ownsWorkspace(mixed $workspace): bool
+    public function ownsWorkspace(?Workspace $workspace): bool
     {
         if (is_null($workspace)) {
             return false;
@@ -80,11 +83,13 @@ trait HasWorkspaces
      */
     public function personalWorkspace(): Workspace
     {
-        return $this->ownedWorkspaces->firstWhere('personal_workspace', true);
+        return type($this->ownedWorkspaces->firstWhere('personal_workspace', true))->as(Workspace::class);
     }
 
     /**
      * Get all the workspaces the user owns or belongs to.
+     *
+     * @return Collection<int, Workspace>
      */
     public function allWorkspaces(): Collection
     {
@@ -93,18 +98,22 @@ trait HasWorkspaces
 
     /**
      * Get all the workspaces the user owns.
+     *
+     * @return HasMany<Workspace, covariant $this>
      */
     public function ownedWorkspaces(): HasMany
     {
-        return $this->hasMany(Workspaces::workspaceModel());
+        return $this->hasMany(Workspace::class);
     }
 
     /**
      * Get all the workspace the user belongs to.
+     *
+     * @return BelongsToMany<Workspace, covariant $this>
      */
     public function workspaces(): BelongsToMany
     {
-        return $this->belongsToMany(Workspaces::workspaceModel(), Workspaces::membershipModel())
+        return $this->belongsToMany(Workspace::class, Membership::class)
             ->withPivot('role')
             ->withTimestamps()
             ->as('membership');
@@ -113,21 +122,22 @@ trait HasWorkspaces
     /**
      * Determine if the user has the given role on the given workspace.
      */
-    public function hasWorkspaceRole(mixed $workspace, string $role): bool
+    public function hasWorkspaceRole(Workspace $workspace, string $role): bool
     {
         if ($this->ownsWorkspace($workspace)) {
             return true;
         }
 
-        return $this->belongsToWorkspace($workspace) && optional(Workspaces::findRole($workspace->users->where(
-            'id', $this->id
-        )->first()->membership->role))->key === $role;
+        return $this->belongsToWorkspace($workspace) && Workspaces::findRole(type($workspace->users->firstWhere(
+            'id',
+            $this->id
+        )?->membership->role)->asString())?->key === $role;
     }
 
     /**
      * Determine if the user has the given permission on the given workspace.
      */
-    public function hasWorkspacePermission(mixed $workspace, string $permission): bool
+    public function hasWorkspacePermission(Workspace $workspace, string $permission): bool
     {
         if ($this->ownsWorkspace($workspace)) {
             return true;
@@ -137,9 +147,10 @@ trait HasWorkspaces
             return false;
         }
 
-        if (in_array(HasApiTokens::class, class_uses_recursive($this)) &&
-            ! $this->tokenCan($permission) &&
-            $this->currentAccessToken() !== null) {
+        if (
+            in_array(HasApiTokens::class, class_uses_recursive($this)) &&
+            ! $this->tokenCan($permission)
+        ) {
             return false;
         }
 
@@ -153,8 +164,10 @@ trait HasWorkspaces
 
     /**
      * Get the user's permissions for the given workspace.
+     *
+     * @return array<string>
      */
-    public function workspacePermissions(mixed $workspace): array
+    public function workspacePermissions(Workspace $workspace): array
     {
         if ($this->ownsWorkspace($workspace)) {
             return ['*'];
@@ -164,13 +177,13 @@ trait HasWorkspaces
             return [];
         }
 
-        return (array) optional($this->workspaceRole($workspace))->permissions;
+        return $this->workspaceRole($workspace)->permissions ?? [];
     }
 
     /**
      * Get the role that the user has on the workspace.
      */
-    public function workspaceRole(mixed $workspace): Role|OwnerRole|null
+    public function workspaceRole(Workspace $workspace): Role|OwnerRole|null
     {
         if ($this->ownsWorkspace($workspace)) {
             return new OwnerRole;
@@ -180,11 +193,7 @@ trait HasWorkspaces
             return null;
         }
 
-        $role = $workspace->users
-            ->where('id', $this->id)
-            ->first()
-            ->membership
-            ->role;
+        $role = $workspace->users->firstWhere('id', $this->id)?->membership->role;
 
         return $role ? Workspaces::findRole($role) : null;
     }

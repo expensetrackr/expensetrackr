@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Workspaces\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -25,17 +26,17 @@ final class WorkspaceMemberController extends Controller
 
         if (Features::sendsWorkspaceInvitations()) {
             app(InvitesWorkspaceMembers::class)->invite(
-                $request->user(),
+                type($request->user())->as(User::class),
                 $workspace,
-                $request->email ?: '',
-                $request->role
+                type($request->email)->asString() ?: '',
+                type($request->role)->asString()
             );
         } else {
             app(AddsWorkspaceMembers::class)->add(
-                $request->user(),
+                type($request->user())->as(User::class),
                 $workspace,
-                $request->email ?: '',
-                $request->role
+                type($request->email)->asString() ?: '',
+                type($request->role)->asString()
             );
         }
 
@@ -48,10 +49,10 @@ final class WorkspaceMemberController extends Controller
     public function update(Request $request, int $workspaceId, int $userId): RedirectResponse
     {
         app(UpdateWorkspaceMemberRole::class)->update(
-            $request->user(),
+            type($request->user())->as(User::class),
             Workspaces::newWorkspaceModel()->findOrFail($workspaceId),
             $userId,
-            $request->role
+            type($request->role)->asString()
         );
 
         return back(303);
@@ -65,13 +66,13 @@ final class WorkspaceMemberController extends Controller
         $workspace = Workspaces::newWorkspaceModel()->findOrFail($workspaceId);
 
         app(RemovesWorkspaceMembers::class)->remove(
-            $request->user(),
+            type($request->user())->as(User::class),
             $workspace,
             $user = Workspaces::findUserByIdOrFail($userId)
         );
 
-        if ($request->user()->id === $user->id) {
-            return redirect(config('fortify.home'));
+        if ($request->user()?->id === $user->id) {
+            return redirect(type(config('fortify.home'))->asString());
         }
 
         return back(303);

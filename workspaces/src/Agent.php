@@ -64,7 +64,7 @@ final class Agent extends MobileDetect
     {
         return $this->retrieveUsingCacheOrResolve('workspaces.platform', function () {
             return $this->findDetectionRulesAgainstUserAgent(
-                $this->mergeRules(MobileDetect::getOperatingSystems(), static::$additionalOperatingSystems)
+                $this->mergeRules(MobileDetect::getOperatingSystems(), self::$additionalOperatingSystems)
             );
         });
     }
@@ -76,7 +76,7 @@ final class Agent extends MobileDetect
     {
         return $this->retrieveUsingCacheOrResolve('workspaces.browser', function () {
             return $this->findDetectionRulesAgainstUserAgent(
-                $this->mergeRules(static::$additionalBrowsers, MobileDetect::getBrowsers())
+                $this->mergeRules(self::$additionalBrowsers, MobileDetect::getBrowsers())
             );
         });
     }
@@ -89,7 +89,7 @@ final class Agent extends MobileDetect
         return $this->retrieveUsingCacheOrResolve('workspaces.desktop', function () {
             // Check specifically for cloudfront headers if the useragent === 'Amazon CloudFront'
             if (
-                $this->getUserAgent() === static::$cloudFrontUA
+                $this->getUserAgent() === self::$cloudFrontUA
                 && $this->getHttpHeader('HTTP_CLOUDFRONT_IS_DESKTOP_VIEWER') === 'true'
             ) {
                 return true;
@@ -102,9 +102,12 @@ final class Agent extends MobileDetect
     /**
      * Retrieve from the given key from the cache or resolve the value.
      *
-     * @param  Closure():mixed  $callback
+     * @template T
+     *
+     * @param  Closure():T  $callback
+     * @return T
      */
-    protected function retrieveUsingCacheOrResolve(string $key, Closure $callback): mixed
+    protected function retrieveUsingCacheOrResolve(string $key, Closure $callback)
     {
         $cacheKey = $this->createCacheKey($key);
 
@@ -119,6 +122,8 @@ final class Agent extends MobileDetect
 
     /**
      * Match a detection rule and return the matched key.
+     *
+     * @param  array<string, string>  $rules
      */
     protected function findDetectionRulesAgainstUserAgent(array $rules): ?string
     {
@@ -129,7 +134,7 @@ final class Agent extends MobileDetect
                 continue;
             }
 
-            if ($this->match($regex, $userAgent)) {
+            if ($this->match($regex, $userAgent ?? '')) {
                 return $key ?: reset($this->matchesArray);
             }
         }
@@ -140,10 +145,9 @@ final class Agent extends MobileDetect
     /**
      * Merge multiple rules into one array.
      *
-     * @param  array  $all
      * @return array<string, string>
      */
-    protected function mergeRules(...$all): array
+    protected function mergeRules(array ...$all): array // @phpstan-ignore-line
     {
         $merged = [];
 

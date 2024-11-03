@@ -50,6 +50,8 @@ trait HasProfilePhoto
 
     /**
      * Get the URL to the user's profile photo.
+     *
+     * @return Attribute<string|null, never>
      */
     public function profilePhotoUrl(): Attribute
     {
@@ -65,6 +67,6 @@ trait HasProfilePhoto
      */
     protected function profilePhotoDisk(): string
     {
-        return isset($_ENV['VAPOR_ARTIFACT_NAME']) ? 's3' : config('workspaces.profile_photo_disk', 'public');
+        return isset($_ENV['VAPOR_ARTIFACT_NAME']) ? 's3' : type(config('workspaces.profile_photo_disk', 'public'))->asString();
     }
 }

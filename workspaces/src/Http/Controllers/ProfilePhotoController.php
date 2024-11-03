@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Workspaces\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -15,7 +16,8 @@ final class ProfilePhotoController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
-        $request->user()->deleteProfilePhoto();
+        $user = type($request->user())->as(User::class);
+        $user->deleteProfilePhoto();
 
         return back(303)->with('status', 'profile-photo-deleted');
     }

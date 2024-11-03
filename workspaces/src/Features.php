@@ -19,7 +19,7 @@ final class Features
      */
     public static function enabled(string $feature): bool
     {
-        return in_array($feature, config('workspaces.features', []));
+        return in_array($feature, type(config('workspaces.features', []))->asArray());
     }
 
     /**
@@ -56,6 +56,8 @@ final class Features
 
     /**
      * Enable the workspaces feature.
+     *
+     * @param  array<string, mixed>  $options
      */
     public static function workspaces(array $options = []): string
     {

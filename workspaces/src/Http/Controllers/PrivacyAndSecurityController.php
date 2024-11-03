@@ -34,28 +34,29 @@ final class PrivacyAndSecurityController extends Controller
     /**
      * Get the current sessions.
      */
+    // @phpstan-ignore-next-line This method is not type-safe because it uses the database session driver. Maybe we can check later the types.
     public function sessions(Request $request): Collection
     {
         if (config('session.driver') !== 'database') {
             return collect();
         }
 
-        return DB::connection(config('session.connection'))->table(config('session.table', 'sessions'))
-            ->where('user_id', $request->user()->getAuthIdentifier())
+        return DB::connection(type(config('session.connection'))->asString())->table(type(config('session.table', 'sessions'))->asString())
+            ->where('user_id', $request->user()?->getAuthIdentifier())
             ->orderBy('last_activity', 'desc')
             ->get()->map(function ($session) use ($request) {
                 $agent = $this->createAgent($session);
 
                 return (object) [
-                    'id' => $session->id,
+                    'id' => $session->id, // @phpstan-ignore-line
                     'agent' => [
                         'is_desktop' => $agent->isDesktop(),
                         'platform' => $agent->platform(),
                         'browser' => $agent->browser(),
                     ],
-                    'ip_address' => $session->ip_address,
-                    'is_current_device' => $session->id === $request->session()->getId(),
-                    'last_active' => Carbon::createFromTimestamp($session->last_activity)->diffForHumans(),
+                    'ip_address' => $session->ip_address, // @phpstan-ignore-line
+                    'is_current_device' => $session->id === $request->session()->getId(), // @phpstan-ignore-line
+                    'last_active' => Carbon::createFromTimestamp($session->last_activity)->diffForHumans(), // @phpstan-ignore-line
                 ];
             });
     }
@@ -65,6 +66,6 @@ final class PrivacyAndSecurityController extends Controller
      */
     protected function createAgent(mixed $session): Agent
     {
-        return tap(new Agent(), fn ($agent) => $agent->setUserAgent($session->user_agent));
+        return tap(new Agent(), fn ($agent) => $agent->setUserAgent($session->user_agent)); // @phpstan-ignore-line
     }
 }
