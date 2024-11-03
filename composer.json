@@ -32,6 +32,7 @@
 		"tightenco/ziggy": "2.3.1"
 	},
 	"require-dev": {
+		"barryvdh/laravel-ide-helper": "3.2.2",
 		"fakerphp/faker": "1.23.1",
 		"larastan/larastan": "2.9.10",
 		"laravel/pint": "1.18.1",
@@ -61,7 +62,11 @@
 			"Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
 			"@php artisan package:discover --ansi"
 		],
-		"post-update-cmd": ["@php artisan vendor:publish --tag=laravel-assets --ansi --force"],
+		"post-update-cmd": [
+            "@php artisan vendor:publish --tag=laravel-assets --ansi --force",
+            "@php artisan ide-helper:generate",
+            "@php artisan ide-helper:meta"
+        ],
 		"post-root-package-install": ["@php -r \"file_exists('.env') || copy('.env.example', '.env');\""],
 		"post-create-project-cmd": [
 			"@php artisan key:generate --ansi",

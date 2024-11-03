@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace Workspaces\Http\Controllers;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Inertia\Response;
-use Laravel\Sanctum\PersonalAccessToken;
 use Workspaces\Workspaces;
 
 final class ApiTokenController extends Controller
@@ -20,8 +18,8 @@ final class ApiTokenController extends Controller
     public function index(Request $request): Response
     {
         return Workspaces::inertia()->render($request, 'API/Index', [
-            'tokens' => $request->user()?->tokens->map(fn (Model $token) => $token->toArray() + [
-                'last_used_ago' => type($token)->as(PersonalAccessToken::class)->last_used_at?->diffForHumans(),
+            'tokens' => $request->user()?->tokens->map(fn ($token) => $token->toArray() + [
+                'last_used_ago' => $token->last_used_at?->diffForHumans(),
             ]),
             'availablePermissions' => Workspaces::$permissions,
             'defaultPermissions' => Workspaces::$defaultPermissions,
