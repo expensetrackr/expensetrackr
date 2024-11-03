@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Context;
 use Illuminate\Support\Facades\Log;
 
-// @phpstan-ignore-next-line
 trait WorkspaceOwned
 {
     public static function bootWorkspaceOwned(): void
@@ -35,7 +34,7 @@ trait WorkspaceOwned
     /**
      * Get the workspace that the model belongs to.
      *
-     * @return BelongsTo<Workspace, $this>
+     * @return BelongsTo<Workspace, covariant $this>
      */
     public function workspace(): BelongsTo
     {
