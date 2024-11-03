@@ -44,7 +44,7 @@ use Workspaces\HasWorkspaces;
  * @property-read int|null $tokens_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Workspaces\Workspace> $workspaces
  * @property-read int|null $workspaces_count
- * @property-read Membership $membership
+ * @property-read \Workspaces\Membership $membership
  *
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User newModelQuery()
@@ -104,7 +104,7 @@ final class User extends Authenticatable
     public function profilePhotoUrl(): Attribute
     {
         return filter_var($this->profile_photo_path, FILTER_VALIDATE_URL)
-            ? Attribute::get(fn () => $this->profile_photo_path)
+            ? Attribute::get(fn() => $this->profile_photo_path)
             : $this->getPhotoUrl();
     }
 
