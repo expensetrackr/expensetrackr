@@ -8,6 +8,7 @@ use Database\Factories\UserFactory;
 use Illuminate\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use JoelButcher\Socialstream\HasConnectedAccounts;
@@ -31,6 +32,8 @@ use Workspaces\HasWorkspaces;
  * @property string|null $two_factor_secret
  * @property string|null $two_factor_recovery_codes
  * @property \Carbon\CarbonImmutable|null $two_factor_confirmed_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Account> $accounts
+ * @property-read int|null $accounts_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \JoelButcher\Socialstream\ConnectedAccount> $connectedAccounts
  * @property-read int|null $connected_accounts_count
  * @property-read \Workspaces\Workspace|null $currentWorkspace
@@ -42,9 +45,9 @@ use Workspaces\HasWorkspaces;
  * @property-read string|null $profile_photo_url
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
  * @property-read int|null $tokens_count
+ * @property-read \Workspaces\Membership|null $membership
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Workspaces\Workspace> $workspaces
  * @property-read int|null $workspaces_count
- * @property-read \Workspaces\Membership $membership
  *
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User newModelQuery()
@@ -106,6 +109,16 @@ final class User extends Authenticatable
         return filter_var($this->profile_photo_path, FILTER_VALIDATE_URL)
             ? Attribute::get(fn () => $this->profile_photo_path)
             : $this->getPhotoUrl();
+    }
+
+    /**
+     * Get the accounts created by the user.
+     *
+     * @return HasMany<Account, covariant $this>
+     */
+    public function accounts(): HasMany
+    {
+        return $this->hasMany(Account::class, 'created_by');
     }
 
     /**
