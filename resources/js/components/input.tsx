@@ -39,9 +39,9 @@ export const inputVariants = cva({
     ],
     variants: {
         $size: {
-            xs: "h-8 rounded-8 p-1.5",
-            sm: "h-9 rounded-8 p-2",
-            md: "h-10 rounded-10 p-2.5",
+            xs: "rounded-8 h-8 p-1.5",
+            sm: "rounded-8 h-9 p-2",
+            md: "rounded-10 h-10 p-2.5",
         },
     },
     defaultVariants: {

@@ -1,10 +1,10 @@
 import { SidebarLayout } from "#/components/sidebar-layout.tsx";
-import { CreateSidebar } from "#/layouts/partials/create-sidebar.tsx";
+import { CreateAccountSidebar } from "#/layouts/partials/create-account-sidebar.tsx";
 
 export function CreateLayout({ children }: { children: React.ReactNode }) {
     return (
         <SidebarLayout
-            sidebar={<CreateSidebar />}
+            sidebar={<CreateAccountSidebar />}
             sidebarClassName="lg:pl-2 lg:py-2"
             contentClassName="lg:pt-0 lg:pr-0"
             contentChildrenClassName="relative lg:ring-0"

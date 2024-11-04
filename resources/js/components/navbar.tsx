@@ -29,13 +29,13 @@ export const NavbarSpacer = twc.div.attrs({
 
 export const navbarItemClasses = cx(
     // Base
-    "relative flex min-w-0 items-center gap-3 rounded-8 p-2 text-left font-medium text-base/6 text-zinc-950 transition sm:text-sm/5",
+    "rounded-8 relative flex min-w-0 items-center gap-3 p-2 text-left text-base/6 font-medium text-zinc-950 transition sm:text-sm/5",
     // Leading icon/icon-only
     "data-[slot=icon]:*:size-6 data-[slot=icon]:*:shrink-0 data-[slot=icon]:*:fill-zinc-500 sm:data-[slot=icon]:*:size-5",
     // Trailing icon (down chevron or similar)
     "data-[slot=icon]:last:[&:not(:nth-child(2))]:*:ml-auto data-[slot=icon]:last:[&:not(:nth-child(2))]:*:size-5 sm:data-[slot=icon]:last:[&:not(:nth-child(2))]:*:size-4",
     // Avatar
-    "data-[slot=avatar]:*:-m-0.5 data-[slot=avatar]:*:size-7 sm:data-[slot=avatar]:*:size-6 data-[slot=avatar]:*:[--avatar-radius:var(--radius-4)] data-[slot=avatar]:*:[--ring-opacity:10%]",
+    "data-[slot=avatar]:*:-m-0.5 data-[slot=avatar]:*:size-7 data-[slot=avatar]:*:[--avatar-radius:var(--radius-4)] data-[slot=avatar]:*:[--ring-opacity:10%] sm:data-[slot=avatar]:*:size-6",
     // Hover
     "data-[hover]:bg-zinc-950/5 data-[slot=icon]:*:data-[hover]:fill-zinc-950",
     // Active

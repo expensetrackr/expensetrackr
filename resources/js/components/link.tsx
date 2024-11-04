@@ -8,11 +8,11 @@ import { cva } from "#/utils/cva.ts";
 const linkVariants = cva({
     base: [
         // Base
-        "relative isolate inline-flex items-center justify-center rounded-4 transition",
+        "rounded-4 relative isolate inline-flex items-center justify-center transition",
         // Focus
-        "focus:outline-none data-[focus]:outline data-[focus]:outline-2 data-[focus]:outline-primary data-[focus]:outline-offset-2",
+        "data-[focus]:outline-primary focus:outline-none data-[focus]:outline data-[focus]:outline-2 data-[focus]:outline-offset-2",
         // Icon
-        "[&>[data-slot=icon]]:-mx-0.5 forced-colors:[--link-icon:ButtonText] forced-colors:data-[hover]:[--link-icon:ButtonText] [&>[data-slot=icon]]:my-0.5 [&>[data-slot=icon]]:size-5 [&>[data-slot=icon]]:shrink-0 [&>[data-slot=icon]]:text-[--link-icon] [&>[data-slot=icon]]:sm:my-1 [&>[data-slot=icon]]:sm:size-4",
+        "forced-colors:[--link-icon:ButtonText] forced-colors:data-[hover]:[--link-icon:ButtonText] [&>[data-slot=icon]]:-mx-0.5 [&>[data-slot=icon]]:my-0.5 [&>[data-slot=icon]]:size-5 [&>[data-slot=icon]]:shrink-0 [&>[data-slot=icon]]:text-[--link-icon] [&>[data-slot=icon]]:sm:my-1 [&>[data-slot=icon]]:sm:size-4",
     ],
     variants: {
         $color: {

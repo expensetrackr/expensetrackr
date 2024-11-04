@@ -36,7 +36,7 @@ export function Description({
             data-slot="description"
             {...props}
             className={cx(
-                "text-paragraph-xs inline-flex items-center gap-1 text-[var(--text-sub-600)] data-[disabled]:opacity-50",
+                "text-paragraph-xs inline-flex items-start gap-1 text-[var(--text-sub-600)] data-[disabled]:opacity-50",
                 className,
             )}
         >

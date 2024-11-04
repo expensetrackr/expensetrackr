@@ -1,14 +1,16 @@
 {
-    "[javascript]": {
-        "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-    },
     "[jsonc]": {
         "editor.defaultFormatter": "vscode.json-language-features"
     },
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true,
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
     "eslint.enable": true,
     "eslint.useFlatConfig": true,
+    "tailwindCSS.classAttributes": [
+        "class",
+        "className",
+        "buttonClassName"
+    ],
     "tailwindCSS.experimental.classRegex": [
         // HeadlessUI Transition (React)
         "(?:enter|leave)(?:From|To)?=\\s*(?:\"|'|{`)([^(?:\"|'|`})]*)",
@@ -23,5 +25,6 @@
         ],
         // Plain Javascript Object
         ":\\s*?[\"'`]([^\"'`]*).*?,"
-    ]
+    ],
+    "tailwindCSS.experimental.configFile": "./resources/css/tailwind.css"
 }

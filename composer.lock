@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5bc670c77216bdf1896f528c8b5a1489",
+    "content-hash": "dab28c1e205e095c2f5784cca392980c",
     "packages": [
         {
             "name": "akaunting/laravel-money",
@@ -412,16 +412,16 @@
         },
         {
             "name": "composer/ca-bundle",
-            "version": "1.5.2",
+            "version": "1.5.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/ca-bundle.git",
-                "reference": "48a792895a2b7a6ee65dd5442c299d7b835b6137"
+                "reference": "3b1fc3f0be055baa7c6258b1467849c3e8204eb2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/48a792895a2b7a6ee65dd5442c299d7b835b6137",
-                "reference": "48a792895a2b7a6ee65dd5442c299d7b835b6137",
+                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/3b1fc3f0be055baa7c6258b1467849c3e8204eb2",
+                "reference": "3b1fc3f0be055baa7c6258b1467849c3e8204eb2",
                 "shasum": ""
             },
             "require": {
@@ -468,7 +468,7 @@
             "support": {
                 "irc": "irc://irc.freenode.org/composer",
                 "issues": "https://github.com/composer/ca-bundle/issues",
-                "source": "https://github.com/composer/ca-bundle/tree/1.5.2"
+                "source": "https://github.com/composer/ca-bundle/tree/1.5.3"
             },
             "funding": [
                 {
@@ -484,7 +484,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-09-25T07:49:53+00:00"
+            "time": "2024-11-04T10:15:26+00:00"
         },
         {
             "name": "composer/class-map-generator",
@@ -2563,6 +2563,52 @@
                 "source": "https://github.com/jsonrainbow/json-schema/tree/5.3.0"
             },
             "time": "2024-07-06T21:00:26+00:00"
+        },
+        {
+            "name": "kongulov/interact-with-enum",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kongulov/interact-with-enum.git",
+                "reference": "89acf4725e0408a7c1945d239fdf519eb1076224"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kongulov/interact-with-enum/zipball/89acf4725e0408a7c1945d239fdf519eb1076224",
+                "reference": "89acf4725e0408a7c1945d239fdf519eb1076224",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Kongulov\\Traits\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ramiz Kongulov",
+                    "email": "ramiz.kongulov@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Trait for convenient use of ENUM in PHP",
+            "homepage": "https://github.com/kongulov/interact-with-enum",
+            "keywords": [
+                "enum",
+                "php"
+            ],
+            "support": {
+                "issues": "https://github.com/kongulov/interact-with-enum/issues",
+                "source": "https://github.com/kongulov/interact-with-enum/tree/1.0.0"
+            },
+            "time": "2023-06-28T19:30:17+00:00"
         },
         {
             "name": "laminas/laminas-diactoros",

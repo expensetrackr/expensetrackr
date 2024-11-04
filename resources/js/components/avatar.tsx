@@ -87,7 +87,7 @@ export function Avatar({
 }
 
 const avatarButtonVariants = cva({
-    base: "relative focus:outline-none data-[focus]:outline data-[focus]:outline-2 data-[focus]:outline-blue-500 data-[focus]:outline-offset-2",
+    base: "relative focus:outline-none data-[focus]:outline data-[focus]:outline-2 data-[focus]:outline-offset-2 data-[focus]:outline-blue-500",
     variants: {
         $square: {
             true: "rounded-[20%]",

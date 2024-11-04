@@ -54,9 +54,9 @@ export function DropdownMenu({
 
 const dropdownItemClasses = cx(
     // Base styles
-    "group cursor-default rounded-8 p-2 transition focus:outline-none",
+    "group rounded-8 cursor-default p-2 transition focus:outline-none",
     // Text styles
-    "text-left text-paragraph-sm forced-colors:text-[CanvasText]",
+    "text-paragraph-sm text-left forced-colors:text-[CanvasText]",
     // Focus
     "data-focus:bg-[var(--bg-weak-50)]",
     // Disabled state
@@ -66,10 +66,10 @@ const dropdownItemClasses = cx(
     // Use subgrid when available but fallback to an explicit grid layout if not
     "col-span-full grid grid-cols-[auto_1fr_1.5rem_0.5rem_auto] items-center supports-[grid-template-columns:subgrid]:grid-cols-subgrid",
     // Icons
-    "[&>[data-slot=icon]]:-ml-0.5 [&>[data-slot=icon]]:col-start-1 [&>[data-slot=icon]]:row-start-1 [&>[data-slot=icon]]:mr-2.5 [&>[data-slot=icon]]:size-5 sm:[&>[data-slot=icon]]:mr-2",
+    "[&>[data-slot=icon]]:col-start-1 [&>[data-slot=icon]]:row-start-1 [&>[data-slot=icon]]:mr-2.5 [&>[data-slot=icon]]:-ml-0.5 [&>[data-slot=icon]]:size-5 sm:[&>[data-slot=icon]]:mr-2",
     "[&>[data-slot=icon]]:text-[var(--icon-sub-600)]",
     // Avatar
-    "[&>[data-slot=avatar]]:-ml-1 [&>[data-slot=avatar]]:mr-2.5 [&>[data-slot=avatar]]:size-6 sm:[&>[data-slot=avatar]]:mr-2 sm:[&>[data-slot=avatar]]:size-5",
+    "[&>[data-slot=avatar]]:mr-2.5 [&>[data-slot=avatar]]:-ml-1 [&>[data-slot=avatar]]:size-6 sm:[&>[data-slot=avatar]]:mr-2 sm:[&>[data-slot=avatar]]:size-5",
 );
 
 export function DropdownItem({

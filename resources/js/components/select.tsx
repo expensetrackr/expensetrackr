@@ -7,7 +7,7 @@ import { cva, cx } from "#/utils/cva.ts";
 const selectVariants = cva({
     base: [
         // Basic layout
-        "relative block w-full appearance-none shadow-none ring-0 transition",
+        "relative block w-full appearance-none ring-0 shadow-none transition",
         // Typography
         "text-paragraph-sm placeholder:text-[var(--text-soft-400)] placeholder:transition-colors focus-visible:placeholder:text-[var(--text-strong-950)] data-hover:placeholder:text-[var(--text-sub-600)]",
         // Border
@@ -23,9 +23,9 @@ const selectVariants = cva({
     ],
     variants: {
         $size: {
-            xs: "h-8 rounded-8 p-1.5",
-            sm: "h-9 rounded-8 p-2",
-            md: "h-10 rounded-10 p-2.5",
+            xs: "rounded-8 h-8 p-1.5",
+            sm: "rounded-8 h-9 p-2",
+            md: "rounded-10 h-10 p-2.5",
         },
     },
     defaultVariants: {

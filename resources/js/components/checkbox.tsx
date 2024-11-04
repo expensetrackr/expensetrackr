@@ -33,9 +33,9 @@ export const CheckboxField = twc(Headless.Field).attrs({
 const checkboxVariants = cva({
     base: [
         // Basic layout
-        "relative isolate flex size-4 items-center justify-center rounded-4 transition",
+        "rounded-4 relative isolate flex size-4 items-center justify-center transition",
         // Background color + shadow applied to inset pseudo-element, so it blends with border in light mode
-        "before:-z-10 before:absolute before:inset-0 before:rounded-[calc(4px-2px)] before:bg-[var(--bg-white-0)] before:shadow before:transition",
+        "before:absolute before:inset-0 before:-z-10 before:rounded-[calc(4px-2px)] before:bg-[var(--bg-white-0)] before:shadow before:transition",
         // Background color when checked
         "group-data-[checked]:group-data-[focus]:bg-primary-dark group-data-[checked]:group-data-[hover]:bg-primary-darker group-data-[checked]:before:bg-[var(--checkbox-checked-bg)]",
         "group-data-[indeterminate]:group-data-[focus]:bg-primary-dark group-data-[indeterminate]:group-data-[hover]:bg-primary-darker group-data-[indeterminate]:before:bg-[var(--checkbox-checked-bg)]",
@@ -45,12 +45,12 @@ const checkboxVariants = cva({
         "bg-[var(--bg-white-0)]",
         "dark:group-data-[indeterminate]:bg-[var(--checkbox-checked-bg)]",
         // Border
-        "border-2 border-[var(--bg-soft-200)] group-data-[checked]:group-data-[hover]:border-transparent group-data-[checked]:border-transparent group-data-[hover]:border-[var(--bg-sub-300)] group-data-[checked]:bg-[var(--checkbox-checked-border)]",
-        "group-data-[indeterminate]:group-data-[hover]:border-transparent group-data-[indeterminate]:border-transparent group-data-[indeterminate]:bg-[var(--checkbox-checked-border)]",
+        "border-2 border-[var(--bg-soft-200)] group-data-[checked]:border-transparent group-data-[checked]:bg-[var(--checkbox-checked-border)] group-data-[hover]:border-[var(--bg-sub-300)] group-data-[checked]:group-data-[hover]:border-transparent",
+        "group-data-[indeterminate]:border-transparent group-data-[indeterminate]:bg-[var(--checkbox-checked-border)] group-data-[indeterminate]:group-data-[hover]:border-transparent",
         // Focus ring
         "group-data-[focus]:border-primary-dark group-data-[focus]:bg-[var(--bg-white-0)]",
         // Disabled state
-        "group-data-[disabled]:border-[var(--bg-soft-200)] group-data-[disabled]:bg-[var(--bg-soft-200)] group-data-[disabled]:before:bg-transparent group-data-[disabled]:[--checkbox-check:var(--color-white)]",
+        "group-data-[disabled]:border-[var(--bg-soft-200)] group-data-[disabled]:bg-[var(--bg-soft-200)] group-data-[disabled]:[--checkbox-check:var(--color-white)] group-data-[disabled]:before:bg-transparent",
         // Forced colors mode
         "forced-colors:[--checkbox-check:HighlightText] forced-colors:[--checkbox-checked-bg:Highlight] forced-colors:group-data-[disabled]:[--checkbox-check:Highlight]",
         undefined,

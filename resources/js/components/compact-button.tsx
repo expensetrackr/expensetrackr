@@ -13,11 +13,11 @@ const compactButtonVariants = cva({
         // Hover
         "data-[hover]:bg-[var(--bg-weak-50)] data-[hover]:text-[var(--icon-strong-950)]",
         // Focus
-        "focus:outline-none data-[focus]:bg-[var(--bg-strong-950)] data-[focus]:text-[var(--icon-white-0)] data-[focus]:outline data-[focus]:outline-2 data-[focus]:outline-neutral-alpha-16 data-[focus]:outline-offset-2",
+        "data-[focus]:outline-neutral-alpha-16 focus:outline-none data-[focus]:bg-[var(--bg-strong-950)] data-[focus]:text-[var(--icon-white-0)] data-[focus]:outline data-[focus]:outline-2 data-[focus]:outline-offset-2",
         // Disabled
         "data-[disabled]:bg-transparent data-[disabled]:text-[var(--icon-disabled-300)]",
         // Icon
-        "[&>[data-slot=icon]]:-mx-0.5 forced-colors:[--btn-icon:ButtonText] forced-colors:data-[hover]:[--btn-icon:ButtonText] [&>[data-slot=icon]]:my-0.5 [&>[data-slot=icon]]:size-5 [&>[data-slot=icon]]:shrink-0 [&>[data-slot=icon]]:text-[--btn-icon] [&>[data-slot=icon]]:sm:my-1 [&>[data-slot=icon]]:sm:size-4",
+        "forced-colors:[--btn-icon:ButtonText] forced-colors:data-[hover]:[--btn-icon:ButtonText] [&>[data-slot=icon]]:-mx-0.5 [&>[data-slot=icon]]:my-0.5 [&>[data-slot=icon]]:size-5 [&>[data-slot=icon]]:shrink-0 [&>[data-slot=icon]]:text-[--btn-icon] [&>[data-slot=icon]]:sm:my-1 [&>[data-slot=icon]]:sm:size-4",
     ],
     variants: {
         $variant: {

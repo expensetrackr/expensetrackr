@@ -8,13 +8,13 @@ import { Link } from "./link.tsx";
 const buttonVariants = cva({
     base: [
         // Base
-        "relative isolate inline-flex items-center justify-center font-medium text-label-sm transition",
+        "text-label-sm relative isolate inline-flex items-center justify-center font-medium transition",
         // Focus
-        "focus:outline-none data-focus:outline data-focus:outline-2 data-focus:outline-primary data-focus:outline-offset-2",
+        "data-focus:outline-primary focus:outline-none data-focus:outline data-focus:outline-2 data-focus:outline-offset-2",
         // Disabled
         "data-disabled:opacity-50",
         // Icon
-        "[&>[data-slot=icon]]:-mx-0.5 forced-colors:[--btn-icon:ButtonText] forced-colors:data-hover:[--btn-icon:ButtonText] [&>[data-slot=icon]]:my-0.5 [&>[data-slot=icon]]:size-5 [&>[data-slot=icon]]:shrink-0 [&>[data-slot=icon]]:text-[var(--btn-icon)] [&>[data-slot=icon]]:sm:my-1 [&>[data-slot=icon]]:sm:size-4",
+        "forced-colors:[--btn-icon:ButtonText] forced-colors:data-hover:[--btn-icon:ButtonText] [&>[data-slot=icon]]:-mx-0.5 [&>[data-slot=icon]]:my-0.5 [&>[data-slot=icon]]:size-5 [&>[data-slot=icon]]:shrink-0 [&>[data-slot=icon]]:text-[var(--btn-icon)] [&>[data-slot=icon]]:sm:my-1 [&>[data-slot=icon]]:sm:size-4",
     ],
     variants: {
         $variant: {
@@ -24,21 +24,21 @@ const buttonVariants = cva({
                 // Optical border, implemented as the button background to avoid corner artifacts
                 "border-transparent bg-[var(--btn-border)]",
                 // Button background, implemented as foreground layer to stack on top of pseudo-border layer
-                "before:-z-10 before:absolute before:inset-0 before:bg-[var(--btn-bg)] before:transition",
+                "before:absolute before:inset-0 before:-z-10 before:bg-[var(--btn-bg)] before:transition",
                 // Drop shadow, applied to the inset `before` layer, so it blends with the
                 "before:shadow",
                 // Shim/overlay, inset to match button foreground and used for hover state + highlight
-                "after:-z-10 after:absolute after:inset-0 after:transition",
+                "after:absolute after:inset-0 after:-z-10 after:transition",
                 // White overlay on hover
-                "data-active:after:bg-[var(--btn-hover-overlay)] data-hover:after:bg-[var(--btn-hover-overlay)]",
+                "data-hover:after:bg-[var(--btn-hover-overlay)] data-active:after:bg-[var(--btn-hover-overlay)]",
                 // Disabled
-                "data-disabled:after:shadow-none data-disabled:before:shadow-none",
+                "data-disabled:before:shadow-none data-disabled:after:shadow-none",
             ],
             stroke: [
                 // Base
-                "border border-[var(--btn-stroke-border)] bg-[var(--bg-white-0)] text-[var(--btn-stroke-text)] data-active:bg-[var(--btn-stroke-hover)] data-hover:bg-[var(--btn-stroke-hover)]",
+                "border border-[var(--btn-stroke-border)] bg-[var(--bg-white-0)] text-[var(--btn-stroke-text)] data-hover:bg-[var(--btn-stroke-hover)] data-active:bg-[var(--btn-stroke-hover)]",
                 // Icon
-                "data-active:[--btn-icon:theme(colors.zinc.700)] data-hover:[--btn-icon:theme(colors.zinc.700)]",
+                "data-hover:[--btn-icon:theme(colors.zinc.700)] data-active:[--btn-icon:theme(colors.zinc.700)]",
             ],
             lighter: [
                 // Base
@@ -58,9 +58,9 @@ const buttonVariants = cva({
             ],
         },
         $size: {
-            xs: "h-8 gap-1 rounded-8 p-1.5 before:rounded-[calc(var(--radius-8)-1px)] after:rounded-[calc(var(--radius-8)-1px)]",
-            sm: "h-9 gap-2 rounded-8 p-2 before:rounded-[calc(var(--radius-8)-1px)] after:rounded-[calc(var(--radius-8)-1px)]",
-            md: "h-10 gap-2 rounded-10 p-2.5 before:rounded-[calc(var(--radius-10)-1px)] after:rounded-[calc(var(--radius-10)-1px)]",
+            xs: "rounded-8 h-8 gap-1 p-1.5 before:rounded-[calc(var(--radius-8)-1px)] after:rounded-[calc(var(--radius-8)-1px)]",
+            sm: "rounded-8 h-9 gap-2 p-2 before:rounded-[calc(var(--radius-8)-1px)] after:rounded-[calc(var(--radius-8)-1px)]",
+            md: "rounded-10 h-10 gap-2 p-2.5 before:rounded-[calc(var(--radius-10)-1px)] after:rounded-[calc(var(--radius-10)-1px)]",
             none: false,
         },
         $color: {
