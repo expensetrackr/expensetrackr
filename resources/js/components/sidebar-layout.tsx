@@ -48,31 +48,42 @@ export function SidebarLayout({
     navbar,
     sidebar,
     subSidebar,
+    sidebarClassName,
+    contentClassName,
+    contentChildrenClassName,
     children,
 }: React.PropsWithChildren<{
-    navbar: React.ReactNode;
-    sidebar: React.ReactNode;
+    navbar?: React.ReactNode;
+    sidebar?: React.ReactNode;
     subSidebar?: React.ReactNode;
+    sidebarClassName?: string;
+    contentClassName?: string;
+    contentChildrenClassName?: string;
 }>) {
     const [showSidebar, setShowSidebar] = React.useState(false);
 
     return (
         <div className="relative isolate flex min-h-svh w-full bg-[var(--bg-white-0)] max-lg:flex-col">
             {/* Sidebar on desktop */}
-            <div
-                className={cx(
-                    "fixed inset-y-0 left-0 w-64 max-lg:hidden",
-                    subSidebar && "border-r border-[var(--stroke-soft-200)]",
-                )}
-            >
-                {sidebar}
-            </div>
+            {sidebar ? (
+                <div
+                    className={cx([
+                        "fixed inset-y-0 left-0 z-50 w-64 max-lg:hidden",
+                        subSidebar && "border-r border-[var(--stroke-soft-200)]",
+                        sidebarClassName,
+                    ])}
+                >
+                    {sidebar}
+                </div>
+            ) : null}
             {subSidebar && <div className="fixed inset-y-0 left-64 w-64 max-lg:hidden">{subSidebar}</div>}
 
             {/* Sidebar on mobile */}
-            <MobileSidebar open={showSidebar} close={() => setShowSidebar(false)}>
-                {sidebar}
-            </MobileSidebar>
+            {sidebar ? (
+                <MobileSidebar open={showSidebar} close={() => setShowSidebar(false)}>
+                    {sidebar}
+                </MobileSidebar>
+            ) : null}
 
             {/* Navbar on mobile */}
             <header className="flex items-center px-4 lg:hidden">
@@ -81,17 +92,24 @@ export function SidebarLayout({
                         <MenuIcon />
                     </NavbarItem>
                 </div>
-                <div className="min-w-0 flex-1">{navbar}</div>
+
+                {navbar ? <div className="min-w-0 flex-1">{navbar}</div> : null}
             </header>
 
             {/* Content */}
             <main
-                className={cx(
+                className={cx([
                     "flex flex-1 flex-col pb-2 lg:min-w-0 lg:pt-2 lg:pr-2",
                     subSidebar ? "lg:pl-[512px]" : "lg:pl-64",
-                )}
+                    contentClassName,
+                ])}
             >
-                <div className="lg:rounded-8 grow px-4 pb-4 pb-5 lg:bg-[var(--bg-white-0)] lg:px-8 lg:ring-1 lg:shadow-sm lg:ring-[var(--stroke-soft-200)]">
+                <div
+                    className={cx([
+                        "lg:rounded-8 grow px-4 pb-5 lg:bg-[var(--bg-white-0)] lg:px-8 lg:ring-1 lg:shadow-sm lg:ring-[var(--stroke-soft-200)]",
+                        contentChildrenClassName,
+                    ])}
+                >
                     {children}
                 </div>
             </main>

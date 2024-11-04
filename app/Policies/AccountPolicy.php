@@ -17,7 +17,7 @@ final class AccountPolicy
      */
     public function viewAny(): bool
     {
-        return false;
+        return true;
     }
 
     /**

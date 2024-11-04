@@ -1,22 +1,27 @@
 {
-	"[javascript]": {
-		"editor.defaultFormatter": "biomejs.biome"
-	},
-	"editor.codeActionsOnSave": {
-		"quickfix.biome": "always",
-		"source.organizeImports.biome": "always"
-	},
-	"editor.defaultFormatter": "biomejs.biome",
-	"tailwindCSS.experimental.classRegex": [
-		// HeadlessUI Transition (React)
-		"(?:enter|leave)(?:From|To)?=\\s*(?:\"|'|{`)([^(?:\"|'|`})]*)",
-		// CVA
-		["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
-		["cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"],
-		// Plain Javascript Object
-		":\\s*?[\"'`]([^\"'`]*).*?,"
-	],
-	"[jsonc]": {
-		"editor.defaultFormatter": "vscode.json-language-features"
-	}
+    "[javascript]": {
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    },
+    "[jsonc]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "eslint.enable": true,
+    "eslint.useFlatConfig": true,
+    "tailwindCSS.experimental.classRegex": [
+        // HeadlessUI Transition (React)
+        "(?:enter|leave)(?:From|To)?=\\s*(?:\"|'|{`)([^(?:\"|'|`})]*)",
+        // CVA
+        [
+            "cva\\(([^)]*)\\)",
+            "[\"'`]([^\"'`]*).*?[\"'`]"
+        ],
+        [
+            "cx\\(([^)]*)\\)",
+            "(?:'|\"|`)([^']*)(?:'|\"|`)"
+        ],
+        // Plain Javascript Object
+        ":\\s*?[\"'`]([^\"'`]*).*?,"
+    ]
 }

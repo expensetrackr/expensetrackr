@@ -13,6 +13,7 @@ import Settings2Icon from "virtual:icons/ri/settings-2-line";
 import ShieldCheckIcon from "virtual:icons/ri/shield-check-fill";
 import Sparkling2Icon from "virtual:icons/ri/sparkling-2-fill";
 import UserSettingsIcon from "virtual:icons/ri/user-settings-line";
+import WalletIcon from "virtual:icons/ri/wallet-line";
 import { route } from "ziggy-js";
 
 import { Avatar } from "#/components/avatar.tsx";
@@ -144,6 +145,10 @@ export function MainSidebar({
                     <SidebarItem href={route("dashboard")} current={route().current("dashboard")}>
                         <LayoutGridIcon />
                         <SidebarLabel>Dashboard</SidebarLabel>
+                    </SidebarItem>
+                    <SidebarItem href={route("accounts.index")} current={route().current("accounts.index")}>
+                        <WalletIcon />
+                        <SidebarLabel>Accounts</SidebarLabel>
                     </SidebarItem>
                     <SidebarItem href="/transactions">
                         <HistoryIcon />

@@ -34,7 +34,7 @@ export function Dialog({
     );
 }
 
-export const DialogHeader = twc.div`flex items-center gap-4 px-4`;
+export const DialogHeader = twc.div`flex items-start gap-4 px-4`;
 
 export const DialogIcon = twc.div`flex size-11 items-center text-[var(--icon-sub-600)] justify-center rounded-full border border-[var(--stroke-soft-200)] bg-[var(--bg-white-0)]`;
 

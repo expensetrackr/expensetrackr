@@ -4,7 +4,7 @@ import ErrorWarningFillIcon from "virtual:icons/ri/error-warning-fill";
 import { cx } from "#/utils/cva.ts";
 import { twc } from "#/utils/twc.ts";
 
-export const Fieldset = twc(Headless.Fieldset)`[&>*+[data-slot=control]]:mt-6 [&>[data-slot=text]]:mt-1`;
+export const Fieldset = twc(Headless.Fieldset)`[&>*+[data-slot=control]]:mt-5 [&>[data-slot=text]]:mt-1`;
 
 export const Legend = twc(Headless.Legend).attrs({
     "data-slot": "legend",

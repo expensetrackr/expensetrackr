@@ -18,7 +18,7 @@ export const InputGroup = twc.span.attrs({
 const dateTypes = ["date", "datetime-local", "month", "time", "week"];
 type DateType = (typeof dateTypes)[number];
 
-const inputVariants = cva({
+export const inputVariants = cva({
     base: [
         // Basic layout
         "relative block w-full appearance-none transition",

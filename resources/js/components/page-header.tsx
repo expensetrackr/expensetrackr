@@ -10,7 +10,7 @@ const PageHeaderTitle = twc.h1`text-label-lg`;
 
 const PageHeaderDescription = twc.p`text-[var(--text-sub-600)] text-paragraph-sm line-clamp-1`;
 
-const PageHeaderActions = twc.div`flex w-full items-center gap-3 sm:w-auto`;
+const PageHeaderActions = twc.div`flex w-full items-center gap-3 my-auto sm:w-auto`;
 
 export const PageHeader = Object.assign(PageHeaderRoot, {
     Content: PageHeaderContent,
