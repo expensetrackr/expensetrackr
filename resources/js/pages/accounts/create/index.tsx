@@ -1,4 +1,4 @@
-import { useForm } from "@inertiajs/react";
+import { Head, useForm } from "@inertiajs/react";
 import DraftIcon from "virtual:icons/ri/draft-line";
 
 import { Button } from "#/components/button.tsx";
@@ -28,6 +28,8 @@ export default function CreateAccountPage({ accountTypes }: CreateAccountPagePro
 
     return (
         <CreateLayout>
+            <Head title="Create account" />
+
             <div className="relative py-12">
                 <div className="flex flex-col gap-6 sm:mx-auto sm:max-w-[540px]">
                     <div className="flex flex-col items-center gap-2">

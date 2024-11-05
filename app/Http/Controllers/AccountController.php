@@ -97,7 +97,10 @@ final class AccountController extends Controller
                 'description' => ['nullable', 'string', 'max:1000'],
                 'type' => ['required', 'string', Rule::enum(AccountType::class)],
             ]),
-            2 => $request->validate([]),
+            2 => $request->validate([
+                'initial_balance' => ['money'],
+                'currency_code' => ['required', 'currency'],
+            ]),
             3 => $request->validate([]),
             default => abort(404)
         };
