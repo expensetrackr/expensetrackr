@@ -50,7 +50,6 @@ export default function CreateAccountStep2Page() {
                             <Label>Initial balance</Label>
                             <CurrencyInput
                                 customInput={Input}
-                                // @ts-expect-error - TODO: fix this on library internally
                                 invalid={!!errors.initial_balance}
                                 name="initial_balance"
                                 onValueChange={(value) => form.setData("initial_balance", value.value)}
