@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use Akaunting\Money\Rules\CurrencyRule;
 use App\Enums\AccountType;
 use App\Models\Account;
 use Illuminate\Http\RedirectResponse;
@@ -74,9 +75,9 @@ final class AccountController extends Controller
                 'currentStep' => $currentStep,
                 'totalSteps' => count($steps),
                 'completedSteps' => array_filter([
-                    1 => $request->session()->has('account_wizard.step1'),
-                    2 => $request->session()->has('account_wizard.step2'),
-                    3 => false, // Step 3 is never completed as it's the final step
+                    'details' => $request->session()->get('account_wizard.step1'),
+                    'balance-and-currency' => $request->session()->get('account_wizard.step2'),
+                    'review' => false, // Step 3 is never completed as it's the final step
                 ]),
                 ...$currentStepData['props'],
             ]
@@ -98,8 +99,8 @@ final class AccountController extends Controller
                 'type' => ['required', 'string', Rule::enum(AccountType::class)],
             ]),
             2 => $request->validate([
-                'initial_balance' => ['money'],
-                'currency_code' => ['required', 'currency'],
+                'initial_balance' => ['required'],
+                'currency_code' => ['required', new CurrencyRule()],
             ]),
             3 => $request->validate([]),
             default => abort(404)
@@ -107,7 +108,7 @@ final class AccountController extends Controller
 
         // Store step data in session with expiration
         $request->session()->put("account_wizard.step{$step}", [
-            'data' => $validated,
+            ...$validated,
             'timestamp' => now(),
         ]);
 

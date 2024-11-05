@@ -58,9 +58,9 @@ const buttonVariants = cva({
             ],
         },
         $size: {
-            xs: "rounded-8 h-8 gap-1 p-1.5 before:rounded-[calc(var(--radius-8)-1px)] after:rounded-[calc(var(--radius-8)-1px)]",
-            sm: "rounded-8 h-9 gap-2 p-2 before:rounded-[calc(var(--radius-8)-1px)] after:rounded-[calc(var(--radius-8)-1px)]",
-            md: "rounded-10 h-10 gap-2 p-2.5 before:rounded-[calc(var(--radius-10)-1px)] after:rounded-[calc(var(--radius-10)-1px)]",
+            xs: "rounded-8 h-8 gap-1 p-1.5",
+            sm: "rounded-8 h-9 gap-2 p-2",
+            md: "rounded-10 h-10 gap-2 p-2.5",
             none: false,
         },
         $color: {
@@ -83,6 +83,23 @@ const buttonVariants = cva({
             ],
         },
     },
+    compoundVariants: [
+        {
+            $variant: "filled",
+            $size: "xs",
+            className: "before:rounded-[calc(var(--radius-8)-1px)] after:rounded-[calc(var(--radius-8)-1px)]",
+        },
+        {
+            $variant: "filled",
+            $size: "sm",
+            className: "before:rounded-[calc(var(--radius-8)-1px)] after:rounded-[calc(var(--radius-8)-1px)]",
+        },
+        {
+            $variant: "filled",
+            $size: "md",
+            className: "before:rounded-[calc(var(--radius-10)-1px)] after:rounded-[calc(var(--radius-10)-1px)]",
+        },
+    ],
     defaultVariants: {
         $variant: "filled",
         $size: "md",

@@ -1,3 +1,5 @@
+import { usePage } from "@inertiajs/react";
+import CheckboxCircleFillIcon from "virtual:icons/ri/checkbox-circle-fill";
 import HeadphoneIcon from "virtual:icons/ri/headphone-line";
 import { route } from "ziggy-js";
 
@@ -14,9 +16,18 @@ import {
 } from "#/components/sidebar.tsx";
 import { Text } from "#/components/text.tsx";
 
+type PageProps = {
+    currentStep: string;
+    completedSteps: Record<string, boolean>;
+    totalSteps: number;
+};
+
 export function CreateAccountSidebar() {
+    const page = usePage<PageProps>();
+    const completedSteps = page.props.completedSteps;
+
     return (
-        <Sidebar className="rounded-16 gap-3 bg-[var(--bg-weak-50)]">
+        <Sidebar className="lg:rounded-16 gap-3 lg:bg-[var(--bg-weak-50)]">
             <SidebarHeader className="mx-4 mt-5 p-0">
                 <SidebarHeading className="p-0">account creation</SidebarHeading>
             </SidebarHeader>
@@ -24,14 +35,23 @@ export function CreateAccountSidebar() {
             <SidebarBody className="mx-4 p-0">
                 <SidebarSection>
                     <SidebarItem
-                        href={route("accounts.create")}
-                        current={route().current("accounts.create")}
+                        href={route("accounts.create", { step: "details" })}
+                        current={route().current("accounts.create", { step: "details" })}
                         buttonClassName="group rounded-10 p-2 data-hover:bg-[var(--bg-white-0)] data-current:bg-[var(--bg-white-0)]"
                     >
-                        <StepNumber>1</StepNumber>
+                        {completedSteps["details"] ? (
+                            <CheckboxCircleFillIcon className="!text-state-success-base" />
+                        ) : (
+                            <StepNumber>1</StepNumber>
+                        )}
+
                         <SidebarLabel>Account details</SidebarLabel>
                     </SidebarItem>
-                    <SidebarItem buttonClassName="group rounded-10 p-2 data-hover:bg-[var(--bg-white-0)] data-current:bg-[var(--bg-white-0)]">
+                    <SidebarItem
+                        href={route("accounts.create", { step: "balance-and-currency" })}
+                        current={route().current("accounts.create", { step: "balance-and-currency" })}
+                        buttonClassName="group rounded-10 p-2 data-hover:bg-[var(--bg-white-0)] data-current:bg-[var(--bg-white-0)]"
+                    >
                         <StepNumber>2</StepNumber>
                         <SidebarLabel>Balance & currency</SidebarLabel>
                     </SidebarItem>

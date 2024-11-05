@@ -1,4 +1,5 @@
-import { Head, useForm } from "@inertiajs/react";
+import { Head, router, useForm } from "@inertiajs/react";
+import ArrowRightIcon from "virtual:icons/ri/arrow-right-line";
 import DraftIcon from "virtual:icons/ri/draft-line";
 
 import { Button } from "#/components/button.tsx";
@@ -11,19 +12,22 @@ import { CreateLayout } from "#/layouts/create-layout.tsx";
 
 type CreateAccountPageProps = {
     accountTypes: Record<string, string>;
+    completedSteps: Record<string, Record<string, Record<string, string>>>;
 };
 
-export default function CreateAccountPage({ accountTypes }: CreateAccountPageProps) {
+export default function CreateAccountPage({ accountTypes, completedSteps }: CreateAccountPageProps) {
     const { errors, data, ...form } = useForm({
-        name: "",
-        description: "",
-        type: "depository",
+        name: completedSteps["details"]?.name ?? "",
+        description: completedSteps["details"]?.description ?? "",
+        type: completedSteps["details"]?.type ?? "depository",
     });
 
     function onSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
 
-        form.post(route("accounts.store", [1]));
+        form.post(route("accounts.store", [1]), {
+            onSuccess: () => router.visit(route("accounts.create", { step: "balance-and-currency" })),
+        });
     }
 
     return (
@@ -53,8 +57,7 @@ export default function CreateAccountPage({ accountTypes }: CreateAccountPagePro
                             <Label>Name</Label>
                             <Input
                                 invalid={!!errors.name}
-                                name="email"
-                                type="email"
+                                name="name"
                                 onChange={(e) => form.setData("name", e.target.value)}
                                 value={data.name}
                                 placeholder="e.g. Personal savings"
@@ -97,7 +100,8 @@ export default function CreateAccountPage({ accountTypes }: CreateAccountPagePro
 
                         <div className="flex justify-end">
                             <Button $size="sm" className="px-4" type="submit">
-                                Continue
+                                <span>Continue</span>
+                                <ArrowRightIcon />
                             </Button>
                         </div>
                     </form>

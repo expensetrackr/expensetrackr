@@ -6,10 +6,11 @@ namespace App\Providers;
 
 use App\Services\CurrencyService;
 use GuzzleHttp\Client;
+use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 
-final class CurrencyServiceProvider extends ServiceProvider
+final class CurrencyServiceProvider extends ServiceProvider implements DeferrableProvider
 {
     public function register(): void
     {
@@ -20,10 +21,5 @@ final class CurrencyServiceProvider extends ServiceProvider
 
             return new CurrencyService($apiKey, $baseUrl, $client);
         });
-    }
-
-    public function boot(): void
-    {
-        //
     }
 }
