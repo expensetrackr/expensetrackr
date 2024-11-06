@@ -12,7 +12,7 @@ import { CreateLayout } from "#/layouts/create-layout.tsx";
 
 export default function CreateAccountStep2Page() {
     const { errors, data, ...form } = useForm({
-        initial_balance: "",
+        initial_balance: 0,
         currency_code: "",
     });
 
@@ -52,8 +52,7 @@ export default function CreateAccountStep2Page() {
                                 customInput={Input}
                                 invalid={!!errors.initial_balance}
                                 name="initial_balance"
-                                onValueChange={(value) => form.setData("initial_balance", value.value)}
-                                value={data.initial_balance}
+                                onValueChange={(value) => form.setData("initial_balance", value.floatValue ?? 0)}
                                 placeholder="e.g. 1000"
                             />
                             {errors.initial_balance && <ErrorMessage>{errors.initial_balance}</ErrorMessage>}
