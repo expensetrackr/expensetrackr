@@ -34,3 +34,6 @@ ziggy.js
 # ide-helper
 _ide_helper.php
 .phpstorm.meta.php
+
+.vemto_settings
+.vemto
