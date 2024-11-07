@@ -1,84 +1,86 @@
 {
-	"name": "expensetrackr/expensetrackr.app",
-	"type": "project",
-	"description": "A comprehensive web application for effortless expense management, supporting both personal and business finance tracking. Features include account organization, transaction categorization, team collaboration, insightful graphics, and financial reporting.",
-	"keywords": [
-		"expense-tracker",
-		"finance-management",
-		"budget-planner",
-		"personal-finance",
-		"business-finance",
-		"financial-reporting",
-		"team-collaboration",
-		"laravel",
-		"web-application",
-		"financial-analytics"
-	],
-	"license": "GPL-3.0-or-later",
-	"require": {
-		"php": "^8.2",
-		"akaunting/laravel-money": "5.2.2",
-		"hirethunk/verbs": "0.6.4",
-		"inertiajs/inertia-laravel": "2.x-dev",
-		"joelbutcher/socialstream": "6.1.9",
-		"kongulov/interact-with-enum": "1.0.0",
-		"laravel/fortify": "1.24.4",
-		"laravel/framework": "11.30.0",
-		"laravel/octane": "2.5.9",
-		"laravel/sanctum": "4.0.3",
-		"laravel/tinker": "2.10.0",
-		"league/flysystem-aws-s3-v3": "3.29.0",
-		"mobiledetect/mobiledetectlib": "4.8.06",
-		"pinkary-project/type-guard": "0.1.0",
-		"spatie/laravel-prefixed-ids": "1.4.0",
-		"tightenco/ziggy": "2.3.1"
-	},
-	"require-dev": {
-		"barryvdh/laravel-ide-helper": "3.2.2",
-		"fakerphp/faker": "1.23.1",
-		"larastan/larastan": "2.9.10",
-		"laravel/pint": "1.18.1",
-		"laravel/sail": "1.37.1",
-		"mockery/mockery": "1.6.12",
-		"nunomaduro/collision": "8.5.0",
-		"pestphp/pest": "3.5.1",
-		"pestphp/pest-plugin-laravel": "3.0.0",
-		"pestphp/pest-plugin-type-coverage": "3.1.0",
-		"rector/rector": "1.2.8"
-	},
-	"autoload": {
-		"psr-4": {
-			"App\\": "app/",
-			"Database\\Factories\\": "database/factories/",
-			"Database\\Seeders\\": "database/seeders/",
-			"Workspaces\\": "workspaces/src/"
-		}
-	},
-	"autoload-dev": {
-		"psr-4": {
-			"Tests\\": "tests/"
-		}
-	},
-	"scripts": {
-		"post-autoload-dump": [
-			"Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-			"@php artisan package:discover --ansi"
-		],
-		"post-update-cmd": [
+    "name": "expensetrackr/expensetrackr.app",
+    "type": "project",
+    "description": "A comprehensive web application for effortless expense management, supporting both personal and business finance tracking. Features include account organization, transaction categorization, team collaboration, insightful graphics, and financial reporting.",
+    "keywords": [
+        "expense-tracker",
+        "finance-management",
+        "budget-planner",
+        "personal-finance",
+        "business-finance",
+        "financial-reporting",
+        "team-collaboration",
+        "laravel",
+        "web-application",
+        "financial-analytics"
+    ],
+    "license": "GPL-3.0-or-later",
+    "require": {
+        "php": "^8.2",
+        "akaunting/laravel-money": "5.2.2",
+        "hirethunk/verbs": "0.6.4",
+        "inertiajs/inertia-laravel": "2.x-dev",
+        "joelbutcher/socialstream": "6.1.9",
+        "kongulov/interact-with-enum": "1.0.0",
+        "laravel/fortify": "1.24.4",
+        "laravel/framework": "11.30.0",
+        "laravel/octane": "2.5.9",
+        "laravel/sanctum": "4.0.3",
+        "laravel/tinker": "2.10.0",
+        "league/flysystem-aws-s3-v3": "3.29.0",
+        "mobiledetect/mobiledetectlib": "4.8.06",
+        "pinkary-project/type-guard": "0.1.0",
+        "spatie/laravel-prefixed-ids": "1.4.0",
+        "tightenco/ziggy": "2.3.1"
+    },
+    "require-dev": {
+        "barryvdh/laravel-ide-helper": "3.2.2",
+        "fakerphp/faker": "1.23.1",
+        "larastan/larastan": "2.9.10",
+        "laravel/pint": "1.18.1",
+        "laravel/sail": "1.37.1",
+        "mockery/mockery": "1.6.12",
+        "nunomaduro/collision": "8.5.0",
+        "pestphp/pest": "3.5.1",
+        "pestphp/pest-plugin-laravel": "3.0.0",
+        "pestphp/pest-plugin-type-coverage": "3.1.0",
+        "rector/rector": "1.2.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/",
+            "Workspaces\\": "workspaces/src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover --ansi"
+        ],
+        "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force",
             "@php artisan ide-helper:generate",
             "@php artisan ide-helper:meta"
         ],
-		"post-root-package-install": ["@php -r \"file_exists('.env') || copy('.env.example', '.env');\""],
-		"post-create-project-cmd": [
-			"@php artisan key:generate --ansi",
-			"@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
-			"@php artisan migrate --graceful --ansi"
-		],
-		"lint": "pint",
-		"refactor": "rector",
-		"test:lint": "pint --test",
-		"test:refactor": "rector --dry-run",
+        "post-root-package-install": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ],
+        "post-create-project-cmd": [
+            "@php artisan key:generate --ansi",
+            "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
+            "@php artisan migrate --graceful --ansi"
+        ],
+        "lint": "pint",
+        "refactor": "rector",
+        "test:lint": "pint --test",
+        "test:refactor": "rector --dry-run",
         "test:types": "phpstan analyse",
         "test": [
             "@test:lint",
@@ -86,21 +88,21 @@
             "@test:types"
         ]
     },
-	"extra": {
-		"laravel": {
-			"dont-discover": [],
-			"providers": "Workspaces\\WorkspacesServiceProvider"
-		}
-	},
-	"config": {
-		"optimize-autoloader": true,
-		"preferred-install": "dist",
-		"sort-packages": true,
-		"allow-plugins": {
-			"pestphp/pest-plugin": true,
-			"php-http/discovery": true
-		}
-	},
-	"minimum-stability": "dev",
-	"prefer-stable": true
+    "extra": {
+        "laravel": {
+            "dont-discover": [],
+            "providers": "Workspaces\\WorkspacesServiceProvider"
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "php-http/discovery": true
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
