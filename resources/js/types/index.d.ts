@@ -75,13 +75,14 @@ export type InertiaSharedProps<T extends Record<string, unknown> = Record<string
 };
 
 export interface Session {
-    id: number;
     ip_address: string;
     is_current_device: boolean;
-    agent: {
-        is_desktop: boolean;
-        platform: string;
+    device: {
         browser: string;
+        desktop: boolean;
+        mobile: boolean;
+        tablet: boolean;
+        platform: string;
     };
     last_active: DateTime;
 }

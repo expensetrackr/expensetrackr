@@ -139,19 +139,19 @@ export function LogoutOtherBrowserSessionsForm({ sessions }: LogoutOtherBrowserS
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {sessions.map((session) => (
-                            <TableRow key={session.id}>
+                        {sessions.map((session, index) => (
+                            <TableRow key={`${session.device.browser}-${index}`}>
                                 <TableCell>
                                     <p className="inline-flex items-center gap-3">
                                         <span className="inline-flex rounded-full bg-[var(--state-faded-lighter)] p-1.5">
-                                            {session.agent.browser === "Firefox" ? (
+                                            {session.device.browser === "Firefox" ? (
                                                 <FirefoxIcon className="size-5" />
                                             ) : null}
-                                            {session.agent.browser === "Chrome" ? (
+                                            {session.device.browser === "Chrome" ? (
                                                 <ChromeIcon className="size-5" />
                                             ) : null}
                                         </span>
-                                        <span>{session.agent.browser}</span>
+                                        <span>{session.device.browser}</span>
                                     </p>
                                 </TableCell>
                                 <TableCell>
