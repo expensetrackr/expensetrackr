@@ -12,7 +12,7 @@ import { CreateLayout } from "#/layouts/create-layout.tsx";
 
 type CreateAccountPageProps = {
     accountTypes: Record<string, string>;
-    completedSteps: Record<string, Record<string, Record<string, string>>>;
+    completedSteps: Record<string, Record<string, string>>;
 };
 
 export default function CreateAccountPage({ accountTypes, completedSteps }: CreateAccountPageProps) {
@@ -25,7 +25,7 @@ export default function CreateAccountPage({ accountTypes, completedSteps }: Crea
     function onSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
 
-        form.post(route("accounts.store", [1]), {
+        form.post(route("accounts.store", ["details"]), {
             onSuccess: () => router.visit(route("accounts.create", { step: "balance-and-currency" })),
         });
     }

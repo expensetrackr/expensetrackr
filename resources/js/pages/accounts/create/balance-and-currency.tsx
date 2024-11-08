@@ -1,20 +1,28 @@
+import { Combobox } from "@headlessui/react";
 import { Head, router, useForm } from "@inertiajs/react";
 import { CurrencyInput } from "headless-currency-input";
+import { useQueryState } from "nuqs";
 import ArrowLeftIcon from "virtual:icons/ri/arrow-left-line";
 import ArrowRightIcon from "virtual:icons/ri/arrow-right-line";
 import CurrencyIcon from "virtual:icons/ri/currency-line";
 
 import { Button } from "#/components/button.tsx";
+import { ComboboxInput, ComboboxOption, ComboboxOptions } from "#/components/combobox.tsx";
 import { ErrorMessage, Field, Label } from "#/components/fieldset.tsx";
 import { Input } from "#/components/input.tsx";
 import { Text } from "#/components/text.tsx";
 import { CreateLayout } from "#/layouts/create-layout.tsx";
 
-export default function CreateAccountStep2Page() {
+type CreateAccountStep2PageProps = {
+    currencies: string[];
+};
+
+export default function CreateAccountStep2Page({ currencies = [] }: CreateAccountStep2PageProps) {
     const { errors, data, ...form } = useForm({
         initial_balance: 0,
-        currency_code: "",
+        currency_code: "USD",
     });
+    const [query, setQuery] = useQueryState("currency_code");
 
     function onSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -23,6 +31,13 @@ export default function CreateAccountStep2Page() {
             onSuccess: () => router.visit(route("accounts.create", { step: "review" })),
         });
     }
+
+    const filteredCurrencies =
+        query === ""
+            ? currencies
+            : currencies?.filter((currency) => {
+                  return currency.toLowerCase().includes(query?.toLowerCase() ?? "");
+              });
 
     return (
         <CreateLayout>
@@ -54,8 +69,44 @@ export default function CreateAccountStep2Page() {
                                 name="initial_balance"
                                 onValueChange={(value) => form.setData("initial_balance", value.floatValue ?? 0)}
                                 placeholder="e.g. 1000"
+                                currency={data.currency_code || "USD"}
                             />
                             {errors.initial_balance && <ErrorMessage>{errors.initial_balance}</ErrorMessage>}
+                        </Field>
+
+                        <Field>
+                            <Label>Currency</Label>
+                            <Combobox
+                                immediate
+                                value={data.currency_code}
+                                onChange={(value) => form.setData("currency_code", value ?? "")}
+                                virtual={{ options: filteredCurrencies }}
+                                onClose={() => setQuery(null)}
+                            >
+                                <ComboboxInput
+                                    aria-label="Currency"
+                                    value={query || data.currency_code}
+                                    onChange={(event) => setQuery(event.target.value)}
+                                />
+
+                                <ComboboxOptions>
+                                    {({ option }) => (
+                                        <ComboboxOption value={option} className="data-[focus]:bg-blue-100">
+                                            <svg
+                                                className="size-5 rounded-full"
+                                                role="img"
+                                                aria-label={`${option} flag`}
+                                                preserveAspectRatio="xMidYMid meet"
+                                            >
+                                                <use href={`/img/flags.svg#${option}`} />
+                                            </svg>
+
+                                            <span>{option}</span>
+                                        </ComboboxOption>
+                                    )}
+                                </ComboboxOptions>
+                            </Combobox>
+                            {errors.currency_code && <ErrorMessage>{errors.currency_code}</ErrorMessage>}
                         </Field>
 
                         <div className="flex justify-between">

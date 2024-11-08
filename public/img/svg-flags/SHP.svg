@@ -1,0 +1,236 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g clip-path="url(#clip0_6_1099)">
+        <path
+            d="M32 64C49.6731 64 64 49.6731 64 32C64 14.3269 49.6731 0 32 0C14.3269 0 0 14.3269 0 32C0 49.6731 14.3269 64 32 64Z"
+            fill="#191977"
+            style="fill: #191977; fill: color(display-p3 0.098 0.098 0.4667); fill-opacity: 1"
+        />
+        <path
+            d="M32 8V6.6667H26.8073L32 3.2049V1.6025L24.4036 6.6667H20V6.3976L29.4284 0.1119C28.4256 0.1917 27.4362 0.3173 26.4614 0.4875L20 4.7952V2.335C19.5501 2.5172 19.1061 2.7097 18.6667 2.9114V8H32Z"
+            fill="white"
+            style="fill: white; fill-opacity: 1"
+        />
+        <path
+            d="M13.3333 6.0163C12.4708 6.637 11.6404 7.2985 10.8453 8H13.3333V6.0163Z"
+            fill="white"
+            style="fill: white; fill-opacity: 1"
+        />
+        <path
+            d="M18.6667 21.3333H20V16.5382L27.1927 21.3333H29.5964L20 14.9358V14.6667H24.4036L32 19.7309V18.1285L26.8073 14.6667H32V13.3333H18.6667V21.3333Z"
+            fill="white"
+            style="fill: white; fill-opacity: 1"
+        />
+        <path
+            d="M6.01639 13.3333C5.70239 13.7697 5.39949 14.2142 5.10739 14.6666C5.08599 14.6997 5.06479 14.733 5.04359 14.7662C4.50449 15.6076 4.00419 16.4754 3.54419 17.3682L7.59649 14.6667H12.0001V14.9358L2.40369 21.3333H4.80729L12 16.5381V21.3333H13.3333V13.3333H6.01639Z"
+            fill="white"
+            style="fill: white; fill-opacity: 1"
+        />
+        <path
+            d="M20 6.6667H24.4036L32 1.6025V0C31.1335 0 30.2777 0.0444 29.4284 0.1119L20 6.3975V6.6667Z"
+            fill="#F0263C"
+            style="fill: #f0263c; fill: color(display-p3 0.9412 0.149 0.2353); fill-opacity: 1"
+        />
+        <path
+            d="M20 14.6667V14.9358L29.5964 21.3333H32V19.7309L24.4036 14.6667H20Z"
+            fill="#F0263C"
+            style="fill: #f0263c; fill: color(display-p3 0.9412 0.149 0.2353); fill-opacity: 1"
+        />
+        <path
+            d="M12 14.9358V14.6667H7.59645L3.54415 17.3682C2.88725 18.6431 2.31165 19.9659 1.82825 21.3333H2.40375L12 14.9358Z"
+            fill="#F0263C"
+            style="fill: #f0263c; fill: color(display-p3 0.9412 0.149 0.2353); fill-opacity: 1"
+        />
+        <path
+            d="M13.3334 21.3333H18.6667V13.3333H32V8H18.6667V2.9114C16.7831 3.7763 14.9987 4.8178 13.3334 6.0163V8H10.8454C9.04316 9.5898 7.42306 11.3787 6.01636 13.3333H13.3335L13.3334 21.3333Z"
+            fill="#F0263C"
+            style="fill: #f0263c; fill: color(display-p3 0.9412 0.149 0.2353); fill-opacity: 1"
+        />
+        <path
+            d="M42.7713 35.649C42.7018 35.3531 42.6666 35.0596 42.6666 34.7778V32L41.3333 36L39.8333 33.5L38.6666 34.6667L41.3378 38.6667H39.9999L37.0908 36.7273L35.9999 40H45.3332V38.4468C44.0691 38.0159 43.0866 36.9841 42.7713 35.649Z"
+            fill="#5A2919"
+            style="fill: #5a2919; fill: color(display-p3 0.3529 0.1608 0.098); fill-opacity: 1"
+        />
+        <path
+            d="M52 38.6667V37.3334H49.6795C49.3387 37.7149 48.9228 38.022 48.4573 38.2482L49.3333 40.0001H57.3333L56 38.6668L52 38.6667Z"
+            fill="#F0F0F0"
+            style="fill: #f0f0f0; fill: color(display-p3 0.9412 0.9412 0.9412); fill-opacity: 1"
+        />
+        <path
+            d="M46.6667 38.6667C46.2007 38.6667 45.7517 38.5894 45.3334 38.4468V40H49.3334L48.4574 38.2481C47.9154 38.5116 47.3096 38.6667 46.6667 38.6667Z"
+            fill="#619B27"
+            style="fill: #619b27; fill: color(display-p3 0.3804 0.6078 0.1529); fill-opacity: 1"
+        />
+        <path
+            d="M50.6666 34.7778V29.3334L46.6666 38.6667C47.3095 38.6667 47.9153 38.5117 48.4573 38.2482C48.9228 38.022 49.3386 37.7149 49.6795 37.3334C50.0988 36.8639 50.4099 36.2938 50.562 35.6502C50.6315 35.3532 50.6666 35.0597 50.6666 34.7778Z"
+            fill="#007ACC"
+            style="fill: #007acc; fill: color(display-p3 0 0.4784 0.8); fill-opacity: 1"
+        />
+        <path
+            d="M42.6666 31.8868V34.7777C42.6666 35.0595 42.7018 35.3531 42.7713 35.6489C43.0866 36.984 44.0692 38.0158 45.3333 38.4467C45.7516 38.5893 46.2007 38.6666 46.6666 38.6666L42.6666 29.3333V31.8868Z"
+            fill="#007ACC"
+            style="fill: #007acc; fill: color(display-p3 0 0.4784 0.8); fill-opacity: 1"
+        />
+        <path
+            d="M42.6667 26.6667H44H45.3333L44 25.3333H42.6667H41.3379L42.6667 26.6667Z"
+            fill="white"
+            style="fill: white; fill-opacity: 1"
+        />
+        <path
+            d="M49.3333 26.6667H50.6667V25.3333H49.3333L48 26.6667H49.3333Z"
+            fill="white"
+            style="fill: white; fill-opacity: 1"
+        />
+        <path
+            d="M41.3379 25.3333H42.6667V24V22.6667H41.3333V24H40V25.3333H41.3333H41.3379Z"
+            fill="#007ACC"
+            style="fill: #007acc; fill: color(display-p3 0 0.4784 0.8); fill-opacity: 1"
+        />
+        <path
+            d="M51.9999 26.6667V25.3333H53.3332V24H51.9999V22.6667H50.6666V25.3333V26.6667H51.9999Z"
+            fill="#007ACC"
+            style="fill: #007acc; fill: color(display-p3 0 0.4784 0.8); fill-opacity: 1"
+        />
+        <path
+            d="M41.3333 22.6667H42.6666V21.3333L40 20V21.3333L37.3333 20L38.6666 22.6667H40V24H41.3333V22.6667Z"
+            fill="white"
+            style="fill: white; fill-opacity: 1"
+        />
+        <path
+            d="M51.9999 24H53.3332V22.6667H54.6666L55.9999 20L53.3332 21.3333V20L50.6666 21.3333V22.6667H51.9999V24Z"
+            fill="white"
+            style="fill: white; fill-opacity: 1"
+        />
+        <path d="M45.3333 22.6667H44V24H45.3333V22.6667Z" fill="white" style="fill: white; fill-opacity: 1" />
+        <path
+            d="M46.6665 22.6667H45.3333V24H46.6665V22.6667Z"
+            fill="#007ACC"
+            style="fill: #007acc; fill: color(display-p3 0 0.4784 0.8); fill-opacity: 1"
+        />
+        <path d="M47.9999 22.6667H46.6666V24H47.9999V22.6667Z" fill="white" style="fill: white; fill-opacity: 1" />
+        <path
+            d="M49.3333 22.6667H48V24H49.3333V22.6667Z"
+            fill="#007ACC"
+            style="fill: #007acc; fill: color(display-p3 0 0.4784 0.8); fill-opacity: 1"
+        />
+        <path
+            d="M43.9999 26.6667V27.9977H42.6666V29.3311H50.6666V28V27.9977H49.3332V26.6667H47.9999L49.3332 25.3333V24H47.9999H46.6666H45.3332H43.9999V25.3333L45.3332 26.6667H43.9999Z"
+            fill="#999999"
+            style="fill: #999999; fill: color(display-p3 0.6 0.6 0.6); fill-opacity: 1"
+        />
+        <path
+            d="M49.3332 29.3333V30.6667H47.9999L46.6662 36L45.3332 30.6667H43.9999V29.3333H42.6666L46.6666 38.6667L50.6666 29.3333H49.3332Z"
+            fill="#619B27"
+            style="fill: #619b27; fill: color(display-p3 0.3804 0.6078 0.1529); fill-opacity: 1"
+        />
+        <path
+            d="M48 29.3333H45.3333V30.6666H48V29.3333Z"
+            fill="#619B27"
+            style="fill: #619b27; fill: color(display-p3 0.3804 0.6078 0.1529); fill-opacity: 1"
+        />
+        <path
+            d="M46.6663 36L48 30.6667H45.3333L46.6663 36Z"
+            fill="#FFD400"
+            style="fill: #ffd400; fill: color(display-p3 1 0.8314 0); fill-opacity: 1"
+        />
+        <path
+            d="M46.6666 20H47.9999V21.3333H49.3332V18.6667V17.3333H43.9999H42.6666V18.6667H45.3332V21.3333H46.6666V20Z"
+            fill="#5A2919"
+            style="fill: #5a2919; fill: color(display-p3 0.3529 0.1608 0.098); fill-opacity: 1"
+        />
+        <path
+            d="M43.9999 16H42.6666V17.3333H43.9999V16Z"
+            fill="#CC9500"
+            style="fill: #cc9500; fill: color(display-p3 0.8 0.5843 0); fill-opacity: 1"
+        />
+        <path
+            d="M42.6665 14.6667H41.3333V16H42.6665V14.6667Z"
+            fill="#CC9500"
+            style="fill: #cc9500; fill: color(display-p3 0.8 0.5843 0); fill-opacity: 1"
+        />
+        <path
+            d="M45.3333 14.6667H44V16H45.3333V14.6667Z"
+            fill="#CC9500"
+            style="fill: #cc9500; fill: color(display-p3 0.8 0.5843 0); fill-opacity: 1"
+        />
+        <path
+            d="M52 38.6667H54.6667L53.3333 37.3333H52V38.6667Z"
+            fill="#FF7700"
+            style="fill: #ff7700; fill: color(display-p3 1 0.4667 0); fill-opacity: 1"
+        />
+        <path
+            d="M55.9999 26.6667V25.3333H54.6666L55.5554 26.6667H55.9999Z"
+            fill="#CC9500"
+            style="fill: #cc9500; fill: color(display-p3 0.8 0.5843 0); fill-opacity: 1"
+        />
+        <path
+            d="M51.9999 28L53.3332 26.6667H51.9999L50.6666 28H51.9999Z"
+            fill="#FF7700"
+            style="fill: #ff7700; fill: color(display-p3 1 0.4667 0); fill-opacity: 1"
+        />
+        <path
+            d="M57.3333 34.6667V29.3333L55.5555 26.6667L54.6667 25.3333H53.3333L52 26.6667H53.3333L52 28H53.3333H54.6667L53.3333 29.3311L54.6667 30.6667L53.3333 33.3333V36H54.6667V37.3333H53.3333L54.6667 38.6667H56H57.3333V37.3333H56V36L57.3333 34.6667Z"
+            fill="black"
+            style="fill: black; fill-opacity: 1"
+        />
+        <path
+            d="M53.3333 37.3333H54.6667V36H53.3333V33.3333L54.6667 30.6667L53.3333 29.3311L54.6667 28H53.3333H52V33.3333L53.3333 37.3333Z"
+            fill="#F0F0F0"
+            style="fill: #f0f0f0; fill: color(display-p3 0.9412 0.9412 0.9412); fill-opacity: 1"
+        />
+        <path
+            d="M41.3379 38.6667L38.6667 34.6667L39.8333 33.5L37.3333 29.3333H38.6667L42.6667 32L40 28L41.3333 25.3333H40H38.6667L37.3333 26.6667L36 32V36L37.0909 36.7273L40 38.6667H41.3379Z"
+            fill="#999999"
+            style="fill: #999999; fill: color(display-p3 0.6 0.6 0.6); fill-opacity: 1"
+        />
+        <path
+            d="M37.3333 29.3333L39.8333 33.5L41.3333 36L42.6666 32L38.6666 29.3333H37.3333Z"
+            fill="black"
+            style="fill: black; fill-opacity: 1"
+        />
+        <path
+            d="M46.6667 22.6667H48H49.3333V21.3333H48H46.6667H45.3333H44V22.6667H45.3333H46.6667Z"
+            fill="#999999"
+            style="fill: #999999; fill: color(display-p3 0.6 0.6 0.6); fill-opacity: 1"
+        />
+        <path
+            d="M45.3333 29.3333H44V30.6666H45.3333V29.3333Z"
+            fill="#FFD400"
+            style="fill: #ffd400; fill: color(display-p3 1 0.8314 0); fill-opacity: 1"
+        />
+        <path
+            d="M49.3333 29.3333H48V30.6666H49.3333V29.3333Z"
+            fill="#FFD400"
+            style="fill: #ffd400; fill: color(display-p3 1 0.8314 0); fill-opacity: 1"
+        />
+        <path
+            d="M39.9999 46.6667L38.6666 48L41.3332 49.3333L40.4444 46.6667H39.9999Z"
+            fill="#F0263C"
+            style="fill: #f0263c; fill: color(display-p3 0.9412 0.149 0.2353); fill-opacity: 1"
+        />
+        <path
+            d="M37.3333 41.3333L36 44L37.3333 45.3333L37.8667 44.2667L38.6667 42.6667L37.3333 41.3333Z"
+            fill="#F0263C"
+            style="fill: #f0263c; fill: color(display-p3 0.9412 0.149 0.2353); fill-opacity: 1"
+        />
+        <path
+            d="M52.8888 46.6667L52 49.3333L54.6667 48L53.3333 46.6667H52.8888Z"
+            fill="#F0263C"
+            style="fill: #f0263c; fill: color(display-p3 0.9412 0.149 0.2353); fill-opacity: 1"
+        />
+        <path
+            d="M54.6666 42.6667L55.4665 44.2667L55.9999 45.3333L57.3332 44L55.9999 41.3333L54.6666 42.6667Z"
+            fill="#F0263C"
+            style="fill: #f0263c; fill: color(display-p3 0.9412 0.149 0.2353); fill-opacity: 1"
+        />
+        <path
+            d="M55.4665 44.2667L54.6666 42.6667L56 41.3333H54.6666L53.3333 42.6667L52.4445 43.5555L50.6666 42.6667L48 42H45.3333L42.6666 42.6667L40.8888 43.5555L40 42.6667L38.6666 41.3333H37.3333L38.6666 42.6667L37.8666 44.2667L39.1111 44.8889L37.3333 46.6667L38.6666 48L40 46.6667L40.3333 46.3333L40.4445 46.6667L41.3333 49.3333L42.6666 46.6667L41.8666 45.0667L44 44H46.6666H49.3333L51.4665 45.0667L50.6666 46.6667L52 49.3333L52.8888 46.6667L53 46.3333L53.3333 46.6667L54.6666 48L56 46.6667L54.2221 44.8889L55.4665 44.2667Z"
+            fill="#FFD400"
+            style="fill: #ffd400; fill: color(display-p3 1 0.8314 0); fill-opacity: 1"
+        />
+    </g>
+    <defs>
+        <clipPath id="clip0_6_1099">
+            <rect width="64" height="64" fill="white" style="fill: white; fill-opacity: 1" />
+        </clipPath>
+    </defs>
+</svg>

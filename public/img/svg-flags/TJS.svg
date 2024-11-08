@@ -1,0 +1,84 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g clip-path="url(#clip0_1_11927)">
+        <path
+            d="M0 32C0 37.8307 1.5671 43.2921 4.2917 48H59.7084C62.433 43.2921 64.0001 37.8307 64.0001 32C64.0001 26.1693 62.433 20.7079 59.7084 16H4.2917C1.5671 20.7079 0 26.1693 0 32Z"
+            fill="white"
+            style="fill: white; fill-opacity: 1"
+        />
+        <path
+            d="M32 0C20.1576 0 9.82545 6.4379 4.29175 16H59.7085C54.1747 6.4379 43.8424 0 32 0Z"
+            fill="#F0263C"
+            style="fill: #f0263c; fill: color(display-p3 0.9412 0.149 0.2353); fill-opacity: 1"
+        />
+        <path
+            d="M32 64C43.8424 64 54.1747 57.562 59.7084 48H4.29175C9.82545 57.562 20.1576 64 32 64Z"
+            fill="#1E5B00"
+            style="fill: #1e5b00; fill: color(display-p3 0.1176 0.3569 0); fill-opacity: 1"
+        />
+        <path
+            d="M41.3333 43.9999H22.6666V45.3332H41.3333V43.9999Z"
+            fill="#FFD400"
+            style="fill: #ffd400; fill: color(display-p3 1 0.8314 0); fill-opacity: 1"
+        />
+        <path
+            d="M25.3332 39.3333L23.9999 41.3333H22.6666L23.9999 42.6666H26.6666L27.9999 41.3333H26.6666L25.3332 39.3333Z"
+            fill="#FFD400"
+            style="fill: #ffd400; fill: color(display-p3 1 0.8314 0); fill-opacity: 1"
+        />
+        <path
+            d="M32 39.3333L30.6667 41.3333H29.3333L30.6667 42.6666H33.3333L34.6667 41.3333H33.3333L32 39.3333Z"
+            fill="#FFD400"
+            style="fill: #ffd400; fill: color(display-p3 1 0.8314 0); fill-opacity: 1"
+        />
+        <path
+            d="M37.3332 41.3333H35.9999L37.3332 42.6666H39.9999L41.3332 41.3333H39.9999L38.6666 39.3333L37.3332 41.3333Z"
+            fill="#FFD400"
+            style="fill: #ffd400; fill: color(display-p3 1 0.8314 0); fill-opacity: 1"
+        />
+        <path
+            d="M32 18.6686L30 20.6686L32 22.6686L34 20.6686L32 18.6686Z"
+            fill="#FFD400"
+            style="fill: #ffd400; fill: color(display-p3 1 0.8314 0); fill-opacity: 1"
+        />
+        <path
+            d="M24.6677 20.6333L23.9357 23.3654L26.6677 24.0974L27.3997 21.3654L24.6677 20.6333Z"
+            fill="#FFD400"
+            style="fill: #ffd400; fill: color(display-p3 1 0.8314 0); fill-opacity: 1"
+        />
+        <path
+            d="M22.032 25.2689L19.2999 26.001L20.032 28.733L22.764 28.001L22.032 25.2689Z"
+            fill="#FFD400"
+            style="fill: #ffd400; fill: color(display-p3 1 0.8314 0); fill-opacity: 1"
+        />
+        <path
+            d="M19.3352 31.3333L17.3352 33.3333L19.3352 35.3332L21.3352 33.3333L19.3352 31.3333Z"
+            fill="#FFD400"
+            style="fill: #ffd400; fill: color(display-p3 1 0.8314 0); fill-opacity: 1"
+        />
+        <path
+            d="M39.3322 20.6333L36.6002 21.3654L37.3323 24.0974L40.0643 23.3653L39.3322 20.6333Z"
+            fill="#FFD400"
+            style="fill: #ffd400; fill: color(display-p3 1 0.8314 0); fill-opacity: 1"
+        />
+        <path
+            d="M41.968 25.2689L41.236 28.0009L43.968 28.733L44.7 26.0009L41.968 25.2689Z"
+            fill="#FFD400"
+            style="fill: #ffd400; fill: color(display-p3 1 0.8314 0); fill-opacity: 1"
+        />
+        <path
+            d="M44.6647 31.3333L42.6647 33.3333L44.6647 35.3332L46.6646 33.3333L44.6647 31.3333Z"
+            fill="#FFD400"
+            style="fill: #ffd400; fill: color(display-p3 1 0.8314 0); fill-opacity: 1"
+        />
+        <path
+            d="M41.3334 38L38.6667 36L35.3334 38L33.3334 36.6667L32.1334 31.8667L33.3334 30.6667H34.6667V32L36 30.6667V29.3334L33.3333 26.6667H30.6666L27.9999 29.3334V30.6667L29.3332 32V30.6667H30.6665L31.8665 31.8667L30.6665 36.6667L28.6665 38L25.3332 36L22.6665 38L19.9998 37.3333L22.6665 40L25.3332 37.3333L28.6665 40L31.9998 37.3333L35.3331 40L38.6664 37.3333L41.3331 40L43.9998 37.3333L41.3334 38ZM29.3334 29.3333L30.6667 28H33.3334L34.6667 29.3333H33.3334L32.0001 30.6666L30.6668 29.3333H29.3334Z"
+            fill="#FFD400"
+            style="fill: #ffd400; fill: color(display-p3 1 0.8314 0); fill-opacity: 1"
+        />
+    </g>
+    <defs>
+        <clipPath id="clip0_1_11927">
+            <rect width="64" height="64" fill="white" style="fill: white; fill-opacity: 1" />
+        </clipPath>
+    </defs>
+</svg>

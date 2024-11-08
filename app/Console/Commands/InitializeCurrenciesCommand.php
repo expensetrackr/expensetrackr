@@ -21,7 +21,7 @@ final class InitializeCurrenciesCommand extends Command
      */
     protected $description = 'Initialize currencies from the API';
 
-    public function __construct(private readonly CurrencyService $currency)
+    public function __construct(private readonly CurrencyService $currencyService)
     {
         parent::__construct();
     }
@@ -33,9 +33,9 @@ final class InitializeCurrenciesCommand extends Command
     {
         $this->info('Fetching supported currencies from the API...');
 
-        $apiSupportedCurrencies = $this->currency->getSupportedCurrencies();
+        $apiSupportedCurrencies = $this->currencyService->getSupportedCurrencies();
 
-        if (! $this->currency->isEnabled()) {
+        if (! $this->isEnabled()) {
             $this->error('The Currency Exchange Rate feature is disabled.');
 
             return;

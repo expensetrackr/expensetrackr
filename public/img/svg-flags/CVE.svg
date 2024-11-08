@@ -1,0 +1,94 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g clip-path="url(#clip0_1_1051)">
+        <path
+            d="M64 32C64 14.3269 49.6731 0 32 0C14.3269 0 0 14.3269 0 32C0 32.6724 0.0276 33.3379 0.0685 34H63.9315C63.9724 33.3379 64 32.6724 64 32Z"
+            fill="#191977"
+            style="fill: #191977; fill: color(display-p3 0.098 0.098 0.4667); fill-opacity: 1"
+        />
+        <path
+            d="M33.6621 63.9572C33.1094 63.9766 32.5578 64 32 64C32.5575 64 33.1116 63.9854 33.6621 63.9572Z"
+            fill="#191977"
+            style="fill: #191977; fill: color(display-p3 0.098 0.098 0.4667); fill-opacity: 1"
+        />
+        <path
+            d="M32 64C31.4423 64 30.8906 63.9766 30.3379 63.9572C30.8884 63.9854 31.4425 64 32 64Z"
+            fill="#191977"
+            style="fill: #191977; fill: color(display-p3 0.098 0.098 0.4667); fill-opacity: 1"
+        />
+        <path
+            d="M2.61005 44.6667H61.3899C62.1261 42.961 62.7131 41.1773 63.1457 39.3334H0.854248C1.28685 41.1773 1.87395 42.961 2.61005 44.6667Z"
+            fill="#F0263C"
+            style="fill: #f0263c; fill: color(display-p3 0.9412 0.149 0.2353); fill-opacity: 1"
+        />
+        <path
+            d="M63.1459 39.3333C63.5514 37.6047 63.819 35.8238 63.9316 34H0.0686035C0.181204 35.8239 0.448804 37.6048 0.854304 39.3333H63.1459Z"
+            fill="white"
+            style="fill: white; fill-opacity: 1"
+        />
+        <path
+            d="M5.54231 50H58.4578C59.5968 48.3291 60.5797 46.5441 61.39 44.6667H2.61011C3.42041 46.5441 4.40331 48.3291 5.54231 50Z"
+            fill="white"
+            style="fill: white; fill-opacity: 1"
+        />
+        <path
+            d="M58.4578 50H5.54224C11.0103 58.0218 20.0287 63.4296 30.3379 63.9572C30.8906 63.9766 31.4422 64 32 64C32.5578 64 33.1094 63.9766 33.6621 63.9572C43.9713 63.4297 52.9897 58.0218 58.4578 50Z"
+            fill="#191977"
+            style="fill: #191977; fill: color(display-p3 0.098 0.098 0.4667); fill-opacity: 1"
+        />
+        <path
+            d="M28.0002 24.3099L25.6431 26.6666L27.9998 29.0237L30.3569 26.667L28.0002 24.3099Z"
+            fill="#FFD400"
+            style="fill: #ffd400; fill: color(display-p3 1 0.8314 0); fill-opacity: 1"
+        />
+        <path
+            d="M37.3334 26.9765L34.9763 29.3333L37.3331 31.6903L39.6902 29.3336L37.3334 26.9765Z"
+            fill="#FFD400"
+            style="fill: #ffd400; fill: color(display-p3 1 0.8314 0); fill-opacity: 1"
+        />
+        <path
+            d="M42.6669 34.3097L40.3098 36.6665L42.6666 39.0236L45.0237 36.6668L42.6669 34.3097Z"
+            fill="#FFD400"
+            style="fill: #ffd400; fill: color(display-p3 1 0.8314 0); fill-opacity: 1"
+        />
+        <path
+            d="M42.6669 44.9765L40.3098 47.3333L42.6666 49.6903L45.0237 47.3336L42.6669 44.9765Z"
+            fill="#FFD400"
+            style="fill: #ffd400; fill: color(display-p3 1 0.8314 0); fill-opacity: 1"
+        />
+        <path
+            d="M28.0002 54.9765L25.6431 57.3333L27.9998 59.6903L30.3569 57.3336L28.0002 54.9765Z"
+            fill="#FFD400"
+            style="fill: #ffd400; fill: color(display-p3 1 0.8314 0); fill-opacity: 1"
+        />
+        <path
+            d="M37.3334 51.6431L34.9763 53.9999L37.3331 56.357L39.6902 54.0002L37.3334 51.6431Z"
+            fill="#FFD400"
+            style="fill: #ffd400; fill: color(display-p3 1 0.8314 0); fill-opacity: 1"
+        />
+        <path
+            d="M18.6669 26.9764L16.3098 29.3331L18.6666 31.6902L21.0237 29.3335L18.6669 26.9764Z"
+            fill="#FFD400"
+            style="fill: #ffd400; fill: color(display-p3 1 0.8314 0); fill-opacity: 1"
+        />
+        <path
+            d="M13.3334 34.3099L10.9763 36.6666L13.3331 39.0237L15.6902 36.667L13.3334 34.3099Z"
+            fill="#FFD400"
+            style="fill: #ffd400; fill: color(display-p3 1 0.8314 0); fill-opacity: 1"
+        />
+        <path
+            d="M13.3334 44.9764L10.9763 47.3331L13.3331 49.6902L15.6902 47.3335L13.3334 44.9764Z"
+            fill="#FFD400"
+            style="fill: #ffd400; fill: color(display-p3 1 0.8314 0); fill-opacity: 1"
+        />
+        <path
+            d="M18.6669 51.6431L16.3098 53.9999L18.6666 56.357L21.0237 54.0002L18.6669 51.6431Z"
+            fill="#FFD400"
+            style="fill: #ffd400; fill: color(display-p3 1 0.8314 0); fill-opacity: 1"
+        />
+    </g>
+    <defs>
+        <clipPath id="clip0_1_1051">
+            <rect width="64" height="64" fill="white" style="fill: white; fill-opacity: 1" />
+        </clipPath>
+    </defs>
+</svg>

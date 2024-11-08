@@ -11,11 +11,16 @@ use Illuminate\Support\Facades\Log;
 
 final readonly class CurrencyService
 {
+    /**
+     * Create a new instance of the Currency service.
+     */
     public function __construct(
         private ?string $apiKey,
         private ?string $baseUrl,
         private Client $client
-    ) {}
+    ) {
+        //
+    }
 
     /**
      * Determine if the Currency Exchange Rate feature is enabled.
@@ -65,13 +70,15 @@ final readonly class CurrencyService
                 $responseData = json_decode($response->getBody()->getContents(), true);
 
                 if (filled($responseData['data'])) {
-                    return array_map(function (array $currency): string {
+                    $excludedCodes = ['MRO', 'SKK', 'SLL', 'STD', 'XAG', 'XAU', 'XDR', 'XPD', 'XPT', 'XTS', 'ZMK'];
+
+                    return array_values(array_map(function (array $currency): string {
                         if ($currency['iso_code'] === 'veb') {
                             return 'VES';
                         }
 
                         return mb_strtoupper($currency['iso_code']);
-                    }, $responseData['data']);
+                    }, array_filter($responseData['data'], fn (array $currency): bool => ! in_array(mb_strtoupper($currency['iso_code']), $excludedCodes))));
                 }
             }
 
@@ -125,11 +132,7 @@ final readonly class CurrencyService
      */
     public function getCachedExchangeRates(string $baseCurrency, array $targetCurrencies): ?array
     {
-        if ($this->isEnabled()) {
-            return $this->getExchangeRates($baseCurrency, $targetCurrencies);
-        }
-
-        return null;
+        return $this->getExchangeRates($baseCurrency, $targetCurrencies);
     }
 
     /**

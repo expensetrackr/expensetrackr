@@ -36,10 +36,7 @@ export function CreateAccountSidebar() {
                 <SidebarSection>
                     <SidebarItem
                         href={route("accounts.create", { step: "details" })}
-                        current={
-                            route().current("accounts.create") ||
-                            route().current("accounts.create", { step: "details" })
-                        }
+                        current={route().current("accounts.create", { step: "details" })}
                         buttonClassName="group rounded-10 p-2 data-hover:bg-[var(--bg-white-0)] data-current:bg-[var(--bg-white-0)]"
                     >
                         {completedSteps["details"] ? (

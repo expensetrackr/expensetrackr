@@ -19,36 +19,35 @@ export function DropdownButton<T extends React.ElementType = typeof Button>({
 export function DropdownMenu({
     anchor = "bottom",
     className,
+    transition = true,
     ...props
 }: { className?: string } & Omit<Headless.MenuItemsProps, "className">) {
     return (
-        <Headless.Transition leave="duration-100 ease-in" leaveTo="opacity-0">
-            <Headless.MenuItems
-                {...props}
-                transition
-                anchor={anchor}
-                className={cx(
-                    // Anchor positioning
-                    "[--anchor-gap:var(--spacing-2)] [--anchor-padding:var(--spacing-1)] data-[anchor~=end]:[--anchor-offset:6px] data-[anchor~=start]:[--anchor-offset:-6px] sm:data-[anchor~=end]:[--anchor-offset:4px] sm:data-[anchor~=start]:[--anchor-offset:-4px]",
-                    // Base styles
-                    "rounded-16 isolate flex w-max flex-col gap-1 p-2",
-                    // Invisible border that is only visible in `forced-colors` mode for accessibility purposes
-                    "outline outline-transparent focus:outline-none",
-                    // Handle scrolling when menu won't fit in viewport
-                    "overflow-y-auto",
-                    // Popover background
-                    "backdrop-blur-xl",
-                    // Shadows
-                    "ring-1 shadow-md ring-[var(--stroke-soft-200)]",
-                    // Define grid at the menu level if subgrid is supported
-                    "supports-[grid-template-columns:subgrid]:grid supports-[grid-template-columns:subgrid]:grid-cols-[auto_1fr_1.5rem_0.5rem_auto]",
-                    // Transitions
-                    "transition data-leave:duration-100 data-leave:ease-in data-closed:data-leave:opacity-0",
-                    // Put className last to allow overriding
-                    className,
-                )}
-            />
-        </Headless.Transition>
+        <Headless.MenuItems
+            {...props}
+            anchor={anchor}
+            transition={transition}
+            className={cx(
+                // Anchor positioning
+                "[--anchor-gap:var(--spacing-2)] [--anchor-padding:var(--spacing-1)] data-[anchor~=end]:[--anchor-offset:6px] data-[anchor~=start]:[--anchor-offset:-6px] sm:data-[anchor~=end]:[--anchor-offset:4px] sm:data-[anchor~=start]:[--anchor-offset:-4px]",
+                // Base styles
+                "rounded-16 isolate flex w-max flex-col gap-1 p-2",
+                // Invisible border that is only visible in `forced-colors` mode for accessibility purposes
+                "outline outline-transparent focus:outline-none",
+                // Handle scrolling when menu won't fit in viewport
+                "overflow-y-auto",
+                // Popover background
+                "backdrop-blur-xl",
+                // Shadows
+                "ring-1 shadow-md ring-[var(--stroke-soft-200)]",
+                // Define grid at the menu level if subgrid is supported
+                "supports-[grid-template-columns:subgrid]:grid supports-[grid-template-columns:subgrid]:grid-cols-[auto_1fr_1.5rem_0.5rem_auto]",
+                // Transitions
+                "transition data-leave:duration-100 data-leave:ease-in data-closed:data-leave:opacity-0",
+                // Put className last to allow overriding
+                className,
+            )}
+        />
     );
 }
 

@@ -4,18 +4,26 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Akaunting\Money\Rules\CurrencyRule;
 use App\Enums\AccountType;
+use App\Http\Requests\StoreAccountStepRequest;
 use App\Models\Account;
+use App\Services\AccountWizardService;
+use App\Services\CurrencyService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Validation\Rule;
 use Inertia\Response;
 use Workspaces\Workspaces;
 
 final class AccountController extends Controller
 {
+    /**
+     * Create a new instance of the Account controller.
+     */
+    public function __construct(
+        private readonly AccountWizardService $wizardService,
+    ) {}
+
     /**
      * Display all accounts.
      */
@@ -29,14 +37,17 @@ final class AccountController extends Controller
     /**
      * Create a new account.
      */
-    public function create(Request $request): Response|RedirectResponse
+    public function create(Request $request, CurrencyService $currencyService): Response|RedirectResponse
     {
         Gate::authorize('create', Account::class);
 
-        // Get current step from query param, default to details
-        $currentStep = $request->query('step', 'details') ?: 'details';
+        $currentStep = $request->query('step');
 
-        // Define wizard steps and their data
+        // If no step or invalid step provided, redirect to details
+        if (! $currentStep || ! in_array($currentStep, AccountWizardService::STEPS)) {
+            return redirect()->route('accounts.create', ['step' => 'details']);
+        }
+
         $steps = [
             'details' => [
                 'component' => 'accounts/create/index',
@@ -47,23 +58,26 @@ final class AccountController extends Controller
             'balance-and-currency' => [
                 'component' => 'accounts/create/balance-and-currency',
                 'props' => [
-                    // Get step 1 data from session to show in review
-                    'previousData' => $request->session()->get('account_wizard.step1'),
+                    'previousData' => $this->wizardService->getStepData($request, 'details'),
+                    'currencies' => $currencyService->getSupportedCurrencies(),
                 ],
             ],
             'review' => [
                 'component' => 'accounts/create/review',
                 'props' => [
-                    // Get all previous steps data for review
-                    'step1Data' => $request->session()->get('account_wizard.step1'),
-                    'step2Data' => $request->session()->get('account_wizard.step2'),
+                    'step1Data' => $this->wizardService->getStepData($request, 'details'),
+                    'step2Data' => $this->wizardService->getStepData($request, 'balance-and-currency'),
                 ],
             ],
         ];
 
-        // Validate requested step
-        if (! array_key_exists($currentStep, $steps)) {
-            return redirect()->route('accounts.create', ['step' => 'details']);
+        // Validate step progression
+        $currentStepIndex = array_search($currentStep, AccountWizardService::STEPS);
+        for ($i = 0; $i < $currentStepIndex; $i++) {
+            $previousStep = AccountWizardService::STEPS[$i];
+            if ($this->wizardService->getStepData($request, $previousStep) === []) {
+                return redirect()->route('accounts.create', ['step' => $previousStep]);
+            }
         }
 
         $currentStepData = $steps[$currentStep];
@@ -75,9 +89,9 @@ final class AccountController extends Controller
                 'currentStep' => $currentStep,
                 'totalSteps' => count($steps),
                 'completedSteps' => array_filter([
-                    'details' => $request->session()->get('account_wizard.step1'),
-                    'balance-and-currency' => $request->session()->get('account_wizard.step2'),
-                    'review' => false, // Step 3 is never completed as it's the final step
+                    'details' => $this->wizardService->getStepData($request, 'details'),
+                    'balance-and-currency' => $this->wizardService->getStepData($request, 'balance-and-currency'),
+                    'review' => false, // Review is never completed as it's the final step
                 ]),
                 ...$currentStepData['props'],
             ]
@@ -87,65 +101,31 @@ final class AccountController extends Controller
     /**
      * Handle form submission for each step
      */
-    public function store(Request $request, int $step): RedirectResponse
+    public function store(StoreAccountStepRequest $request, string $step): RedirectResponse
     {
-        Gate::authorize('create', Account::class);
+        $validated = $request->validated();
+        $this->wizardService->storeStepData($request, $step, $validated);
 
-        // Validate based on current step
-        $validated = match ($step) {
-            1 => $request->validate([
-                'name' => ['required', 'string', 'min:3', 'max:255'],
-                'description' => ['nullable', 'string', 'max:1000'],
-                'type' => ['required', 'string', Rule::enum(AccountType::class)],
-            ]),
-            2 => $request->validate([
-                'initial_balance' => ['required'],
-                'currency_code' => ['required', new CurrencyRule()],
-            ]),
-            3 => $request->validate([]),
-            default => abort(404)
-        };
-
-        // Store step data in session with expiration
-        $request->session()->put("account_wizard.step{$step}", [
-            ...$validated,
-            'timestamp' => now(),
-        ]);
-
-        // Check for expired steps (e.g., older than 30 minutes)
-        $this->clearExpiredSteps($request);
-
-        // If final step, create account
-        if ($step === 3) {
+        if ($step === 'review') {
             $accountData = [
-                ...$request->session()->get('account_wizard.step1', []),
-                ...$request->session()->get('account_wizard.step2', []),
+                ...$this->wizardService->getStepData($request, 'details'),
+                ...$this->wizardService->getStepData($request, 'balance-and-currency'),
                 ...$validated,
             ];
 
-            // Create account
             $account = Account::create($accountData);
-
-            // Clear wizard data from session
-            $request->session()->forget(['account_wizard']);
+            $this->wizardService->clearWizardData($request);
 
             return redirect()->route('accounts.show', $account)
                 ->with('success', 'Account created successfully.');
         }
 
-        // Proceed to next step
-        return redirect()->route('accounts.create', ['step' => $step + 1]);
-    }
+        $nextStep = match ($step) {
+            'details' => 'balance-and-currency',
+            'balance-and-currency' => 'review',
+            default => abort(404)
+        };
 
-    private function clearExpiredSteps(Request $request): void
-    {
-        $expirationTime = now()->subMinutes(30);
-
-        foreach (range(1, 3) as $step) {
-            $stepData = $request->session()->get("account_wizard.step{$step}");
-            if ($stepData && $stepData['timestamp'] < $expirationTime) {
-                $request->session()->forget("account_wizard.step{$step}");
-            }
-        }
+        return redirect()->route('accounts.create', ['step' => $nextStep]);
     }
 }

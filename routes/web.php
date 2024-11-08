@@ -27,7 +27,9 @@ Route::middleware([
 
     Route::get('/accounts', [AccountController::class, 'index'])->name('accounts.index');
     Route::get('/accounts/create', [AccountController::class, 'create'])->name('accounts.create')->middleware('accounts.create.wizard');
-    Route::post('/accounts/create/{step}', [AccountController::class, 'store'])->name('accounts.store');
+    Route::post('/accounts/create/{step}', [AccountController::class, 'store'])
+        ->where('step', 'details|balance-and-currency|review')
+        ->name('accounts.store');
 
     Route::prefix('settings')->group(function () {
         Route::get('/', function () {
