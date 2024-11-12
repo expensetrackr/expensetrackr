@@ -12,7 +12,7 @@ final class ValidateAccountWizard
 {
     public function handle(Request $request, Closure $next): Response
     {
-        $currentStep = (int) $request->query('step', 1);
+        $currentStep = (int) $request->query('step', '1');
 
         // Step 1 is always accessible
         if ($currentStep === 1) {

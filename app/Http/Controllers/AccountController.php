@@ -80,6 +80,7 @@ final class AccountController extends Controller
             }
         }
 
+        assert(is_string($currentStep));
         $currentStepData = $steps[$currentStep];
 
         return Workspaces::inertia()->render(
@@ -107,13 +108,21 @@ final class AccountController extends Controller
         $this->wizardService->storeStepData($request, $step, $validated);
 
         if ($step === 'review') {
+            /** @var array<string, string|array<string>> $step1Data */
+            $step1Data = $this->wizardService->getStepData($request, 'details');
+            /** @var array<string, string|array<string>> $step2Data */
+            $step2Data = $this->wizardService->getStepData($request, 'balance-and-currency');
+
             $accountData = [
-                ...$this->wizardService->getStepData($request, 'details'),
-                ...$this->wizardService->getStepData($request, 'balance-and-currency'),
+                ...$step1Data,
+                ...$step2Data,
                 ...$validated,
             ];
 
-            $account = Account::create($accountData);
+            $account = new Account();
+            $account->fill($accountData);
+            $account->save();
+
             $this->wizardService->clearWizardData($request);
 
             return redirect()->route('accounts.show', $account)

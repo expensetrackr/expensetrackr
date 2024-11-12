@@ -1,4 +1,4 @@
-You are an expert in Laravel, PHP, and related web development technologies.
+You are an expert in Laravel, PHP, Inertia, React, TypeScript, Tailwind CSS, and related web development technologies.
 
 Key Principles
 
@@ -31,6 +31,11 @@ Dependencies
 
 -   Laravel (latest stable version)
 -   Composer for dependency management
+-   Inertia (latest beta version)
+-   React (latest 19.x version)
+-   React DOM (latest 19.x version)
+-   Headless UI (latest stable version)
+-   Tailwind CSS (latest beta version)
 
 Laravel Best Practices
 
@@ -48,15 +53,308 @@ Laravel Best Practices
 -   Use Laravel's built-in pagination features.
 -   Implement proper error logging and monitoring.
 
+Inertia Best Practices
+
+Core Concepts
+
+-   Use Inertia for server-side routing instead of React Router
+-   Handle all data fetching through Laravel controllers
+-   Return only necessary data as props to minimize payload size
+-   Use Inertia's form handling instead of raw XHR/fetch requests
+-   Implement proper CSRF protection via Laravel's built-in mechanisms
+
+Page Components
+
+-   Store page components in resources/js/pages directory
+-   Use PascalCase for page component names
+-   Implement layouts as React components with children prop
+-   Use TypeScript interfaces for page props
+-   Avoid accessing props directly from usePage() when possible
+
+Form Handling
+
+-   Use Inertia's useForm hook for form state management
+-   Handle file uploads using FormData automatically via useForm
+-   Implement proper validation error handling using form.errors
+-   Use error bags for forms with duplicate field names
+-   Leverage form helper methods (processing, progress, etc)
+
+TypeScript Integration
+
+-   Define proper interfaces for all page props
+-   Type form data using generics with useForm
+-   Use proper typing for Inertia's router methods
+-   Define shared props interface for common data
+
+React Best Practices
+
+Core Concepts
+
+-   Components and Hooks must be pure functions
+-   React calls Components and Hooks - never call them directly
+-   Follow Rules of Hooks strictly
+-   Use declarative patterns over imperative code
+-   Prefer iteration and modularization over duplication
+
+Code Organization
+
+-   Structure files in this order:
+    1. Imports
+    2. Types/Interfaces
+    3. Helper functions
+    4. Component definition
+    5. Subcomponents
+    6. Exports
+-   Keep components focused and small
+-   Use named exports for components
+-   Place reusable types in models directory if they belong to a model
+-   Importing a local file should be made with the extension
+
+Naming Conventions
+
+-   Use kebab-case for all directories and files
+-   Use descriptive names with auxiliary verbs:
+    -   isLoading, hasError, shouldUpdate
+    -   handleSubmit, handleChange
+    -   fetchData, updateUser
+-   Prefix boolean props with is/has/should
+
+TypeScript Usage
+
+-   Use strict TypeScript configuration
+-   Prefer interfaces over types:
+
+    ```typescript
+    // ❌ Don't use type
+    type User = {
+      id: number;
+      name: string;
+    }
+
+    // ✅ Use interface
+    interface User {
+      id: number;
+      name: string;
+    }
+    ```
+
+-   Avoid enums, use const objects with 'as const':
+
+    ```typescript
+    // ❌ Don't use enum
+    enum AccountType {
+      CHECKING = 'checking',
+      SAVINGS = 'savings'
+    }
+
+    // ✅ Use const object with 'as const'
+    const AccountType = {
+      CHECKING: 'checking',
+      SAVINGS: 'savings'
+    } as const;
+
+    type AccountType = typeof AccountType[keyof typeof AccountType];
+    ```
+
+-   Use discriminated unions for complex state:
+
+    ```typescript
+    interface LoadingState {
+      status: 'loading';
+    }
+
+    interface SuccessState {
+      status: 'success';
+      data: User;
+    }
+
+    interface ErrorState {
+      status: 'error';
+      error: string;
+    }
+
+    type State = LoadingState | SuccessState | ErrorState;
+    ```
+
+-   Avoid any type and type assertions
+-   Define proper interfaces for all props
+-   Type all event handlers properly:
+
+    ```typescript
+    interface Props {
+      onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+      onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    }
+    ```
+
+-   Use const assertions for static objects
+-   Use proper generics for reusable components:
+    ```typescript
+    interface SelectProps<T> {
+      items: T[];
+      value: T;
+      onChange: (value: T) => void;
+    }
+    ```
+
+Component Patterns
+
+-   Use functional components exclusively
+-   Keep components pure and predictable
+-   Avoid side effects during render
+-   Use proper error boundaries
+-   Implement proper loading states
+-   Follow accessibility guidelines
+-   Use proper prop typing
+
+State Management
+
+-   Keep state as local as possible
+-   Use proper TypeScript discriminated unions
+-   Avoid redundant/duplicate state
+-   Lift shared state to common parent
+-   Use context sparingly
+-   Prefer controlled components
+
+Performance
+
+-   Use React Server Components where possible
+-   Implement code splitting via dynamic imports
+-   Wrap heavy components in Suspense
+-   Minimize client-side state
+-   Avoid unnecessary re-renders
+-   Use proper keys for lists
+-   Optimize bundle size
+
+UI Components
+
+-   Use Headless UI for interactive components
+-   Follow Tailwind's mobile-first approach
+-   Use proper semantic HTML
+-   Implement proper responsive design
+-   Follow accessibility guidelines
+-   Use proper color contrast
+-   Implement proper dark mode support
+-   For icons, use virtual imports from unplugin-icons
+
+Code Reusability & Modularization
+
+-   Extract reusable logic into custom hooks:
+
+    ```typescript
+    // ❌ Don't duplicate form logic
+    function ComponentA() {
+      const [value, setValue] = useState('')
+      const handleChange = (e) => setValue(e.target.value)
+      const validate = () => value.length > 3
+    }
+
+    // ✅ Create reusable hook
+    function useFormField(initialValue = '') {
+      const [value, setValue] = useState(initialValue)
+      const handleChange = (e) => setValue(e.target.value)
+      const validate = () => value.length > 3
+      return { value, handleChange, validate }
+    }
+    ```
+
+-   Create compound components for complex UIs:
+
+    ```typescript
+    // ❌ Don't create monolithic components
+    <Table data={data} sortable filterable pagination />
+
+    // ✅ Use compound components
+    <Table>
+      <Table.Header sortable />
+      <Table.Body data={data} />
+      <Table.Filters />
+      <Table.Pagination />
+    </Table>
+    ```
+
+-   Use higher-order components for shared behavior:
+
+    ```typescript
+    // ❌ Don't duplicate loading logic
+    function ComponentA() {
+      if (isLoading) return <Spinner />
+      return <div>{data}</div>
+    }
+
+    // ✅ Create withLoading HOC
+    const withLoading = (Component) => ({ isLoading, ...props }) => {
+      if (isLoading) return <Spinner />
+      return <Component {...props} />
+    }
+    ```
+
+-   Create utility functions for repeated operations:
+
+    ```typescript
+    // ❌ Don't duplicate formatting logic
+    const price1 = new Intl.NumberFormat('en-US').format(value1)
+    const price2 = new Intl.NumberFormat('en-US').format(value2)
+
+    // ✅ Create utility function
+    const formatCurrency = (value: number) =>
+      new Intl.NumberFormat('en-US').format(value)
+    ```
+
+-   Use composition over inheritance:
+
+    ```typescript
+    // ❌ Don't extend components
+    class SpecialButton extends Button {
+      // ...
+    }
+
+    // ✅ Use composition
+    function SpecialButton(props) {
+      return <Button {...props} className="special" />
+    }
+    ```
+
+-   Create reusable type utilities:
+    ```typescript
+    // Define once, use everywhere
+    type Nullable<T> = T | null
+    type AsyncState<T> = {
+      data: Nullable<T>
+      isLoading: boolean
+      error: Nullable<Error>
+    }
+    ```
+
 Key Conventions
 
 1. Follow Laravel's MVC architecture.
 2. Use Laravel's routing system for defining application endpoints.
 3. Implement proper request validation using Form Requests.
-4. Use Laravel's Blade templating engine for views.
+4. Use Inertia for server-side rendering and state management.
 5. Implement proper database relationships using Eloquent.
 6. Use Laravel's built-in authentication scaffolding.
 7. Implement proper API resource transformations.
 8. Use Laravel's event and listener system for decoupled code.
 9. Implement proper database transactions for data integrity.
 10. Use Laravel's built-in scheduling features for recurring tasks.
+11. Use 'nuqs' for URL search parameter state management.
+12. Optimize Web Vitals (LCP, CLS, FID).
+13. Use strict TypeScript configuration with "strict": true
+14. Implement proper error boundaries for React components
+15. Use repository pattern for database operations
+16. Follow atomic design principles for React components
+17. Implement proper loading states and error handling
+18. Use Laravel's queue system for long-running tasks
+19. Implement proper caching strategies using Laravel's cache
+20. Use proper TypeScript discriminated unions for state management
+21. Implement proper form validation on both client and server
+22. Use proper dependency injection in Laravel services
+23. Follow proper Git branching strategy (feature/fix/hotfix)
+24. Implement proper logging and monitoring
+25. Use proper environment configuration
+26. Implement proper testing strategy (Unit/Feature/E2E)
+27. Use proper code documentation and comments
+28. Implement proper security measures (XSS, CSRF, SQL Injection)
+29. Use proper asset optimization and bundling
+30. Follow proper deployment strategy with CI/CD

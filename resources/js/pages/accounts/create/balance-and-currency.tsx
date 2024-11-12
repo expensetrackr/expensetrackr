@@ -1,47 +1,48 @@
-import { Combobox } from "@headlessui/react";
-import { Head, router, useForm } from "@inertiajs/react";
+import { Head, router } from "@inertiajs/react";
 import { CurrencyInput } from "headless-currency-input";
-import { useQueryState } from "nuqs";
-import ArrowLeftIcon from "virtual:icons/ri/arrow-left-line";
-import ArrowRightIcon from "virtual:icons/ri/arrow-right-line";
+import { type NumberFormatValues } from "react-number-format";
 import CurrencyIcon from "virtual:icons/ri/currency-line";
 
-import { Button } from "#/components/button.tsx";
-import { ComboboxInput, ComboboxOption, ComboboxOptions } from "#/components/combobox.tsx";
 import { ErrorMessage, Field, Label } from "#/components/fieldset.tsx";
+import { AccountForm } from "#/components/forms/account-form.tsx";
+import { CurrencySelector } from "#/components/forms/currency-selector.tsx";
 import { Input } from "#/components/input.tsx";
 import { Text } from "#/components/text.tsx";
+import { useAccountForm } from "#/hooks/use-account-form.ts";
 import { CreateLayout } from "#/layouts/create-layout.tsx";
+import { type AccountFormData } from "#/models/account.ts";
 
-type CreateAccountStep2PageProps = {
+interface CreateAccountStep2PageProps {
     currencies: string[];
-};
+    previousData?: Partial<AccountFormData>;
+}
 
-export default function CreateAccountStep2Page({ currencies = [] }: CreateAccountStep2PageProps) {
-    const { errors, data, ...form } = useForm({
+export default function CreateAccountStep2Page({ currencies, previousData }: CreateAccountStep2PageProps) {
+    const form = useAccountForm({
+        ...previousData,
         initial_balance: 0,
         currency_code: "USD",
     });
-    const [query, setQuery] = useQueryState("currency_code");
 
-    function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
 
-        form.post(route("accounts.store", [2]), {
+        form.post(route("accounts.store", ["balance-and-currency"]), {
             onSuccess: () => router.visit(route("accounts.create", { step: "review" })),
         });
     }
 
-    const filteredCurrencies =
-        query === ""
-            ? currencies
-            : currencies?.filter((currency) => {
-                  return currency.toLowerCase().includes(query?.toLowerCase() ?? "");
-              });
+    function handleCurrencyChange(value: string) {
+        form.setData("currency_code", value);
+    }
+
+    function handleBalanceChange(value: NumberFormatValues) {
+        form.setData("initial_balance", value.floatValue ?? 0);
+    }
 
     return (
         <CreateLayout>
-            <Head title="Create account" />
+            <Head title="Balance and Currency - Create Account" />
 
             <div className="relative py-12">
                 <div className="flex flex-col gap-6 sm:mx-auto sm:max-w-[540px]">
@@ -60,74 +61,29 @@ export default function CreateAccountStep2Page({ currencies = [] }: CreateAccoun
                         </div>
                     </div>
 
-                    <form onSubmit={onSubmit} className="flex w-full flex-col gap-5 sm:mx-auto sm:max-w-[352px]">
+                    <AccountForm step="balance-and-currency" onSubmit={handleSubmit}>
                         <Field>
                             <Label>Initial balance</Label>
                             <CurrencyInput
                                 customInput={Input}
-                                invalid={!!errors.initial_balance}
+                                invalid={!!form.errors.initial_balance}
                                 name="initial_balance"
-                                onValueChange={(value) => form.setData("initial_balance", value.floatValue ?? 0)}
+                                onValueChange={handleBalanceChange}
                                 placeholder="e.g. 1000"
-                                currency={data.currency_code || "USD"}
+                                currency={form.data.currency_code || "USD"}
                             />
-                            {errors.initial_balance && <ErrorMessage>{errors.initial_balance}</ErrorMessage>}
+                            {form.errors.initial_balance && <ErrorMessage>{form.errors.initial_balance}</ErrorMessage>}
                         </Field>
 
-                        <Field>
-                            <Label>Currency</Label>
-                            <Combobox
-                                immediate
-                                value={data.currency_code}
-                                onChange={(value) => form.setData("currency_code", value ?? "")}
-                                virtual={{ options: filteredCurrencies }}
-                                onClose={() => setQuery(null)}
-                            >
-                                <ComboboxInput
-                                    aria-label="Currency"
-                                    value={query || data.currency_code}
-                                    onChange={(event) => setQuery(event.target.value)}
-                                />
+                        <CurrencySelector
+                            value={form.data.currency_code}
+                            onChange={handleCurrencyChange}
+                            currencies={currencies}
+                            error={form.errors.currency_code}
+                        />
 
-                                <ComboboxOptions>
-                                    {({ option }) => (
-                                        <ComboboxOption value={option} className="data-[focus]:bg-blue-100">
-                                            <svg
-                                                className="size-5 rounded-full"
-                                                role="img"
-                                                aria-label={`${option} flag`}
-                                                preserveAspectRatio="xMidYMid meet"
-                                            >
-                                                <use href={`/img/flags.svg#${option}`} />
-                                            </svg>
-
-                                            <span>{option}</span>
-                                        </ComboboxOption>
-                                    )}
-                                </ComboboxOptions>
-                            </Combobox>
-                            {errors.currency_code && <ErrorMessage>{errors.currency_code}</ErrorMessage>}
-                        </Field>
-
-                        <div className="flex justify-between">
-                            <Button
-                                $color="neutral"
-                                $size="sm"
-                                $variant="stroke"
-                                href={route("accounts.create", {
-                                    step: "details",
-                                })}
-                                className="px-4"
-                            >
-                                <ArrowLeftIcon />
-                                <span>Back</span>
-                            </Button>
-                            <Button $size="sm" className="px-4" type="submit">
-                                <span>Continue</span>
-                                <ArrowRightIcon />
-                            </Button>
-                        </div>
-                    </form>
+                        <AccountForm.Navigation prevStep="details" isSubmitting={form.processing} />
+                    </AccountForm>
                 </div>
             </div>
         </CreateLayout>

@@ -30,15 +30,15 @@ const buttonVariants = cva({
                 // Shim/overlay, inset to match button foreground and used for hover state + highlight
                 "after:absolute after:inset-0 after:-z-10 after:transition",
                 // White overlay on hover
-                "data-active:after:bg-[var(--btn-hover-overlay)] data-hover:after:bg-[var(--btn-hover-overlay)]",
+                "data-hover:after:bg-[var(--btn-hover-overlay)] data-active:after:bg-[var(--btn-hover-overlay)]",
                 // Disabled
                 "data-disabled:before:shadow-none data-disabled:after:shadow-none",
             ],
             stroke: [
                 // Base
-                "border border-[var(--btn-stroke-border)] bg-[var(--bg-white-0)] text-[var(--btn-stroke-text)] data-active:bg-[var(--btn-stroke-hover)] data-hover:bg-[var(--btn-stroke-hover)]",
+                "border border-[var(--btn-stroke-border)] bg-[var(--bg-white-0)] text-[var(--btn-stroke-text)] data-hover:bg-[var(--btn-stroke-hover)] data-active:bg-[var(--btn-stroke-hover)]",
                 // Icon
-                "data-active:[--btn-icon:theme(colors.zinc.700)] data-hover:[--btn-icon:theme(colors.zinc.700)]",
+                "data-hover:[--btn-icon:theme(colors.zinc.700)] data-active:[--btn-icon:theme(colors.zinc.700)]",
             ],
             lighter: [
                 // Base

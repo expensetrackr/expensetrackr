@@ -13,6 +13,11 @@ export default [
         },
     },
     {
+        rules: {
+            "import/extensions": ["warn", "ignorePackages"],
+        },
+    },
+    {
         ignores: ["vite.config.ts"],
     },
 ];

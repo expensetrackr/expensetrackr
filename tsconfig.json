@@ -1,24 +1,23 @@
 {
-	"compilerOptions": {
-		"allowJs": true,
-		"module": "ESNext",
-		"moduleResolution": "bundler",
-		"jsx": "react-jsx",
-		"target": "ESNext",
-		"strict": true,
-		"skipLibCheck": true,
-		"allowImportingTsExtensions": true,
-		"noUncheckedIndexedAccess": true,
-		"noEmit": true,
-		"isolatedModules": true,
-		"esModuleInterop": true,
-		"forceConsistentCasingInFileNames": true,
-		"baseUrl": ".",
-		"paths": {
-			"#/*": ["./resources/js/*"],
-			"ziggy-js": ["./vendor/tightenco/ziggy"]
-		},
-		"typeRoots": ["./node_modules/@types"]
-	},
-	"include": ["resources/js/**/*.ts", "resources/js/**/*.tsx", "resources/js/**/*.d.ts"]
+    "include": [
+        "resources/js/**/*.ts",
+        "resources/js/**/*.tsx",
+        "resources/js/**/*.d.ts"
+    ],
+    "extends": [
+        "@epic-web/config/typescript"
+    ],
+    "compilerOptions": {
+        "paths": {
+            "#/*": [
+                "./resources/js/*"
+            ],
+            "ziggy-js": [
+                "./vendor/tightenco/ziggy"
+            ]
+        },
+        "typeRoots": [
+            "./node_modules/@types"
+        ]
+    },
 }

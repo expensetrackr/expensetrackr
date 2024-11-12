@@ -1,7 +1,7 @@
 import { useQueryState } from "nuqs";
 import WalletIcon from "virtual:icons/ri/wallet-line";
 
-import { Dialog, DialogDescription, DialogHeader, DialogIcon, DialogTitle } from "#/components/dialog";
+import { Dialog, DialogDescription, DialogHeader, DialogIcon, DialogTitle } from "#/components/dialog.tsx";
 
 export function CreateAccountForm() {
     const [action, setAction] = useQueryState("action");

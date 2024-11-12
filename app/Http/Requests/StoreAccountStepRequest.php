@@ -14,9 +14,12 @@ final class StoreAccountStepRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return $this->user()->can('create', Account::class);
+        return $this->user()?->can('create', Account::class) ?? false;
     }
 
+    /**
+     * @return array<string, array<int, CurrencyRule|\Illuminate\Validation\Rules\Enum|string>>
+     */
     public function rules(): array
     {
         return match ($this->route('step')) {
