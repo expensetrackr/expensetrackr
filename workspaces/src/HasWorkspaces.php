@@ -131,7 +131,7 @@ trait HasWorkspaces
         return $this->belongsToWorkspace($workspace) && Workspaces::findRole(type($workspace->users->firstWhere(
             'id',
             $this->id
-        )?->membership->role)->asString())?->key === $role;
+        )?->membership?->role)->asString())?->key === $role;
     }
 
     /**
@@ -193,7 +193,7 @@ trait HasWorkspaces
             return null;
         }
 
-        $role = $workspace->users->firstWhere('id', $this->id)?->membership->role;
+        $role = $workspace->users->firstWhere('id', $this->id)?->membership?->role;
 
         return $role ? Workspaces::findRole($role) : null;
     }

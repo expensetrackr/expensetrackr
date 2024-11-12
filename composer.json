@@ -24,7 +24,7 @@
         "joelbutcher/socialstream": "6.1.9",
         "kongulov/interact-with-enum": "1.0.0",
         "laravel/fortify": "1.24.4",
-        "laravel/framework": "11.30.0",
+        "laravel/framework": "11.31.0",
         "laravel/octane": "2.5.9",
         "laravel/sanctum": "4.0.3",
         "laravel/tinker": "2.10.0",
@@ -36,7 +36,7 @@
     "require-dev": {
         "barryvdh/laravel-ide-helper": "3.2.2",
         "fakerphp/faker": "1.24.0",
-        "larastan/larastan": "2.9.10",
+        "larastan/larastan": "2.9.11",
         "laravel/pint": "1.18.1",
         "laravel/sail": "1.37.1",
         "mockery/mockery": "1.6.12",
