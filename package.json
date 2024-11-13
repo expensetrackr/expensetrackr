@@ -36,7 +36,7 @@
         "tailwind-merge": "2.5.4"
     },
     "devDependencies": {
-        "@epic-web/config": "1.16.0",
+        "@epic-web/config": "1.16.1",
         "@headlessui/tailwindcss": "0.2.1",
         "@iconify-json/flat-color-icons": "1.2.0",
         "@iconify-json/logos": "1.2.3",
