@@ -7,7 +7,6 @@ import { Button } from "#/components/button.tsx";
 import { Divider } from "#/components/divider.tsx";
 import { PageHeader } from "#/components/page-header.tsx";
 import { AppLayout } from "#/layouts/app-layout.tsx";
-import { CreateAccountForm } from "#/pages/accounts/partials/create-account-form.tsx";
 
 export default function AccountsPage() {
     return (
@@ -36,8 +35,6 @@ export default function AccountsPage() {
                 </PageHeader>
 
                 <Divider />
-
-                <CreateAccountForm />
             </div>
         </AppLayout>
     );
