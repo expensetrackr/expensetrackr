@@ -16,8 +16,8 @@ import {
     DialogIcon,
     DialogTitle,
 } from "#/components/dialog.tsx";
-import { ErrorMessage, Field, Label } from "#/components/fieldset.tsx";
-import { Input } from "#/components/input.tsx";
+import { ErrorMessage, Field, Label } from "#/components/form/fieldset.tsx";
+import { Input } from "#/components/form/input.tsx";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "#/components/table.tsx";
 import { type Session } from "#/types/index.ts";
 

@@ -5,8 +5,8 @@ import { route } from "ziggy-js";
 
 import { Button } from "#/components/button.tsx";
 import { Checkbox, CheckboxField } from "#/components/checkbox.tsx";
-import { ErrorMessage, Field, Label } from "#/components/fieldset.tsx";
-import { Input } from "#/components/input.tsx";
+import { ErrorMessage, Field, Label } from "#/components/form/fieldset.tsx";
+import { Input } from "#/components/form/input.tsx";
 import { StyledLink } from "#/components/link.tsx";
 import { Socialstream } from "#/components/socialstream.tsx";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";

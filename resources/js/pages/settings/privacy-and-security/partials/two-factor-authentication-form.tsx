@@ -6,8 +6,8 @@ import { useEffect, useState } from "react";
 import { ActionSection } from "#/components/action-section.tsx";
 import { Button } from "#/components/button.tsx";
 import { ConfirmsPassword } from "#/components/confirms-password.tsx";
-import { ErrorMessage, Field, Label } from "#/components/fieldset.tsx";
-import { Input } from "#/components/input.tsx";
+import { ErrorMessage, Field, Label } from "#/components/form/fieldset.tsx";
+import { Input } from "#/components/form/input.tsx";
 import { type PageProps } from "#/types/index.ts";
 
 interface TwoFactorAuthenticationFormProps {

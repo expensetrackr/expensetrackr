@@ -4,9 +4,9 @@ import { useState } from "react";
 import { route } from "ziggy-js";
 
 import { Button } from "#/components/button.tsx";
-import { ErrorMessage, Field, Label } from "#/components/fieldset.tsx";
-import { InputOTP, InputOTPGroup, InputOTPSlot } from "#/components/input-otp.tsx";
-import { Input } from "#/components/input.tsx";
+import { ErrorMessage, Field, Label } from "#/components/form/fieldset.tsx";
+import { InputOTP, InputOTPGroup, InputOTPSlot } from "#/components/form/input-otp.tsx";
+import { Input } from "#/components/form/input.tsx";
 import { StyledLink } from "#/components/link.tsx";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";
 

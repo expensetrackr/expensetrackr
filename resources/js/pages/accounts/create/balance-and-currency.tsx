@@ -4,10 +4,10 @@ import { type NumberFormatValues } from "react-number-format";
 import BankIcon from "virtual:icons/ri/bank-line";
 import MoneyDollarCircleFillIcon from "virtual:icons/ri/money-dollar-circle-fill";
 
-import { ErrorMessage, Field, Label } from "#/components/fieldset.tsx";
 import { AccountForm } from "#/components/form/account-form.tsx";
 import { CurrencySelector } from "#/components/form/currency-selector.tsx";
-import { Input } from "#/components/input.tsx";
+import { ErrorMessage, Field, Label } from "#/components/form/fieldset.tsx";
+import { Input } from "#/components/form/input.tsx";
 import { Text } from "#/components/text.tsx";
 import { useAccountForm } from "#/hooks/use-account-form.ts";
 import { CreateLayout } from "#/layouts/create-layout.tsx";

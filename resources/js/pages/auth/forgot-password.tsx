@@ -3,8 +3,8 @@ import { useEffect } from "react";
 import { toast } from "sonner";
 
 import { Button } from "#/components/button.tsx";
-import { ErrorMessage, Field, Label } from "#/components/fieldset.tsx";
-import { Input } from "#/components/input.tsx";
+import { ErrorMessage, Field, Label } from "#/components/form/fieldset.tsx";
+import { Input } from "#/components/form/input.tsx";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";
 
 export default function ForgotPassword({ status }: { status?: string }) {

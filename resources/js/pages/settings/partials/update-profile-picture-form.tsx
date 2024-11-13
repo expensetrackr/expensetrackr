@@ -6,9 +6,9 @@ import PencilIcon from "virtual:icons/ri/pencil-line";
 
 import { Avatar } from "#/components/avatar.tsx";
 import { Dropdown, DropdownButton, DropdownItem, DropdownMenu } from "#/components/dropdown.tsx";
-import { ErrorMessage, Field, Label } from "#/components/fieldset.tsx";
+import { ErrorMessage, Field, Label } from "#/components/form/fieldset.tsx";
+import { Input } from "#/components/form/input.tsx";
 import { FormSection } from "#/components/form-section.tsx";
-import { Input } from "#/components/input.tsx";
 import { type InertiaSharedProps } from "#/types/index.ts";
 
 export function UpdateProfilePictureForm() {

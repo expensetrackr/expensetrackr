@@ -13,9 +13,9 @@ import {
     DialogIcon,
     DialogTitle,
 } from "#/components/dialog.tsx";
-import { ErrorMessage, Field, Label } from "#/components/fieldset.tsx";
-import { Input } from "#/components/input.tsx";
-import { Select } from "#/components/select.tsx";
+import { ErrorMessage, Field, Label } from "#/components/form/fieldset.tsx";
+import { Input } from "#/components/form/input.tsx";
+import { Select } from "#/components/form/select.tsx";
 import { type Role, type Workspace } from "#/types/index.ts";
 
 interface AddWorkspaceMemberFormProps {

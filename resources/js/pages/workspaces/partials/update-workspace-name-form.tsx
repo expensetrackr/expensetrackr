@@ -4,9 +4,9 @@ import { useCallback, useEffect } from "react";
 import { toast } from "sonner";
 import { route } from "ziggy-js";
 
-import { ErrorMessage, Field, Label } from "#/components/fieldset.tsx";
+import { ErrorMessage, Field, Label } from "#/components/form/fieldset.tsx";
+import { Input } from "#/components/form/input.tsx";
 import { FormSection } from "#/components/form-section.tsx";
-import { Input } from "#/components/input.tsx";
 import { type User, type Workspace, type WorkspacePermissions } from "#/types/index.ts";
 
 interface UpdateWorkspaceNameFormProps {

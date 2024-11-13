@@ -14,8 +14,8 @@ import {
     DialogIcon,
     DialogTitle,
 } from "./dialog.tsx";
-import { ErrorMessage, Field, Label } from "./fieldset.tsx";
-import { Input } from "./input.tsx";
+import { ErrorMessage, Field, Label } from "./form/fieldset.tsx";
+import { Input } from "./form/input.tsx";
 
 interface ConfirmsPasswordProps {
     onConfirm?: () => void;

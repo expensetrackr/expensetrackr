@@ -2,8 +2,8 @@ import { Head, useForm } from "@inertiajs/react";
 import { route } from "ziggy-js";
 
 import { Button } from "#/components/button.tsx";
-import { Description, ErrorMessage, Field, Label } from "#/components/fieldset.tsx";
-import { Input } from "#/components/input.tsx";
+import { Description, ErrorMessage, Field, Label } from "#/components/form/fieldset.tsx";
+import { Input } from "#/components/form/input.tsx";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";
 
 export default function ResetPassword({ token, email }: { token: string; email: string }) {

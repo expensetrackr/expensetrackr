@@ -2,8 +2,8 @@ import * as Headless from "@headlessui/react";
 import { type VariantProps } from "cva";
 import * as React from "react";
 
-import { inputVariants } from "#/components/input.tsx";
 import { cx } from "#/utils/cva.ts";
+import { inputVariants } from "./input.tsx";
 
 export const Textarea = React.forwardRef(function Textarea(
     {

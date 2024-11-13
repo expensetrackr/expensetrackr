@@ -1,12 +1,12 @@
 import { Head, router } from "@inertiajs/react";
 import DraftFillIcon from "virtual:icons/ri/draft-fill";
 
-import { Description, ErrorMessage, Field, Label } from "#/components/fieldset.tsx";
 import { AccountForm } from "#/components/form/account-form.tsx";
-import { Input } from "#/components/input.tsx";
-import { Select } from "#/components/select.tsx";
+import { Description, ErrorMessage, Field, Label } from "#/components/form/fieldset.tsx";
+import { Input } from "#/components/form/input.tsx";
+import { Select } from "#/components/form/select.tsx";
+import { Textarea } from "#/components/form/textarea.tsx";
 import { Text } from "#/components/text.tsx";
-import { Textarea } from "#/components/textarea.tsx";
 import { useAccountForm } from "#/hooks/use-account-form.ts";
 import { CreateLayout } from "#/layouts/create-layout.tsx";
 import { type AccountTypes } from "#/models/account.ts";
