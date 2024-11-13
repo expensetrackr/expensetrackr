@@ -4,8 +4,6 @@ php artisan down
 
 php artisan inertia:stop-ssr
 
-php artisan schedule:interrupt
-
-php artisan octane:reload
+php artisan queue:restart
 
 php artisan up
