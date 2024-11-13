@@ -18,8 +18,8 @@ export function AppLayout({ children, subSidebar }: { children: React.ReactNode;
 
     return (
         <SidebarLayout
-            navbar={<MainNavbar user={user} logout={logout} />}
-            sidebar={<MainSidebar user={user} workspaces={workspaces} logout={logout} />}
+            navbar={<MainNavbar logout={logout} user={user} />}
+            sidebar={<MainSidebar logout={logout} user={user} workspaces={workspaces} />}
             subSidebar={subSidebar}
         >
             {children}

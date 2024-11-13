@@ -17,7 +17,6 @@ export const Textarea = React.forwardRef(function Textarea(
 ) {
     return (
         <span
-            data-slot="control"
             className={cx([
                 // Basic layout
                 "relative block w-full transition before:transition after:transition",
@@ -37,6 +36,7 @@ export const Textarea = React.forwardRef(function Textarea(
                 "has-data-invalid:before:shadow-red-500/10",
                 className,
             ])}
+            data-slot="control"
         >
             <Headless.Textarea
                 ref={ref}

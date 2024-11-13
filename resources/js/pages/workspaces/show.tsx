@@ -55,19 +55,19 @@ export default function WorkspacesShow({ workspace, availableRoles, permissions 
 
                 <Divider />
 
-                <UpdateWorkspaceNameForm workspace={workspace} permissions={permissions} />
+                <UpdateWorkspaceNameForm permissions={permissions} workspace={workspace} />
 
                 <Divider />
 
                 <WorkspaceMemberManager
-                    workspace={workspace}
                     availableRoles={availableRoles}
                     permissions={permissions}
+                    workspace={workspace}
                 />
 
                 <Divider />
 
-                <WorkspaceMemberInvitations workspace={workspace} permissions={permissions} />
+                <WorkspaceMemberInvitations permissions={permissions} workspace={workspace} />
             </div>
         </AppLayout>
     );

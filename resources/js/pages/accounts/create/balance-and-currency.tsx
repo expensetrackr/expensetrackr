@@ -1,9 +1,12 @@
 import { Head, router } from "@inertiajs/react";
+import { resolveCurrencyFormat } from "@sumup/intl";
+import Decimal from "decimal.js";
 import { CurrencyInput } from "headless-currency-input";
 import { type NumberFormatValues } from "react-number-format";
 import BankIcon from "virtual:icons/ri/bank-line";
 import MoneyDollarCircleFillIcon from "virtual:icons/ri/money-dollar-circle-fill";
 
+import { ContentDivider } from "#/components/content-divider.tsx";
 import { AccountForm } from "#/components/form/account-form.tsx";
 import { CurrencySelector } from "#/components/form/currency-selector.tsx";
 import { ErrorMessage, Field, Label } from "#/components/form/fieldset.tsx";
@@ -15,15 +18,16 @@ import { type AccountFormData } from "#/models/account.ts";
 
 interface CreateAccountStep2PageProps {
     currencies: string[];
-    previousData?: Partial<AccountFormData>;
+    formData?: Partial<AccountFormData>;
 }
 
-export default function CreateAccountStep2Page({ currencies, previousData }: CreateAccountStep2PageProps) {
+export default function CreateAccountStep2Page({ currencies, formData }: CreateAccountStep2PageProps) {
     const form = useAccountForm({
-        ...previousData,
-        initial_balance: previousData?.initial_balance ?? 0,
-        currency_code: previousData?.currency_code ?? "USD",
+        ...formData,
+        initial_balance: formData?.initial_balance ?? "0.00",
+        currency_code: formData?.currency_code ?? "USD",
     });
+    const currencyFormat = resolveCurrencyFormat("en", form.data.currency_code || "USD");
 
     function handleSubmit(e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>) {
         e.preventDefault();
@@ -38,7 +42,8 @@ export default function CreateAccountStep2Page({ currencies, previousData }: Cre
     }
 
     function handleBalanceChange(value: NumberFormatValues) {
-        form.setData("initial_balance", value.floatValue ?? 0);
+        const decimalValue = new Decimal(value.value).toDecimalPlaces(currencyFormat?.minimumFractionDigits);
+        form.setData("initial_balance", decimalValue.toFixed(currencyFormat?.minimumFractionDigits));
     }
 
     return (
@@ -69,16 +74,12 @@ export default function CreateAccountStep2Page({ currencies, previousData }: Cre
                             </div>
 
                             <div className="flex flex-1 flex-col gap-1">
-                                <h3 className="text-label-sm">{previousData?.name}</h3>
-                                <p className="text-paragraph-sm text-[var(--text-sub-600)]">
-                                    Type: {previousData?.type}
-                                </p>
+                                <h3 className="text-label-sm">{formData?.name}</h3>
+                                <p className="text-paragraph-sm text-[var(--text-sub-600)]">Type: {formData?.type}</p>
                             </div>
                         </div>
 
-                        <div className="bg-[var(--bg-weak-50)] px-4 py-1.5">
-                            <p className="text-subheading-xs text-[var(--text-soft-400)] uppercase">account balance</p>
-                        </div>
+                        <ContentDivider $type="solid-text">account balance</ContentDivider>
 
                         <div className="p-4">
                             <AccountForm
@@ -89,12 +90,14 @@ export default function CreateAccountStep2Page({ currencies, previousData }: Cre
                                 <Field>
                                     <Label>Initial balance</Label>
                                     <CurrencyInput
+                                        currency={form.data.currency_code || "USD"}
                                         customInput={Input}
                                         invalid={!!form.errors.initial_balance}
+                                        locale="en"
                                         name="initial_balance"
                                         onValueChange={handleBalanceChange}
                                         placeholder="e.g. 1000"
-                                        currency={form.data.currency_code || "USD"}
+                                        value={form.data.initial_balance}
                                     />
                                     {form.errors.initial_balance && (
                                         <ErrorMessage>{form.errors.initial_balance}</ErrorMessage>
@@ -102,18 +105,18 @@ export default function CreateAccountStep2Page({ currencies, previousData }: Cre
                                 </Field>
 
                                 <CurrencySelector
-                                    value={form.data.currency_code}
-                                    onChange={(value) => handleChange("currency_code", value)}
                                     currencies={currencies}
                                     error={form.errors.currency_code}
+                                    onChange={(value) => handleChange("currency_code", value)}
+                                    value={form.data.currency_code}
                                 />
                             </AccountForm>
                         </div>
 
                         <AccountForm.Navigation
-                            prevStep="details"
                             isSubmitting={form.processing}
                             onSubmit={handleSubmit}
+                            prevStep="details"
                         />
                     </div>
                 </div>

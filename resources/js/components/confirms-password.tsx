@@ -65,7 +65,7 @@ export function ConfirmsPassword({ onConfirm, children }: ConfirmsPasswordProps)
                 {children}
             </span>
 
-            <Dialog open={action === "confirming:password"} onClose={() => setAction(null)}>
+            <Dialog onClose={() => setAction(null)} open={action === "confirming:password"}>
                 <DialogHeader>
                     <DialogIcon>
                         <LockPasswordIcon className="size-6 text-[var(--icon-sub-600)]" />
@@ -80,18 +80,18 @@ export function ConfirmsPassword({ onConfirm, children }: ConfirmsPasswordProps)
                 </DialogHeader>
 
                 <DialogBody>
-                    <form onSubmit={onSubmit} id="set-password-form" className="flex flex-col gap-3">
+                    <form className="flex flex-col gap-3" id="set-password-form" onSubmit={onSubmit}>
                         <Field>
                             <Label>Password</Label>
                             <Input
-                                ref={passwordRef}
                                 autoComplete="current-password"
                                 autoFocus
                                 invalid={!!errors.password}
                                 name="password"
-                                type="password"
                                 onChange={(e) => setData("password", e.target.value)}
                                 placeholder="Enter your password"
+                                ref={passwordRef}
+                                type="password"
                             />
                             {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
                         </Field>
@@ -101,20 +101,20 @@ export function ConfirmsPassword({ onConfirm, children }: ConfirmsPasswordProps)
                 <DialogActions>
                     <Button
                         $color="neutral"
-                        $variant="stroke"
                         $size="sm"
-                        disabled={form.processing}
+                        $variant="stroke"
                         className="w-full"
+                        disabled={form.processing}
                         onClick={() => setAction(null)}
                     >
                         Cancel
                     </Button>
                     <Button
                         $size="sm"
+                        className="w-full"
                         disabled={form.processing}
                         form="set-password-form"
                         type="submit"
-                        className="w-full"
                     >
                         {form.processing ? "Confirming..." : "Confirm"}
                     </Button>

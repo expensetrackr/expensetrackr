@@ -26,8 +26,8 @@ export default function ForgotPassword({ status }: { status?: string }) {
 
     return (
         <AuthLayout
-            title="Forgot your password?"
             description="No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one."
+            title="Forgot your password?"
         >
             <Head title="Forgot Password" />
 
@@ -39,15 +39,15 @@ export default function ForgotPassword({ status }: { status?: string }) {
                         autoFocus
                         invalid={!!errors.email}
                         name="email"
-                        type="email"
                         onChange={(e) => setData("email", e.target.value)}
                         placeholder="e.g. john@example.com"
+                        type="email"
                         value={data.email}
                     />
                     {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
                 </Field>
 
-                <Button type="submit" disabled={processing}>
+                <Button disabled={processing} type="submit">
                     Email password reset link
                 </Button>
             </form>

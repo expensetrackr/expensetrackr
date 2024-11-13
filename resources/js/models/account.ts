@@ -9,9 +9,9 @@ export interface Account {
 
 export interface AccountFormData {
     name: string;
-    description: string;
+    description?: string | null;
     type: AccountTypes;
-    initial_balance: number;
+    initial_balance: string;
     currency_code: string;
 }
 

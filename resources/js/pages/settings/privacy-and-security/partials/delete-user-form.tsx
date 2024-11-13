@@ -43,8 +43,6 @@ export function DeleteUserForm() {
 
     return (
         <ActionSection
-            title="Delete account"
-            description="Permanently delete your account."
             action={
                 <>
                     <Button
@@ -56,7 +54,7 @@ export function DeleteUserForm() {
                         Delete account
                     </Button>
 
-                    <Dialog open={action === "destroy:current-user"} onClose={() => setAction(null)}>
+                    <Dialog onClose={() => setAction(null)} open={action === "destroy:current-user"}>
                         <DialogHeader>
                             <DialogIcon>
                                 <DeleteBinIcon className="size-6 text-[var(--icon-sub-600)]" />
@@ -72,18 +70,18 @@ export function DeleteUserForm() {
                         </DialogHeader>
 
                         <DialogBody>
-                            <form onSubmit={onSubmit} id="delete-user-form" className="flex flex-col gap-3">
+                            <form className="flex flex-col gap-3" id="delete-user-form" onSubmit={onSubmit}>
                                 <Field>
                                     <Label>Password</Label>
                                     <Input
-                                        ref={passwordRef}
                                         autoComplete="current-password"
                                         autoFocus
                                         invalid={!!form.errors.password}
                                         name="password"
-                                        type="password"
                                         onChange={(e) => form.setData("password", e.target.value)}
                                         placeholder="Enter your password"
+                                        ref={passwordRef}
+                                        type="password"
                                         value={form.data.password}
                                     />
                                     {form.errors.password && <ErrorMessage>{form.errors.password}</ErrorMessage>}
@@ -94,10 +92,10 @@ export function DeleteUserForm() {
                         <DialogActions>
                             <Button
                                 $color="neutral"
-                                $variant="stroke"
                                 $size="sm"
-                                disabled={form.processing}
+                                $variant="stroke"
                                 className="w-full"
+                                disabled={form.processing}
                                 onClick={closeModal}
                             >
                                 Cancel
@@ -105,10 +103,10 @@ export function DeleteUserForm() {
                             <Button
                                 $color="error"
                                 $size="sm"
+                                className="w-full"
                                 disabled={form.processing}
                                 form="delete-user-form"
                                 type="submit"
-                                className="w-full"
                             >
                                 {form.processing ? "Deleting..." : "Yes, delete my account"}
                             </Button>
@@ -116,6 +114,8 @@ export function DeleteUserForm() {
                     </Dialog>
                 </>
             }
+            description="Permanently delete your account."
+            title="Delete account"
         />
     );
 }

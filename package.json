@@ -20,8 +20,10 @@
     "dependencies": {
         "@headlessui/react": "2.2.0",
         "@inertiajs/react": "2.0.0-beta.2",
+        "@sumup/intl": "1.6.0",
         "@uidotdev/usehooks": "2.4.1",
         "cva": "1.0.0-beta.1",
+        "decimal.js": "10.4.3",
         "framer-motion": "12.0.0-alpha.1",
         "headless-currency-input": "1.2.1",
         "input-otp": "1.4.1",

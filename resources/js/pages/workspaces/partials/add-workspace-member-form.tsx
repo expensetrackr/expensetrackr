@@ -49,7 +49,7 @@ export function AddWorkspaceMemberForm({ workspace, availableRoles }: AddWorkspa
                 Add workspace member
             </Button>
 
-            <Dialog open={action === "create:workspace-members"} onClose={() => setAction(null)}>
+            <Dialog onClose={() => setAction(null)} open={action === "create:workspace-members"}>
                 <DialogHeader>
                     <DialogIcon>
                         <TeamIcon className="size-6 text-[var(--icon-sub-600)]" />
@@ -64,7 +64,7 @@ export function AddWorkspaceMemberForm({ workspace, availableRoles }: AddWorkspa
                 </DialogHeader>
 
                 <DialogBody>
-                    <form onSubmit={onSubmit} id="add-workspace-member-form" className="flex flex-col gap-3">
+                    <form className="flex flex-col gap-3" id="add-workspace-member-form" onSubmit={onSubmit}>
                         <Field>
                             <Label>Email address</Label>
                             <Input
@@ -72,9 +72,9 @@ export function AddWorkspaceMemberForm({ workspace, availableRoles }: AddWorkspa
                                 autoFocus
                                 invalid={!!form.errors.email}
                                 name="email"
-                                type="email"
                                 onChange={(e) => form.setData("email", e.target.value)}
                                 placeholder="i.e. john@example.com"
+                                type="email"
                             />
                             {form.errors.email && <ErrorMessage>{form.errors.email}</ErrorMessage>}
                         </Field>
@@ -83,8 +83,8 @@ export function AddWorkspaceMemberForm({ workspace, availableRoles }: AddWorkspa
                             <Field>
                                 <Label>Role</Label>
                                 <Select
-                                    name="role"
                                     invalid={!!form.errors.role}
+                                    name="role"
                                     onChange={(e) => form.setData("role", e.target.value)}
                                     value={form.data.role}
                                 >
@@ -104,20 +104,20 @@ export function AddWorkspaceMemberForm({ workspace, availableRoles }: AddWorkspa
                 <DialogActions>
                     <Button
                         $color="neutral"
-                        $variant="stroke"
                         $size="sm"
-                        disabled={form.processing}
+                        $variant="stroke"
                         className="w-full"
+                        disabled={form.processing}
                         onClick={() => setAction(null)}
                     >
                         Cancel
                     </Button>
                     <Button
                         $size="sm"
+                        className="w-full"
                         disabled={form.processing}
                         form="add-workspace-member-form"
                         type="submit"
-                        className="w-full"
                     >
                         {form.processing ? "Sending..." : "Send invitation"}
                     </Button>

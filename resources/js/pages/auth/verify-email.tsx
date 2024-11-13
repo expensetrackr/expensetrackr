@@ -26,11 +26,11 @@ export default function VerifyEmail({ status }: { status?: string }) {
             <Head title="Email Verification" />
 
             <form className="flex flex-col gap-3" onSubmit={submit}>
-                <Button type="submit" disabled={processing}>
+                <Button disabled={processing} type="submit">
                     Resend verification email
                 </Button>
 
-                <Button $color="neutral" $variant="stroke" href={route("logout")} method="post" as="button">
+                <Button $color="neutral" $variant="stroke" as="button" href={route("logout")} method="post">
                     Log Out
                 </Button>
             </form>

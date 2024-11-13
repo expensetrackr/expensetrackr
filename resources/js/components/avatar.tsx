@@ -56,19 +56,19 @@ export function Avatar({
             {initials && (
                 // biome-ignore lint/a11y/noSvgWithoutTitle: it has a title when alt is provided, if not, have aria-hidden
                 <svg
+                    aria-hidden={alt ? undefined : "true"}
                     className="text-label-md bg-blue-200 fill-blue-950 uppercase select-none"
                     viewBox="0 0 100 100"
-                    aria-hidden={alt ? undefined : "true"}
                 >
                     {alt && <title>{alt}</title>}
                     <text
+                        alignmentBaseline="middle"
+                        className="text-[48px]/[24px]"
+                        dominantBaseline="middle"
+                        dy=".075em"
+                        textAnchor="middle"
                         x="50%"
                         y="50%"
-                        alignmentBaseline="middle"
-                        dominantBaseline="middle"
-                        textAnchor="middle"
-                        dy=".075em"
-                        className="text-[48px]/[24px]"
                     >
                         {initials}
                     </text>
@@ -77,9 +77,9 @@ export function Avatar({
             {src && (
                 <img
                     {...imageProps}
+                    alt={alt}
                     className={cx(imageProps?.className, "!min-w-full rounded-full")}
                     src={src}
-                    alt={alt}
                 />
             )}
         </span>
@@ -114,7 +114,7 @@ export const AvatarButton = React.forwardRef(function AvatarButton(
             ref={ref as React.ForwardedRef<HTMLAnchorElement>}
         >
             <TouchTarget>
-                <Avatar src={src} $square={$square} initials={initials} alt={alt} />
+                <Avatar $square={$square} alt={alt} initials={initials} src={src} />
             </TouchTarget>
         </Link>
     ) : (
@@ -127,7 +127,7 @@ export const AvatarButton = React.forwardRef(function AvatarButton(
             ref={ref}
         >
             <TouchTarget>
-                <Avatar src={src} $square={$square} initials={initials} alt={alt} />
+                <Avatar $square={$square} alt={alt} initials={initials} src={src} />
             </TouchTarget>
         </Headless.Button>
     );

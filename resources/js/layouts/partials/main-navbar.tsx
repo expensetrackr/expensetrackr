@@ -23,25 +23,25 @@ export function MainNavbar({ user, logout }: { user: Auth["user"]; logout: (e: R
         <Navbar>
             <NavbarSpacer />
             <NavbarSection>
-                <NavbarItem href="/search" aria-label="Search">
+                <NavbarItem aria-label="Search" href="/search">
                     <SearchIcon />
                 </NavbarItem>
-                <NavbarItem href="/inbox" aria-label="Inbox">
+                <NavbarItem aria-label="Inbox" href="/inbox">
                     <InboxIcon />
                 </NavbarItem>
                 <Dropdown>
                     <DropdownButton as={NavbarItem}>
                         <Avatar
-                            user={user}
-                            src={user?.profile_photo_url}
                             alt={user?.name}
                             className="size-10"
                             imageProps={{
                                 className: "size-7 object-cover object-top sm:size-6",
                             }}
+                            src={user?.profile_photo_url}
+                            user={user}
                         />
                     </DropdownButton>
-                    <DropdownMenu className="min-w-64" anchor="bottom end">
+                    <DropdownMenu anchor="bottom end" className="min-w-64">
                         <DropdownItem href={route("settings.show")}>
                             <UserSettingsIcon />
                             <DropdownLabel>My profile</DropdownLabel>

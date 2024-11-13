@@ -10,9 +10,9 @@ export const InputOTP = React.forwardRef<
     React.ComponentPropsWithoutRef<typeof OTPInput>
 >(({ className, containerClassName, ...props }, ref) => (
     <OTPInput
-        ref={ref}
-        containerClassName={cx("flex items-center has-[:disabled]:opacity-50", containerClassName)}
         className={cx("disabled:cursor-not-allowed", className)}
+        containerClassName={cx("flex items-center has-[:disabled]:opacity-50", containerClassName)}
+        ref={ref}
         {...props}
     />
 ));
@@ -33,7 +33,6 @@ export const InputOTPSlot = React.forwardRef<
 
     return (
         <div
-            ref={ref}
             className={cx(
                 "text-h5 first:rounded-l-10 last:rounded-r-10 relative flex h-16 w-full items-center justify-center border-y border-r bg-[var(--bg-white-0)] transition after:outline after:outline-transparent first:border-l hover:bg-[var(--bg-weak-50)]",
                 slot?.isActive &&
@@ -41,6 +40,7 @@ export const InputOTPSlot = React.forwardRef<
                 invalid && "border-state-error-base",
                 className,
             )}
+            ref={ref}
             {...props}
         >
             {slot?.char}

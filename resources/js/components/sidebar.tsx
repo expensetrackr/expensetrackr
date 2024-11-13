@@ -21,7 +21,7 @@ export function SidebarSection({ className, ...props }: React.ComponentPropsWith
 
     return (
         <LayoutGroup id={id}>
-            <div {...props} data-slot="section" className={cx("flex flex-col gap-1", className)} />
+            <div {...props} className={cx("flex flex-col gap-1", className)} data-slot="section" />
         </LayoutGroup>
     );
 }
@@ -77,8 +77,8 @@ export const SidebarItem = React.forwardRef(function SidebarItem(
         <span className={cx("relative", className)}>
             {current && currentIndicator && (
                 <motion.span
-                    layoutId="current-indicator"
                     className="rounded-r-4 bg-primary absolute inset-y-2 -left-5 h-5 w-1"
+                    layoutId="current-indicator"
                 />
             )}
             {"href" in props ? (

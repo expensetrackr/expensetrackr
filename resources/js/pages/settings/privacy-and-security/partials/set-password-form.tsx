@@ -46,15 +46,13 @@ export function SetPasswordForm() {
 
     return (
         <ActionSection
-            title="Set password"
-            description="Create a password for enhanced account security."
             action={
                 <>
                     <Button $color="neutral" $variant="stroke" className="px-2" onClick={() => setAction(null)}>
                         Set password
                     </Button>
 
-                    <Dialog open={action === "set:user-password"} onClose={() => setAction(null)}>
+                    <Dialog onClose={() => setAction(null)} open={action === "set:user-password"}>
                         <DialogHeader>
                             <DialogIcon>
                                 <LockPasswordIcon className="size-6 text-[var(--icon-sub-600)]" />
@@ -69,17 +67,17 @@ export function SetPasswordForm() {
                         </DialogHeader>
 
                         <DialogBody>
-                            <form onSubmit={onSubmit} id="set-password-form" className="flex flex-col gap-3">
+                            <form className="flex flex-col gap-3" id="set-password-form" onSubmit={onSubmit}>
                                 <Field>
                                     <Label>New password</Label>
                                     <Input
-                                        ref={passwordRef}
                                         autoComplete="new-password"
                                         invalid={!!errors.password}
                                         name="password"
-                                        type="password"
                                         onChange={(e) => setData("password", e.target.value)}
                                         placeholder="8+ characters long, 1 capital letter"
+                                        ref={passwordRef}
+                                        type="password"
                                     />
                                     {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
                                 </Field>
@@ -89,9 +87,9 @@ export function SetPasswordForm() {
                                         autoComplete="new-password"
                                         invalid={!!errors.password_confirmation}
                                         name="password"
-                                        type="password"
                                         onChange={(e) => setData("password_confirmation", e.target.value)}
                                         placeholder="Confirm your password"
+                                        type="password"
                                     />
                                     {errors.password_confirmation && (
                                         <ErrorMessage>{errors.password_confirmation}</ErrorMessage>
@@ -103,20 +101,20 @@ export function SetPasswordForm() {
                         <DialogActions>
                             <Button
                                 $color="neutral"
-                                $variant="stroke"
                                 $size="sm"
-                                disabled={form.processing}
+                                $variant="stroke"
                                 className="w-full"
+                                disabled={form.processing}
                                 onClick={() => setAction(null)}
                             >
                                 Cancel
                             </Button>
                             <Button
                                 $size="sm"
+                                className="w-full"
                                 disabled={form.processing}
                                 form="set-password-form"
                                 type="submit"
-                                className="w-full"
                             >
                                 {form.processing ? "Saving..." : "Save"}
                             </Button>
@@ -124,6 +122,8 @@ export function SetPasswordForm() {
                     </Dialog>
                 </>
             }
+            description="Create a password for enhanced account security."
+            title="Set password"
         />
     );
 }

@@ -63,51 +63,51 @@ export function UpdateProfilePictureForm() {
 
     return (
         <FormSection
-            title="Profile photo"
             description="Make your account more personal by adding a profile photo. Max file size is 5MB."
+            title="Profile photo"
         >
             <form
-                ref={formRef}
                 className="flex w-full flex-col items-center gap-4 sm:flex-row"
                 onSubmit={updateProfilePhoto}
+                ref={formRef}
             >
                 <Field>
                     <Label className="sr-only">Profile photo</Label>
                     <Input
-                        ref={photoRef}
-                        invalid={!!form.errors.photo}
-                        name="photo"
-                        type="file"
-                        onChange={handlePhotoChange}
                         className="!sr-only"
                         disabled={form.processing}
+                        invalid={!!form.errors.photo}
+                        name="photo"
+                        onChange={handlePhotoChange}
+                        ref={photoRef}
+                        type="file"
                     />
 
                     <div className="flex flex-col gap-5">
                         <div className="flex items-center gap-5">
                             <div className="relative size-40">
                                 <Avatar
-                                    user={user}
-                                    src={photoPreview || user?.profile_photo_url}
+                                    alt={user?.name}
                                     className="size-40"
                                     imageProps={{
                                         className: "size-40 object-top object-cover",
                                     }}
-                                    alt={user?.name}
+                                    src={photoPreview || user?.profile_photo_url}
+                                    user={user}
                                 />
 
                                 <Dropdown>
                                     <DropdownButton
                                         $color="neutral"
-                                        $variant="stroke"
                                         $size="xs"
+                                        $variant="stroke"
                                         className="absolute bottom-2 left-2 px-2 py-1"
                                     >
                                         <PencilIcon />
                                         <span>Edit</span>
                                     </DropdownButton>
 
-                                    <DropdownMenu className="min-w-32" anchor="bottom end">
+                                    <DropdownMenu anchor="bottom end" className="min-w-32">
                                         <DropdownItem
                                             onClick={() => photoRef.current?.click()}
                                             onFocus={() => photoRef.current?.focus()}

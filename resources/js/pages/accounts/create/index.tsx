@@ -58,8 +58,8 @@ export default function CreateAccountPage({ accountTypes, completedSteps }: Crea
                                         invalid={!!form.errors.name}
                                         name="name"
                                         onChange={(e) => form.setData("name", e.target.value)}
-                                        value={form.data.name}
                                         placeholder="e.g. Personal savings"
+                                        value={form.data.name}
                                     />
                                     {form.errors.name && <ErrorMessage>{form.errors.name}</ErrorMessage>}
                                 </Field>
@@ -70,9 +70,9 @@ export default function CreateAccountPage({ accountTypes, completedSteps }: Crea
                                         invalid={!!form.errors.description}
                                         name="description"
                                         onChange={(e) => form.setData("description", e.target.value)}
-                                        value={form.data.description}
                                         placeholder="e.g. Savings account for personal expenses"
                                         rows={3}
+                                        value={form.data.description ?? ""}
                                     />
                                     {form.errors.description ? (
                                         <ErrorMessage>{form.errors.description}</ErrorMessage>

@@ -63,7 +63,6 @@ export const Input = forwardRef(function Input(
 ) {
     return (
         <span
-            data-slot="control"
             className={cx([
                 // Basic layout
                 "relative block w-full transition before:transition after:transition",
@@ -83,6 +82,7 @@ export const Input = forwardRef(function Input(
                 "has-data-invalid:before:shadow-red-500/10",
                 className,
             ])}
+            data-slot="control"
         >
             <Headless.Input
                 ref={ref}

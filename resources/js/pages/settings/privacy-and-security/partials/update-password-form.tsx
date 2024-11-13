@@ -53,8 +53,6 @@ export function UpdatePasswordForm() {
 
     return (
         <ActionSection
-            title="Update password"
-            description="Update password for enhanced account security."
             action={
                 <>
                     <Button
@@ -65,7 +63,7 @@ export function UpdatePasswordForm() {
                     >
                         Update password
                     </Button>
-                    <Dialog open={action === "update:user-password"} onClose={() => setAction(null)}>
+                    <Dialog onClose={() => setAction(null)} open={action === "update:user-password"}>
                         <DialogHeader>
                             <DialogIcon>
                                 <LockPasswordIcon className="size-6 text-[var(--icon-sub-600)]" />
@@ -80,31 +78,31 @@ export function UpdatePasswordForm() {
                         </DialogHeader>
 
                         <DialogBody>
-                            <form onSubmit={onSubmit} id="update-password-form" className="flex flex-col gap-3">
+                            <form className="flex flex-col gap-3" id="update-password-form" onSubmit={onSubmit}>
                                 <Field>
                                     <Label>Current password</Label>
                                     <Input
-                                        ref={currentPasswordRef}
                                         autoComplete="current-password"
                                         autoFocus
                                         invalid={!!errors.current_password}
                                         name="current_password"
-                                        type="password"
                                         onChange={(e) => setData("current_password", e.target.value)}
                                         placeholder="Enter your password"
+                                        ref={currentPasswordRef}
+                                        type="password"
                                     />
                                     {errors.current_password && <ErrorMessage>{errors.current_password}</ErrorMessage>}
                                 </Field>
                                 <Field>
                                     <Label>New password</Label>
                                     <Input
-                                        ref={passwordRef}
                                         autoComplete="new-password"
                                         invalid={!!errors.password}
                                         name="password"
-                                        type="password"
                                         onChange={(e) => setData("password", e.target.value)}
                                         placeholder="8+ characters long, 1 capital letter"
+                                        ref={passwordRef}
+                                        type="password"
                                     />
                                     {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
                                 </Field>
@@ -114,9 +112,9 @@ export function UpdatePasswordForm() {
                                         autoComplete="new-password"
                                         invalid={!!errors.password_confirmation}
                                         name="password"
-                                        type="password"
                                         onChange={(e) => setData("password_confirmation", e.target.value)}
                                         placeholder="Confirm your password"
+                                        type="password"
                                     />
                                     {errors.password_confirmation && (
                                         <ErrorMessage>{errors.password_confirmation}</ErrorMessage>
@@ -128,20 +126,20 @@ export function UpdatePasswordForm() {
                         <DialogActions>
                             <Button
                                 $color="neutral"
-                                $variant="stroke"
                                 $size="sm"
-                                disabled={form.processing}
+                                $variant="stroke"
                                 className="w-full"
+                                disabled={form.processing}
                                 onClick={() => setAction(null)}
                             >
                                 Cancel
                             </Button>
                             <Button
                                 $size="sm"
+                                className="w-full"
                                 disabled={form.processing}
                                 form="update-password-form"
                                 type="submit"
-                                className="w-full"
                             >
                                 {form.processing ? "Updating..." : "Update"}
                             </Button>
@@ -149,6 +147,8 @@ export function UpdatePasswordForm() {
                     </Dialog>
                 </>
             }
+            description="Update password for enhanced account security."
+            title="Update password"
         />
     );
 }

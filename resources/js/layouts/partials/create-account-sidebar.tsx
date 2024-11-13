@@ -35,9 +35,9 @@ export function CreateAccountSidebar() {
             <SidebarBody className="mx-4 p-0">
                 <SidebarSection>
                     <SidebarItem
-                        href={route("accounts.create", { step: "details" })}
-                        current={route().current("accounts.create", { step: "details" })}
                         buttonClassName="group rounded-10 p-2 data-hover:bg-[var(--bg-white-0)] data-current:bg-[var(--bg-white-0)]"
+                        current={route().current("accounts.create", { step: "details" })}
+                        href={route("accounts.create", { step: "details" })}
                     >
                         {completedSteps["details"] ? (
                             <CheckboxCircleFillIcon className="!text-state-success-base" />
@@ -48,9 +48,9 @@ export function CreateAccountSidebar() {
                         <SidebarLabel>Details</SidebarLabel>
                     </SidebarItem>
                     <SidebarItem
-                        href={route("accounts.create", { step: "balance-and-currency" })}
-                        current={route().current("accounts.create", { step: "balance-and-currency" })}
                         buttonClassName="group rounded-10 p-2 data-hover:bg-[var(--bg-white-0)] data-current:bg-[var(--bg-white-0)]"
+                        current={route().current("accounts.create", { step: "balance-and-currency" })}
+                        href={route("accounts.create", { step: "balance-and-currency" })}
                     >
                         {completedSteps["balance-and-currency"] ? (
                             <CheckboxCircleFillIcon className="!text-state-success-base" />
@@ -61,13 +61,13 @@ export function CreateAccountSidebar() {
                         <SidebarLabel>Balance & Currency</SidebarLabel>
                     </SidebarItem>
                     <SidebarItem
-                        href={route("accounts.create", { step: "review" })}
-                        current={route().current("accounts.create", { step: "review" })}
                         buttonClassName="group rounded-10 p-2 data-hover:bg-[var(--bg-white-0)] data-current:bg-[var(--bg-white-0)]"
+                        current={route().current("accounts.create", { step: "review" })}
+                        href={route("accounts.create", { step: "review" })}
                     >
                         <StepNumber>3</StepNumber>
 
-                        <SidebarLabel>Account summary</SidebarLabel>
+                        <SidebarLabel>Account Summary</SidebarLabel>
                     </SidebarItem>
                 </SidebarSection>
             </SidebarBody>

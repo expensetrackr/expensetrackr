@@ -41,7 +41,6 @@ export default function Login({
 
     return (
         <AuthLayout
-            title="Log in to your account"
             description="Welcome back! Please enter your details"
             footer={
                 <>
@@ -51,6 +50,7 @@ export default function Login({
                     </StyledLink>
                 </>
             }
+            title="Log in to your account"
         >
             <Head title="Log in" />
 
@@ -62,10 +62,10 @@ export default function Login({
                         autoFocus
                         invalid={!!errors.email}
                         name="email"
-                        type="email"
                         onChange={(e) => setData("email", e.target.value)}
-                        value={data.email}
                         placeholder="e.g. john@example.com"
+                        type="email"
+                        value={data.email}
                     />
                     {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
                 </Field>
@@ -76,10 +76,10 @@ export default function Login({
                         autoComplete="current-password"
                         invalid={!!errors.password}
                         name="password"
-                        type="password"
                         onChange={(e) => setData("password", e.target.value)}
-                        value={data.password}
                         placeholder="Enter your password"
+                        type="password"
+                        value={data.password}
                     />
                     {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
                 </Field>
@@ -87,8 +87,8 @@ export default function Login({
                 <div className="flex items-center justify-between gap-3 py-2">
                     <CheckboxField>
                         <Checkbox
-                            name="remember"
                             checked={data.remember}
+                            name="remember"
                             onChange={(checked) => setData("remember", checked)}
                         />
                         <Label className="text-paragraph-sm">Remember me</Label>
@@ -99,7 +99,7 @@ export default function Login({
                     )}
                 </div>
 
-                <Button type="submit" disabled={processing}>
+                <Button disabled={processing} type="submit">
                     Log in
                 </Button>
             </form>

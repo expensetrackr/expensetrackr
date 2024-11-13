@@ -24,16 +24,16 @@ export function CurrencySelector({ value, onChange, currencies, error }: Currenc
             <Label>Currency</Label>
             <Headless.Combobox
                 immediate
-                value={value}
                 onChange={onChange}
-                virtual={{ options: filteredCurrencies }}
                 onClose={() => setQuery(null)}
+                value={value}
+                virtual={{ options: filteredCurrencies }}
             >
                 <div className="relative">
                     <ComboboxInput
                         aria-label="Currency"
-                        value={query || value}
                         onChange={(event) => setQuery(event.target.value)}
+                        value={query || value}
                     />
 
                     <Headless.ComboboxButton className="group absolute inset-y-0 right-0 px-2.5">
@@ -45,10 +45,10 @@ export function CurrencySelector({ value, onChange, currencies, error }: Currenc
                     {({ option }) => (
                         <ComboboxOption value={option}>
                             <svg
-                                className="size-5 rounded-full"
-                                role="img"
                                 aria-label={`${option} flag`}
+                                className="size-5 rounded-full"
                                 preserveAspectRatio="xMidYMid meet"
+                                role="img"
                             >
                                 <use href={`/img/flags.svg#${option}`} />
                             </svg>

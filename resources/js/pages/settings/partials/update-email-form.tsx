@@ -40,21 +40,21 @@ export function UpdateEmailForm() {
 
     return (
         <FormSection
-            title="Email address"
             description="Your email address is used to log in and receive important notifications."
+            title="Email address"
         >
             <form className="flex w-full flex-col gap-4" onSubmit={onSubmit}>
                 <Field>
                     <Label className="sr-only">Email address</Label>
                     <Input
                         autoComplete="email"
+                        disabled={form.processing}
                         invalid={!!errors.email}
                         name="name"
-                        type="email"
                         onChange={(e) => setData("email", e.target.value)}
                         placeholder="e.g. john@example.com"
+                        type="email"
                         value={data.email}
-                        disabled={form.processing}
                     />
                     {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
                 </Field>

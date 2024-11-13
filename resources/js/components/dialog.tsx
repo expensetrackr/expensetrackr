@@ -12,19 +12,19 @@ export function Dialog({
     return (
         <Headless.Dialog {...props}>
             <Headless.DialogBackdrop
-                transition
                 className="fixed inset-0 flex w-screen justify-center overflow-y-auto bg-[#020D17]/25 px-2 py-2 backdrop-blur-[5px] transition duration-100 focus:outline-0 data-[closed]:opacity-0 data-[enter]:ease-out data-[leave]:ease-in sm:px-6 sm:py-8 lg:px-8 lg:py-16"
+                transition
             />
 
             <div className="fixed inset-0 w-screen overflow-y-auto pt-6 sm:pt-0">
                 <div className="grid min-h-full grid-rows-[1fr_auto] justify-items-center sm:grid-rows-[1fr_auto_3fr] sm:p-4">
                     <Headless.DialogPanel
-                        transition
                         className={cx(
                             "rounded-t-20 sm:rounded-20 row-start-2 w-full min-w-0 bg-[var(--bg-white-0)] py-6 ring-1 shadow-md ring-[var(--stroke-soft-200)] sm:m-auto sm:mb-auto sm:max-w-md forced-colors:outline",
                             "transition duration-100 data-[closed]:translate-y-12 data-[closed]:opacity-0 data-[enter]:ease-out data-[leave]:ease-in sm:data-[closed]:translate-y-0 sm:data-[closed]:data-[enter]:scale-95",
                             className,
                         )}
+                        transition
                     >
                         <div className="flex flex-col gap-3">{children}</div>
                     </Headless.DialogPanel>

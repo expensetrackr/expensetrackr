@@ -21,8 +21,8 @@ export function Socialstream() {
                     return (
                         <a
                             className="rounded-10 text-label-sm ring-neutral-alpha-10 inline-flex h-10 w-full items-center justify-center gap-2 border border-[var(--stroke-soft-200)] bg-[var(--bg-white-0)] p-2.5 outline-none transition hover:border-[var(--bg-weak-50)] hover:bg-[var(--bg-weak-50)] focus-visible:border-[var(--stroke-strong-950)] focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-white-0)]"
-                            key={provider.id}
                             href={route("oauth.redirect", provider)}
+                            key={provider.id}
                         >
                             {socialsIcons[provider.id]}
                             Continue with {provider.name}

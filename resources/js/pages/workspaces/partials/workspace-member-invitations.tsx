@@ -35,8 +35,8 @@ interface WorkspaceMemberInvitationsProps {
 export function WorkspaceMemberInvitations({ workspace, permissions }: WorkspaceMemberInvitationsProps) {
     return (
         <ActionSection
-            title="Pending workspace invitations"
             description="These people have been invited to your workspace and have been sent an invitation email. They may join the workspace by accepting the email invitation."
+            title="Pending workspace invitations"
         >
             <Table bleed>
                 <TableHead>
@@ -99,14 +99,14 @@ function CancelInvitation({ invitation }: { invitation: WorkspaceInvitation }) {
         <>
             <Button
                 $color="error"
-                $variant="stroke"
                 $size="sm"
+                $variant="stroke"
                 onClick={() => setAction(`destroy:workspace-invitations:${invitation.id}`)}
             >
                 Cancel invitation
             </Button>
 
-            <Dialog open={action === `destroy:workspace-invitations:${invitation.id}`} onClose={() => setAction(null)}>
+            <Dialog onClose={() => setAction(null)} open={action === `destroy:workspace-invitations:${invitation.id}`}>
                 <DialogHeader>
                     <DialogIcon>
                         <MailCloseIcon className="size-6 text-[var(--icon-sub-600)]" />
@@ -121,8 +121,8 @@ function CancelInvitation({ invitation }: { invitation: WorkspaceInvitation }) {
                 <DialogActions>
                     <Button
                         $color="neutral"
-                        $variant="stroke"
                         $size="sm"
+                        $variant="stroke"
                         className="w-full"
                         disabled={isCancelling}
                         onClick={() => setAction(null)}

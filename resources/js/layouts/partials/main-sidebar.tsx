@@ -70,9 +70,9 @@ export function MainSidebar({
                 <Dropdown>
                     <DropdownButton as={SidebarItem} buttonClassName="p-3">
                         <Avatar
-                            src="/img/isotype-dark.svg"
                             alt="ExpenseTrackr logo"
                             className="bg-primary inline-flex !size-10 items-center justify-center p-1"
+                            src="/img/isotype-dark.svg"
                         />
                         <SidebarLabel className="text-label-sm flex-1">{user?.current_workspace.name}</SidebarLabel>
                         {/* @ts-expect-error - TODO: this type is wrong (Headless UI side) */}
@@ -81,8 +81,8 @@ export function MainSidebar({
                         </CompactButton>
                     </DropdownButton>
                     <DropdownMenu
-                        className="min-w-80 data-[anchor~=start]:[--anchor-offset:0] sm:data-[anchor~=start]:[--anchor-offset:0] lg:min-w-64"
                         anchor="bottom start"
+                        className="min-w-80 data-[anchor~=start]:[--anchor-offset:0] sm:data-[anchor~=start]:[--anchor-offset:0] lg:min-w-64"
                     >
                         {user && workspaces.hasWorkspaceFeatures && (
                             <DropdownSection>
@@ -111,9 +111,9 @@ export function MainSidebar({
                                                 <CheckIcon />
                                             ) : (
                                                 <Avatar
-                                                    slot="icon"
-                                                    initials={workspace.name.slice(0, 1)}
                                                     alt={workspace.name}
+                                                    initials={workspace.name.slice(0, 1)}
+                                                    slot="icon"
                                                 />
                                             )}
 
@@ -142,11 +142,11 @@ export function MainSidebar({
             <SidebarBody>
                 <SidebarSection>
                     <SidebarHeading className="pb-3">Main</SidebarHeading>
-                    <SidebarItem href={route("dashboard")} current={route().current("dashboard")}>
+                    <SidebarItem current={route().current("dashboard")} href={route("dashboard")}>
                         <LayoutGridIcon />
                         <SidebarLabel>Dashboard</SidebarLabel>
                     </SidebarItem>
-                    <SidebarItem href={route("accounts.index")} current={route().current("accounts.index")}>
+                    <SidebarItem current={route().current("accounts.index")} href={route("accounts.index")}>
                         <WalletIcon />
                         <SidebarLabel>Accounts</SidebarLabel>
                     </SidebarItem>
@@ -158,9 +158,9 @@ export function MainSidebar({
                 <SidebarSection>
                     <SidebarHeading className="pb-3">Other</SidebarHeading>
                     <SidebarItem
-                        href={route("settings.show")}
-                        current={route().current("settings.*") || route().current("workspaces.show")}
                         className="max-lg:hidden"
+                        current={route().current("settings.*") || route().current("workspaces.show")}
+                        href={route("settings.show")}
                     >
                         <Settings2Icon />
                         <SidebarLabel>Settings</SidebarLabel>
@@ -169,8 +169,8 @@ export function MainSidebar({
                     <Disclosure defaultOpen={route().current("settings.*") || route().current("workspaces.show")}>
                         <DisclosureButton
                             as={SidebarItem}
-                            current={route().current("settings.*") || route().current("workspaces.show")}
                             className="lg:hidden"
+                            current={route().current("settings.*") || route().current("workspaces.show")}
                         >
                             <Settings2Icon />
                             <SidebarLabel>Settings</SidebarLabel>
@@ -197,13 +197,13 @@ export function MainSidebar({
                     <DropdownButton as={SidebarItem} className="rounded-10 -mx-4">
                         <span className="flex min-w-0 items-center gap-3">
                             <Avatar
-                                user={user}
-                                src={user?.profile_photo_url}
+                                alt={user?.name}
                                 className="size-10"
                                 imageProps={{
                                     className: "size-10 object-cover object-top",
                                 }}
-                                alt={user?.name}
+                                src={user?.profile_photo_url}
+                                user={user}
                             />
                             <span className="min-w-0 space-y-1">
                                 <span className="text-label-sm block truncate">{user?.name}</span>
@@ -215,8 +215,8 @@ export function MainSidebar({
                         <ArrowUpSIcon className="size-5" />
                     </DropdownButton>
                     <DropdownMenu
-                        className="min-w-64 data-[anchor~=start]:[--anchor-offset:0] sm:data-[anchor~=start]:[--anchor-offset:0]"
                         anchor="top start"
+                        className="min-w-64 data-[anchor~=start]:[--anchor-offset:0] sm:data-[anchor~=start]:[--anchor-offset:0]"
                     >
                         <DropdownItem href={route("settings.show")}>
                             <UserSettingsIcon />

@@ -30,11 +30,11 @@ export default function Modal({
     }[maxWidth];
 
     return (
-        <Transition show={show} as={Fragment} leave="duration-200">
+        <Transition as={Fragment} leave="duration-200" show={show}>
             <Dialog
                 as="div"
-                id="modal"
                 className="fixed inset-0 z-50 flex transform items-center overflow-y-auto px-4 py-6 transition-all sm:px-0"
+                id="modal"
                 onClose={close}
             >
                 <Transition.Child

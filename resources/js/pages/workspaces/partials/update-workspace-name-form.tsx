@@ -47,20 +47,20 @@ export function UpdateWorkspaceNameForm({ workspace, permissions }: UpdateWorksp
     }
 
     return (
-        <FormSection title="Name" description="Your workspace name is how others will recognize you on the platform.">
-            <form id="update-workspace-name-form" onSubmit={onSubmit} className="w-full">
+        <FormSection description="Your workspace name is how others will recognize you on the platform." title="Name">
+            <form className="w-full" id="update-workspace-name-form" onSubmit={onSubmit}>
                 <Field>
                     <Label className="sr-only">Workspace name</Label>
                     <Input
                         autoComplete="name"
+                        disabled={form.processing}
                         invalid={!!form.errors.name}
                         name="name"
-                        type="text"
                         onChange={(e) => form.setData("name", e.target.value)}
                         placeholder="e.g. Apple"
-                        value={form.data.name}
                         readOnly={!permissions.canUpdateWorkspace}
-                        disabled={form.processing}
+                        type="text"
+                        value={form.data.name}
                     />
                     {form.errors.name && <ErrorMessage>{form.errors.name}</ErrorMessage>}
                 </Field>

@@ -51,8 +51,6 @@ export function LogoutOtherBrowserSessionsForm({ sessions }: LogoutOtherBrowserS
 
     return (
         <ActionSection
-            title="Browser sessions"
-            description="Manage and log out your active sessions on other browsers and devices."
             action={
                 <>
                     <Button
@@ -64,7 +62,7 @@ export function LogoutOtherBrowserSessionsForm({ sessions }: LogoutOtherBrowserS
                         Log out all sessions
                     </Button>
 
-                    <Dialog open={action === "destroy:other-browser-sessions"} onClose={() => setAction(null)}>
+                    <Dialog onClose={() => setAction(null)} open={action === "destroy:other-browser-sessions"}>
                         <DialogHeader>
                             <DialogIcon>
                                 <LogoutCircleRIcon className="size-6 text-[var(--icon-sub-600)]" />
@@ -81,9 +79,9 @@ export function LogoutOtherBrowserSessionsForm({ sessions }: LogoutOtherBrowserS
 
                         <DialogBody>
                             <form
-                                onSubmit={onSubmit}
-                                id="logout-other-browser-sessions-form"
                                 className="flex flex-col gap-3"
+                                id="logout-other-browser-sessions-form"
+                                onSubmit={onSubmit}
                             >
                                 <Field>
                                     <Label>Password</Label>
@@ -92,11 +90,11 @@ export function LogoutOtherBrowserSessionsForm({ sessions }: LogoutOtherBrowserS
                                         autoFocus
                                         invalid={!!form.errors.password}
                                         name="password"
-                                        type="password"
                                         onChange={(e) => form.setData("password", e.target.value)}
                                         placeholder="Enter your password"
-                                        value={form.data.password}
                                         ref={passwordRef}
+                                        type="password"
+                                        value={form.data.password}
                                     />
                                     {form.errors.password && <ErrorMessage>{form.errors.password}</ErrorMessage>}
                                 </Field>
@@ -106,10 +104,10 @@ export function LogoutOtherBrowserSessionsForm({ sessions }: LogoutOtherBrowserS
                         <DialogActions>
                             <Button
                                 $color="neutral"
-                                $variant="stroke"
                                 $size="sm"
-                                disabled={form.processing}
+                                $variant="stroke"
                                 className="w-full"
+                                disabled={form.processing}
                                 onClick={closeModal}
                             >
                                 Cancel
@@ -117,10 +115,10 @@ export function LogoutOtherBrowserSessionsForm({ sessions }: LogoutOtherBrowserS
                             <Button
                                 $color="error"
                                 $size="sm"
+                                className="w-full"
                                 disabled={form.processing}
                                 form="logout-other-browser-sessions-form"
                                 type="submit"
-                                className="w-full"
                             >
                                 {form.processing ? "Logging out..." : "Yes, log me out"}
                             </Button>
@@ -128,6 +126,8 @@ export function LogoutOtherBrowserSessionsForm({ sessions }: LogoutOtherBrowserS
                     </Dialog>
                 </>
             }
+            description="Manage and log out your active sessions on other browsers and devices."
+            title="Browser sessions"
         >
             {sessions.length ? (
                 <Table bleed>

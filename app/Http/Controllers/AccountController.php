@@ -58,15 +58,21 @@ final class AccountController extends Controller
             'balance-and-currency' => [
                 'component' => 'accounts/create/balance-and-currency',
                 'props' => [
-                    'previousData' => $this->wizardService->getStepData($request, 'details'),
+                    'formData' => [
+                        ...($this->wizardService->getStepData($request, 'details') ?: []),
+                        ...($this->wizardService->getStepData($request, 'balance-and-currency') ?: []),
+                    ],
                     'currencies' => $currencyService->getSupportedCurrencies(),
                 ],
             ],
             'review' => [
                 'component' => 'accounts/create/review',
                 'props' => [
-                    'step1Data' => $this->wizardService->getStepData($request, 'details'),
-                    'step2Data' => $this->wizardService->getStepData($request, 'balance-and-currency'),
+                    'formData' => [
+                        /** @var array<string, string|array<string>> */
+                        ...($this->wizardService->getStepData($request, 'details') ?: []),
+                        ...($this->wizardService->getStepData($request, 'balance-and-currency') ?: []),
+                    ],
                 ],
             ],
         ];

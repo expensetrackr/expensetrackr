@@ -9,7 +9,7 @@ import { NavbarItem } from "./navbar.tsx";
 function MobileSidebar({ open, close, children }: React.PropsWithChildren<{ open: boolean; close: () => void }>) {
     return (
         <Headless.Transition show={open}>
-            <Headless.Dialog onClose={close} className="lg:hidden">
+            <Headless.Dialog className="lg:hidden" onClose={close}>
                 <Headless.TransitionChild
                     enter="ease-out duration-300"
                     enterFrom="opacity-0"
@@ -31,7 +31,7 @@ function MobileSidebar({ open, close, children }: React.PropsWithChildren<{ open
                     <Headless.DialogPanel className="fixed inset-y-0 w-full max-w-80 p-2 transition">
                         <div className="rounded-8 flex h-full flex-col bg-[var(--bg-white-0)] ring-1 shadow-sm ring-[var(--stroke-soft-200)]">
                             <div className="-mb-3 px-4 pt-3">
-                                <Headless.CloseButton as={NavbarItem} aria-label="Close navigation">
+                                <Headless.CloseButton aria-label="Close navigation" as={NavbarItem}>
                                     <CloseIcon />
                                 </Headless.CloseButton>
                             </div>
@@ -80,7 +80,7 @@ export function SidebarLayout({
 
             {/* Sidebar on mobile */}
             {sidebar ? (
-                <MobileSidebar open={showSidebar} close={() => setShowSidebar(false)}>
+                <MobileSidebar close={() => setShowSidebar(false)} open={showSidebar}>
                     {sidebar}
                 </MobileSidebar>
             ) : null}
@@ -88,7 +88,7 @@ export function SidebarLayout({
             {/* Navbar on mobile */}
             <header className="flex items-center px-4 lg:hidden">
                 <div className="py-2.5">
-                    <NavbarItem onClick={() => setShowSidebar(true)} aria-label="Open navigation">
+                    <NavbarItem aria-label="Open navigation" onClick={() => setShowSidebar(true)}>
                         <MenuIcon />
                     </NavbarItem>
                 </div>

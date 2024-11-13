@@ -39,12 +39,12 @@ export default function TwoFactorChallenge() {
 
     return (
         <AuthLayout
-            title="Two-Factor Confirmation"
             description={
                 recovery
                     ? "Please confirm access to your account by entering one of your emergency recovery codes."
                     : "Please confirm access to your account by entering the authentication code provided by your authenticator application."
             }
+            title="Two-Factor Confirmation"
         >
             <Head title="Two-Factor Confirmation" />
 
@@ -70,39 +70,39 @@ export default function TwoFactorChallenge() {
                             autoFocus
                             id="code"
                             maxLength={6}
+                            onChange={(value) => setData("code", value)}
                             pattern={REGEXP_ONLY_DIGITS}
                             value={data.code}
-                            onChange={(value) => setData("code", value)}
                         >
                             <InputOTPGroup className="w-full gap-1">
                                 <InputOTPSlot
+                                    className="rounded-10 border after:rounded-[9px]"
                                     index={0}
-                                    className="rounded-10 border after:rounded-[9px]"
                                     invalid={!!errors.code}
                                 />
                                 <InputOTPSlot
+                                    className="rounded-10 border after:rounded-[9px]"
                                     index={1}
-                                    className="rounded-10 border after:rounded-[9px]"
                                     invalid={!!errors.code}
                                 />
                                 <InputOTPSlot
+                                    className="rounded-10 border after:rounded-[9px]"
                                     index={2}
-                                    className="rounded-10 border after:rounded-[9px]"
                                     invalid={!!errors.code}
                                 />
                                 <InputOTPSlot
+                                    className="rounded-10 border after:rounded-[9px]"
                                     index={3}
-                                    className="rounded-10 border after:rounded-[9px]"
                                     invalid={!!errors.code}
                                 />
                                 <InputOTPSlot
+                                    className="rounded-10 border after:rounded-[9px]"
                                     index={4}
-                                    className="rounded-10 border after:rounded-[9px]"
                                     invalid={!!errors.code}
                                 />
                                 <InputOTPSlot
-                                    index={5}
                                     className="rounded-10 border after:rounded-[9px]"
+                                    index={5}
                                     invalid={!!errors.code}
                                 />
                             </InputOTPGroup>
@@ -117,7 +117,7 @@ export default function TwoFactorChallenge() {
                     </StyledLink>
                 </div>
 
-                <Button type="submit" disabled={processing}>
+                <Button disabled={processing} type="submit">
                     Log in
                 </Button>
             </form>

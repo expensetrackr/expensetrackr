@@ -32,7 +32,6 @@ export default function Register({ socialstream }: InertiaSharedProps) {
 
     return (
         <AuthLayout
-            title="Sign up"
             description="Create an account to start tracking your expenses"
             footer={
                 <>
@@ -42,6 +41,7 @@ export default function Register({ socialstream }: InertiaSharedProps) {
                     </StyledLink>
                 </>
             }
+            title="Sign up"
         >
             <Head title="Register" />
 
@@ -66,9 +66,9 @@ export default function Register({ socialstream }: InertiaSharedProps) {
                         autoComplete="username"
                         invalid={!!errors.email}
                         name="email"
-                        type="email"
                         onChange={(e) => setData("email", e.target.value)}
                         placeholder="e.g. john@example.com"
+                        type="email"
                         value={data.email}
                     />
                     {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
@@ -80,9 +80,9 @@ export default function Register({ socialstream }: InertiaSharedProps) {
                         autoComplete="new-password"
                         invalid={!!errors.password}
                         name="password"
-                        type="password"
                         onChange={(e) => setData("password", e.target.value)}
                         placeholder="8+ characters long, 1 capital letter"
+                        type="password"
                         value={data.password}
                     />
                     {errors.password ? (
@@ -98,9 +98,9 @@ export default function Register({ socialstream }: InertiaSharedProps) {
                         autoComplete="new-password"
                         invalid={!!errors.password_confirmation}
                         name="password_confirmation"
-                        type="password"
                         onChange={(e) => setData("password_confirmation", e.target.value)}
                         placeholder="Confirm your password"
+                        type="password"
                         value={data.password_confirmation}
                     />
                     {errors.password_confirmation && <ErrorMessage>{errors.password_confirmation}</ErrorMessage>}
@@ -109,18 +109,18 @@ export default function Register({ socialstream }: InertiaSharedProps) {
                 <div className="flex flex-col gap-3 py-2">
                     <CheckboxField className="items-start">
                         <Checkbox
+                            checked={data.terms}
                             className="mt-px"
                             name="terms"
-                            checked={data.terms}
                             onChange={(checked) => setData("terms", checked)}
                         />
                         <Label className="text-paragraph-sm">
                             I agree with the{" "}
-                            <Link href={route("terms.show")} className="font-bold">
+                            <Link className="font-bold" href={route("terms.show")}>
                                 Terms of Service
                             </Link>{" "}
                             and{" "}
-                            <Link href={route("policy.show")} className="font-bold">
+                            <Link className="font-bold" href={route("policy.show")}>
                                 Privacy Policy
                             </Link>
                         </Label>
@@ -130,15 +130,15 @@ export default function Register({ socialstream }: InertiaSharedProps) {
 
                     <CheckboxField>
                         <Checkbox
-                            name="remember"
                             checked={data.remember}
+                            name="remember"
                             onChange={(checked) => setData("remember", checked)}
                         />
                         <Label className="text-paragraph-sm">Remember me</Label>
                     </CheckboxField>
                 </div>
 
-                <Button type="submit" disabled={processing}>
+                <Button disabled={processing} type="submit">
                     Get started
                 </Button>
             </form>

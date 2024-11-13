@@ -115,8 +115,6 @@ export function TwoFactorAuthenticationForm({ requiresConfirmation }: TwoFactorA
 
     return (
         <ActionSection
-            title="Two-factor Authentication"
-            description={getDescription()}
             action={
                 twoFactorEnabled || action === "confirming:2fa" ? (
                     <>
@@ -176,6 +174,8 @@ export function TwoFactorAuthenticationForm({ requiresConfirmation }: TwoFactorA
                     </ConfirmsPassword>
                 )
             }
+            description={getDescription()}
+            title="Two-factor Authentication"
         >
             <div className="flex flex-col gap-4">
                 {twoFactorEnabled || action === "confirming:2fa" ? (
@@ -234,8 +234,8 @@ export function TwoFactorAuthenticationForm({ requiresConfirmation }: TwoFactorA
                                                     autoFocus
                                                     invalid={!!confirmationForm.errors.code}
                                                     name="code"
-                                                    type="numeric"
                                                     onChange={(e) => confirmationForm.setData("code", e.target.value)}
+                                                    type="numeric"
                                                     value={confirmationForm.data.code}
                                                 />
                                                 {confirmationForm.errors.code && (

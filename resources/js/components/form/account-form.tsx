@@ -27,8 +27,8 @@ AccountForm.Navigation = function AccountFormNavigation({
                     $color="neutral"
                     $size="sm"
                     $variant="stroke"
-                    href={route("accounts.create", { step: prevStep })}
                     className="w-full"
+                    href={route("accounts.create", { step: prevStep })}
                 >
                     Back
                 </Button>

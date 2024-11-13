@@ -10,6 +10,15 @@ export function Toaster(props: SonnerProps) {
     return (
         <Sonner
             className="toaster group"
+            icons={{
+                error: <ErrorWarningFillIcon className="size-5" />,
+                warning: <AlertFillIcon className="size-5" />,
+                success: <CheckboxCircleFillIcon className="size-5" />,
+                info: <InformationFillIcon className="size-5" />,
+            }}
+            style={{
+                "--width": "390px",
+            }}
             toastOptions={{
                 unstyled: true,
                 classNames: {
@@ -24,15 +33,6 @@ export function Toaster(props: SonnerProps) {
                     actionButton: "",
                     cancelButton: "",
                 },
-            }}
-            icons={{
-                error: <ErrorWarningFillIcon className="size-5" />,
-                warning: <AlertFillIcon className="size-5" />,
-                success: <CheckboxCircleFillIcon className="size-5" />,
-                info: <InformationFillIcon className="size-5" />,
-            }}
-            style={{
-                "--width": "390px",
             }}
             {...props}
         />

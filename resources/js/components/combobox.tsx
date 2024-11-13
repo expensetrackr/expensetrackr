@@ -45,7 +45,6 @@ export const ComboboxInput = forwardRef(function Combobox(
 ) {
     return (
         <span
-            data-slot="control"
             className={cx([
                 className,
                 // Basic layout
@@ -63,10 +62,11 @@ export const ComboboxInput = forwardRef(function Combobox(
                 // Disabled state
                 "has-data-disabled:opacity-50 before:has-data-disabled:bg-zinc-950/5 before:has-data-disabled:shadow-none",
             ])}
+            data-slot="control"
         >
             <Headless.ComboboxInput
-                ref={ref}
                 multiple={multiple}
+                ref={ref}
                 {...props}
                 className={comboboxVariants({
                     $size,
@@ -86,7 +86,6 @@ export function ComboboxOptions({
         <Headless.ComboboxOptions
             {...props}
             anchor={anchor}
-            transition={transition}
             className={cx([
                 // Anchor positioning
                 "[--anchor-gap:var(--spacing-2)] [--anchor-padding:var(--spacing-1)] data-[anchor~=end]:[--anchor-offset:6px] data-[anchor~=start]:[--anchor-offset:-6px] sm:data-[anchor~=end]:[--anchor-offset:4px] sm:data-[anchor~=start]:[--anchor-offset:-4px]",
@@ -105,6 +104,7 @@ export function ComboboxOptions({
                 // Put className last to allow overriding
                 className,
             ])}
+            transition={transition}
         />
     );
 }

@@ -41,19 +41,19 @@ export function UpdateNameForm() {
     }
 
     return (
-        <FormSection title="Full name" description="Use your real name to build trust with others.">
-            <form onSubmit={onSubmit} className="flex w-full flex-col gap-4">
+        <FormSection description="Use your real name to build trust with others." title="Full name">
+            <form className="flex w-full flex-col gap-4" onSubmit={onSubmit}>
                 <Field>
                     <Label className="sr-only">Full name</Label>
                     <Input
                         autoComplete="name"
+                        disabled={form.processing}
                         invalid={!!errors.name}
                         name="name"
-                        type="text"
                         onChange={(e) => setData("name", e.target.value)}
                         placeholder="e.g. John Doe"
+                        type="text"
                         value={data.name}
-                        disabled={form.processing}
                     />
                     {errors.name && <ErrorMessage>{errors.name}</ErrorMessage>}
                 </Field>

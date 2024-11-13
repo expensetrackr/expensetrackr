@@ -36,10 +36,10 @@ export default function ResetPassword({ token, email }: { token: string; email: 
                         autoFocus
                         invalid={!!errors.email}
                         name="email"
-                        type="email"
                         onChange={(e) => setData("email", e.target.value)}
-                        value={data.email}
                         placeholder="e.g. john@example.com"
+                        type="email"
+                        value={data.email}
                     />
                     {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
                 </Field>
@@ -50,9 +50,9 @@ export default function ResetPassword({ token, email }: { token: string; email: 
                         autoComplete="new-password"
                         invalid={!!errors.password}
                         name="password"
-                        type="password"
                         onChange={(e) => setData("password", e.target.value)}
                         placeholder="8+ characters long, 1 capital letter"
+                        type="password"
                         value={data.password}
                     />
                     {errors.password ? (
@@ -68,15 +68,15 @@ export default function ResetPassword({ token, email }: { token: string; email: 
                         autoComplete="new-password"
                         invalid={!!errors.password_confirmation}
                         name="password_confirmation"
-                        type="password"
                         onChange={(e) => setData("password_confirmation", e.target.value)}
                         placeholder="Confirm your password"
+                        type="password"
                         value={data.password_confirmation}
                     />
                     {errors.password_confirmation && <ErrorMessage>{errors.password_confirmation}</ErrorMessage>}
                 </Field>
 
-                <Button type="submit" disabled={processing}>
+                <Button disabled={processing} type="submit">
                     Reset password
                 </Button>
             </form>

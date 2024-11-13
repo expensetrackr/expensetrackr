@@ -18,34 +18,34 @@ export function AuthLayout({
     return (
         <div className="flex min-h-dvh flex-col overflow-hidden">
             <Head>
-                <link rel="preload" href="/img/auth-light.jpeg" as="image" media="(prefers-color-scheme: light)" />
-                <link rel="preload" href="/img/auth-dark.jpeg" as="image" media="(prefers-color-scheme: dark)" />
+                <link as="image" href="/img/auth-light.jpeg" media="(prefers-color-scheme: light)" rel="preload" />
+                <link as="image" href="/img/auth-dark.jpeg" media="(prefers-color-scheme: dark)" rel="preload" />
             </Head>
 
             <img
                 alt=""
                 className="absolute inset-0 h-full w-full object-cover object-top dark:hidden"
-                src="/img/auth-light.jpeg"
                 loading="lazy"
+                src="/img/auth-light.jpeg"
             />
             <img
                 alt=""
                 className="absolute inset-0 hidden h-full w-full object-cover object-top dark:block"
-                src="/img/auth-dark.jpeg"
                 loading="lazy"
+                src="/img/auth-dark.jpeg"
             />
             <div className="absolute inset-0 bg-white/70 mix-blend-multiply" id="filter" />
 
             <div className="relative flex min-h-screen flex-col items-center px-4 py-8 sm:justify-center sm:pt-0">
                 <div className="rounded-12 relative flex w-full max-w-[400px] flex-col gap-2 overflow-hidden bg-white/60 px-4 py-6 backdrop-blur-md sm:px-6 dark:bg-neutral-950/60">
                     <svg
+                        aria-hidden="true"
                         className="text-primary absolute top-[-91px] left-[-87px] h-[430.84px] w-[362.5px] opacity-20"
                         fill="none"
                         height="960"
                         viewBox="0 0 960 960"
                         width="960"
                         xmlns="http://www.w3.org/2000/svg"
-                        aria-hidden="true"
                     >
                         <g clipPath="url(#clip0_4940_405681)">
                             <mask
@@ -116,7 +116,7 @@ export function AuthLayout({
 
                     <div className="relative flex flex-col gap-3">
                         {logoOrIcon ?? (
-                            <Link href="/" className="outline-none">
+                            <Link className="outline-none" href="/">
                                 <img
                                     alt="ExpenseTrackr"
                                     className="mx-auto w-16 dark:hidden"

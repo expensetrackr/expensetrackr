@@ -13,8 +13,19 @@ export default [
         },
     },
     {
+        files: ["**/*.tsx", "**/*.jsx"],
+        plugins: {
+            react: (await import("eslint-plugin-react")).default,
+        },
+        languageOptions: {
+            parser: (await import("typescript-eslint")).parser,
+            parserOptions: {
+                jsx: true,
+            },
+        },
         rules: {
             "import/extensions": ["warn", "ignorePackages"],
+            "react/jsx-sort-props": "warn",
         },
     },
     {

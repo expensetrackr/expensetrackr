@@ -26,7 +26,6 @@ export function DropdownMenu({
         <Headless.MenuItems
             {...props}
             anchor={anchor}
-            transition={transition}
             className={cx(
                 // Anchor positioning
                 "[--anchor-gap:var(--spacing-2)] [--anchor-padding:var(--spacing-1)] data-[anchor~=end]:[--anchor-offset:6px] data-[anchor~=start]:[--anchor-offset:-6px] sm:data-[anchor~=end]:[--anchor-offset:4px] sm:data-[anchor~=start]:[--anchor-offset:-4px]",
@@ -47,6 +46,7 @@ export function DropdownMenu({
                 // Put className last to allow overriding
                 className,
             )}
+            transition={transition}
         />
     );
 }
@@ -121,12 +121,12 @@ export function DropdownShortcut({
             {(Array.isArray(keys) ? keys : keys.split("")).map((char, index) => (
                 <kbd
                     // biome-ignore lint/suspicious/noArrayIndexKey: it's safe to use the index as a key here
-                    key={index}
                     className={cx([
                         "min-w-[2ch] text-center font-sans text-zinc-400 capitalize group-data-focus:text-white forced-colors:group-data-focus:text-[HighlightText]",
                         // Make sure key names that are longer than one character (like "Tab") have extra space
                         index > 0 && char.length > 1 && "pl-1",
                     ])}
+                    key={index}
                 >
                     {char}
                 </kbd>

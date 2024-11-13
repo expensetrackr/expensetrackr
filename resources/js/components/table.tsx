@@ -125,12 +125,12 @@ export function TableCell({ className, children, ...props }: React.ComponentProp
         >
             {href && (
                 <Link
+                    aria-label={title}
+                    className="absolute inset-0 focus:outline-none"
                     data-row-link
                     href={href}
-                    target={target}
-                    aria-label={title}
                     tabIndex={cellRef?.previousElementSibling === null ? 0 : -1}
-                    className="absolute inset-0 focus:outline-none"
+                    target={target}
                 />
             )}
             {children}

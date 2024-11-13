@@ -24,9 +24,9 @@ export function SettingsMenu() {
     return (
         <>
             <SidebarItem
-                href={route("settings.show")}
                 current={route().current("settings.show")}
                 currentIndicator={false}
+                href={route("settings.show")}
             >
                 <UserSettingsIcon />
                 <SidebarLabel>Profile</SidebarLabel>
@@ -38,13 +38,13 @@ export function SettingsMenu() {
                 )}
             </SidebarItem>
             <SidebarItem
-                href={route("workspaces.show", {
-                    workspace: Number(user?.current_workspace_id),
-                })}
                 current={route().current("workspaces.show", {
                     workspace: Number(user?.current_workspace_id),
                 })}
                 currentIndicator={false}
+                href={route("workspaces.show", {
+                    workspace: Number(user?.current_workspace_id),
+                })}
             >
                 <PlanetIcon />
                 <SidebarLabel>Workspace</SidebarLabel>
@@ -58,9 +58,9 @@ export function SettingsMenu() {
                 )}
             </SidebarItem>
             <SidebarItem
-                href={route("settings.privacy-and-security.show")}
                 current={route().current("settings.privacy-and-security.show")}
                 currentIndicator={false}
+                href={route("settings.privacy-and-security.show")}
             >
                 <ShieldUserIcon />
                 <SidebarLabel>Privacy & Security</SidebarLabel>
@@ -72,9 +72,9 @@ export function SettingsMenu() {
                 )}
             </SidebarItem>
             <SidebarItem
-                href={route("settings.connected-accounts.show")}
                 current={route().current("settings.connected-accounts.show")}
                 currentIndicator={false}
+                href={route("settings.connected-accounts.show")}
             >
                 <EqualizerIcon />
                 <SidebarLabel>Connected accounts</SidebarLabel>

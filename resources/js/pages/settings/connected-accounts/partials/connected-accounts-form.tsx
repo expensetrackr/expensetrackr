@@ -69,14 +69,14 @@ export default function ConnectedAccountsForm() {
                         socialStream.connectedAccounts.length > 1 || socialStream.hasPassword;
 
                     return (
-                        <ConnectedAccount key={provider.id} provider={provider} connectedAccount={connectedAccount}>
+                        <ConnectedAccount connectedAccount={connectedAccount} key={provider.id} provider={provider}>
                             {connectedAccount ? (
                                 <>
                                     {canRemoveConnectedAccount ? (
                                         <Button
                                             $color="error"
-                                            $variant="stroke"
                                             $size="sm"
+                                            $variant="stroke"
                                             className="px-4"
                                             onClick={() => onRemoveAccount(provider.id)}
                                         >
@@ -86,20 +86,20 @@ export default function ConnectedAccountsForm() {
                                 </>
                             ) : (
                                 <Button
-                                    $variant="stroke"
                                     $size="sm"
+                                    $variant="stroke"
+                                    className="px-4"
                                     href={route("oauth.redirect", {
                                         provider: provider.id,
                                     })}
-                                    className="px-4"
                                 >
                                     Connect account
                                 </Button>
                             )}
 
                             <Dialog
-                                open={action === `destroy:connected-accounts:${provider.id}`}
                                 onClose={() => setAction(null)}
+                                open={action === `destroy:connected-accounts:${provider.id}`}
                             >
                                 <DialogHeader>
                                     <DialogIcon>
@@ -116,19 +116,19 @@ export default function ConnectedAccountsForm() {
 
                                 <DialogBody>
                                     <form
+                                        className="sr-only"
                                         id={`destroy-connected-accounts-${provider.id}-form`}
                                         onSubmit={onSubmit}
-                                        className="sr-only"
                                     />
                                 </DialogBody>
 
                                 <DialogActions>
                                     <Button
                                         $color="neutral"
-                                        $variant="stroke"
                                         $size="sm"
-                                        disabled={form.processing}
+                                        $variant="stroke"
                                         className="w-full"
+                                        disabled={form.processing}
                                         onClick={() => setAction(null)}
                                     >
                                         Cancel
@@ -136,10 +136,10 @@ export default function ConnectedAccountsForm() {
                                     <Button
                                         $color="error"
                                         $size="sm"
+                                        className="w-full"
                                         disabled={form.processing}
                                         form={`destroy-connected-accounts-${provider.id}-form`}
                                         type="submit"
-                                        className="w-full"
                                     >
                                         {form.processing ? "Removing..." : "Yes, remove it"}
                                     </Button>

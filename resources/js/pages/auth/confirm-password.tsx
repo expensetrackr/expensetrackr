@@ -33,15 +33,15 @@ export default function ConfirmPassword() {
                         autoFocus
                         invalid={!!errors.password}
                         name="password"
-                        type="password"
                         onChange={(e) => setData("password", e.target.value)}
                         placeholder="Enter your password"
+                        type="password"
                         value={data.password}
                     />
                     {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
                 </Field>
 
-                <Button type="submit" disabled={processing}>
+                <Button disabled={processing} type="submit">
                     Confirm
                 </Button>
             </form>

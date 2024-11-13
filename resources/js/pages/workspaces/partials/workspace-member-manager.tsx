@@ -60,13 +60,13 @@ export function WorkspaceMemberManager({ workspace, availableRoles, permissions 
 
     return (
         <ActionSection
-            title="Members"
-            description="All of the people that are part of this workspace."
             action={
                 permissions.canAddWorkspaceMembers ? (
-                    <AddWorkspaceMemberForm workspace={workspace} availableRoles={availableRoles} />
+                    <AddWorkspaceMemberForm availableRoles={availableRoles} workspace={workspace} />
                 ) : null
             }
+            description="All of the people that are part of this workspace."
+            title="Members"
         >
             <Table bleed>
                 <TableHead>
@@ -86,10 +86,10 @@ export function WorkspaceMemberManager({ workspace, availableRoles, permissions 
                                 <TableCell>
                                     <div className="inline-flex items-center gap-3">
                                         <Avatar
-                                            src={user.profile_photo_url}
                                             alt={user.name}
-                                            user={user}
                                             className="size-8"
+                                            src={user.profile_photo_url}
+                                            user={user}
                                         />
                                         <p className="text-[var(--text-strong-950)]">{user.name}</p>
                                     </div>
@@ -105,8 +105,8 @@ export function WorkspaceMemberManager({ workspace, availableRoles, permissions 
                                             <Dropdown>
                                                 <DropdownButton
                                                     $color="neutral"
-                                                    $variant="ghost"
                                                     $size="xs"
+                                                    $variant="ghost"
                                                     aria-label="Actions"
                                                 >
                                                     <More2Icon className="size-5" />
@@ -151,16 +151,16 @@ export function WorkspaceMemberManager({ workspace, availableRoles, permissions 
 
                                             {permissions.canAddWorkspaceMembers && availableRoles.length > 0 ? (
                                                 <ManageRoleDialog
-                                                    workspace={workspace}
-                                                    user={user}
                                                     availableRoles={availableRoles}
+                                                    user={user}
+                                                    workspace={workspace}
                                                 />
                                             ) : null}
 
                                             {permissions.canRemoveWorkspaceMembers || currentUser.id === user.id ? (
                                                 <RemoveMemberDialog
-                                                    workspace={workspace}
                                                     user={currentUser.id === user.id ? currentUser : user}
+                                                    workspace={workspace}
                                                     {...(currentUser.id === user.id
                                                         ? {
                                                               dialogTitle: "Leave workspace",
@@ -220,7 +220,7 @@ function ManageRoleDialog({
     }
 
     return (
-        <Dialog open={action === `update:workspace-members:${user.id}`} onClose={() => setAction(null)}>
+        <Dialog onClose={() => setAction(null)} open={action === `update:workspace-members:${user.id}`}>
             <DialogHeader>
                 <DialogIcon>
                     <FolderShield2Icon className="size-6 text-[var(--icon-sub-600)]" />
@@ -237,8 +237,8 @@ function ManageRoleDialog({
                     <Field>
                         <Label>Role</Label>
                         <Select
-                            name="role"
                             invalid={!!form.errors.role}
+                            name="role"
                             onChange={(e) => form.setData("role", e.target.value)}
                             value={form.data.role}
                         >
@@ -256,20 +256,20 @@ function ManageRoleDialog({
             <DialogActions>
                 <Button
                     $color="neutral"
-                    $variant="stroke"
                     $size="sm"
-                    disabled={form.processing}
+                    $variant="stroke"
                     className="w-full"
+                    disabled={form.processing}
                     onClick={() => setAction(null)}
                 >
                     Cancel
                 </Button>
                 <Button
                     $size="sm"
+                    className="w-full"
                     disabled={form.processing}
                     form={`manage-role-form-${user.id}`}
                     type="submit"
-                    className="w-full"
                 >
                     {form.processing ? "Updating..." : "Update role"}
                 </Button>
@@ -309,7 +309,7 @@ function RemoveMemberDialog({
     }
 
     return (
-        <Dialog open={action === `destroy:workspace-members:${user.id}`} onClose={() => setAction(null)}>
+        <Dialog onClose={() => setAction(null)} open={action === `destroy:workspace-members:${user.id}`}>
             <DialogHeader>
                 <DialogIcon>
                     <EraserIcon className="size-6 text-[var(--icon-sub-600)]" />
@@ -322,16 +322,16 @@ function RemoveMemberDialog({
             </DialogHeader>
 
             <DialogBody>
-                <form id={`destroy-workspace-members-${user.id}-form`} onSubmit={onSubmit} className="sr-only" />
+                <form className="sr-only" id={`destroy-workspace-members-${user.id}-form`} onSubmit={onSubmit} />
             </DialogBody>
 
             <DialogActions>
                 <Button
                     $color="neutral"
-                    $variant="stroke"
                     $size="sm"
-                    disabled={form.processing}
+                    $variant="stroke"
                     className="w-full"
+                    disabled={form.processing}
                     onClick={() => setAction(null)}
                 >
                     Cancel
@@ -339,10 +339,10 @@ function RemoveMemberDialog({
                 <Button
                     $color="error"
                     $size="sm"
+                    className="w-full"
                     disabled={form.processing}
                     form={`destroy-workspace-members-${user.id}-form`}
                     type="submit"
-                    className="w-full"
                 >
                     {form.processing ? "Removing..." : dialogSubmitLabel}
                 </Button>
