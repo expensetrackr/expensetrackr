@@ -1,5 +1,6 @@
-import { Combobox } from "@headlessui/react";
+import * as Headless from "@headlessui/react";
 import { useQueryState } from "nuqs";
+import ArrowDropDownIcon from "virtual:icons/ri/arrow-drop-down-line";
 
 import { ComboboxInput, ComboboxOption, ComboboxOptions } from "../combobox.tsx";
 import { ErrorMessage, Field, Label } from "../fieldset.tsx";
@@ -21,22 +22,28 @@ export function CurrencySelector({ value, onChange, currencies, error }: Currenc
     return (
         <Field>
             <Label>Currency</Label>
-            <Combobox
+            <Headless.Combobox
                 immediate
                 value={value}
                 onChange={onChange}
                 virtual={{ options: filteredCurrencies }}
                 onClose={() => setQuery(null)}
             >
-                <ComboboxInput
-                    aria-label="Currency"
-                    value={query || value}
-                    onChange={(event) => setQuery(event.target.value)}
-                />
+                <div className="relative">
+                    <ComboboxInput
+                        aria-label="Currency"
+                        value={query || value}
+                        onChange={(event) => setQuery(event.target.value)}
+                    />
+
+                    <Headless.ComboboxButton className="group absolute inset-y-0 right-0 px-2.5">
+                        <ArrowDropDownIcon className="size-5 fill-white/60 group-data-hover:fill-white" />
+                    </Headless.ComboboxButton>
+                </div>
 
                 <ComboboxOptions>
                     {({ option }) => (
-                        <ComboboxOption value={option} className="data-[focus]:bg-blue-100">
+                        <ComboboxOption value={option}>
                             <svg
                                 className="size-5 rounded-full"
                                 role="img"
@@ -50,7 +57,7 @@ export function CurrencySelector({ value, onChange, currencies, error }: Currenc
                         </ComboboxOption>
                     )}
                 </ComboboxOptions>
-            </Combobox>
+            </Headless.Combobox>
             {error && <ErrorMessage>{error}</ErrorMessage>}
         </Field>
     );

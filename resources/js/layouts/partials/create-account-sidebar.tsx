@@ -45,15 +45,29 @@ export function CreateAccountSidebar() {
                             <StepNumber>1</StepNumber>
                         )}
 
-                        <SidebarLabel>Account details</SidebarLabel>
+                        <SidebarLabel>Details</SidebarLabel>
                     </SidebarItem>
                     <SidebarItem
                         href={route("accounts.create", { step: "balance-and-currency" })}
                         current={route().current("accounts.create", { step: "balance-and-currency" })}
                         buttonClassName="group rounded-10 p-2 data-hover:bg-[var(--bg-white-0)] data-current:bg-[var(--bg-white-0)]"
                     >
-                        <StepNumber>2</StepNumber>
-                        <SidebarLabel>Balance & currency</SidebarLabel>
+                        {completedSteps["balance-and-currency"] ? (
+                            <CheckboxCircleFillIcon className="!text-state-success-base" />
+                        ) : (
+                            <StepNumber>2</StepNumber>
+                        )}
+
+                        <SidebarLabel>Balance & Currency</SidebarLabel>
+                    </SidebarItem>
+                    <SidebarItem
+                        href={route("accounts.create", { step: "review" })}
+                        current={route().current("accounts.create", { step: "review" })}
+                        buttonClassName="group rounded-10 p-2 data-hover:bg-[var(--bg-white-0)] data-current:bg-[var(--bg-white-0)]"
+                    >
+                        <StepNumber>3</StepNumber>
+
+                        <SidebarLabel>Account summary</SidebarLabel>
                     </SidebarItem>
                 </SidebarSection>
             </SidebarBody>

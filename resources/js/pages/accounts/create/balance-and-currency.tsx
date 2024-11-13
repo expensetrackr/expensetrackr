@@ -1,11 +1,12 @@
 import { Head, router } from "@inertiajs/react";
 import { CurrencyInput } from "headless-currency-input";
 import { type NumberFormatValues } from "react-number-format";
-import CurrencyIcon from "virtual:icons/ri/currency-line";
+import BankIcon from "virtual:icons/ri/bank-line";
+import MoneyDollarCircleFillIcon from "virtual:icons/ri/money-dollar-circle-fill";
 
 import { ErrorMessage, Field, Label } from "#/components/fieldset.tsx";
-import { AccountForm } from "#/components/forms/account-form.tsx";
-import { CurrencySelector } from "#/components/forms/currency-selector.tsx";
+import { AccountForm } from "#/components/form/account-form.tsx";
+import { CurrencySelector } from "#/components/form/currency-selector.tsx";
 import { Input } from "#/components/input.tsx";
 import { Text } from "#/components/text.tsx";
 import { useAccountForm } from "#/hooks/use-account-form.ts";
@@ -20,11 +21,11 @@ interface CreateAccountStep2PageProps {
 export default function CreateAccountStep2Page({ currencies, previousData }: CreateAccountStep2PageProps) {
     const form = useAccountForm({
         ...previousData,
-        initial_balance: 0,
-        currency_code: "USD",
+        initial_balance: previousData?.initial_balance ?? 0,
+        currency_code: previousData?.currency_code ?? "USD",
     });
 
-    function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    function handleSubmit(e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>) {
         e.preventDefault();
 
         form.post(route("accounts.store", ["balance-and-currency"]), {
@@ -32,8 +33,8 @@ export default function CreateAccountStep2Page({ currencies, previousData }: Cre
         });
     }
 
-    function handleCurrencyChange(value: string) {
-        form.setData("currency_code", value);
+    function handleChange(key: keyof AccountFormData, value: string) {
+        form.setData(key, value);
     }
 
     function handleBalanceChange(value: NumberFormatValues) {
@@ -49,7 +50,7 @@ export default function CreateAccountStep2Page({ currencies, previousData }: Cre
                     <div className="flex flex-col items-center gap-2">
                         <div className="rounded-full bg-gradient-to-b from-neutral-500/10 to-transparent p-4 backdrop-blur-md">
                             <div className="rounded-full border border-[var(--stroke-soft-200)] bg-[var(--bg-white-0)] p-4">
-                                <CurrencyIcon className="size-8 text-[var(--icon-sub-600)]" />
+                                <MoneyDollarCircleFillIcon className="size-8 text-[var(--icon-sub-600)]" />
                             </div>
                         </div>
 
@@ -61,29 +62,60 @@ export default function CreateAccountStep2Page({ currencies, previousData }: Cre
                         </div>
                     </div>
 
-                    <AccountForm step="balance-and-currency" onSubmit={handleSubmit}>
-                        <Field>
-                            <Label>Initial balance</Label>
-                            <CurrencyInput
-                                customInput={Input}
-                                invalid={!!form.errors.initial_balance}
-                                name="initial_balance"
-                                onValueChange={handleBalanceChange}
-                                placeholder="e.g. 1000"
-                                currency={form.data.currency_code || "USD"}
-                            />
-                            {form.errors.initial_balance && <ErrorMessage>{form.errors.initial_balance}</ErrorMessage>}
-                        </Field>
+                    <div className="rounded-20 mx-auto w-full max-w-[400px] border border-[var(--stroke-soft-200)] bg-[var(--bg-white-0)] shadow-xs">
+                        <div className="flex items-center gap-3.5 py-4 pr-6 pl-5">
+                            <div className="flex size-10 items-center justify-center rounded-full border border-[var(--stroke-soft-200)]">
+                                <BankIcon className="size-5 text-[var(--icon-sub-600)]" />
+                            </div>
 
-                        <CurrencySelector
-                            value={form.data.currency_code}
-                            onChange={handleCurrencyChange}
-                            currencies={currencies}
-                            error={form.errors.currency_code}
+                            <div className="flex flex-1 flex-col gap-1">
+                                <h3 className="text-label-sm">{previousData?.name}</h3>
+                                <p className="text-paragraph-sm text-[var(--text-sub-600)]">
+                                    Type: {previousData?.type}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="bg-[var(--bg-weak-50)] px-4 py-1.5">
+                            <p className="text-subheading-xs text-[var(--text-soft-400)] uppercase">account balance</p>
+                        </div>
+
+                        <div className="p-4">
+                            <AccountForm
+                                action={route("accounts.store", ["balance-and-currency"])}
+                                id="balance-and-currency-form"
+                                onSubmit={handleSubmit}
+                            >
+                                <Field>
+                                    <Label>Initial balance</Label>
+                                    <CurrencyInput
+                                        customInput={Input}
+                                        invalid={!!form.errors.initial_balance}
+                                        name="initial_balance"
+                                        onValueChange={handleBalanceChange}
+                                        placeholder="e.g. 1000"
+                                        currency={form.data.currency_code || "USD"}
+                                    />
+                                    {form.errors.initial_balance && (
+                                        <ErrorMessage>{form.errors.initial_balance}</ErrorMessage>
+                                    )}
+                                </Field>
+
+                                <CurrencySelector
+                                    value={form.data.currency_code}
+                                    onChange={(value) => handleChange("currency_code", value)}
+                                    currencies={currencies}
+                                    error={form.errors.currency_code}
+                                />
+                            </AccountForm>
+                        </div>
+
+                        <AccountForm.Navigation
+                            prevStep="details"
+                            isSubmitting={form.processing}
+                            onSubmit={handleSubmit}
                         />
-
-                        <AccountForm.Navigation prevStep="details" isSubmitting={form.processing} />
-                    </AccountForm>
+                    </div>
                 </div>
             </div>
         </CreateLayout>

@@ -46,7 +46,7 @@ export const ComboboxInput = forwardRef(function Combobox(
     return (
         <span
             data-slot="control"
-            className={cx(
+            className={cx([
                 className,
                 // Basic layout
                 "group relative block w-full before:transition after:transition",
@@ -62,7 +62,7 @@ export const ComboboxInput = forwardRef(function Combobox(
                 $size === "md" && "after:rounded-10",
                 // Disabled state
                 "has-data-disabled:opacity-50 before:has-data-disabled:bg-zinc-950/5 before:has-data-disabled:shadow-none",
-            )}
+            ])}
         >
             <Headless.ComboboxInput
                 ref={ref}
@@ -87,7 +87,7 @@ export function ComboboxOptions({
             {...props}
             anchor={anchor}
             transition={transition}
-            className={cx(
+            className={cx([
                 // Anchor positioning
                 "[--anchor-gap:var(--spacing-2)] [--anchor-padding:var(--spacing-1)] data-[anchor~=end]:[--anchor-offset:6px] data-[anchor~=start]:[--anchor-offset:-6px] sm:data-[anchor~=end]:[--anchor-offset:4px] sm:data-[anchor~=start]:[--anchor-offset:-4px]",
                 // Base styles
@@ -97,19 +97,19 @@ export function ComboboxOptions({
                 // Handle scrolling when menu won't fit in viewport
                 "overflow-y-auto",
                 // Popover background
-                "bg-[var(--bg-white-0)]/90 backdrop-blur-xl",
+                "bg-[var(--bg-white-0)]/85 backdrop-blur-lg",
                 // Shadows
                 "ring-1 shadow-md ring-[var(--stroke-soft-200)]",
                 // Transitions
                 "origin-top transition duration-200 ease-out data-leave:ease-in data-closed:data-leave:opacity-0",
                 // Put className last to allow overriding
                 className,
-            )}
+            ])}
         />
     );
 }
 
-const comboboxOptionClasses = cx(
+const comboboxOptionClasses = cx([
     // Base styles
     "group rounded-8 w-full cursor-default p-2 transition duration-100 focus:outline-none",
     // Text styles
@@ -127,7 +127,7 @@ const comboboxOptionClasses = cx(
     "[&>[data-slot=icon]]:text-[var(--icon-sub-600)]",
     // Avatar
     "[&>[data-slot=avatar]]:mr-2.5 [&>[data-slot=avatar]]:-ml-1 [&>[data-slot=avatar]]:size-6 sm:[&>[data-slot=avatar]]:mr-2 sm:[&>[data-slot=avatar]]:size-5",
-);
+]);
 
 export function ComboboxOption({
     className,

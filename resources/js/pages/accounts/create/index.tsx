@@ -1,8 +1,8 @@
 import { Head, router } from "@inertiajs/react";
-import DraftIcon from "virtual:icons/ri/draft-line";
+import DraftFillIcon from "virtual:icons/ri/draft-fill";
 
 import { Description, ErrorMessage, Field, Label } from "#/components/fieldset.tsx";
-import { AccountForm } from "#/components/forms/account-form.tsx";
+import { AccountForm } from "#/components/form/account-form.tsx";
 import { Input } from "#/components/input.tsx";
 import { Select } from "#/components/select.tsx";
 import { Text } from "#/components/text.tsx";
@@ -19,7 +19,7 @@ type CreateAccountPageProps = {
 export default function CreateAccountPage({ accountTypes, completedSteps }: CreateAccountPageProps) {
     const form = useAccountForm(completedSteps["details"]);
 
-    function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    function onSubmit(e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>) {
         e.preventDefault();
 
         form.post(route("accounts.store", ["details"]), {
@@ -36,7 +36,7 @@ export default function CreateAccountPage({ accountTypes, completedSteps }: Crea
                     <div className="flex flex-col items-center gap-2">
                         <div className="rounded-full bg-gradient-to-b from-neutral-500/10 to-transparent p-4 backdrop-blur-md">
                             <div className="rounded-full border border-[var(--stroke-soft-200)] bg-[var(--bg-white-0)] p-4">
-                                <DraftIcon className="size-8 text-[var(--icon-sub-600)]" />
+                                <DraftFillIcon className="size-8 text-[var(--icon-sub-600)]" />
                             </div>
                         </div>
 
@@ -49,54 +49,63 @@ export default function CreateAccountPage({ accountTypes, completedSteps }: Crea
                         </div>
                     </div>
 
-                    <AccountForm step="details" onSubmit={onSubmit}>
-                        <Field>
-                            <Label>Name</Label>
-                            <Input
-                                invalid={!!form.errors.name}
-                                name="name"
-                                onChange={(e) => form.setData("name", e.target.value)}
-                                value={form.data.name}
-                                placeholder="e.g. Personal savings"
-                            />
-                            {form.errors.name && <ErrorMessage>{form.errors.name}</ErrorMessage>}
-                        </Field>
+                    <div className="rounded-20 mx-auto w-full max-w-[400px] border border-[var(--stroke-soft-200)] bg-[var(--bg-white-0)] shadow-xs">
+                        <div className="p-4">
+                            <AccountForm id="details-form" onSubmit={onSubmit}>
+                                <Field>
+                                    <Label>Name</Label>
+                                    <Input
+                                        invalid={!!form.errors.name}
+                                        name="name"
+                                        onChange={(e) => form.setData("name", e.target.value)}
+                                        value={form.data.name}
+                                        placeholder="e.g. Personal savings"
+                                    />
+                                    {form.errors.name && <ErrorMessage>{form.errors.name}</ErrorMessage>}
+                                </Field>
 
-                        <Field>
-                            <Label>Description</Label>
-                            <Textarea
-                                invalid={!!form.errors.description}
-                                name="description"
-                                onChange={(e) => form.setData("description", e.target.value)}
-                                value={form.data.description}
-                                placeholder="e.g. Savings account for personal expenses"
-                            />
-                            {form.errors.description ? (
-                                <ErrorMessage>{form.errors.description}</ErrorMessage>
-                            ) : (
-                                <Description>This will only be visible to you.</Description>
-                            )}
-                        </Field>
+                                <Field>
+                                    <Label>Description</Label>
+                                    <Textarea
+                                        invalid={!!form.errors.description}
+                                        name="description"
+                                        onChange={(e) => form.setData("description", e.target.value)}
+                                        value={form.data.description}
+                                        placeholder="e.g. Savings account for personal expenses"
+                                        rows={3}
+                                    />
+                                    {form.errors.description ? (
+                                        <ErrorMessage>{form.errors.description}</ErrorMessage>
+                                    ) : (
+                                        <Description>This will only be visible to you.</Description>
+                                    )}
+                                </Field>
 
-                        <Field>
-                            <Label>Type</Label>
-                            <Select
-                                invalid={!!form.errors.type}
-                                name="type"
-                                onChange={(e) => form.setData("type", e.target.value as AccountTypes)}
-                                value={form.data.type}
-                            >
-                                {Object.entries(accountTypes).map(([key, value]) => (
-                                    <option key={key} value={key}>
-                                        {value}
-                                    </option>
-                                ))}
-                            </Select>
-                            {form.errors.type && <ErrorMessage>{form.errors.type}</ErrorMessage>}
-                        </Field>
+                                <div className="-mx-4 mt-1 border-t border-t-[var(--stroke-soft-200)] pt-3">
+                                    <div className="px-5">
+                                        <Field>
+                                            <Label>Type</Label>
+                                            <Select
+                                                invalid={!!form.errors.type}
+                                                name="type"
+                                                onChange={(e) => form.setData("type", e.target.value as AccountTypes)}
+                                                value={form.data.type}
+                                            >
+                                                {Object.entries(accountTypes).map(([key, value]) => (
+                                                    <option key={key} value={key}>
+                                                        {value}
+                                                    </option>
+                                                ))}
+                                            </Select>
+                                            {form.errors.type && <ErrorMessage>{form.errors.type}</ErrorMessage>}
+                                        </Field>
+                                    </div>
+                                </div>
+                            </AccountForm>
+                        </div>
 
-                        <AccountForm.Navigation isSubmitting={form.processing} />
-                    </AccountForm>
+                        <AccountForm.Navigation isSubmitting={form.processing} onSubmit={onSubmit} />
+                    </div>
                 </div>
             </div>
         </CreateLayout>
