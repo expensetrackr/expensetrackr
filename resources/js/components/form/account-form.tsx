@@ -3,9 +3,9 @@ import { Button } from "../button.tsx";
 
 interface AccountFormProps extends React.FormHTMLAttributes<HTMLFormElement> {}
 
-export function AccountForm({ onSubmit, children, ...props }: AccountFormProps) {
+export function AccountForm({ children, ...props }: AccountFormProps) {
     return (
-        <form {...props} className={cx("flex flex-col gap-3")}>
+        <form {...props} className={cx("flex flex-col gap-3", props.className)}>
             {children}
         </form>
     );
