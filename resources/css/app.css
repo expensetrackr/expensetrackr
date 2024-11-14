@@ -131,6 +131,15 @@ p {
     @apply text-pretty;
 }
 
+.text-h1,
+.text-h2,
+.text-h3,
+.text-h4,
+.text-h5,
+.text-h6 {
+    font-family: var(--font-family-display);
+}
+
 .dark #filter {
     background: linear-gradient(0deg, rgba(12, 17, 29, 0.5), rgba(12, 17, 29, 0.5)), #1570ef;
 }
