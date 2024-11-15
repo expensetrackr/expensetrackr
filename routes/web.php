@@ -22,7 +22,7 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/dashboard', function () {
-        return Inertia::render('dashboard')->with('toast', ['type' => 'success', 'message' => 'Hello, world!']);
+        return Inertia::render('dashboard');
     })->name('dashboard');
 
     Route::get('/accounts', [AccountController::class, 'index'])->name('accounts.index');
