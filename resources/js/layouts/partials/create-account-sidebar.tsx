@@ -17,14 +17,16 @@ import {
 import { Text } from "#/components/text.tsx";
 
 type PageProps = {
-    currentStep: string;
-    completedSteps: Record<string, boolean>;
-    totalSteps: number;
+    wizard: {
+        currentStep: string;
+        completedSteps: Record<string, boolean>;
+        totalSteps: number;
+    };
 };
 
 export function CreateAccountSidebar() {
     const page = usePage<PageProps>();
-    const completedSteps = page.props.completedSteps;
+    const completedSteps = page.props.wizard.completedSteps;
 
     return (
         <Sidebar className="lg:rounded-16 gap-3 lg:bg-[var(--bg-weak-50)]">

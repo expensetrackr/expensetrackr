@@ -24,8 +24,6 @@ export default function CreateAccountReviewPage({ formData }: CreateAccountRevie
         });
     }
 
-    console.info(formData);
-
     return (
         <CreateLayout>
             <Head title="Review - Create Account" />

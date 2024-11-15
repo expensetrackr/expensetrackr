@@ -1,23 +1,11 @@
 {
-    "include": [
-        "resources/js/**/*.ts",
-        "resources/js/**/*.tsx",
-        "resources/js/**/*.d.ts"
-    ],
-    "extends": [
-        "@epic-web/config/typescript"
-    ],
+    "include": ["resources/js/**/*.ts", "resources/js/**/*.tsx", "resources/js/**/*.d.ts"],
+    "extends": ["@epic-web/config/typescript"],
     "compilerOptions": {
         "paths": {
-            "#/*": [
-                "./resources/js/*"
-            ],
-            "ziggy-js": [
-                "./vendor/tightenco/ziggy"
-            ]
+            "#/*": ["./resources/js/*"],
+            "ziggy-js": ["./vendor/tightenco/ziggy"]
         },
-        "typeRoots": [
-            "./node_modules/@types"
-        ]
-    },
+        "typeRoots": ["./node_modules/@types"]
+    }
 }

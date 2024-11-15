@@ -40,13 +40,13 @@ final class HandleInertiaRequests extends Middleware
     public function share(Request $request): array
     {
         return array_merge(parent::share($request), [
-            'ziggy' => fn() => [
+            'ziggy' => fn () => [
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),
                 'query' => $request->query(),
             ],
             'toast' => collect(Arr::only($request->session()->all(), ['error', 'warning', 'success', 'info']))
-                ->mapWithKeys(fn($notification, $key) => ['type' => $key, 'message' => $notification])->first() ?? null
+                ->mapWithKeys(fn ($notification, $key): array => ['type' => $key, 'message' => $notification])->first() ?? null,
         ]);
     }
 }

@@ -11,10 +11,6 @@
     "printWidth": 120,
     "tabWidth": 4,
     "tailwindConfig": "./resources/css/tailwind.css",
-    "tailwindAttributes": [
-        "class",
-        "className",
-        "buttonClassName"
-    ],
+    "tailwindAttributes": ["class", "className", "buttonClassName"],
     "tailwindFunctions": ["cx", "cva"]
 }

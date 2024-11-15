@@ -13,11 +13,16 @@ import { type AccountTypes } from "#/models/account.ts";
 
 type CreateAccountPageProps = {
     accountTypes: Record<string, string>;
-    completedSteps: Record<string, Record<string, string>>;
+    wizard: {
+        currentStep: string;
+        totalSteps: number;
+        completedSteps: Record<string, boolean>;
+        data: Record<string, string>;
+    };
 };
 
-export default function CreateAccountPage({ accountTypes, completedSteps }: CreateAccountPageProps) {
-    const form = useAccountForm(completedSteps["details"]);
+export default function CreateAccountPage({ accountTypes, wizard }: CreateAccountPageProps) {
+    const form = useAccountForm(wizard.data);
 
     function onSubmit(e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>) {
         e.preventDefault();

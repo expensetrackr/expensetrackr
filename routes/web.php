@@ -42,4 +42,4 @@ Route::middleware([
     });
 });
 
-require __DIR__ . '/socialstream.php';
+require __DIR__.'/socialstream.php';

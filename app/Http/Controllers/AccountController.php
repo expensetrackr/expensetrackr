@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Enums\AccountType;
 use App\Http\Requests\StoreAccountStepRequest;
 use App\Models\Account;
 use App\Services\AccountWizardService;
 use App\Services\CurrencyService;
+use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Response;
+use InvalidArgumentException;
 use Workspaces\Workspaces;
 
 final class AccountController extends Controller
@@ -36,6 +37,8 @@ final class AccountController extends Controller
 
     /**
      * Create a new account.
+     *
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function create(Request $request, CurrencyService $currencyService): Response|RedirectResponse
     {
@@ -43,67 +46,35 @@ final class AccountController extends Controller
 
         $currentStep = $request->query('step');
 
-        // If no step or invalid step provided, redirect to details
-        if (! $currentStep || ! in_array($currentStep, AccountWizardService::STEPS)) {
-            return redirect()->route('accounts.create', ['step' => 'details']);
+        if (empty($currentStep)) {
+            return redirect()->route('accounts.create', ['step' => $this->wizardService->getFirstIncompleteStep($request)]);
         }
 
-        /** @var array<string, string|array<string>> $step1Data */
-        $step1Data = $this->wizardService->getStepData($request, 'details');
-        /** @var array<string, string|array<string>> $step2Data */
-        $step2Data = $this->wizardService->getStepData($request, 'balance-and-currency');
-
-        $steps = [
-            'details' => [
-                'component' => 'accounts/create/index',
-                'props' => [
-                    'accountTypes' => AccountType::array(),
-                ],
-            ],
-            'balance-and-currency' => [
-                'component' => 'accounts/create/balance-and-currency',
-                'props' => [
-                    'formData' => [
-                        ...($step1Data ?: []),
-                        ...($step2Data ?: []),
-                    ],
-                    'currencies' => $currencyService->getSupportedCurrencies(),
-                ],
-            ],
-            'review' => [
-                'component' => 'accounts/create/review',
-                'props' => [
-                    'formData' => [
-                        ...($step1Data ?: []),
-                        ...($step2Data ?: []),
-                    ],
-                ],
-            ],
-        ];
-
-        // Validate step progression
-        $currentStepIndex = array_search($currentStep, AccountWizardService::STEPS);
-        for ($i = 0; $i < $currentStepIndex; $i++) {
-            $previousStep = AccountWizardService::STEPS[$i];
-            if ($this->wizardService->getStepData($request, $previousStep) === []) {
-                return redirect()->route('accounts.create', ['step' => $previousStep]);
-            }
+        try {
+            $currentStep = $this->wizardService->validateStep(type($currentStep)->asString());
+            $this->wizardService->validateStepProgression($request, $currentStep);
+        } catch (InvalidArgumentException $e) {
+            return redirect()->route('accounts.create', ['step' => $this->wizardService->getFirstIncompleteStep($request)])
+                ->with('toast', ['type' => 'error', 'message' => $e->getMessage()]);
         }
 
-        assert(is_string($currentStep));
-        $currentStepData = $steps[$currentStep];
+        $stepData = $this->wizardService->getAllStepsData($request);
+        $currentStepData = $this->wizardService->getStepConfiguration(
+            $currentStep,
+            $stepData,
+            $currencyService->getSupportedCurrencies()
+        );
 
         return Workspaces::inertia()->render(
             $request,
             $currentStepData['component'],
             [
-                'currentStep' => $currentStep,
-                'totalSteps' => count($steps),
-                'completedSteps' => array_filter([
-                    'details' => $this->wizardService->getStepData($request, 'details'),
-                    'balance-and-currency' => $this->wizardService->getStepData($request, 'balance-and-currency'),
-                    'review' => false, // Review is never completed as it's the final step
-                ]),
+                'wizard' => [
+                    'currentStep' => $currentStep,
+                    'totalSteps' => $this->wizardService->getTotalSteps(),
+                    'completedSteps' => $this->wizardService->getCompletedSteps($request),
+                    'data' => $this->wizardService->getWizardData($request),
+                ],
                 ...$currentStepData['props'],
             ]
         );
@@ -111,40 +82,43 @@ final class AccountController extends Controller
 
     /**
      * Handle form submission for each step
+     *
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store(StoreAccountStepRequest $request, string $step): RedirectResponse
     {
+        Gate::authorize('create', Account::class);
+
+        try {
+            $this->wizardService->validateStep($step);
+        } catch (InvalidArgumentException $e) {
+            return redirect()->route('accounts.create', ['step' => 'details'])
+                ->with('toast', ['type' => 'error', 'message' => $e->getMessage()]);
+        }
+
         $validated = $request->validated();
         $this->wizardService->storeStepData($request, $step, $validated);
 
-        if ($step === 'review') {
-            /** @var array<string, string|array<string>> $step1Data */
-            $step1Data = $this->wizardService->getStepData($request, 'details');
-            /** @var array<string, string|array<string>> $step2Data */
-            $step2Data = $this->wizardService->getStepData($request, 'balance-and-currency');
+        if ($step === AccountWizardService::STEP_REVIEW) {
+            try {
+                $account = $this->wizardService->createAccount($request);
+                $this->wizardService->clearWizardData($request);
 
-            $accountData = [
-                ...$step1Data,
-                ...$step2Data,
-                ...$validated,
-            ];
-
-            $account = new Account();
-            $account->fill($accountData);
-            $account->save();
-
-            $this->wizardService->clearWizardData($request);
-
-            return redirect()->route('accounts.show', $account)
-                ->with('toast', ['type' => 'success', 'message' => 'Account created successfully.']);
+                return redirect()->route('accounts.show', $account)
+                    ->with('toast', ['type' => 'success', 'message' => 'Account created successfully.']);
+            } catch (Exception) {
+                return redirect()->back()
+                    ->with('toast', ['type' => 'error', 'message' => 'Failed to create account. Please try again.']);
+            }
         }
 
-        $nextStep = match ($step) {
-            'details' => 'balance-and-currency',
-            'balance-and-currency' => 'review',
-            default => abort(404)
-        };
+        try {
+            $nextStep = $this->wizardService->getNextStep($step);
 
-        return redirect()->route('accounts.create', ['step' => $nextStep]);
+            return redirect()->route('accounts.create', ['step' => $nextStep]);
+        } catch (InvalidArgumentException $e) {
+            return redirect()->back()
+                ->with('toast', ['type' => 'error', 'message' => $e->getMessage()]);
+        }
     }
 }

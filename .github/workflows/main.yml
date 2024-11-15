@@ -1,86 +1,86 @@
 name: 🏗️ CI
 on:
-  push:
-    branches:
-      - main
-  pull_request: { }
+    push:
+        branches:
+            - main
+    pull_request: {}
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
 
 permissions:
-  actions: write
-  contents: read
+    actions: write
+    contents: read
 
 jobs:
-  lint:
-    name: 🪝 oxlint + ⬣ ESLint
-    runs-on: ubuntu-latest
-    steps:
-      - name: ⬇️ Checkout repo
-        uses: actions/checkout@v4
+    lint:
+        name: 🪝 oxlint + ⬣ ESLint
+        runs-on: ubuntu-latest
+        steps:
+            - name: ⬇️ Checkout repo
+              uses: actions/checkout@v4
 
-      - name: 🧅 Setup bun
-        uses: oven-sh/setup-bun@v1
+            - name: 🧅 Setup bun
+              uses: oven-sh/setup-bun@v1
 
-      - name: ⎔ Setup node
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20.x"
+            - name: ⎔ Setup node
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "20.x"
 
-      - uses: actions/cache@v4
-        with:
-          path: ~/.bun/install/cache
-          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb') }}
-          restore-keys: |
-            ${{ runner.os }}-bun-
+            - uses: actions/cache@v4
+              with:
+                  path: ~/.bun/install/cache
+                  key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb') }}
+                  restore-keys: |
+                      ${{ runner.os }}-bun-
 
-      - name: 📥 Download deps
-        run: bun install
+            - name: 📥 Download deps
+              run: bun install
 
-      - name: 🔬 Lint
-        run: bun run lint .
+            - name: 🔬 Lint
+              run: bun run lint .
 
-  typecheck:
-    name: ʦ TypeScript
-    runs-on: ubuntu-latest
-    steps:
-      - name: ⬇️ Checkout repo
-        uses: actions/checkout@v4
+    typecheck:
+        name: ʦ TypeScript
+        runs-on: ubuntu-latest
+        steps:
+            - name: ⬇️ Checkout repo
+              uses: actions/checkout@v4
 
-      - name: 🧅 Setup bun
-        uses: oven-sh/setup-bun@v1
+            - name: 🧅 Setup bun
+              uses: oven-sh/setup-bun@v1
 
-      - name: ⎔ Setup node
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20.x"
+            - name: ⎔ Setup node
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "20.x"
 
-      - uses: actions/cache@v4
-        with:
-          path: ~/.bun/install/cache
-          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb') }}
-          restore-keys: |
-            ${{ runner.os }}-bun-
+            - uses: actions/cache@v4
+              with:
+                  path: ~/.bun/install/cache
+                  key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb') }}
+                  restore-keys: |
+                      ${{ runner.os }}-bun-
 
-      - name: 💾 Cache composer dependencies
-        uses: actions/cache@v4
-        with:
-          path: /tmp/composer-cache
-          key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
+            - name: 💾 Cache composer dependencies
+              uses: actions/cache@v4
+              with:
+                  path: /tmp/composer-cache
+                  key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
 
-      - name: 📦 Install composer dependencies
-        uses: php-actions/composer@v6
-        with:
-          dev: no
-          args: --optimize-autoloader
+            - name: 📦 Install composer dependencies
+              uses: php-actions/composer@v6
+              with:
+                  dev: no
+                  args: --optimize-autoloader
 
-      - name: 📥 Download deps
-        run: bun install
+            - name: 📥 Download deps
+              run: bun install
 
-      - name: 🔨 Build
-        run: bun run build
+            - name: 🔨 Build
+              run: bun run build
 
-      - name: 🔎 Type check
-        run: bun run typecheck
+            - name: 🔎 Type check
+              run: bun run typecheck
