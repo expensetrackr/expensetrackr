@@ -22,7 +22,7 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/dashboard', function () {
-        return Inertia::render('dashboard');
+        return Inertia::render('dashboard')->with('toast', ['type' => 'success', 'message' => 'Hello, world!']);
     })->name('dashboard');
 
     Route::get('/accounts', [AccountController::class, 'index'])->name('accounts.index');
@@ -42,4 +42,4 @@ Route::middleware([
     });
 });
 
-require __DIR__.'/socialstream.php';
+require __DIR__ . '/socialstream.php';

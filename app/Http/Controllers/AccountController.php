@@ -48,6 +48,11 @@ final class AccountController extends Controller
             return redirect()->route('accounts.create', ['step' => 'details']);
         }
 
+        /** @var array<string, string|array<string>> $step1Data */
+        $step1Data = $this->wizardService->getStepData($request, 'details');
+        /** @var array<string, string|array<string>> $step2Data */
+        $step2Data = $this->wizardService->getStepData($request, 'balance-and-currency');
+
         $steps = [
             'details' => [
                 'component' => 'accounts/create/index',
@@ -59,8 +64,8 @@ final class AccountController extends Controller
                 'component' => 'accounts/create/balance-and-currency',
                 'props' => [
                     'formData' => [
-                        ...($this->wizardService->getStepData($request, 'details') ?: []),
-                        ...($this->wizardService->getStepData($request, 'balance-and-currency') ?: []),
+                        ...($step1Data ?: []),
+                        ...($step2Data ?: []),
                     ],
                     'currencies' => $currencyService->getSupportedCurrencies(),
                 ],
@@ -69,9 +74,8 @@ final class AccountController extends Controller
                 'component' => 'accounts/create/review',
                 'props' => [
                     'formData' => [
-                        /** @var array<string, string|array<string>> */
-                        ...($this->wizardService->getStepData($request, 'details') ?: []),
-                        ...($this->wizardService->getStepData($request, 'balance-and-currency') ?: []),
+                        ...($step1Data ?: []),
+                        ...($step2Data ?: []),
                     ],
                 ],
             ],
@@ -132,7 +136,7 @@ final class AccountController extends Controller
             $this->wizardService->clearWizardData($request);
 
             return redirect()->route('accounts.show', $account)
-                ->with('success', 'Account created successfully.');
+                ->with('toast', ['type' => 'success', 'message' => 'Account created successfully.']);
         }
 
         $nextStep = match ($step) {

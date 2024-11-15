@@ -72,6 +72,7 @@ export type InertiaSharedProps<T extends Record<string, unknown> = Record<string
         hasPassword: boolean;
     };
     ziggy: Config & { location: string; query: Record<string, string> };
+    toast: { type: "error" | "warning" | "success" | "info"; message: string } | null;
 };
 
 export interface Session {

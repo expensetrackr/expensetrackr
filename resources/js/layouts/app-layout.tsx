@@ -1,4 +1,6 @@
 import { router, usePage } from "@inertiajs/react";
+import { useEffect } from "react";
+import { toast } from "sonner";
 
 import { SidebarLayout } from "#/components/sidebar-layout.tsx";
 import { Toaster } from "#/components/toaster.tsx";
@@ -10,6 +12,14 @@ export function AppLayout({ children, subSidebar }: { children: React.ReactNode;
     const page = usePage<InertiaSharedProps>();
     const user = page.props.auth.user;
     const workspaces = page.props.workspaces;
+
+    useEffect(() => {
+        if (page.props.toast) {
+            toast[page.props.toast.type](page.props.toast.message, {
+                duration: 500000,
+            });
+        }
+    }, [page.props.toast]);
 
     function logout(e: React.FormEvent) {
         e.preventDefault();
@@ -24,7 +34,7 @@ export function AppLayout({ children, subSidebar }: { children: React.ReactNode;
         >
             {children}
 
-            <Toaster position="bottom-center" />
+            <Toaster position="top-center" />
         </SidebarLayout>
     );
 }
