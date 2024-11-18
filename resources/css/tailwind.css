@@ -226,98 +226,98 @@
     --color-state-stable-light: var(--state-stable-light);
     --color-state-stable-lighter: var(--state-stable-lighter);
 
-    --font-size-*: initial;
+    --text-*: initial;
 
-    --font-size-h1: 3.5rem;
-    --font-size-h1--font-weight: 500;
-    --font-size-h1--line-height: 4rem;
-    --font-size-h1--letter-spacing: -0.56px;
+    --text-h1: 3.5rem;
+    --text-h1--font-weight: 500;
+    --text-h1--line-height: 4rem;
+    --text-h1--letter-spacing: -0.56px;
 
-    --font-size-h2: 3rem;
-    --font-size-h2--font-weight: 500;
-    --font-size-h2--line-height: 3.5rem;
-    --font-size-h2--letter-spacing: -0.48px;
+    --text-h2: 3rem;
+    --text-h2--font-weight: 500;
+    --text-h2--line-height: 3.5rem;
+    --text-h2--letter-spacing: -0.48px;
 
-    --font-size-h3: 2.5rem;
-    --font-size-h3--font-weight: 500;
-    --font-size-h3--line-height: 3rem;
-    --font-size-h3--letter-spacing: -0.4px;
+    --text-h3: 2.5rem;
+    --text-h3--font-weight: 500;
+    --text-h3--line-height: 3rem;
+    --text-h3--letter-spacing: -0.4px;
 
-    --font-size-h4: 2rem;
-    --font-size-h4--font-weight: 500;
-    --font-size-h4--line-height: 2.5rem;
-    --font-size-h4--letter-spacing: -0.16px;
+    --text-h4: 2rem;
+    --text-h4--font-weight: 500;
+    --text-h4--line-height: 2.5rem;
+    --text-h4--letter-spacing: -0.16px;
 
-    --font-size-h5: 1.5rem;
-    --font-size-h5--font-weight: 500;
-    --font-size-h5--line-height: 2rem;
+    --text-h5: 1.5rem;
+    --text-h5--font-weight: 500;
+    --text-h5--line-height: 2rem;
 
-    --font-size-h6: 1.25rem;
-    --font-size-h6--font-weight: 500;
-    --font-size-h6--line-height: 1.75rem;
+    --text-h6: 1.25rem;
+    --text-h6--font-weight: 500;
+    --text-h6--line-height: 1.75rem;
 
-    --font-size-label-xl: 1.5rem;
-    --font-size-label-xl--font-weight: 500;
-    --font-size-label-xl--line-height: 2rem;
-    --font-size-label-xl--letter-spacing: -0.36px;
+    --text-label-xl: 1.5rem;
+    --text-label-xl--font-weight: 500;
+    --text-label-xl--line-height: 2rem;
+    --text-label-xl--letter-spacing: -0.36px;
 
-    --font-size-label-lg: 1.125rem;
-    --font-size-label-lg--font-weight: 500;
-    --font-size-label-lg--line-height: 1.5rem;
-    --font-size-label-lg--letter-spacing: -0.27px;
+    --text-label-lg: 1.125rem;
+    --text-label-lg--font-weight: 500;
+    --text-label-lg--line-height: 1.5rem;
+    --text-label-lg--letter-spacing: -0.27px;
 
-    --font-size-label-md: 1rem;
-    --font-size-label-md--font-weight: 500;
-    --font-size-label-md--line-height: 1.5rem;
-    --font-size-label-md--letter-spacing: -0.176px;
+    --text-label-md: 1rem;
+    --text-label-md--font-weight: 500;
+    --text-label-md--line-height: 1.5rem;
+    --text-label-md--letter-spacing: -0.176px;
 
-    --font-size-label-sm: 0.875rem;
-    --font-size-label-sm--font-weight: 500;
-    --font-size-label-sm--line-height: 1.25rem;
-    --font-size-label-sm--letter-spacing: -0.096px;
+    --text-label-sm: 0.875rem;
+    --text-label-sm--font-weight: 500;
+    --text-label-sm--line-height: 1.25rem;
+    --text-label-sm--letter-spacing: -0.096px;
 
-    --font-size-label-xs: 0.75rem;
-    --font-size-label-xs--font-weight: 500;
-    --font-size-label-xs--line-height: 1rem;
+    --text-label-xs: 0.75rem;
+    --text-label-xs--font-weight: 500;
+    --text-label-xs--line-height: 1rem;
 
-    --font-size-paragraph-xl: 1.5rem;
-    --font-size-paragraph-xl--line-height: 2rem;
-    --font-size-paragraph-xl--letter-spacing: -0.36px;
+    --text-paragraph-xl: 1.5rem;
+    --text-paragraph-xl--line-height: 2rem;
+    --text-paragraph-xl--letter-spacing: -0.36px;
 
-    --font-size-paragraph-lg: 1.125rem;
-    --font-size-paragraph-lg--line-height: 1.5rem;
-    --font-size-paragraph-lg--letter-spacing: -0.27px;
+    --text-paragraph-lg: 1.125rem;
+    --text-paragraph-lg--line-height: 1.5rem;
+    --text-paragraph-lg--letter-spacing: -0.27px;
 
-    --font-size-paragraph-md: 1rem;
-    --font-size-paragraph-md--line-height: 1.5rem;
-    --font-size-paragraph-md--letter-spacing: -0.176px;
+    --text-paragraph-md: 1rem;
+    --text-paragraph-md--line-height: 1.5rem;
+    --text-paragraph-md--letter-spacing: -0.176px;
 
-    --font-size-paragraph-sm: 0.875rem;
-    --font-size-paragraph-sm--line-height: 1.25rem;
-    --font-size-paragraph-sm--letter-spacing: -0.084px;
+    --text-paragraph-sm: 0.875rem;
+    --text-paragraph-sm--line-height: 1.25rem;
+    --text-paragraph-sm--letter-spacing: -0.084px;
 
-    --font-size-paragraph-xs: 0.75rem;
-    --font-size-paragraph-xs--line-height: 1rem;
+    --text-paragraph-xs: 0.75rem;
+    --text-paragraph-xs--line-height: 1rem;
 
-    --font-size-subheading-md: 1rem;
-    --font-size-subheading-md--font-weight: 500;
-    --font-size-subheading-md--line-height: 1.5rem;
-    --font-size-subheading-md--letter-spacing: 0.96px;
+    --text-subheading-md: 1rem;
+    --text-subheading-md--font-weight: 500;
+    --text-subheading-md--line-height: 1.5rem;
+    --text-subheading-md--letter-spacing: 0.96px;
 
-    --font-size-subheading-sm: 0.875rem;
-    --font-size-subheading-sm--font-weight: 500;
-    --font-size-subheading-sm--line-height: 1.25rem;
-    --font-size-subheading-sm--letter-spacing: 0.84px;
+    --text-subheading-sm: 0.875rem;
+    --text-subheading-sm--font-weight: 500;
+    --text-subheading-sm--line-height: 1.25rem;
+    --text-subheading-sm--letter-spacing: 0.84px;
 
-    --font-size-subheading-xs: 0.75rem;
-    --font-size-subheading-xs--font-weight: 500;
-    --font-size-subheading-xs--line-height: 1rem;
-    --font-size-subheading-xs--letter-spacing: 0.48px;
+    --text-subheading-xs: 0.75rem;
+    --text-subheading-xs--font-weight: 500;
+    --text-subheading-xs--line-height: 1rem;
+    --text-subheading-xs--letter-spacing: 0.48px;
 
-    --font-size-subheading-2xs: 0.6875rem;
-    --font-size-subheading-2xs--font-weight: 500;
-    --font-size-subheading-2xs--line-height: 0.75rem;
-    --font-size-subheading-2xs--letter-spacing: 0.22px;
+    --text-subheading-2xs: 0.6875rem;
+    --text-subheading-2xs--font-weight: 500;
+    --text-subheading-2xs--line-height: 0.75rem;
+    --text-subheading-2xs--letter-spacing: 0.22px;
 
     --radius-*: initial;
     --radius-0: 0;
@@ -331,8 +331,8 @@
     --radius-24: 1.5rem;
     --radius-full: 9999px;
 
-    --default-font-family: "Inter", var(--font-family-sans);
-    --font-family-display: "InterDisplay", var(--font-family-sans);
+    --default-font-family: "Inter", var(--font-sans);
+    --font-display: "InterDisplay", var(--font-sans);
 
     --shadow-xs: 0px 1px 2px 0px rgba(10, 13, 20, 0.03);
     --shadow-md: 0px 16px 32px -12px rgba(14, 18, 27, 0.1);

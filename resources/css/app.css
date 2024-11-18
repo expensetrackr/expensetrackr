@@ -137,7 +137,7 @@ p {
 .text-h4,
 .text-h5,
 .text-h6 {
-    font-family: var(--font-family-display);
+    font-family: var(--font-display);
 }
 
 .dark #filter {
