@@ -37,7 +37,7 @@ export function CreateAccountSidebar() {
             <SidebarBody className="mx-4 p-0">
                 <SidebarSection>
                     <SidebarItem
-                        buttonClassName="group rounded-10 p-2 data-hover:bg-[var(--bg-white-0)] data-current:bg-[var(--bg-white-0)]"
+                        buttonClassName="group rounded-10 p-2 data-current:!bg-[var(--bg-white-0)] data-hover:!bg-[var(--bg-white-0)]"
                         current={route().current("accounts.create", { step: "details" })}
                         href={route("accounts.create", { step: "details" })}
                     >
@@ -50,7 +50,7 @@ export function CreateAccountSidebar() {
                         <SidebarLabel>Details</SidebarLabel>
                     </SidebarItem>
                     <SidebarItem
-                        buttonClassName="group rounded-10 p-2 data-hover:bg-[var(--bg-white-0)] data-current:bg-[var(--bg-white-0)]"
+                        buttonClassName="group rounded-10 p-2 data-current:!bg-[var(--bg-white-0)] data-hover:!bg-[var(--bg-white-0)]"
                         current={route().current("accounts.create", { step: "balance-and-currency" })}
                         href={route("accounts.create", { step: "balance-and-currency" })}
                     >
@@ -63,7 +63,7 @@ export function CreateAccountSidebar() {
                         <SidebarLabel>Balance & Currency</SidebarLabel>
                     </SidebarItem>
                     <SidebarItem
-                        buttonClassName="group rounded-10 p-2 data-hover:bg-[var(--bg-white-0)] data-current:bg-[var(--bg-white-0)]"
+                        buttonClassName="group rounded-10 p-2 data-current:!bg-[var(--bg-white-0)] data-hover:!bg-[var(--bg-white-0)]"
                         current={route().current("accounts.create", { step: "review" })}
                         href={route("accounts.create", { step: "review" })}
                     >
@@ -94,7 +94,7 @@ export function CreateAccountSidebar() {
 function StepNumber({ children }: { children: React.ReactNode }) {
     return (
         <span className="group-data-hover:bg-primary group-data-current:bg-primary inline-flex items-center justify-center rounded-full bg-[var(--bg-white-0)] p-0.5 shadow-xs">
-            <span className="text-label-xs inline-flex size-4 justify-center text-[var(--text-sub-600)] group-data-hover:text-white group-data-current:text-white">
+            <span className="text-label-xs inline-flex size-4 justify-center text-[var(--text-sub-600)] group-data-current:text-white group-data-hover:text-white">
                 {children}
             </span>
         </span>

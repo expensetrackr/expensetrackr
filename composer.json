@@ -16,7 +16,7 @@
     ],
     "license": "GPL-3.0-or-later",
     "require": {
-        "php": "^8.2",
+        "php": "^8.3",
         "akaunting/laravel-money": "5.2.2",
         "cjmellor/browser-sessions": "1.2.0",
         "hirethunk/verbs": "0.6.4",
