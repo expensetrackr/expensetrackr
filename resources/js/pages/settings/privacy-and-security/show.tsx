@@ -2,9 +2,7 @@ import { Head } from "@inertiajs/react";
 import ShieldUserIcon from "virtual:icons/ri/shield-user-line";
 
 import { Divider } from "#/components/divider.tsx";
-import { PageHeader } from "#/components/page-header.tsx";
-import { AppLayout } from "#/layouts/app-layout.tsx";
-import { SettingsSidebar } from "#/layouts/partials/settings-sidebar.tsx";
+import { SettingsLayout } from "#/layouts/settings-layout.tsx";
 import { SetPasswordForm } from "#/pages/settings/privacy-and-security/partials/set-password-form.tsx";
 import { type InertiaSharedProps, type Session } from "#/types/index.ts";
 import { DeleteUserForm } from "./partials/delete-user-form.tsx";
@@ -27,52 +25,33 @@ export default function PrivacyAndSecurityShow({
 
     return (
         <>
-            <Head title="Privacy & Security" />
+            {workspaces.canUpdatePassword && (
+                <>
+                    <Divider />
 
-            <div className="flex flex-col gap-5">
-                <PageHeader className="-mb-5">
-                    <PageHeader.Content>
-                        <PageHeader.Icon>
-                            <ShieldUserIcon className="size-6" />
-                        </PageHeader.Icon>
+                    {canUpdatePassword ? <UpdatePasswordForm /> : <SetPasswordForm />}
+                </>
+            )}
 
-                        <div className="flex flex-1 flex-col gap-1">
-                            <PageHeader.Title>Privacy & Security</PageHeader.Title>
-                            <PageHeader.Description>
-                                Personalize your privacy settings and enhance the security of your account.
-                            </PageHeader.Description>
-                        </div>
-                    </PageHeader.Content>
-                </PageHeader>
+            {workspaces.canManageTwoFactorAuthentication && (
+                <>
+                    <Divider />
 
-                {workspaces.canUpdatePassword && (
-                    <>
-                        <Divider />
+                    <TwoFactorAuthenticationForm requiresConfirmation={confirmsTwoFactorAuthentication} />
+                </>
+            )}
 
-                        {canUpdatePassword ? <UpdatePasswordForm /> : <SetPasswordForm />}
-                    </>
-                )}
+            <Divider />
 
-                {workspaces.canManageTwoFactorAuthentication && (
-                    <>
-                        <Divider />
+            <LogoutOtherBrowserSessionsForm sessions={sessions} />
 
-                        <TwoFactorAuthenticationForm requiresConfirmation={confirmsTwoFactorAuthentication} />
-                    </>
-                )}
+            {workspaces.hasAccountDeletionFeatures && (
+                <>
+                    <Divider />
 
-                <Divider />
-
-                <LogoutOtherBrowserSessionsForm sessions={sessions} />
-
-                {workspaces.hasAccountDeletionFeatures && (
-                    <>
-                        <Divider />
-
-                        <DeleteUserForm />
-                    </>
-                )}
-            </div>
+                    <DeleteUserForm />
+                </>
+            )}
         </>
     );
 }
@@ -80,7 +59,14 @@ export default function PrivacyAndSecurityShow({
 PrivacyAndSecurityShow.layout = (
     page: React.ReactNode & { props: InertiaSharedProps<PrivacyAndSecurityShowProps> },
 ) => (
-    <AppLayout {...page.props} subSidebar={<SettingsSidebar />}>
+    <SettingsLayout
+        {...page.props}
+        description="Personalize your privacy settings and enhance the security of your account."
+        icon={ShieldUserIcon}
+        title="Privacy & Security"
+    >
+        <Head title="Privacy & Security" />
+
         {page}
-    </AppLayout>
+    </SettingsLayout>
 );

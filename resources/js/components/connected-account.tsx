@@ -14,7 +14,7 @@ const providerIcons = {
 
 export function ConnectedAccount({ connectedAccount, provider, children }: ConnectedAccountProps) {
     return (
-        <div className="flex flex-col gap-1 py-5">
+        <div className="flex flex-col gap-1">
             <div className="flex flex-col gap-3.5 lg:flex-row lg:items-center">
                 <div className="flex flex-1 items-center gap-3.5">
                     <div className="flex size-12 items-center justify-center rounded-full border border-[var(--stroke-soft-200)] p-2">

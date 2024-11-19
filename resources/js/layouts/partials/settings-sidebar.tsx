@@ -1,10 +1,11 @@
 import { usePage } from "@inertiajs/react";
+import { motion } from "framer-motion";
 import ArrowRightSIcon from "virtual:icons/ri/arrow-right-s-line";
 import EqualizerIcon from "virtual:icons/ri/equalizer-line";
 import PlanetIcon from "virtual:icons/ri/planet-line";
 import ShieldUserIcon from "virtual:icons/ri/shield-user-line";
 import UserSettingsIcon from "virtual:icons/ri/user-settings-line";
-import { route } from "ziggy-js";
+import { useRoute } from "ziggy-js";
 
 import {
     Sidebar,
@@ -20,21 +21,26 @@ import { type InertiaSharedProps } from "#/types/index.ts";
 export function SettingsMenu() {
     const page = usePage<InertiaSharedProps>();
     const user = page.props.auth.user;
+    const route = useRoute();
+    const currentRoute = route().current();
 
     return (
         <>
             <SidebarItem
-                current={route().current("settings.show")}
+                current={currentRoute === "settings.show"}
                 currentIndicator={false}
                 href={route("settings.show")}
             >
                 <UserSettingsIcon />
                 <SidebarLabel>Profile</SidebarLabel>
 
-                {route().current("settings.show") && (
-                    <span className="ml-auto inline-flex rounded-full bg-[var(--bg-white-0)] p-px shadow-xs">
+                {currentRoute === "settings.show" && (
+                    <motion.span
+                        className="ml-auto inline-flex rounded-full bg-[var(--bg-white-0)] p-px shadow-xs"
+                        layoutId="current-setting-indicator"
+                    >
                         <ArrowRightSIcon className="size-[18px]" />
-                    </span>
+                    </motion.span>
                 )}
             </SidebarItem>
             <SidebarItem
@@ -49,40 +55,47 @@ export function SettingsMenu() {
                 <PlanetIcon />
                 <SidebarLabel>Workspace</SidebarLabel>
 
-                {route().current("workspaces.show", {
-                    workspace: Number(user?.current_workspace_id),
-                }) && (
-                    <span className="ml-auto inline-flex rounded-full bg-[var(--bg-white-0)] p-px shadow-xs">
+                {currentRoute === "workspaces.show" && (
+                    <motion.span
+                        className="ml-auto inline-flex rounded-full bg-[var(--bg-white-0)] p-px shadow-xs"
+                        layoutId="current-setting-indicator"
+                    >
                         <ArrowRightSIcon className="size-[18px]" />
-                    </span>
+                    </motion.span>
                 )}
             </SidebarItem>
             <SidebarItem
-                current={route().current("settings.privacy-and-security.show")}
+                current={currentRoute === "settings.privacy-and-security.show"}
                 currentIndicator={false}
                 href={route("settings.privacy-and-security.show")}
             >
                 <ShieldUserIcon />
                 <SidebarLabel>Privacy & Security</SidebarLabel>
 
-                {route().current("settings.privacy-and-security.show") && (
-                    <span className="ml-auto inline-flex rounded-full bg-[var(--bg-white-0)] p-px shadow-xs">
+                {currentRoute === "settings.privacy-and-security.show" && (
+                    <motion.span
+                        className="ml-auto inline-flex rounded-full bg-[var(--bg-white-0)] p-px shadow-xs"
+                        layoutId="current-setting-indicator"
+                    >
                         <ArrowRightSIcon className="size-[18px]" />
-                    </span>
+                    </motion.span>
                 )}
             </SidebarItem>
             <SidebarItem
-                current={route().current("settings.connected-accounts.show")}
+                current={currentRoute === "settings.connected-accounts.show"}
                 currentIndicator={false}
                 href={route("settings.connected-accounts.show")}
             >
                 <EqualizerIcon />
                 <SidebarLabel>Connected accounts</SidebarLabel>
 
-                {route().current("settings.connected-accounts.show") && (
-                    <span className="ml-auto inline-flex rounded-full bg-[var(--bg-white-0)] p-px shadow-xs">
+                {currentRoute === "settings.connected-accounts.show" && (
+                    <motion.span
+                        className="ml-auto inline-flex rounded-full bg-[var(--bg-white-0)] p-px shadow-xs"
+                        layoutId="current-setting-indicator"
+                    >
                         <ArrowRightSIcon className="size-[18px]" />
-                    </span>
+                    </motion.span>
                 )}
             </SidebarItem>
         </>

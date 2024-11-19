@@ -1,5 +1,5 @@
 import * as Headless from "@headlessui/react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import CloseIcon from "virtual:icons/ri/close-line";
 import MenuIcon from "virtual:icons/ri/menu-line";
@@ -69,7 +69,7 @@ export function SidebarLayout({
             {/* Sidebar on desktop */}
             {sidebar ? (
                 <motion.div
-                    animate={{ x: 0, width: "auto" }}
+                    animate={{ x: 0, width: "calc(var(--spacing) * 64)" }}
                     className={cx([
                         "fixed inset-y-0 left-0 z-50 w-64 max-lg:hidden",
                         subSidebar && "border-r border-[var(--stroke-soft-200)]",
@@ -85,7 +85,20 @@ export function SidebarLayout({
                     {sidebar}
                 </motion.div>
             ) : null}
-            {subSidebar && <div className="fixed inset-y-0 left-64 w-64 max-lg:hidden">{subSidebar}</div>}
+            {subSidebar && (
+                <motion.div
+                    animate={{ x: 0, width: "calc(var(--spacing) * 64)" }}
+                    className="fixed inset-y-0 left-64 w-64 max-lg:hidden"
+                    initial={{ x: -100, width: 0 }}
+                    transition={{
+                        type: "spring",
+                        stiffness: 130,
+                        damping: 20,
+                    }}
+                >
+                    {subSidebar}
+                </motion.div>
+            )}
 
             {/* Sidebar on mobile */}
             {sidebar ? (
@@ -106,22 +119,32 @@ export function SidebarLayout({
             </header>
 
             {/* Content */}
-            <main
+            <motion.main
+                animate={{
+                    paddingLeft: ["var(--sidebar-width)"],
+                }}
                 className={cx([
                     "flex flex-1 flex-col pb-2 lg:min-w-0 lg:pt-2 lg:pr-2",
-                    subSidebar ? "lg:pl-[512px]" : "lg:pl-64",
+                    subSidebar ? "lg:[--sidebar-width:512px]" : "lg:[--sidebar-width:256px]",
                     contentClassName,
                 ])}
             >
-                <div
-                    className={cx([
-                        "lg:rounded-8 grow px-4 pb-5 lg:bg-[var(--bg-white-0)] lg:px-8 lg:ring-1 lg:shadow-sm lg:ring-[var(--stroke-soft-200)]",
-                        contentChildrenClassName,
-                    ])}
-                >
-                    {children}
-                </div>
-            </main>
+                <AnimatePresence mode="wait">
+                    <motion.div
+                        animate={{ opacity: 1 }}
+                        className={cx([
+                            "lg:rounded-8 grow px-4 pb-5 lg:bg-[var(--bg-white-0)] lg:px-8 lg:ring-1 lg:shadow-sm lg:ring-[var(--stroke-soft-200)]",
+                            contentChildrenClassName,
+                        ])}
+                        exit={{ opacity: 0 }}
+                        initial={{ opacity: 0 }}
+                        key={window.location.pathname}
+                        transition={{ duration: 0.2 }}
+                    >
+                        {children}
+                    </motion.div>
+                </AnimatePresence>
+            </motion.main>
         </div>
     );
 }

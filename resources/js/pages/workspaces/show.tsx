@@ -2,9 +2,7 @@ import { Head } from "@inertiajs/react";
 import PlanetIcon from "virtual:icons/ri/planet-line";
 
 import { Divider } from "#/components/divider.tsx";
-import { PageHeader } from "#/components/page-header.tsx";
-import { AppLayout } from "#/layouts/app-layout.tsx";
-import { SettingsSidebar } from "#/layouts/partials/settings-sidebar.tsx";
+import { SettingsLayout } from "#/layouts/settings-layout.tsx";
 import { WorkspaceMemberInvitations } from "#/pages/workspaces/partials/workspace-member-invitations.tsx";
 import {
     type InertiaSharedProps,
@@ -40,46 +38,30 @@ export default function WorkspacesShow({
 }: InertiaSharedProps<WorkspacesShowProps>) {
     return (
         <>
-            <Head title="Workspace settings" />
+            <Divider />
 
-            <div className="flex flex-col gap-5">
-                <PageHeader className="-mb-5">
-                    <PageHeader.Content>
-                        <PageHeader.Icon>
-                            <PlanetIcon className="size-6" />
-                        </PageHeader.Icon>
+            <UpdateWorkspaceNameForm permissions={permissions} workspace={workspace} />
 
-                        <div className="flex flex-1 flex-col gap-1">
-                            <PageHeader.Title>Workspace settings</PageHeader.Title>
-                            <PageHeader.Description>
-                                Customize and edit essential workspace details.
-                            </PageHeader.Description>
-                        </div>
-                    </PageHeader.Content>
-                </PageHeader>
+            <Divider />
 
-                <Divider />
+            <WorkspaceMemberManager availableRoles={availableRoles} permissions={permissions} workspace={workspace} />
 
-                <UpdateWorkspaceNameForm permissions={permissions} workspace={workspace} />
+            <Divider />
 
-                <Divider />
-
-                <WorkspaceMemberManager
-                    availableRoles={availableRoles}
-                    permissions={permissions}
-                    workspace={workspace}
-                />
-
-                <Divider />
-
-                <WorkspaceMemberInvitations permissions={permissions} workspace={workspace} />
-            </div>
+            <WorkspaceMemberInvitations permissions={permissions} workspace={workspace} />
         </>
     );
 }
 
 WorkspacesShow.layout = (page: React.ReactNode & { props: InertiaSharedProps<WorkspacesShowProps> }) => (
-    <AppLayout {...page.props} subSidebar={<SettingsSidebar />}>
+    <SettingsLayout
+        {...page.props}
+        description="Customize and edit essential workspace details."
+        icon={PlanetIcon}
+        title="Workspace settings"
+    >
+        <Head title="Workspace settings" />
+
         {page}
-    </AppLayout>
+    </SettingsLayout>
 );

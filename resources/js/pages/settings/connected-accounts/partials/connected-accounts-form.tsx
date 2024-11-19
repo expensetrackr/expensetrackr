@@ -59,7 +59,7 @@ export default function ConnectedAccountsForm() {
     }
     return (
         <ActionSection>
-            <div className="flex flex-col divide-y divide-[--stroke-soft-200]">
+            <div className="flex flex-col gap-5 divide-y divide-[--stroke-soft-200]">
                 {socialStream.providers?.map((provider) => {
                     const connectedAccount = socialStream.connectedAccounts.find((account) => {
                         return account.provider === provider.id;
