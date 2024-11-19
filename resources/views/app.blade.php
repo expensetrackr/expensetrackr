@@ -62,6 +62,7 @@
         @inertiaHead
         @include('partials.theme')
     </head>
+
     <body class="h-full bg-[var(--bg-white-0)] text-[var(--text-strong-950)]">
         @inertia
     </body>

@@ -1,4 +1,4 @@
-import { Head, router } from "@inertiajs/react";
+import { Head } from "@inertiajs/react";
 import { formatCurrency } from "@sumup/intl";
 import MoneyDollarCircleFillIcon from "virtual:icons/ri/money-dollar-circle-fill";
 
@@ -8,24 +8,26 @@ import { Text } from "#/components/text.tsx";
 import { useAccountForm } from "#/hooks/use-account-form.ts";
 import { CreateLayout } from "#/layouts/create-layout.tsx";
 import { type AccountFormData } from "#/models/account.ts";
+import { type InertiaSharedProps } from "#/types/index.ts";
 
-interface CreateAccountReviewPageProps {
+type CreateAccountReviewPageProps = {
     formData: AccountFormData;
-}
+};
 
-export default function CreateAccountReviewPage({ formData }: CreateAccountReviewPageProps) {
+export default function CreateAccountReviewPage({
+    formData,
+    ...props
+}: InertiaSharedProps<CreateAccountReviewPageProps>) {
     const form = useAccountForm(formData);
 
     function handleSubmit(e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>) {
         e.preventDefault();
 
-        form.post(route("accounts.store", ["review"]), {
-            onSuccess: () => router.visit(route("accounts.create", { step: "review" })),
-        });
+        form.post(route("accounts.store", ["review"]));
     }
 
     return (
-        <CreateLayout>
+        <CreateLayout {...props}>
             <Head title="Review - Create Account" />
 
             <div className="relative py-12">
@@ -49,7 +51,12 @@ export default function CreateAccountReviewPage({ formData }: CreateAccountRevie
                         <div className="flex flex-col gap-1 p-4">
                             <Text className="text-paragraph-xs text-center">Initial balance</Text>
                             <p className="text-h4 font-display text-center">
-                                {formatCurrency(formData.initial_balance, "en", formData.currency_code)}
+                                {formatCurrency(
+                                    // @ts-expect-error - doesn't matter the type because the format will convert it
+                                    formData.initial_balance,
+                                    "en",
+                                    formData.currency_code,
+                                )}
                             </p>
                         </div>
 

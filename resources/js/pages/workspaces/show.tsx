@@ -7,6 +7,7 @@ import { AppLayout } from "#/layouts/app-layout.tsx";
 import { SettingsSidebar } from "#/layouts/partials/settings-sidebar.tsx";
 import { WorkspaceMemberInvitations } from "#/pages/workspaces/partials/workspace-member-invitations.tsx";
 import {
+    type InertiaSharedProps,
     type Role,
     type User,
     type Workspace,
@@ -22,7 +23,7 @@ interface UserMembership extends User {
     };
 }
 
-interface UpdateWorkspaceNameFormProps {
+type WorkspacesShowProps = {
     workspace: Workspace & {
         owner: User;
         workspace_invitations: WorkspaceInvitation[];
@@ -30,11 +31,15 @@ interface UpdateWorkspaceNameFormProps {
     };
     availableRoles: Role[];
     permissions: WorkspacePermissions;
-}
+};
 
-export default function WorkspacesShow({ workspace, availableRoles, permissions }: UpdateWorkspaceNameFormProps) {
+export default function WorkspacesShow({
+    workspace,
+    availableRoles,
+    permissions,
+}: InertiaSharedProps<WorkspacesShowProps>) {
     return (
-        <AppLayout subSidebar={<SettingsSidebar />}>
+        <>
             <Head title="Workspace settings" />
 
             <div className="flex flex-col gap-5">
@@ -69,6 +74,12 @@ export default function WorkspacesShow({ workspace, availableRoles, permissions 
 
                 <WorkspaceMemberInvitations permissions={permissions} workspace={workspace} />
             </div>
-        </AppLayout>
+        </>
     );
 }
+
+WorkspacesShow.layout = (page: React.ReactNode & { props: InertiaSharedProps<WorkspacesShowProps> }) => (
+    <AppLayout {...page.props} subSidebar={<SettingsSidebar />}>
+        {page}
+    </AppLayout>
+);

@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Carbon\CarbonImmutable;
 use Database\Factories\ConnectedAccountFactory;
+use Eloquent;
 use Illuminate\Database\Eloquent\Concerns\HasTimestamps;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use JoelButcher\Socialstream\ConnectedAccount as SocialstreamConnectedAccount;
@@ -25,9 +27,9 @@ use JoelButcher\Socialstream\Events\ConnectedAccountUpdated;
  * @property string $token
  * @property string|null $secret
  * @property string|null $refresh_token
- * @property \Carbon\CarbonImmutable|null $expires_at
- * @property \Carbon\CarbonImmutable|null $created_at
- * @property \Carbon\CarbonImmutable|null $updated_at
+ * @property CarbonImmutable|null $expires_at
+ * @property CarbonImmutable|null $created_at
+ * @property CarbonImmutable|null $updated_at
  * @property-read User|null $user
  *
  * @method static \Database\Factories\ConnectedAccountFactory factory($count = null, $state = [])
@@ -50,7 +52,7 @@ use JoelButcher\Socialstream\Events\ConnectedAccountUpdated;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ConnectedAccount whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ConnectedAccount whereUserId($value)
  *
- * @mixin \Eloquent
+ * @mixin Eloquent
  */
 final class ConnectedAccount extends SocialstreamConnectedAccount
 {

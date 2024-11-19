@@ -1,12 +1,13 @@
 import * as Headless from "@headlessui/react";
-import * as React from "react";
+import { motion } from "framer-motion";
+import { useState } from "react";
 import CloseIcon from "virtual:icons/ri/close-line";
 import MenuIcon from "virtual:icons/ri/menu-line";
 
 import { cx } from "#/utils/cva.ts";
 import { NavbarItem } from "./navbar.tsx";
 
-function MobileSidebar({ open, close, children }: React.PropsWithChildren<{ open: boolean; close: () => void }>) {
+function MobileSidebar({ open, close, children }: { open: boolean; close: () => void; children: React.ReactNode }) {
     return (
         <Headless.Transition show={open}>
             <Headless.Dialog className="lg:hidden" onClose={close}>
@@ -52,29 +53,37 @@ export function SidebarLayout({
     contentClassName,
     contentChildrenClassName,
     children,
-}: React.PropsWithChildren<{
+}: {
+    children: React.ReactNode;
     navbar?: React.ReactNode;
     sidebar?: React.ReactNode;
     subSidebar?: React.ReactNode;
     sidebarClassName?: string;
     contentClassName?: string;
     contentChildrenClassName?: string;
-}>) {
-    const [showSidebar, setShowSidebar] = React.useState(false);
+}) {
+    const [showSidebar, setShowSidebar] = useState(false);
 
     return (
         <div className="relative isolate flex min-h-svh w-full bg-[var(--bg-white-0)] max-lg:flex-col">
             {/* Sidebar on desktop */}
             {sidebar ? (
-                <div
+                <motion.div
+                    animate={{ x: 0, width: "auto" }}
                     className={cx([
                         "fixed inset-y-0 left-0 z-50 w-64 max-lg:hidden",
                         subSidebar && "border-r border-[var(--stroke-soft-200)]",
                         sidebarClassName,
                     ])}
+                    initial={{ x: -100, width: 0 }}
+                    transition={{
+                        type: "spring",
+                        stiffness: 130,
+                        damping: 20,
+                    }}
                 >
                     {sidebar}
-                </div>
+                </motion.div>
             ) : null}
             {subSidebar && <div className="fixed inset-y-0 left-64 w-64 max-lg:hidden">{subSidebar}</div>}
 

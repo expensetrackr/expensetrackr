@@ -1,4 +1,4 @@
-import { router, usePage } from "@inertiajs/react";
+import { router } from "@inertiajs/react";
 import { useEffect } from "react";
 import { toast } from "sonner";
 
@@ -8,18 +8,22 @@ import { type InertiaSharedProps } from "#/types/index.ts";
 import { MainNavbar } from "./partials/main-navbar.tsx";
 import { MainSidebar } from "./partials/main-sidebar.tsx";
 
-export function AppLayout({ children, subSidebar }: { children: React.ReactNode; subSidebar?: React.ReactNode }) {
-    const page = usePage<InertiaSharedProps>();
-    const user = page.props.auth.user;
-    const workspaces = page.props.workspaces;
+export function AppLayout({
+    children,
+    subSidebar,
+    ...props
+}: InertiaSharedProps<{
+    children: React.ReactNode;
+    subSidebar?: React.ReactNode;
+}>) {
+    const user = props.auth.user;
+    const workspaces = props.workspaces;
 
     useEffect(() => {
-        if (page.props.toast) {
-            toast[page.props.toast.type](page.props.toast.message, {
-                duration: 500000,
-            });
+        if (props.toast?.type) {
+            toast[props.toast.type](props.toast.message);
         }
-    }, [page.props.toast]);
+    }, [props.toast]);
 
     function logout(e: React.FormEvent) {
         e.preventDefault();

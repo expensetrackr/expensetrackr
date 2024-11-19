@@ -1,4 +1,4 @@
-import { Head, usePage } from "@inertiajs/react";
+import { Head } from "@inertiajs/react";
 import ShieldUserIcon from "virtual:icons/ri/shield-user-line";
 
 import { Divider } from "#/components/divider.tsx";
@@ -12,21 +12,21 @@ import { LogoutOtherBrowserSessionsForm } from "./partials/logout-other-browser-
 import { TwoFactorAuthenticationForm } from "./partials/two-factor-authentication-form.tsx";
 import { UpdatePasswordForm } from "./partials/update-password-form.tsx";
 
-interface PrivacyAndSecurityShowProps {
+type PrivacyAndSecurityShowProps = {
     sessions: Session[];
     confirmsTwoFactorAuthentication: boolean;
-}
+};
 
 export default function PrivacyAndSecurityShow({
     sessions,
     confirmsTwoFactorAuthentication,
-}: PrivacyAndSecurityShowProps) {
-    const page = usePage<InertiaSharedProps>();
-    const workspaces = page.props.workspaces;
-    const canUpdatePassword = workspaces.canUpdatePassword && page.props.socialstream.hasPassword;
+    ...props
+}: InertiaSharedProps<PrivacyAndSecurityShowProps>) {
+    const workspaces = props.workspaces;
+    const canUpdatePassword = workspaces.canUpdatePassword && props.socialstream.hasPassword;
 
     return (
-        <AppLayout subSidebar={<SettingsSidebar />}>
+        <>
             <Head title="Privacy & Security" />
 
             <div className="flex flex-col gap-5">
@@ -73,6 +73,14 @@ export default function PrivacyAndSecurityShow({
                     </>
                 )}
             </div>
-        </AppLayout>
+        </>
     );
 }
+
+PrivacyAndSecurityShow.layout = (
+    page: React.ReactNode & { props: InertiaSharedProps<PrivacyAndSecurityShowProps> },
+) => (
+    <AppLayout {...page.props} subSidebar={<SettingsSidebar />}>
+        {page}
+    </AppLayout>
+);

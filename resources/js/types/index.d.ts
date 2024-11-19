@@ -48,7 +48,7 @@ export type ConnectedAccountType = {
     created_at: string;
 };
 
-export type InertiaSharedProps<T extends Record<string, unknown> = Record<string, unknown>> = T & {
+export type InertiaSharedProps<T extends Record<string, unknown | string> = Record<string, unknown | string>> = T & {
     workspaces: {
         canCreateWorkspaces: boolean;
         canManageTwoFactorAuthentication: boolean;

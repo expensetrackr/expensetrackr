@@ -14,7 +14,7 @@ import ShieldCheckIcon from "virtual:icons/ri/shield-check-fill";
 import Sparkling2Icon from "virtual:icons/ri/sparkling-2-fill";
 import UserSettingsIcon from "virtual:icons/ri/user-settings-line";
 import WalletIcon from "virtual:icons/ri/wallet-line";
-import { route } from "ziggy-js";
+import { useRoute } from "ziggy-js";
 
 import { Avatar } from "#/components/avatar.tsx";
 import { CompactButton } from "#/components/compact-button.tsx";
@@ -52,6 +52,9 @@ export function MainSidebar({
     workspaces: InertiaSharedProps["workspaces"];
     logout: (e: React.FormEvent) => void;
 }) {
+    const route = useRoute();
+    const currentRoute = route().current();
+
     function switchToWorkspace(workspace: Workspace) {
         router.put(
             route("current-workspace.update"),
@@ -142,11 +145,11 @@ export function MainSidebar({
             <SidebarBody>
                 <SidebarSection>
                     <SidebarHeading className="pb-3">Main</SidebarHeading>
-                    <SidebarItem current={route().current("dashboard")} href={route("dashboard")}>
+                    <SidebarItem current={currentRoute === "dashboard"} href={route("dashboard")}>
                         <LayoutGridIcon />
                         <SidebarLabel>Dashboard</SidebarLabel>
                     </SidebarItem>
-                    <SidebarItem current={route().current("accounts.index")} href={route("accounts.index")}>
+                    <SidebarItem current={currentRoute === "accounts.index"} href={route("accounts.index")}>
                         <WalletIcon />
                         <SidebarLabel>Accounts</SidebarLabel>
                     </SidebarItem>
@@ -159,18 +162,20 @@ export function MainSidebar({
                     <SidebarHeading className="pb-3">Other</SidebarHeading>
                     <SidebarItem
                         className="max-lg:hidden"
-                        current={route().current("settings.*") || route().current("workspaces.show")}
+                        current={currentRoute?.startsWith("settings.") || currentRoute === "workspaces.show"}
                         href={route("settings.show")}
                     >
                         <Settings2Icon />
                         <SidebarLabel>Settings</SidebarLabel>
                     </SidebarItem>
 
-                    <Disclosure defaultOpen={route().current("settings.*") || route().current("workspaces.show")}>
+                    <Disclosure
+                        defaultOpen={currentRoute?.startsWith("settings.") || currentRoute === "workspaces.show"}
+                    >
                         <DisclosureButton
                             as={SidebarItem}
                             className="lg:hidden"
-                            current={route().current("settings.*") || route().current("workspaces.show")}
+                            current={currentRoute?.startsWith("settings.") || currentRoute === "workspaces.show"}
                         >
                             <Settings2Icon />
                             <SidebarLabel>Settings</SidebarLabel>

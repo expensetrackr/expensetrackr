@@ -11,30 +11,19 @@ use InvalidArgumentException;
 
 final class AccountWizardService
 {
-    public const STEP_DETAILS = 'details';
+    public const string STEP_DETAILS = 'details';
 
-    public const STEP_BALANCE_CURRENCY = 'balance-and-currency';
+    public const string STEP_BALANCE_CURRENCY = 'balance-and-currency';
 
-    public const STEP_REVIEW = 'review';
+    public const string STEP_REVIEW = 'review';
 
-    public const STEPS = [
+    public const array STEPS = [
         self::STEP_DETAILS,
         self::STEP_BALANCE_CURRENCY,
         self::STEP_REVIEW,
     ];
 
-    private const EXPIRATION_MINUTES = 30;
-
-    /**
-     * @return array<string, mixed>
-     */
-    public function getStepData(Request $request, string $step): array
-    {
-        /** @var array<string, mixed> */
-        $data = $request->session()->get("account_wizard.{$step}", []);
-
-        return $data;
-    }
+    private const int EXPIRATION_MINUTES = 30;
 
     /**
      * @param  array<string, mixed>  $data
@@ -67,6 +56,15 @@ final class AccountWizardService
         }
 
         return $data;
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function getStepData(Request $request, string $step): array
+    {
+        /** @var array<string, mixed> */
+        return $request->session()->get("account_wizard.{$step}", []);
     }
 
     public function validateStep(string $step): string
@@ -200,11 +198,14 @@ final class AccountWizardService
             throw new InvalidArgumentException('Missing required step data.');
         }
 
-        $account = new Account();
-        $account->fill([...$step1Data, ...$step2Data]);
-        $account->save();
+        $attributes = [
+            ...$step1Data,
+            ...$step2Data,
+        ];
 
-        return $account;
+        unset($attributes['timestamp']);
+
+        return Account::create($attributes);
     }
 
     private function clearExpiredSteps(Request $request): void

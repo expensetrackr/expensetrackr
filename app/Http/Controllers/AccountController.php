@@ -9,6 +9,7 @@ use App\Models\Account;
 use App\Services\AccountWizardService;
 use App\Services\CurrencyService;
 use Exception;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -38,7 +39,7 @@ final class AccountController extends Controller
     /**
      * Create a new account.
      *
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws AuthorizationException
      */
     public function create(Request $request, CurrencyService $currencyService): Response|RedirectResponse
     {
@@ -83,7 +84,7 @@ final class AccountController extends Controller
     /**
      * Handle form submission for each step
      *
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws AuthorizationException
      */
     public function store(StoreAccountStepRequest $request, string $step): RedirectResponse
     {
@@ -104,11 +105,10 @@ final class AccountController extends Controller
                 $account = $this->wizardService->createAccount($request);
                 $this->wizardService->clearWizardData($request);
 
-                return redirect()->route('accounts.show', $account)
-                    ->with('toast', ['type' => 'success', 'message' => 'Account created successfully.']);
-            } catch (Exception) {
-                return redirect()->back()
-                    ->with('toast', ['type' => 'error', 'message' => 'Failed to create account. Please try again.']);
+                return redirect()->route('accounts.index')
+                    ->with('success', 'Account created successfully.');
+            } catch (Exception $e) {
+                return redirect()->back()->with('error', 'Failed to create account. Please try again.');
             }
         }
 

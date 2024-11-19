@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Carbon\CarbonImmutable;
+use Eloquent;
 use Workspaces\WorkspaceInvitation as BaseWorkspaceInvitation;
 
 /**
@@ -11,8 +13,8 @@ use Workspaces\WorkspaceInvitation as BaseWorkspaceInvitation;
  * @property int $workspace_id
  * @property string $email
  * @property string|null $role
- * @property \Carbon\CarbonImmutable|null $created_at
- * @property \Carbon\CarbonImmutable|null $updated_at
+ * @property CarbonImmutable|null $created_at
+ * @property CarbonImmutable|null $updated_at
  * @property-read Workspace $workspace
  *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkspaceInvitation newModelQuery()
@@ -25,7 +27,7 @@ use Workspaces\WorkspaceInvitation as BaseWorkspaceInvitation;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkspaceInvitation whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkspaceInvitation whereWorkspaceId($value)
  *
- * @mixin \Eloquent
+ * @mixin Eloquent
  */
 final class WorkspaceInvitation extends BaseWorkspaceInvitation
 {

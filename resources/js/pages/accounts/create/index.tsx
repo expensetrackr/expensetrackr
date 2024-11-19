@@ -10,6 +10,7 @@ import { Text } from "#/components/text.tsx";
 import { useAccountForm } from "#/hooks/use-account-form.ts";
 import { CreateLayout } from "#/layouts/create-layout.tsx";
 import { type AccountTypes } from "#/models/account.ts";
+import { type InertiaSharedProps } from "#/types/index.ts";
 
 type CreateAccountPageProps = {
     accountTypes: Record<string, string>;
@@ -21,7 +22,11 @@ type CreateAccountPageProps = {
     };
 };
 
-export default function CreateAccountPage({ accountTypes, wizard }: CreateAccountPageProps) {
+export default function CreateAccountPage({
+    accountTypes,
+    wizard,
+    ...props
+}: InertiaSharedProps<CreateAccountPageProps>) {
     const form = useAccountForm(wizard.data);
 
     function onSubmit(e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>) {
@@ -33,7 +38,7 @@ export default function CreateAccountPage({ accountTypes, wizard }: CreateAccoun
     }
 
     return (
-        <CreateLayout>
+        <CreateLayout {...props}>
             <Head title="Create account" />
 
             <div className="relative py-12">

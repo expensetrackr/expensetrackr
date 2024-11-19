@@ -1,10 +1,21 @@
-import { SidebarLayout } from "#/components/sidebar-layout.tsx";
-import { CreateAccountSidebar } from "#/layouts/partials/create-account-sidebar.tsx";
+import { useEffect } from "react";
+import { toast } from "sonner";
 
-export function CreateLayout({ children }: { children: React.ReactNode }) {
+import { SidebarLayout } from "#/components/sidebar-layout.tsx";
+import { Toaster } from "#/components/toaster.tsx";
+import { CreateAccountSidebar } from "#/layouts/partials/create-account-sidebar.tsx";
+import { type InertiaSharedProps } from "#/types/index.ts";
+
+export function CreateLayout({ children, ...props }: Partial<InertiaSharedProps<{ children: React.ReactNode }>>) {
+    useEffect(() => {
+        if (props.toast?.type) {
+            toast[props.toast.type](props.toast.message);
+        }
+    }, [props.toast]);
+
     return (
         <SidebarLayout
-            contentChildrenClassName="relative lg:ring-0"
+            contentChildrenClassName="relative lg:shadow-none lg:ring-0"
             contentClassName="lg:pt-0 lg:pr-0"
             sidebar={<CreateAccountSidebar />}
             sidebarClassName="lg:pl-2 lg:py-2"
@@ -38,6 +49,8 @@ export function CreateLayout({ children }: { children: React.ReactNode }) {
             </svg>
 
             {children}
+
+            <Toaster position="top-center" />
         </SidebarLayout>
     );
 }

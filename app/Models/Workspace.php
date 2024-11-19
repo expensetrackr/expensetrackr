@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Carbon\CarbonImmutable;
 use Database\Factories\WorkspaceFactory;
+use Eloquent;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Workspaces\Events\WorkspaceCreated;
 use Workspaces\Events\WorkspaceDeleted;
@@ -16,13 +19,13 @@ use Workspaces\Workspace as BaseWorkspace;
  * @property int $user_id
  * @property string $name
  * @property bool $personal_workspace
- * @property \Carbon\CarbonImmutable|null $created_at
- * @property \Carbon\CarbonImmutable|null $updated_at
+ * @property CarbonImmutable|null $created_at
+ * @property CarbonImmutable|null $updated_at
  * @property-read User|null $owner
  * @property-read \Workspaces\Membership|null $membership
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $users
+ * @property-read Collection<int, User> $users
  * @property-read int|null $users_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \Workspaces\WorkspaceInvitation> $workspaceInvitations
+ * @property-read Collection<int, \Workspaces\WorkspaceInvitation> $workspaceInvitations
  * @property-read int|null $workspace_invitations_count
  *
  * @method static \Database\Factories\WorkspaceFactory factory($count = null, $state = [])
@@ -36,7 +39,7 @@ use Workspaces\Workspace as BaseWorkspace;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Workspace whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Workspace whereUserId($value)
  *
- * @mixin \Eloquent
+ * @mixin Eloquent
  */
 final class Workspace extends BaseWorkspace
 {

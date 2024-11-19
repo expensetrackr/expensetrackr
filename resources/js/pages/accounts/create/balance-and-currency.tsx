@@ -15,13 +15,18 @@ import { Text } from "#/components/text.tsx";
 import { useAccountForm } from "#/hooks/use-account-form.ts";
 import { CreateLayout } from "#/layouts/create-layout.tsx";
 import { type AccountFormData } from "#/models/account.ts";
+import { type InertiaSharedProps } from "#/types/index.ts";
 
-interface CreateAccountStep2PageProps {
+type CreateAccountStep2PageProps = {
     currencies: string[];
     formData?: Partial<AccountFormData>;
-}
+};
 
-export default function CreateAccountStep2Page({ currencies, formData }: CreateAccountStep2PageProps) {
+export default function CreateAccountStep2Page({
+    currencies,
+    formData,
+    ...props
+}: InertiaSharedProps<CreateAccountStep2PageProps>) {
     const form = useAccountForm({
         ...formData,
         initial_balance: formData?.initial_balance ?? "0.00",
@@ -47,7 +52,7 @@ export default function CreateAccountStep2Page({ currencies, formData }: CreateA
     }
 
     return (
-        <CreateLayout>
+        <CreateLayout {...props}>
             <Head title="Balance and Currency - Create Account" />
 
             <div className="relative py-12">

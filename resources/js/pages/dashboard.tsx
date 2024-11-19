@@ -1,10 +1,11 @@
 import { Head } from "@inertiajs/react";
 
 import { AppLayout } from "#/layouts/app-layout.tsx";
+import { type InertiaSharedProps } from "#/types/index.ts";
 
 export default function Dashboard() {
     return (
-        <AppLayout>
+        <>
             <Head title="Dashboard" />
 
             <div className="py-12">
@@ -14,6 +15,10 @@ export default function Dashboard() {
                     </div>
                 </div>
             </div>
-        </AppLayout>
+        </>
     );
 }
+
+Dashboard.layout = (page: React.ReactNode & { props: InertiaSharedProps }) => (
+    <AppLayout {...page.props}>{page}</AppLayout>
+);

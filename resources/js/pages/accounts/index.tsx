@@ -7,10 +7,11 @@ import { Button } from "#/components/button.tsx";
 import { Divider } from "#/components/divider.tsx";
 import { PageHeader } from "#/components/page-header.tsx";
 import { AppLayout } from "#/layouts/app-layout.tsx";
+import { type InertiaSharedProps } from "#/types/index.ts";
 
 export default function AccountsPage() {
     return (
-        <AppLayout>
+        <>
             <Head title="Accounts" />
 
             <div className="flex flex-col gap-5">
@@ -36,6 +37,10 @@ export default function AccountsPage() {
 
                 <Divider />
             </div>
-        </AppLayout>
+        </>
     );
 }
+
+AccountsPage.layout = (page: React.ReactNode & { props: InertiaSharedProps }) => (
+    <AppLayout {...page.props}>{page}</AppLayout>
+);

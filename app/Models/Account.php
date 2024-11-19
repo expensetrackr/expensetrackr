@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use Akaunting\Money\Casts\CurrencyCast;
-use Akaunting\Money\Casts\MoneyCast;
+use Akaunting\Money\Money;
+use App\Casts\MoneyCast;
 use App\Concerns\Blamable;
 use App\Concerns\WorkspaceOwned;
+use Carbon\CarbonImmutable;
 use Database\Factories\AccountFactory;
+use Eloquent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
@@ -18,16 +20,16 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @property string $name
  * @property string|null $description
  * @property \Akaunting\Money\Currency $currency_code
- * @property \Akaunting\Money\Money $initial_balance
- * @property \Akaunting\Money\Money $current_balance
+ * @property Money $initial_balance
+ * @property Money $current_balance
  * @property string $type
  * @property bool $is_default
  * @property string $public_id
  * @property int $workspace_id
  * @property int|null $created_by
  * @property int|null $updated_by
- * @property \Carbon\CarbonImmutable|null $created_at
- * @property \Carbon\CarbonImmutable|null $updated_at
+ * @property CarbonImmutable|null $created_at
+ * @property CarbonImmutable|null $updated_at
  * @property-read User|null $createdBy
  * @property-read string|null $prefixed_id
  * @property-read User|null $updatedBy
@@ -52,7 +54,7 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereUpdatedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereWorkspaceId($value)
  *
- * @mixin \Eloquent
+ * @mixin Eloquent
  */
 final class Account extends Model
 {
@@ -67,7 +69,6 @@ final class Account extends Model
     protected function casts(): array
     {
         return [
-            'currency_code' => CurrencyCast::class,
             'initial_balance' => MoneyCast::class,
             'current_balance' => MoneyCast::class,
         ];

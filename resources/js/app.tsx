@@ -1,5 +1,4 @@
 import "./bootstrap.ts";
-import "./theme.ts";
 import "../css/tailwind.css";
 import "../css/app.css";
 

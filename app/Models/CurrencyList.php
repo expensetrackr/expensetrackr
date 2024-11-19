@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Carbon\CarbonImmutable;
+use Eloquent;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -11,8 +13,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $code
  * @property string $name
  * @property bool $available
- * @property \Carbon\CarbonImmutable|null $created_at
- * @property \Carbon\CarbonImmutable|null $updated_at
+ * @property CarbonImmutable|null $created_at
+ * @property CarbonImmutable|null $updated_at
  *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CurrencyList newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CurrencyList newQuery()
@@ -24,7 +26,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CurrencyList whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CurrencyList whereUpdatedAt($value)
  *
- * @mixin \Eloquent
+ * @mixin Eloquent
  */
 final class CurrencyList extends Model
 {
