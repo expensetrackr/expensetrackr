@@ -30,7 +30,7 @@ function MobileSidebar({ open, close, children }: { open: boolean; close: () => 
                     leaveTo="-translate-x-full"
                 >
                     <Headless.DialogPanel className="fixed inset-y-0 w-full max-w-80 p-2 transition">
-                        <div className="rounded-8 flex h-full flex-col bg-[var(--bg-white-0)] ring-1 shadow-sm ring-[var(--stroke-soft-200)]">
+                        <div className="flex h-full flex-col rounded-8 bg-[var(--bg-white-0)] ring-1 shadow-sm ring-[var(--stroke-soft-200)]">
                             <div className="-mb-3 px-4 pt-3">
                                 <Headless.CloseButton aria-label="Close navigation" as={NavbarItem}>
                                     <CloseIcon />
@@ -133,10 +133,9 @@ export function SidebarLayout({
                     <motion.div
                         animate={{ opacity: 1 }}
                         className={cx([
-                            "lg:rounded-8 grow px-4 pb-5 lg:bg-[var(--bg-white-0)] lg:px-8 lg:ring-1 lg:shadow-sm lg:ring-[var(--stroke-soft-200)]",
+                            "grow px-4 pb-5 lg:rounded-8 lg:bg-[var(--bg-white-0)] lg:px-8 lg:ring-1 lg:shadow-sm lg:ring-[var(--stroke-soft-200)]",
                             contentChildrenClassName,
                         ])}
-                        exit={{ opacity: 0 }}
                         initial={{ opacity: 0 }}
                         key={window.location.pathname}
                         transition={{ duration: 0.2 }}
