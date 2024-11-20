@@ -10,15 +10,26 @@
     "editor.formatOnSave": true,
     "eslint.enable": true,
     "eslint.useFlatConfig": true,
-    "tailwindCSS.classAttributes": ["class", "className", "buttonClassName"],
+    "tailwindCSS.classAttributes": [
+        "class",
+        "className",
+        "buttonClassName"
+    ],
     "tailwindCSS.experimental.classRegex": [
         // HeadlessUI Transition (React)
         "(?:enter|leave)(?:From|To)?=\\s*(?:\"|'|{`)([^(?:\"|'|`})]*)",
         // CVA
-        ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
-        ["cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"],
+        [
+            "cva\\(([^)]*)\\)",
+            "[\"'`]([^\"'`]*).*?[\"'`]"
+        ],
+        [
+            "cx\\(([^)]*)\\)",
+            "(?:'|\"|`)([^']*)(?:'|\"|`)"
+        ],
         // Plain Javascript Object
         ":\\s*?[\"'`]([^\"'`]*).*?,"
     ],
-    "tailwindCSS.experimental.configFile": "./resources/css/tailwind.css"
+    "tailwindCSS.experimental.configFile": "./resources/css/tailwind.css",
+    "phpstan.configFile": "phpstan.neon"
 }
