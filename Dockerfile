@@ -9,7 +9,7 @@ RUN apt-get install -y nodejs
 
 RUN npm install -g bun
 
-RUN install-php-extensions bcmath
+RUN install-php-extensions bcmath intl
 
 COPY --chown=www-data:www-data . /var/www/html
 
