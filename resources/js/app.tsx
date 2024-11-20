@@ -5,10 +5,16 @@ import "../css/app.css";
 import { createInertiaApp } from "@inertiajs/react";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { createRoot, hydrateRoot } from "react-dom/client";
+import { scan } from "react-scan";
 
 import { NuqsAdapter } from "#/utils/nuqs-adapter.ts";
 
 const appName = import.meta.env.VITE_APP_NAME || "ExpenseTrackr";
+
+scan({
+    enabled: import.meta.env.DEV,
+    log: import.meta.env.DEV,
+});
 
 void createInertiaApp({
     title: (title) => `${title} - ${appName}`,

@@ -31,6 +31,7 @@
         "nuqs": "2.2.1",
         "react": "19.0.0-rc-4beb1fd8-20241118",
         "react-dom": "19.0.0-rc-4beb1fd8-20241118",
+        "react-scan": "0.0.12",
         "react-twc": "1.4.2",
         "sonner": "1.7.0",
         "tailwind-merge": "2.5.4"
