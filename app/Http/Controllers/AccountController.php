@@ -33,7 +33,9 @@ final class AccountController extends Controller
     {
         Gate::authorize('viewAny', Account::class);
 
-        return Workspaces::inertia()->render($request, 'accounts/index');
+        return Workspaces::inertia()->render($request, 'accounts/index', [
+            'accounts' => Account::all()->sortBy('name'),
+        ]);
     }
 
     /**
@@ -102,7 +104,7 @@ final class AccountController extends Controller
 
         if ($step === AccountWizardService::STEP_REVIEW) {
             try {
-                $account = $this->wizardService->createAccount($request);
+                $this->wizardService->createAccount($request);
                 $this->wizardService->clearWizardData($request);
 
                 return redirect()->route('accounts.index')

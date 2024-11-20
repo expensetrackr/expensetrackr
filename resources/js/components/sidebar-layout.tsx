@@ -1,5 +1,5 @@
 import * as Headless from "@headlessui/react";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import CloseIcon from "virtual:icons/ri/close-line";
 import MenuIcon from "virtual:icons/ri/menu-line";
@@ -68,36 +68,20 @@ export function SidebarLayout({
         <div className="relative isolate flex min-h-svh w-full bg-[var(--bg-white-0)] max-lg:flex-col">
             {/* Sidebar on desktop */}
             {sidebar ? (
-                <motion.div
-                    animate={{ x: 0, width: "calc(var(--spacing) * 64)" }}
+                <div
                     className={cx([
-                        "fixed inset-y-0 left-0 z-50 w-64 max-lg:hidden",
+                        "fixed inset-y-0 left-0 z-50 w-64 motion-safe:animate-in motion-safe:fade-in max-lg:hidden",
                         subSidebar && "border-r border-[var(--stroke-soft-200)]",
                         sidebarClassName,
                     ])}
-                    initial={{ x: -100, width: 0 }}
-                    transition={{
-                        type: "spring",
-                        stiffness: 130,
-                        damping: 20,
-                    }}
                 >
                     {sidebar}
-                </motion.div>
+                </div>
             ) : null}
             {subSidebar && (
-                <motion.div
-                    animate={{ x: 0, width: "calc(var(--spacing) * 64)" }}
-                    className="fixed inset-y-0 left-64 w-64 max-lg:hidden"
-                    initial={{ x: -100, width: 0 }}
-                    transition={{
-                        type: "spring",
-                        stiffness: 130,
-                        damping: 20,
-                    }}
-                >
+                <div className="fixed inset-y-0 left-64 w-64 motion-safe:animate-in motion-safe:fade-in max-lg:hidden">
                     {subSidebar}
-                </motion.div>
+                </div>
             )}
 
             {/* Sidebar on mobile */}

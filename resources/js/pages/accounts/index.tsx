@@ -9,11 +9,10 @@ import { PageHeader } from "#/components/page-header.tsx";
 import { AppLayout } from "#/layouts/app-layout.tsx";
 import { type InertiaSharedProps } from "#/types/index.ts";
 
-export default function AccountsPage() {
+export default function AccountsPage(props) {
+    console.info(props);
     return (
         <>
-            <Head title="Accounts" />
-
             <div className="flex flex-col gap-5">
                 <PageHeader className="-mb-5">
                     <PageHeader.Content>
@@ -42,5 +41,9 @@ export default function AccountsPage() {
 }
 
 AccountsPage.layout = (page: React.ReactNode & { props: InertiaSharedProps }) => (
-    <AppLayout {...page.props}>{page}</AppLayout>
+    <AppLayout {...page.props}>
+        <Head title="Accounts" />
+
+        {page}
+    </AppLayout>
 );

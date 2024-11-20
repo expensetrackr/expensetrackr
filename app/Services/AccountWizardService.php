@@ -201,6 +201,7 @@ final class AccountWizardService
         $attributes = [
             ...$step1Data,
             ...$step2Data,
+            'current_balance' => $step2Data['initial_balance'],
         ];
 
         unset($attributes['timestamp']);
