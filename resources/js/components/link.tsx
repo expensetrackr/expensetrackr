@@ -1,7 +1,6 @@
 import * as Headless from "@headlessui/react";
 import { Link as InertiaLink, type InertiaLinkProps } from "@inertiajs/react";
 import { type VariantProps } from "cva";
-import * as React from "react";
 
 import { cva } from "#/utils/cva.ts";
 
@@ -35,24 +34,23 @@ const linkVariants = cva({
     },
 });
 
-export const StyledLink = React.forwardRef(function Link(
-    { className, $color = "gray", $size = "md", ...props }: InertiaLinkProps & VariantProps<typeof linkVariants>,
-    ref: React.ForwardedRef<HTMLAnchorElement>,
-) {
+type StyledLinkProps = InertiaLinkProps &
+    VariantProps<typeof linkVariants> & {
+        ref?: React.ForwardedRef<HTMLAnchorElement>;
+    };
+
+export function StyledLink({ ref, className, $color = "gray", $size = "md", ...props }: StyledLinkProps) {
     return (
         <Headless.DataInteractive>
             <InertiaLink {...props} className={linkVariants({ $color, $size, className })} ref={ref} />
         </Headless.DataInteractive>
     );
-});
+}
 
-export const Link = React.forwardRef(function Link(
-    props: InertiaLinkProps,
-    ref: React.ForwardedRef<HTMLAnchorElement>,
-) {
+export function Link({ ref, ...props }: InertiaLinkProps & { ref?: React.ForwardedRef<HTMLAnchorElement> }) {
     return (
         <Headless.DataInteractive>
             <InertiaLink {...props} ref={ref} />
         </Headless.DataInteractive>
     );
-});
+}

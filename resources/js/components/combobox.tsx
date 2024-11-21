@@ -1,6 +1,5 @@
 import * as Headless from "@headlessui/react";
 import { type VariantProps } from "cva";
-import { forwardRef } from "react";
 
 import { cva, cx } from "#/utils/cva.ts";
 
@@ -33,16 +32,13 @@ const comboboxVariants = cva({
     },
 });
 
-export const ComboboxInput = forwardRef(function Combobox(
-    {
-        className,
-        multiple,
-        $size = "md",
-        ...props
-    }: { className?: string } & Omit<Headless.ComboboxInputProps, "as" | "className"> &
-        VariantProps<typeof comboboxVariants>,
-    ref: React.ForwardedRef<HTMLInputElement>,
-) {
+type ComboboxInputProps = Omit<Headless.ComboboxInputProps, "as" | "className"> &
+    VariantProps<typeof comboboxVariants> & {
+        className?: string;
+        ref?: React.ForwardedRef<HTMLInputElement>;
+    };
+
+export function ComboboxInput({ ref, className, multiple, $size = "md", ...props }: ComboboxInputProps) {
     return (
         <span
             className={cx([
@@ -74,7 +70,7 @@ export const ComboboxInput = forwardRef(function Combobox(
             />
         </span>
     );
-});
+}
 
 export function ComboboxOptions({
     anchor = "bottom",

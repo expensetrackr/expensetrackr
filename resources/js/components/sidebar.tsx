@@ -34,26 +34,24 @@ export const SidebarSpacer = twc.div.attrs({
 
 export const SidebarHeading = twc.h3`p-1 text-subheading-xs uppercase text-(--text-soft-400)`;
 
-export const SidebarItem = React.forwardRef(function SidebarItem(
-    {
-        current,
-        currentIndicator = true,
-        className,
-        buttonClassName,
-        children,
-        ...props
-    }: {
-        current?: boolean;
-        currentIndicator?: boolean;
-        className?: string;
-        buttonClassName?: string;
-        children: React.ReactNode;
-    } & (
-        | Omit<Headless.ButtonProps, "className">
-        | Omit<React.ComponentPropsWithoutRef<typeof Link>, "type" | "className">
-    ),
-    ref: React.ForwardedRef<HTMLButtonElement>,
-) {
+type SidebarItemProps = {
+    current?: boolean;
+    currentIndicator?: boolean;
+    className?: string;
+    buttonClassName?: string;
+    children: React.ReactNode;
+    ref?: React.ForwardedRef<HTMLButtonElement>;
+} & (Omit<Headless.ButtonProps, "className"> | Omit<React.ComponentPropsWithoutRef<typeof Link>, "className">);
+
+export function SidebarItem({
+    ref,
+    current,
+    currentIndicator = true,
+    className,
+    buttonClassName,
+    children,
+    ...props
+}: SidebarItemProps) {
     const classes = cx(
         // Base
         "flex w-full items-center gap-2 rounded-8 px-3 py-2 text-left text-label-sm text-(--text-sub-600) transition",
@@ -104,7 +102,7 @@ export const SidebarItem = React.forwardRef(function SidebarItem(
             )}
         </span>
     );
-});
+}
 
 export function SidebarLabel({ className, ...props }: React.ComponentPropsWithoutRef<"span">) {
     return <span {...props} className={clsx(className, "truncate")} />;

@@ -1,20 +1,17 @@
 import * as Headless from "@headlessui/react";
 import { type VariantProps } from "cva";
-import * as React from "react";
 
 import { cx } from "#/utils/cva.ts";
 import { inputVariants } from "./input.tsx";
 
-export const Textarea = React.forwardRef(function Textarea(
-    {
-        className,
-        resizable = true,
-        $size = "md",
-        ...props
-    }: { className?: string; resizable?: boolean } & Omit<Headless.TextareaProps, "as" | "className"> &
-        VariantProps<typeof inputVariants>,
-    ref: React.ForwardedRef<HTMLTextAreaElement>,
-) {
+type TextareaProps = {
+    ref?: React.ForwardedRef<HTMLElement>;
+    className?: string;
+    resizable?: boolean;
+} & Omit<Headless.TextareaProps, "as" | "className"> &
+    VariantProps<typeof inputVariants>;
+
+export function Textarea({ ref, className, resizable = true, $size = "md", ...props }: TextareaProps) {
     return (
         <span
             className={cx([
@@ -53,4 +50,4 @@ export const Textarea = React.forwardRef(function Textarea(
             />
         </span>
     );
-});
+}

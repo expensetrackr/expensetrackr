@@ -1,6 +1,5 @@
 import * as Headless from "@headlessui/react";
 import { type VariantProps } from "cva";
-import * as React from "react";
 
 import { cva, cx } from "#/utils/cva.ts";
 import { Link } from "./link.tsx";
@@ -109,14 +108,21 @@ const buttonVariants = cva({
 
 type ButtonProps = { className?: string; children: React.ReactNode } & (
     | Omit<Headless.ButtonProps, "className">
-    | Omit<React.ComponentPropsWithoutRef<typeof Link>, "className">
+    | Omit<React.ComponentPropsWithRef<typeof Link>, "className">
 ) &
-    VariantProps<typeof buttonVariants>;
+    VariantProps<typeof buttonVariants> & {
+        ref?: React.ForwardedRef<HTMLButtonElement>;
+    };
 
-export const Button = React.forwardRef(function Button(
-    { className, children, $variant = "filled", $size = "md", $color = "primary", ...props }: ButtonProps,
-    ref: React.ForwardedRef<HTMLElement>,
-) {
+export function Button({
+    ref,
+    className,
+    children,
+    $variant = "filled",
+    $size = "md",
+    $color = "primary",
+    ...props
+}: ButtonProps) {
     if ("href" in props) {
         return (
             <Link
@@ -151,7 +157,7 @@ export const Button = React.forwardRef(function Button(
             <TouchTarget>{children}</TouchTarget>
         </Headless.Button>
     );
-});
+}
 
 /* Expand the hit area to at least 44×44px on touch devices */
 export function TouchTarget({ children }: { children: React.ReactNode }) {

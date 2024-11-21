@@ -1,6 +1,5 @@
 import * as Headless from "@headlessui/react";
 import { type VariantProps } from "cva";
-import { forwardRef } from "react";
 
 import { cva, cx } from "#/utils/cva.ts";
 import { twc } from "#/utils/twc.ts";
@@ -49,18 +48,14 @@ export const inputVariants = cva({
     },
 });
 
-export const Input = forwardRef(function Input(
-    {
-        className,
-        $size = "md",
-        ...props
-    }: {
-        className?: string;
-        type?: "email" | "number" | "password" | "search" | "tel" | "text" | "url" | DateType;
-    } & Omit<Headless.InputProps, "className"> &
-        VariantProps<typeof inputVariants>,
-    ref: React.ForwardedRef<HTMLInputElement>,
-) {
+type InputProps = {
+    ref?: React.ForwardedRef<HTMLInputElement>;
+    className?: string;
+    type?: "email" | "number" | "password" | "search" | "tel" | "text" | "url" | DateType;
+} & Omit<Headless.InputProps, "className"> &
+    VariantProps<typeof inputVariants>;
+
+export function Input({ ref, className, $size = "md", ...props }: InputProps) {
     return (
         <span
             className={cx([
@@ -110,4 +105,4 @@ export const Input = forwardRef(function Input(
             />
         </span>
     );
-});
+}

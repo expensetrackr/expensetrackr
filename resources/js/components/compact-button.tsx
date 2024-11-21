@@ -1,6 +1,5 @@
 import * as Headless from "@headlessui/react";
 import { type VariantProps } from "cva";
-import * as React from "react";
 
 import { TouchTarget } from "#/components/button.tsx";
 import { Link } from "#/components/link.tsx";
@@ -58,16 +57,22 @@ const compactButtonVariants = cva({
     },
 });
 
-type CompactButtonProps = { className?: string; children: React.ReactNode } & (
-    | Omit<Headless.ButtonProps, "className">
-    | Omit<React.ComponentPropsWithoutRef<typeof Link>, "className">
-) &
+type CompactButtonProps = {
+    ref?: React.ForwardedRef<HTMLElement>;
+    className?: string;
+    children: React.ReactNode;
+} & (Omit<Headless.ButtonProps, "className"> | Omit<React.ComponentPropsWithRef<typeof Link>, "className">) &
     VariantProps<typeof compactButtonVariants>;
 
-export const CompactButton = React.forwardRef(function Button(
-    { className, children, $variant = "stroke", $size = "lg", $fullRadius = false, ...props }: CompactButtonProps,
-    ref: React.ForwardedRef<HTMLElement>,
-) {
+export function CompactButton({
+    ref,
+    className,
+    children,
+    $variant = "stroke",
+    $size = "lg",
+    $fullRadius = false,
+    ...props
+}: CompactButtonProps) {
     if ("href" in props) {
         return (
             <Link
@@ -102,4 +107,4 @@ export const CompactButton = React.forwardRef(function Button(
             <TouchTarget>{children}</TouchTarget>
         </Headless.Button>
     );
-});
+}

@@ -46,18 +46,14 @@ export const navbarItemClasses = cx(
     "dark:data-active:bg-white/5 dark:data-[slot=icon]:*:data-active:fill-white",
 );
 
-export const NavbarItem = React.forwardRef(function NavbarItem(
-    {
-        current,
-        className,
-        children,
-        ...props
-    }: { current?: boolean; className?: string; children: React.ReactNode } & (
-        | Omit<Headless.ButtonProps, "className">
-        | Omit<React.ComponentPropsWithoutRef<typeof Link>, "className">
-    ),
-    ref: React.ForwardedRef<HTMLButtonElement>,
-) {
+type NavbarItemProps = {
+    ref?: React.ForwardedRef<HTMLButtonElement>;
+    current?: boolean;
+    className?: string;
+    children: React.ReactNode;
+} & (Omit<Headless.ButtonProps, "className"> | Omit<React.ComponentPropsWithoutRef<typeof Link>, "className">);
+
+export function NavbarItem({ ref, current, className, children, ...props }: NavbarItemProps) {
     return (
         <span className={cx(className, "relative")}>
             {current && (
@@ -91,6 +87,6 @@ export const NavbarItem = React.forwardRef(function NavbarItem(
             )}
         </span>
     );
-});
+}
 
 export const NavbarLabel = twc.span`truncate`;

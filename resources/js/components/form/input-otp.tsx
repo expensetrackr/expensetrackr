@@ -1,33 +1,34 @@
-import { OTPInput, OTPInputContext } from "input-otp";
+import { OTPInput, OTPInputContext, type OTPInputProps } from "input-otp";
 import * as React from "react";
 import DotIcon from "virtual:icons/lucide/dot";
 
 import { cx } from "#/utils/cva.ts";
 import { twc } from "#/utils/twc.ts";
 
-export const InputOTP = React.forwardRef<
-    React.ElementRef<typeof OTPInput>,
-    React.ComponentPropsWithoutRef<typeof OTPInput>
->(({ className, containerClassName, ...props }, ref) => (
-    <OTPInput
-        className={cx("disabled:cursor-not-allowed", className)}
-        containerClassName={cx("flex items-center has-[:disabled]:opacity-50", containerClassName)}
-        ref={ref}
-        {...props}
-    />
-));
-InputOTP.displayName = "InputOTP";
+export function InputOTP({
+    ref,
+    className,
+    containerClassName,
+    ...props
+}: OTPInputProps & { ref?: React.ForwardedRef<HTMLInputElement> }) {
+    return (
+        <OTPInput
+            className={cx("disabled:cursor-not-allowed", className)}
+            containerClassName={cx("flex items-center has-[:disabled]:opacity-50", containerClassName)}
+            ref={ref}
+            {...props}
+        />
+    );
+}
 
 export const InputOTPGroup = twc.div`flex items-center`;
-InputOTPGroup.displayName = "InputOTPGroup";
 
-export const InputOTPSlot = React.forwardRef<
-    React.ElementRef<"div">,
-    React.ComponentPropsWithoutRef<"div"> & {
-        index: number;
-        invalid?: boolean;
-    }
->(({ index, invalid, className, ...props }, ref) => {
+type InputOTPSlotProps = React.ComponentProps<"div"> & {
+    index: number;
+    invalid?: boolean;
+};
+
+export function InputOTPSlot({ ref, index, invalid, className, ...props }: InputOTPSlotProps) {
     const inputOTPContext = React.useContext(OTPInputContext);
     const slot = inputOTPContext.slots[index];
 
@@ -51,15 +52,12 @@ export const InputOTPSlot = React.forwardRef<
             )}
         </div>
     );
-});
-InputOTPSlot.displayName = "InputOTPSlot";
+}
 
-export const InputOTPSeparator = React.forwardRef<React.ElementRef<"div">, React.ComponentPropsWithoutRef<"div">>(
-    ({ ...props }, ref) => (
-        // biome-ignore lint/a11y/useSemanticElements: we need to use a div because of the caret animation
+export function InputOTPSeparator({ ref, ...props }: React.ComponentProps<"div">) {
+    return (
         <div ref={ref} role="separator" tabIndex={0} {...props}>
             <DotIcon />
         </div>
-    ),
-);
-InputOTPSeparator.displayName = "InputOTPSeparator";
+    );
+}

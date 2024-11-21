@@ -1,6 +1,5 @@
 import * as Headless from "@headlessui/react";
 import { type VariantProps } from "cva";
-import * as React from "react";
 
 import { type Nullable, type User } from "#/types/index.ts";
 import { cva, cx } from "#/utils/cva.ts";
@@ -97,13 +96,12 @@ const avatarButtonVariants = cva({
 });
 
 type AvatarButtonProps = BaseAvatarProps &
-    (Omit<Headless.ButtonProps, "className"> | Omit<React.ComponentPropsWithoutRef<typeof Link>, "className">) &
-    VariantProps<typeof avatarButtonVariants>;
+    (Omit<Headless.ButtonProps, "className"> | Omit<React.ComponentPropsWithRef<typeof Link>, "className">) &
+    VariantProps<typeof avatarButtonVariants> & {
+        ref?: React.ForwardedRef<HTMLButtonElement>;
+    };
 
-export const AvatarButton = React.forwardRef(function AvatarButton(
-    { $square = false, src, initials, alt, className, ...props }: AvatarButtonProps,
-    ref: React.ForwardedRef<HTMLElement>,
-) {
+export function AvatarButton({ ref, $square = false, src, initials, alt, className, ...props }: AvatarButtonProps) {
     return "href" in props ? (
         <Link
             {...props}
@@ -131,4 +129,4 @@ export const AvatarButton = React.forwardRef(function AvatarButton(
             </TouchTarget>
         </Headless.Button>
     );
-});
+}

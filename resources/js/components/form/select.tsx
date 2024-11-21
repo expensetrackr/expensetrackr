@@ -1,6 +1,5 @@
 import * as Headless from "@headlessui/react";
 import { type VariantProps } from "cva";
-import { forwardRef } from "react";
 
 import { cva, cx } from "#/utils/cva.ts";
 
@@ -33,15 +32,14 @@ const selectVariants = cva({
     },
 });
 
-export const Select = forwardRef(function Select(
-    {
-        className,
-        multiple,
-        $size = "md",
-        ...props
-    }: { className?: string } & Omit<Headless.SelectProps, "as" | "className"> & VariantProps<typeof selectVariants>,
-    ref: React.ForwardedRef<HTMLSelectElement>,
-) {
+type SelectProps = {
+    ref?: React.ForwardedRef<HTMLElement>;
+    className?: string;
+    multiple?: boolean;
+} & VariantProps<typeof selectVariants> &
+    Omit<Headless.SelectProps, "as" | "className">;
+
+export function Select({ ref, className, multiple, $size = "md", ...props }: SelectProps) {
     return (
         <span
             className={cx(
@@ -96,4 +94,4 @@ export const Select = forwardRef(function Select(
             )}
         </span>
     );
-});
+}
