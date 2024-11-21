@@ -12,7 +12,7 @@ const linkVariants = cva({
         // Focus
         "focus:outline-none data-focus:outline-2 data-focus:outline-offset-2 data-focus:outline-primary",
         // Icon
-        "forced-colors:[--link-icon:ButtonText] forced-colors:data-[hover]:[--link-icon:ButtonText] [&>[data-slot=icon]]:-mx-0.5 [&>[data-slot=icon]]:my-0.5 [&>[data-slot=icon]]:size-5 [&>[data-slot=icon]]:shrink-0 [&>[data-slot=icon]]:text-[--link-icon] [&>[data-slot=icon]]:sm:my-1 [&>[data-slot=icon]]:sm:size-4",
+        "forced-colors:[--link-icon:ButtonText] forced-colors:data-hover:[--link-icon:ButtonText] [&>[data-slot=icon]]:-mx-0.5 [&>[data-slot=icon]]:my-0.5 [&>[data-slot=icon]]:size-5 [&>[data-slot=icon]]:shrink-0 [&>[data-slot=icon]]:text-[--link-icon] [&>[data-slot=icon]]:sm:my-1 [&>[data-slot=icon]]:sm:size-4",
     ],
     variants: {
         $color: {

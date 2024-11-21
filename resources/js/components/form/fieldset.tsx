@@ -8,7 +8,7 @@ export const Fieldset = twc(Headless.Fieldset)`[&>*+[data-slot=control]]:mt-5 [&
 
 export const Legend = twc(Headless.Legend).attrs({
     "data-slot": "legend",
-})`font-semibold text-base/6 text-zinc-950 sm:text-sm/6 data-[disabled]:opacity-50`;
+})`font-semibold text-base/6 text-zinc-950 sm:text-sm/6 data-disabled:opacity-50`;
 
 export const FieldGroup = twc(Headless.Fieldset).attrs({
     "data-slot": "control",
@@ -24,7 +24,7 @@ export const Field = twc(Headless.Field)(() => [
 
 export const Label = twc(Headless.Label).attrs({
     "data-slot": "label",
-})`select-none text-label-sm data-[disabled]:opacity-50`;
+})`select-none text-label-sm data-disabled:opacity-50`;
 
 export function Description({
     className,
@@ -36,7 +36,7 @@ export function Description({
             data-slot="description"
             {...props}
             className={cx(
-                "inline-flex items-start gap-1 text-paragraph-xs text-(--text-sub-600) data-[disabled]:opacity-50",
+                "inline-flex items-start gap-1 text-paragraph-xs text-(--text-sub-600) data-disabled:opacity-50",
                 className,
             )}
         >
@@ -56,7 +56,7 @@ export function ErrorMessage({
             data-slot="error"
             {...props}
             className={cx(
-                "inline-flex items-start gap-1 text-paragraph-xs text-state-error-base data-[disabled]:opacity-50",
+                "inline-flex items-start gap-1 text-paragraph-xs text-state-error-base data-disabled:opacity-50",
                 className,
             )}
         >

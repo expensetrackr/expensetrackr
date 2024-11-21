@@ -37,22 +37,22 @@ const checkboxVariants = cva({
         // Background color + shadow applied to inset pseudo-element, so it blends with border in light mode
         "before:absolute before:inset-0 before:-z-10 before:rounded-[calc(4px-2px)] before:bg-(--bg-white-0) before:shadow before:transition",
         // Background color when checked
-        "group-data-[checked]:group-data-[focus]:bg-primary-dark group-data-[checked]:group-data-[hover]:bg-primary-darker group-data-[checked]:before:bg-(--checkbox-checked-bg)",
-        "group-data-[indeterminate]:group-data-[focus]:bg-primary-dark group-data-[indeterminate]:group-data-[hover]:bg-primary-darker group-data-[indeterminate]:before:bg-(--checkbox-checked-bg)",
+        "group-data-checked:group-data-focus:bg-primary-dark group-data-checked:group-data-hover:bg-primary-darker group-data-checked:before:bg-(--checkbox-checked-bg)",
+        "group-data-indeterminate:group-data-focus:bg-primary-dark group-data-indeterminate:group-data-hover:bg-primary-darker group-data-indeterminate:before:bg-(--checkbox-checked-bg)",
         // Background color is moved to control and shadow is removed in dark mode so hide `before` pseudo
         "dark:before:hidden",
         // Background color applied to control in dark mode
         "bg-(--bg-white-0)",
-        "dark:group-data-[indeterminate]:bg-(--checkbox-checked-bg)",
+        "dark:group-data-indeterminate:bg-(--checkbox-checked-bg)",
         // Border
-        "border-2 border-(--bg-soft-200) group-data-[checked]:border-transparent group-data-[checked]:bg-(--checkbox-checked-border) group-data-[hover]:border-(--bg-sub-300) group-data-[checked]:group-data-[hover]:border-transparent",
-        "group-data-[indeterminate]:border-transparent group-data-[indeterminate]:bg-(--checkbox-checked-border) group-data-[indeterminate]:group-data-[hover]:border-transparent",
+        "border-2 border-(--bg-soft-200) group-data-checked:border-transparent group-data-checked:bg-(--checkbox-checked-border) group-data-hover:border-(--bg-sub-300) group-data-checked:group-data-hover:border-transparent",
+        "group-data-indeterminate:border-transparent group-data-indeterminate:bg-(--checkbox-checked-border) group-data-indeterminate:group-data-hover:border-transparent",
         // Focus ring
-        "group-data-[focus]:border-primary-dark group-data-[focus]:bg-(--bg-white-0)",
+        "group-data-focus:border-primary-dark group-data-focus:bg-(--bg-white-0)",
         // Disabled state
-        "group-data-[disabled]:border-(--bg-soft-200) group-data-[disabled]:bg-(--bg-soft-200) group-data-[disabled]:[--checkbox-check:var(--color-white)] group-data-[disabled]:before:bg-transparent",
+        "group-data-disabled:border-(--bg-soft-200) group-data-disabled:bg-(--bg-soft-200) group-data-disabled:[--checkbox-check:var(--color-white)] group-data-disabled:before:bg-transparent",
         // Forced colors mode
-        "forced-colors:[--checkbox-check:HighlightText] forced-colors:[--checkbox-checked-bg:Highlight] forced-colors:group-data-[disabled]:[--checkbox-check:Highlight]",
+        "forced-colors:[--checkbox-check:HighlightText] forced-colors:[--checkbox-checked-bg:Highlight] forced-colors:group-data-disabled:[--checkbox-check:Highlight]",
         undefined,
     ],
     variants: {
@@ -87,9 +87,9 @@ export function Checkbox({
                 })}
             >
                 {props.indeterminate ? (
-                    <SubtractLineIcon className="size-4 stroke-(--checkbox-check) opacity-0 group-data-[indeterminate]:opacity-100 sm:size-2.5" />
+                    <SubtractLineIcon className="size-4 stroke-(--checkbox-check) opacity-0 group-data-indeterminate:opacity-100 sm:size-2.5" />
                 ) : (
-                    <CheckIcon className="size-4 stroke-(--checkbox-check) opacity-0 group-data-[checked]:opacity-100 sm:size-2.5" />
+                    <CheckIcon className="size-4 stroke-(--checkbox-check) opacity-0 group-data-checked:opacity-100 sm:size-2.5" />
                 )}
             </span>
         </Headless.Checkbox>

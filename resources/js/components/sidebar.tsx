@@ -64,11 +64,11 @@ export const SidebarItem = React.forwardRef(function SidebarItem(
         // Avatar
         "data-[slot=avatar]:*:-m-0.5 data-[slot=avatar]:*:size-7 data-[slot=avatar]:*:[--ring-opacity:10%] sm:data-[slot=avatar]:*:size-6",
         // Hover
-        "data-[hover]:bg-(--bg-weak-50) data-[hover]:*:data-[slot=icon]:text-(--icon-sub-600) data-[current]:data-[hover]:*:data-[slot=icon]:text-primary",
+        "data-hover:bg-(--bg-weak-50) data-hover:*:data-[slot=icon]:text-(--icon-sub-600) data-current:data-hover:*:data-[slot=icon]:text-primary",
         // Active
-        "data-[active]:bg-(--bg-weak-50) data-[active]:*:data-[slot=icon]:text-(--icon-sub-600)",
+        "data-active:bg-(--bg-weak-50) data-active:*:data-[slot=icon]:text-(--icon-sub-600)",
         // Current
-        "data-[current]:bg-(--bg-weak-50) data-[current]:text-(--text-strong-950) data-[current]:*:data-[slot=icon]:text-primary",
+        "data-current:bg-(--bg-weak-50) data-current:text-(--text-strong-950) data-current:*:data-[slot=icon]:text-primary",
         // Custom classes
         buttonClassName,
     );

@@ -33,8 +33,10 @@
         "react-dom": "19.0.0-rc-4beb1fd8-20241118",
         "react-scan": "0.0.15",
         "react-twc": "1.4.2",
+        "react-use-wizard": "2.3.0",
         "sonner": "1.7.0",
-        "tailwind-merge": "2.5.4"
+        "tailwind-merge": "2.5.4",
+        "zustand": "5.0.1"
     },
     "devDependencies": {
         "@epic-web/config": "1.16.3",

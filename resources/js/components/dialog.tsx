@@ -12,7 +12,7 @@ export function Dialog({
     return (
         <Headless.Dialog {...props}>
             <Headless.DialogBackdrop
-                className="fixed inset-0 flex w-screen justify-center overflow-y-auto bg-[#020D17]/25 px-2 py-2 backdrop-blur-[5px] transition duration-100 focus:outline-0 data-[closed]:opacity-0 data-[enter]:ease-out data-[leave]:ease-in sm:px-6 sm:py-8 lg:px-8 lg:py-16"
+                className="fixed inset-0 flex w-screen justify-center overflow-y-auto bg-[#020D17]/25 px-2 py-2 backdrop-blur-[5px] transition duration-100 focus:outline-0 data-closed:opacity-0 data-enter:ease-out data-leave:ease-in sm:px-6 sm:py-8 lg:px-8 lg:py-16"
                 transition
             />
 
@@ -21,7 +21,7 @@ export function Dialog({
                     <Headless.DialogPanel
                         className={cx(
                             "row-start-2 w-full min-w-0 rounded-t-20 bg-(--bg-white-0) py-6 ring-1 shadow-md ring-(--stroke-soft-200) sm:m-auto sm:mb-auto sm:max-w-md sm:rounded-20 forced-colors:outline",
-                            "transition duration-100 data-[closed]:translate-y-12 data-[closed]:opacity-0 data-[enter]:ease-out data-[leave]:ease-in sm:data-[closed]:translate-y-0 sm:data-[closed]:data-[enter]:scale-95",
+                            "transition duration-100 data-closed:translate-y-12 data-closed:opacity-0 data-enter:ease-out data-leave:ease-in sm:data-closed:translate-y-0 sm:data-closed:data-enter:scale-95",
                             className,
                         )}
                         transition
