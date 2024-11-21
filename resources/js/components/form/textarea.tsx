@@ -27,11 +27,11 @@ export const Textarea = React.forwardRef(function Textarea(
                 // Background color is moved to control and shadow is removed in dark mode so hide `before` pseudo
                 "dark:before:hidden",
                 // Focus ring
-                "sm:focus-within:after:outline-neutral-alpha-16 after:pointer-events-none after:absolute after:inset-0 after:outline after:outline-transparent sm:focus-within:after:outline-2 sm:focus-within:after:outline-offset-2",
+                "after:pointer-events-none after:absolute after:inset-0 after:outline after:outline-transparent sm:focus-within:after:outline-2 sm:focus-within:after:outline-offset-2 sm:focus-within:after:outline-neutral-alpha-16",
                 ($size === "xs" || $size === "sm") && "after:rounded-8",
                 $size === "md" && "after:rounded-10",
                 // Disabled state
-                "has-data-disabled:opacity-50 has-data-disabled:before:bg-[var(--bg-weak-50)] has-data-disabled:before:shadow-none",
+                "has-data-disabled:opacity-50 has-data-disabled:before:bg-(--bg-weak-50) has-data-disabled:before:shadow-none",
                 // Invalid state
                 "has-data-invalid:before:shadow-red-500/10",
                 className,

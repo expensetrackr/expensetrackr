@@ -32,9 +32,9 @@ export function Table({
     return (
         <TableContext.Provider value={{ bleed, dense, grid, striped } as React.ContextType<typeof TableContext>}>
             <div className="flow-root">
-                <div {...props} className={cx(className, "-mx-[var(--gutter)] overflow-x-auto whitespace-nowrap")}>
-                    <div className={cx("inline-block !min-w-full align-middle", !bleed && "sm:px-[var(--gutter)]")}>
-                        <table className="!min-w-full text-left text-sm/6">{children}</table>
+                <div {...props} className={cx(className, "-mx-(--gutter) overflow-x-auto whitespace-nowrap")}>
+                    <div className={cx("inline-block !min-w-full align-middle", !bleed && "sm:px-(--gutter)")}>
+                        <table className="text-sm/6 !min-w-full text-left">{children}</table>
                     </div>
                 </div>
             </div>
@@ -43,7 +43,7 @@ export function Table({
 }
 
 export function TableHead({ className, ...props }: React.ComponentPropsWithoutRef<"thead">) {
-    return <thead {...props} className={cx(className, "text-paragraph-sm text-[var(--text-sub-600)]")} />;
+    return <thead {...props} className={cx(className, "text-paragraph-sm text-(--text-sub-600)")} />;
 }
 
 export function TableBody(props: React.ComponentPropsWithoutRef<"tbody">) {
@@ -98,8 +98,8 @@ export function TableHeader({ className, ...props }: React.ComponentPropsWithout
             {...props}
             className={cx(
                 className,
-                "first:rounded-l-8 last:rounded-r-8 bg-[var(--bg-weak-50)] px-3 py-2 font-medium",
-                grid && "border-l border-l-zinc-950/5 first:border-l-0 dark:border-l-white/5",
+                "bg-(--bg-weak-50) px-3 py-2 font-medium first:rounded-l-8 last:rounded-r-8",
+                grid && "border-l-zinc-950/5 border-l first:border-l-0 dark:border-l-white/5",
                 !bleed && "sm:first:pl-1 sm:last:pr-1",
             )}
         />
@@ -117,8 +117,8 @@ export function TableCell({ className, children, ...props }: React.ComponentProp
             {...props}
             className={cx(
                 className,
-                "text-paragraph-sm relative px-3 py-3.5 text-[var(--text-sub-600)]",
-                grid && "border-l border-l-zinc-950/5 first:border-l-0 dark:border-l-white/5",
+                "relative px-3 py-3.5 text-paragraph-sm text-(--text-sub-600)",
+                grid && "border-l-zinc-950/5 border-l first:border-l-0 dark:border-l-white/5",
                 dense ? "py-2.5" : "py-4",
                 !bleed && "sm:first:pl-1 sm:last:pr-1",
             )}

@@ -55,8 +55,8 @@ export default function CreateAccountStep2Page({
             <div className="flex flex-col gap-6 sm:mx-auto sm:max-w-[540px]">
                 <div className="flex flex-col items-center gap-2">
                     <div className="rounded-full bg-gradient-to-b from-neutral-500/10 to-transparent p-4 backdrop-blur-md">
-                        <div className="rounded-full border border-[var(--stroke-soft-200)] bg-[var(--bg-white-0)] p-4">
-                            <MoneyDollarCircleFillIcon className="size-8 text-[var(--icon-sub-600)]" />
+                        <div className="rounded-full border border-(--stroke-soft-200) bg-(--bg-white-0) p-4">
+                            <MoneyDollarCircleFillIcon className="size-8 text-(--icon-sub-600)" />
                         </div>
                     </div>
 
@@ -68,15 +68,15 @@ export default function CreateAccountStep2Page({
                     </div>
                 </div>
 
-                <div className="mx-auto w-full max-w-[400px] rounded-20 border border-[var(--stroke-soft-200)] bg-[var(--bg-white-0)] shadow-xs">
+                <div className="mx-auto w-full max-w-[400px] rounded-20 border border-(--stroke-soft-200) bg-(--bg-white-0) shadow-xs">
                     <div className="flex items-center gap-3.5 py-4 pr-6 pl-5">
-                        <div className="flex size-10 items-center justify-center rounded-full border border-[var(--stroke-soft-200)]">
-                            <BankIcon className="size-5 text-[var(--icon-sub-600)]" />
+                        <div className="flex size-10 items-center justify-center rounded-full border border-(--stroke-soft-200)">
+                            <BankIcon className="size-5 text-(--icon-sub-600)" />
                         </div>
 
                         <div className="flex flex-1 flex-col gap-1">
                             <h3 className="text-label-sm">{formData?.name}</h3>
-                            <p className="text-paragraph-sm text-[var(--text-sub-600)]">Type: {formData?.type}</p>
+                            <p className="text-paragraph-sm text-(--text-sub-600)">Type: {formData?.type}</p>
                         </div>
                     </div>
 

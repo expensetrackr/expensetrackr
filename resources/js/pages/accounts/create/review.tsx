@@ -28,8 +28,8 @@ export default function CreateAccountReviewPage({ formData }: InertiaSharedProps
             <div className="flex flex-col gap-6 sm:mx-auto sm:max-w-[540px]">
                 <div className="flex flex-col items-center gap-2">
                     <div className="rounded-full bg-gradient-to-b from-neutral-500/10 to-transparent p-4 backdrop-blur-md">
-                        <div className="rounded-full border border-[var(--stroke-soft-200)] bg-[var(--bg-white-0)] p-4">
-                            <MoneyDollarCircleFillIcon className="size-8 text-[var(--icon-sub-600)]" />
+                        <div className="rounded-full border border-(--stroke-soft-200) bg-(--bg-white-0) p-4">
+                            <MoneyDollarCircleFillIcon className="size-8 text-(--icon-sub-600)" />
                         </div>
                     </div>
 
@@ -41,7 +41,7 @@ export default function CreateAccountReviewPage({ formData }: InertiaSharedProps
                     </div>
                 </div>
 
-                <div className="mx-auto w-full max-w-[400px] rounded-20 border border-[var(--stroke-soft-200)] bg-[var(--bg-white-0)] shadow-xs">
+                <div className="mx-auto w-full max-w-[400px] rounded-20 border border-(--stroke-soft-200) bg-(--bg-white-0) shadow-xs">
                     <div className="flex flex-col gap-1 p-4">
                         <Text className="text-center text-paragraph-xs">Initial balance</Text>
                         <p className="text-center font-display text-h4">
@@ -80,7 +80,7 @@ export default function CreateAccountReviewPage({ formData }: InertiaSharedProps
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-3 border-t border-t-[var(--stroke-soft-200)] px-5 py-4">
+                    <div className="flex items-center gap-3 border-t border-t-(--stroke-soft-200) px-5 py-4">
                         <Button
                             $color="neutral"
                             $size="sm"
@@ -96,7 +96,7 @@ export default function CreateAccountReviewPage({ formData }: InertiaSharedProps
                     </div>
 
                     <div className="px-4 pb-4">
-                        <Text className="text-center text-paragraph-xs text-[var(--text-soft-400)]">
+                        <Text className="text-center text-paragraph-xs text-(--text-soft-400)">
                             You can change the account details later after the account is created.
                         </Text>
                     </div>

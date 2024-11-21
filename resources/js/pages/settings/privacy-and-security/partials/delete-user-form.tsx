@@ -57,7 +57,7 @@ export function DeleteUserForm() {
                     <Dialog onClose={() => setAction(null)} open={action === "destroy:current-user"}>
                         <DialogHeader>
                             <DialogIcon>
-                                <DeleteBinIcon className="size-6 text-[var(--icon-sub-600)]" />
+                                <DeleteBinIcon className="size-6 text-(--icon-sub-600)" />
                             </DialogIcon>
 
                             <div className="flex flex-1 flex-col gap-1">

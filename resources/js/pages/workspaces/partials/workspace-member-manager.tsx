@@ -91,7 +91,7 @@ export function WorkspaceMemberManager({ workspace, availableRoles, permissions 
                                             src={user.profile_photo_url}
                                             user={user}
                                         />
-                                        <p className="text-[var(--text-strong-950)]">{user.name}</p>
+                                        <p className="text-(--text-strong-950)">{user.name}</p>
                                     </div>
                                 </TableCell>
                                 <TableCell>{user.email}</TableCell>
@@ -125,7 +125,7 @@ export function WorkspaceMemberManager({ workspace, availableRoles, permissions 
 
                                                     {permissions.canRemoveWorkspaceMembers ? (
                                                         <DropdownItem
-                                                            className="text-state-error-base [&>[data-slot=icon]]:text-state-error-base data-focus:bg-[var(--color-red-alpha-10)]"
+                                                            className="text-state-error-base data-focus:bg-(--color-red-alpha-10) [&>[data-slot=icon]]:text-state-error-base"
                                                             onClick={() =>
                                                                 setAction(`destroy:workspace-members:${user.id}`)
                                                             }
@@ -137,7 +137,7 @@ export function WorkspaceMemberManager({ workspace, availableRoles, permissions 
 
                                                     {currentUser.id === user.id ? (
                                                         <DropdownItem
-                                                            className="text-state-error-base [&>[data-slot=icon]]:text-state-error-base data-focus:bg-[var(--color-red-alpha-10)]"
+                                                            className="text-state-error-base data-focus:bg-(--color-red-alpha-10) [&>[data-slot=icon]]:text-state-error-base"
                                                             onClick={() =>
                                                                 setAction(`destroy:workspace-members:${user.id}`)
                                                             }
@@ -180,7 +180,7 @@ export function WorkspaceMemberManager({ workspace, availableRoles, permissions 
                         <TableRow>
                             <TableCell colSpan={3}>
                                 <div className="flex justify-center py-12">
-                                    <p className="text-paragraph-sm text-[var(--text-sub-600)]">
+                                    <p className="text-paragraph-sm text-(--text-sub-600)">
                                         There are no members in this workspace yet.
                                     </p>
                                 </div>
@@ -223,7 +223,7 @@ function ManageRoleDialog({
         <Dialog onClose={() => setAction(null)} open={action === `update:workspace-members:${user.id}`}>
             <DialogHeader>
                 <DialogIcon>
-                    <FolderShield2Icon className="size-6 text-[var(--icon-sub-600)]" />
+                    <FolderShield2Icon className="size-6 text-(--icon-sub-600)" />
                 </DialogIcon>
 
                 <div className="flex flex-1 flex-col gap-1">
@@ -312,7 +312,7 @@ function RemoveMemberDialog({
         <Dialog onClose={() => setAction(null)} open={action === `destroy:workspace-members:${user.id}`}>
             <DialogHeader>
                 <DialogIcon>
-                    <EraserIcon className="size-6 text-[var(--icon-sub-600)]" />
+                    <EraserIcon className="size-6 text-(--icon-sub-600)" />
                 </DialogIcon>
 
                 <div className="flex flex-1 flex-col gap-1">

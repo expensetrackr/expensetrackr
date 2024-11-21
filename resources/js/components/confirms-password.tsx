@@ -68,7 +68,7 @@ export function ConfirmsPassword({ onConfirm, children }: ConfirmsPasswordProps)
             <Dialog onClose={() => setAction(null)} open={action === "confirming:password"}>
                 <DialogHeader>
                     <DialogIcon>
-                        <LockPasswordIcon className="size-6 text-[var(--icon-sub-600)]" />
+                        <LockPasswordIcon className="size-6 text-(--icon-sub-600)" />
                     </DialogIcon>
 
                     <div className="flex flex-1 flex-col gap-1">

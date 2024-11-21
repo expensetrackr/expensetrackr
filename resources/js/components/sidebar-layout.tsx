@@ -30,7 +30,7 @@ function MobileSidebar({ open, close, children }: { open: boolean; close: () => 
                     leaveTo="-translate-x-full"
                 >
                     <Headless.DialogPanel className="fixed inset-y-0 w-full max-w-80 p-2 transition">
-                        <div className="flex h-full flex-col rounded-8 bg-[var(--bg-white-0)] ring-1 shadow-sm ring-[var(--stroke-soft-200)]">
+                        <div className="flex h-full flex-col rounded-8 bg-(--bg-white-0) ring-1 shadow-sm ring-(--stroke-soft-200)">
                             <div className="-mb-3 px-4 pt-3">
                                 <Headless.CloseButton aria-label="Close navigation" as={NavbarItem}>
                                     <CloseIcon />
@@ -65,13 +65,13 @@ export function SidebarLayout({
     const [showSidebar, setShowSidebar] = useState(false);
 
     return (
-        <div className="relative isolate flex min-h-svh w-full bg-[var(--bg-white-0)] max-lg:flex-col">
+        <div className="relative isolate flex min-h-svh w-full bg-(--bg-white-0) max-lg:flex-col">
             {/* Sidebar on desktop */}
             {sidebar ? (
                 <div
                     className={cx([
                         "fixed inset-y-0 left-0 z-50 w-64 motion-safe:animate-in motion-safe:fade-in max-lg:hidden",
-                        subSidebar && "border-r border-[var(--stroke-soft-200)]",
+                        subSidebar && "border-r border-(--stroke-soft-200)",
                         sidebarClassName,
                     ])}
                 >
@@ -117,7 +117,7 @@ export function SidebarLayout({
                     <motion.div
                         animate={{ opacity: 1 }}
                         className={cx([
-                            "grow px-4 pb-5 lg:rounded-8 lg:bg-[var(--bg-white-0)] lg:px-8 lg:ring-1 lg:shadow-sm lg:ring-[var(--stroke-soft-200)]",
+                            "grow px-4 pb-5 lg:rounded-8 lg:bg-(--bg-white-0) lg:px-8 lg:ring-1 lg:shadow-sm lg:ring-(--stroke-soft-200)",
                             contentChildrenClassName,
                         ])}
                         initial={{ opacity: 0 }}

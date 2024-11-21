@@ -29,7 +29,7 @@ export function CreateAccountSidebar() {
     const completedSteps = page.props.wizard.completedSteps;
 
     return (
-        <Sidebar className="lg:rounded-16 gap-3 lg:bg-[var(--bg-weak-50)]">
+        <Sidebar className="gap-3 lg:rounded-16 lg:bg-(--bg-weak-50)">
             <SidebarHeader className="mx-4 mt-5 p-0">
                 <SidebarHeading className="p-0">account creation</SidebarHeading>
             </SidebarHeader>
@@ -37,7 +37,7 @@ export function CreateAccountSidebar() {
             <SidebarBody className="mx-4 p-0">
                 <SidebarSection>
                     <SidebarItem
-                        buttonClassName="group rounded-10 p-2 data-current:!bg-[var(--bg-white-0)] data-hover:!bg-[var(--bg-white-0)]"
+                        buttonClassName="group rounded-10 p-2 data-current:!bg-(--bg-white-0) data-hover:!bg-(--bg-white-0)"
                         current={route().current("accounts.create", { step: "details" })}
                         href={route("accounts.create", { step: "details" })}
                     >
@@ -50,7 +50,7 @@ export function CreateAccountSidebar() {
                         <SidebarLabel>Details</SidebarLabel>
                     </SidebarItem>
                     <SidebarItem
-                        buttonClassName="group rounded-10 p-2 data-current:!bg-[var(--bg-white-0)] data-hover:!bg-[var(--bg-white-0)]"
+                        buttonClassName="group rounded-10 p-2 data-current:!bg-(--bg-white-0) data-hover:!bg-(--bg-white-0)"
                         current={route().current("accounts.create", { step: "balance-and-currency" })}
                         href={route("accounts.create", { step: "balance-and-currency" })}
                     >
@@ -63,7 +63,7 @@ export function CreateAccountSidebar() {
                         <SidebarLabel>Balance & Currency</SidebarLabel>
                     </SidebarItem>
                     <SidebarItem
-                        buttonClassName="group rounded-10 p-2 data-current:!bg-[var(--bg-white-0)] data-hover:!bg-[var(--bg-white-0)]"
+                        buttonClassName="group rounded-10 p-2 data-current:!bg-(--bg-white-0) data-hover:!bg-(--bg-white-0)"
                         current={route().current("accounts.create", { step: "review" })}
                         href={route("accounts.create", { step: "review" })}
                     >
@@ -83,7 +83,7 @@ export function CreateAccountSidebar() {
                     </Button>
                 </div>
 
-                <Text className="text-paragraph-xs text-center text-[var(--text-soft-400)]">
+                <Text className="text-center text-paragraph-xs text-(--text-soft-400)">
                     &copy; {new Date().getFullYear()} ExpenseTrackr
                 </Text>
             </SidebarFooter>
@@ -93,8 +93,8 @@ export function CreateAccountSidebar() {
 
 function StepNumber({ children }: { children: React.ReactNode }) {
     return (
-        <span className="group-data-hover:bg-primary group-data-current:bg-primary inline-flex items-center justify-center rounded-full bg-[var(--bg-white-0)] p-0.5 shadow-xs">
-            <span className="text-label-xs inline-flex size-4 justify-center text-[var(--text-sub-600)] group-data-current:text-white group-data-hover:text-white">
+        <span className="inline-flex items-center justify-center rounded-full bg-(--bg-white-0) p-0.5 shadow-xs group-data-current:bg-primary group-data-hover:bg-primary">
+            <span className="inline-flex size-4 justify-center text-label-xs text-(--text-sub-600) group-data-current:text-white group-data-hover:text-white">
                 {children}
             </span>
         </span>

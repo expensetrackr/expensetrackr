@@ -103,7 +103,7 @@ export default function ConnectedAccountsForm() {
                             >
                                 <DialogHeader>
                                     <DialogIcon>
-                                        <ShareIcon className="size-6 text-[var(--icon-sub-600)]" />
+                                        <ShareIcon className="size-6 text-(--icon-sub-600)" />
                                     </DialogIcon>
 
                                     <div className="flex flex-1 flex-col gap-1">

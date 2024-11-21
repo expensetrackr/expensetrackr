@@ -8,19 +8,19 @@ import { cva } from "#/utils/cva.ts";
 const linkVariants = cva({
     base: [
         // Base
-        "rounded-4 relative isolate inline-flex items-center justify-center transition",
+        "relative isolate inline-flex items-center justify-center rounded-4 transition",
         // Focus
-        "data-[focus]:outline-primary focus:outline-none data-[focus]:outline data-[focus]:outline-2 data-[focus]:outline-offset-2",
+        "focus:outline-none data-focus:outline-2 data-focus:outline-offset-2 data-focus:outline-primary",
         // Icon
         "forced-colors:[--link-icon:ButtonText] forced-colors:data-[hover]:[--link-icon:ButtonText] [&>[data-slot=icon]]:-mx-0.5 [&>[data-slot=icon]]:my-0.5 [&>[data-slot=icon]]:size-5 [&>[data-slot=icon]]:shrink-0 [&>[data-slot=icon]]:text-[--link-icon] [&>[data-slot=icon]]:sm:my-1 [&>[data-slot=icon]]:sm:size-4",
     ],
     variants: {
         $color: {
             gray: [
-                "text-[var(--text-sub-600)] hover:underline",
-                "focus-visible:text-[var(--text-strong-950)] focus-visible:underline",
+                "text-(--text-sub-600) hover:underline",
+                "focus-visible:text-(--text-strong-950) focus-visible:underline",
             ],
-            black: ["text-[var(--text-strong-950)] hover:underline", "focus-visible:underline"],
+            black: ["text-(--text-strong-950) hover:underline", "focus-visible:underline"],
             primary: ["text-primary hover:text-primary-dark hover:underline", "focus-visible:underline"],
             error: ["text-state-error-base hover:text-red-700 hover:underline", "focus-visible:underline"],
         },

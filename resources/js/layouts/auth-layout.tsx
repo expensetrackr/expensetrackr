@@ -37,10 +37,10 @@ export function AuthLayout({
             <div className="absolute inset-0 bg-white/70 mix-blend-multiply" id="filter" />
 
             <div className="relative flex min-h-screen flex-col items-center px-4 py-8 sm:justify-center sm:pt-0">
-                <div className="rounded-12 relative flex w-full max-w-[400px] flex-col gap-2 overflow-hidden bg-white/60 px-4 py-6 backdrop-blur-md sm:px-6 dark:bg-neutral-950/60">
+                <div className="relative flex w-full max-w-[400px] flex-col gap-2 overflow-hidden rounded-12 bg-white/60 px-4 py-6 backdrop-blur-md sm:px-6 dark:bg-neutral-950/60">
                     <svg
                         aria-hidden="true"
-                        className="text-primary absolute top-[-91px] left-[-87px] h-[430.84px] w-[362.5px] opacity-20"
+                        className="absolute top-[-91px] left-[-87px] h-[430.84px] w-[362.5px] text-primary opacity-20"
                         fill="none"
                         height="960"
                         viewBox="0 0 960 960"
@@ -133,21 +133,17 @@ export function AuthLayout({
 
                         <div className="flex flex-col gap-3">
                             <div className="flex flex-col gap-1">
-                                {title && <h1 className="font-inter text-label-lg text-center font-bold">{title}</h1>}
+                                {title && <h1 className="font-inter text-center text-label-lg font-bold">{title}</h1>}
 
                                 {description && (
-                                    <p className="text-paragraph-sm text-center text-[var(--text-sub-600)]">
-                                        {description}
-                                    </p>
+                                    <p className="text-center text-paragraph-sm text-(--text-sub-600)">{description}</p>
                                 )}
                             </div>
 
                             {children}
                         </div>
 
-                        {footer && (
-                            <p className="text-label-sm pt-1 text-center text-[var(--text-sub-600)]">{footer}</p>
-                        )}
+                        {footer && <p className="pt-1 text-center text-label-sm text-(--text-sub-600)">{footer}</p>}
                     </div>
                 </div>
             </div>

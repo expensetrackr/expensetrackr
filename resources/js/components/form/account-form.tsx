@@ -21,7 +21,7 @@ AccountForm.Navigation = function AccountFormNavigation({
     onSubmit: (e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>) => void;
 }) {
     return (
-        <div className="flex items-center gap-3 border-t border-t-[var(--stroke-soft-200)] px-5 py-4">
+        <div className="flex items-center gap-3 border-t border-t-(--stroke-soft-200) px-5 py-4">
             {prevStep && (
                 <Button
                     $color="neutral"

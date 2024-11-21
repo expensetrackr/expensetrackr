@@ -11,7 +11,7 @@ export function FormSection({ title, description, children }: FormSectionProps) 
                 {(title || description) && (
                     <div className="flex flex-col gap-1">
                         <h2 className="text-label-sm">{title}</h2>
-                        {description && <p className="text-paragraph-xs text-[var(--text-sub-600)]">{description}</p>}
+                        {description && <p className="text-paragraph-xs text-(--text-sub-600)">{description}</p>}
                     </div>
                 )}
             </div>

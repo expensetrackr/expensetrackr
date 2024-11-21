@@ -23,11 +23,11 @@ export const inputVariants = cva({
         // Basic layout
         "relative block w-full appearance-none transition",
         // Typography
-        "text-paragraph-sm placeholder:text-[var(--text-soft-400)] placeholder:transition-colors focus-visible:placeholder:text-[var(--text-strong-950)] data-hover:placeholder:text-[var(--text-sub-600)]",
+        "text-paragraph-sm placeholder:text-(--text-soft-400) placeholder:transition-colors focus-visible:placeholder:text-(--text-strong-950) data-hover:placeholder:text-(--text-sub-600)",
         // Border
-        "border border-[var(--stroke-soft-200)] focus-visible:border-[var(--stroke-strong-950)] data-hover:border-[var(--bg-weak-50)]",
+        "border border-(--stroke-soft-200) focus-visible:border-(--stroke-strong-950) data-hover:border-(--bg-weak-50)",
         // Background color
-        "bg-[var(--bg-white-0)] focus-visible:border-[var(--stroke-strong-950)] data-hover:bg-[var(--bg-weak-50)]",
+        "bg-(--bg-white-0) focus-visible:border-(--stroke-strong-950) data-hover:bg-(--bg-weak-50)",
         // Hide default focus styles
         "focus:outline-none",
         // Focus ring
@@ -35,13 +35,13 @@ export const inputVariants = cva({
         // Invalid state
         "data-invalid:border-state-error-base",
         // Disabled state
-        "data-disabled:bg-[var(--bg-weak-50)] data-disabled:text-[var(--text-disabled-300)]",
+        "data-disabled:bg-(--bg-weak-50) data-disabled:text-(--text-disabled-300)",
     ],
     variants: {
         $size: {
-            xs: "rounded-8 h-8 p-1.5",
-            sm: "rounded-8 h-9 p-2",
-            md: "rounded-10 h-10 p-2.5",
+            xs: "h-8 rounded-8 p-1.5",
+            sm: "h-9 rounded-8 p-2",
+            md: "h-10 rounded-10 p-2.5",
         },
     },
     defaultVariants: {
@@ -73,11 +73,11 @@ export const Input = forwardRef(function Input(
                 // Background color is moved to control and shadow is removed in dark mode so hide `before` pseudo
                 "dark:before:hidden",
                 // Focus ring
-                "sm:focus-within:after:outline-neutral-alpha-16 after:pointer-events-none after:absolute after:inset-0 after:outline after:outline-transparent sm:focus-within:after:outline-2 sm:focus-within:after:outline-offset-2",
+                "after:pointer-events-none after:absolute after:inset-0 after:outline after:outline-transparent sm:focus-within:after:outline-2 sm:focus-within:after:outline-offset-2 sm:focus-within:after:outline-neutral-alpha-16",
                 ($size === "xs" || $size === "sm") && "after:rounded-8",
                 $size === "md" && "after:rounded-10",
                 // Disabled state
-                "has-data-disabled:opacity-50 has-data-disabled:before:bg-[var(--bg-weak-50)] has-data-disabled:before:shadow-none",
+                "has-data-disabled:opacity-50 has-data-disabled:before:bg-(--bg-weak-50) has-data-disabled:before:shadow-none",
                 // Invalid state
                 "has-data-invalid:before:shadow-red-500/10",
                 className,

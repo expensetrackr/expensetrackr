@@ -17,7 +17,7 @@ export function ConnectedAccount({ connectedAccount, provider, children }: Conne
         <div className="flex flex-col gap-1">
             <div className="flex flex-col gap-3.5 lg:flex-row lg:items-center">
                 <div className="flex flex-1 items-center gap-3.5">
-                    <div className="flex size-12 items-center justify-center rounded-full border border-[var(--stroke-soft-200)] p-2">
+                    <div className="flex size-12 items-center justify-center rounded-full border border-(--stroke-soft-200) p-2">
                         {providerIcons[provider.id]}
                     </div>
 
@@ -25,11 +25,11 @@ export function ConnectedAccount({ connectedAccount, provider, children }: Conne
                         <h3 className="text-label-md">{provider.name}</h3>
 
                         {connectedAccount?.created_at ? (
-                            <p className="text-paragraph-sm text-[var(--text-sub-600)]">
+                            <p className="text-paragraph-sm text-(--text-sub-600)">
                                 Connected {connectedAccount?.created_at}
                             </p>
                         ) : (
-                            <p className="text-paragraph-sm text-[var(--text-sub-600)]">Not connected.</p>
+                            <p className="text-paragraph-sm text-(--text-sub-600)">Not connected.</p>
                         )}
                     </div>
                 </div>

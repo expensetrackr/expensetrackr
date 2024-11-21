@@ -9,13 +9,13 @@ import { cva, cx } from "#/utils/cva.ts";
 const compactButtonVariants = cva({
     base: [
         // Base
-        "relative isolate inline-flex items-center justify-center text-[var(--icon-sub-600)] transition",
+        "relative isolate inline-flex items-center justify-center text-(--icon-sub-600) transition",
         // Hover
-        "data-[hover]:bg-[var(--bg-weak-50)] data-[hover]:text-[var(--icon-strong-950)]",
+        "data-[hover]:bg-(--bg-weak-50) data-[hover]:text-(--icon-strong-950)",
         // Focus
-        "data-[focus]:outline-neutral-alpha-16 focus:outline-none data-[focus]:bg-[var(--bg-strong-950)] data-[focus]:text-[var(--icon-white-0)] data-[focus]:outline data-[focus]:outline-2 data-[focus]:outline-offset-2",
+        "focus:outline-none data-[focus]:bg-(--bg-strong-950) data-[focus]:text-(--icon-white-0) data-[focus]:outline data-[focus]:outline-2 data-[focus]:outline-offset-2 data-[focus]:outline-neutral-alpha-16",
         // Disabled
-        "data-[disabled]:bg-transparent data-[disabled]:text-[var(--icon-disabled-300)]",
+        "data-[disabled]:bg-transparent data-[disabled]:text-(--icon-disabled-300)",
         // Icon
         "forced-colors:[--btn-icon:ButtonText] forced-colors:data-[hover]:[--btn-icon:ButtonText] [&>[data-slot=icon]]:-mx-0.5 [&>[data-slot=icon]]:my-0.5 [&>[data-slot=icon]]:size-5 [&>[data-slot=icon]]:shrink-0 [&>[data-slot=icon]]:text-[--btn-icon] [&>[data-slot=icon]]:sm:my-1 [&>[data-slot=icon]]:sm:size-4",
     ],
@@ -23,7 +23,7 @@ const compactButtonVariants = cva({
         $variant: {
             stroke: [
                 // Base
-                "border border-[var(--stroke-soft-200)] bg-[var(--bg-white-0)] shadow-xs",
+                "border border-(--stroke-soft-200) bg-(--bg-white-0) shadow-xs",
                 // Hover
                 "data-[hover]:border-0 data-[hover]:shadow-none",
                 // Focus
@@ -31,11 +31,11 @@ const compactButtonVariants = cva({
             ],
             ghost: [
                 // Hover
-                "data-[hover]:bg-[var(--bg-weak-50)] data-[hover]:text-[var(--icon-strong-950)]",
+                "data-[hover]:bg-(--bg-weak-50) data-[hover]:text-(--icon-strong-950)",
             ],
             white: [
                 // Base
-                "bg-[var(--bg-white-0)] shadow-xs",
+                "bg-(--bg-white-0) shadow-xs",
                 // Hover
                 "data-[hover]:shadow-none",
                 // Focus

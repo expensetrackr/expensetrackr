@@ -3,11 +3,11 @@ import { type VariantProps } from "cva";
 import { cva } from "#/utils/cva.ts";
 
 const contentDividerVariants = cva({
-    base: "text-[var(--text-soft-400)] uppercase",
+    base: "text-(--text-soft-400) uppercase",
     variants: {
         $type: {
-            text: "text-subheading-xs px-2 py-1",
-            "solid-text": "text-subheading-xs bg-[var(--bg-weak-50)] px-4 py-1.5",
+            text: "px-2 py-1 text-subheading-xs",
+            "solid-text": "bg-(--bg-weak-50) px-4 py-1.5 text-subheading-xs",
         },
     },
 

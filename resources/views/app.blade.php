@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html
-    class="h-full bg-[var(--bg-white-0)] antialiased transition duration-500"
+    class="h-full bg-(--bg-white-0) antialiased transition duration-500"
     lang="{{ str_replace('_', '-', app()->getLocale()) }}"
 >
     <head>
@@ -63,7 +63,7 @@
         @include('partials.theme')
     </head>
 
-    <body class="h-full bg-[var(--bg-white-0)] text-[var(--text-strong-950)]">
+    <body class="h-full bg-(--bg-white-0) text-(--text-strong-950)">
         @inertia
     </body>
 </html>

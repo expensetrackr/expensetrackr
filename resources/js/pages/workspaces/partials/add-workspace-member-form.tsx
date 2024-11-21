@@ -52,7 +52,7 @@ export function AddWorkspaceMemberForm({ workspace, availableRoles }: AddWorkspa
             <Dialog onClose={() => setAction(null)} open={action === "create:workspace-members"}>
                 <DialogHeader>
                     <DialogIcon>
-                        <TeamIcon className="size-6 text-[var(--icon-sub-600)]" />
+                        <TeamIcon className="size-6 text-(--icon-sub-600)" />
                     </DialogIcon>
 
                     <div className="flex flex-1 flex-col gap-1">

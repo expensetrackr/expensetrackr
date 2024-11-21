@@ -34,9 +34,9 @@ export const InputOTPSlot = React.forwardRef<
     return (
         <div
             className={cx(
-                "text-h5 first:rounded-l-10 last:rounded-r-10 relative flex h-16 w-full items-center justify-center border-y border-r bg-[var(--bg-white-0)] transition after:outline after:outline-transparent first:border-l hover:bg-[var(--bg-weak-50)]",
+                "relative flex h-16 w-full items-center justify-center border-y border-r bg-(--bg-white-0) text-h5 transition after:outline after:outline-transparent first:rounded-l-10 first:border-l last:rounded-r-10 hover:bg-(--bg-weak-50)",
                 slot?.isActive &&
-                    "after:outline-neutral-alpha-16 z-10 border-[var(--stroke-strong-950)] after:pointer-events-none after:absolute after:inset-0 after:outline-2 after:outline-offset-[3px] after:transition",
+                    "z-10 border-(--stroke-strong-950) after:pointer-events-none after:absolute after:inset-0 after:outline-2 after:outline-offset-[3px] after:outline-neutral-alpha-16 after:transition",
                 invalid && "border-state-error-base",
                 className,
             )}
@@ -46,7 +46,7 @@ export const InputOTPSlot = React.forwardRef<
             {slot?.char}
             {slot?.hasFakeCaret && (
                 <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-                    <div className="animate-caret-blink h-8 w-px bg-[var(--text-strong-950)] duration-1000" />
+                    <div className="h-8 w-px animate-caret-blink bg-(--text-strong-950) duration-1000" />
                 </div>
             )}
         </div>

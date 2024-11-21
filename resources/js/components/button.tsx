@@ -8,59 +8,59 @@ import { Link } from "./link.tsx";
 const buttonVariants = cva({
     base: [
         // Base
-        "text-label-sm relative isolate inline-flex items-center justify-center font-medium transition",
+        "relative isolate inline-flex items-center justify-center text-label-sm font-medium transition",
         // Focus
-        "data-focus:outline-primary focus:outline-none data-focus:outline-2 data-focus:outline-offset-2",
+        "focus:outline-none data-focus:outline-2 data-focus:outline-offset-2 data-focus:outline-primary",
         // Disabled
         "data-disabled:opacity-50",
         // Icon
-        "forced-colors:[--btn-icon:ButtonText] forced-colors:data-hover:[--btn-icon:ButtonText] [&>[data-slot=icon]]:-mx-0.5 [&>[data-slot=icon]]:my-0.5 [&>[data-slot=icon]]:size-5 [&>[data-slot=icon]]:shrink-0 [&>[data-slot=icon]]:text-[var(--btn-icon)] [&>[data-slot=icon]]:sm:my-1 [&>[data-slot=icon]]:sm:size-4",
+        "forced-colors:[--btn-icon:ButtonText] forced-colors:data-hover:[--btn-icon:ButtonText] [&>[data-slot=icon]]:-mx-0.5 [&>[data-slot=icon]]:my-0.5 [&>[data-slot=icon]]:size-5 [&>[data-slot=icon]]:shrink-0 [&>[data-slot=icon]]:text-(--btn-icon) [&>[data-slot=icon]]:sm:my-1 [&>[data-slot=icon]]:sm:size-4",
     ],
     variants: {
         $variant: {
             filled: [
                 // Base
-                "text-[var(--btn-text)]",
+                "text-(--btn-text)",
                 // Optical border, implemented as the button background to avoid corner artifacts
-                "border-transparent bg-[var(--btn-border)]",
+                "border-transparent bg-(--btn-border)",
                 // Button background, implemented as foreground layer to stack on top of pseudo-border layer
-                "before:absolute before:inset-0 before:-z-10 before:bg-[var(--btn-bg)] before:transition",
+                "before:absolute before:inset-0 before:-z-10 before:bg-(--btn-bg) before:transition",
                 // Drop shadow, applied to the inset `before` layer, so it blends with the
                 "before:shadow",
                 // Shim/overlay, inset to match button foreground and used for hover state + highlight
                 "after:absolute after:inset-0 after:-z-10 after:transition",
                 // White overlay on hover
-                "data-hover:after:bg-[var(--btn-hover-overlay)] data-active:after:bg-[var(--btn-hover-overlay)]",
+                "data-active:after:bg-(--btn-hover-overlay) data-hover:after:bg-(--btn-hover-overlay)",
                 // Disabled
                 "data-disabled:before:shadow-none data-disabled:after:shadow-none",
             ],
             stroke: [
                 // Base
-                "border border-[var(--btn-stroke-border)] bg-[var(--bg-white-0)] text-[var(--btn-stroke-text)] data-hover:bg-[var(--btn-stroke-hover)] data-active:bg-[var(--btn-stroke-hover)]",
+                "border border-(--btn-stroke-border) bg-(--bg-white-0) text-(--btn-stroke-text) data-active:bg-(--btn-stroke-hover) data-hover:bg-(--btn-stroke-hover)",
                 // Icon
                 "data-hover:[--btn-icon:theme(colors.zinc.700)] data-active:[--btn-icon:theme(colors.zinc.700)]",
             ],
             lighter: [
                 // Base
-                "text-[var(--btn-lighter-text)]",
+                "text-(--btn-lighter-text)",
                 // Border
-                "border border-[var(--btn-lighter-border,transparent)]",
+                "border-(--btn-lighter-border,ransparent)] border",
                 // Button background
-                "bg-[var(--btn-lighter-bg)] data-focus:bg-[var(--bg-white-0)] data-hover:bg-[var(--bg-white-0)]",
+                "bg-(--btn-lighter-bg) data-focus:bg-(--bg-white-0) data-hover:bg-(--bg-white-0)",
             ],
             ghost: [
                 // Base
-                "text-[var(--btn-ghost-text)]",
+                "text-(--btn-ghost-text)",
                 // Border
-                "border border-[var(--btn-ghost-border,transparent)]",
+                "border-(--btn-ghost-border,ransparent)] border",
                 // Button background
-                "bg-[var(--btn-ghost-bg,transparent)] data-focus:bg-[var(--bg-white-0)]",
+                "bg-(--btn-ghost-bg,ransparent)] data-focus:bg-(--bg-white-0)",
             ],
         },
         $size: {
-            xs: "rounded-8 h-8 gap-1 p-1.5",
-            sm: "rounded-8 h-9 gap-2 p-2",
-            md: "rounded-10 h-10 gap-2 p-2.5",
+            xs: "h-8 gap-1 rounded-8 p-1.5",
+            sm: "h-9 gap-2 rounded-8 p-2",
+            md: "h-10 gap-2 rounded-10 p-2.5",
             none: false,
         },
         $color: {

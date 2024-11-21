@@ -20,7 +20,7 @@ export function Dialog({
                 <div className="grid min-h-full grid-rows-[1fr_auto] justify-items-center sm:grid-rows-[1fr_auto_3fr] sm:p-4">
                     <Headless.DialogPanel
                         className={cx(
-                            "rounded-t-20 sm:rounded-20 row-start-2 w-full min-w-0 bg-[var(--bg-white-0)] py-6 ring-1 shadow-md ring-[var(--stroke-soft-200)] sm:m-auto sm:mb-auto sm:max-w-md forced-colors:outline",
+                            "row-start-2 w-full min-w-0 rounded-t-20 bg-(--bg-white-0) py-6 ring-1 shadow-md ring-(--stroke-soft-200) sm:m-auto sm:mb-auto sm:max-w-md sm:rounded-20 forced-colors:outline",
                             "transition duration-100 data-[closed]:translate-y-12 data-[closed]:opacity-0 data-[enter]:ease-out data-[leave]:ease-in sm:data-[closed]:translate-y-0 sm:data-[closed]:data-[enter]:scale-95",
                             className,
                         )}
@@ -36,13 +36,13 @@ export function Dialog({
 
 export const DialogHeader = twc.div`flex items-start gap-4 px-4`;
 
-export const DialogIcon = twc.div`flex size-11 items-center text-[var(--icon-sub-600)] justify-center rounded-full border border-[var(--stroke-soft-200)] bg-[var(--bg-white-0)]`;
+export const DialogIcon = twc.div`flex size-11 items-center text-(--icon-sub-600) justify-center rounded-full border border-(--stroke-soft-200) bg-(--bg-white-0)`;
 
 export const DialogTitle = twc(Headless.DialogTitle)`text-label-md`;
 
 export const DialogDescription = twc(Headless.Description).attrs({
     as: Text,
-})`text-[var(--text-sub-600)] text-paragraph-sm`;
+})`text-(--text-sub-600) text-paragraph-sm`;
 
 export const DialogBody = twc.div`px-5`;
 

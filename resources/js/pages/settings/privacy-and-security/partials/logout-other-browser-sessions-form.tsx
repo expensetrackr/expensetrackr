@@ -65,7 +65,7 @@ export function LogoutOtherBrowserSessionsForm({ sessions }: LogoutOtherBrowserS
                     <Dialog onClose={() => setAction(null)} open={action === "destroy:other-browser-sessions"}>
                         <DialogHeader>
                             <DialogIcon>
-                                <LogoutCircleRIcon className="size-6 text-[var(--icon-sub-600)]" />
+                                <LogoutCircleRIcon className="size-6 text-(--icon-sub-600)" />
                             </DialogIcon>
 
                             <div className="flex flex-1 flex-col gap-1">
@@ -143,7 +143,7 @@ export function LogoutOtherBrowserSessionsForm({ sessions }: LogoutOtherBrowserS
                             <TableRow key={`${session.device.browser}-${index}`}>
                                 <TableCell>
                                     <p className="inline-flex items-center gap-3">
-                                        <span className="inline-flex rounded-full bg-[var(--state-faded-lighter)] p-1.5">
+                                        <span className="inline-flex rounded-full bg-(--state-faded-lighter) p-1.5">
                                             {session.device.browser === "Firefox" ? (
                                                 <FirefoxIcon className="size-5" />
                                             ) : null}

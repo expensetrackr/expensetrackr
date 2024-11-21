@@ -74,10 +74,10 @@ export function MainSidebar({
                     <DropdownButton as={SidebarItem} buttonClassName="p-3">
                         <Avatar
                             alt="ExpenseTrackr logo"
-                            className="bg-primary inline-flex !size-10 items-center justify-center p-1"
+                            className="inline-flex !size-10 items-center justify-center bg-primary p-1"
                             src="/img/isotype-dark.svg"
                         />
-                        <SidebarLabel className="text-label-sm flex-1">{user?.current_workspace.name}</SidebarLabel>
+                        <SidebarLabel className="flex-1 text-label-sm">{user?.current_workspace.name}</SidebarLabel>
                         {/* @ts-expect-error - TODO: this type is wrong (Headless UI side) */}
                         <CompactButton as="span" className="ml-auto">
                             <ExpandUpDownIcon />
@@ -199,7 +199,7 @@ export function MainSidebar({
             </SidebarBody>
             <SidebarFooter className="max-lg:hidden">
                 <Dropdown>
-                    <DropdownButton as={SidebarItem} className="rounded-10 -mx-4">
+                    <DropdownButton as={SidebarItem} className="-mx-4 rounded-10">
                         <span className="flex min-w-0 items-center gap-3">
                             <Avatar
                                 alt={user?.name}
@@ -211,8 +211,8 @@ export function MainSidebar({
                                 user={user}
                             />
                             <span className="min-w-0 space-y-1">
-                                <span className="text-label-sm block truncate">{user?.name}</span>
-                                <span className="text-paragraph-xs block truncate text-[var(--text-sub-600)]">
+                                <span className="block truncate text-label-sm">{user?.name}</span>
+                                <span className="block truncate text-paragraph-xs text-(--text-sub-600)">
                                     {user?.email}
                                 </span>
                             </span>

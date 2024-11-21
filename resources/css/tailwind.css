@@ -2,6 +2,20 @@
 @plugin "@tailwindcss/forms";
 @plugin "tailwindcss-animate";
 
+@layer base {
+    input,
+    textarea,
+    select,
+    button {
+        border: 0px solid;
+        border-radius: 0;
+        padding: 0;
+        color: inherit;
+        background-color: transparent;
+        color: inherit;
+    }
+}
+
 @theme {
     --color-*: initial;
 

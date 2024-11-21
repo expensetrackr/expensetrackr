@@ -14,7 +14,7 @@ const avatarVariants = cva({
     ],
     variants: {
         $square: {
-            true: "rounded-[var(--avatar-radius)] *:rounded-[var(--avatar-radius)]",
+            true: "rounded-(--avatar-radius) *:rounded-(--avatar-radius)",
             false: "rounded-full *:rounded-full",
         },
     },
@@ -57,7 +57,7 @@ export function Avatar({
                 // biome-ignore lint/a11y/noSvgWithoutTitle: it has a title when alt is provided, if not, have aria-hidden
                 <svg
                     aria-hidden={alt ? undefined : "true"}
-                    className="text-label-md bg-blue-200 fill-blue-950 uppercase select-none"
+                    className="bg-blue-200 fill-blue-950 text-label-md uppercase select-none"
                     viewBox="0 0 100 100"
                 >
                     {alt && <title>{alt}</title>}

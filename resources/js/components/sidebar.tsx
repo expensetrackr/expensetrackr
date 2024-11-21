@@ -14,7 +14,7 @@ export const SidebarHeader = twc.div`flex flex-col p-3 [&>[data-slot=section]+[d
 
 export const SidebarBody = twc.div`flex flex-1 flex-col overflow-y-auto p-5 [&>[data-slot=section]+[data-slot=section]]:mt-8`;
 
-export const SidebarFooter = twc.div`flex flex-col mx-5 p-3 border-t border-[var(--stroke-soft-200)] [&>[data-slot=section]+[data-slot=section]]:mt-2.5`;
+export const SidebarFooter = twc.div`flex flex-col mx-5 p-3 border-t border-(--stroke-soft-200) [&>[data-slot=section]+[data-slot=section]]:mt-2.5`;
 
 export function SidebarSection({ className, ...props }: React.ComponentPropsWithoutRef<"div">) {
     const id = React.useId();
@@ -26,13 +26,13 @@ export function SidebarSection({ className, ...props }: React.ComponentPropsWith
     );
 }
 
-export const SidebarDivider = twc.hr`border-t border-[var(--stroke-soft-200)]`;
+export const SidebarDivider = twc.hr`border-t border-(--stroke-soft-200)`;
 
 export const SidebarSpacer = twc.div.attrs({
     "aria-hidden": "true",
 })`mt-8 flex-1`;
 
-export const SidebarHeading = twc.h3`p-1 text-subheading-xs uppercase text-[var(--text-soft-400)]`;
+export const SidebarHeading = twc.h3`p-1 text-subheading-xs uppercase text-(--text-soft-400)`;
 
 export const SidebarItem = React.forwardRef(function SidebarItem(
     {
@@ -56,19 +56,19 @@ export const SidebarItem = React.forwardRef(function SidebarItem(
 ) {
     const classes = cx(
         // Base
-        "rounded-8 text-label-sm flex w-full items-center gap-2 px-3 py-2 text-left text-[var(--text-sub-600)] transition",
+        "flex w-full items-center gap-2 rounded-8 px-3 py-2 text-left text-label-sm text-(--text-sub-600) transition",
         // Leading icon/icon-only
-        "*:data-[slot=icon]:size-5 data-[slot=icon]:*:shrink-0 data-[slot=icon]:*:text-[var(--icon-sub-600)] data-[slot=icon]:*:transition",
+        "*:data-[slot=icon]:size-5 data-[slot=icon]:*:shrink-0 data-[slot=icon]:*:text-(--icon-sub-600) data-[slot=icon]:*:transition",
         // Trailing icon (down chevron or similar)
         "data-[slot=icon]:last:*:ml-auto data-[slot=icon]:last:*:size-5 sm:data-[slot=icon]:last:*:size-4",
         // Avatar
         "data-[slot=avatar]:*:-m-0.5 data-[slot=avatar]:*:size-7 data-[slot=avatar]:*:[--ring-opacity:10%] sm:data-[slot=avatar]:*:size-6",
         // Hover
-        "data-[current]:data-[hover]:*:data-[slot=icon]:text-primary data-[hover]:bg-[var(--bg-weak-50)] data-[hover]:*:data-[slot=icon]:text-[var(--icon-sub-600)]",
+        "data-[hover]:bg-(--bg-weak-50) data-[hover]:*:data-[slot=icon]:text-(--icon-sub-600) data-[current]:data-[hover]:*:data-[slot=icon]:text-primary",
         // Active
-        "data-[active]:bg-[var(--bg-weak-50)] data-[active]:*:data-[slot=icon]:text-[var(--icon-sub-600)]",
+        "data-[active]:bg-(--bg-weak-50) data-[active]:*:data-[slot=icon]:text-(--icon-sub-600)",
         // Current
-        "data-[current]:*:data-[slot=icon]:text-primary data-[current]:bg-[var(--bg-weak-50)] data-[current]:text-[var(--text-strong-950)]",
+        "data-[current]:bg-(--bg-weak-50) data-[current]:text-(--text-strong-950) data-[current]:*:data-[slot=icon]:text-primary",
         // Custom classes
         buttonClassName,
     );
@@ -77,7 +77,7 @@ export const SidebarItem = React.forwardRef(function SidebarItem(
         <span className={cx("relative", className)}>
             {current && currentIndicator && (
                 <motion.span
-                    className="rounded-r-4 bg-primary absolute inset-y-2 -left-5 h-5 w-1"
+                    className="absolute inset-y-2 -left-5 h-5 w-1 rounded-r-4 bg-primary"
                     layoutId="current-indicator"
                 />
             )}

@@ -65,7 +65,7 @@ export function WorkspaceMemberInvitations({ workspace, permissions }: Workspace
                         <TableRow>
                             <TableCell colSpan={3}>
                                 <div className="flex justify-center py-12">
-                                    <p className="text-paragraph-sm text-[var(--text-sub-600)]">
+                                    <p className="text-paragraph-sm text-(--text-sub-600)">
                                         There are no pending invitations.
                                     </p>
                                 </div>
@@ -109,7 +109,7 @@ function CancelInvitation({ invitation }: { invitation: WorkspaceInvitation }) {
             <Dialog onClose={() => setAction(null)} open={action === `destroy:workspace-invitations:${invitation.id}`}>
                 <DialogHeader>
                     <DialogIcon>
-                        <MailCloseIcon className="size-6 text-[var(--icon-sub-600)]" />
+                        <MailCloseIcon className="size-6 text-(--icon-sub-600)" />
                     </DialogIcon>
 
                     <div className="flex flex-1 flex-col gap-1">

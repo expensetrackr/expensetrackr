@@ -36,7 +36,7 @@ export function SettingsMenu() {
 
                 {currentRoute === "settings.show" && (
                     <motion.span
-                        className="ml-auto inline-flex rounded-full bg-[var(--bg-white-0)] p-px shadow-xs"
+                        className="ml-auto inline-flex rounded-full bg-(--bg-white-0) p-px shadow-xs"
                         layoutId="current-setting-indicator"
                     >
                         <ArrowRightSIcon className="size-[18px]" />
@@ -57,7 +57,7 @@ export function SettingsMenu() {
 
                 {currentRoute === "workspaces.show" && (
                     <motion.span
-                        className="ml-auto inline-flex rounded-full bg-[var(--bg-white-0)] p-px shadow-xs"
+                        className="ml-auto inline-flex rounded-full bg-(--bg-white-0) p-px shadow-xs"
                         layoutId="current-setting-indicator"
                     >
                         <ArrowRightSIcon className="size-[18px]" />
@@ -74,7 +74,7 @@ export function SettingsMenu() {
 
                 {currentRoute === "settings.privacy-and-security.show" && (
                     <motion.span
-                        className="ml-auto inline-flex rounded-full bg-[var(--bg-white-0)] p-px shadow-xs"
+                        className="ml-auto inline-flex rounded-full bg-(--bg-white-0) p-px shadow-xs"
                         layoutId="current-setting-indicator"
                     >
                         <ArrowRightSIcon className="size-[18px]" />
@@ -91,7 +91,7 @@ export function SettingsMenu() {
 
                 {currentRoute === "settings.connected-accounts.show" && (
                     <motion.span
-                        className="ml-auto inline-flex rounded-full bg-[var(--bg-white-0)] p-px shadow-xs"
+                        className="ml-auto inline-flex rounded-full bg-(--bg-white-0) p-px shadow-xs"
                         layoutId="current-setting-indicator"
                     >
                         <ArrowRightSIcon className="size-[18px]" />
@@ -107,7 +107,7 @@ export function SettingsSidebar() {
         <Sidebar className="gap-5 px-5 py-7">
             <SidebarHeader className="gap-1 p-0">
                 <h2 className="text-label-lg">Settings</h2>
-                <p className="text-paragraph-sm text-[var(--text-sub-600)]">Choose between categories.</p>
+                <p className="text-paragraph-sm text-(--text-sub-600)">Choose between categories.</p>
             </SidebarHeader>
 
             <SidebarDivider />

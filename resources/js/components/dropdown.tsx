@@ -30,15 +30,15 @@ export function DropdownMenu({
                 // Anchor positioning
                 "[--anchor-gap:var(--spacing-2)] [--anchor-padding:var(--spacing-1)] data-[anchor~=end]:[--anchor-offset:6px] data-[anchor~=start]:[--anchor-offset:-6px] sm:data-[anchor~=end]:[--anchor-offset:4px] sm:data-[anchor~=start]:[--anchor-offset:-4px]",
                 // Base styles
-                "rounded-16 isolate flex w-max flex-col gap-1 p-2",
+                "isolate flex w-max flex-col gap-1 rounded-16 p-2",
                 // Invisible border that is only visible in `forced-colors` mode for accessibility purposes
                 "outline outline-transparent focus:outline-none",
                 // Handle scrolling when menu won't fit in viewport
                 "overflow-y-auto",
                 // Popover background
-                "bg-[var(--bg-white-0)]/85 backdrop-blur-lg",
+                "bg-(--bg-white-0)/85 backdrop-blur-lg",
                 // Shadows
-                "ring-1 shadow-md ring-[var(--stroke-soft-200)]",
+                "ring-1 shadow-md ring-(--stroke-soft-200)",
                 // Define grid at the menu level if subgrid is supported
                 "supports-[grid-template-columns:subgrid]:grid supports-[grid-template-columns:subgrid]:grid-cols-[auto_1fr_1.5rem_0.5rem_auto]",
                 // Transitions
@@ -53,11 +53,11 @@ export function DropdownMenu({
 
 const dropdownItemClasses = cx(
     // Base styles
-    "group rounded-8 cursor-default p-2 transition focus:outline-none",
+    "group cursor-default rounded-8 p-2 transition focus:outline-none",
     // Text styles
-    "text-paragraph-sm text-left forced-colors:text-[CanvasText]",
+    "text-left text-paragraph-sm forced-colors:text-[CanvasText]",
     // Focus
-    "data-focus:bg-[var(--bg-weak-50)]",
+    "data-focus:bg-(--bg-weak-50)",
     // Disabled state
     "data-disabled:opacity-50",
     // Forced colors mode
@@ -66,7 +66,7 @@ const dropdownItemClasses = cx(
     "col-span-full grid grid-cols-[auto_1fr_1.5rem_0.5rem_auto] items-center supports-[grid-template-columns:subgrid]:grid-cols-subgrid",
     // Icons
     "[&>[data-slot=icon]]:col-start-1 [&>[data-slot=icon]]:row-start-1 [&>[data-slot=icon]]:mr-2.5 [&>[data-slot=icon]]:-ml-0.5 [&>[data-slot=icon]]:size-5 sm:[&>[data-slot=icon]]:mr-2",
-    "[&>[data-slot=icon]]:text-[var(--icon-sub-600)]",
+    "[&>[data-slot=icon]]:text-(--icon-sub-600)",
     // Avatar
     "[&>[data-slot=avatar]]:mr-2.5 [&>[data-slot=avatar]]:-ml-1 [&>[data-slot=avatar]]:size-6 sm:[&>[data-slot=avatar]]:mr-2 sm:[&>[data-slot=avatar]]:size-5",
 );
@@ -93,11 +93,11 @@ export const DropdownSection = twc(
 
 export const DropdownHeading = twc(
     Headless.MenuHeading,
-)`col-span-full grid grid-cols-[1fr,auto] gap-x-12 px-2 py-1 text-subheading-xs uppercase text-[var(--text-soft-400)]`;
+)`col-span-full grid grid-cols-[1fr,auto] gap-x-12 px-2 py-1 text-subheading-xs uppercase text-(--text-soft-400)`;
 
 export const DropdownDivider = twc(
     Headless.MenuSeparator,
-)`col-span-full my-[1.5px] h-px border-0 bg-[var(--stroke-soft-200)] forced-colors:bg-[CanvasText]`;
+)`col-span-full my-[1.5px] h-px border-0 bg-(--stroke-soft-200) forced-colors:bg-[CanvasText]`;
 
 export const DropdownLabel = twc(Headless.Label).attrs({
     "data-slot": "label",
@@ -122,7 +122,7 @@ export function DropdownShortcut({
                 <kbd
                     // biome-ignore lint/suspicious/noArrayIndexKey: it's safe to use the index as a key here
                     className={cx([
-                        "min-w-[2ch] text-center font-sans text-zinc-400 capitalize group-data-focus:text-white forced-colors:group-data-focus:text-[HighlightText]",
+                        "text-zinc-400 min-w-[2ch] text-center font-sans capitalize group-data-focus:text-white forced-colors:group-data-focus:text-[HighlightText]",
                         // Make sure key names that are longer than one character (like "Tab") have extra space
                         index > 0 && char.length > 1 && "pl-1",
                     ])}

@@ -36,11 +36,11 @@ export function Description({
             data-slot="description"
             {...props}
             className={cx(
-                "text-paragraph-xs inline-flex items-start gap-1 text-[var(--text-sub-600)] data-[disabled]:opacity-50",
+                "inline-flex items-start gap-1 text-paragraph-xs text-(--text-sub-600) data-[disabled]:opacity-50",
                 className,
             )}
         >
-            <ErrorWarningFillIcon className="size-4 text-[var(--icon-soft-400)]" />
+            <ErrorWarningFillIcon className="size-4 text-(--icon-soft-400)" />
             <span>{typeof children === "string" ? children : children?.toString?.()}</span>
         </Headless.Description>
     );
@@ -56,7 +56,7 @@ export function ErrorMessage({
             data-slot="error"
             {...props}
             className={cx(
-                "text-paragraph-xs text-state-error-base inline-flex items-start gap-1 data-[disabled]:opacity-50",
+                "inline-flex items-start gap-1 text-paragraph-xs text-state-error-base data-[disabled]:opacity-50",
                 className,
             )}
         >

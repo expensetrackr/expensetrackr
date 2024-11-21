@@ -38,8 +38,8 @@ export default function CreateAccountPage({ accountTypes, wizard }: InertiaShare
             <div className="flex flex-col gap-6 sm:mx-auto sm:max-w-[540px]">
                 <div className="flex flex-col items-center gap-2">
                     <div className="rounded-full bg-gradient-to-b from-neutral-500/10 to-transparent p-4 backdrop-blur-md">
-                        <div className="rounded-full border border-[var(--stroke-soft-200)] bg-[var(--bg-white-0)] p-4">
-                            <DraftFillIcon className="size-8 text-[var(--icon-sub-600)]" />
+                        <div className="rounded-full border border-(--stroke-soft-200) bg-(--bg-white-0) p-4">
+                            <DraftFillIcon className="size-8 text-(--icon-sub-600)" />
                         </div>
                     </div>
 
@@ -52,7 +52,7 @@ export default function CreateAccountPage({ accountTypes, wizard }: InertiaShare
                     </div>
                 </div>
 
-                <div className="mx-auto w-full max-w-[400px] rounded-20 border border-[var(--stroke-soft-200)] bg-[var(--bg-white-0)] shadow-xs">
+                <div className="mx-auto w-full max-w-[400px] rounded-20 border border-(--stroke-soft-200) bg-(--bg-white-0) shadow-xs">
                     <div className="p-4">
                         <AccountForm id="details-form" onSubmit={onSubmit}>
                             <Field>
@@ -84,7 +84,7 @@ export default function CreateAccountPage({ accountTypes, wizard }: InertiaShare
                                 )}
                             </Field>
 
-                            <div className="-mx-4 mt-1 border-t border-t-[var(--stroke-soft-200)] pt-3">
+                            <div className="-mx-4 mt-1 border-t border-t-(--stroke-soft-200) pt-3">
                                 <div className="px-5">
                                     <Field>
                                         <Label>Type</Label>

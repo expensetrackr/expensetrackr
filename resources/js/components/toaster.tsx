@@ -23,9 +23,9 @@ export function Toaster(props: SonnerProps) {
                 unstyled: true,
                 classNames: {
                     toast: cx(
-                        "group toast flex w-[var(--width)] items-start",
-                        "group-[.toaster]:bg-state-faded-base group-[.toaster]:data-[type=error]:bg-state-error-base group-[.toaster]:data-[type=info]:bg-state-information-base group-[.toaster]:data-[type=success]:bg-state-success-base group-[.toaster]:data-[type=warning]:bg-state-warning-base backdrop-blur-2xl group-[.toaster]:text-white",
-                        "rounded-12 gap-3 p-3.5",
+                        "group toast flex w-(--width) items-start",
+                        "backdrop-blur-2xl group-[.toaster]:bg-state-faded-base group-[.toaster]:text-white group-[.toaster]:data-[type=error]:bg-state-error-base group-[.toaster]:data-[type=info]:bg-state-information-base group-[.toaster]:data-[type=success]:bg-state-success-base group-[.toaster]:data-[type=warning]:bg-state-warning-base",
+                        "gap-3 rounded-12 p-3.5",
                     ),
                     icon: "!size-5 !m-0 mt-0.5",
                     title: "text-label-sm h-5",
