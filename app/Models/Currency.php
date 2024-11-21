@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $workspace_id
  * @property string $name
  * @property string $code
- * @property int $rate
+ * @property float $rate
  * @property int $precision
  * @property string $symbol
  * @property bool $symbol_first
@@ -31,10 +31,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null $updated_by
  * @property CarbonImmutable|null $created_at
  * @property CarbonImmutable|null $updated_at
- * @property-read float|null $live_rate
  * @property-read Workspace $workspace
  *
- * @method static CurrencyFactory factory($count = null, $state = [])
+ * @method static \Database\Factories\CurrencyFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Currency newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Currency newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Currency query()

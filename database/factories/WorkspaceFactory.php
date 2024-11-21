@@ -8,9 +8,7 @@ use App\Models\User;
 use App\Models\Workspace;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends Factory<Workspace>
- */
+/** @extends Factory<Workspace> */
 final class WorkspaceFactory extends Factory
 {
     /**

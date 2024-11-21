@@ -38,7 +38,7 @@ use Workspaces\HasWorkspaces;
  * @property string|null $two_factor_secret
  * @property string|null $two_factor_recovery_codes
  * @property CarbonImmutable|null $two_factor_confirmed_at
- * @property-read Collection<int, Account> $accounts
+ * @property-read Collection<int, \App\Models\Account> $accounts
  * @property-read int|null $accounts_count
  * @property-read Collection<int, \JoelButcher\Socialstream\ConnectedAccount> $connectedAccounts
  * @property-read int|null $connected_accounts_count

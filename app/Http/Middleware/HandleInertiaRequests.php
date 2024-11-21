@@ -46,7 +46,7 @@ final class HandleInertiaRequests extends Middleware
                 'query' => $request->query(),
             ],
             'toast' => collect(Arr::only($request->session()->all(), ['error', 'warning', 'success', 'info']))
-                ->mapWithKeys(fn ($notification, $key): array => ['type' => $key, 'message' => $notification]) ?? null,
+                ->mapWithKeys(fn ($notification, $key): array => ['type' => $key, 'message' => $notification]),
         ]);
     }
 }

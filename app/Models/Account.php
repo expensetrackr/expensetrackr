@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use Akaunting\Money\Money;
 use App\Casts\MoneyCast;
 use App\Concerns\Blamable;
 use App\Concerns\WorkspaceOwned;
@@ -13,16 +12,16 @@ use Database\Factories\AccountFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
 
 /**
  * @property int $id
  * @property string $name
  * @property string|null $description
- * @property \Akaunting\Money\Currency $currency_code
- * @property Money $initial_balance
- * @property Money $current_balance
- * @property string $type
+ * @property string $currency_code
+ * @property string $initial_balance
+ * @property string $current_balance
  * @property bool $is_default
  * @property string $public_id
  * @property int $workspace_id
@@ -30,6 +29,9 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @property int|null $updated_by
  * @property CarbonImmutable|null $created_at
  * @property CarbonImmutable|null $updated_at
+ * @property string $accountable_type
+ * @property int $accountable_id
+ * @property-read Model|Eloquent $accountable
  * @property-read User|null $createdBy
  * @property-read string|null $prefixed_id
  * @property-read User|null $updatedBy
@@ -39,6 +41,8 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Account newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Account newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Account query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereAccountableId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereAccountableType($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereCreatedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereCurrencyCode($value)
@@ -49,7 +53,6 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereIsDefault($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Account wherePublicId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereUpdatedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereWorkspaceId($value)
@@ -60,6 +63,16 @@ final class Account extends Model
 {
     /** @use HasFactory<AccountFactory> */
     use Blamable, HasFactory, HasPrefixedId, WorkspaceOwned;
+
+    /**
+     * The accountable model.
+     *
+     * @return MorphTo<Model, covariant $this>
+     */
+    public function accountable(): MorphTo
+    {
+        return $this->morphTo();
+    }
 
     /**
      * The attributes that should be cast.

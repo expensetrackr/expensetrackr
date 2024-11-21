@@ -12,9 +12,7 @@ use Illuminate\Support\Str;
 use JoelButcher\Socialstream\Providers;
 use Workspaces\Features as WorkspacesFeatures;
 
-/**
- * @extends Factory<User>
- */
+/** @extends Factory<User> */
 final class UserFactory extends Factory
 {
     /**

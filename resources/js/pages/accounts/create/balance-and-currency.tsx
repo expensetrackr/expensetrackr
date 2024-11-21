@@ -66,13 +66,13 @@ export default function CreateAccountStep2Page({
 
                         <div className="flex flex-col items-center gap-1">
                             <h1 className="text-h5">Balance and currency</h1>
-                            <Text className="text-paragraph-md text-center">
+                            <Text className="text-center text-paragraph-md">
                                 Provide the balance and currency for your new account.
                             </Text>
                         </div>
                     </div>
 
-                    <div className="rounded-20 mx-auto w-full max-w-[400px] border border-[var(--stroke-soft-200)] bg-[var(--bg-white-0)] shadow-xs">
+                    <div className="mx-auto w-full max-w-[400px] rounded-20 border border-[var(--stroke-soft-200)] bg-[var(--bg-white-0)] shadow-xs">
                         <div className="flex items-center gap-3.5 py-4 pr-6 pl-5">
                             <div className="flex size-10 items-center justify-center rounded-full border border-[var(--stroke-soft-200)]">
                                 <BankIcon className="size-5 text-[var(--icon-sub-600)]" />

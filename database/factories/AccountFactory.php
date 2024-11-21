@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace Database\Factories;
 
 use App\Enums\AccountType;
+use App\Models\Account;
 use App\Models\User;
 use App\Models\Workspace;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Account>
- */
+/** @extends Factory<Account> */
 final class AccountFactory extends Factory
 {
     /**

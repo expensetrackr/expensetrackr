@@ -23,9 +23,11 @@ final class MoneyCast implements CastsAttributes
         $currency_code = $attributes['currency_code'] ?? CurrencyAccessor::getDefaultCurrency() ?? 'USD';
 
         if ($value !== null) {
-            if (is_string($value)) {
-                $value = (int) $value;
+            if (! is_numeric($value)) {
+                return '';
             }
+
+            $value = (int) $value;
 
             return CurrencyConverter::prepareForMutator($value, $currency_code);
         }

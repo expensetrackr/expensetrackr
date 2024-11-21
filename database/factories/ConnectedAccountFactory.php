@@ -9,9 +9,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use JoelButcher\Socialstream\Providers;
 
-/**
- * @extends Factory<ConnectedAccount>
- */
+/** @extends Factory<ConnectedAccount> */
 final class ConnectedAccountFactory extends Factory
 {
     protected $model = ConnectedAccount::class;

@@ -109,7 +109,7 @@ final class AccountController extends Controller
 
                 return redirect()->route('accounts.index')
                     ->with('success', 'Account created successfully.');
-            } catch (Exception $e) {
+            } catch (Exception) {
                 return redirect()->back()->with('error', 'Failed to create account. Please try again.');
             }
         }

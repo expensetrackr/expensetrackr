@@ -23,7 +23,7 @@ use Workspaces\Workspace as BaseWorkspace;
  * @property CarbonImmutable|null $updated_at
  * @property-read User|null $owner
  * @property-read \Workspaces\Membership|null $membership
- * @property-read Collection<int, User> $users
+ * @property-read Collection<int, \App\Models\User> $users
  * @property-read int|null $users_count
  * @property-read Collection<int, \Workspaces\WorkspaceInvitation> $workspaceInvitations
  * @property-read int|null $workspace_invitations_count
