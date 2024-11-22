@@ -20,7 +20,7 @@ export interface ContentDividerProps
     extends React.HTMLAttributes<HTMLDivElement>,
         VariantProps<typeof contentDividerVariants> {}
 
-export function ContentDivider({ $type, className, children, ...props }: ContentDividerProps) {
+export function ContentDivider({ $type = "text", className, children, ...props }: ContentDividerProps) {
     if ($type === "text" || $type === "solid-text") {
         return (
             <div

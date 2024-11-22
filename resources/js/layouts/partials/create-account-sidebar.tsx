@@ -1,7 +1,4 @@
-import { usePage } from "@inertiajs/react";
-import CheckboxCircleFillIcon from "virtual:icons/ri/checkbox-circle-fill";
 import HeadphoneIcon from "virtual:icons/ri/headphone-line";
-import { route } from "ziggy-js";
 
 import { Button } from "#/components/button.tsx";
 import {
@@ -15,18 +12,10 @@ import {
     SidebarSection,
 } from "#/components/sidebar.tsx";
 import { Text } from "#/components/text.tsx";
-
-type PageProps = {
-    wizard: {
-        currentStep: string;
-        completedSteps: Record<string, boolean>;
-        totalSteps: number;
-    };
-};
+import { stepperInstance } from "#/pages/accounts/create/partials/stepper.ts";
 
 export function CreateAccountSidebar() {
-    const page = usePage<PageProps>();
-    const completedSteps = page.props.wizard.completedSteps;
+    const stepper = stepperInstance.useStepper();
 
     return (
         <Sidebar className="gap-3 lg:rounded-16 lg:bg-(--bg-weak-50)">
@@ -36,41 +25,24 @@ export function CreateAccountSidebar() {
 
             <SidebarBody className="mx-4 p-0">
                 <SidebarSection>
-                    <SidebarItem
-                        buttonClassName="group rounded-10 p-2 data-current:!bg-(--bg-white-0) data-hover:!bg-(--bg-white-0)"
-                        current={route().current("accounts.create", { step: "details" })}
-                        href={route("accounts.create", { step: "details" })}
-                    >
-                        {completedSteps["details"] ? (
-                            <CheckboxCircleFillIcon className="!text-state-success-base" />
-                        ) : (
-                            <StepNumber>1</StepNumber>
-                        )}
-
-                        <SidebarLabel>Details</SidebarLabel>
-                    </SidebarItem>
-                    <SidebarItem
-                        buttonClassName="group rounded-10 p-2 data-current:!bg-(--bg-white-0) data-hover:!bg-(--bg-white-0)"
-                        current={route().current("accounts.create", { step: "balance-and-currency" })}
-                        href={route("accounts.create", { step: "balance-and-currency" })}
-                    >
-                        {completedSteps["balance-and-currency"] ? (
-                            <CheckboxCircleFillIcon className="!text-state-success-base" />
-                        ) : (
-                            <StepNumber>2</StepNumber>
-                        )}
-
-                        <SidebarLabel>Balance & Currency</SidebarLabel>
-                    </SidebarItem>
-                    <SidebarItem
-                        buttonClassName="group rounded-10 p-2 data-current:!bg-(--bg-white-0) data-hover:!bg-(--bg-white-0)"
-                        current={route().current("accounts.create", { step: "review" })}
-                        href={route("accounts.create", { step: "review" })}
-                    >
-                        <StepNumber>3</StepNumber>
-
-                        <SidebarLabel>Account Summary</SidebarLabel>
-                    </SidebarItem>
+                    <ol aria-orientation="vertical" className="flex flex-col gap-1">
+                        {stepper.all.map((step, index) => (
+                            <SidebarItem
+                                aria-posinset={index + 1}
+                                aria-selected={stepper.current.id === step.id}
+                                aria-setsize={stepper.all.length}
+                                buttonClassName="group rounded-10 p-2 data-current:bg-(--bg-white-0) data-hover:bg-(--bg-white-0)"
+                                current={stepper.current.id === step.id}
+                                currentIndicator={false}
+                                key={step.id}
+                                onClick={() => stepper.goTo(step.id)}
+                                role="tab"
+                            >
+                                <StepNumber>{index + 1}</StepNumber>
+                                <SidebarLabel>{step.label}</SidebarLabel>
+                            </SidebarItem>
+                        ))}
+                    </ol>
                 </SidebarSection>
             </SidebarBody>
 

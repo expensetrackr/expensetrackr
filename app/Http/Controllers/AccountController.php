@@ -7,7 +7,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreAccountStepRequest;
 use App\Models\Account;
 use App\Services\AccountWizardService;
-use App\Services\CurrencyService;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
@@ -39,48 +38,13 @@ final class AccountController extends Controller
     }
 
     /**
-     * Create a new account.
-     *
-     * @throws AuthorizationException
+     * Create a new account
      */
-    public function create(Request $request, CurrencyService $currencyService): Response|RedirectResponse
+    public function create(Request $request): Response
     {
         Gate::authorize('create', Account::class);
 
-        $currentStep = $request->query('step');
-
-        if (empty($currentStep)) {
-            return redirect()->route('accounts.create', ['step' => $this->wizardService->getFirstIncompleteStep($request)]);
-        }
-
-        try {
-            $currentStep = $this->wizardService->validateStep(type($currentStep)->asString());
-            $this->wizardService->validateStepProgression($request, $currentStep);
-        } catch (InvalidArgumentException $e) {
-            return redirect()->route('accounts.create', ['step' => $this->wizardService->getFirstIncompleteStep($request)])
-                ->with('toast', ['type' => 'error', 'message' => $e->getMessage()]);
-        }
-
-        $stepData = $this->wizardService->getAllStepsData($request);
-        $currentStepData = $this->wizardService->getStepConfiguration(
-            $currentStep,
-            $stepData,
-            $currencyService->getSupportedCurrencies()
-        );
-
-        return Workspaces::inertia()->render(
-            $request,
-            $currentStepData['component'],
-            [
-                'wizard' => [
-                    'currentStep' => $currentStep,
-                    'totalSteps' => $this->wizardService->getTotalSteps(),
-                    'completedSteps' => $this->wizardService->getCompletedSteps($request),
-                    'data' => $this->wizardService->getWizardData($request),
-                ],
-                ...$currentStepData['props'],
-            ]
-        );
+        return Workspaces::inertia()->render($request, 'accounts/create/index');
     }
 
     /**

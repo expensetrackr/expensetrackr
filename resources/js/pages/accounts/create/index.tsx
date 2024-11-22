@@ -1,123 +1,76 @@
-import { Head, router } from "@inertiajs/react";
-import DraftFillIcon from "virtual:icons/ri/draft-fill";
+import { getFormProps, useForm } from "@conform-to/react";
+import { getZodConstraint, parseWithZod } from "@conform-to/zod";
+import { Head } from "@inertiajs/react";
 
-import { AccountForm } from "#/components/form/account-form.tsx";
-import { Description, ErrorMessage, Field, Label } from "#/components/form/fieldset.tsx";
-import { Input } from "#/components/form/input.tsx";
-import { Select } from "#/components/form/select.tsx";
-import { Textarea } from "#/components/form/textarea.tsx";
-import { Text } from "#/components/text.tsx";
-import { useAccountForm } from "#/hooks/use-account-form.ts";
-import { CreateLayout } from "#/layouts/create-layout.tsx";
-import { type AccountTypes } from "#/models/account.ts";
-import { type InertiaSharedProps } from "#/types/index.ts";
+import { SidebarLayout } from "#/components/sidebar-layout.tsx";
+import { CreateAccountSidebar } from "#/layouts/partials/create-account-sidebar.tsx";
+import { TypeStep, type TypeStepValues } from "#/pages/accounts/create/partials/type-step.tsx";
+import { stepperInstance } from "./partials/stepper.ts";
 
-type CreateAccountPageProps = {
-    accountTypes: Record<string, string>;
-    wizard: {
-        currentStep: string;
-        totalSteps: number;
-        completedSteps: Record<string, boolean>;
-        data: Record<string, string>;
-    };
-};
-
-export default function CreateAccountPage({ accountTypes, wizard }: InertiaSharedProps<CreateAccountPageProps>) {
-    const form = useAccountForm(wizard.data);
-
-    function onSubmit(e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>) {
-        e.preventDefault();
-
-        form.post(route("accounts.store", ["details"]), {
-            onSuccess: () => router.visit(route("accounts.create", { step: "balance-and-currency" })),
-        });
-    }
+export default function CreateAccountPage() {
+    const stepper = stepperInstance.useStepper();
+    const [form, fields] = useForm({
+        id: "create-account",
+        shouldValidate: "onBlur",
+        shouldRevalidate: "onInput",
+        constraint: getZodConstraint(stepper.current.schema),
+        onValidate({ formData }) {
+            return parseWithZod(formData, { schema: stepper.current.schema });
+        },
+        onSubmit(event, { submission }) {
+            event.preventDefault();
+            // biome-ignore lint/suspicious/noConsoleLog: <We want to log the form values>
+            console.log(`Form values for step ${stepper.current.id}:`, submission);
+            if (stepper.isLast) {
+                stepper.reset();
+            } else {
+                stepper.next();
+            }
+        },
+    });
 
     return (
-        <div className="relative py-12">
-            <div className="flex flex-col gap-6 sm:mx-auto sm:max-w-[540px]">
-                <div className="flex flex-col items-center gap-2">
-                    <div className="rounded-full bg-gradient-to-b from-neutral-500/10 to-transparent p-4 backdrop-blur-md">
-                        <div className="rounded-full border border-(--stroke-soft-200) bg-(--bg-white-0) p-4">
-                            <DraftFillIcon className="size-8 text-(--icon-sub-600)" />
-                        </div>
-                    </div>
+        <SidebarLayout
+            contentChildrenClassName="relative lg:shadow-none lg:ring-0"
+            contentClassName="lg:pt-0 lg:pr-0"
+            sidebar={<CreateAccountSidebar />}
+            sidebarClassName="lg:pl-2 lg:py-2"
+        >
+            <Head title="Create account" />
 
-                    <div className="flex flex-col items-center gap-1">
-                        <h1 className="text-h5">Account details</h1>
-                        <Text className="text-center text-paragraph-md">
-                            Provide the name, description, and type for your new account to manage your finances
-                            effectively.
-                        </Text>
-                    </div>
-                </div>
+            <svg
+                className="absolute left-1/2 -translate-x-1/2 text-neutral-500"
+                fill="none"
+                height="456"
+                viewBox="0 0 966 456"
+                width="966"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    d="M1.00004 0L1 456M69.8572 0L69.8571 456M138.714 0L138.714 456M207.571 0L207.571 456M276.429 0L276.429 456M345.286 0L345.286 456M414.143 0L414.143 456M483 0L483 456M551.857 0V456M620.714 0L620.714 456M689.571 0V456M758.428 0V456M827.286 0V456M896.143 0V456M965 0V456"
+                    stroke="url(#paint0_linear_3974_25638)"
+                    strokeOpacity="0.16"
+                />
+                <defs>
+                    <linearGradient
+                        gradientUnits="userSpaceOnUse"
+                        id="paint0_linear_3974_25638"
+                        x1="483"
+                        x2="483"
+                        y1="0"
+                        y2="456"
+                    >
+                        <stop stopColor="currentColor" />
+                        <stop offset="1" stopColor="currentColor" stopOpacity="0" />
+                    </linearGradient>
+                </defs>
+            </svg>
 
-                <div className="mx-auto w-full max-w-[400px] rounded-20 border border-(--stroke-soft-200) bg-(--bg-white-0) shadow-xs">
-                    <div className="p-4">
-                        <AccountForm id="details-form" onSubmit={onSubmit}>
-                            <Field>
-                                <Label>Name</Label>
-                                <Input
-                                    invalid={!!form.errors.name}
-                                    name="name"
-                                    onChange={(e) => form.setData("name", e.target.value)}
-                                    placeholder="e.g. Personal savings"
-                                    value={form.data.name}
-                                />
-                                {form.errors.name && <ErrorMessage>{form.errors.name}</ErrorMessage>}
-                            </Field>
-
-                            <Field>
-                                <Label>Description</Label>
-                                <Textarea
-                                    invalid={!!form.errors.description}
-                                    name="description"
-                                    onChange={(e) => form.setData("description", e.target.value)}
-                                    placeholder="e.g. Savings account for personal expenses"
-                                    rows={3}
-                                    value={form.data.description ?? ""}
-                                />
-                                {form.errors.description ? (
-                                    <ErrorMessage>{form.errors.description}</ErrorMessage>
-                                ) : (
-                                    <Description>This will only be visible to you.</Description>
-                                )}
-                            </Field>
-
-                            <div className="-mx-4 mt-1 border-t border-t-(--stroke-soft-200) pt-3">
-                                <div className="px-5">
-                                    <Field>
-                                        <Label>Type</Label>
-                                        <Select
-                                            invalid={!!form.errors.type}
-                                            name="type"
-                                            onChange={(e) => form.setData("type", e.target.value as AccountTypes)}
-                                            value={form.data.type}
-                                        >
-                                            {Object.entries(accountTypes).map(([key, value]) => (
-                                                <option key={key} value={key}>
-                                                    {value}
-                                                </option>
-                                            ))}
-                                        </Select>
-                                        {form.errors.type && <ErrorMessage>{form.errors.type}</ErrorMessage>}
-                                    </Field>
-                                </div>
-                            </div>
-                        </AccountForm>
-                    </div>
-
-                    <AccountForm.Navigation isSubmitting={form.processing} onSubmit={onSubmit} />
-                </div>
-            </div>
-        </div>
+            <form method="post" {...getFormProps(form)} className="relative py-12">
+                {stepper.switch({
+                    type: () => <TypeStep fields={fields as ReturnType<typeof useForm<TypeStepValues>>[1]} />,
+                })}
+            </form>
+        </SidebarLayout>
     );
 }
-
-CreateAccountPage.layout = (page: React.ReactNode & { props: InertiaSharedProps }) => (
-    <CreateLayout {...page.props}>
-        <Head title="Create account" />
-
-        {page}
-    </CreateLayout>
-);

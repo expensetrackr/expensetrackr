@@ -2,6 +2,8 @@
 @plugin "@tailwindcss/forms";
 @plugin "tailwindcss-animate";
 
+@variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
 @layer base {
     input,
     textarea,
@@ -182,12 +184,28 @@
     --color-black-alpha-16: rgb(0 0 0 / 16%);
     --color-black-alpha-10: rgb(0 0 0 / 10%);
 
+    /* brand colors */
+    --color-brand-primary-50: hsl(214 100% 97%);
+    --color-brand-primary-100: hsl(216 95% 93%);
+    --color-brand-primary-200: hsl(214 100% 87%);
+    --color-brand-primary-300: hsl(213 98% 78%);
+    --color-brand-primary-400: hsl(214 96% 68%);
+    --color-brand-primary-500: hsl(218 93% 60%);
+    --color-brand-primary-600: hsl(228 96% 60%);
+    --color-brand-primary-700: hsl(225 78% 49%);
+    --color-brand-primary-800: hsl(227 73% 40%);
+    --color-brand-primary-900: hsl(226 65% 33%);
+    --color-brand-primary-950: hsl(227 59% 21%);
+    --color-brand-primary-alpha-24: hsla(227deg, 59%, 21%, 0.24);
+    --color-brand-primary-alpha-16: hsla(227deg, 59%, 21%, 0.16);
+    --color-brand-primary-alpha-10: hsla(227deg, 59%, 21%, 0.1);
+
     /* primary colors */
-    --color-primary-darker: var(--color-blue-800);
-    --color-primary-dark: var(--color-blue-700);
-    --color-primary: var(--color-blue-500);
-    --color-primary-light: var(--color-blue-alpha-16);
-    --color-primary-lighter: var(--color-blue-alpha-10);
+    --color-primary-darker: var(--color-brand-primary-800);
+    --color-primary-dark: var(--color-brand-primary-700);
+    --color-primary: var(--color-brand-primary-500);
+    --color-primary-light: var(--color-brand-primary-alpha-16);
+    --color-primary-lighter: var(--color-brand-primary-alpha-10);
 
     /* state-colors */
     --color-state-faded-dark: var(--state-faded-dark);

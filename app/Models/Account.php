@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Casts\MoneyCast;
 use App\Concerns\Blamable;
 use App\Concerns\WorkspaceOwned;
+use App\Enums\AccountSubtype;
 use Carbon\CarbonImmutable;
 use Database\Factories\AccountFactory;
 use Eloquent;
@@ -25,6 +26,7 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @property bool $is_default
  * @property string $public_id
  * @property int $workspace_id
+ * @property AccountSubtype|null $subtype
  * @property int|null $created_by
  * @property int|null $updated_by
  * @property CarbonImmutable|null $created_at
@@ -33,7 +35,6 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @property int $accountable_id
  * @property-read Model|Eloquent $accountable
  * @property-read User|null $createdBy
- * @property-read string|null $prefixed_id
  * @property-read User|null $updatedBy
  * @property-read Workspace $workspace
  *
@@ -56,6 +57,7 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereUpdatedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereWorkspaceId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereSubtype($value)
  *
  * @mixin Eloquent
  */
@@ -84,6 +86,7 @@ final class Account extends Model
         return [
             'initial_balance' => MoneyCast::class,
             'current_balance' => MoneyCast::class,
+            'subtype' => AccountSubtype::class,
         ];
     }
 }
