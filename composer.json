@@ -22,7 +22,7 @@
         "filament/filament": "3.2.124",
         "hirethunk/verbs": "0.6.4",
         "inertiajs/inertia-laravel": "2.x-dev",
-        "joelbutcher/socialstream": "6.1.10",
+        "joelbutcher/socialstream": "6.1.11",
         "kongulov/interact-with-enum": "1.0.0",
         "laravel/fortify": "1.24.5",
         "laravel/framework": "11.33.2",
