@@ -1,11 +1,12 @@
-import { getFormProps, useForm } from "@conform-to/react";
+import { FormProvider, FormStateInput, getFormProps, useForm } from "@conform-to/react";
 import { getZodConstraint, parseWithZod } from "@conform-to/zod";
 import { Head } from "@inertiajs/react";
 
 import { SidebarLayout } from "#/components/sidebar-layout.tsx";
 import { CreateAccountSidebar } from "#/layouts/partials/create-account-sidebar.tsx";
 import { TypeStep, type TypeStepValues } from "#/pages/accounts/create/partials/type-step.tsx";
-import { stepperInstance } from "./partials/stepper.ts";
+import { DetailsStep } from "./partials/details.tsx";
+import { type DetailsStepValues, stepperInstance } from "./partials/stepper.ts";
 
 export default function CreateAccountPage() {
     const stepper = stepperInstance.useStepper();
@@ -14,6 +15,9 @@ export default function CreateAccountPage() {
         shouldValidate: "onBlur",
         shouldRevalidate: "onInput",
         constraint: getZodConstraint(stepper.current.schema),
+        defaultValue: {
+            type: "",
+        },
         onValidate({ formData }) {
             return parseWithZod(formData, { schema: stepper.current.schema });
         },
@@ -66,11 +70,18 @@ export default function CreateAccountPage() {
                 </defs>
             </svg>
 
-            <form method="post" {...getFormProps(form)} className="relative py-12">
-                {stepper.switch({
-                    type: () => <TypeStep fields={fields as ReturnType<typeof useForm<TypeStepValues>>[1]} />,
-                })}
-            </form>
+            <FormProvider context={form.context}>
+                <FormStateInput />
+
+                <form method="post" {...getFormProps(form)} className="relative py-12">
+                    {stepper.switch({
+                        type: () => <TypeStep fields={fields as ReturnType<typeof useForm<TypeStepValues>>[1]} />,
+                        details: () => (
+                            <DetailsStep fields={fields as ReturnType<typeof useForm<DetailsStepValues>>[1]} />
+                        ),
+                    })}
+                </form>
+            </FormProvider>
         </SidebarLayout>
     );
 }

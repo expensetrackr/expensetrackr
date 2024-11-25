@@ -53,10 +53,10 @@ export function SettingsLayout({
                         </PageHeader.Icon>
 
                         <div className="flex flex-1 flex-col gap-1">
-                            <PageHeader.Title className="motion-safe:animate-in motion-safe:fade-in motion-safe:zoom-in-95 motion-safe:origin-left">
+                            <PageHeader.Title className="motion-safe:origin-left motion-safe:animate-in motion-safe:fade-in motion-safe:zoom-in-95">
                                 {title}
                             </PageHeader.Title>
-                            <PageHeader.Description className="motion-safe:animate-in motion-safe:fade-in motion-safe:zoom-in-95 motion-safe:origin-left">
+                            <PageHeader.Description className="motion-safe:origin-left motion-safe:animate-in motion-safe:fade-in motion-safe:zoom-in-95">
                                 {description}
                             </PageHeader.Description>
                         </div>

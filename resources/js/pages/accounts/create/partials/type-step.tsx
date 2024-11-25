@@ -14,9 +14,9 @@ import { Button } from "#/components/button.tsx";
 import { ContentDivider } from "#/components/content-divider.tsx";
 import { ErrorMessage, Field } from "#/components/form/fieldset.tsx";
 import { accountTypeEnum } from "#/schemas/account.ts";
+import { useCreateAccountWizardStore } from "#/store/create-account-wizard.ts";
 import { cx } from "#/utils/cva.ts";
 import { Card } from "./card.tsx";
-import { stepperInstance } from "./stepper.ts";
 
 export const typeStepSchema = z.object({
     type: accountTypeEnum,
@@ -70,8 +70,13 @@ const accountTypes = {
 };
 
 export function TypeStep({ fields }: { fields: ReturnType<typeof useForm<TypeStepValues>>[1] }) {
-    const stepper = stepperInstance.useStepper();
     const typeControl = useInputControl(fields.type);
+    const { setType } = useCreateAccountWizardStore();
+
+    function handleChange(value: z.infer<typeof accountTypeEnum>) {
+        setType(value);
+        typeControl.change(value);
+    }
 
     return (
         <Card
@@ -81,14 +86,14 @@ export function TypeStep({ fields }: { fields: ReturnType<typeof useForm<TypeSte
         >
             <ContentDivider className="px-0">supported account types</ContentDivider>
 
-            <Field className="mb-4 flex flex-col gap-1">
+            <Field className="flex flex-col gap-1">
                 <Headless.RadioGroup
                     className="flex flex-col gap-2"
+                    defaultValue={fields.type.initialValue}
                     name={fields.type.name}
                     onBlur={typeControl.blur}
-                    onChange={typeControl.change}
+                    onChange={handleChange}
                     onFocus={typeControl.focus}
-                    value={typeControl.value}
                 >
                     {accountTypeEnum.options.map((option) => {
                         const Icon = accountTypes[option].icon;
@@ -125,24 +130,6 @@ export function TypeStep({ fields }: { fields: ReturnType<typeof useForm<TypeSte
                 </Headless.RadioGroup>
                 {fields.type.errors && <ErrorMessage id={fields.type.errorId}>{fields.type.errors}</ErrorMessage>}
             </Field>
-
-            <div className="flex items-center gap-3 border-t border-t-(--stroke-soft-200) pt-4">
-                {!stepper.isLast && !stepper.isFirst && (
-                    <Button
-                        $color="neutral"
-                        $size="sm"
-                        $variant="stroke"
-                        className="w-full"
-                        disabled={stepper.isFirst}
-                        onClick={stepper.prev}
-                    >
-                        Back
-                    </Button>
-                )}
-                <Button $size="sm" className="w-full" type="submit">
-                    Continue
-                </Button>
-            </div>
         </Card>
     );
 }

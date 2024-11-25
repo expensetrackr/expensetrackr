@@ -46,7 +46,7 @@ export default function Modal({
                     leaveFrom="opacity-100"
                     leaveTo="opacity-0"
                 >
-                    <div className="absolute inset-0 bg-gray-500/75" />
+                    <div className="bg-gray-500/75 absolute inset-0" />
                 </Transition.Child>
 
                 <Transition.Child
@@ -60,7 +60,7 @@ export default function Modal({
                 >
                     <Dialog.Panel
                         className={cx(
-                            "mb-6 transform overflow-hidden rounded-lg bg-white shadow-xl transition-all sm:mx-auto sm:w-full",
+                            "rounded-lg mb-6 transform overflow-hidden bg-white shadow-xl transition-all sm:mx-auto sm:w-full",
                             maxWidthClass,
                         )}
                     >

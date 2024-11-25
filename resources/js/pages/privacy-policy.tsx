@@ -12,7 +12,7 @@ export default function PrivacyPolicy({ policy }: Props) {
         <div>
             <Head title="Privacy Policy" />
 
-            <div className="font-sans text-gray-900 antialiased">
+            <div className="text-gray-900 font-sans antialiased">
                 <div className="bg-gray-100 pt-4">
                     <div className="flex min-h-screen flex-col items-center pt-6 sm:pt-0">
                         <div>
@@ -20,7 +20,7 @@ export default function PrivacyPolicy({ policy }: Props) {
                         </div>
 
                         <div
-                            className="prose mt-6 w-full overflow-hidden bg-white p-6 shadow-md sm:max-w-2xl sm:rounded-lg"
+                            className="prose sm:rounded-lg mt-6 w-full overflow-hidden bg-white p-6 shadow-md sm:max-w-2xl"
                             // biome-ignore lint/security/noDangerouslySetInnerHtml: we are the ones who set the content
                             dangerouslySetInnerHTML={{ __html: policy }}
                         />

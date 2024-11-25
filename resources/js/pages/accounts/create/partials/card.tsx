@@ -1,4 +1,7 @@
+import { Button } from "#/components/button.tsx";
 import { Text } from "#/components/text.tsx";
+
+import { stepperInstance } from "./stepper.ts";
 
 type CardFormProps = {
     title?: string;
@@ -8,6 +11,8 @@ type CardFormProps = {
 };
 
 export function Card({ icon, title, description, children }: CardFormProps) {
+    const stepper = stepperInstance.useStepper();
+
     const Icon = icon;
 
     return (
@@ -32,7 +37,25 @@ export function Card({ icon, title, description, children }: CardFormProps) {
             ) : null}
 
             <div className="mx-auto w-full max-w-[400px] rounded-20 border border-(--stroke-soft-200) bg-(--bg-white-0) shadow-xs">
-                <div className="p-4">{children}</div>
+                <div className="flex flex-col gap-3 p-4">{children}</div>
+
+                <div className="flex items-center gap-3 border-t border-t-(--stroke-soft-200) px-5 py-4">
+                    {!stepper.isLast && !stepper.isFirst && (
+                        <Button
+                            $color="neutral"
+                            $size="sm"
+                            $variant="stroke"
+                            className="w-full"
+                            disabled={stepper.isFirst}
+                            onClick={stepper.prev}
+                        >
+                            Back
+                        </Button>
+                    )}
+                    <Button $size="sm" className="w-full" type="submit">
+                        Continue
+                    </Button>
+                </div>
             </div>
         </div>
     );

@@ -5,6 +5,24 @@
 @variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 @layer base {
+    * {
+        /* Prevent grid and flex items from spilling out their container. */
+        min-width: 0;
+
+        font-feature-settings:
+            "ss11" 1,
+            "cv09" 1,
+            "liga" 0,
+            "calt" 0;
+    }
+
+    body {
+        border-color: var(--stroke-soft-200);
+
+        /* Ensure that the body fills the entire viewport. */
+        @apply min-h-dvh;
+    }
+
     input,
     textarea,
     select,

@@ -26,7 +26,7 @@ export const inputVariants = cva({
         // Border
         "border border-(--stroke-soft-200) focus-visible:border-(--stroke-strong-950) data-hover:border-(--bg-weak-50)",
         // Background color
-        "bg-(--bg-white-0) focus-visible:border-(--stroke-strong-950) data-hover:bg-(--bg-weak-50)",
+        "bg-(--bg-white-0) data-hover:bg-(--bg-weak-50)",
         // Hide default focus styles
         "focus:outline-none",
         // Focus ring
@@ -62,7 +62,7 @@ export function Input({ ref, className, $size = "md", ...props }: InputProps) {
                 // Basic layout
                 "relative block w-full transition before:transition after:transition",
                 // Background color + shadow applied to inset pseudo-element, so shadow blends with border in light mode
-                "before:absolute before:inset-px before:bg-white before:shadow",
+                "before:absolute before:inset-px before:bg-(--bg-white-0) before:shadow",
                 ($size === "xs" || $size === "sm") && "before:rounded-[calc(var(--radius-8)-1px)]",
                 $size === "md" && "before:rounded-[calc(var(--radius-10)-1px)]",
                 // Background color is moved to control and shadow is removed in dark mode so hide `before` pseudo

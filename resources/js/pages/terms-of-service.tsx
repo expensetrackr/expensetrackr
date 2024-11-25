@@ -9,7 +9,7 @@ interface Props {
 
 export default function TermsOfService({ terms }: Props) {
     return (
-        <div className="font-sans text-gray-900 antialiased">
+        <div className="text-gray-900 font-sans antialiased">
             <Head title="Terms of Service" />
 
             <div className="bg-gray-100 pt-4">
@@ -19,7 +19,7 @@ export default function TermsOfService({ terms }: Props) {
                     </div>
 
                     <div
-                        className="prose mt-6 w-full overflow-hidden bg-white p-6 shadow-md sm:max-w-2xl sm:rounded-lg"
+                        className="prose sm:rounded-lg mt-6 w-full overflow-hidden bg-white p-6 shadow-md sm:max-w-2xl"
                         // biome-ignore lint/security/noDangerouslySetInnerHtml: we are the ones who set the content
                         dangerouslySetInnerHTML={{ __html: terms }}
                     />
