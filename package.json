@@ -36,7 +36,6 @@
         "react-dom": "19.0.0-rc-91061073-20241121",
         "react-scan": "0.0.29",
         "react-twc": "1.4.2",
-        "react-use-wizard": "2.3.0",
         "sonner": "1.7.0",
         "tailwind-merge": "2.5.5",
         "zod": "3.23.8",
