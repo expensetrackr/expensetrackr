@@ -120,7 +120,7 @@ export function Listbox<T>({
                     // Handle scrolling when menu won't fit in viewport
                     "overflow-y-scroll overscroll-contain",
                     // Popover background
-                    "bg-(--bg-white-0)/85 backdrop-blur-lg",
+                    "bg-(--bg-white-0)/70 backdrop-blur-lg",
                     // Shadows
                     "ring-1 shadow-md ring-(--stroke-soft-200)",
                     // Transitions
