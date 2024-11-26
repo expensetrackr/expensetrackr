@@ -73,6 +73,9 @@ export type InertiaSharedProps<T extends Record<string, unknown | string> = Reco
     };
     ziggy: Config & { location: string; query: Record<string, string> };
     toast: { type: "error" | "warning" | "success" | "info"; message: string } | null;
+    language: string;
+    languages: Array<{ code: string; name: string }>;
+    translations: Record<string, string>;
 };
 
 export interface Session {

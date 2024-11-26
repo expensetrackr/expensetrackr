@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
+use App\Enums\Language;
+use App\Http\Resources\LanguageResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\File;
 use Inertia\Middleware;
 use Tighten\Ziggy\Ziggy;
 
@@ -40,13 +43,24 @@ final class HandleInertiaRequests extends Middleware
     public function share(Request $request): array
     {
         return array_merge(parent::share($request), [
-            'ziggy' => fn () => [
+            'ziggy' => fn() => [
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),
                 'query' => $request->query(),
             ],
             'toast' => collect(Arr::only($request->session()->all(), ['error', 'warning', 'success', 'info']))
-                ->mapWithKeys(fn ($notification, $key): array => ['type' => $key, 'message' => $notification]),
+                ->mapWithKeys(fn($notification, $key): array => ['type' => $key, 'message' => $notification]),
+            'language' => app()->getLocale(),
+            'languages' => LanguageResource::collection(Language::cases()),
+            'translations' => function () {
+                return cache()->rememberForever('translations.' . app()->getLocale(), function () {
+                    return collect(File::allFiles(base_path('lang/' . app()->getLocale())))
+                        ->flatMap(function ($file) {
+                            $fileContents = File::getRequire($file->getRealPath());
+                            return is_array($fileContents) ? Arr::dot($fileContents, $file->getBasename('.' . $file->getExtension()) . '.') : [];
+                        });
+                });
+            }
         ]);
     }
 }

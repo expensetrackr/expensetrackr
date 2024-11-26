@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\LanguageController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -42,4 +43,6 @@ Route::middleware([
     });
 });
 
-require __DIR__.'/socialstream.php';
+Route::post('/language', LanguageController::class)->name('language.store');
+
+require __DIR__ . '/socialstream.php';
