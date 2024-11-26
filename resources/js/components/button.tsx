@@ -9,7 +9,7 @@ const buttonVariants = cva({
         // Base
         "relative isolate inline-flex items-center justify-center text-label-sm font-medium transition",
         // Focus
-        "focus:outline-none data-focus:outline-2 data-focus:outline-offset-2 data-focus:outline-primary data-focus:outline-solid",
+        "data-focus:outline-2 data-focus:outline-offset-2 data-focus:outline-primary data-focus:outline-solid",
         // Disabled
         "data-disabled:opacity-50",
         // Icon
@@ -43,7 +43,7 @@ const buttonVariants = cva({
                 // Base
                 "text-(--btn-lighter-text)",
                 // Border
-                "border-(--btn-lighter-border,ransparent)] border",
+                "border-(--btn-lighter-border,transparent)] border",
                 // Button background
                 "bg-(--btn-lighter-bg) data-focus:bg-(--bg-white-0) data-hover:bg-(--bg-white-0)",
             ],

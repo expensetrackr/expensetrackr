@@ -10,8 +10,6 @@ export const listboxVariants = cva({
     base: [
         // Basic layout
         "relative block w-full appearance-none transition",
-        // Horizontal padding
-        "pr-[calc(theme(spacing.7)-1px)] pl-[calc(theme(spacing[3.5])-1px)] sm:pl-[calc(theme(spacing.3)-1px)]",
         // Typography
         "text-left text-paragraph-sm forced-colors:text-[CanvasText]",
         // Border
