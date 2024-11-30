@@ -57,7 +57,6 @@ export function LogoutOtherBrowserSessionsForm({ sessions }: LogoutOtherBrowserS
                     <Button
                         $color="error"
                         $variant="stroke"
-                        className="px-2"
                         onClick={() => setAction(Action.OtherBrowserSessionsDestroy)}
                     >
                         Log out all sessions

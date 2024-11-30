@@ -56,12 +56,7 @@ export function UpdatePasswordForm() {
         <ActionSection
             action={
                 <>
-                    <Button
-                        $color="neutral"
-                        $variant="stroke"
-                        className="px-2"
-                        onClick={() => setAction(Action.UserPasswordUpdate)}
-                    >
+                    <Button $color="neutral" $variant="stroke" onClick={() => setAction(Action.UserPasswordUpdate)}>
                         Update password
                     </Button>
                     <Dialog onClose={() => setAction(null)} open={action === Action.UserPasswordUpdate}>

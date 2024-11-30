@@ -46,12 +46,7 @@ export function DeleteUserForm() {
         <ActionSection
             action={
                 <>
-                    <Button
-                        $color="error"
-                        $variant="stroke"
-                        className="px-2"
-                        onClick={() => setAction(Action.CurrentUserDestroy)}
-                    >
+                    <Button $color="error" $variant="stroke" onClick={() => setAction(Action.CurrentUserDestroy)}>
                         Delete account
                     </Button>
 

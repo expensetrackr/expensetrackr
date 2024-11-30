@@ -49,12 +49,7 @@ export function SetPasswordForm() {
         <ActionSection
             action={
                 <>
-                    <Button
-                        $color="neutral"
-                        $variant="stroke"
-                        className="px-2"
-                        onClick={() => setAction(Action.UserPasswordCreate)}
-                    >
+                    <Button $color="neutral" $variant="stroke" onClick={() => setAction(Action.UserPasswordCreate)}>
                         Set password
                     </Button>
 

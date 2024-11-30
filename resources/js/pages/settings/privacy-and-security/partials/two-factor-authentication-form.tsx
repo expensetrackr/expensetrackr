@@ -121,37 +121,32 @@ export function TwoFactorAuthenticationForm({ requiresConfirmation }: TwoFactorA
                     <>
                         {recoveryCodes.length > 0 && action !== Action.TwoFactorConfirm ? (
                             <ConfirmsPassword onConfirm={regenerateRecoveryCodes}>
-                                <Button $color="error" $variant="stroke" className="px-2">
+                                <Button $color="error" $variant="stroke">
                                     Regenerate recovery codes
                                 </Button>
                             </ConfirmsPassword>
                         ) : null}
                         {action === Action.TwoFactorConfirm ? (
                             <ConfirmsPassword onConfirm={disableTwoFactorAuthentication}>
-                                <Button $color="neutral" $variant="stroke" className="px-2">
+                                <Button $color="neutral" $variant="stroke">
                                     Cancel
                                 </Button>
                             </ConfirmsPassword>
                         ) : (
                             <ConfirmsPassword onConfirm={disableTwoFactorAuthentication}>
-                                <Button
-                                    $color="error"
-                                    $variant="stroke"
-                                    className="px-2"
-                                    disabled={action === Action.TwoFactorDisable}
-                                >
+                                <Button $color="error" $variant="stroke" disabled={action === Action.TwoFactorDisable}>
                                     Disable 2FA
                                 </Button>
                             </ConfirmsPassword>
                         )}
                         {action === Action.TwoFactorConfirm ? (
                             <ConfirmsPassword onConfirm={confirmTwoFactorAuthentication}>
-                                <Button className="px-2">Finish setup</Button>
+                                <Button>Finish setup</Button>
                             </ConfirmsPassword>
                         ) : null}
                         {recoveryCodes.length === 0 && action !== Action.TwoFactorConfirm ? (
                             <ConfirmsPassword onConfirm={showRecoveryCodes}>
-                                <Button $color="neutral" $variant="stroke" className="px-2">
+                                <Button $color="neutral" $variant="stroke">
                                     Show recovery codes
                                 </Button>
                             </ConfirmsPassword>
@@ -159,12 +154,7 @@ export function TwoFactorAuthenticationForm({ requiresConfirmation }: TwoFactorA
                     </>
                 ) : (
                     <ConfirmsPassword onConfirm={enableTwoFactorAuthentication}>
-                        <Button
-                            $color="neutral"
-                            $variant="stroke"
-                            className="px-2"
-                            disabled={action === Action.TwoFactorEnable}
-                        >
+                        <Button $color="neutral" $variant="stroke" disabled={action === Action.TwoFactorEnable}>
                             Enable 2FA
                         </Button>
                     </ConfirmsPassword>
