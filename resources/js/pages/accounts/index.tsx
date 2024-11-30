@@ -9,8 +9,7 @@ import { PageHeader } from "#/components/page-header.tsx";
 import { AppLayout } from "#/layouts/app-layout.tsx";
 import { type InertiaSharedProps } from "#/types/index.ts";
 
-export default function AccountsPage(props) {
-    console.info(props);
+export default function AccountsPage() {
     return (
         <>
             <div className="flex flex-col gap-5">

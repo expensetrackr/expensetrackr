@@ -1,6 +1,6 @@
 import { router, useForm, usePage } from "@inertiajs/react";
 import axios from "axios";
-import { useQueryState } from "nuqs";
+import { parseAsStringEnum, useQueryState } from "nuqs";
 import { useEffect, useState } from "react";
 
 import { ActionSection } from "#/components/action-section.tsx";
@@ -10,29 +10,35 @@ import { ErrorMessage, Field, Label } from "#/components/form/fieldset.tsx";
 import { Input } from "#/components/form/input.tsx";
 import { type PageProps } from "#/types/index.ts";
 
+enum Action {
+    Enabling = "enabling:2fa",
+    Confirming = "confirming:2fa",
+    Disabling = "disabling:2fa",
+}
+
 interface TwoFactorAuthenticationFormProps {
     requiresConfirmation: boolean;
 }
 
 export function TwoFactorAuthenticationForm({ requiresConfirmation }: TwoFactorAuthenticationFormProps) {
     const page = usePage<PageProps>();
-    const [action, setAction] = useQueryState("action");
+    const [action, setAction] = useQueryState("action", parseAsStringEnum<Action>(Object.values(Action)));
     const [qrCode, setQrCode] = useState<string | null>(null);
     const [recoveryCodes, setRecoveryCodes] = useState<string[]>([]);
     const [setupKey, setSetupKey] = useState<string | null>(null);
     const confirmationForm = useForm({
         code: "",
     });
-    const twoFactorEnabled = action !== "enabling:2fa" && page.props?.auth?.user?.two_factor_enabled;
+    const twoFactorEnabled = action !== Action.Enabling && page.props?.auth?.user?.two_factor_enabled;
 
     useEffect(() => {
-        if (action === "confirming:2fa" && !qrCode) {
+        if (action === Action.Confirming && !qrCode) {
             void setAction(null);
         }
     }, [action, qrCode, setAction]);
 
     async function enableTwoFactorAuthentication() {
-        await setAction("enabling:2fa");
+        await setAction(Action.Enabling);
 
         router.post(
             "/user/two-factor-authentication",
@@ -43,7 +49,7 @@ export function TwoFactorAuthenticationForm({ requiresConfirmation }: TwoFactorA
                     return Promise.all([showQrCode(), showSetupKey(), showRecoveryCodes()]);
                 },
                 async onFinish() {
-                    await setAction(requiresConfirmation ? "confirming:2fa" : null);
+                    await setAction(requiresConfirmation ? Action.Confirming : null);
                 },
             },
         );
@@ -87,7 +93,7 @@ export function TwoFactorAuthenticationForm({ requiresConfirmation }: TwoFactorA
     }
 
     async function disableTwoFactorAuthentication() {
-        await setAction("disabling:2fa");
+        await setAction(Action.Disabling);
 
         router.delete("/user/two-factor-authentication", {
             preserveScroll: true,
@@ -98,8 +104,8 @@ export function TwoFactorAuthenticationForm({ requiresConfirmation }: TwoFactorA
     }
 
     const getDescription = () => {
-        if ((twoFactorEnabled || action === "confirming:2fa") && qrCode) {
-            if (action === "confirming:2fa") {
+        if ((twoFactorEnabled || action === Action.Confirming) && qrCode) {
+            if (action === Action.Confirming) {
                 return "To finish enabling two-factor authentication, scan the image below with your 2FA authenticator app or manually enter the setup key:";
             }
 
@@ -116,23 +122,18 @@ export function TwoFactorAuthenticationForm({ requiresConfirmation }: TwoFactorA
     return (
         <ActionSection
             action={
-                twoFactorEnabled || action === "confirming:2fa" ? (
+                twoFactorEnabled || action === Action.Confirming ? (
                     <>
-                        {recoveryCodes.length > 0 && action !== "confirming:2fa" ? (
+                        {recoveryCodes.length > 0 && action !== Action.Confirming ? (
                             <ConfirmsPassword onConfirm={regenerateRecoveryCodes}>
                                 <Button $color="error" $variant="stroke" className="px-2">
                                     Regenerate recovery codes
                                 </Button>
                             </ConfirmsPassword>
                         ) : null}
-                        {action === "confirming:2fa" ? (
+                        {action === Action.Confirming ? (
                             <ConfirmsPassword onConfirm={disableTwoFactorAuthentication}>
-                                <Button
-                                    $color="neutral"
-                                    $variant="stroke"
-                                    className="px-2"
-                                    disabled={action === "disabling:2fa"}
-                                >
+                                <Button $color="neutral" $variant="stroke" className="px-2">
                                     Cancel
                                 </Button>
                             </ConfirmsPassword>
@@ -142,18 +143,18 @@ export function TwoFactorAuthenticationForm({ requiresConfirmation }: TwoFactorA
                                     $color="error"
                                     $variant="stroke"
                                     className="px-2"
-                                    disabled={action === "disabling:2fa"}
+                                    disabled={action === Action.Disabling}
                                 >
                                     Disable 2FA
                                 </Button>
                             </ConfirmsPassword>
                         )}
-                        {action === "confirming:2fa" ? (
+                        {action === Action.Confirming ? (
                             <ConfirmsPassword onConfirm={confirmTwoFactorAuthentication}>
                                 <Button className="px-2">Finish setup</Button>
                             </ConfirmsPassword>
                         ) : null}
-                        {recoveryCodes.length === 0 && action !== "confirming:2fa" ? (
+                        {recoveryCodes.length === 0 && action !== Action.Confirming ? (
                             <ConfirmsPassword onConfirm={showRecoveryCodes}>
                                 <Button $color="neutral" $variant="stroke" className="px-2">
                                     Show recovery codes
@@ -167,7 +168,7 @@ export function TwoFactorAuthenticationForm({ requiresConfirmation }: TwoFactorA
                             $color="neutral"
                             $variant="stroke"
                             className="px-2"
-                            disabled={action === "enabling:2fa"}
+                            disabled={action === Action.Enabling}
                         >
                             Enable 2FA
                         </Button>
@@ -178,7 +179,7 @@ export function TwoFactorAuthenticationForm({ requiresConfirmation }: TwoFactorA
             title="Two-factor Authentication"
         >
             <div className="flex flex-col gap-4">
-                {twoFactorEnabled || action === "confirming:2fa" ? (
+                {twoFactorEnabled || action === Action.Confirming ? (
                     <>
                         {qrCode ? (
                             <div className="grid grid-cols-12 items-center gap-8">
@@ -206,7 +207,7 @@ export function TwoFactorAuthenticationForm({ requiresConfirmation }: TwoFactorA
                                         </div>
                                     ) : null}
 
-                                    {action === "confirming:2fa" ? (
+                                    {action === Action.Confirming ? (
                                         <div className="col-span-12 flex flex-col gap-4 md:col-span-6">
                                             <ol className="flex list-decimal flex-col gap-1.5">
                                                 <li className="text-paragraph-sm text-(--text-sub-600)">
@@ -248,7 +249,7 @@ export function TwoFactorAuthenticationForm({ requiresConfirmation }: TwoFactorA
                             </div>
                         ) : null}
 
-                        {recoveryCodes.length && action !== "confirming:2fa" ? (
+                        {recoveryCodes.length && action !== Action.Confirming ? (
                             <div className="rounded-lg text-sm grid max-w-xl gap-1 bg-(--bg-surface-700) px-4 py-4 font-mono text-white">
                                 {recoveryCodes.map((code) => (
                                     <div key={code}>{code}</div>
