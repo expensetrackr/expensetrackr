@@ -19,7 +19,7 @@
         "php": "^8.3",
         "akaunting/laravel-money": "5.2.2",
         "cjmellor/browser-sessions": "1.2.0",
-        "filament/filament": "3.2.125",
+        "filament/filament": "3.2.127",
         "hirethunk/verbs": "0.6.4",
         "inertiajs/inertia-laravel": "2.x-dev",
         "joelbutcher/socialstream": "6.1.11",
