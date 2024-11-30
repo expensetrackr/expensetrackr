@@ -1,9 +1,10 @@
 import { useForm } from "@inertiajs/react";
 import axios from "axios";
-import { useQueryState } from "nuqs";
+import { parseAsStringEnum, useQueryState } from "nuqs";
 import { useRef } from "react";
 import LockPasswordIcon from "virtual:icons/ri/lock-password-line";
 
+import { Action } from "#/utils/action.ts";
 import { Button } from "./button.tsx";
 import {
     Dialog,
@@ -23,7 +24,7 @@ interface ConfirmsPasswordProps {
 }
 
 export function ConfirmsPassword({ onConfirm, children }: ConfirmsPasswordProps) {
-    const [action, setAction] = useQueryState("action");
+    const [action, setAction] = useQueryState("action", parseAsStringEnum<Action>(Object.values(Action)));
     const { data, setData, errors, ...form } = useForm({
         password: "",
     });
@@ -34,7 +35,7 @@ export function ConfirmsPassword({ onConfirm, children }: ConfirmsPasswordProps)
             if (response.data.confirmed) {
                 onConfirm?.();
             } else {
-                await setAction("confirming:password");
+                await setAction(Action.PasswordConfirm);
             }
         });
     }
@@ -65,7 +66,7 @@ export function ConfirmsPassword({ onConfirm, children }: ConfirmsPasswordProps)
                 {children}
             </span>
 
-            <Dialog onClose={() => setAction(null)} open={action === "confirming:password"}>
+            <Dialog onClose={() => setAction(null)} open={action === Action.PasswordConfirm}>
                 <DialogHeader>
                     <DialogIcon>
                         <LockPasswordIcon className="size-6 text-(--icon-sub-600)" />

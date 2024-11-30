@@ -1,5 +1,5 @@
 import { useForm } from "@inertiajs/react";
-import { useQueryState } from "nuqs";
+import { parseAsStringEnum, useQueryState } from "nuqs";
 import { useRef } from "react";
 import DeleteBinIcon from "virtual:icons/ri/delete-bin-line";
 
@@ -16,9 +16,10 @@ import {
 } from "#/components/dialog.tsx";
 import { ErrorMessage, Field, Label } from "#/components/form/fieldset.tsx";
 import { Input } from "#/components/form/input.tsx";
+import { Action } from "#/utils/action.ts";
 
 export function DeleteUserForm() {
-    const [action, setAction] = useQueryState("action");
+    const [action, setAction] = useQueryState("action", parseAsStringEnum<Action>(Object.values(Action)));
     const form = useForm({
         password: "",
     });
@@ -49,12 +50,12 @@ export function DeleteUserForm() {
                         $color="error"
                         $variant="stroke"
                         className="px-2"
-                        onClick={() => setAction("destroy:current-user")}
+                        onClick={() => setAction(Action.CurrentUserDestroy)}
                     >
                         Delete account
                     </Button>
 
-                    <Dialog onClose={() => setAction(null)} open={action === "destroy:current-user"}>
+                    <Dialog onClose={() => setAction(null)} open={action === Action.CurrentUserDestroy}>
                         <DialogHeader>
                             <DialogIcon>
                                 <DeleteBinIcon className="size-6 text-(--icon-sub-600)" />

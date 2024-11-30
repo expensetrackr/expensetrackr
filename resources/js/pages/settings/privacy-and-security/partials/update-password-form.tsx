@@ -1,5 +1,5 @@
 import { useForm } from "@inertiajs/react";
-import { useQueryState } from "nuqs";
+import { parseAsStringEnum, useQueryState } from "nuqs";
 import { useRef } from "react";
 import LockPasswordIcon from "virtual:icons/ri/lock-password-line";
 
@@ -16,9 +16,10 @@ import {
 } from "#/components/dialog.tsx";
 import { ErrorMessage, Field, Label } from "#/components/form/fieldset.tsx";
 import { Input } from "#/components/form/input.tsx";
+import { Action } from "#/utils/action.ts";
 
 export function UpdatePasswordForm() {
-    const [action, setAction] = useQueryState("action");
+    const [action, setAction] = useQueryState("action", parseAsStringEnum<Action>(Object.values(Action)));
     const { data, setData, errors, ...form } = useForm({
         current_password: "",
         password: "",
@@ -59,11 +60,11 @@ export function UpdatePasswordForm() {
                         $color="neutral"
                         $variant="stroke"
                         className="px-2"
-                        onClick={() => setAction("update:user-password")}
+                        onClick={() => setAction(Action.UserPasswordUpdate)}
                     >
                         Update password
                     </Button>
-                    <Dialog onClose={() => setAction(null)} open={action === "update:user-password"}>
+                    <Dialog onClose={() => setAction(null)} open={action === Action.UserPasswordUpdate}>
                         <DialogHeader>
                             <DialogIcon>
                                 <LockPasswordIcon className="size-6 text-(--icon-sub-600)" />

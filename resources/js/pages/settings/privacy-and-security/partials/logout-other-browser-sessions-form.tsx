@@ -1,5 +1,5 @@
 import { useForm } from "@inertiajs/react";
-import { useQueryState } from "nuqs";
+import { parseAsStringEnum, useQueryState } from "nuqs";
 import { useRef } from "react";
 import ChromeIcon from "virtual:icons/ri/chrome-line";
 import FirefoxIcon from "virtual:icons/ri/firefox-line";
@@ -20,13 +20,14 @@ import { ErrorMessage, Field, Label } from "#/components/form/fieldset.tsx";
 import { Input } from "#/components/form/input.tsx";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "#/components/table.tsx";
 import { type Session } from "#/types/index.ts";
+import { Action } from "#/utils/action.ts";
 
 interface LogoutOtherBrowserSessionsFormProps {
     sessions: Session[];
 }
 
 export function LogoutOtherBrowserSessionsForm({ sessions }: LogoutOtherBrowserSessionsFormProps) {
-    const [action, setAction] = useQueryState("action");
+    const [action, setAction] = useQueryState("action", parseAsStringEnum<Action>(Object.values(Action)));
     const form = useForm({
         password: "",
     });
@@ -57,12 +58,12 @@ export function LogoutOtherBrowserSessionsForm({ sessions }: LogoutOtherBrowserS
                         $color="error"
                         $variant="stroke"
                         className="px-2"
-                        onClick={() => setAction("destroy:other-browser-sessions")}
+                        onClick={() => setAction(Action.OtherBrowserSessionsDestroy)}
                     >
                         Log out all sessions
                     </Button>
 
-                    <Dialog onClose={() => setAction(null)} open={action === "destroy:other-browser-sessions"}>
+                    <Dialog onClose={() => setAction(null)} open={action === Action.OtherBrowserSessionsDestroy}>
                         <DialogHeader>
                             <DialogIcon>
                                 <LogoutCircleRIcon className="size-6 text-(--icon-sub-600)" />

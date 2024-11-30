@@ -1,5 +1,5 @@
 import { useForm } from "@inertiajs/react";
-import { useQueryState } from "nuqs";
+import { parseAsStringEnum, useQueryState } from "nuqs";
 import TeamIcon from "virtual:icons/ri/team-line";
 import { route } from "ziggy-js";
 
@@ -17,6 +17,7 @@ import { ErrorMessage, Field, Label } from "#/components/form/fieldset.tsx";
 import { Input } from "#/components/form/input.tsx";
 import { Select } from "#/components/form/select.tsx";
 import { type Role, type Workspace } from "#/types/index.ts";
+import { Action } from "#/utils/action.ts";
 
 interface AddWorkspaceMemberFormProps {
     workspace: Workspace;
@@ -24,7 +25,7 @@ interface AddWorkspaceMemberFormProps {
 }
 
 export function AddWorkspaceMemberForm({ workspace, availableRoles }: AddWorkspaceMemberFormProps) {
-    const [action, setAction] = useQueryState("action");
+    const [action, setAction] = useQueryState("action", parseAsStringEnum<Action>(Object.values(Action)));
     const form = useForm({
         email: "",
         role: availableRoles[0]?.key,
@@ -45,11 +46,11 @@ export function AddWorkspaceMemberForm({ workspace, availableRoles }: AddWorkspa
 
     return (
         <>
-            <Button $size="sm" className="px-4" onClick={() => setAction("create:workspace-members")}>
+            <Button $size="sm" className="px-4" onClick={() => setAction(Action.WorkspaceMembersCreate)}>
                 Add workspace member
             </Button>
 
-            <Dialog onClose={() => setAction(null)} open={action === "create:workspace-members"}>
+            <Dialog onClose={() => setAction(null)} open={action === Action.WorkspaceMembersCreate}>
                 <DialogHeader>
                     <DialogIcon>
                         <TeamIcon className="size-6 text-(--icon-sub-600)" />

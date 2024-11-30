@@ -1,5 +1,5 @@
 import { router } from "@inertiajs/react";
-import { useQueryState } from "nuqs";
+import { parseAsStringEnum, useQueryState } from "nuqs";
 import { useState } from "react";
 import MailCloseIcon from "virtual:icons/ri/mail-close-line";
 import { route } from "ziggy-js";
@@ -16,6 +16,7 @@ import {
 } from "#/components/dialog.tsx";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "#/components/table.tsx";
 import { type User, type Workspace, type WorkspaceInvitation, type WorkspacePermissions } from "#/types/index.ts";
+import { Action, getAction } from "#/utils/action.ts";
 
 interface UserMembership extends User {
     membership: {
@@ -79,7 +80,7 @@ export function WorkspaceMemberInvitations({ workspace, permissions }: Workspace
 }
 
 function CancelInvitation({ invitation }: { invitation: WorkspaceInvitation }) {
-    const [action, setAction] = useQueryState("action");
+    const [action, setAction] = useQueryState("action", parseAsStringEnum<Action>(Object.values(Action)));
     const [isCancelling, setCancelling] = useState(false);
 
     function cancelWorkspaceInvitation(invitation: WorkspaceInvitation) {
@@ -101,12 +102,15 @@ function CancelInvitation({ invitation }: { invitation: WorkspaceInvitation }) {
                 $color="error"
                 $size="sm"
                 $variant="stroke"
-                onClick={() => setAction(`destroy:workspace-invitations:${invitation.id}`)}
+                onClick={() => setAction(getAction("WorkspaceInvitationsDestroy", invitation.id))}
             >
                 Cancel invitation
             </Button>
 
-            <Dialog onClose={() => setAction(null)} open={action === `destroy:workspace-invitations:${invitation.id}`}>
+            <Dialog
+                onClose={() => setAction(null)}
+                open={action === getAction("WorkspaceInvitationsDestroy", invitation.id)}
+            >
                 <DialogHeader>
                     <DialogIcon>
                         <MailCloseIcon className="size-6 text-(--icon-sub-600)" />

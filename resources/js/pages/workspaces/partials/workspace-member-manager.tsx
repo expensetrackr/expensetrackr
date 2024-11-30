@@ -1,5 +1,5 @@
 import { useForm } from "@inertiajs/react";
-import { useQueryState } from "nuqs";
+import { parseAsStringEnum, useQueryState } from "nuqs";
 import EraserIcon from "virtual:icons/ri/eraser-line";
 import FolderShield2Icon from "virtual:icons/ri/folder-shield-2-line";
 import LogoutCircleRIcon from "virtual:icons/ri/logout-circle-r-line";
@@ -32,6 +32,7 @@ import {
     type WorkspaceInvitation,
     type WorkspacePermissions,
 } from "#/types/index.ts";
+import { Action, getAction } from "#/utils/action.ts";
 import { AddWorkspaceMemberForm } from "./add-workspace-member-form.tsx";
 
 interface UserMembership extends User {
@@ -51,7 +52,7 @@ interface WorkspaceMemberManagerProps {
 }
 
 export function WorkspaceMemberManager({ workspace, availableRoles, permissions }: WorkspaceMemberManagerProps) {
-    const [, setAction] = useQueryState("action");
+    const [, setAction] = useQueryState("action", parseAsStringEnum<Action>(Object.values(Action)));
     const currentUser = useUser();
 
     function displayableRole(role: string) {
@@ -115,7 +116,7 @@ export function WorkspaceMemberManager({ workspace, availableRoles, permissions 
                                                     {permissions.canAddWorkspaceMembers && availableRoles.length > 0 ? (
                                                         <DropdownItem
                                                             onClick={() =>
-                                                                setAction(`update:workspace-members:${user.id}`)
+                                                                setAction(getAction("WorkspaceMembersUpdate", user.id))
                                                             }
                                                         >
                                                             <ShieldUserIcon />
@@ -127,7 +128,7 @@ export function WorkspaceMemberManager({ workspace, availableRoles, permissions 
                                                         <DropdownItem
                                                             className="text-state-error-base data-focus:bg-(--color-red-alpha-10) [&>[data-slot=icon]]:text-state-error-base"
                                                             onClick={() =>
-                                                                setAction(`destroy:workspace-members:${user.id}`)
+                                                                setAction(getAction("WorkspaceMembersDestroy", user.id))
                                                             }
                                                         >
                                                             <UserMinusIcon />
@@ -139,7 +140,7 @@ export function WorkspaceMemberManager({ workspace, availableRoles, permissions 
                                                         <DropdownItem
                                                             className="text-state-error-base data-focus:bg-(--color-red-alpha-10) [&>[data-slot=icon]]:text-state-error-base"
                                                             onClick={() =>
-                                                                setAction(`destroy:workspace-members:${user.id}`)
+                                                                setAction(getAction("WorkspaceMembersDestroy", user.id))
                                                             }
                                                         >
                                                             <LogoutCircleRIcon />
@@ -202,7 +203,7 @@ function ManageRoleDialog({
     user: UserMembership;
     availableRoles: Role[];
 }) {
-    const [action, setAction] = useQueryState("action");
+    const [action, setAction] = useQueryState("action", parseAsStringEnum<Action>(Object.values(Action)));
     const form = useForm({
         role: user.membership.role,
     });
@@ -220,7 +221,10 @@ function ManageRoleDialog({
     }
 
     return (
-        <Dialog onClose={() => setAction(null)} open={action === `update:workspace-members:${user.id}`}>
+        <Dialog
+            onClose={() => setAction(null)}
+            open={action === Action.WorkspaceMembersUpdate.replace("{id}", user.id.toString())}
+        >
             <DialogHeader>
                 <DialogIcon>
                     <FolderShield2Icon className="size-6 text-(--icon-sub-600)" />
@@ -291,7 +295,7 @@ function RemoveMemberDialog({
     dialogDescription?: string;
     dialogSubmitLabel?: string;
 }) {
-    const [action, setAction] = useQueryState("action");
+    const [action, setAction] = useQueryState("action", parseAsStringEnum<Action>(Object.values(Action)));
     const form = useForm({});
 
     function onSubmit(e: React.FormEvent) {
@@ -309,7 +313,10 @@ function RemoveMemberDialog({
     }
 
     return (
-        <Dialog onClose={() => setAction(null)} open={action === `destroy:workspace-members:${user.id}`}>
+        <Dialog
+            onClose={() => setAction(null)}
+            open={action === Action.WorkspaceMembersDestroy.replace("{id}", user.id.toString())}
+        >
             <DialogHeader>
                 <DialogIcon>
                     <EraserIcon className="size-6 text-(--icon-sub-600)" />

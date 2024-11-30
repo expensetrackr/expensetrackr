@@ -1,5 +1,5 @@
 import { useForm, usePage } from "@inertiajs/react";
-import { useQueryState } from "nuqs";
+import { parseAsStringEnum, useQueryState } from "nuqs";
 import ShareIcon from "virtual:icons/ri/share-line";
 import { route } from "ziggy-js";
 
@@ -16,9 +16,10 @@ import {
     DialogTitle,
 } from "#/components/dialog.tsx";
 import { type InertiaSharedProps } from "#/types/index.ts";
+import { Action, getAction } from "#/utils/action.ts";
 
 export default function ConnectedAccountsForm() {
-    const [action, setAction] = useQueryState("action");
+    const [action, setAction] = useQueryState("action", parseAsStringEnum<Action>(Object.values(Action)));
     const page = usePage<InertiaSharedProps>();
     const form = useForm({
         _method: "DELETE",
@@ -54,7 +55,7 @@ export default function ConnectedAccountsForm() {
         const account = getAccountForProvider(provider);
 
         if (account) {
-            return setAction(`destroy:connected-accounts:${account.id}`);
+            return setAction(getAction("ConnectedAccountsDestroy", account.id));
         }
     }
     return (
@@ -99,7 +100,7 @@ export default function ConnectedAccountsForm() {
 
                             <Dialog
                                 onClose={() => setAction(null)}
-                                open={action === `destroy:connected-accounts:${provider.id}`}
+                                open={action === getAction("ConnectedAccountsDestroy", provider.id)}
                             >
                                 <DialogHeader>
                                     <DialogIcon>
