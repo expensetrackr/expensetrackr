@@ -1,18 +1,17 @@
 import { Button } from "#/components/button.tsx";
 import { Text } from "#/components/text.tsx";
 
-import { stepperInstance } from "./stepper.ts";
+import { type useStepper } from "./stepper.ts";
 
 type CardFormProps = {
     title?: string;
     description?: string;
     icon?: (props: React.SVGProps<SVGSVGElement>) => React.ReactElement;
     children: React.ReactNode;
+    stepper: ReturnType<typeof useStepper>;
 };
 
-export function Card({ icon, title, description, children }: CardFormProps) {
-    const stepper = stepperInstance.useStepper();
-
+export function Card({ icon, title, description, children, stepper }: CardFormProps) {
     const Icon = icon;
 
     return (
@@ -29,8 +28,22 @@ export function Card({ icon, title, description, children }: CardFormProps) {
 
                     {title || description ? (
                         <div className="flex flex-col items-center gap-1">
-                            {title && <h1 className="text-h5">{title}</h1>}
-                            {description && <Text className="text-center text-paragraph-md">{description}</Text>}
+                            {title && (
+                                <h1
+                                    className="text-h5 duration-300 animate-in fade-in"
+                                    key={`${stepper.current.id}-title`}
+                                >
+                                    {title}
+                                </h1>
+                            )}
+                            {description && (
+                                <Text
+                                    className="text-center text-paragraph-md duration-300 animate-in fade-in"
+                                    key={`${stepper.current.id}-description`}
+                                >
+                                    {description}
+                                </Text>
+                            )}
                         </div>
                     ) : null}
                 </div>
@@ -40,7 +53,7 @@ export function Card({ icon, title, description, children }: CardFormProps) {
                 <div className="flex flex-col gap-3 p-4">{children}</div>
 
                 <div className="flex items-center gap-3 border-t border-t-(--stroke-soft-200) px-5 py-4">
-                    {!stepper.isLast && !stepper.isFirst && (
+                    {!stepper.isFirst && (
                         <Button
                             $color="neutral"
                             $size="sm"

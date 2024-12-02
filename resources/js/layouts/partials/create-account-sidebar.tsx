@@ -12,11 +12,13 @@ import {
     SidebarSection,
 } from "#/components/sidebar.tsx";
 import { Text } from "#/components/text.tsx";
-import { stepperInstance } from "#/pages/accounts/create/partials/stepper.ts";
+import { type useStepper } from "#/pages/accounts/create/partials/stepper.ts";
 
-export function CreateAccountSidebar() {
-    const stepper = stepperInstance.useStepper();
+type CreateAccountSidebarProps = {
+    stepper: ReturnType<typeof useStepper>;
+};
 
+export function CreateAccountSidebar({ stepper }: CreateAccountSidebarProps) {
     return (
         <Sidebar className="gap-3 lg:rounded-16 lg:bg-(--bg-weak-50)">
             <SidebarHeader className="mx-4 mt-5 p-0">
@@ -35,7 +37,6 @@ export function CreateAccountSidebar() {
                                 current={stepper.current.id === step.id}
                                 currentIndicator={false}
                                 key={step.id}
-                                onClick={() => stepper.goTo(step.id)}
                                 role="tab"
                             >
                                 <StepNumber>{index + 1}</StepNumber>

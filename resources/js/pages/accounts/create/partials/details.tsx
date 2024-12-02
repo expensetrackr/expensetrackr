@@ -1,5 +1,4 @@
-import { getInputProps, getTextareaProps, useInputControl, type useForm } from "@conform-to/react";
-import TextboxDuotone from "virtual:icons/ph/textbox-duotone";
+import { getInputProps, getTextareaProps, type useForm, useInputControl } from "@conform-to/react";
 
 import { Description, ErrorMessage, Field, Label } from "#/components/form/fieldset.tsx";
 import { Input } from "#/components/form/input.tsx";
@@ -7,7 +6,6 @@ import { Listbox, ListboxLabel, ListboxOption } from "#/components/form/listbox.
 import { Textarea } from "#/components/form/textarea.tsx";
 import { accountTypeEnum, depositorySubtypeEnum, investmentSubtypeEnum } from "#/schemas/account.ts";
 import { useCreateAccountWizardStore } from "#/store/create-account-wizard.ts";
-import { Card } from "./card.tsx";
 import { type DetailsStepValues } from "./stepper.ts";
 
 const subtypeOptions = {
@@ -15,16 +13,18 @@ const subtypeOptions = {
     [accountTypeEnum.Enum.investment]: investmentSubtypeEnum.options,
 };
 
-export function DetailsStep({ fields }: { fields: ReturnType<typeof useForm<DetailsStepValues>>[1] }) {
+type DetailsStepProps = {
+    fields: ReturnType<typeof useForm<DetailsStepValues>>[1];
+};
+
+export function DetailsStep({ fields }: DetailsStepProps) {
     const subtypeControl = useInputControl(fields.subtype);
     const { type } = useCreateAccountWizardStore();
 
     return (
-        <Card
-            description="Enter your account's name and any additional details. The available options are customized based on your selected account type."
-            icon={TextboxDuotone}
-            title="Account details"
-        >
+        <>
+            <input {...getInputProps(fields.type, { type: "hidden" })} value={type} />
+
             <Field>
                 <Label>Name</Label>
                 <Input
@@ -69,6 +69,6 @@ export function DetailsStep({ fields }: { fields: ReturnType<typeof useForm<Deta
                     {fields.subtype.errors && <ErrorMessage>{fields.subtype.errors}</ErrorMessage>}
                 </Field>
             )}
-        </Card>
+        </>
     );
 }

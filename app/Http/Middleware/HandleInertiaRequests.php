@@ -43,24 +43,21 @@ final class HandleInertiaRequests extends Middleware
     public function share(Request $request): array
     {
         return array_merge(parent::share($request), [
-            'ziggy' => fn() => [
+            'ziggy' => fn () => [
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),
                 'query' => $request->query(),
             ],
             'toast' => collect(Arr::only($request->session()->all(), ['error', 'warning', 'success', 'info']))
-                ->mapWithKeys(fn($notification, $key): array => ['type' => $key, 'message' => $notification]),
+                ->mapWithKeys(fn ($notification, $key): array => ['type' => $key, 'message' => $notification]),
             'language' => app()->getLocale(),
             'languages' => LanguageResource::collection(Language::cases()),
-            'translations' => function () {
-                return cache()->rememberForever('translations.' . app()->getLocale(), function () {
-                    return collect(File::allFiles(base_path('lang/' . app()->getLocale())))
-                        ->flatMap(function ($file) {
-                            $fileContents = File::getRequire($file->getRealPath());
-                            return is_array($fileContents) ? Arr::dot($fileContents, $file->getBasename('.' . $file->getExtension()) . '.') : [];
-                        });
-                });
-            }
+            'translations' => fn () => cache()->rememberForever('translations.'.app()->getLocale(), fn () => collect(File::allFiles(base_path('lang/'.app()->getLocale())))
+                ->flatMap(function ($file) {
+                    $fileContents = File::getRequire($file->getRealPath());
+
+                    return is_array($fileContents) ? Arr::dot($fileContents, $file->getBasename('.'.$file->getExtension()).'.') : [];
+                })),
         ]);
     }
 }

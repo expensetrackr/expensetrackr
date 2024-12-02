@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Enums\Language;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
-class LanguageController extends Controller
+final class LanguageController extends Controller
 {
     public function __invoke(Request $request): RedirectResponse
     {

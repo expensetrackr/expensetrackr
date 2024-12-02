@@ -12,7 +12,7 @@ export const accountTypeEnum = z.enum([
     "other_liability",
 ]);
 
-export const depositorySubtypeEnum = z.enum(["checking", "savings"]);
+export const depositorySubtypeEnum = z.enum(["none", "checking", "savings"]);
 export const investmentSubtypeEnum = z.enum([
     "brokerage",
     "pension",

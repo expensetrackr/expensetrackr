@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Resources;
 
+use App\Enums\Language;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Enums\Language;
 
 /** @mixin Language */
-class LanguageResource extends JsonResource
+final class LanguageResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

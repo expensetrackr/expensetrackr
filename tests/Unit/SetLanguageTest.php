@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Http\Middleware\SetLanguage;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;

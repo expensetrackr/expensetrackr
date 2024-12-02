@@ -11,6 +11,7 @@ enum AccountSubtype: string
     use InteractWithEnum;
 
     // Depository
+    case None = 'none';
     case Checking = 'checking';
     case Savings = 'savings';
 

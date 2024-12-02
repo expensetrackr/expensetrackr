@@ -5,10 +5,9 @@ import ChartLineIcon from "virtual:icons/mdi/finance";
 import BankDuotoneIcon from "virtual:icons/ph/bank-duotone";
 import BankCardDuotoneIcon from "virtual:icons/ph/credit-card-duotone";
 import HandCoinsDuotone from "virtual:icons/ph/hand-coins-duotone";
-import ListSettings from "virtual:icons/ri/list-settings-fill";
 import CryptoDuotone from "virtual:icons/tabler/currency-bitcoin";
 import ReceiptDuotone from "virtual:icons/tabler/receipt-2";
-import { z } from "zod";
+import { type z } from "zod";
 
 import { Button } from "#/components/button.tsx";
 import { ContentDivider } from "#/components/content-divider.tsx";
@@ -16,11 +15,7 @@ import { ErrorMessage, Field } from "#/components/form/fieldset.tsx";
 import { accountTypeEnum } from "#/schemas/account.ts";
 import { useCreateAccountWizardStore } from "#/store/create-account-wizard.ts";
 import { cx } from "#/utils/cva.ts";
-import { Card } from "./card.tsx";
-
-export const typeStepSchema = z.object({
-    type: accountTypeEnum,
-});
+import { type typeStepSchema } from "./stepper.ts";
 
 export type TypeStepValues = z.infer<typeof typeStepSchema>;
 
@@ -79,11 +74,7 @@ export function TypeStep({ fields }: { fields: ReturnType<typeof useForm<TypeSte
     }
 
     return (
-        <Card
-            description="Choose the type of account you want to add. You can add more accounts later."
-            icon={ListSettings}
-            title="Select your account type"
-        >
+        <>
             <ContentDivider className="px-0">supported account types</ContentDivider>
 
             <Field className="flex flex-col gap-1">
@@ -130,6 +121,6 @@ export function TypeStep({ fields }: { fields: ReturnType<typeof useForm<TypeSte
                 </Headless.RadioGroup>
                 {fields.type.errors && <ErrorMessage id={fields.type.errorId}>{fields.type.errors}</ErrorMessage>}
             </Field>
-        </Card>
+        </>
     );
 }
