@@ -222,8 +222,9 @@
     --color-primary-darker: var(--color-brand-primary-800);
     --color-primary-dark: var(--color-brand-primary-700);
     --color-primary: var(--color-brand-primary-500);
-    --color-primary-light: var(--color-brand-primary-alpha-16);
-    --color-primary-lighter: var(--color-brand-primary-alpha-10);
+    --color-primary-light: var(--color-brand-primary-alpha-24);
+    --color-primary-lighter: var(--color-brand-primary-alpha-16);
+    --color-primary-lightest: var(--color-brand-primary-alpha-10);
 
     /* state-colors */
     --color-state-faded-dark: var(--state-faded-dark);
@@ -281,22 +282,22 @@
     --text-h1: 3.5rem;
     --text-h1--font-weight: 500;
     --text-h1--line-height: 4rem;
-    --text-h1--letter-spacing: -0.56px;
+    --text-h1--letter-spacing: -0.01em;
 
     --text-h2: 3rem;
     --text-h2--font-weight: 500;
     --text-h2--line-height: 3.5rem;
-    --text-h2--letter-spacing: -0.48px;
+    --text-h2--letter-spacing: -0.01em;
 
     --text-h3: 2.5rem;
     --text-h3--font-weight: 500;
     --text-h3--line-height: 3rem;
-    --text-h3--letter-spacing: -0.4px;
+    --text-h3--letter-spacing: -0.01em;
 
     --text-h4: 2rem;
     --text-h4--font-weight: 500;
     --text-h4--line-height: 2.5rem;
-    --text-h4--letter-spacing: -0.16px;
+    --text-h4--letter-spacing: -0.005em;
 
     --text-h5: 1.5rem;
     --text-h5--font-weight: 500;
@@ -309,22 +310,22 @@
     --text-label-xl: 1.5rem;
     --text-label-xl--font-weight: 500;
     --text-label-xl--line-height: 2rem;
-    --text-label-xl--letter-spacing: -0.36px;
+    --text-label-xl--letter-spacing: -0.015em;
 
     --text-label-lg: 1.125rem;
     --text-label-lg--font-weight: 500;
     --text-label-lg--line-height: 1.5rem;
-    --text-label-lg--letter-spacing: -0.27px;
+    --text-label-lg--letter-spacing: -0.015em;
 
     --text-label-md: 1rem;
     --text-label-md--font-weight: 500;
     --text-label-md--line-height: 1.5rem;
-    --text-label-md--letter-spacing: -0.176px;
+    --text-label-md--letter-spacing: -0.011em;
 
     --text-label-sm: 0.875rem;
     --text-label-sm--font-weight: 500;
     --text-label-sm--line-height: 1.25rem;
-    --text-label-sm--letter-spacing: -0.096px;
+    --text-label-sm--letter-spacing: -0.006em;
 
     --text-label-xs: 0.75rem;
     --text-label-xs--font-weight: 500;
@@ -332,19 +333,19 @@
 
     --text-paragraph-xl: 1.5rem;
     --text-paragraph-xl--line-height: 2rem;
-    --text-paragraph-xl--letter-spacing: -0.36px;
+    --text-paragraph-xl--letter-spacing: -0.015em;
 
     --text-paragraph-lg: 1.125rem;
     --text-paragraph-lg--line-height: 1.5rem;
-    --text-paragraph-lg--letter-spacing: -0.27px;
+    --text-paragraph-lg--letter-spacing: -0.015em;
 
     --text-paragraph-md: 1rem;
     --text-paragraph-md--line-height: 1.5rem;
-    --text-paragraph-md--letter-spacing: -0.176px;
+    --text-paragraph-md--letter-spacing: -0.011em;
 
     --text-paragraph-sm: 0.875rem;
     --text-paragraph-sm--line-height: 1.25rem;
-    --text-paragraph-sm--letter-spacing: -0.084px;
+    --text-paragraph-sm--letter-spacing: -0.006em;
 
     --text-paragraph-xs: 0.75rem;
     --text-paragraph-xs--line-height: 1rem;
@@ -352,22 +353,22 @@
     --text-subheading-md: 1rem;
     --text-subheading-md--font-weight: 500;
     --text-subheading-md--line-height: 1.5rem;
-    --text-subheading-md--letter-spacing: 0.96px;
+    --text-subheading-md--letter-spacing: 0.06em;
 
     --text-subheading-sm: 0.875rem;
     --text-subheading-sm--font-weight: 500;
     --text-subheading-sm--line-height: 1.25rem;
-    --text-subheading-sm--letter-spacing: 0.84px;
+    --text-subheading-sm--letter-spacing: 0.06em;
 
     --text-subheading-xs: 0.75rem;
     --text-subheading-xs--font-weight: 500;
     --text-subheading-xs--line-height: 1rem;
-    --text-subheading-xs--letter-spacing: 0.48px;
+    --text-subheading-xs--letter-spacing: 0.04em;
 
     --text-subheading-2xs: 0.6875rem;
     --text-subheading-2xs--font-weight: 500;
     --text-subheading-2xs--line-height: 0.75rem;
-    --text-subheading-2xs--letter-spacing: 0.22px;
+    --text-subheading-2xs--letter-spacing: 0.02em;
 
     --radius-*: initial;
     --radius-0: 0;
@@ -384,25 +385,13 @@
     --default-font-family: "Inter", var(--font-sans);
     --font-display: "InterDisplay", var(--font-sans);
 
-    --shadow-xs: 0px 1px 2px 0px rgba(10, 13, 20, 0.03);
-    --shadow-md: 0px 16px 32px -12px rgba(14, 18, 27, 0.1);
+    --shadow-xs: 0 1px 2px 0 oklch(15.9% 0.0157 267deg / 3.14%);
+    --shadow-sm: 0 2px 4px oklch(22.6% 0.00247 248deg / 3.92%);
+    --shadow-md: 0 16px 32px -12px oklch(18.3% 0.0196 266deg / 10.2%);
 
     --transition-timing-function-drawer: cubic-bezier(0.32, 0.72, 0, 1);
 
     --animate-caret-blink: caret-blink 1.25s ease-out infinite;
-}
-
-/* tailwind is configured to prefer this font */
-@font-face {
-    font-weight: 500;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
 }
 
 @keyframes caret-blink {

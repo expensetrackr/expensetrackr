@@ -11,7 +11,7 @@ const buttonVariants = cva({
         // Focus
         "data-focus:outline-2 data-focus:outline-offset-2 data-focus:outline-primary data-focus:outline-solid",
         // Disabled
-        "data-disabled:opacity-50",
+        "text-(--text-disabled-300) data-disabled:pointer-events-none data-disabled:bg-(--bg-weak-50) data-disabled:opacity-50",
         // Icon
         "forced-colors:[--btn-icon:ButtonText] forced-colors:data-hover:[--btn-icon:ButtonText] [&>[data-slot=icon]]:-mx-0.5 [&>[data-slot=icon]]:my-0.5 [&>[data-slot=icon]]:size-5 [&>[data-slot=icon]]:shrink-0 [&>[data-slot=icon]]:text-(--btn-icon) [&>[data-slot=icon]]:sm:my-1 [&>[data-slot=icon]]:sm:size-4",
     ],
