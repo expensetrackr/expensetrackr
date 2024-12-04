@@ -13,7 +13,7 @@ import {
     DialogIcon,
     DialogTitle,
 } from "#/components/dialog.tsx";
-import { ErrorMessage, Field, Label } from "#/components/form/fieldset.tsx";
+import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
 import { Input } from "#/components/form/input.tsx";
 import { Select } from "#/components/form/select.tsx";
 import { type Role, type Workspace } from "#/types/index.ts";
@@ -77,7 +77,7 @@ export function AddWorkspaceMemberForm({ workspace, availableRoles }: AddWorkspa
                                 placeholder="i.e. john@example.com"
                                 type="email"
                             />
-                            {form.errors.email && <ErrorMessage>{form.errors.email}</ErrorMessage>}
+                            {form.errors.email && <Hint invalid>{form.errors.email}</Hint>}
                         </Field>
 
                         {availableRoles.length > 0 ? (
@@ -96,7 +96,7 @@ export function AddWorkspaceMemberForm({ workspace, availableRoles }: AddWorkspa
                                     ))}
                                 </Select>
 
-                                {form.errors.role && <ErrorMessage>{form.errors.role}</ErrorMessage>}
+                                {form.errors.role && <Hint invalid>{form.errors.role}</Hint>}
                             </Field>
                         ) : null}
                     </form>

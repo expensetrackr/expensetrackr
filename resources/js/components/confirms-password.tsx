@@ -15,7 +15,7 @@ import {
     DialogIcon,
     DialogTitle,
 } from "./dialog.tsx";
-import { ErrorMessage, Field, Label } from "./form/fieldset.tsx";
+import { Field, Hint, Label } from "./form/fieldset.tsx";
 import { Input } from "./form/input.tsx";
 
 interface ConfirmsPasswordProps {
@@ -94,7 +94,7 @@ export function ConfirmsPassword({ onConfirm, children }: ConfirmsPasswordProps)
                                 ref={passwordRef}
                                 type="password"
                             />
-                            {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
+                            {errors.password && <Hint invalid>{errors.password}</Hint>}
                         </Field>
                     </form>
                 </DialogBody>

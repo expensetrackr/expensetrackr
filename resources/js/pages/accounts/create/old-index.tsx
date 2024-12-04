@@ -2,7 +2,7 @@ import { Head, router } from "@inertiajs/react";
 import DraftFillIcon from "virtual:icons/ri/draft-fill";
 
 import { AccountForm } from "#/components/form/account-form.tsx";
-import { Description, ErrorMessage, Field, Label } from "#/components/form/fieldset.tsx";
+import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
 import { Input } from "#/components/form/input.tsx";
 import { Select } from "#/components/form/select.tsx";
 import { Textarea } from "#/components/form/textarea.tsx";
@@ -64,7 +64,7 @@ export default function CreateAccountPage({ accountTypes, wizard }: InertiaShare
                                     placeholder="e.g. Personal savings"
                                     value={form.data.name}
                                 />
-                                {form.errors.name && <ErrorMessage>{form.errors.name}</ErrorMessage>}
+                                {form.errors.name && <Hint invalid>{form.errors.name}</Hint>}
                             </Field>
 
                             <Field>
@@ -77,11 +77,9 @@ export default function CreateAccountPage({ accountTypes, wizard }: InertiaShare
                                     rows={3}
                                     value={form.data.description ?? ""}
                                 />
-                                {form.errors.description ? (
-                                    <ErrorMessage>{form.errors.description}</ErrorMessage>
-                                ) : (
-                                    <Description>This will only be visible to you.</Description>
-                                )}
+                                <Hint invalid={!!form.errors.description}>
+                                    {form.errors.description ?? "This will only be visible to you."}
+                                </Hint>
                             </Field>
 
                             <div className="-mx-4 mt-1 border-t border-t-(--stroke-soft-200) pt-3">
@@ -100,7 +98,7 @@ export default function CreateAccountPage({ accountTypes, wizard }: InertiaShare
                                                 </option>
                                             ))}
                                         </Select>
-                                        {form.errors.type && <ErrorMessage>{form.errors.type}</ErrorMessage>}
+                                        {form.errors.type && <Hint invalid>{form.errors.type}</Hint>}
                                     </Field>
                                 </div>
                             </div>

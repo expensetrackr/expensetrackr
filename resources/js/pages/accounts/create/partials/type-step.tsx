@@ -11,7 +11,7 @@ import { type z } from "zod";
 
 import { Button } from "#/components/button.tsx";
 import { ContentDivider } from "#/components/content-divider.tsx";
-import { ErrorMessage, Field } from "#/components/form/fieldset.tsx";
+import { Field, Hint } from "#/components/form/fieldset.tsx";
 import { accountTypeEnum } from "#/schemas/account.ts";
 import { useCreateAccountWizardStore } from "#/store/create-account-wizard.ts";
 import { cx } from "#/utils/cva.ts";
@@ -119,7 +119,11 @@ export function TypeStep({ fields }: { fields: ReturnType<typeof useForm<TypeSte
                         );
                     })}
                 </Headless.RadioGroup>
-                {fields.type.errors && <ErrorMessage id={fields.type.errorId}>{fields.type.errors}</ErrorMessage>}
+                {fields.type.errors && (
+                    <Hint id={fields.type.errorId} invalid>
+                        {fields.type.errors}
+                    </Hint>
+                )}
             </Field>
         </>
     );

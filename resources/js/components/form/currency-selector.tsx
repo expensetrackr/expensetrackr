@@ -3,7 +3,7 @@ import { useQueryState } from "nuqs";
 import ArrowDropDownIcon from "virtual:icons/ri/arrow-drop-down-line";
 
 import { ComboboxInput, ComboboxOption, ComboboxOptions } from "../combobox.tsx";
-import { ErrorMessage, Field, Label } from "./fieldset.tsx";
+import { Field, Hint, Label } from "./fieldset.tsx";
 
 interface CurrencySelectorProps {
     value: string;
@@ -58,7 +58,7 @@ export function CurrencySelector({ value, onChange, currencies, error }: Currenc
                     )}
                 </ComboboxOptions>
             </Headless.Combobox>
-            {error && <ErrorMessage>{error}</ErrorMessage>}
+            {error && <Hint invalid>{error}</Hint>}
         </Field>
     );
 }

@@ -4,7 +4,7 @@ import { useCallback, useEffect } from "react";
 import { toast } from "sonner";
 import { route } from "ziggy-js";
 
-import { ErrorMessage, Field, Label } from "#/components/form/fieldset.tsx";
+import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
 import { Input } from "#/components/form/input.tsx";
 import { FormSection } from "#/components/form-section.tsx";
 import { type User, type Workspace, type WorkspacePermissions } from "#/types/index.ts";
@@ -62,7 +62,7 @@ export function UpdateWorkspaceNameForm({ workspace, permissions }: UpdateWorksp
                         type="text"
                         value={form.data.name}
                     />
-                    {form.errors.name && <ErrorMessage>{form.errors.name}</ErrorMessage>}
+                    {form.errors.name && <Hint invalid>{form.errors.name}</Hint>}
                 </Field>
             </form>
         </FormSection>

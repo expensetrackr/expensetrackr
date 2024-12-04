@@ -9,8 +9,13 @@ export default function InputLabel({
     ...props
 }: LabelHTMLAttributes<HTMLLabelElement> & { value?: string }) {
     return (
-        // biome-ignore lint/a11y/noLabelWithoutControl: it's already handled by the input component
-        <label {...props} className={cx("text-sm text-gray-700 block font-medium", className)}>
+        <label
+            {...props}
+            className={cx(
+                "flex items-center text-label-sm font-medium aria-disabled:text-(--text-disabled-300)",
+                className,
+            )}
+        >
             {value ? value : children}
         </label>
     );

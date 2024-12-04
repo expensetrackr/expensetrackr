@@ -1,6 +1,6 @@
 import { getInputProps, getTextareaProps, type useForm, useInputControl } from "@conform-to/react";
 
-import { Description, ErrorMessage, Field, Label } from "#/components/form/fieldset.tsx";
+import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
 import { Input } from "#/components/form/input.tsx";
 import { Listbox, ListboxLabel, ListboxOption } from "#/components/form/listbox.tsx";
 import { Textarea } from "#/components/form/textarea.tsx";
@@ -33,7 +33,7 @@ export function DetailsStep({ fields }: DetailsStepProps) {
                     name="name"
                     placeholder="e.g. Personal savings"
                 />
-                {fields.name.errors && <ErrorMessage>{fields.name.errors}</ErrorMessage>}
+                {fields.name.errors && <Hint invalid>{fields.name.errors}</Hint>}
             </Field>
 
             <Field>
@@ -44,11 +44,9 @@ export function DetailsStep({ fields }: DetailsStepProps) {
                     placeholder="e.g. Savings account for personal expenses"
                     rows={3}
                 />
-                {fields.description.errors ? (
-                    <ErrorMessage>{fields.description.errors}</ErrorMessage>
-                ) : (
-                    <Description>This will only be visible to you.</Description>
-                )}
+                <Hint invalid={!!fields.description.errors}>
+                    {fields.description.errors ?? "This will only be visible to you."}
+                </Hint>
             </Field>
 
             {type && subtypeOptions[type as keyof typeof subtypeOptions] && (
@@ -66,7 +64,7 @@ export function DetailsStep({ fields }: DetailsStepProps) {
                             </ListboxOption>
                         ))}
                     </Listbox>
-                    {fields.subtype.errors && <ErrorMessage>{fields.subtype.errors}</ErrorMessage>}
+                    {fields.subtype.errors && <Hint invalid>{fields.subtype.errors}</Hint>}
                 </Field>
             )}
         </>

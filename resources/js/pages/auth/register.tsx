@@ -3,7 +3,7 @@ import { route } from "ziggy-js";
 
 import { Button } from "#/components/button.tsx";
 import { Checkbox, CheckboxField } from "#/components/checkbox.tsx";
-import { Description, ErrorMessage, Field, Label } from "#/components/form/fieldset.tsx";
+import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
 import { Input } from "#/components/form/input.tsx";
 import { Link, StyledLink } from "#/components/link.tsx";
 import { Socialstream } from "#/components/socialstream.tsx";
@@ -57,7 +57,7 @@ export default function Register({ socialstream }: InertiaSharedProps) {
                         placeholder="e.g. John Doe"
                         value={data.name}
                     />
-                    {errors.name ? <ErrorMessage>{errors.name}</ErrorMessage> : null}
+                    {errors.name ? <Hint invalid>{errors.name}</Hint> : null}
                 </Field>
 
                 <Field>
@@ -71,7 +71,7 @@ export default function Register({ socialstream }: InertiaSharedProps) {
                         type="email"
                         value={data.email}
                     />
-                    {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
+                    {errors.email && <Hint invalid>{errors.email}</Hint>}
                 </Field>
 
                 <Field>
@@ -85,11 +85,7 @@ export default function Register({ socialstream }: InertiaSharedProps) {
                         type="password"
                         value={data.password}
                     />
-                    {errors.password ? (
-                        <ErrorMessage>{errors.password}</ErrorMessage>
-                    ) : (
-                        <Description>Must be at least 8 characters long</Description>
-                    )}
+                    <Hint invalid={!!errors.password}>{errors.password ?? "Must be at least 8 characters long"}</Hint>
                 </Field>
 
                 <Field>
@@ -103,7 +99,7 @@ export default function Register({ socialstream }: InertiaSharedProps) {
                         type="password"
                         value={data.password_confirmation}
                     />
-                    {errors.password_confirmation && <ErrorMessage>{errors.password_confirmation}</ErrorMessage>}
+                    {errors.password_confirmation && <Hint invalid>{errors.password_confirmation}</Hint>}
                 </Field>
 
                 <div className="flex flex-col gap-3 py-2">
@@ -125,7 +121,11 @@ export default function Register({ socialstream }: InertiaSharedProps) {
                             </Link>
                         </Label>
 
-                        {errors.terms && <ErrorMessage className="col-span-full">{errors.terms}</ErrorMessage>}
+                        {errors.terms && (
+                            <Hint className="col-span-full" invalid>
+                                {errors.terms}
+                            </Hint>
+                        )}
                     </CheckboxField>
 
                     <CheckboxField>

@@ -9,7 +9,7 @@ import MoneyDollarCircleFillIcon from "virtual:icons/ri/money-dollar-circle-fill
 import { ContentDivider } from "#/components/content-divider.tsx";
 import { AccountForm } from "#/components/form/account-form.tsx";
 import { CurrencySelector } from "#/components/form/currency-selector.tsx";
-import { ErrorMessage, Field, Label } from "#/components/form/fieldset.tsx";
+import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
 import { Input } from "#/components/form/input.tsx";
 import { Text } from "#/components/text.tsx";
 import { useAccountForm } from "#/hooks/use-account-form.ts";
@@ -100,9 +100,7 @@ export default function CreateAccountStep2Page({
                                     placeholder="e.g. 1000"
                                     value={form.data.initial_balance}
                                 />
-                                {form.errors.initial_balance && (
-                                    <ErrorMessage>{form.errors.initial_balance}</ErrorMessage>
-                                )}
+                                {form.errors.initial_balance && <Hint invalid>{form.errors.initial_balance}</Hint>}
                             </Field>
 
                             <CurrencySelector

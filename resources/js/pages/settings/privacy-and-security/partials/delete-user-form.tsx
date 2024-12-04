@@ -14,7 +14,7 @@ import {
     DialogIcon,
     DialogTitle,
 } from "#/components/dialog.tsx";
-import { ErrorMessage, Field, Label } from "#/components/form/fieldset.tsx";
+import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
 import { Input } from "#/components/form/input.tsx";
 import { Action } from "#/utils/action.ts";
 
@@ -80,7 +80,7 @@ export function DeleteUserForm() {
                                         type="password"
                                         value={form.data.password}
                                     />
-                                    {form.errors.password && <ErrorMessage>{form.errors.password}</ErrorMessage>}
+                                    {form.errors.password && <Hint invalid>{form.errors.password}</Hint>}
                                 </Field>
                             </form>
                         </DialogBody>

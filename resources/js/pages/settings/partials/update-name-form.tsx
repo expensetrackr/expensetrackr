@@ -3,7 +3,7 @@ import { useDebounce } from "@uidotdev/usehooks";
 import { useCallback, useEffect } from "react";
 import { toast } from "sonner";
 
-import { ErrorMessage, Field, Label } from "#/components/form/fieldset.tsx";
+import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
 import { Input } from "#/components/form/input.tsx";
 import { FormSection } from "#/components/form-section.tsx";
 import { type InertiaSharedProps } from "#/types/index.ts";
@@ -55,7 +55,7 @@ export function UpdateNameForm() {
                         type="text"
                         value={data.name}
                     />
-                    {errors.name && <ErrorMessage>{errors.name}</ErrorMessage>}
+                    {errors.name && <Hint invalid>{errors.name}</Hint>}
                 </Field>
             </form>
         </FormSection>

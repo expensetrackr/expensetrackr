@@ -5,7 +5,7 @@ import { route } from "ziggy-js";
 
 import { Button } from "#/components/button.tsx";
 import { Checkbox, CheckboxField } from "#/components/checkbox.tsx";
-import { ErrorMessage, Field, Label } from "#/components/form/fieldset.tsx";
+import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
 import { Input } from "#/components/form/input.tsx";
 import { StyledLink } from "#/components/link.tsx";
 import { Socialstream } from "#/components/socialstream.tsx";
@@ -67,7 +67,7 @@ export default function Login({
                         type="email"
                         value={data.email}
                     />
-                    {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
+                    {errors.email && <Hint invalid>{errors.email}</Hint>}
                 </Field>
 
                 <Field>
@@ -81,7 +81,7 @@ export default function Login({
                         type="password"
                         value={data.password}
                     />
-                    {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
+                    {errors.password && <Hint invalid>{errors.password}</Hint>}
                 </Field>
 
                 <div className="flex items-center justify-between gap-3 py-2">

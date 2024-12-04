@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { ActionSection } from "#/components/action-section.tsx";
 import { Button } from "#/components/button.tsx";
 import { ConfirmsPassword } from "#/components/confirms-password.tsx";
-import { ErrorMessage, Field, Label } from "#/components/form/fieldset.tsx";
+import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
 import { Input } from "#/components/form/input.tsx";
 import { type PageProps } from "#/types/index.ts";
 import { Action } from "#/utils/action.ts";
@@ -225,7 +225,7 @@ export function TwoFactorAuthenticationForm({ requiresConfirmation }: TwoFactorA
                                                     value={confirmationForm.data.code}
                                                 />
                                                 {confirmationForm.errors.code && (
-                                                    <ErrorMessage>{confirmationForm.errors.code}</ErrorMessage>
+                                                    <Hint invalid>{confirmationForm.errors.code}</Hint>
                                                 )}
                                             </Field>
                                         </div>

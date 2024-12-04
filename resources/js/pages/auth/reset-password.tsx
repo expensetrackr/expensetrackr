@@ -2,7 +2,7 @@ import { Head, useForm } from "@inertiajs/react";
 import { route } from "ziggy-js";
 
 import { Button } from "#/components/button.tsx";
-import { Description, ErrorMessage, Field, Label } from "#/components/form/fieldset.tsx";
+import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
 import { Input } from "#/components/form/input.tsx";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";
 
@@ -41,7 +41,7 @@ export default function ResetPassword({ token, email }: { token: string; email: 
                         type="email"
                         value={data.email}
                     />
-                    {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
+                    {errors.email && <Hint invalid>{errors.email}</Hint>}
                 </Field>
 
                 <Field>
@@ -55,11 +55,7 @@ export default function ResetPassword({ token, email }: { token: string; email: 
                         type="password"
                         value={data.password}
                     />
-                    {errors.password ? (
-                        <ErrorMessage>{errors.password}</ErrorMessage>
-                    ) : (
-                        <Description>Must be at least 8 characters long</Description>
-                    )}
+                    <Hint invalid={!!errors.password}>{errors.password ?? "Must be at least 8 characters long"}</Hint>
                 </Field>
 
                 <Field>
@@ -73,7 +69,7 @@ export default function ResetPassword({ token, email }: { token: string; email: 
                         type="password"
                         value={data.password_confirmation}
                     />
-                    {errors.password_confirmation && <ErrorMessage>{errors.password_confirmation}</ErrorMessage>}
+                    {errors.password_confirmation && <Hint invalid>{errors.password_confirmation}</Hint>}
                 </Field>
 
                 <Button disabled={processing} type="submit">

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { route } from "ziggy-js";
 
 import { Button } from "#/components/button.tsx";
-import { ErrorMessage, Field, Label } from "#/components/form/fieldset.tsx";
+import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "#/components/form/input-otp.tsx";
 import { Input } from "#/components/form/input.tsx";
 import { StyledLink } from "#/components/link.tsx";
@@ -60,7 +60,7 @@ export default function TwoFactorChallenge() {
                             onChange={(e) => setData("recovery_code", e.target.value)}
                             value={data.recovery_code}
                         />
-                        {errors.recovery_code && <ErrorMessage>{errors.recovery_code}</ErrorMessage>}
+                        {errors.recovery_code && <Hint invalid>{errors.recovery_code}</Hint>}
                     </Field>
                 ) : (
                     <Field>
@@ -107,7 +107,7 @@ export default function TwoFactorChallenge() {
                                 />
                             </InputOTPGroup>
                         </InputOTP>
-                        {errors.code && <ErrorMessage>{errors.code}</ErrorMessage>}
+                        {errors.code && <Hint invalid>{errors.code}</Hint>}
                     </Field>
                 )}
 

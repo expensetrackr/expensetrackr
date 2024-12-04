@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { toast } from "sonner";
 
 import { Button } from "#/components/button.tsx";
-import { ErrorMessage, Field, Label } from "#/components/form/fieldset.tsx";
+import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
 import { Input } from "#/components/form/input.tsx";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";
 
@@ -44,7 +44,7 @@ export default function ForgotPassword({ status }: { status?: string }) {
                         type="email"
                         value={data.email}
                     />
-                    {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
+                    {errors.email && <Hint invalid>{errors.email}</Hint>}
                 </Field>
 
                 <Button disabled={processing} type="submit">

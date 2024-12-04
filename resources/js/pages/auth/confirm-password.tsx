@@ -2,7 +2,7 @@ import { Head, useForm } from "@inertiajs/react";
 import { route } from "ziggy-js";
 
 import { Button } from "#/components/button.tsx";
-import { ErrorMessage, Field, Label } from "#/components/form/fieldset.tsx";
+import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
 import { Input } from "#/components/form/input.tsx";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";
 
@@ -38,7 +38,7 @@ export default function ConfirmPassword() {
                         type="password"
                         value={data.password}
                     />
-                    {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
+                    {errors.password && <Hint invalid>{errors.password}</Hint>}
                 </Field>
 
                 <Button disabled={processing} type="submit">

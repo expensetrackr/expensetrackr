@@ -16,7 +16,7 @@ import {
     DialogIcon,
     DialogTitle,
 } from "#/components/dialog.tsx";
-import { ErrorMessage, Field, Label } from "#/components/form/fieldset.tsx";
+import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
 import { Input } from "#/components/form/input.tsx";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "#/components/table.tsx";
 import { type Session } from "#/types/index.ts";
@@ -96,7 +96,7 @@ export function LogoutOtherBrowserSessionsForm({ sessions }: LogoutOtherBrowserS
                                         type="password"
                                         value={form.data.password}
                                     />
-                                    {form.errors.password && <ErrorMessage>{form.errors.password}</ErrorMessage>}
+                                    {form.errors.password && <Hint invalid>{form.errors.password}</Hint>}
                                 </Field>
                             </form>
                         </DialogBody>

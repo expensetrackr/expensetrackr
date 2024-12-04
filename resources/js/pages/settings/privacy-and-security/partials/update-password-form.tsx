@@ -14,7 +14,7 @@ import {
     DialogIcon,
     DialogTitle,
 } from "#/components/dialog.tsx";
-import { ErrorMessage, Field, Label } from "#/components/form/fieldset.tsx";
+import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
 import { Input } from "#/components/form/input.tsx";
 import { Action } from "#/utils/action.ts";
 
@@ -87,7 +87,7 @@ export function UpdatePasswordForm() {
                                         ref={currentPasswordRef}
                                         type="password"
                                     />
-                                    {errors.current_password && <ErrorMessage>{errors.current_password}</ErrorMessage>}
+                                    {errors.current_password && <Hint invalid>{errors.current_password}</Hint>}
                                 </Field>
                                 <Field>
                                     <Label>New password</Label>
@@ -100,7 +100,7 @@ export function UpdatePasswordForm() {
                                         ref={passwordRef}
                                         type="password"
                                     />
-                                    {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
+                                    {errors.password && <Hint invalid>{errors.password}</Hint>}
                                 </Field>
                                 <Field>
                                     <Label>Confirm password</Label>
@@ -113,7 +113,7 @@ export function UpdatePasswordForm() {
                                         type="password"
                                     />
                                     {errors.password_confirmation && (
-                                        <ErrorMessage>{errors.password_confirmation}</ErrorMessage>
+                                        <Hint invalid>{errors.password_confirmation}</Hint>
                                     )}
                                 </Field>
                             </form>

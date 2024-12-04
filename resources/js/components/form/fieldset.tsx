@@ -24,43 +24,30 @@ export const Field = twc(Headless.Field)(() => [
 
 export const Label = twc(Headless.Label).attrs({
     "data-slot": "label",
-})`select-none text-label-sm data-disabled:opacity-50`;
+})`select-none text-label-sm data-disabled:text-(--text-disabled-300)`;
 
-export function Description({
+export function Hint({
     className,
     children,
+    invalid,
     ...props
-}: { className?: string } & Omit<Headless.DescriptionProps, "className">) {
+}: { className?: string; invalid?: boolean } & Omit<Headless.DescriptionProps, "className">) {
     return (
         <Headless.Description
-            data-slot="description"
+            data-slot={invalid ? "error" : "description"}
             {...props}
             className={cx(
-                "inline-flex items-start gap-1 text-paragraph-xs text-(--text-sub-600) data-disabled:opacity-50",
+                "flex items-center gap-1 text-paragraph-xs data-disabled:text-(--text-disabled-300)",
+                invalid ? "text-state-error-base" : "text-(--text-sub-600)",
                 className,
             )}
         >
-            <ErrorWarningFillIcon className="size-4 text-(--icon-soft-400)" />
-            <span>{typeof children === "string" ? children : children?.toString?.()}</span>
-        </Headless.Description>
-    );
-}
-
-export function ErrorMessage({
-    className,
-    children,
-    ...props
-}: { className?: string } & Omit<Headless.DescriptionProps, "className">) {
-    return (
-        <Headless.Description
-            data-slot="error"
-            {...props}
-            className={cx(
-                "inline-flex items-start gap-1 text-paragraph-xs text-state-error-base data-disabled:opacity-50",
-                className,
-            )}
-        >
-            <ErrorWarningFillIcon className="size-4" />
+            <ErrorWarningFillIcon
+                className={cx(
+                    "size-4 shrink-0 data-disabled:text-(--text-disabled-300)",
+                    invalid ? "text-state-error-base" : "text-(--text-soft-400)",
+                )}
+            />
             <span>{typeof children === "string" ? children : children?.toString?.()}</span>
         </Headless.Description>
     );

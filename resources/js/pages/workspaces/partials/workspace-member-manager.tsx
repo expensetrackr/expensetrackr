@@ -21,7 +21,7 @@ import {
     DialogTitle,
 } from "#/components/dialog.tsx";
 import { Dropdown, DropdownButton, DropdownItem, DropdownLabel, DropdownMenu } from "#/components/dropdown.tsx";
-import { ErrorMessage, Field, Label } from "#/components/form/fieldset.tsx";
+import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
 import { Select } from "#/components/form/select.tsx";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "#/components/table.tsx";
 import { useUser } from "#/hooks/use-user.ts";
@@ -252,7 +252,7 @@ function ManageRoleDialog({
                                 </option>
                             ))}
                         </Select>
-                        {form.errors.role && <ErrorMessage>{form.errors.role}</ErrorMessage>}
+                        {form.errors.role && <Hint invalid>{form.errors.role}</Hint>}
                     </Field>
                 </form>
             </DialogBody>
