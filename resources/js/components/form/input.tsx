@@ -11,7 +11,7 @@ export const InputGroup = twc.span.attrs({
     "[&_input]:has-[[data-slot=icon]:last-child]:pr-10 sm:[&_input]:has-[[data-slot=icon]:last-child]:pr-8 [&_input]:has-[[data-slot=icon]:first-child]:pl-10 sm:[&_input]:has-[[data-slot=icon]:first-child]:pl-8",
     "[&>[data-slot=icon]]:absolute [&>[data-slot=icon]]:top-3 sm:[&>[data-slot=icon]]:top-2.5 [&>[data-slot=icon]]:z-10 [&>[data-slot=icon]]:size-5 sm:[&>[data-slot=icon]]:size-4",
     "[&>[data-slot=icon]:last-child]:right-3 sm:[&>[data-slot=icon]:last-child]:right-2.5 [&>[data-slot=icon]:first-child]:left-3 sm:[&>[data-slot=icon]:first-child]:left-2.5",
-    "[&>[data-slot=icon]]:text-zinc-500",
+    "[&>[data-slot=icon]]:text-(--text-soft-400)",
 ]);
 
 const dateTypes = ["date", "datetime-local", "month", "time", "week"];
@@ -22,11 +22,11 @@ export const inputVariants = cva({
         // Basic layout
         "relative block w-full appearance-none transition",
         // Typography
-        "text-paragraph-sm placeholder:text-(--text-soft-400) placeholder:transition-colors focus-visible:placeholder:text-(--text-strong-950) data-hover:placeholder:text-(--text-sub-600)",
+        "text-paragraph-sm placeholder:text-(--text-soft-400) placeholder:transition placeholder:duration-200 placeholder:ease-out data-focus:placeholder:text-(--text-sub-600) data-hover:placeholder:text-(--text-strong-950)",
         // Border
-        "border border-(--stroke-soft-200) focus-visible:border-(--stroke-strong-950) data-hover:border-(--bg-weak-50)",
+        "border border-(--stroke-soft-200) data-focus:border-(--stroke-strong-950) data-hover:not-data-focus:not-data-invalid:border-(--bg-weak-50)",
         // Background color
-        "bg-(--bg-white-0) data-hover:bg-(--bg-weak-50)",
+        "bg-(--bg-white-0) data-hover:not-data-focus:bg-(--bg-weak-50)",
         // Hide default focus styles
         "focus:outline-none",
         // Focus ring
@@ -60,7 +60,7 @@ export function Input({ ref, className, $size = "md", ...props }: InputProps) {
         <span
             className={cx([
                 // Basic layout
-                "relative block w-full transition before:transition after:transition",
+                "relative block w-full transition duration-200 ease-out",
                 // Background color + shadow applied to inset pseudo-element, so shadow blends with border in light mode
                 "before:absolute before:inset-px before:bg-(--bg-white-0) before:shadow",
                 ($size === "xs" || $size === "sm") && "before:rounded-[calc(var(--radius-8)-1px)]",
@@ -68,13 +68,13 @@ export function Input({ ref, className, $size = "md", ...props }: InputProps) {
                 // Background color is moved to control and shadow is removed in dark mode so hide `before` pseudo
                 "dark:before:hidden",
                 // Focus ring
-                "after:pointer-events-none after:absolute after:inset-0 after:outline after:outline-transparent sm:focus-within:after:outline-2 sm:focus-within:after:outline-offset-2 sm:focus-within:after:outline-neutral-alpha-16",
+                "after:pointer-events-none after:absolute after:inset-0 after:outline after:outline-transparent has-data-focus:after:outline-2 has-data-focus:after:outline-offset-2 has-data-focus:after:outline-neutral-alpha-16",
                 ($size === "xs" || $size === "sm") && "after:rounded-8",
                 $size === "md" && "after:rounded-10",
                 // Disabled state
                 "has-data-disabled:opacity-50 has-data-disabled:before:bg-(--bg-weak-50) has-data-disabled:before:shadow-none",
                 // Invalid state
-                "has-data-invalid:before:shadow-red-500/10",
+                "has-data-focus:has-data-invalid:after:outline-red-alpha-10",
                 className,
             ])}
             data-slot="control"

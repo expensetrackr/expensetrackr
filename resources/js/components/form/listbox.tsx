@@ -58,7 +58,7 @@ export function Listbox<T>({
                 autoFocus={autoFocus}
                 className={cx([
                     // Basic layout
-                    "group relative block w-full transition before:transition after:transition",
+                    "group relative block w-full transition duration-200 ease-out",
                     // Background color + shadow applied to inset pseudo element, so shadow blends with border in light mode
                     "before:absolute before:inset-px before:bg-(--bg-white-0) before:shadow",
                     ($size === "xs" || $size === "sm") && "before:rounded-[calc(var(--radius-8)-1px)]",
@@ -72,9 +72,9 @@ export function Listbox<T>({
                     ($size === "xs" || $size === "sm") && "after:rounded-8",
                     $size === "md" && "after:rounded-10",
                     // Disabled state
-                    "data-disabled:opacity-50 data-disabled:before:bg-(--bg-weak-50) data-disabled:before:shadow-none",
+                    "data-disabled:before:bg-(--bg-weak-50) data-disabled:before:shadow-none",
                     // Invalid state
-                    "data-invalid:before:border-state-error-base",
+                    "data-invalid:after:outline-red-alpha-10",
                     className,
                 ])}
                 data-slot="control"
@@ -85,7 +85,7 @@ export function Listbox<T>({
                     options={options}
                     placeholder={
                         placeholder && (
-                            <span className="block truncate text-(--text-soft-400) transition-colors group-data-focus:text-(--text-strong-950) group-data-hover:text-(--text-sub-600)">
+                            <span className="block truncate text-(--text-soft-400) transition duration-200 ease-out group-data-focus:text-(--text-strong-950) group-data-hover:text-(--text-sub-600)">
                                 {placeholder}
                             </span>
                         )

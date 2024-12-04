@@ -7,7 +7,7 @@ import { Link } from "./link.tsx";
 const buttonVariants = cva({
     base: [
         // Base
-        "relative isolate inline-flex items-center justify-center text-label-sm font-medium transition",
+        "relative isolate inline-flex items-center justify-center text-label-sm font-medium transition duration-200 ease-out",
         // Focus
         "data-focus:outline-2 data-focus:outline-offset-2 data-focus:outline-primary data-focus:outline-solid",
         // Disabled
@@ -23,11 +23,11 @@ const buttonVariants = cva({
                 // Optical border, implemented as the button background to avoid corner artifacts
                 "border-transparent bg-(--btn-border)",
                 // Button background, implemented as foreground layer to stack on top of pseudo-border layer
-                "before:absolute before:inset-0 before:-z-10 before:bg-(--btn-bg) before:transition",
+                "before:absolute before:inset-0 before:-z-10 before:bg-(--btn-bg) before:transition before:duration-200 before:ease-out",
                 // Drop shadow, applied to the inset `before` layer, so it blends with the
                 "before:shadow",
                 // Shim/overlay, inset to match button foreground and used for hover state + highlight
-                "after:absolute after:inset-0 after:-z-10 after:transition",
+                "after:absolute after:inset-0 after:-z-10 after:transition after:duration-200 after:ease-out",
                 // White overlay on hover
                 "data-active:after:bg-(--btn-hover-overlay) data-hover:after:bg-(--btn-hover-overlay)",
                 // Disabled
@@ -64,9 +64,9 @@ const buttonVariants = cva({
         },
         $color: {
             primary: [
-                "[--btn-bg:var(--color-primary)] [--btn-border:var(--color-primary)] [--btn-ghost-text:var(--color-primary)] [--btn-hover-overlay:var(--color-primary-dark)] [--btn-lighter-bg:var(--color-primary-lighter)] [--btn-lighter-text:var(--color-primary)] [--btn-stroke-border:var(--color-primary)] [--btn-stroke-hover:var(--color-primary-lighter)] [--btn-stroke-text:var(--color-primary)] [--btn-text:var(--color-white)]",
-                "data-hover:[--btn-ghost-bg:var(--color-primary-lighter)] data-hover:[--btn-lighter-border:var(--color-primary)]",
-                "data-focus:outline-primary-lighter data-focus:[--btn-ghost-border:var(--color-primary)] data-focus:[--btn-lighter-border:var(--color-primary)]",
+                "[--btn-bg:var(--color-primary)] [--btn-border:var(--color-primary)] [--btn-ghost-text:var(--color-primary)] [--btn-hover-overlay:var(--color-primary-dark)] [--btn-lighter-bg:var(--color-primary-lightest)] [--btn-lighter-text:var(--color-primary)] [--btn-stroke-border:var(--color-primary)] [--btn-stroke-hover:var(--color-primary-lightest)] [--btn-stroke-text:var(--color-primary)] [--btn-text:var(--color-white)]",
+                "data-hover:[--btn-ghost-bg:var(--color-primary-lightest)] data-hover:[--btn-lighter-border:var(--color-primary)]",
+                "data-focus:outline-primary-lightest data-focus:[--btn-ghost-border:var(--color-primary)] data-focus:[--btn-lighter-border:var(--color-primary)]",
                 "[--btn-icon:var(--color-white)]",
             ],
             neutral: [
