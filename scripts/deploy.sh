@@ -2,6 +2,19 @@
 
 php artisan down
 
+php artisan cache:clear
+
+php artisan config:clear
+
+php artisan view:clear
+
+php artisan event:clear
+
+php artisan route:clear
+
+php artisan filament:clear-cached-components
+php artisan filament:cache-components
+
 php artisan inertia:stop-ssr
 
 php artisan queue:restart
