@@ -73,7 +73,7 @@ jobs:
             - name: 📦 Install composer dependencies
               uses: php-actions/composer@v6
               with:
-                  php_extensions: bcmath intl
+                  php_extensions: bcmath intl zip
                   dev: no
                   args: --optimize-autoloader
 
