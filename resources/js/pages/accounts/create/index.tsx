@@ -28,7 +28,7 @@ export default function CreateAccountPage() {
         },
         onSubmit(event, { submission }) {
             event.preventDefault();
-            // biome-ignore lint/suspicious/noConsoleLog: <We want to log the form values>
+
             console.log(`Form values for step ${stepper.current.id}:`, submission);
             if (stepper.isLast) {
                 stepper.reset();
@@ -85,10 +85,10 @@ export default function CreateAccountPage() {
                         {stepper.switch({
                             type: () => (
                                 <Card
-                                    description="Choose the type of account you want to add. You can add more accounts later."
+                                    description="Choose the type of account you want to add."
                                     icon={ListSettings}
                                     stepper={stepper}
-                                    title="Select your account type"
+                                    title="Type selection"
                                 >
                                     <TypeStep fields={fields as ReturnType<typeof useForm<TypeStepValues>>[1]} />
                                 </Card>

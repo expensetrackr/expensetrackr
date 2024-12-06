@@ -24,7 +24,13 @@ export const Field = twc(Headless.Field)(() => [
 
 export const Label = twc(Headless.Label).attrs({
     "data-slot": "label",
-})`select-none text-label-sm data-disabled:text-(--text-disabled-300)`;
+})`select-none flex items-center gap-px text-label-sm data-disabled:text-(--text-disabled-300)`;
+
+export const LabelAsterisk = twc.span.attrs({
+    children: "*",
+})`text-primary group-data-disabled:text-(--text-disabled-300)`;
+
+export const LabelSub = twc.span`text-paragraph-sm text-(--text-sub-600) group-data-disabled:text-(--text-disabled-300)`;
 
 export function Hint({
     className,

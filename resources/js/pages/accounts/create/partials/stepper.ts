@@ -7,7 +7,7 @@ import { zodDecimal } from "#/utils/zod-decimal.ts";
 export const typeStepSchema = z.object({
     type: accountTypeEnum,
 });
-export const baseDetailsSchema = accountSchema.pick({ name: true, description: true, subtype: true });
+export const detailsSchema = accountSchema.pick({ name: true, description: true, subtype: true });
 
 export const creditCardDetailsSchema = z.object({
     available_balance: zodDecimal().wholeNumber(10),
@@ -17,25 +17,29 @@ export const creditCardDetailsSchema = z.object({
     expires_at: z.string().datetime(),
 });
 
-export const detailsSchema = z.discriminatedUnion("type", [
-    baseDetailsSchema.extend({
+export const baseBalanceSchema = accountSchema.pick({
+    initial_balance: true,
+    current_balance: true,
+    currency_code: true,
+});
+
+export const balanceSchema = z.discriminatedUnion("type", [
+    baseBalanceSchema.extend({
         type: z.literal(accountTypeEnum.Enum.depository),
     }),
-    baseDetailsSchema.extend({
+    baseBalanceSchema.extend({
         type: z.literal(accountTypeEnum.Enum.investment),
     }),
-    baseDetailsSchema.extend({
+    baseBalanceSchema.extend({
         type: z.literal(accountTypeEnum.Enum.credit_card),
         ...creditCardDetailsSchema.shape,
     }),
 ]);
 
-export const balanceSchema = accountSchema.pick({ initial_balance: true, current_balance: true, currency_code: true });
-
 export type DetailsStepValues = z.infer<typeof detailsSchema>;
 
 export const { useStepper, Scoped } = defineStepper(
-    { id: "type", label: "Type", schema: typeStepSchema },
+    { id: "type", label: "Type selection", schema: typeStepSchema },
     { id: "details", label: "Details", schema: detailsSchema },
     { id: "balance", label: "Balance & Currency", schema: balanceSchema },
     { id: "complete", label: "Account Summary", schema: typeStepSchema },

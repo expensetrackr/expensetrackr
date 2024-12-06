@@ -17,7 +17,7 @@ type DetailsStepProps = {
     fields: ReturnType<typeof useForm<DetailsStepValues>>[1];
 };
 
-export function DetailsStep({ fields }: DetailsStepProps) {
+export function BalanceStep({ fields }: DetailsStepProps) {
     const subtypeControl = useInputControl(fields.subtype);
     const { type } = useCreateAccountWizardStore();
 
