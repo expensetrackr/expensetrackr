@@ -24,13 +24,14 @@
         "inertiajs/inertia-laravel": "2.x-dev",
         "joelbutcher/socialstream": "6.1.11",
         "kongulov/interact-with-enum": "1.0.0",
-        "laravel/fortify": "1.25.0",
-        "laravel/framework": "11.34.2",
+        "laravel/fortify": "1.25.1",
+        "laravel/framework": "11.35.0",
         "laravel/octane": "2.6.0",
-        "laravel/sanctum": "4.0.5",
+        "laravel/sanctum": "4.0.6",
         "laravel/tinker": "2.10.0",
         "league/flysystem-aws-s3-v3": "3.29.0",
         "pinkary-project/type-guard": "0.1.0",
+        "spatie/laravel-permission": "6.10.1",
         "spatie/laravel-prefixed-ids": "1.4.0",
         "tightenco/ziggy": "2.4.1"
     },
@@ -42,7 +43,7 @@
         "laravel/sail": "1.39.1",
         "mockery/mockery": "1.6.12",
         "nunomaduro/collision": "8.5.0",
-        "pestphp/pest": "3.6.0",
+        "pestphp/pest": "3.7.0",
         "pestphp/pest-plugin-laravel": "3.0.0",
         "pestphp/pest-plugin-type-coverage": "3.2.0",
         "rector/rector": "1.2.10"
@@ -51,8 +52,7 @@
         "psr-4": {
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
-            "Database\\Seeders\\": "database/seeders/",
-            "Workspaces\\": "workspaces/src/"
+            "Database\\Seeders\\": "database/seeders/"
         }
     },
     "autoload-dev": {
@@ -88,12 +88,6 @@
             "@test:refactor",
             "@test:types"
         ]
-    },
-    "extra": {
-        "laravel": {
-            "dont-discover": [],
-            "providers": "Workspaces\\WorkspacesServiceProvider"
-        }
     },
     "config": {
         "optimize-autoloader": true,

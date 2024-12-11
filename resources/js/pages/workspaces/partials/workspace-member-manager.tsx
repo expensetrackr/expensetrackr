@@ -45,7 +45,7 @@ interface WorkspaceMemberManagerProps {
     workspace: Workspace & {
         owner: User;
         workspace_invitations: WorkspaceInvitation[];
-        users: UserMembership[];
+        members: UserMembership[];
     };
     availableRoles: Role[];
     permissions: WorkspacePermissions;
@@ -54,10 +54,6 @@ interface WorkspaceMemberManagerProps {
 export function WorkspaceMemberManager({ workspace, availableRoles, permissions }: WorkspaceMemberManagerProps) {
     const [, setAction] = useQueryState("action", parseAsStringEnum<Action>(Object.values(Action)));
     const currentUser = useUser();
-
-    function displayableRole(role: string) {
-        return availableRoles.find((r) => r.key === role)?.name;
-    }
 
     return (
         <ActionSection
@@ -81,8 +77,8 @@ export function WorkspaceMemberManager({ workspace, availableRoles, permissions 
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {workspace.users.length > 0 ? (
-                        workspace.users?.map((user) => (
+                    {workspace.members.length > 0 ? (
+                        workspace.members?.map((user) => (
                             <TableRow key={user.id}>
                                 <TableCell>
                                     <div className="inline-flex items-center gap-3">
@@ -96,7 +92,7 @@ export function WorkspaceMemberManager({ workspace, availableRoles, permissions 
                                     </div>
                                 </TableCell>
                                 <TableCell>{user.email}</TableCell>
-                                <TableCell>{displayableRole(user.membership.role)}</TableCell>
+                                <TableCell>{user.membership.role}</TableCell>
 
                                 {(permissions.canAddWorkspaceMembers && availableRoles.length > 0) ||
                                 permissions.canRemoveWorkspaceMembers ||
@@ -247,7 +243,7 @@ function ManageRoleDialog({
                             value={form.data.role}
                         >
                             {availableRoles.map((role) => (
-                                <option key={role.key} value={role.key}>
+                                <option key={role.name} value={role.name}>
                                     {role.name}
                                 </option>
                             ))}

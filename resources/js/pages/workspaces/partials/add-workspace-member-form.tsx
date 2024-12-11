@@ -90,7 +90,7 @@ export function AddWorkspaceMemberForm({ workspace, availableRoles }: AddWorkspa
                                     value={form.data.role}
                                 >
                                     {availableRoles.map((role) => (
-                                        <option key={role.key} value={role.key}>
+                                        <option key={role.name} value={role.name}>
                                             {role.name}
                                         </option>
                                     ))}

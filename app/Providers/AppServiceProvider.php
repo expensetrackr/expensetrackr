@@ -22,6 +22,7 @@ final class AppServiceProvider extends ServiceProvider
         $this->configurePasswordValidation();
         $this->configureDates();
         $this->configureVite();
+        $this->configurePermissions();
 
         if (config('app.env') !== 'local') {
             $url->forceScheme('https');
@@ -69,5 +70,22 @@ final class AppServiceProvider extends ServiceProvider
     private function configureVite(): void
     {
         Vite::prefetch(concurrency: 3);
+    }
+
+    /**
+     * Configure the Workspaces middleware to run before SubstituteBindings.
+     *
+     * The Workspaces middleware needs to run before SubstituteBindings because it
+     * SubstituteBindings to resolve the route bindings.
+     */
+    private function configurePermissions(): void
+    {
+        //        /** @var Kernel $kernel */
+        //        $kernel = app()->make(Kernel::class);
+
+        //        $kernel->addToMiddlewarePriorityBefore(
+        //            SubstituteBindings::class,
+        //            WorkspacesPermission::class,
+        //        );
     }
 }
