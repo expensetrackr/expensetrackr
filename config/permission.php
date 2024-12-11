@@ -92,10 +92,10 @@ return [
 
         /*
          * Change this if you want to use the workspaces feature and your related model's
-         * foreign key is other than `current_workspace_id`.
+         * foreign key is other than `workspace_id`.
          */
 
-        'workspace_foreign_key' => 'current_workspace_id',
+        'team_foreign_key' => 'current_workspace_id',
     ],
 
     /*
@@ -111,6 +111,18 @@ return [
      * NOTE: This should not be needed in most cases, but an Octane/Vapor combination benefited from it.
      */
     'register_octane_reset_listener' => false,
+
+    /*
+     * Teams Feature.
+     * When set to true the package implements teams using the 'team_foreign_key'.
+     * If you want the migrations to register the 'team_foreign_key', you must
+     * set this to true before doing the migration.
+     * If you already did the migration then you must make a new migration to also
+     * add 'team_foreign_key' to 'roles', 'model_has_roles', and 'model_has_permissions'
+     * (view the latest version of this package's migration file)
+     */
+
+    'teams' => true,
 
     /*
      * Passport Client Credentials Grant

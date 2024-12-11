@@ -21,5 +21,7 @@ final class AdminRoleSeeder extends Seeder
         $role->givePermissionTo(Permission::findOrCreate('view workspace members'));
         $role->givePermissionTo(Permission::findOrCreate('remove workspace members'));
         $role->givePermissionTo(Permission::findOrCreate('add workspace members'));
+        $role->givePermissionTo(Permission::findOrCreate('invite workspace members'));
+        $role->givePermissionTo(Permission::findOrCreate('update workspace members'));
     }
 }

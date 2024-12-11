@@ -55,10 +55,6 @@ export function WorkspaceMemberManager({ workspace, availableRoles, permissions 
     const [, setAction] = useQueryState("action", parseAsStringEnum<Action>(Object.values(Action)));
     const currentUser = useUser();
 
-    function displayableRole(role: string) {
-        return availableRoles.find((r) => r.key === role)?.name;
-    }
-
     return (
         <ActionSection
             action={
@@ -96,7 +92,7 @@ export function WorkspaceMemberManager({ workspace, availableRoles, permissions 
                                     </div>
                                 </TableCell>
                                 <TableCell>{user.email}</TableCell>
-                                <TableCell>{displayableRole(user.membership.role)}</TableCell>
+                                <TableCell>{user.membership.role}</TableCell>
 
                                 {(permissions.canAddWorkspaceMembers && availableRoles.length > 0) ||
                                 permissions.canRemoveWorkspaceMembers ||
@@ -247,7 +243,7 @@ function ManageRoleDialog({
                             value={form.data.role}
                         >
                             {availableRoles.map((role) => (
-                                <option key={role.key} value={role.key}>
+                                <option key={role.name} value={role.name}>
                                     {role.name}
                                 </option>
                             ))}

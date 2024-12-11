@@ -27,7 +27,7 @@ interface UserMembership extends User {
 interface WorkspaceMemberInvitationsProps {
     workspace: Workspace & {
         owner: User;
-        workspace_invitations: WorkspaceInvitation[];
+        invitations: WorkspaceInvitation[];
         members: UserMembership[];
     };
     permissions: WorkspacePermissions;
@@ -51,8 +51,8 @@ export function WorkspaceMemberInvitations({ workspace, permissions }: Workspace
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {workspace.workspace_invitations.length > 0 ? (
-                        workspace.workspace_invitations?.map((invitation) => (
+                    {workspace.invitations.length > 0 ? (
+                        workspace.invitations?.map((invitation) => (
                             <TableRow key={invitation.id}>
                                 <TableCell>{invitation.email}</TableCell>
                                 {permissions.canRemoveWorkspaceMembers ? (

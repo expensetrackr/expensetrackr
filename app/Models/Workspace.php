@@ -123,7 +123,6 @@ final class Workspace extends Model
     public function members(): BelongsToMany
     {
         return $this->belongsToMany(User::class, Membership::class)
-            ->withPivot('role')
             ->withTimestamps()
             ->as('membership');
     }

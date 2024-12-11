@@ -69,7 +69,7 @@ final class InviteWorkspaceMember implements InvitesWorkspaceMembers
                     $query->where('workspace_id', $workspace->id);
                 }),
             ],
-            'role' => ['required', 'string', new RoleRule],
+            'role' => ['required', 'string', 'exists:roles,name'],
         ];
     }
 

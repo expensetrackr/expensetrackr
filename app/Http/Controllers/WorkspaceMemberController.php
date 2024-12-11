@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Actions\Workspaces\AddWorkspaceMember;
+use App\Actions\Workspaces\InviteWorkspaceMember;
+use App\Actions\Workspaces\RemoveWorkspaceMember;
 use App\Actions\Workspaces\UpdateWorkspaceMemberRole;
-use App\Contracts\AddsWorkspaceMembers;
-use App\Contracts\InvitesWorkspaceMembers;
-use App\Contracts\RemovesWorkspaceMembers;
 use App\Models\User;
 use App\Models\Workspace;
 use App\Utilities\Workspaces\WorkspaceFeatures;
@@ -25,14 +25,14 @@ final class WorkspaceMemberController extends Controller
         $workspace = Workspace::findOrFail($workspaceId);
 
         if (WorkspaceFeatures::sendsWorkspaceInvitations()) {
-            app(InvitesWorkspaceMembers::class)->invite(
+            app(InviteWorkspaceMember::class)->invite(
                 type($request->user())->as(User::class),
                 $workspace,
                 in_array(type($request->email)->asString(), ['', '0'], true) ? '' : type($request->email)->asString(),
                 type($request->role)->asString()
             );
         } else {
-            app(AddsWorkspaceMembers::class)->add(
+            app(AddWorkspaceMember::class)->add(
                 type($request->user())->as(User::class),
                 $workspace,
                 in_array(type($request->email)->asString(), ['', '0'], true) ? '' : type($request->email)->asString(),
@@ -48,12 +48,14 @@ final class WorkspaceMemberController extends Controller
      */
     public function update(Request $request, int $workspaceId, int $userId): RedirectResponse
     {
-        app(UpdateWorkspaceMemberRole::class)->update(
-            type($request->user())->as(User::class),
-            Workspace::findOrFail($workspaceId),
-            $userId,
-            type($request->role)->asString()
-        );
+        if ($request->has('role')) {
+            app(UpdateWorkspaceMemberRole::class)->update(
+                type($request->user())->as(User::class),
+                Workspace::findOrFail($workspaceId),
+                $userId,
+                type($request->role)->asString()
+            );
+        }
 
         return back(303);
     }
@@ -65,7 +67,7 @@ final class WorkspaceMemberController extends Controller
     {
         $workspace = Workspace::findOrFail($workspaceId);
 
-        app(RemovesWorkspaceMembers::class)->remove(
+        app(RemoveWorkspaceMember::class)->remove(
             type($request->user())->as(User::class),
             $workspace,
             $user = User::whereId($userId)->firstOrFail()

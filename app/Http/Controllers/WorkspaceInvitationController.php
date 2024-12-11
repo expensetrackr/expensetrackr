@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Contracts\AddsWorkspaceMembers;
+use App\Actions\Workspaces\AddWorkspaceMember;
 use App\Models\User;
 use App\Models\WorkspaceInvitation;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -18,16 +18,20 @@ final class WorkspaceInvitationController extends Controller
     /**
      * Accept a workspace invitation.
      */
-    public function accept(int $invitationId): RedirectResponse
+    public function accept(Request $request, int $invitationId): RedirectResponse
     {
         $invitation = WorkspaceInvitation::whereKey($invitationId)->firstOrFail();
 
-        app(AddsWorkspaceMembers::class)->add(
+        app(AddWorkspaceMember::class)->add(
             type($invitation->workspace->owner)->as(User::class),
             $invitation->workspace,
             $invitation->email,
             $invitation->role
         );
+
+        setPermissionsTeamId($invitation->workspace->id);
+
+        $request->user()?->assignRole($invitation->role);
 
         $invitation->delete();
 

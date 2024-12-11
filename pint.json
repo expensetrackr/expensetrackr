@@ -54,11 +54,5 @@
         "self_static_accessor": true,
         "strict_comparison": true,
         "visibility_required": true
-    },
-    "notPath": [
-        "workspaces/src/Membership.php",
-        "workspaces/src/Role.php",
-        "workspaces/src/Workspace.php",
-        "workspaces/src/WorkspaceInvitation.php"
-    ]
+    }
 }

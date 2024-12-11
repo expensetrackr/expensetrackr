@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace App\Actions\Fortify;
 
 use App\Models\User;
-use App\Models\Workspace;
 use App\Utilities\Workspaces\WorkspaceFeatures;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
+use Throwable;
 
 final class CreateNewUser implements CreatesNewUsers
 {
@@ -20,6 +19,8 @@ final class CreateNewUser implements CreatesNewUsers
      * Create a newly registered user.
      *
      * @param  array<string, string>  $input
+     *
+     * @throws Throwable
      */
     public function create(array $input): User
     {
@@ -30,31 +31,10 @@ final class CreateNewUser implements CreatesNewUsers
             'terms' => WorkspaceFeatures::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
         ])->validate();
 
-        $user = new User();
-        $user = $user->create([
+        return User::create([
             'name' => $input['name'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
-        ]);
-
-        return DB::transaction(fn () => tap($user, function (User $user): void {
-            $workspace = $this->createWorkspace($user);
-
-            setPermissionsTeamId($workspace->id);
-
-            $user->assignRole('workspace admin');
-        }));
-    }
-
-    /**
-     * Create a personal workspace for the user.
-     */
-    private function createWorkspace(User $user): Workspace
-    {
-        return $user->ownedWorkspaces()->forceCreate([
-            'user_id' => $user->id,
-            'name' => explode(' ', $user->name, 2)[0]."'s Workspace",
-            'personal_workspace' => true,
         ]);
     }
 }

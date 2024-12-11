@@ -7,7 +7,6 @@ namespace App\Actions\Workspaces;
 use App\Events\WorkspaceMemberUpdated;
 use App\Models\User;
 use App\Models\Workspace;
-use App\Rules\RoleRule;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 
@@ -23,12 +22,13 @@ final class UpdateWorkspaceMemberRole
         Validator::make([
             'role' => $role,
         ], [
-            'role' => ['required', 'string', new RoleRule],
+            'role' => ['required', 'string', 'exists:roles,name'],
         ])->validate();
 
-        $workspace->members()->updateExistingPivot($workspaceMemberId, [
-            'role' => $role,
-        ]);
+        tap($workspace->members->findOrFail($user), function (User $member) use ($role) {
+            $member->roles()->detach();
+            $member->assignRole($role);
+        });
 
         WorkspaceMemberUpdated::dispatch($workspace->fresh(), User::whereId($workspaceMemberId)->firstOrFail());
     }

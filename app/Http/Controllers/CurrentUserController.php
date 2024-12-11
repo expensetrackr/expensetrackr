@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Contracts\DeletesUsers;
+use App\Actions\Workspaces\DeleteUser;
 use App\Models\User;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Http\Request;
@@ -34,7 +34,7 @@ final class CurrentUserController extends Controller
             ]);
         }
 
-        app(DeletesUsers::class)->delete(type($user->fresh())->as(User::class));
+        app(DeleteUser::class)->delete(type($user->fresh())->as(User::class));
 
         $guard->logout();
 

@@ -33,8 +33,7 @@ final class AddWorkspaceMember implements AddsWorkspaceMembers
         AddingWorkspaceMember::dispatch($workspace, $newWorkspaceMember);
 
         $workspace->members()->attach(
-            $newWorkspaceMember,
-            ['role' => $role]
+            $newWorkspaceMember
         );
 
         WorkspaceMemberAdded::dispatch($workspace, $newWorkspaceMember);
@@ -64,7 +63,7 @@ final class AddWorkspaceMember implements AddsWorkspaceMembers
     {
         return [
             'email' => ['required', 'email', Rule::unique(WorkspaceInvitation::class, 'email')->where('workspace_id', $workspace->id)],
-            'role' => ['required', 'string', new RoleRule],
+            'role' => ['required', 'string', 'exists:roles,name'],
         ];
     }
 

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Actions\Workspaces\CreateWorkspace;
+use App\Actions\Workspaces\DeleteWorkspace;
+use App\Actions\Workspaces\UpdateWorkspaceName;
 use App\Actions\Workspaces\ValidateWorkspaceDeletion;
 use App\Concerns\RedirectsActions;
-use App\Contracts\CreatesWorkspaces;
-use App\Contracts\DeletesWorkspaces;
-use App\Contracts\UpdatesWorkspaceNames;
 use App\Models\User;
 use App\Models\Workspace;
 use Illuminate\Contracts\Foundation\Application;
@@ -19,6 +19,7 @@ use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Inertia\Response;
+use Spatie\Permission\Models\Role;
 
 final class WorkspaceController extends Controller
 {
@@ -34,7 +35,8 @@ final class WorkspaceController extends Controller
         Gate::authorize('view', $workspace);
 
         return Inertia::render('workspaces/show', [
-            'workspace' => $workspace->load('owner', 'users', 'workspaceInvitations'),
+            'workspace' => $workspace->load('owner', 'members', 'invitations'),
+            'availableRoles' => Role::get(),
             'permissions' => [
                 'canAddWorkspaceMembers' => Gate::check('addWorkspaceMember', $workspace),
                 'canDeleteWorkspace' => Gate::check('delete', $workspace),
@@ -50,7 +52,7 @@ final class WorkspaceController extends Controller
      */
     public function store(Request $request): Application|RedirectResponse|\Illuminate\Http\Response|Redirector|Response
     {
-        $creator = app(CreatesWorkspaces::class);
+        $creator = app(CreateWorkspace::class);
 
         $creator->create(type($request->user())->as(User::class), $request->all());
 
@@ -76,7 +78,7 @@ final class WorkspaceController extends Controller
     {
         $workspace = Workspace::findOrFail($workspaceId);
 
-        app(UpdatesWorkspaceNames::class)->update(type($request->user())->as(User::class), $workspace, $request->all());
+        app(UpdateWorkspaceName::class)->update(type($request->user())->as(User::class), $workspace, $request->all());
 
         return back(303);
     }
@@ -90,7 +92,7 @@ final class WorkspaceController extends Controller
 
         app(ValidateWorkspaceDeletion::class)->validate(type($request->user())->as(User::class), $workspace);
 
-        $deleter = app(DeletesWorkspaces::class);
+        $deleter = app(DeleteWorkspace::class);
 
         $deleter->delete($workspace);
 

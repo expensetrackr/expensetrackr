@@ -22,11 +22,11 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->web(append: [
+            WorkspacesPermission::class,
             ShareInertiaDataMiddleware::class,
             HandleInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
             AddWorkspaceToRequest::class,
-            WorkspacesPermission::class,
             SetLanguage::class,
         ]);
 

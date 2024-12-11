@@ -46,22 +46,22 @@ trait HasProfilePhoto
     }
 
     /**
-     * Get the URL to the user's profile photo.
-     *
-     * @return Attribute<string|null, never>
-     */
-    public function profilePhotoUrl(): Attribute
-    {
-        return Attribute::get(fn (): ?string => $this->profile_photo_path
-            ? Storage::disk($this->profilePhotoDisk())->url($this->profile_photo_path)
-            : null);
-    }
-
-    /**
      * Get the disk that profile photos should be stored on.
      */
     protected function profilePhotoDisk(): string
     {
         return isset($_ENV['VAPOR_ARTIFACT_NAME']) ? 's3' : type(config('workspaces.profile_photo_disk', 'public'))->asString();
+    }
+
+    /**
+     * Get the URL to the user's profile photo.
+     *
+     * @return Attribute<string|null, never>
+     */
+    protected function profilePhotoUrl(): Attribute
+    {
+        return Attribute::get(fn (): ?string => $this->profile_photo_path
+            ? Storage::disk($this->profilePhotoDisk())->url($this->profile_photo_path)
+            : null);
     }
 }

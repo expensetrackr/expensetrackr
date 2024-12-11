@@ -6,10 +6,12 @@ namespace App\Models;
 
 use App\Concerns\HasProfilePhoto;
 use App\Concerns\HasWorkspaces;
+use App\Observers\UserObserver;
 use Carbon\CarbonImmutable;
 use Database\Factories\UserFactory;
 use Eloquent;
 use Illuminate\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection;
@@ -46,7 +48,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read int|null $accounts_count
  * @property-read Collection<int, \JoelButcher\Socialstream\ConnectedAccount> $connectedAccounts
  * @property-read int|null $connected_accounts_count
- * @property-read Workspace|null $currentWorkspace
+ * @property-read Workspace $currentWorkspace
  * @property-read string|null $get_photo_url
  * @property-read DatabaseNotificationCollection<int, DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
@@ -87,6 +89,7 @@ use Spatie\Permission\Traits\HasRoles;
  *
  * @mixin Eloquent
  */
+#[ObservedBy([UserObserver::class])]
 final class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */

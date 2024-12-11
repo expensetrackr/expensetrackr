@@ -83,9 +83,9 @@ trait HasWorkspaces
     /**
      * Get the user's "personal" workspace.
      */
-    public function personalWorkspace(): Workspace
+    public function personalWorkspace(): ?Workspace
     {
-        return type($this->ownedWorkspaces->firstWhere('personal_workspace', true))->as(Workspace::class);
+        return $this->ownedWorkspaces->firstWhere('personal_workspace', true);
     }
 
     /**
@@ -116,7 +116,6 @@ trait HasWorkspaces
     public function workspaces(): BelongsToMany
     {
         return $this->belongsToMany(Workspace::class, Membership::class)
-            ->withPivot('role')
             ->withTimestamps()
             ->as('membership');
     }

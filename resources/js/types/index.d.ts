@@ -99,10 +99,7 @@ export interface WorkspacePermissions {
 }
 
 export interface Role {
-    key: string;
     name: string;
-    permissions: string[];
-    description: string;
 }
 
 export interface WorkspaceInvitation {

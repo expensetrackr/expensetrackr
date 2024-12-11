@@ -19,7 +19,7 @@ final class WorkspacesPermission
     public function handle(Request $request, Closure $next): Response
     {
         if ($user = Auth::user()) {
-            setPermissionsTeamId($user->currentWorkspace?->id);
+            setPermissionsTeamId($user->currentWorkspace->id);
         }
 
         return $next($request);

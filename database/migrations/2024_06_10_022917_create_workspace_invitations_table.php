@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('workspace_id')->constrained()->cascadeOnDelete();
             $table->string('email');
+            $table->string('role');
             $table->timestamps();
 
             $table->unique(['workspace_id', 'email']);
