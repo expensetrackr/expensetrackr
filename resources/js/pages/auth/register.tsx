@@ -12,11 +12,11 @@ import { type InertiaSharedProps } from "#/types/index.ts";
 
 export default function Register({ socialstream }: InertiaSharedProps) {
     const { data, setData, post, processing, errors, reset } = useForm({
-        name: "Daniel Esteves",
-        email: "estevesd8@gmail.com",
-        password: "Semper2911.",
-        password_confirmation: "Semper2911.",
-        terms: true,
+        name: "",
+        email: "",
+        password: "",
+        password_confirmation: "",
+        terms: false,
         remember: false,
     });
 
