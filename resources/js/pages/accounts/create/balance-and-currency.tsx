@@ -10,7 +10,7 @@ import { ContentDivider } from "#/components/content-divider.tsx";
 import { AccountForm } from "#/components/form/account-form.tsx";
 import { CurrencySelector } from "#/components/form/currency-selector.tsx";
 import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
-import { Input } from "#/components/form/input.tsx";
+import { Input } from "#/components/form/old-input.tsx";
 import { Text } from "#/components/text.tsx";
 import { useAccountForm } from "#/hooks/use-account-form.ts";
 import { CreateLayout } from "#/layouts/create-layout.tsx";

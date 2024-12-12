@@ -10,7 +10,7 @@ export const InputGroup = twc.span.attrs({
     "relative isolate block",
     "[&_input]:has-[[data-slot=icon]:last-child]:pr-10 sm:[&_input]:has-[[data-slot=icon]:last-child]:pr-8 [&_input]:has-[[data-slot=icon]:first-child]:pl-10 sm:[&_input]:has-[[data-slot=icon]:first-child]:pl-8",
     "[&>[data-slot=icon]]:absolute [&>[data-slot=icon]]:top-3 sm:[&>[data-slot=icon]]:top-2.5 [&>[data-slot=icon]]:z-10 [&>[data-slot=icon]]:size-5 sm:[&>[data-slot=icon]]:size-4",
-    "[&>[data-slot=icon]:last-child]:right-3 sm:[&>[data-slot=icon]:last-child]:right-2.5 [&>[data-slot=icon]:first-child]:left-3 sm:[&>[data-slot=icon]:first-child]:left-2.5",
+    "[&>[data-slot=icon]:last-child]:right-3 sm:[&>[data-slot=icon]:last-child]:right-2.5 [data-slot=icon]:first-child:left-3 sm:[&>[data-slot=icon]:first-child]:left-2.5",
     "[&>[data-slot=icon]]:text-(--text-soft-400)",
 ]);
 
@@ -20,7 +20,7 @@ type DateType = (typeof dateTypes)[number];
 export const inputVariants = cva({
     base: [
         // Basic layout
-        "relative block w-full appearance-none transition",
+        "relative block w-full appearance-none transition duration-200 ease-out",
         // Typography
         "text-paragraph-sm placeholder:text-(--text-soft-400) placeholder:transition placeholder:duration-200 placeholder:ease-out data-focus:placeholder:text-(--text-sub-600) data-hover:placeholder:text-(--text-strong-950)",
         // Border

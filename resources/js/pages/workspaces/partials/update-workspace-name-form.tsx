@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import { route } from "ziggy-js";
 
 import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
-import { Input } from "#/components/form/input.tsx";
+import { Input } from "#/components/form/old-input.tsx";
 import { FormSection } from "#/components/form-section.tsx";
 import { type User, type Workspace, type WorkspacePermissions } from "#/types/index.ts";
 

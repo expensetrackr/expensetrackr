@@ -4,9 +4,8 @@ import { toast } from "sonner";
 import { route } from "ziggy-js";
 
 import { Button } from "#/components/button.tsx";
-import { Checkbox, CheckboxField } from "#/components/checkbox.tsx";
-import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
-import { Input } from "#/components/form/input.tsx";
+import { Checkbox } from "#/components/form/checkbox.tsx";
+import { TextField } from "#/components/form/text-field.tsx";
 import { StyledLink } from "#/components/link.tsx";
 import { Socialstream } from "#/components/socialstream.tsx";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";
@@ -55,44 +54,39 @@ export default function Login({
             <Head title="Log in" />
 
             <form className="flex flex-col gap-3" onSubmit={submit}>
-                <Field>
-                    <Label>Email</Label>
-                    <Input
-                        autoComplete="username"
-                        autoFocus
-                        invalid={!!errors.email}
-                        name="email"
-                        onChange={(e) => setData("email", e.target.value)}
-                        placeholder="e.g. john@example.com"
-                        type="email"
-                        value={data.email}
-                    />
-                    {errors.email && <Hint invalid>{errors.email}</Hint>}
-                </Field>
+                <TextField
+                    $error={!!errors.email}
+                    autoComplete="username"
+                    autoFocus
+                    hint={errors.email}
+                    inputMode="email"
+                    label="Email"
+                    name="email"
+                    onChange={(e) => setData("email", e.target.value)}
+                    placeholder="e.g. john@example.com"
+                    type="email"
+                    value={data.email}
+                />
 
-                <Field>
-                    <Label>Password</Label>
-                    <Input
-                        autoComplete="current-password"
-                        invalid={!!errors.password}
-                        name="password"
-                        onChange={(e) => setData("password", e.target.value)}
-                        placeholder="Enter your password"
-                        type="password"
-                        value={data.password}
-                    />
-                    {errors.password && <Hint invalid>{errors.password}</Hint>}
-                </Field>
+                <TextField
+                    $error={!!errors.password}
+                    autoComplete="current-password"
+                    hint={errors.password}
+                    label="Password"
+                    name="password"
+                    onChange={(e) => setData("password", e.target.value)}
+                    placeholder="Enter your password"
+                    type="password"
+                    value={data.password}
+                />
 
                 <div className="flex items-center justify-between gap-3 py-2">
-                    <CheckboxField>
-                        <Checkbox
-                            checked={data.remember}
-                            name="remember"
-                            onChange={(checked) => setData("remember", checked)}
-                        />
-                        <Label className="text-paragraph-sm">Remember me</Label>
-                    </CheckboxField>
+                    <Checkbox
+                        checked={data.remember}
+                        label="Remember me"
+                        name="remember"
+                        onCheckedChange={(e) => setData("remember", !!e)}
+                    />
 
                     {canResetPassword && (
                         <StyledLink href={route("password.request")}>Forgot your password?</StyledLink>

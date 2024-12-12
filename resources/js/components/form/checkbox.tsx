@@ -1,0 +1,44 @@
+import * as React from "react";
+import * as CheckboxPrimitive from "../ui/checkbox.tsx";
+import * as Hint from "../ui/hint.tsx";
+import * as Label from "../ui/label.tsx";
+
+type CheckboxProps = React.CustomComponentPropsWithRef<typeof CheckboxPrimitive.Root> & {
+    $error?: boolean;
+    label?: React.ReactNode;
+    hint?: React.ReactNode;
+};
+
+export function Checkbox({ $error, label, hint, ...props }: CheckboxProps) {
+    const generatedId = React.useId();
+    const id = props.id || generatedId;
+
+    return (
+        <div className="flex items-center gap-2">
+            <CheckboxPrimitive.Root
+                aria-describedby={[$error && `${id}-error`, `${id}-description`].filter(Boolean).join(" ")}
+                aria-invalid={$error ? true : undefined}
+                id={id}
+                {...props}
+            />
+
+            {label ? (
+                <div className="flex flex-col gap-1">
+                    <Label.Root className="text-paragraph-sm" disabled={props.disabled} htmlFor={id}>
+                        {label}
+                    </Label.Root>
+
+                    {hint ? (
+                        <Hint.Root
+                            $disabled={props.disabled}
+                            $error={$error}
+                            aria-describedby={$error ? `${id}-error` : `${id}-description`}
+                        >
+                            {hint}
+                        </Hint.Root>
+                    ) : null}
+                </div>
+            ) : null}
+        </div>
+    );
+}

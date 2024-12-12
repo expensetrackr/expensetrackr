@@ -3,16 +3,22 @@ import { getZodConstraint, parseWithZod } from "@conform-to/zod";
 import { Head } from "@inertiajs/react";
 import TextboxDuotone from "virtual:icons/ph/textbox-duotone";
 import ListSettings from "virtual:icons/ri/list-settings-fill";
+import MoneyDollarCircleFillIcon from "virtual:icons/ri/money-dollar-circle-fill";
 
 import { SidebarLayout } from "#/components/sidebar-layout.tsx";
 import { CreateAccountSidebar } from "#/layouts/partials/create-account-sidebar.tsx";
+import { BalanceStep } from "#/pages/accounts/create/partials/balance-step.tsx";
 import { Card } from "#/pages/accounts/create/partials/card.tsx";
 import { TypeStep, type TypeStepValues } from "#/pages/accounts/create/partials/type-step.tsx";
 import { useCreateAccountWizardStore } from "#/store/create-account-wizard.ts";
-import { DetailsStep } from "./partials/details.tsx";
-import { type DetailsStepValues, Scoped, useStepper } from "./partials/stepper.ts";
+import { DetailsStep } from "./partials/details-type.tsx";
+import { type BalanceStepValues, type DetailsStepValues, Scoped, useStepper } from "./partials/stepper.ts";
 
-export default function CreateAccountPage() {
+type CreateAccountPageProps = {
+    currencies: Array<string>;
+};
+
+export default function CreateAccountPage({ currencies }: CreateAccountPageProps) {
     const stepper = useStepper();
     const { type } = useCreateAccountWizardStore();
     const [form, fields] = useForm({
@@ -101,6 +107,19 @@ export default function CreateAccountPage() {
                                     title="Account details"
                                 >
                                     <DetailsStep fields={fields as ReturnType<typeof useForm<DetailsStepValues>>[1]} />
+                                </Card>
+                            ),
+                            balance: () => (
+                                <Card
+                                    description="Enter your account's balance and currency. The available options are customized based on your selected account type."
+                                    icon={MoneyDollarCircleFillIcon}
+                                    stepper={stepper}
+                                    title="Balance & Currency"
+                                >
+                                    <BalanceStep
+                                        currencies={currencies}
+                                        fields={fields as ReturnType<typeof useForm<BalanceStepValues>>[1]}
+                                    />
                                 </Card>
                             ),
                         })}

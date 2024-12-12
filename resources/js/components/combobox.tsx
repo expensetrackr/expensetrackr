@@ -6,19 +6,19 @@ import { cva, cx } from "#/utils/cva.ts";
 const comboboxVariants = cva({
     base: [
         // Basic layout
-        "relative block w-full appearance-none ring-0 shadow-none transition",
+        "relative block w-full appearance-none ring-0 shadow-none transition duration-200 ease-out",
         // Typography
-        "text-paragraph-sm placeholder:text-(--text-soft-400) placeholder:transition-colors focus-visible:placeholder:text-(--text-strong-950) data-hover:placeholder:text-(--text-sub-600)",
+        "text-paragraph-sm placeholder:text-(--text-soft-400) placeholder:transition placeholder:duration-200 placeholder:ease-out data-focus:placeholder:text-(--text-sub-600) data-hover:placeholder:text-(--text-strong-950)",
         // Border
-        "border border-(--stroke-soft-200) focus-visible:border-(--stroke-strong-950) data-hover:border-(--bg-weak-50)",
+        "border border-(--stroke-soft-200) data-focus:border-(--stroke-strong-950) data-hover:not-data-focus:not-data-invalid:border-(--bg-weak-50)",
         // Background color
-        "bg-(--bg-white-0) focus-visible:border-(--stroke-strong-950) data-hover:bg-(--bg-weak-50)",
+        "bg-(--bg-white-0) data-hover:not-data-focus:bg-(--bg-weak-50)",
         // Hide default focus styles
         "focus:outline-none",
         // Invalid state
         "data-invalid:border-state-error-base",
         // Disabled state
-        "data-disabled:text-(--text-disabled-300)] data-disabled:bg-(--bg-weak-50)",
+        "data-disabled:bg-(--bg-weak-50) data-disabled:text-(--text-disabled-300)",
     ],
     variants: {
         $size: {
@@ -44,7 +44,7 @@ export function ComboboxInput({ ref, className, multiple, $size = "md", ...props
             className={cx([
                 className,
                 // Basic layout
-                "group relative block w-full before:transition after:transition",
+                "group relative block w-full transition duration-200 ease-out",
                 // Background color + shadow applied to inset pseudo-element, so shadow blends with border in light mode
                 "before:absolute before:inset-px before:bg-white before:shadow",
                 ($size === "xs" || $size === "sm") && "before:rounded-[calc(var(--radius-8)-1px)]",
@@ -52,11 +52,13 @@ export function ComboboxInput({ ref, className, multiple, $size = "md", ...props
                 // Background color is moved to control and shadow is removed in dark mode so hide `before` pseudo
                 "dark:before:hidden",
                 // Focus ring
-                "after:pointer-events-none after:absolute after:inset-0 after:ring-transparent after:outline after:outline-transparent sm:focus-within:after:outline-2 sm:focus-within:after:outline-offset-2 sm:focus-within:after:outline-neutral-alpha-16",
+                "after:pointer-events-none after:absolute after:inset-0 after:outline after:outline-transparent has-data-focus:after:outline-2 has-data-focus:after:outline-offset-2 has-data-focus:after:outline-neutral-alpha-16",
                 ($size === "xs" || $size === "sm") && "after:rounded-8",
                 $size === "md" && "after:rounded-10",
                 // Disabled state
-                "before:has-data-disabled:bg-zinc-950/5 has-data-disabled:opacity-50 before:has-data-disabled:shadow-none",
+                "has-data-disabled:opacity-50 has-data-disabled:before:bg-(--bg-weak-50)",
+                // Invalid state
+                "has-data-focus:has-data-invalid:after:outline-red-alpha-10",
             ])}
             data-slot="control"
         >
@@ -84,15 +86,15 @@ export function ComboboxOptions({
             anchor={anchor}
             className={cx([
                 // Anchor positioning
-                "[--anchor-gap:var(--spacing-2)] [--anchor-padding:var(--spacing-1)] data-[anchor~=end]:[--anchor-offset:6px] data-[anchor~=start]:[--anchor-offset:-6px] sm:data-[anchor~=end]:[--anchor-offset:4px] sm:data-[anchor~=start]:[--anchor-offset:-4px]",
+                "[--anchor-gap:calc(var(--spacing)*2)] data-[anchor~=end]:[--anchor-offset:6px] data-[anchor~=start]:[--anchor-offset:-6px] sm:data-[anchor~=end]:[--anchor-offset:4px] sm:data-[anchor~=start]:[--anchor-offset:-4px]",
                 // Base styles
                 "isolate flex w-(--input-width) flex-col gap-1 rounded-16 p-2 [--anchor-max-height:252px] empty:invisible",
                 // Invisible border that is only visible in `forced-colors` mode for accessibility purposes
-                "outline outline-transparent focus:outline-none",
+                "ring-1 ring-(--stroke-soft-200) ring-inset focus:outline-none",
                 // Handle scrolling when menu won't fit in viewport
                 "overflow-y-auto",
                 // Popover background
-                "bg-(--bg-white-0)]/85 backdrop-blur-lg",
+                "bg-(--bg-white-0)",
                 // Shadows
                 "ring-1 shadow-md ring-(--stroke-soft-200)",
                 // Transitions
@@ -107,17 +109,16 @@ export function ComboboxOptions({
 
 const comboboxOptionClasses = cx([
     // Base styles
-    "group w-full cursor-default rounded-8 p-2 transition duration-100 focus:outline-none",
+    "group w-full cursor-default rounded-8 p-2 transition duration-200 ease-out focus:outline-none",
+    "flex items-center gap-2",
     // Text styles
     "text-left text-paragraph-sm forced-colors:text-[CanvasText]",
     // Focus
     "data-focus:bg-(--bg-weak-50)",
     // Disabled state
-    "data-disabled:opacity-50",
+    "data-disabled:pointer-events-none data-disabled:text-(--text-disabled-300)",
     // Forced colors mode
     "forced-color-adjust-none forced-colors:data-focus:bg-[Highlight] forced-colors:data-focus:text-[HighlightText] forced-colors:[&>[data-slot=icon]]:data-focus:text-[HighlightText]",
-    // Use subgrid when available but fallback to an explicit grid layout if not
-    "flex items-center gap-2",
     // Icons
     "[&>[data-slot=icon]]:col-start-1 [&>[data-slot=icon]]:row-start-1 [&>[data-slot=icon]]:mr-2.5 [&>[data-slot=icon]]:-ml-0.5 [&>[data-slot=icon]]:size-5 sm:[&>[data-slot=icon]]:mr-2",
     "[&>[data-slot=icon]]:text-(--icon-sub-600)",

@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@plugin "@tailwindcss/forms";
 @plugin "tailwindcss-animate";
 
 @variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
@@ -388,6 +387,7 @@
     --shadow-xs: 0 1px 2px 0 oklch(15.9% 0.0157 267deg / 3.14%);
     --shadow-sm: 0 2px 4px oklch(22.6% 0.00247 248deg / 3.92%);
     --shadow-md: 0 16px 32px -12px oklch(18.3% 0.0196 266deg / 10.2%);
+    --shadow-button-important-focus: 0 0 0 2px var(--bg-white-0), 0 0 0 4px var(--color-neutral-alpha-16);
 
     --transition-timing-function-drawer: cubic-bezier(0.32, 0.72, 0, 1);
 

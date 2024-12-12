@@ -7,7 +7,7 @@ import { ActionSection } from "#/components/action-section.tsx";
 import { Button } from "#/components/button.tsx";
 import { ConfirmsPassword } from "#/components/confirms-password.tsx";
 import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
-import { Input } from "#/components/form/input.tsx";
+import { Input } from "#/components/form/old-input.tsx";
 import { type PageProps } from "#/types/index.ts";
 import { Action } from "#/utils/action.ts";
 

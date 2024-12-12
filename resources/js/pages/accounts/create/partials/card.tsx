@@ -6,7 +6,7 @@ import { type useStepper } from "./stepper.ts";
 type CardFormProps = {
     title?: string;
     description?: string;
-    icon?: (props: React.SVGProps<SVGSVGElement>) => React.ReactElement;
+    icon?: React.ForwardRefExoticComponent<React.SVGProps<SVGSVGElement>>;
     children: React.ReactNode;
     stepper: ReturnType<typeof useStepper>;
 };

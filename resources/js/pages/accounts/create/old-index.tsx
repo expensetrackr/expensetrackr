@@ -3,7 +3,7 @@ import DraftFillIcon from "virtual:icons/ri/draft-fill";
 
 import { AccountForm } from "#/components/form/account-form.tsx";
 import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
-import { Input } from "#/components/form/input.tsx";
+import { Input } from "#/components/form/old-input.tsx";
 import { Select } from "#/components/form/select.tsx";
 import { Textarea } from "#/components/form/textarea.tsx";
 import { Text } from "#/components/text.tsx";

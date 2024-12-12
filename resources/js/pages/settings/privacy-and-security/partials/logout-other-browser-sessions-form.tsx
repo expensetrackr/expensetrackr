@@ -17,7 +17,7 @@ import {
     DialogTitle,
 } from "#/components/dialog.tsx";
 import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
-import { Input } from "#/components/form/input.tsx";
+import { Input } from "#/components/form/old-input.tsx";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "#/components/table.tsx";
 import { type Session } from "#/types/index.ts";
 import { Action } from "#/utils/action.ts";

@@ -6,7 +6,7 @@ import { route } from "ziggy-js";
 import { Button } from "#/components/button.tsx";
 import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "#/components/form/input-otp.tsx";
-import { Input } from "#/components/form/input.tsx";
+import { Input } from "#/components/form/old-input.tsx";
 import { StyledLink } from "#/components/link.tsx";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";
 

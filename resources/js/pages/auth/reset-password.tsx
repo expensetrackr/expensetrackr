@@ -3,7 +3,7 @@ import { route } from "ziggy-js";
 
 import { Button } from "#/components/button.tsx";
 import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
-import { Input } from "#/components/form/input.tsx";
+import { Input } from "#/components/form/old-input.tsx";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";
 
 export default function ResetPassword({ token, email }: { token: string; email: string }) {

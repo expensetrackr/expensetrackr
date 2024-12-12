@@ -1,6 +1,6 @@
 import * as Headless from "@headlessui/react";
 import { useQueryState } from "nuqs";
-import ArrowDropDownIcon from "virtual:icons/ri/arrow-drop-down-line";
+import ArrowDownSIcon from "virtual:icons/ri/arrow-down-s-line";
 
 import { ComboboxInput, ComboboxOption, ComboboxOptions } from "../combobox.tsx";
 import { Field, Hint, Label } from "./fieldset.tsx";
@@ -21,7 +21,7 @@ export function CurrencySelector({ value, onChange, currencies, error }: Currenc
 
     return (
         <Field>
-            <Label>Currency</Label>
+            <Label className="sr-only">Currency</Label>
             <Headless.Combobox
                 immediate
                 onChange={onChange}
@@ -37,7 +37,7 @@ export function CurrencySelector({ value, onChange, currencies, error }: Currenc
                     />
 
                     <Headless.ComboboxButton className="group absolute inset-y-0 right-0 px-2.5">
-                        <ArrowDropDownIcon className="size-5 fill-white/60 group-data-hover:fill-white" />
+                        <ArrowDownSIcon className="size-5 text-(--text-sub-600) transition duration-200 ease-out group-data-focus:text-(--text-strong-950) group-data-hover:text-(--text-strong-950) group-data-open:rotate-180" />
                     </Headless.ComboboxButton>
                 </div>
 

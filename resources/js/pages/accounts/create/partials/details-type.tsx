@@ -1,7 +1,7 @@
 import { getInputProps, getTextareaProps, type useForm, useInputControl } from "@conform-to/react";
 
 import { Field, Hint, Label, LabelAsterisk, LabelSub } from "#/components/form/fieldset.tsx";
-import { Input } from "#/components/form/input.tsx";
+import { Input } from "#/components/form/old-input.tsx";
 import { Listbox, ListboxLabel, ListboxOption } from "#/components/form/listbox.tsx";
 import { Textarea } from "#/components/form/textarea.tsx";
 import { accountTypeEnum, depositorySubtypeEnum, investmentSubtypeEnum } from "#/schemas/account.ts";
@@ -17,7 +17,7 @@ type DetailsStepProps = {
     fields: ReturnType<typeof useForm<DetailsStepValues>>[1];
 };
 
-export function BalanceStep({ fields }: DetailsStepProps) {
+export function DetailsStep({ fields }: DetailsStepProps) {
     const subtypeControl = useInputControl(fields.subtype);
     const { type } = useCreateAccountWizardStore();
 

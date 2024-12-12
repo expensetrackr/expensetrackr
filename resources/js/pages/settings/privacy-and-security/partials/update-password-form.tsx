@@ -15,7 +15,7 @@ import {
     DialogTitle,
 } from "#/components/dialog.tsx";
 import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
-import { Input } from "#/components/form/input.tsx";
+import { Input } from "#/components/form/old-input.tsx";
 import { Action } from "#/utils/action.ts";
 
 export function UpdatePasswordForm() {

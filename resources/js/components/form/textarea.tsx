@@ -2,7 +2,7 @@ import * as Headless from "@headlessui/react";
 import { type VariantProps } from "cva";
 
 import { cx } from "#/utils/cva.ts";
-import { inputVariants } from "./input.tsx";
+import { inputVariants } from "./old-input.tsx";
 
 type TextareaProps = {
     ref?: React.ForwardedRef<HTMLElement>;

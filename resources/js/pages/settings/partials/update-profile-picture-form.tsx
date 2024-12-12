@@ -7,7 +7,7 @@ import PencilIcon from "virtual:icons/ri/pencil-line";
 import { Avatar } from "#/components/avatar.tsx";
 import { Dropdown, DropdownButton, DropdownItem, DropdownMenu } from "#/components/dropdown.tsx";
 import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
-import { Input } from "#/components/form/input.tsx";
+import { Input } from "#/components/form/old-input.tsx";
 import { FormSection } from "#/components/form-section.tsx";
 import { type InertiaSharedProps } from "#/types/index.ts";
 

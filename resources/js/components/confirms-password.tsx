@@ -16,7 +16,7 @@ import {
     DialogTitle,
 } from "./dialog.tsx";
 import { Field, Hint, Label } from "./form/fieldset.tsx";
-import { Input } from "./form/input.tsx";
+import { Input } from "./form/old-input.tsx";
 
 interface ConfirmsPasswordProps {
     onConfirm?: () => void;
