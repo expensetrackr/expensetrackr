@@ -5,7 +5,6 @@ import MoneyDollarCircleFillIcon from "virtual:icons/ri/money-dollar-circle-fill
 import { Text } from "#/components/text.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import { useAccountForm } from "#/hooks/use-account-form.ts";
-import { CreateLayout } from "#/layouts/create-layout.tsx";
 import { type AccountFormData } from "#/models/account.ts";
 import { type InertiaSharedProps } from "#/types/index.ts";
 
@@ -96,9 +95,9 @@ export default function CreateAccountReviewPage({ formData }: InertiaSharedProps
 }
 
 CreateAccountReviewPage.layout = (page: React.ReactNode & { props: InertiaSharedProps }) => (
-    <CreateLayout {...page.props}>
+    <>
         <Head title="Review - Create Account" />
 
         {page}
-    </CreateLayout>
+    </>
 );

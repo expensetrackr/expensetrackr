@@ -7,7 +7,6 @@ import { Select } from "#/components/form/select.tsx";
 import { TextField } from "#/components/form/text-field.tsx";
 import { Text } from "#/components/text.tsx";
 import { useAccountForm } from "#/hooks/use-account-form.ts";
-import { CreateLayout } from "#/layouts/create-layout.tsx";
 import { type AccountTypes } from "#/models/account.ts";
 import { type InertiaSharedProps } from "#/types/index.ts";
 
@@ -95,9 +94,9 @@ export default function CreateAccountPage({ accountTypes, wizard }: InertiaShare
 }
 
 CreateAccountPage.layout = (page: React.ReactNode & { props: InertiaSharedProps }) => (
-    <CreateLayout {...page.props}>
+    <>
         <Head title="Create account" />
 
         {page}
-    </CreateLayout>
+    </>
 );

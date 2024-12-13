@@ -163,6 +163,7 @@ function CharCounter({
                 // disabled
                 "group-has-[[disabled]]/textarea:text-(--text-disabled-300)",
                 {
+                    // @ts-expect-error
                     "text-state-error-base": isError,
                 },
                 className,

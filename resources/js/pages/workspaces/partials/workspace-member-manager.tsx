@@ -101,9 +101,9 @@ export function WorkspaceMemberManager({ workspace, availableRoles, permissions 
                                         <div className="-mx-3 -my-1.5 sm:-mx-2.5">
                                             <Dropdown>
                                                 <DropdownButton
-                                                    $color="neutral"
                                                     $size="xs"
-                                                    $variant="ghost"
+                                                    $style="ghost"
+                                                    $type="neutral"
                                                     aria-label="Actions"
                                                 >
                                                     <More2Icon className="size-5" />
