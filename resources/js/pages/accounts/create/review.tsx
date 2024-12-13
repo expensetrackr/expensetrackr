@@ -2,7 +2,6 @@ import { Head, Link } from "@inertiajs/react";
 import { formatCurrency } from "@sumup/intl";
 import MoneyDollarCircleFillIcon from "virtual:icons/ri/money-dollar-circle-fill";
 
-import { ContentDivider } from "#/components/content-divider.tsx";
 import { Text } from "#/components/text.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import { useAccountForm } from "#/hooks/use-account-form.ts";
@@ -54,8 +53,6 @@ export default function CreateAccountReviewPage({ formData }: InertiaSharedProps
                         </p>
                     </div>
 
-                    <ContentDivider $type="solid-text">account details</ContentDivider>
-
                     <div className="flex flex-col gap-2 p-4">
                         <div className="flex items-center gap-3">
                             <Text className="flex-1">Name</Text>
@@ -70,8 +67,6 @@ export default function CreateAccountReviewPage({ formData }: InertiaSharedProps
                             <p className="text-label-sm capitalize">{formData.type}</p>
                         </div>
                     </div>
-
-                    <ContentDivider $type="solid-text">more</ContentDivider>
 
                     <div className="flex flex-col gap-2 p-4">
                         <div className="flex items-center gap-3">

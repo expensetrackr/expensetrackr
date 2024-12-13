@@ -1,7 +1,7 @@
 import { Head } from "@inertiajs/react";
 import PlanetIcon from "virtual:icons/ri/planet-line";
 
-import { Divider } from "#/components/divider.tsx";
+import * as Divider from "#/components/ui/divider.tsx";
 import { SettingsLayout } from "#/layouts/settings-layout.tsx";
 import { WorkspaceMemberInvitations } from "#/pages/workspaces/partials/workspace-member-invitations.tsx";
 import {
@@ -24,8 +24,8 @@ interface UserMembership extends User {
 type WorkspacesShowProps = {
     workspace: Workspace & {
         owner: User;
-        workspace_invitations: WorkspaceInvitation[];
-        users: UserMembership[];
+        invitations: WorkspaceInvitation[];
+        members: UserMembership[];
     };
     availableRoles: Role[];
     permissions: WorkspacePermissions;
@@ -38,15 +38,15 @@ export default function WorkspacesShow({
 }: InertiaSharedProps<WorkspacesShowProps>) {
     return (
         <>
-            <Divider />
+            <Divider.Root />
 
             <UpdateWorkspaceNameForm permissions={permissions} workspace={workspace} />
 
-            <Divider />
+            <Divider.Root />
 
             <WorkspaceMemberManager availableRoles={availableRoles} permissions={permissions} workspace={workspace} />
 
-            <Divider />
+            <Divider.Root />
 
             <WorkspaceMemberInvitations permissions={permissions} workspace={workspace} />
         </>

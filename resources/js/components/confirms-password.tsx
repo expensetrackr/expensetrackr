@@ -5,7 +5,6 @@ import { useRef } from "react";
 import LockPasswordIcon from "virtual:icons/ri/lock-password-line";
 
 import { Action } from "#/utils/action.ts";
-import { Button } from "./button.tsx";
 import {
     Dialog,
     DialogActions,
@@ -17,6 +16,7 @@ import {
 } from "./dialog.tsx";
 import { Field, Hint, Label } from "./form/fieldset.tsx";
 import { Input } from "./form/old-input.tsx";
+import * as Button from "./ui/button.tsx";
 
 interface ConfirmsPasswordProps {
     onConfirm?: () => void;
@@ -100,17 +100,17 @@ export function ConfirmsPassword({ onConfirm, children }: ConfirmsPasswordProps)
                 </DialogBody>
 
                 <DialogActions>
-                    <Button
-                        $color="neutral"
+                    <Button.Root
                         $size="sm"
-                        $variant="stroke"
+                        $style="stroke"
+                        $type="neutral"
                         className="w-full"
                         disabled={form.processing}
                         onClick={() => setAction(null)}
                     >
                         Cancel
-                    </Button>
-                    <Button
+                    </Button.Root>
+                    <Button.Root
                         $size="sm"
                         className="w-full"
                         disabled={form.processing}
@@ -118,7 +118,7 @@ export function ConfirmsPassword({ onConfirm, children }: ConfirmsPasswordProps)
                         type="submit"
                     >
                         {form.processing ? "Confirming..." : "Confirm"}
-                    </Button>
+                    </Button.Root>
                 </DialogActions>
             </Dialog>
         </>

@@ -3,9 +3,9 @@ import AddIcon from "virtual:icons/ri/add-line";
 import WalletIcon from "virtual:icons/ri/wallet-line";
 import { route } from "ziggy-js";
 
-import { Divider } from "#/components/divider.tsx";
 import { PageHeader } from "#/components/page-header.tsx";
 import * as Button from "#/components/ui/button.tsx";
+import * as Divider from "#/components/ui/divider.tsx";
 import { AppLayout } from "#/layouts/app-layout.tsx";
 import { type InertiaSharedProps } from "#/types/index.ts";
 
@@ -35,7 +35,7 @@ export default function AccountsPage() {
                     </PageHeader.Content>
                 </PageHeader>
 
-                <Divider />
+                <Divider.Root />
             </div>
         </>
     );

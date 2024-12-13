@@ -3,7 +3,6 @@ import { type VariantProps } from "cva";
 
 import { type Nullable, type User } from "#/types/index.ts";
 import { cva, cx } from "#/utils/cva.ts";
-import { TouchTarget } from "./button.tsx";
 import { Link } from "./link.tsx";
 
 const avatarVariants = cva({
@@ -111,9 +110,9 @@ export function AvatarButton({ ref, $square = false, src, initials, alt, classNa
             })}
             ref={ref as React.ForwardedRef<HTMLAnchorElement>}
         >
-            <TouchTarget>
+            <>
                 <Avatar $square={$square} alt={alt} initials={initials} src={src} />
-            </TouchTarget>
+            </>
         </Link>
     ) : (
         <Headless.Button
@@ -124,9 +123,9 @@ export function AvatarButton({ ref, $square = false, src, initials, alt, classNa
             })}
             ref={ref}
         >
-            <TouchTarget>
+            <>
                 <Avatar $square={$square} alt={alt} initials={initials} src={src} />
-            </TouchTarget>
+            </>
         </Headless.Button>
     );
 }

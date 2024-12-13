@@ -4,7 +4,6 @@ import * as React from "react";
 
 import { cx } from "#/utils/cva.ts";
 import { twc } from "#/utils/twc.ts";
-import { TouchTarget } from "./button.tsx";
 import { Link } from "./link.tsx";
 
 export const Navbar = twc.nav`flex flex-1 items-center gap-4 py-2.5`;
@@ -73,7 +72,7 @@ export function NavbarItem({ ref, current, className, children, ...props }: Navb
                     data-current={current ? "true" : undefined}
                     ref={ref as React.ForwardedRef<HTMLAnchorElement>}
                 >
-                    <TouchTarget>{children}</TouchTarget>
+                    <>{children}</>
                 </Link>
             ) : (
                 <Headless.Button
@@ -82,7 +81,7 @@ export function NavbarItem({ ref, current, className, children, ...props }: Navb
                     data-current={current ? "true" : undefined}
                     ref={ref}
                 >
-                    <TouchTarget>{children}</TouchTarget>
+                    <>{children}</>
                 </Headless.Button>
             )}
         </span>

@@ -1,7 +1,7 @@
 import { Head } from "@inertiajs/react";
 import UserIcon from "virtual:icons/ri/user-line";
 
-import { Divider } from "#/components/divider.tsx";
+import * as Divider from "#/components/ui/divider.tsx";
 import { SettingsLayout } from "#/layouts/settings-layout.tsx";
 import { type InertiaSharedProps } from "#/types/index.ts";
 import { UpdateEmailForm } from "./partials/update-email-form.tsx";
@@ -11,15 +11,15 @@ import { UpdateProfilePictureForm } from "./partials/update-profile-picture-form
 export default function SettingsShow() {
     return (
         <>
-            <Divider />
+            <Divider.Root />
 
             <UpdateProfilePictureForm />
 
-            <Divider />
+            <Divider.Root />
 
             <UpdateNameForm />
 
-            <Divider />
+            <Divider.Root />
 
             <UpdateEmailForm />
         </>

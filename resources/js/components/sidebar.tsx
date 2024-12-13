@@ -5,7 +5,6 @@ import * as React from "react";
 
 import { cx } from "#/utils/cva.ts";
 import { twc } from "#/utils/twc.ts";
-import { TouchTarget } from "./button.tsx";
 import { Link } from "./link.tsx";
 
 export const Sidebar = twc.nav`flex h-full flex-col`;
@@ -88,7 +87,7 @@ export function SidebarItem({
                     data-current={current ? "true" : undefined}
                     ref={ref}
                 >
-                    <TouchTarget>{children}</TouchTarget>
+                    <>{children}</>
                 </Headless.CloseButton>
             ) : (
                 <Headless.Button
@@ -97,7 +96,7 @@ export function SidebarItem({
                     data-current={current ? "true" : undefined}
                     ref={ref}
                 >
-                    <TouchTarget>{children}</TouchTarget>
+                    <>{children}</>
                 </Headless.Button>
             )}
         </span>

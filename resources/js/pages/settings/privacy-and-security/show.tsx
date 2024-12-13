@@ -1,7 +1,7 @@
 import { Head } from "@inertiajs/react";
 import ShieldUserIcon from "virtual:icons/ri/shield-user-line";
 
-import { Divider } from "#/components/divider.tsx";
+import * as Divider from "#/components/ui/divider.tsx";
 import { SettingsLayout } from "#/layouts/settings-layout.tsx";
 import { SetPasswordForm } from "#/pages/settings/privacy-and-security/partials/set-password-form.tsx";
 import { type InertiaSharedProps, type Session } from "#/types/index.ts";
@@ -27,7 +27,7 @@ export default function PrivacyAndSecurityShow({
         <>
             {workspaces.canUpdatePassword && (
                 <>
-                    <Divider />
+                    <Divider.Root />
 
                     {canUpdatePassword ? <UpdatePasswordForm /> : <SetPasswordForm />}
                 </>
@@ -35,19 +35,19 @@ export default function PrivacyAndSecurityShow({
 
             {workspaces.canManageTwoFactorAuthentication && (
                 <>
-                    <Divider />
+                    <Divider.Root />
 
                     <TwoFactorAuthenticationForm requiresConfirmation={confirmsTwoFactorAuthentication} />
                 </>
             )}
 
-            <Divider />
+            <Divider.Root />
 
             <LogoutOtherBrowserSessionsForm sessions={sessions} />
 
             {workspaces.hasAccountDeletionFeatures && (
                 <>
-                    <Divider />
+                    <Divider.Root />
 
                     <DeleteUserForm />
                 </>

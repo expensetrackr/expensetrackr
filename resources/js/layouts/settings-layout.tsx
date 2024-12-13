@@ -11,7 +11,7 @@ import { SettingsSidebar } from "./partials/settings-sidebar.tsx";
 
 type SettingsLayoutProps = {
     children: React.ReactNode;
-    icon: (props: React.SVGProps<SVGSVGElement>) => React.ReactElement;
+    icon: React.ForwardRefExoticComponent<React.SVGProps<SVGSVGElement>>;
     title: string;
     description: string;
 };

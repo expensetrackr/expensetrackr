@@ -44,7 +44,7 @@ interface UserMembership extends User {
 interface WorkspaceMemberManagerProps {
     workspace: Workspace & {
         owner: User;
-        workspace_invitations: WorkspaceInvitation[];
+        invitations: WorkspaceInvitation[];
         members: UserMembership[];
     };
     availableRoles: Role[];

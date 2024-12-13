@@ -9,7 +9,6 @@ import CryptoDuotone from "virtual:icons/tabler/currency-bitcoin";
 import ReceiptDuotone from "virtual:icons/tabler/receipt-2";
 import { type z } from "zod";
 
-import { ContentDivider } from "#/components/content-divider.tsx";
 import { Field, Hint } from "#/components/form/fieldset.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import { accountTypeEnum } from "#/schemas/account.ts";
@@ -75,8 +74,6 @@ export function TypeStep({ fields }: { fields: ReturnType<typeof useForm<TypeSte
 
     return (
         <>
-            <ContentDivider className="px-0">supported account types</ContentDivider>
-
             <Field className="flex flex-col gap-1">
                 <Headless.RadioGroup
                     className="flex flex-col gap-2"

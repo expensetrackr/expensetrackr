@@ -6,7 +6,6 @@ import { type NumberFormatValues } from "react-number-format";
 import BankIcon from "virtual:icons/ri/bank-line";
 import MoneyDollarCircleFillIcon from "virtual:icons/ri/money-dollar-circle-fill";
 
-import { ContentDivider } from "#/components/content-divider.tsx";
 import { AccountForm } from "#/components/form/account-form.tsx";
 import { CurrencySelector } from "#/components/form/currency-selector.tsx";
 import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
@@ -79,8 +78,6 @@ export default function CreateAccountStep2Page({
                             <p className="text-paragraph-sm text-(--text-sub-600)">Type: {formData?.type}</p>
                         </div>
                     </div>
-
-                    <ContentDivider $type="solid-text">account balance</ContentDivider>
 
                     <div className="p-4">
                         <AccountForm

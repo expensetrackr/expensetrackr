@@ -2,15 +2,15 @@ import * as Headless from "@headlessui/react";
 
 import { cx } from "#/utils/cva.ts";
 import { twc } from "#/utils/twc.ts";
-import { Button } from "./button.tsx";
 import { Link } from "./link.tsx";
+import * as Button from "./ui/button.tsx";
 
 export function Dropdown(props: Headless.MenuProps) {
     return <Headless.Menu {...props} />;
 }
 
-export function DropdownButton<T extends React.ElementType = typeof Button>({
-    as = Button,
+export function DropdownButton<T extends React.ElementType = typeof Button.Root>({
+    as = Button.Root,
     ...props
 }: { className?: string } & Omit<Headless.MenuButtonProps<T>, "className">) {
     return <Headless.MenuButton as={as} {...props} />;

@@ -1,5 +1,6 @@
+import { Link } from "@inertiajs/react";
 import { cx } from "#/utils/cva.ts";
-import { Button } from "../button.tsx";
+import * as Button from "../ui/button.tsx";
 
 interface AccountFormProps extends React.FormHTMLAttributes<HTMLFormElement> {}
 
@@ -23,19 +24,13 @@ AccountForm.Navigation = function AccountFormNavigation({
     return (
         <div className="flex items-center gap-3 border-t border-t-(--stroke-soft-200) px-5 py-4">
             {prevStep && (
-                <Button
-                    $color="neutral"
-                    $size="sm"
-                    $variant="stroke"
-                    className="w-full"
-                    href={route("accounts.create", { step: prevStep })}
-                >
-                    Back
-                </Button>
+                <Button.Root $size="sm" $style="stroke" $type="neutral" asChild className="w-full">
+                    <Link href={route("accounts.create", { step: prevStep })}>Back</Link>
+                </Button.Root>
             )}
-            <Button $size="sm" className="w-full" disabled={isSubmitting} onClick={onSubmit}>
+            <Button.Root $size="sm" className="w-full" disabled={isSubmitting} onClick={onSubmit}>
                 Continue
-            </Button>
+            </Button.Root>
         </div>
     );
 };

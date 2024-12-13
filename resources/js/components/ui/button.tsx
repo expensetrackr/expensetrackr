@@ -48,15 +48,15 @@ export const buttonVariants = tv({
                 icon: "-mx-1",
             },
             xxs: {
-                root: "h-7 gap-2.5 rounded-lg px-2 text-label-sm",
+                root: "h-7 gap-2.5 rounded-8 px-2 text-label-sm",
                 icon: "-mx-1",
             },
             xs: {
-                root: "h-8 gap-2.5 rounded-lg px-2.5 text-label-sm",
+                root: "h-8 gap-2.5 rounded-8 px-2.5 text-label-sm",
                 icon: "-mx-1",
             },
             sm: {
-                root: "h-9 gap-3 rounded-lg px-3 text-label-sm",
+                root: "h-9 gap-3 rounded-8 px-3 text-label-sm",
                 icon: "-mx-1",
             },
             md: {
@@ -278,7 +278,7 @@ const ButtonRoot = React.forwardRef<HTMLButtonElement, ButtonRootProps>(
         );
 
         return (
-            <Component className={root({ class: className })} ref={forwardedRef} {...rest}>
+            <Component className={root({ class: className })} ref={forwardedRef} type="button" {...rest}>
                 {extendedChildren}
             </Component>
         );
