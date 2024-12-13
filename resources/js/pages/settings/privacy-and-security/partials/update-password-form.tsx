@@ -4,7 +4,6 @@ import { useRef } from "react";
 import LockPasswordIcon from "virtual:icons/ri/lock-password-line";
 
 import { ActionSection } from "#/components/action-section.tsx";
-import { Button } from "#/components/button.tsx";
 import {
     Dialog,
     DialogActions,
@@ -16,6 +15,7 @@ import {
 } from "#/components/dialog.tsx";
 import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
 import { Input } from "#/components/form/old-input.tsx";
+import * as Button from "#/components/ui/button.tsx";
 import { Action } from "#/utils/action.ts";
 
 export function UpdatePasswordForm() {
@@ -56,9 +56,9 @@ export function UpdatePasswordForm() {
         <ActionSection
             action={
                 <>
-                    <Button $color="neutral" $variant="stroke" onClick={() => setAction(Action.UserPasswordUpdate)}>
+                    <Button.Root $style="stroke" $type="neutral" onClick={() => setAction(Action.UserPasswordUpdate)}>
                         Update password
-                    </Button>
+                    </Button.Root>
                     <Dialog onClose={() => setAction(null)} open={action === Action.UserPasswordUpdate}>
                         <DialogHeader>
                             <DialogIcon>
@@ -120,17 +120,17 @@ export function UpdatePasswordForm() {
                         </DialogBody>
 
                         <DialogActions>
-                            <Button
-                                $color="neutral"
+                            <Button.Root
                                 $size="sm"
-                                $variant="stroke"
+                                $style="stroke"
+                                $type="neutral"
                                 className="w-full"
                                 disabled={form.processing}
                                 onClick={() => setAction(null)}
                             >
                                 Cancel
-                            </Button>
-                            <Button
+                            </Button.Root>
+                            <Button.Root
                                 $size="sm"
                                 className="w-full"
                                 disabled={form.processing}
@@ -138,7 +138,7 @@ export function UpdatePasswordForm() {
                                 type="submit"
                             >
                                 {form.processing ? "Updating..." : "Update"}
-                            </Button>
+                            </Button.Root>
                         </DialogActions>
                     </Dialog>
                 </>

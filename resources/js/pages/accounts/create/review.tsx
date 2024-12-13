@@ -1,10 +1,10 @@
-import { Head } from "@inertiajs/react";
+import { Head, Link } from "@inertiajs/react";
 import { formatCurrency } from "@sumup/intl";
 import MoneyDollarCircleFillIcon from "virtual:icons/ri/money-dollar-circle-fill";
 
-import { Button } from "#/components/button.tsx";
 import { ContentDivider } from "#/components/content-divider.tsx";
 import { Text } from "#/components/text.tsx";
+import * as Button from "#/components/ui/button.tsx";
 import { useAccountForm } from "#/hooks/use-account-form.ts";
 import { CreateLayout } from "#/layouts/create-layout.tsx";
 import { type AccountFormData } from "#/models/account.ts";
@@ -81,18 +81,12 @@ export default function CreateAccountReviewPage({ formData }: InertiaSharedProps
                     </div>
 
                     <div className="flex items-center gap-3 border-t border-t-(--stroke-soft-200) px-5 py-4">
-                        <Button
-                            $color="neutral"
-                            $size="sm"
-                            $variant="stroke"
-                            className="w-full"
-                            href={route("accounts.create", ["balance-and-currency"])}
-                        >
-                            Discard
-                        </Button>
-                        <Button $size="sm" className="w-full" onClick={handleSubmit}>
+                        <Button.Root $size="sm" $style="stroke" $type="neutral" asChild className="w-full">
+                            <Link href={route("accounts.create", ["balance-and-currency"])}>Discard</Link>
+                        </Button.Root>
+                        <Button.Root $size="sm" className="w-full" onClick={handleSubmit}>
                             Save account
-                        </Button>
+                        </Button.Root>
                     </div>
 
                     <div className="px-4 pb-4">

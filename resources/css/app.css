@@ -91,6 +91,15 @@ html[data-theme="light"] {
     --state-stable-base: var(--light, var(--color-teal-500)) var(--dark, var(--color-teal-600));
     --state-stable-light: var(--light, var(--color-teal-200)) var(--dark, var(--color-teal-alpha-24));
     --state-stable-lighter: var(--light, var(--color-teal-50)) var(--dark, var(--color-teal-alpha-16));
+
+    --social-apple: var(--light, oklch(0% 0 0deg)) var(--dark, oklch(100% 0.0000000000000005 0deg));
+    --social-twitter: var(--light, oklch(6.72% 0.0000000000000000351 0deg))
+        var(--dark, oklch(100% 0.0000000000000005 0deg));
+    --social-github: var(--light, oklch(27.9% 0.0132 253deg)) var(--dark, oklch(100% 0.0000000000000005 0deg));
+    --social-notion: var(--light, oklch(25% 0.00961 248deg)) var(--dark, oklch(100% 0.0000000000000005 0deg));
+    --social-tidal: var(--light, oklch(0% 0 0deg)) var(--dark, oklch(100% 0.0000000000000005 0deg));
+    --social-amazon: var(--light, oklch(35.9% 0.0197 248deg)) var(--dark, oklch(100% 0.0000000000000005 0deg));
+    --social-zendesk: var(--light, oklch(19.1% 0.0138 94deg)) var(--dark, oklch(100% 0.0000000000000005 0deg));
 }
 
 .dark,

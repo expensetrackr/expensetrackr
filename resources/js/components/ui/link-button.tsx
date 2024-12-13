@@ -18,7 +18,7 @@ export const linkButtonVariants = tv({
             // hover
             "hover:decoration-current",
             // focus
-            "focus:outline-none focus-visible:underline",
+            "focus:outline-none focus-visible:decoration-current focus-visible:underline",
             // disabled
             "disabled:pointer-events-none disabled:text-(--text-disabled-300) disabled:no-underline",
         ],

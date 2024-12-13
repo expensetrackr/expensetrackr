@@ -1,10 +1,9 @@
-import { useForm, usePage } from "@inertiajs/react";
+import { Link, useForm, usePage } from "@inertiajs/react";
 import { parseAsStringEnum, useQueryState } from "nuqs";
 import ShareIcon from "virtual:icons/ri/share-line";
 import { route } from "ziggy-js";
 
 import { ActionSection } from "#/components/action-section.tsx";
-import { Button } from "#/components/button.tsx";
 import { ConnectedAccount } from "#/components/connected-account.tsx";
 import {
     Dialog,
@@ -15,6 +14,7 @@ import {
     DialogIcon,
     DialogTitle,
 } from "#/components/dialog.tsx";
+import * as Button from "#/components/ui/button.tsx";
 import { type InertiaSharedProps } from "#/types/index.ts";
 import { Action, getAction } from "#/utils/action.ts";
 
@@ -74,28 +74,27 @@ export default function ConnectedAccountsForm() {
                             {connectedAccount ? (
                                 <>
                                     {canRemoveConnectedAccount ? (
-                                        <Button
-                                            $color="error"
+                                        <Button.Root
                                             $size="sm"
-                                            $variant="stroke"
+                                            $style="stroke"
+                                            $type="error"
                                             className="px-4"
                                             onClick={() => onRemoveAccount(provider.id)}
                                         >
                                             Remove account
-                                        </Button>
+                                        </Button.Root>
                                     ) : null}
                                 </>
                             ) : (
-                                <Button
-                                    $size="sm"
-                                    $variant="stroke"
-                                    className="px-4"
-                                    href={route("oauth.redirect", {
-                                        provider: provider.id,
-                                    })}
-                                >
-                                    Connect account
-                                </Button>
+                                <Button.Root $size="sm" $style="stroke" asChild className="px-4">
+                                    <Link
+                                        href={route("oauth.redirect", {
+                                            provider: provider.id,
+                                        })}
+                                    >
+                                        Connect account
+                                    </Link>
+                                </Button.Root>
                             )}
 
                             <Dialog
@@ -124,26 +123,26 @@ export default function ConnectedAccountsForm() {
                                 </DialogBody>
 
                                 <DialogActions>
-                                    <Button
-                                        $color="neutral"
+                                    <Button.Root
                                         $size="sm"
-                                        $variant="stroke"
+                                        $style="stroke"
+                                        $type="neutral"
                                         className="w-full"
                                         disabled={form.processing}
                                         onClick={() => setAction(null)}
                                     >
                                         Cancel
-                                    </Button>
-                                    <Button
-                                        $color="error"
+                                    </Button.Root>
+                                    <Button.Root
                                         $size="sm"
+                                        $type="error"
                                         className="w-full"
                                         disabled={form.processing}
                                         form={`destroy-connected-accounts-${provider.id}-form`}
                                         type="submit"
                                     >
                                         {form.processing ? "Removing..." : "Yes, remove it"}
-                                    </Button>
+                                    </Button.Root>
                                 </DialogActions>
                             </Dialog>
                         </ConnectedAccount>

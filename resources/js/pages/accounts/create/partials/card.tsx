@@ -1,5 +1,5 @@
-import { Button } from "#/components/button.tsx";
 import { Text } from "#/components/text.tsx";
+import * as Button from "#/components/ui/button.tsx";
 
 import { type useStepper } from "./stepper.ts";
 
@@ -54,20 +54,20 @@ export function Card({ icon, title, description, children, stepper }: CardFormPr
 
                 <div className="flex items-center gap-3 border-t border-t-(--stroke-soft-200) px-5 py-4">
                     {!stepper.isFirst && (
-                        <Button
-                            $color="neutral"
+                        <Button.Root
                             $size="sm"
-                            $variant="stroke"
+                            $style="stroke"
+                            $type="neutral"
                             className="w-full"
                             disabled={stepper.isFirst}
                             onClick={stepper.prev}
                         >
                             Back
-                        </Button>
+                        </Button.Root>
                     )}
-                    <Button $size="sm" className="w-full" type="submit">
+                    <Button.Root $size="sm" className="w-full" type="submit">
                         Continue
-                    </Button>
+                    </Button.Root>
                 </div>
             </div>
         </div>

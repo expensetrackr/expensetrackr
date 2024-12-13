@@ -1,9 +1,9 @@
 import { Head, useForm } from "@inertiajs/react";
 import { route } from "ziggy-js";
 
-import { Button } from "#/components/button.tsx";
 import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
 import { Input } from "#/components/form/old-input.tsx";
+import * as FancyButton from "#/components/ui/fancy-button.tsx";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";
 
 export default function ConfirmPassword() {
@@ -41,9 +41,9 @@ export default function ConfirmPassword() {
                     {errors.password && <Hint invalid>{errors.password}</Hint>}
                 </Field>
 
-                <Button disabled={processing} type="submit">
+                <FancyButton.Root disabled={processing} type="submit">
                     Confirm
-                </Button>
+                </FancyButton.Root>
             </form>
         </AuthLayout>
     );

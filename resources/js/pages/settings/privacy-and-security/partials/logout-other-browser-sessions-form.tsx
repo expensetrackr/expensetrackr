@@ -6,7 +6,6 @@ import FirefoxIcon from "virtual:icons/ri/firefox-line";
 import LogoutCircleRIcon from "virtual:icons/ri/logout-circle-r-line";
 
 import { ActionSection } from "#/components/action-section.tsx";
-import { Button } from "#/components/button.tsx";
 import {
     Dialog,
     DialogActions,
@@ -19,6 +18,7 @@ import {
 import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
 import { Input } from "#/components/form/old-input.tsx";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "#/components/table.tsx";
+import * as Button from "#/components/ui/button.tsx";
 import { type Session } from "#/types/index.ts";
 import { Action } from "#/utils/action.ts";
 
@@ -54,13 +54,13 @@ export function LogoutOtherBrowserSessionsForm({ sessions }: LogoutOtherBrowserS
         <ActionSection
             action={
                 <>
-                    <Button
-                        $color="error"
-                        $variant="stroke"
+                    <Button.Root
+                        $style="stroke"
+                        $type="error"
                         onClick={() => setAction(Action.OtherBrowserSessionsDestroy)}
                     >
                         Log out all sessions
-                    </Button>
+                    </Button.Root>
 
                     <Dialog onClose={() => setAction(null)} open={action === Action.OtherBrowserSessionsDestroy}>
                         <DialogHeader>
@@ -102,26 +102,26 @@ export function LogoutOtherBrowserSessionsForm({ sessions }: LogoutOtherBrowserS
                         </DialogBody>
 
                         <DialogActions>
-                            <Button
-                                $color="neutral"
+                            <Button.Root
                                 $size="sm"
-                                $variant="stroke"
+                                $style="stroke"
+                                $type="neutral"
                                 className="w-full"
                                 disabled={form.processing}
                                 onClick={closeModal}
                             >
                                 Cancel
-                            </Button>
-                            <Button
-                                $color="error"
+                            </Button.Root>
+                            <Button.Root
                                 $size="sm"
+                                $type="error"
                                 className="w-full"
                                 disabled={form.processing}
                                 form="logout-other-browser-sessions-form"
                                 type="submit"
                             >
                                 {form.processing ? "Logging out..." : "Yes, log me out"}
-                            </Button>
+                            </Button.Root>
                         </DialogActions>
                     </Dialog>
                 </>

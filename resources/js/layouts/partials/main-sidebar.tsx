@@ -17,7 +17,6 @@ import WalletIcon from "virtual:icons/ri/wallet-line";
 import { useRoute } from "ziggy-js";
 
 import { Avatar } from "#/components/avatar.tsx";
-import { CompactButton } from "#/components/compact-button.tsx";
 import {
     Dropdown,
     DropdownButton,
@@ -40,6 +39,7 @@ import {
     SidebarSection,
     SidebarSpacer,
 } from "#/components/sidebar.tsx";
+import * as CompactButton from "#/components/ui/compact-button.tsx";
 import { type Auth, type InertiaSharedProps, type Workspace } from "#/types/index.ts";
 import { SettingsMenu } from "./settings-sidebar.tsx";
 
@@ -78,10 +78,9 @@ export function MainSidebar({
                             src="/img/isotype-dark.svg"
                         />
                         <SidebarLabel className="flex-1 text-label-sm">{user?.current_workspace.name}</SidebarLabel>
-                        {/* @ts-expect-error - TODO: this type is wrong (Headless UI side) */}
-                        <CompactButton as="span" className="ml-auto">
-                            <ExpandUpDownIcon />
-                        </CompactButton>
+                        <CompactButton.Root className="ml-auto">
+                            <CompactButton.Icon as={ExpandUpDownIcon} />
+                        </CompactButton.Root>
                     </DropdownButton>
                     <DropdownMenu
                         anchor="bottom start"

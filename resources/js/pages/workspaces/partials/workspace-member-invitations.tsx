@@ -5,7 +5,6 @@ import MailCloseIcon from "virtual:icons/ri/mail-close-line";
 import { route } from "ziggy-js";
 
 import { ActionSection } from "#/components/action-section.tsx";
-import { Button } from "#/components/button.tsx";
 import {
     Dialog,
     DialogActions,
@@ -15,6 +14,7 @@ import {
     DialogTitle,
 } from "#/components/dialog.tsx";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "#/components/table.tsx";
+import * as Button from "#/components/ui/button.tsx";
 import { type User, type Workspace, type WorkspaceInvitation, type WorkspacePermissions } from "#/types/index.ts";
 import { Action, getAction } from "#/utils/action.ts";
 
@@ -98,14 +98,14 @@ function CancelInvitation({ invitation }: { invitation: WorkspaceInvitation }) {
 
     return (
         <>
-            <Button
-                $color="error"
+            <Button.Root
                 $size="sm"
-                $variant="stroke"
+                $style="stroke"
+                $type="error"
                 onClick={() => setAction(getAction("WorkspaceInvitationsDestroy", invitation.id))}
             >
                 Cancel invitation
-            </Button>
+            </Button.Root>
 
             <Dialog
                 onClose={() => setAction(null)}
@@ -123,25 +123,25 @@ function CancelInvitation({ invitation }: { invitation: WorkspaceInvitation }) {
                 </DialogHeader>
 
                 <DialogActions>
-                    <Button
-                        $color="neutral"
+                    <Button.Root
                         $size="sm"
-                        $variant="stroke"
+                        $style="stroke"
+                        $type="neutral"
                         className="w-full"
                         disabled={isCancelling}
                         onClick={() => setAction(null)}
                     >
                         Cancel
-                    </Button>
-                    <Button
-                        $color="error"
+                    </Button.Root>
+                    <Button.Root
                         $size="sm"
+                        $type="error"
                         className="w-full"
                         disabled={isCancelling}
                         onClick={() => cancelWorkspaceInvitation(invitation)}
                     >
                         {isCancelling ? "Cancelling..." : "Yes, cancel it"}
-                    </Button>
+                    </Button.Root>
                 </DialogActions>
             </Dialog>
         </>

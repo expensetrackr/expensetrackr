@@ -4,7 +4,6 @@ import { useRef } from "react";
 import DeleteBinIcon from "virtual:icons/ri/delete-bin-line";
 
 import { ActionSection } from "#/components/action-section.tsx";
-import { Button } from "#/components/button.tsx";
 import {
     Dialog,
     DialogActions,
@@ -16,6 +15,7 @@ import {
 } from "#/components/dialog.tsx";
 import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
 import { Input } from "#/components/form/old-input.tsx";
+import * as Button from "#/components/ui/button.tsx";
 import { Action } from "#/utils/action.ts";
 
 export function DeleteUserForm() {
@@ -46,9 +46,9 @@ export function DeleteUserForm() {
         <ActionSection
             action={
                 <>
-                    <Button $color="error" $variant="stroke" onClick={() => setAction(Action.CurrentUserDestroy)}>
+                    <Button.Root $style="stroke" $type="error" onClick={() => setAction(Action.CurrentUserDestroy)}>
                         Delete account
-                    </Button>
+                    </Button.Root>
 
                     <Dialog onClose={() => setAction(null)} open={action === Action.CurrentUserDestroy}>
                         <DialogHeader>
@@ -86,26 +86,26 @@ export function DeleteUserForm() {
                         </DialogBody>
 
                         <DialogActions>
-                            <Button
-                                $color="neutral"
+                            <Button.Root
                                 $size="sm"
-                                $variant="stroke"
+                                $style="stroke"
+                                $type="neutral"
                                 className="w-full"
                                 disabled={form.processing}
                                 onClick={closeModal}
                             >
                                 Cancel
-                            </Button>
-                            <Button
-                                $color="error"
+                            </Button.Root>
+                            <Button.Root
                                 $size="sm"
+                                $type="error"
                                 className="w-full"
                                 disabled={form.processing}
                                 form="delete-user-form"
                                 type="submit"
                             >
                                 {form.processing ? "Deleting..." : "Yes, delete my account"}
-                            </Button>
+                            </Button.Root>
                         </DialogActions>
                     </Dialog>
                 </>

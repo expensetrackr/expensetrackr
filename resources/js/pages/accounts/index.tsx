@@ -1,11 +1,11 @@
-import { Head } from "@inertiajs/react";
+import { Head, Link } from "@inertiajs/react";
 import AddIcon from "virtual:icons/ri/add-line";
 import WalletIcon from "virtual:icons/ri/wallet-line";
 import { route } from "ziggy-js";
 
-import { Button } from "#/components/button.tsx";
 import { Divider } from "#/components/divider.tsx";
 import { PageHeader } from "#/components/page-header.tsx";
+import * as Button from "#/components/ui/button.tsx";
 import { AppLayout } from "#/layouts/app-layout.tsx";
 import { type InertiaSharedProps } from "#/types/index.ts";
 
@@ -25,10 +25,12 @@ export default function AccountsPage() {
                         </div>
 
                         <PageHeader.Actions>
-                            <Button href={route("accounts.create")}>
-                                <AddIcon />
-                                <span>Create account</span>
-                            </Button>
+                            <Button.Root asChild>
+                                <Link href={route("accounts.create")}>
+                                    <Button.Icon as={AddIcon} />
+                                    <span>Create account</span>
+                                </Link>
+                            </Button.Root>
                         </PageHeader.Actions>
                     </PageHeader.Content>
                 </PageHeader>

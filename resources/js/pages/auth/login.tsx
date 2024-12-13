@@ -1,13 +1,13 @@
-import { Head, useForm } from "@inertiajs/react";
+import { Head, Link, useForm } from "@inertiajs/react";
 import { useEffect } from "react";
 import { toast } from "sonner";
 import { route } from "ziggy-js";
 
-import { Button } from "#/components/button.tsx";
 import { Checkbox } from "#/components/form/checkbox.tsx";
 import { TextField } from "#/components/form/text-field.tsx";
-import { StyledLink } from "#/components/link.tsx";
 import { Socialstream } from "#/components/socialstream.tsx";
+import * as FancyButton from "#/components/ui/fancy-button.tsx";
+import * as LinkButton from "#/components/ui/link-button.tsx";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";
 import { type InertiaSharedProps } from "#/types/index.ts";
 
@@ -43,10 +43,10 @@ export default function Login({
             description="Welcome back! Please enter your details"
             footer={
                 <>
-                    Don’t your have account?{" "}
-                    <StyledLink $color="black" className="font-bold" href={route("register")}>
-                        Sign up
-                    </StyledLink>
+                    <span>Don&apos;t your have account?&nbsp;</span>
+                    <LinkButton.Root $style="black" asChild>
+                        <Link href={route("register")}>Sign up</Link>
+                    </LinkButton.Root>
                 </>
             }
             title="Log in to your account"
@@ -85,17 +85,19 @@ export default function Login({
                         checked={data.remember}
                         label="Remember me"
                         name="remember"
-                        onCheckedChange={(e) => setData("remember", !!e)}
+                        onCheckedChange={(checked) => setData("remember", !!checked)}
                     />
 
                     {canResetPassword && (
-                        <StyledLink href={route("password.request")}>Forgot your password?</StyledLink>
+                        <LinkButton.Root $underline asChild>
+                            <Link href={route("password.request")}>Forgot your password?</Link>
+                        </LinkButton.Root>
                     )}
                 </div>
 
-                <Button disabled={processing} type="submit">
+                <FancyButton.Root $type="primary" disabled={processing} type="submit">
                     Log in
-                </Button>
+                </FancyButton.Root>
             </form>
 
             {socialstream.show && <Socialstream />}

@@ -1,9 +1,9 @@
 import { Head, useForm } from "@inertiajs/react";
 import { route } from "ziggy-js";
 
-import { Button } from "#/components/button.tsx";
 import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
 import { Input } from "#/components/form/old-input.tsx";
+import * as FancyButton from "#/components/ui/fancy-button.tsx";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";
 
 export default function ResetPassword({ token, email }: { token: string; email: string }) {
@@ -72,9 +72,9 @@ export default function ResetPassword({ token, email }: { token: string; email: 
                     {errors.password_confirmation && <Hint invalid>{errors.password_confirmation}</Hint>}
                 </Field>
 
-                <Button disabled={processing} type="submit">
+                <FancyButton.Root disabled={processing} type="submit">
                     Reset password
-                </Button>
+                </FancyButton.Root>
             </form>
         </AuthLayout>
     );

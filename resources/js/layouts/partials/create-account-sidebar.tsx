@@ -1,6 +1,5 @@
 import HeadphoneIcon from "virtual:icons/ri/headphone-line";
 
-import { Button } from "#/components/button.tsx";
 import {
     Sidebar,
     SidebarBody,
@@ -12,6 +11,7 @@ import {
     SidebarSection,
 } from "#/components/sidebar.tsx";
 import { Text } from "#/components/text.tsx";
+import * as Button from "#/components/ui/button.tsx";
 import { type useStepper } from "#/pages/accounts/create/partials/stepper.ts";
 
 type CreateAccountSidebarProps = {
@@ -50,10 +50,10 @@ export function CreateAccountSidebar({ stepper }: CreateAccountSidebarProps) {
             <SidebarFooter className="mb-5 flex flex-col gap-3 border-t-0 p-0">
                 <div className="flex flex-col gap-4">
                     <Text className="text-center">Having trouble with creation?</Text>
-                    <Button $color="neutral" $variant="stroke">
-                        <HeadphoneIcon />
+                    <Button.Root $style="stroke" $type="neutral">
+                        <Button.Icon as={HeadphoneIcon} />
                         <span>Contact</span>
-                    </Button>
+                    </Button.Root>
                 </div>
 
                 <Text className="text-center text-paragraph-xs text-(--text-soft-400)">

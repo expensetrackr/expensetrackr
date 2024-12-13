@@ -3,11 +3,11 @@ import { REGEXP_ONLY_DIGITS } from "input-otp";
 import { useState } from "react";
 import { route } from "ziggy-js";
 
-import { Button } from "#/components/button.tsx";
 import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "#/components/form/input-otp.tsx";
 import { Input } from "#/components/form/old-input.tsx";
 import { StyledLink } from "#/components/link.tsx";
+import * as Button from "#/components/ui/button.tsx";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";
 
 export default function TwoFactorChallenge() {
@@ -117,9 +117,9 @@ export default function TwoFactorChallenge() {
                     </StyledLink>
                 </div>
 
-                <Button disabled={processing} type="submit">
+                <Button.Root disabled={processing} type="submit">
                     Log in
-                </Button>
+                </Button.Root>
             </form>
         </AuthLayout>
     );

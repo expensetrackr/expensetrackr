@@ -10,7 +10,6 @@ import { route } from "ziggy-js";
 
 import { ActionSection } from "#/components/action-section.tsx";
 import { Avatar } from "#/components/avatar.tsx";
-import { Button } from "#/components/button.tsx";
 import {
     Dialog,
     DialogActions,
@@ -24,6 +23,7 @@ import { Dropdown, DropdownButton, DropdownItem, DropdownLabel, DropdownMenu } f
 import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
 import { Select } from "#/components/form/select.tsx";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "#/components/table.tsx";
+import * as Button from "#/components/ui/button.tsx";
 import { useUser } from "#/hooks/use-user.ts";
 import {
     type Role,
@@ -254,17 +254,17 @@ function ManageRoleDialog({
             </DialogBody>
 
             <DialogActions>
-                <Button
-                    $color="neutral"
+                <Button.Root
                     $size="sm"
-                    $variant="stroke"
+                    $style="stroke"
+                    $type="neutral"
                     className="w-full"
                     disabled={form.processing}
                     onClick={() => setAction(null)}
                 >
                     Cancel
-                </Button>
-                <Button
+                </Button.Root>
+                <Button.Root
                     $size="sm"
                     className="w-full"
                     disabled={form.processing}
@@ -272,7 +272,7 @@ function ManageRoleDialog({
                     type="submit"
                 >
                     {form.processing ? "Updating..." : "Update role"}
-                </Button>
+                </Button.Root>
             </DialogActions>
         </Dialog>
     );
@@ -329,26 +329,26 @@ function RemoveMemberDialog({
             </DialogBody>
 
             <DialogActions>
-                <Button
-                    $color="neutral"
+                <Button.Root
                     $size="sm"
-                    $variant="stroke"
+                    $style="stroke"
+                    $type="neutral"
                     className="w-full"
                     disabled={form.processing}
                     onClick={() => setAction(null)}
                 >
                     Cancel
-                </Button>
-                <Button
-                    $color="error"
+                </Button.Root>
+                <Button.Root
                     $size="sm"
+                    $type="error"
                     className="w-full"
                     disabled={form.processing}
                     form={`destroy-workspace-members-${user.id}-form`}
                     type="submit"
                 >
                     {form.processing ? "Removing..." : dialogSubmitLabel}
-                </Button>
+                </Button.Root>
             </DialogActions>
         </Dialog>
     );

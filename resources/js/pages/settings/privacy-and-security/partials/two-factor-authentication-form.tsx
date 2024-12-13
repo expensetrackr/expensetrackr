@@ -4,10 +4,10 @@ import { parseAsStringEnum, useQueryState } from "nuqs";
 import { useEffect, useState } from "react";
 
 import { ActionSection } from "#/components/action-section.tsx";
-import { Button } from "#/components/button.tsx";
 import { ConfirmsPassword } from "#/components/confirms-password.tsx";
 import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
 import { Input } from "#/components/form/old-input.tsx";
+import * as Button from "#/components/ui/button.tsx";
 import { type PageProps } from "#/types/index.ts";
 import { Action } from "#/utils/action.ts";
 
@@ -121,42 +121,46 @@ export function TwoFactorAuthenticationForm({ requiresConfirmation }: TwoFactorA
                     <>
                         {recoveryCodes.length > 0 && action !== Action.TwoFactorConfirm ? (
                             <ConfirmsPassword onConfirm={regenerateRecoveryCodes}>
-                                <Button $color="error" $variant="stroke">
+                                <Button.Root $style="stroke" $type="error">
                                     Regenerate recovery codes
-                                </Button>
+                                </Button.Root>
                             </ConfirmsPassword>
                         ) : null}
                         {action === Action.TwoFactorConfirm ? (
                             <ConfirmsPassword onConfirm={disableTwoFactorAuthentication}>
-                                <Button $color="neutral" $variant="stroke">
+                                <Button.Root $style="stroke" $type="neutral">
                                     Cancel
-                                </Button>
+                                </Button.Root>
                             </ConfirmsPassword>
                         ) : (
                             <ConfirmsPassword onConfirm={disableTwoFactorAuthentication}>
-                                <Button $color="error" $variant="stroke" disabled={action === Action.TwoFactorDisable}>
+                                <Button.Root
+                                    $style="stroke"
+                                    $type="error"
+                                    disabled={action === Action.TwoFactorDisable}
+                                >
                                     Disable 2FA
-                                </Button>
+                                </Button.Root>
                             </ConfirmsPassword>
                         )}
                         {action === Action.TwoFactorConfirm ? (
                             <ConfirmsPassword onConfirm={confirmTwoFactorAuthentication}>
-                                <Button>Finish setup</Button>
+                                <Button.Root>Finish setup</Button.Root>
                             </ConfirmsPassword>
                         ) : null}
                         {recoveryCodes.length === 0 && action !== Action.TwoFactorConfirm ? (
                             <ConfirmsPassword onConfirm={showRecoveryCodes}>
-                                <Button $color="neutral" $variant="stroke">
+                                <Button.Root $style="stroke" $type="neutral">
                                     Show recovery codes
-                                </Button>
+                                </Button.Root>
                             </ConfirmsPassword>
                         ) : null}
                     </>
                 ) : (
                     <ConfirmsPassword onConfirm={enableTwoFactorAuthentication}>
-                        <Button $color="neutral" $variant="stroke" disabled={action === Action.TwoFactorEnable}>
+                        <Button.Root $style="stroke" $type="neutral" disabled={action === Action.TwoFactorEnable}>
                             Enable 2FA
-                        </Button>
+                        </Button.Root>
                     </ConfirmsPassword>
                 )
             }

@@ -3,7 +3,6 @@ import { parseAsStringEnum, useQueryState } from "nuqs";
 import TeamIcon from "virtual:icons/ri/team-line";
 import { route } from "ziggy-js";
 
-import { Button } from "#/components/button.tsx";
 import {
     Dialog,
     DialogActions,
@@ -16,6 +15,7 @@ import {
 import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
 import { Input } from "#/components/form/old-input.tsx";
 import { Select } from "#/components/form/select.tsx";
+import * as Button from "#/components/ui/button.tsx";
 import { type Role, type Workspace } from "#/types/index.ts";
 import { Action } from "#/utils/action.ts";
 
@@ -28,7 +28,7 @@ export function AddWorkspaceMemberForm({ workspace, availableRoles }: AddWorkspa
     const [action, setAction] = useQueryState("action", parseAsStringEnum<Action>(Object.values(Action)));
     const form = useForm({
         email: "",
-        role: availableRoles[0]?.key,
+        role: availableRoles[0]?.name,
     });
 
     function onSubmit(e: React.FormEvent) {
@@ -46,9 +46,9 @@ export function AddWorkspaceMemberForm({ workspace, availableRoles }: AddWorkspa
 
     return (
         <>
-            <Button $size="sm" className="px-4" onClick={() => setAction(Action.WorkspaceMembersCreate)}>
+            <Button.Root $size="sm" className="px-4" onClick={() => setAction(Action.WorkspaceMembersCreate)}>
                 Add workspace member
-            </Button>
+            </Button.Root>
 
             <Dialog onClose={() => setAction(null)} open={action === Action.WorkspaceMembersCreate}>
                 <DialogHeader>
@@ -103,17 +103,17 @@ export function AddWorkspaceMemberForm({ workspace, availableRoles }: AddWorkspa
                 </DialogBody>
 
                 <DialogActions>
-                    <Button
-                        $color="neutral"
+                    <Button.Root
                         $size="sm"
-                        $variant="stroke"
+                        $style="stroke"
+                        $type="neutral"
                         className="w-full"
                         disabled={form.processing}
                         onClick={() => setAction(null)}
                     >
                         Cancel
-                    </Button>
-                    <Button
+                    </Button.Root>
+                    <Button.Root
                         $size="sm"
                         className="w-full"
                         disabled={form.processing}
@@ -121,7 +121,7 @@ export function AddWorkspaceMemberForm({ workspace, availableRoles }: AddWorkspa
                         type="submit"
                     >
                         {form.processing ? "Sending..." : "Send invitation"}
-                    </Button>
+                    </Button.Root>
                 </DialogActions>
             </Dialog>
         </>

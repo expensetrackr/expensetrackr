@@ -14,7 +14,7 @@ export function Checkbox({ $error, label, hint, ...props }: CheckboxProps) {
     const id = props.id || generatedId;
 
     return (
-        <div className="flex items-center gap-2">
+        <div className="flex items-start gap-2">
             <CheckboxPrimitive.Root
                 aria-describedby={[$error && `${id}-error`, `${id}-description`].filter(Boolean).join(" ")}
                 aria-invalid={$error ? true : undefined}
@@ -24,7 +24,11 @@ export function Checkbox({ $error, label, hint, ...props }: CheckboxProps) {
 
             {label ? (
                 <div className="flex flex-col gap-1">
-                    <Label.Root className="text-paragraph-sm" disabled={props.disabled} htmlFor={id}>
+                    <Label.Root
+                        className="flex-wrap text-paragraph-sm text-balance"
+                        disabled={props.disabled}
+                        htmlFor={id}
+                    >
                         {label}
                     </Label.Root>
 
@@ -34,6 +38,7 @@ export function Checkbox({ $error, label, hint, ...props }: CheckboxProps) {
                             $error={$error}
                             aria-describedby={$error ? `${id}-error` : `${id}-description`}
                         >
+                            <Hint.Icon $disabled={props.disabled} $error={$error} />
                             {hint}
                         </Hint.Root>
                     ) : null}

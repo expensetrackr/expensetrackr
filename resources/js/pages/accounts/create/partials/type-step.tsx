@@ -9,9 +9,9 @@ import CryptoDuotone from "virtual:icons/tabler/currency-bitcoin";
 import ReceiptDuotone from "virtual:icons/tabler/receipt-2";
 import { type z } from "zod";
 
-import { Button } from "#/components/button.tsx";
 import { ContentDivider } from "#/components/content-divider.tsx";
 import { Field, Hint } from "#/components/form/fieldset.tsx";
+import * as Button from "#/components/ui/button.tsx";
 import { accountTypeEnum } from "#/schemas/account.ts";
 import { useCreateAccountWizardStore } from "#/store/create-account-wizard.ts";
 import { cx } from "#/utils/cva.ts";
@@ -90,10 +90,10 @@ export function TypeStep({ fields }: { fields: ReturnType<typeof useForm<TypeSte
                         const Icon = accountTypes[option].icon;
                         return (
                             <Headless.Radio
-                                $color="neutral"
                                 $size="none"
-                                $variant="stroke"
-                                as={Button}
+                                $style="stroke"
+                                $type="neutral"
+                                as={Button.Root}
                                 className="w-full items-center justify-start gap-3 rounded-10 border-transparent p-2 aria-checked:bg-(--bg-weak-50) data-focus:border-(--stroke-strong-950)"
                                 key={option}
                                 value={option}
