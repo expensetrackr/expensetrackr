@@ -8,8 +8,7 @@ import MoneyDollarCircleFillIcon from "virtual:icons/ri/money-dollar-circle-fill
 
 import { AccountForm } from "#/components/form/account-form.tsx";
 import { CurrencySelector } from "#/components/form/currency-selector.tsx";
-import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
-import { Input } from "#/components/form/old-input.tsx";
+import { TextField } from "#/components/form/text-field.tsx";
 import { Text } from "#/components/text.tsx";
 import { useAccountForm } from "#/hooks/use-account-form.ts";
 import { CreateLayout } from "#/layouts/create-layout.tsx";
@@ -85,20 +84,18 @@ export default function CreateAccountStep2Page({
                             id="balance-and-currency-form"
                             onSubmit={handleSubmit}
                         >
-                            <Field>
-                                <Label>Initial balance</Label>
-                                <CurrencyInput
-                                    currency={form.data.currency_code || "USD"}
-                                    customInput={Input}
-                                    invalid={!!form.errors.initial_balance}
-                                    locale="en"
-                                    name="initial_balance"
-                                    onValueChange={handleBalanceChange}
-                                    placeholder="e.g. 1000"
-                                    value={form.data.initial_balance}
-                                />
-                                {form.errors.initial_balance && <Hint invalid>{form.errors.initial_balance}</Hint>}
-                            </Field>
+                            <CurrencyInput
+                                $error={!!form.errors.initial_balance}
+                                currency={form.data.currency_code || "USD"}
+                                customInput={TextField}
+                                hint={form.errors.initial_balance}
+                                label="Initial balance"
+                                locale="en"
+                                name="initial_balance"
+                                onValueChange={handleBalanceChange}
+                                placeholder="e.g. 1000"
+                                value={form.data.initial_balance}
+                            />
 
                             <CurrencySelector
                                 currencies={currencies}

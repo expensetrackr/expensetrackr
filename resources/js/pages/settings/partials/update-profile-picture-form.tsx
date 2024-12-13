@@ -6,9 +6,9 @@ import PencilIcon from "virtual:icons/ri/pencil-line";
 
 import { Avatar } from "#/components/avatar.tsx";
 import { Dropdown, DropdownButton, DropdownItem, DropdownMenu } from "#/components/dropdown.tsx";
-import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
-import { Input } from "#/components/form/old-input.tsx";
 import { FormSection } from "#/components/form-section.tsx";
+import * as Hint from "#/components/ui/hint.tsx";
+import * as Label from "#/components/ui/label.tsx";
 import { type InertiaSharedProps } from "#/types/index.ts";
 
 export function UpdateProfilePictureForm() {
@@ -71,12 +71,11 @@ export function UpdateProfilePictureForm() {
                 onSubmit={updateProfilePhoto}
                 ref={formRef}
             >
-                <Field>
-                    <Label className="sr-only">Profile photo</Label>
-                    <Input
+                <div className="flex flex-col gap-1">
+                    <Label.Root className="sr-only">Profile photo</Label.Root>
+                    <input
                         className="!sr-only"
                         disabled={form.processing}
-                        invalid={!!form.errors.photo}
                         name="photo"
                         onChange={handlePhotoChange}
                         ref={photoRef}
@@ -98,9 +97,9 @@ export function UpdateProfilePictureForm() {
 
                                 <Dropdown>
                                     <DropdownButton
-                                        $color="neutral"
                                         $size="xs"
-                                        $variant="stroke"
+                                        $style="stroke"
+                                        $type="neutral"
                                         className="absolute bottom-2 left-2 px-2 py-1"
                                     >
                                         <PencilIcon />
@@ -128,8 +127,13 @@ export function UpdateProfilePictureForm() {
                         </div>
                     </div>
 
-                    {form.errors.photo && <Hint invalid>{form.errors.photo}</Hint>}
-                </Field>
+                    {form.errors.photo && (
+                        <Hint.Root $error>
+                            <Hint.Icon />
+                            {form.errors.photo}
+                        </Hint.Root>
+                    )}
+                </div>
             </form>
         </FormSection>
     );

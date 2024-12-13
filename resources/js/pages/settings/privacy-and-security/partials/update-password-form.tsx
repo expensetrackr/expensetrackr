@@ -13,8 +13,7 @@ import {
     DialogIcon,
     DialogTitle,
 } from "#/components/dialog.tsx";
-import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
-import { Input } from "#/components/form/old-input.tsx";
+import { TextField } from "#/components/form/text-field.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import { Action } from "#/utils/action.ts";
 
@@ -75,47 +74,44 @@ export function UpdatePasswordForm() {
 
                         <DialogBody>
                             <form className="flex flex-col gap-3" id="update-password-form" onSubmit={onSubmit}>
-                                <Field>
-                                    <Label>Current password</Label>
-                                    <Input
-                                        autoComplete="current-password"
-                                        autoFocus
-                                        invalid={!!errors.current_password}
-                                        name="current_password"
-                                        onChange={(e) => setData("current_password", e.target.value)}
-                                        placeholder="Enter your password"
-                                        ref={currentPasswordRef}
-                                        type="password"
-                                    />
-                                    {errors.current_password && <Hint invalid>{errors.current_password}</Hint>}
-                                </Field>
-                                <Field>
-                                    <Label>New password</Label>
-                                    <Input
-                                        autoComplete="new-password"
-                                        invalid={!!errors.password}
-                                        name="password"
-                                        onChange={(e) => setData("password", e.target.value)}
-                                        placeholder="8+ characters long, 1 capital letter"
-                                        ref={passwordRef}
-                                        type="password"
-                                    />
-                                    {errors.password && <Hint invalid>{errors.password}</Hint>}
-                                </Field>
-                                <Field>
-                                    <Label>Confirm password</Label>
-                                    <Input
-                                        autoComplete="new-password"
-                                        invalid={!!errors.password_confirmation}
-                                        name="password"
-                                        onChange={(e) => setData("password_confirmation", e.target.value)}
-                                        placeholder="Confirm your password"
-                                        type="password"
-                                    />
-                                    {errors.password_confirmation && (
-                                        <Hint invalid>{errors.password_confirmation}</Hint>
-                                    )}
-                                </Field>
+                                <TextField
+                                    $error={!!errors.current_password}
+                                    autoComplete="current-password"
+                                    autoFocus
+                                    hint={errors.current_password}
+                                    label="Current password"
+                                    name="current_password"
+                                    onChange={(e) => setData("current_password", e.target.value)}
+                                    placeholder="Enter your password"
+                                    type="password"
+                                    value={data.current_password}
+                                />
+
+                                <TextField
+                                    $error={!!errors.password}
+                                    autoComplete="new-password"
+                                    autoFocus
+                                    hint={errors.password}
+                                    label="New password"
+                                    name="password"
+                                    onChange={(e) => setData("password", e.target.value)}
+                                    placeholder="8+ characters long, 1 capital letter"
+                                    type="password"
+                                    value={data.password}
+                                />
+
+                                <TextField
+                                    $error={!!errors.password_confirmation}
+                                    autoComplete="new-password"
+                                    autoFocus
+                                    hint={errors.password_confirmation}
+                                    label="Confirm password"
+                                    name="password"
+                                    onChange={(e) => setData("password_confirmation", e.target.value)}
+                                    placeholder="Confirm your password"
+                                    type="password"
+                                    value={data.password_confirmation}
+                                />
                             </form>
                         </DialogBody>
 

@@ -5,7 +5,7 @@ import { route } from "ziggy-js";
 
 import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "#/components/form/input-otp.tsx";
-import { Input } from "#/components/form/old-input.tsx";
+import { TextField } from "#/components/form/text-field.tsx";
 import { StyledLink } from "#/components/link.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";
@@ -50,18 +50,15 @@ export default function TwoFactorChallenge() {
 
             <form className="flex flex-col gap-3" onSubmit={submit}>
                 {recovery ? (
-                    <Field>
-                        <Label>Recovery code</Label>
-                        <Input
-                            autoComplete="name"
-                            autoFocus
-                            invalid={!!errors.recovery_code}
-                            name="name"
-                            onChange={(e) => setData("recovery_code", e.target.value)}
-                            value={data.recovery_code}
-                        />
-                        {errors.recovery_code && <Hint invalid>{errors.recovery_code}</Hint>}
-                    </Field>
+                    <TextField
+                        $error={!!errors.recovery_code}
+                        autoFocus
+                        hint={errors.recovery_code}
+                        label="Recovery code"
+                        name="recovery_code"
+                        onChange={(e) => setData("recovery_code", e.target.value)}
+                        value={data.recovery_code}
+                    />
                 ) : (
                     <Field>
                         <Label htmlFor="code">Code</Label>

@@ -13,8 +13,8 @@ import {
     DialogTitle,
 } from "#/components/dialog.tsx";
 import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
-import { Input } from "#/components/form/old-input.tsx";
 import { Select } from "#/components/form/select.tsx";
+import { TextField } from "#/components/form/text-field.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import { type Role, type Workspace } from "#/types/index.ts";
 import { Action } from "#/utils/action.ts";
@@ -66,19 +66,18 @@ export function AddWorkspaceMemberForm({ workspace, availableRoles }: AddWorkspa
 
                 <DialogBody>
                     <form className="flex flex-col gap-3" id="add-workspace-member-form" onSubmit={onSubmit}>
-                        <Field>
-                            <Label>Email address</Label>
-                            <Input
-                                autoComplete="off"
-                                autoFocus
-                                invalid={!!form.errors.email}
-                                name="email"
-                                onChange={(e) => form.setData("email", e.target.value)}
-                                placeholder="i.e. john@example.com"
-                                type="email"
-                            />
-                            {form.errors.email && <Hint invalid>{form.errors.email}</Hint>}
-                        </Field>
+                        <TextField
+                            $error={!!form.errors.email}
+                            autoComplete="off"
+                            autoFocus
+                            hint={form.errors.email}
+                            label="Email address"
+                            name="email"
+                            onChange={(e) => form.setData("email", e.target.value)}
+                            placeholder="i.e. john@example.com"
+                            type="email"
+                            value={form.data.email}
+                        />
 
                         {availableRoles.length > 0 ? (
                             <Field>

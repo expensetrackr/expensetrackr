@@ -7,7 +7,7 @@ import * as Label from "../ui/label.tsx";
 
 type TextFieldProps = InputProps & {
     label?: string;
-    hint?: string;
+    hint?: string | Array<string>;
 };
 
 export const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(

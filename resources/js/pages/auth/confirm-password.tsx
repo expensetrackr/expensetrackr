@@ -1,8 +1,7 @@
 import { Head, useForm } from "@inertiajs/react";
 import { route } from "ziggy-js";
 
-import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
-import { Input } from "#/components/form/old-input.tsx";
+import { TextField } from "#/components/form/text-field.tsx";
 import * as FancyButton from "#/components/ui/fancy-button.tsx";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";
 
@@ -26,20 +25,18 @@ export default function ConfirmPassword() {
             <Head title="Confirm Password" />
 
             <form className="flex flex-col gap-3" onSubmit={submit}>
-                <Field>
-                    <Label>Password</Label>
-                    <Input
-                        autoComplete="current-password"
-                        autoFocus
-                        invalid={!!errors.password}
-                        name="password"
-                        onChange={(e) => setData("password", e.target.value)}
-                        placeholder="Enter your password"
-                        type="password"
-                        value={data.password}
-                    />
-                    {errors.password && <Hint invalid>{errors.password}</Hint>}
-                </Field>
+                <TextField
+                    $error={!!errors.password}
+                    autoComplete="current-password"
+                    autoFocus
+                    hint={errors.password}
+                    label="Password"
+                    name="password"
+                    onChange={(e) => setData("password", e.target.value)}
+                    placeholder="Enter your password"
+                    type="password"
+                    value={data.password}
+                />
 
                 <FancyButton.Root disabled={processing} type="submit">
                     Confirm

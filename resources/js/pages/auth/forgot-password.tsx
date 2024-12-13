@@ -2,8 +2,7 @@ import { Head, useForm } from "@inertiajs/react";
 import { useEffect } from "react";
 import { toast } from "sonner";
 
-import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
-import { Input } from "#/components/form/old-input.tsx";
+import { TextField } from "#/components/form/text-field.tsx";
 import * as FancyButton from "#/components/ui/fancy-button.tsx";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";
 
@@ -32,20 +31,18 @@ export default function ForgotPassword({ status }: { status?: string }) {
             <Head title="Forgot Password" />
 
             <form className="flex flex-col gap-3" onSubmit={submit}>
-                <Field>
-                    <Label>Email</Label>
-                    <Input
-                        autoComplete="username"
-                        autoFocus
-                        invalid={!!errors.email}
-                        name="email"
-                        onChange={(e) => setData("email", e.target.value)}
-                        placeholder="e.g. john@example.com"
-                        type="email"
-                        value={data.email}
-                    />
-                    {errors.email && <Hint invalid>{errors.email}</Hint>}
-                </Field>
+                <TextField
+                    $error={!!errors.email}
+                    autoComplete="username"
+                    autoFocus
+                    hint={errors.email}
+                    label="Email"
+                    name="email"
+                    onChange={(e) => setData("email", e.target.value)}
+                    placeholder="e.g. john@example.com"
+                    type="email"
+                    value={data.email}
+                />
 
                 <FancyButton.Root disabled={processing} type="submit">
                     Email password reset link

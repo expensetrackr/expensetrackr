@@ -14,8 +14,7 @@ import {
     DialogIcon,
     DialogTitle,
 } from "./dialog.tsx";
-import { Field, Hint, Label } from "./form/fieldset.tsx";
-import { Input } from "./form/old-input.tsx";
+import { TextField } from "./form/text-field.tsx";
 import * as Button from "./ui/button.tsx";
 
 interface ConfirmsPasswordProps {
@@ -82,20 +81,18 @@ export function ConfirmsPassword({ onConfirm, children }: ConfirmsPasswordProps)
 
                 <DialogBody>
                     <form className="flex flex-col gap-3" id="set-password-form" onSubmit={onSubmit}>
-                        <Field>
-                            <Label>Password</Label>
-                            <Input
-                                autoComplete="current-password"
-                                autoFocus
-                                invalid={!!errors.password}
-                                name="password"
-                                onChange={(e) => setData("password", e.target.value)}
-                                placeholder="Enter your password"
-                                ref={passwordRef}
-                                type="password"
-                            />
-                            {errors.password && <Hint invalid>{errors.password}</Hint>}
-                        </Field>
+                        <TextField
+                            $error={!!errors.password}
+                            autoComplete="current-password"
+                            autoFocus
+                            hint={errors.password}
+                            label="Password"
+                            name="password"
+                            onChange={(e) => setData("password", e.target.value)}
+                            placeholder="Enter your password"
+                            ref={passwordRef}
+                            type="password"
+                        />
                     </form>
                 </DialogBody>
 

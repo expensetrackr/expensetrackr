@@ -3,9 +3,8 @@ import DraftFillIcon from "virtual:icons/ri/draft-fill";
 
 import { AccountForm } from "#/components/form/account-form.tsx";
 import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
-import { Input } from "#/components/form/old-input.tsx";
 import { Select } from "#/components/form/select.tsx";
-import { Textarea } from "#/components/form/textarea.tsx";
+import { TextField } from "#/components/form/text-field.tsx";
 import { Text } from "#/components/text.tsx";
 import { useAccountForm } from "#/hooks/use-account-form.ts";
 import { CreateLayout } from "#/layouts/create-layout.tsx";
@@ -55,32 +54,15 @@ export default function CreateAccountPage({ accountTypes, wizard }: InertiaShare
                 <div className="mx-auto w-full max-w-[400px] rounded-20 border border-(--stroke-soft-200) bg-(--bg-white-0) shadow-xs">
                     <div className="p-4">
                         <AccountForm id="details-form" onSubmit={onSubmit}>
-                            <Field>
-                                <Label>Name</Label>
-                                <Input
-                                    invalid={!!form.errors.name}
-                                    name="name"
-                                    onChange={(e) => form.setData("name", e.target.value)}
-                                    placeholder="e.g. Personal savings"
-                                    value={form.data.name}
-                                />
-                                {form.errors.name && <Hint invalid>{form.errors.name}</Hint>}
-                            </Field>
-
-                            <Field>
-                                <Label>Description</Label>
-                                <Textarea
-                                    invalid={!!form.errors.description}
-                                    name="description"
-                                    onChange={(e) => form.setData("description", e.target.value)}
-                                    placeholder="e.g. Savings account for personal expenses"
-                                    rows={3}
-                                    value={form.data.description ?? ""}
-                                />
-                                <Hint invalid={!!form.errors.description}>
-                                    {form.errors.description ?? "This will only be visible to you."}
-                                </Hint>
-                            </Field>
+                            <TextField
+                                $error={!!form.errors.name}
+                                hint={form.errors.name}
+                                label="Name"
+                                name="name"
+                                onChange={(e) => form.setData("name", e.target.value)}
+                                placeholder="e.g. Personal savings"
+                                value={form.data.name}
+                            />
 
                             <div className="-mx-4 mt-1 border-t border-t-(--stroke-soft-200) pt-3">
                                 <div className="px-5">

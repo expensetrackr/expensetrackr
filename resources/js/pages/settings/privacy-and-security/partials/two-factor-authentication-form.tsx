@@ -5,8 +5,7 @@ import { useEffect, useState } from "react";
 
 import { ActionSection } from "#/components/action-section.tsx";
 import { ConfirmsPassword } from "#/components/confirms-password.tsx";
-import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
-import { Input } from "#/components/form/old-input.tsx";
+import { TextField } from "#/components/form/text-field.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import { type PageProps } from "#/types/index.ts";
 import { Action } from "#/utils/action.ts";
@@ -217,21 +216,17 @@ export function TwoFactorAuthenticationForm({ requiresConfirmation }: TwoFactorA
                                                 </li>
                                             </ol>
 
-                                            <Field>
-                                                <Label>Enter verification code</Label>
-                                                <Input
-                                                    autoComplete="one-time-code"
-                                                    autoFocus
-                                                    invalid={!!confirmationForm.errors.code}
-                                                    name="code"
-                                                    onChange={(e) => confirmationForm.setData("code", e.target.value)}
-                                                    type="numeric"
-                                                    value={confirmationForm.data.code}
-                                                />
-                                                {confirmationForm.errors.code && (
-                                                    <Hint invalid>{confirmationForm.errors.code}</Hint>
-                                                )}
-                                            </Field>
+                                            <TextField
+                                                $error={!!confirmationForm.errors.code}
+                                                autoComplete="one-time-code"
+                                                autoFocus
+                                                hint={confirmationForm.errors.code}
+                                                label="Enter verification code"
+                                                name="code"
+                                                onChange={(e) => confirmationForm.setData("code", e.target.value)}
+                                                type="numeric"
+                                                value={confirmationForm.data.code}
+                                            />
                                         </div>
                                     ) : null}
                                 </div>

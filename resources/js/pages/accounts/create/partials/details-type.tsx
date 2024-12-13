@@ -1,9 +1,11 @@
 import { getInputProps, getTextareaProps, type useForm, useInputControl } from "@conform-to/react";
 
-import { Field, Hint, Label, LabelAsterisk, LabelSub } from "#/components/form/fieldset.tsx";
-import { Input } from "#/components/form/old-input.tsx";
+import { Field } from "#/components/form/fieldset.tsx";
 import { Listbox, ListboxLabel, ListboxOption } from "#/components/form/listbox.tsx";
-import { Textarea } from "#/components/form/textarea.tsx";
+import { TextField } from "#/components/form/text-field.tsx";
+import { Textarea } from "#/components/textarea.tsx";
+import * as Hint from "#/components/ui/hint.tsx";
+import * as Label from "#/components/ui/label.tsx";
 import { accountTypeEnum, depositorySubtypeEnum, investmentSubtypeEnum } from "#/schemas/account.ts";
 import { useCreateAccountWizardStore } from "#/store/create-account-wizard.ts";
 import { type DetailsStepValues } from "./stepper.ts";
@@ -23,37 +25,31 @@ export function DetailsStep({ fields }: DetailsStepProps) {
 
     return (
         <>
-            <Field>
-                <Label>
-                    Name <LabelAsterisk />
-                </Label>
-                <Input
-                    {...getInputProps(fields.name, { type: "text" })}
-                    invalid={!!fields.name.errors}
-                    name="name"
-                    placeholder="e.g. Personal savings"
-                />
-                {fields.name.errors && <Hint invalid>{fields.name.errors}</Hint>}
-            </Field>
+            <TextField
+                $error={!!fields.name.errors}
+                hint={fields.name.errors}
+                label="Name"
+                {...getInputProps(fields.name, { type: "text" })}
+                placeholder="e.g. Personal savings"
+            />
 
-            <Field>
-                <Label>
-                    Description <LabelSub>(Optional)</LabelSub>
-                </Label>
-                <Textarea
-                    {...getTextareaProps(fields.description)}
-                    invalid={!!fields.description.errors}
-                    placeholder="e.g. Savings account for personal expenses"
-                    rows={3}
-                />
-                <Hint invalid={!!fields.description.errors}>
-                    {fields.description.errors ?? "This will only be visible to you."}
-                </Hint>
-            </Field>
+            <Textarea
+                {...getTextareaProps(fields.description)}
+                $error={!!fields.description.errors}
+                charCounterCurrent={fields.description.value?.length || 0}
+                charCounterMax={200}
+                hint={fields.description.errors ?? "This will only be visible to you."}
+                label={
+                    <>
+                        Description <Label.Sub>(Optional)</Label.Sub>
+                    </>
+                }
+                placeholder="e.g. Savings account for personal expenses"
+            ></Textarea>
 
             {type && subtypeOptions[type as keyof typeof subtypeOptions] && (
                 <Field>
-                    <Label>Subtype</Label>
+                    <Label.Root>Subtype</Label.Root>
                     <Listbox
                         defaultValue={fields.subtype.initialValue}
                         name={fields.subtype.name}
@@ -66,7 +62,12 @@ export function DetailsStep({ fields }: DetailsStepProps) {
                             </ListboxOption>
                         ))}
                     </Listbox>
-                    {fields.subtype.errors && <Hint invalid>{fields.subtype.errors}</Hint>}
+                    {fields.subtype.errors && (
+                        <Hint.Root $error>
+                            <Hint.Icon $error />
+                            {fields.subtype.errors}
+                        </Hint.Root>
+                    )}
                 </Field>
             )}
         </>

@@ -13,8 +13,7 @@ import {
     DialogIcon,
     DialogTitle,
 } from "#/components/dialog.tsx";
-import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
-import { Input } from "#/components/form/old-input.tsx";
+import { TextField } from "#/components/form/text-field.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import { Action } from "#/utils/action.ts";
 
@@ -67,21 +66,19 @@ export function DeleteUserForm() {
 
                         <DialogBody>
                             <form className="flex flex-col gap-3" id="delete-user-form" onSubmit={onSubmit}>
-                                <Field>
-                                    <Label>Password</Label>
-                                    <Input
-                                        autoComplete="current-password"
-                                        autoFocus
-                                        invalid={!!form.errors.password}
-                                        name="password"
-                                        onChange={(e) => form.setData("password", e.target.value)}
-                                        placeholder="Enter your password"
-                                        ref={passwordRef}
-                                        type="password"
-                                        value={form.data.password}
-                                    />
-                                    {form.errors.password && <Hint invalid>{form.errors.password}</Hint>}
-                                </Field>
+                                <TextField
+                                    $error={!!form.errors.password}
+                                    autoComplete="current-password"
+                                    autoFocus
+                                    disabled={form.processing}
+                                    hint={form.errors.password}
+                                    label="Password"
+                                    name="password"
+                                    onChange={(e) => form.setData("password", e.target.value)}
+                                    placeholder="Enter your password"
+                                    type="password"
+                                    value={form.data.password}
+                                />
                             </form>
                         </DialogBody>
 

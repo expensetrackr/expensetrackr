@@ -3,8 +3,7 @@ import { useDebounce } from "@uidotdev/usehooks";
 import { useCallback, useEffect } from "react";
 import { toast } from "sonner";
 
-import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
-import { Input } from "#/components/form/old-input.tsx";
+import { TextField } from "#/components/form/text-field.tsx";
 import { FormSection } from "#/components/form-section.tsx";
 import { type InertiaSharedProps } from "#/types/index.ts";
 
@@ -44,20 +43,19 @@ export function UpdateEmailForm() {
             title="Email address"
         >
             <form className="flex w-full flex-col gap-4" onSubmit={onSubmit}>
-                <Field>
-                    <Label className="sr-only">Email address</Label>
-                    <Input
-                        autoComplete="email"
-                        disabled={form.processing}
-                        invalid={!!errors.email}
-                        name="name"
-                        onChange={(e) => setData("email", e.target.value)}
-                        placeholder="e.g. john@example.com"
-                        type="email"
-                        value={data.email}
-                    />
-                    {errors.email && <Hint invalid>{errors.email}</Hint>}
-                </Field>
+                <TextField
+                    $error={!!errors.email}
+                    autoComplete="username"
+                    autoFocus
+                    disabled={form.processing}
+                    hint={errors.email}
+                    label="Email"
+                    name="email"
+                    onChange={(e) => setData("email", e.target.value)}
+                    placeholder="e.g. john@example.com"
+                    type="email"
+                    value={data.email}
+                />
             </form>
         </FormSection>
     );

@@ -16,7 +16,7 @@ export const inputVariants = tv({
     slots: {
         root: [
             // base
-            "group relative flex w-full overflow-hidden bg-(--bg-white-0) shadow",
+            "group relative flex w-full overflow-hidden bg-(--bg-white-0) shadow-xs",
             "transition duration-200 ease-out",
             "divide-x divide-(--stroke-soft-200)",
             // before
