@@ -75,7 +75,7 @@
         "autoprefixer": "10.4.20",
         "axios": "1.7.9",
         "babel-plugin-react-compiler": "19.0.0-beta-df7b47d-20241124",
-        "eslint": "9.16.0",
+        "eslint": "9.17.0",
         "eslint-plugin-react-compiler": "19.0.0-beta-df7b47d-20241124",
         "husky": "9.1.7",
         "laravel-vite-plugin": "1.1.1",
