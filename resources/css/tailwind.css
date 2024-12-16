@@ -284,6 +284,8 @@
     --color-social-amazon: var(--social-amazon);
     --color-social-zendesk: var(--social-zendesk);
 
+    --color-overlay: var(--overlay-gray);
+
     --text-*: initial;
 
     --text-h1: 3.5rem;

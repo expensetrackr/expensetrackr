@@ -5,16 +5,9 @@ import MailCloseIcon from "virtual:icons/ri/mail-close-line";
 import { route } from "ziggy-js";
 
 import { ActionSection } from "#/components/action-section.tsx";
-import {
-    Dialog,
-    DialogActions,
-    DialogDescription,
-    DialogHeader,
-    DialogIcon,
-    DialogTitle,
-} from "#/components/dialog.tsx";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "#/components/table.tsx";
 import * as Button from "#/components/ui/button.tsx";
+import * as Modal from "#/components/ui/modal.tsx";
 import { type User, type Workspace, type WorkspaceInvitation, type WorkspacePermissions } from "#/types/index.ts";
 import { Action, getAction } from "#/utils/action.ts";
 
@@ -97,42 +90,41 @@ function CancelInvitation({ invitation }: { invitation: WorkspaceInvitation }) {
     }
 
     return (
-        <>
-            <Button.Root
-                $size="sm"
-                $style="stroke"
-                $type="error"
-                onClick={() => setAction(getAction("WorkspaceInvitationsDestroy", invitation.id))}
-            >
-                Cancel invitation
-            </Button.Root>
+        <Modal.Root
+            onOpenChange={(open) => setAction(open ? getAction("WorkspaceInvitationsDestroy", invitation.id) : null)}
+            open={action === getAction("WorkspaceInvitationsDestroy", invitation.id)}
+        >
+            <Modal.Trigger asChild>
+                <Button.Root
+                    $size="sm"
+                    $style="stroke"
+                    $type="error"
+                    onClick={() => setAction(getAction("WorkspaceInvitationsDestroy", invitation.id))}
+                >
+                    Cancel invitation
+                </Button.Root>
+            </Modal.Trigger>
 
-            <Dialog
-                onClose={() => setAction(null)}
-                open={action === getAction("WorkspaceInvitationsDestroy", invitation.id)}
-            >
-                <DialogHeader>
-                    <DialogIcon>
-                        <MailCloseIcon className="size-6 text-(--icon-sub-600)" />
-                    </DialogIcon>
+            <Modal.Content className="max-w-[440px]">
+                <Modal.Header
+                    description="Are you sure you want to cancel this invitation?"
+                    icon={MailCloseIcon}
+                    title="Cancel invitation"
+                />
 
-                    <div className="flex flex-1 flex-col gap-1">
-                        <DialogTitle>Cancel invitation</DialogTitle>
-                        <DialogDescription>Are you sure you want to cancel this invitation?</DialogDescription>
-                    </div>
-                </DialogHeader>
-
-                <DialogActions>
-                    <Button.Root
-                        $size="sm"
-                        $style="stroke"
-                        $type="neutral"
-                        className="w-full"
-                        disabled={isCancelling}
-                        onClick={() => setAction(null)}
-                    >
-                        Cancel
-                    </Button.Root>
+                <Modal.Footer>
+                    <Modal.Close asChild>
+                        <Button.Root
+                            $size="sm"
+                            $style="stroke"
+                            $type="neutral"
+                            className="w-full"
+                            disabled={isCancelling}
+                            onClick={() => setAction(null)}
+                        >
+                            Cancel
+                        </Button.Root>
+                    </Modal.Close>
                     <Button.Root
                         $size="sm"
                         $type="error"
@@ -142,8 +134,8 @@ function CancelInvitation({ invitation }: { invitation: WorkspaceInvitation }) {
                     >
                         {isCancelling ? "Cancelling..." : "Yes, cancel it"}
                     </Button.Root>
-                </DialogActions>
-            </Dialog>
-        </>
+                </Modal.Footer>
+            </Modal.Content>
+        </Modal.Root>
     );
 }

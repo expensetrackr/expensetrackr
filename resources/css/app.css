@@ -100,6 +100,10 @@ html[data-theme="light"] {
     --social-tidal: var(--light, oklch(0% 0 0deg)) var(--dark, oklch(100% 0.0000000000000005 0deg));
     --social-amazon: var(--light, oklch(35.9% 0.0197 248deg)) var(--dark, oklch(100% 0.0000000000000005 0deg));
     --social-zendesk: var(--light, oklch(19.1% 0.0138 94deg)) var(--dark, oklch(100% 0.0000000000000005 0deg));
+
+    --overlay-gray: var(--light, oklch(32.1% 0.000000000000000262 0deg / 24%))
+        var(--dark, oklch(32.1% 0.000000000000000262 0deg / 56%));
+    --overlay-slate: var(--light, oklch(30.9% 0.021 266deg / 24%)) var(--dark, oklch(30.9% 0.021 266deg / 56%));
 }
 
 .dark,

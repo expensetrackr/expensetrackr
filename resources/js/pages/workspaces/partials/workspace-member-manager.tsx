@@ -9,21 +9,13 @@ import UserMinusIcon from "virtual:icons/ri/user-minus-line";
 import { route } from "ziggy-js";
 
 import { ActionSection } from "#/components/action-section.tsx";
-import {
-    Dialog,
-    DialogActions,
-    DialogBody,
-    DialogDescription,
-    DialogHeader,
-    DialogIcon,
-    DialogTitle,
-} from "#/components/dialog.tsx";
 import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
 import { Select } from "#/components/form/select.tsx";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "#/components/table.tsx";
 import * as Avatar from "#/components/ui/avatar.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import * as Dropdown from "#/components/ui/dropdown.tsx";
+import * as Modal from "#/components/ui/modal.tsx";
 import { useUser } from "#/hooks/use-user.ts";
 import {
     type Role,
@@ -211,64 +203,63 @@ function ManageRoleDialog({
     }
 
     return (
-        <Dialog
-            onClose={() => setAction(null)}
+        <Modal.Root
+            onOpenChange={() => setAction(null)}
             open={action === Action.WorkspaceMembersUpdate.replace("{id}", user.id.toString())}
         >
-            <DialogHeader>
-                <DialogIcon>
-                    <FolderShield2Icon className="size-6 text-(--icon-sub-600)" />
-                </DialogIcon>
+            <Modal.Content className="max-w-[440px]">
+                <Modal.Header
+                    description="Select the new role for this workspace member."
+                    icon={FolderShield2Icon}
+                    title="Manage role"
+                />
 
-                <div className="flex flex-1 flex-col gap-1">
-                    <DialogTitle>Manage role</DialogTitle>
-                    <DialogDescription>Select the new role for this workspace member.</DialogDescription>
-                </div>
-            </DialogHeader>
+                <Modal.Body>
+                    <form id={`update-workspace-members-role-${user.id}-form`} onSubmit={onSubmit}>
+                        <Field>
+                            <Label>Role</Label>
+                            <Select
+                                invalid={!!form.errors.role}
+                                name="role"
+                                onChange={(e) => form.setData("role", e.target.value)}
+                                value={form.data.role}
+                            >
+                                {availableRoles.map((role) => (
+                                    <option key={role.name} value={role.name}>
+                                        {role.name}
+                                    </option>
+                                ))}
+                            </Select>
+                            {form.errors.role && <Hint invalid>{form.errors.role}</Hint>}
+                        </Field>
+                    </form>
+                </Modal.Body>
 
-            <DialogBody>
-                <form id={`update-workspace-members-role-${user.id}-form`} onSubmit={onSubmit}>
-                    <Field>
-                        <Label>Role</Label>
-                        <Select
-                            invalid={!!form.errors.role}
-                            name="role"
-                            onChange={(e) => form.setData("role", e.target.value)}
-                            value={form.data.role}
+                <Modal.Footer>
+                    <Modal.Close asChild>
+                        <Button.Root
+                            $size="sm"
+                            $style="stroke"
+                            $type="neutral"
+                            className="w-full"
+                            disabled={form.processing}
+                            onClick={() => setAction(null)}
                         >
-                            {availableRoles.map((role) => (
-                                <option key={role.name} value={role.name}>
-                                    {role.name}
-                                </option>
-                            ))}
-                        </Select>
-                        {form.errors.role && <Hint invalid>{form.errors.role}</Hint>}
-                    </Field>
-                </form>
-            </DialogBody>
-
-            <DialogActions>
-                <Button.Root
-                    $size="sm"
-                    $style="stroke"
-                    $type="neutral"
-                    className="w-full"
-                    disabled={form.processing}
-                    onClick={() => setAction(null)}
-                >
-                    Cancel
-                </Button.Root>
-                <Button.Root
-                    $size="sm"
-                    className="w-full"
-                    disabled={form.processing}
-                    form={`manage-role-form-${user.id}`}
-                    type="submit"
-                >
-                    {form.processing ? "Updating..." : "Update role"}
-                </Button.Root>
-            </DialogActions>
-        </Dialog>
+                            Cancel
+                        </Button.Root>
+                    </Modal.Close>
+                    <Button.Root
+                        $size="sm"
+                        className="w-full"
+                        disabled={form.processing}
+                        form={`manage-role-form-${user.id}`}
+                        type="submit"
+                    >
+                        {form.processing ? "Updating..." : "Update role"}
+                    </Button.Root>
+                </Modal.Footer>
+            </Modal.Content>
+        </Modal.Root>
     );
 }
 
@@ -303,47 +294,41 @@ function RemoveMemberDialog({
     }
 
     return (
-        <Dialog
-            onClose={() => setAction(null)}
+        <Modal.Root
+            onOpenChange={() => setAction(null)}
             open={action === Action.WorkspaceMembersDestroy.replace("{id}", user.id.toString())}
         >
-            <DialogHeader>
-                <DialogIcon>
-                    <EraserIcon className="size-6 text-(--icon-sub-600)" />
-                </DialogIcon>
+            <Modal.Content className="max-w-[440px]">
+                <Modal.Header description={dialogDescription} icon={EraserIcon} title={dialogTitle} />
 
-                <div className="flex flex-1 flex-col gap-1">
-                    <DialogTitle>{dialogTitle}</DialogTitle>
-                    <DialogDescription>{dialogDescription}</DialogDescription>
-                </div>
-            </DialogHeader>
+                <Modal.Body>
+                    <form className="sr-only" id={`destroy-workspace-members-${user.id}-form`} onSubmit={onSubmit} />
+                </Modal.Body>
 
-            <DialogBody>
-                <form className="sr-only" id={`destroy-workspace-members-${user.id}-form`} onSubmit={onSubmit} />
-            </DialogBody>
-
-            <DialogActions>
-                <Button.Root
-                    $size="sm"
-                    $style="stroke"
-                    $type="neutral"
-                    className="w-full"
-                    disabled={form.processing}
-                    onClick={() => setAction(null)}
-                >
-                    Cancel
-                </Button.Root>
-                <Button.Root
-                    $size="sm"
-                    $type="error"
-                    className="w-full"
-                    disabled={form.processing}
-                    form={`destroy-workspace-members-${user.id}-form`}
-                    type="submit"
-                >
-                    {form.processing ? "Removing..." : dialogSubmitLabel}
-                </Button.Root>
-            </DialogActions>
-        </Dialog>
+                <Modal.Footer>
+                    <Modal.Close asChild>
+                        <Button.Root
+                            $size="sm"
+                            $style="stroke"
+                            $type="neutral"
+                            className="w-full"
+                            disabled={form.processing}
+                            onClick={() => setAction(null)}
+                        >
+                            Cancel
+                        </Button.Root>
+                    </Modal.Close>
+                    <Button.Root
+                        $size="sm"
+                        className="w-full"
+                        disabled={form.processing}
+                        form={`destroy-workspace-members-${user.id}-form`}
+                        type="submit"
+                    >
+                        {form.processing ? "Removing..." : dialogSubmitLabel}
+                    </Button.Root>
+                </Modal.Footer>
+            </Modal.Content>
+        </Modal.Root>
     );
 }

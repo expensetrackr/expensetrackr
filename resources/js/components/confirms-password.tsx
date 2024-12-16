@@ -5,17 +5,9 @@ import { useRef } from "react";
 import LockPasswordIcon from "virtual:icons/ri/lock-password-line";
 
 import { Action } from "#/utils/action.ts";
-import {
-    Dialog,
-    DialogActions,
-    DialogBody,
-    DialogDescription,
-    DialogHeader,
-    DialogIcon,
-    DialogTitle,
-} from "./dialog.tsx";
 import { TextField } from "./form/text-field.tsx";
 import * as Button from "./ui/button.tsx";
+import * as Modal from "./ui/modal.tsx";
 
 interface ConfirmsPasswordProps {
     onConfirm?: () => void;
@@ -65,59 +57,59 @@ export function ConfirmsPassword({ onConfirm, children }: ConfirmsPasswordProps)
                 {children}
             </span>
 
-            <Dialog onClose={() => setAction(null)} open={action === Action.PasswordConfirm}>
-                <DialogHeader>
-                    <DialogIcon>
-                        <LockPasswordIcon className="size-6 text-(--icon-sub-600)" />
-                    </DialogIcon>
+            <Modal.Root
+                onOpenChange={(open) => setAction(open ? Action.PasswordConfirm : null)}
+                open={action === Action.PasswordConfirm}
+            >
+                <Modal.Content className="max-w-[440px]">
+                    <Modal.Header
+                        description="For your security, please confirm your password to continue."
+                        icon={LockPasswordIcon}
+                        title="Confirm Password"
+                    />
 
-                    <div className="flex flex-1 flex-col gap-1">
-                        <DialogTitle>Confirm Password</DialogTitle>
-                        <DialogDescription>
-                            For your security, please confirm your password to continue.
-                        </DialogDescription>
-                    </div>
-                </DialogHeader>
+                    <Modal.Body>
+                        <form className="flex flex-col gap-3" id="set-password-form" onSubmit={onSubmit}>
+                            <TextField
+                                $error={!!errors.password}
+                                autoComplete="current-password"
+                                autoFocus
+                                hint={errors.password}
+                                label="Password"
+                                name="password"
+                                onChange={(e) => setData("password", e.target.value)}
+                                placeholder="Enter your password"
+                                ref={passwordRef}
+                                type="password"
+                            />
+                        </form>
+                    </Modal.Body>
 
-                <DialogBody>
-                    <form className="flex flex-col gap-3" id="set-password-form" onSubmit={onSubmit}>
-                        <TextField
-                            $error={!!errors.password}
-                            autoComplete="current-password"
-                            autoFocus
-                            hint={errors.password}
-                            label="Password"
-                            name="password"
-                            onChange={(e) => setData("password", e.target.value)}
-                            placeholder="Enter your password"
-                            ref={passwordRef}
-                            type="password"
-                        />
-                    </form>
-                </DialogBody>
-
-                <DialogActions>
-                    <Button.Root
-                        $size="sm"
-                        $style="stroke"
-                        $type="neutral"
-                        className="w-full"
-                        disabled={form.processing}
-                        onClick={() => setAction(null)}
-                    >
-                        Cancel
-                    </Button.Root>
-                    <Button.Root
-                        $size="sm"
-                        className="w-full"
-                        disabled={form.processing}
-                        form="set-password-form"
-                        type="submit"
-                    >
-                        {form.processing ? "Confirming..." : "Confirm"}
-                    </Button.Root>
-                </DialogActions>
-            </Dialog>
+                    <Modal.Footer>
+                        <Modal.Close asChild>
+                            <Button.Root
+                                $size="sm"
+                                $style="stroke"
+                                $type="neutral"
+                                className="w-full"
+                                disabled={form.processing}
+                                onClick={() => setAction(null)}
+                            >
+                                Cancel
+                            </Button.Root>
+                        </Modal.Close>
+                        <Button.Root
+                            $size="sm"
+                            className="w-full"
+                            disabled={form.processing}
+                            form="set-password-form"
+                            type="submit"
+                        >
+                            {form.processing ? "Confirming..." : "Confirm"}
+                        </Button.Root>
+                    </Modal.Footer>
+                </Modal.Content>
+            </Modal.Root>
         </>
     );
 }

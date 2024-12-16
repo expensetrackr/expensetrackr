@@ -3,19 +3,11 @@ import { parseAsStringEnum, useQueryState } from "nuqs";
 import TeamIcon from "virtual:icons/ri/team-line";
 import { route } from "ziggy-js";
 
-import {
-    Dialog,
-    DialogActions,
-    DialogBody,
-    DialogDescription,
-    DialogHeader,
-    DialogIcon,
-    DialogTitle,
-} from "#/components/dialog.tsx";
 import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
 import { Select } from "#/components/form/select.tsx";
 import { TextField } from "#/components/form/text-field.tsx";
 import * as Button from "#/components/ui/button.tsx";
+import * as Modal from "#/components/ui/modal.tsx";
 import { type Role, type Workspace } from "#/types/index.ts";
 import { Action } from "#/utils/action.ts";
 
@@ -45,26 +37,24 @@ export function AddWorkspaceMemberForm({ workspace, availableRoles }: AddWorkspa
     }
 
     return (
-        <>
-            <Button.Root $size="sm" className="px-4" onClick={() => setAction(Action.WorkspaceMembersCreate)}>
-                Add workspace member
-            </Button.Root>
+        <Modal.Root
+            onOpenChange={(open) => setAction(open ? Action.WorkspaceMembersCreate : null)}
+            open={action === Action.WorkspaceMembersCreate}
+        >
+            <Modal.Trigger asChild>
+                <Button.Root $size="sm" className="px-4" onClick={() => setAction(Action.WorkspaceMembersCreate)}>
+                    Add workspace member
+                </Button.Root>
+            </Modal.Trigger>
 
-            <Dialog onClose={() => setAction(null)} open={action === Action.WorkspaceMembersCreate}>
-                <DialogHeader>
-                    <DialogIcon>
-                        <TeamIcon className="size-6 text-(--icon-sub-600)" />
-                    </DialogIcon>
+            <Modal.Content className="max-w-[440px]">
+                <Modal.Header
+                    description="Add a new team member to your team, allowing them to collaborate with you."
+                    icon={TeamIcon}
+                    title="Add workspace member"
+                />
 
-                    <div className="flex flex-1 flex-col gap-1">
-                        <DialogTitle>Add workspace member</DialogTitle>
-                        <DialogDescription>
-                            Add a new team member to your team, allowing them to collaborate with you.
-                        </DialogDescription>
-                    </div>
-                </DialogHeader>
-
-                <DialogBody>
+                <Modal.Body>
                     <form className="flex flex-col gap-3" id="add-workspace-member-form" onSubmit={onSubmit}>
                         <TextField
                             $error={!!form.errors.email}
@@ -99,19 +89,21 @@ export function AddWorkspaceMemberForm({ workspace, availableRoles }: AddWorkspa
                             </Field>
                         ) : null}
                     </form>
-                </DialogBody>
+                </Modal.Body>
 
-                <DialogActions>
-                    <Button.Root
-                        $size="sm"
-                        $style="stroke"
-                        $type="neutral"
-                        className="w-full"
-                        disabled={form.processing}
-                        onClick={() => setAction(null)}
-                    >
-                        Cancel
-                    </Button.Root>
+                <Modal.Footer>
+                    <Modal.Close asChild>
+                        <Button.Root
+                            $size="sm"
+                            $style="stroke"
+                            $type="neutral"
+                            className="w-full"
+                            disabled={form.processing}
+                            onClick={() => setAction(null)}
+                        >
+                            Cancel
+                        </Button.Root>
+                    </Modal.Close>
                     <Button.Root
                         $size="sm"
                         className="w-full"
@@ -121,8 +113,8 @@ export function AddWorkspaceMemberForm({ workspace, availableRoles }: AddWorkspa
                     >
                         {form.processing ? "Sending..." : "Send invitation"}
                     </Button.Root>
-                </DialogActions>
-            </Dialog>
-        </>
+                </Modal.Footer>
+            </Modal.Content>
+        </Modal.Root>
     );
 }

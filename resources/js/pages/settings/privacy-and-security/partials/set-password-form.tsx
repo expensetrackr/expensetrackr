@@ -4,17 +4,9 @@ import { useRef } from "react";
 import LockPasswordIcon from "virtual:icons/ri/lock-password-line";
 
 import { ActionSection } from "#/components/action-section.tsx";
-import {
-    Dialog,
-    DialogActions,
-    DialogBody,
-    DialogDescription,
-    DialogHeader,
-    DialogIcon,
-    DialogTitle,
-} from "#/components/dialog.tsx";
 import { TextField } from "#/components/form/text-field.tsx";
 import * as Button from "#/components/ui/button.tsx";
+import * as Modal from "#/components/ui/modal.tsx";
 import { Action } from "#/utils/action.ts";
 
 export function SetPasswordForm() {
@@ -47,26 +39,28 @@ export function SetPasswordForm() {
     return (
         <ActionSection
             action={
-                <>
-                    <Button.Root $style="stroke" $type="neutral" onClick={() => setAction(Action.UserPasswordCreate)}>
-                        Set password
-                    </Button.Root>
+                <Modal.Root
+                    onOpenChange={(open) => setAction(open ? Action.UserPasswordCreate : null)}
+                    open={action === Action.UserPasswordCreate}
+                >
+                    <Modal.Trigger asChild>
+                        <Button.Root
+                            $style="stroke"
+                            $type="neutral"
+                            onClick={() => setAction(Action.UserPasswordCreate)}
+                        >
+                            Set password
+                        </Button.Root>
+                    </Modal.Trigger>
 
-                    <Dialog onClose={() => setAction(null)} open={action === Action.UserPasswordCreate}>
-                        <DialogHeader>
-                            <DialogIcon>
-                                <LockPasswordIcon className="size-6 text-(--icon-sub-600)" />
-                            </DialogIcon>
+                    <Modal.Content className="max-w-[440px]">
+                        <Modal.Header
+                            description="Create a password for enhanced account security."
+                            icon={LockPasswordIcon}
+                            title="Set password"
+                        />
 
-                            <div className="flex flex-1 flex-col gap-1">
-                                <DialogTitle>Update password</DialogTitle>
-                                <DialogDescription>
-                                    Update your password to ensure your account remains secure.
-                                </DialogDescription>
-                            </div>
-                        </DialogHeader>
-
-                        <DialogBody>
+                        <Modal.Body>
                             <form className="flex flex-col gap-3" id="set-password-form" onSubmit={onSubmit}>
                                 <TextField
                                     $error={!!errors.password}
@@ -92,19 +86,21 @@ export function SetPasswordForm() {
                                     value={data.password_confirmation}
                                 />
                             </form>
-                        </DialogBody>
+                        </Modal.Body>
 
-                        <DialogActions>
-                            <Button.Root
-                                $size="sm"
-                                $style="stroke"
-                                $type="neutral"
-                                className="w-full"
-                                disabled={form.processing}
-                                onClick={() => setAction(null)}
-                            >
-                                Cancel
-                            </Button.Root>
+                        <Modal.Footer>
+                            <Modal.Close asChild>
+                                <Button.Root
+                                    $size="sm"
+                                    $style="stroke"
+                                    $type="neutral"
+                                    className="w-full"
+                                    disabled={form.processing}
+                                    onClick={() => setAction(null)}
+                                >
+                                    Cancel
+                                </Button.Root>
+                            </Modal.Close>
                             <Button.Root
                                 $size="sm"
                                 className="w-full"
@@ -114,9 +110,9 @@ export function SetPasswordForm() {
                             >
                                 {form.processing ? "Saving..." : "Save"}
                             </Button.Root>
-                        </DialogActions>
-                    </Dialog>
-                </>
+                        </Modal.Footer>
+                    </Modal.Content>
+                </Modal.Root>
             }
             description="Create a password for enhanced account security."
             title="Set password"
