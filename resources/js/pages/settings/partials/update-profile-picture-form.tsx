@@ -4,9 +4,9 @@ import DeleteBinIcon from "virtual:icons/ri/delete-bin-line";
 import ImageEditIcon from "virtual:icons/ri/image-edit-line";
 import PencilIcon from "virtual:icons/ri/pencil-line";
 
-import { Avatar } from "#/components/avatar.tsx";
 import { Dropdown, DropdownButton, DropdownItem, DropdownMenu } from "#/components/dropdown.tsx";
 import { FormSection } from "#/components/form-section.tsx";
+import * as Avatar from "#/components/ui/avatar.tsx";
 import * as Hint from "#/components/ui/hint.tsx";
 import * as Label from "#/components/ui/label.tsx";
 import { type InertiaSharedProps } from "#/types/index.ts";
@@ -85,15 +85,9 @@ export function UpdateProfilePictureForm() {
                     <div className="flex flex-col gap-5">
                         <div className="flex items-center gap-5">
                             <div className="relative size-40">
-                                <Avatar
-                                    alt={user?.name}
-                                    className="size-40"
-                                    imageProps={{
-                                        className: "size-40 object-top object-cover",
-                                    }}
-                                    src={photoPreview || user?.profile_photo_url}
-                                    user={user}
-                                />
+                                <Avatar.Root>
+                                    <Avatar.Image alt={user?.name} src={photoPreview || user?.profile_photo_url} />
+                                </Avatar.Root>
 
                                 <Dropdown>
                                     <DropdownButton

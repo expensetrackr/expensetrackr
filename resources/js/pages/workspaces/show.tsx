@@ -1,6 +1,7 @@
 import { Head } from "@inertiajs/react";
 import PlanetIcon from "virtual:icons/ri/planet-line";
 
+import { Header } from "#/components/header.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
 import { SettingsLayout } from "#/layouts/settings-layout.tsx";
 import { WorkspaceMemberInvitations } from "#/pages/workspaces/partials/workspace-member-invitations.tsx";
@@ -38,29 +39,42 @@ export default function WorkspacesShow({
 }: InertiaSharedProps<WorkspacesShowProps>) {
     return (
         <>
-            <Divider.Root />
+            <div className="px-4 lg:px-8">
+                <Divider.Root />
+            </div>
 
-            <UpdateWorkspaceNameForm permissions={permissions} workspace={workspace} />
+            <div className="flex w-full flex-col gap-5 px-4 py-6 lg:px-8">
+                <UpdateWorkspaceNameForm permissions={permissions} workspace={workspace} />
 
-            <Divider.Root />
+                <Divider.Root $type="line-spacing" />
 
-            <WorkspaceMemberManager availableRoles={availableRoles} permissions={permissions} workspace={workspace} />
+                <WorkspaceMemberManager
+                    availableRoles={availableRoles}
+                    permissions={permissions}
+                    workspace={workspace}
+                />
 
-            <Divider.Root />
+                <Divider.Root $type="line-spacing" />
 
-            <WorkspaceMemberInvitations permissions={permissions} workspace={workspace} />
+                <WorkspaceMemberInvitations permissions={permissions} workspace={workspace} />
+            </div>
         </>
     );
 }
 
 WorkspacesShow.layout = (page: React.ReactNode & { props: InertiaSharedProps<WorkspacesShowProps> }) => (
-    <SettingsLayout
-        {...page.props}
-        description="Customize and edit essential workspace details."
-        icon={PlanetIcon}
-        title="Workspace settings"
-    >
+    <SettingsLayout {...page.props}>
         <Head title="Workspace settings" />
+
+        <Header
+            description="Customize and edit essential workspace details."
+            icon={
+                <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-(--bg-white-0) ring-1 shadow-xs ring-(--stroke-soft-200) ring-inset">
+                    <PlanetIcon className="size-6 text-(--text-sub-600)" />
+                </div>
+            }
+            title="Workspace settings"
+        />
 
         {page}
     </SettingsLayout>

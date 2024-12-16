@@ -5,8 +5,6 @@ import TextboxDuotone from "virtual:icons/ph/textbox-duotone";
 import ListSettings from "virtual:icons/ri/list-settings-fill";
 import MoneyDollarCircleFillIcon from "virtual:icons/ri/money-dollar-circle-fill";
 
-import { SidebarLayout } from "#/components/sidebar-layout.tsx";
-import { CreateAccountSidebar } from "#/layouts/partials/create-account-sidebar.tsx";
 import { BalanceStep } from "#/pages/accounts/create/partials/balance-step.tsx";
 import { Card } from "#/pages/accounts/create/partials/card.tsx";
 import { TypeStep, type TypeStepValues } from "#/pages/accounts/create/partials/type-step.tsx";
@@ -48,12 +46,7 @@ export default function CreateAccountPage({ currencies }: CreateAccountPageProps
 
     return (
         <Scoped>
-            <SidebarLayout
-                contentChildrenClassName="relative lg:shadow-none lg:ring-0"
-                contentClassName="lg:pt-0 lg:pr-0"
-                sidebar={<CreateAccountSidebar stepper={stepper} />}
-                sidebarClassName="lg:pl-2 lg:py-2"
-            >
+            <>
                 <Head title="Create account" />
 
                 <svg
@@ -125,7 +118,7 @@ export default function CreateAccountPage({ currencies }: CreateAccountPageProps
                         })}
                     </form>
                 </FormProvider>
-            </SidebarLayout>
+            </>
         </Scoped>
     );
 }

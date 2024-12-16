@@ -70,7 +70,7 @@ export const compactButtonVariants = tv({
                 root: "rounded-full",
             },
             false: {
-                root: "rounded-md",
+                root: "rounded-6",
             },
         },
     },
@@ -84,47 +84,47 @@ export const compactButtonVariants = tv({
 type CompactButtonSharedProps = Omit<VariantProps<typeof compactButtonVariants>, "fullRadius">;
 
 type CompactButtonProps = VariantProps<typeof compactButtonVariants> &
-    React.ButtonHTMLAttributes<HTMLButtonElement> & {
+    React.ComponentPropsWithRef<"button"> & {
         asChild?: boolean;
     };
 
-const CompactButtonRoot = React.forwardRef<HTMLButtonElement, CompactButtonProps>(
-    ({ asChild, $style, $size, $fullRadius, children, className, ...rest }, forwardedRef) => {
-        const uniqueId = React.useId();
-        const Component = asChild ? Slot : "button";
-        const { root } = compactButtonVariants({ $style, $size, $fullRadius });
+function CompactButtonRoot({ asChild, $style, $size, $fullRadius, children, className, ...rest }: CompactButtonProps) {
+    const uniqueId = React.useId();
+    const Component = asChild ? Slot : "button";
+    const { root } = compactButtonVariants({ $style, $size, $fullRadius });
 
-        const sharedProps: CompactButtonSharedProps = {
-            $style,
-            $size,
-        };
+    const sharedProps: CompactButtonSharedProps = {
+        $style,
+        $size,
+        $fullRadius,
+    };
 
-        const extendedChildren = recursiveCloneChildren(
-            children as React.ReactElement[],
-            sharedProps,
-            [COMPACT_BUTTON_ICON_NAME],
-            uniqueId,
-            asChild,
-        );
+    const extendedChildren = recursiveCloneChildren(
+        children as React.ReactElement[],
+        sharedProps,
+        [COMPACT_BUTTON_ICON_NAME],
+        uniqueId,
+        asChild,
+    );
 
-        return (
-            <Component className={root({ class: className })} ref={forwardedRef} {...rest}>
-                {extendedChildren}
-            </Component>
-        );
-    },
-);
+    return (
+        <Component className={root({ class: className })} {...rest}>
+            {extendedChildren}
+        </Component>
+    );
+}
 CompactButtonRoot.displayName = COMPACT_BUTTON_ROOT_NAME;
 
 function CompactButtonIcon<T extends React.ElementType>({
     $style,
     $size,
+    $fullRadius,
     as,
     className,
     ...rest
 }: PolymorphicComponentProps<T, CompactButtonSharedProps>) {
     const Component = as || "div";
-    const { icon } = compactButtonVariants({ $style, $size });
+    const { icon } = compactButtonVariants({ $style, $size, $fullRadius });
 
     return <Component className={icon({ class: className })} {...rest} />;
 }

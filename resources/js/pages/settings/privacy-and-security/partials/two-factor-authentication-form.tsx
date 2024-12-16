@@ -182,7 +182,7 @@ export function TwoFactorAuthenticationForm({ requiresConfirmation }: TwoFactorA
                                         />
                                     </div>
 
-                                    <div className="mx-auto flex h-3 w-full max-w-48 flex-row items-center gap-2.5 self-stretch text-subheading-2xs whitespace-nowrap text-(--text-soft-400) uppercase before:h-px before:w-full before:flex-grow before:bg-(--stroke-soft-200) after:h-px after:w-full after:flex-grow after:bg-(--stroke-soft-200)">
+                                    <div className="mx-auto flex h-3 w-full max-w-48 flex-row items-center gap-2.5 self-stretch text-subheading-2xs whitespace-nowrap text-(--text-soft-400) uppercase before:h-px before:w-full before:grow before:bg-(--stroke-soft-200) after:h-px after:w-full after:grow after:bg-(--stroke-soft-200)">
                                         or
                                     </div>
 

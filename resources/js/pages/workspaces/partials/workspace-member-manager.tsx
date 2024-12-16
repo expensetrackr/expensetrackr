@@ -9,7 +9,6 @@ import UserMinusIcon from "virtual:icons/ri/user-minus-line";
 import { route } from "ziggy-js";
 
 import { ActionSection } from "#/components/action-section.tsx";
-import { Avatar } from "#/components/avatar.tsx";
 import {
     Dialog,
     DialogActions,
@@ -23,6 +22,7 @@ import { Dropdown, DropdownButton, DropdownItem, DropdownLabel, DropdownMenu } f
 import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
 import { Select } from "#/components/form/select.tsx";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "#/components/table.tsx";
+import * as Avatar from "#/components/ui/avatar.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import { useUser } from "#/hooks/use-user.ts";
 import {
@@ -82,12 +82,9 @@ export function WorkspaceMemberManager({ workspace, availableRoles, permissions 
                             <TableRow key={user.id}>
                                 <TableCell>
                                     <div className="inline-flex items-center gap-3">
-                                        <Avatar
-                                            alt={user.name}
-                                            className="size-8"
-                                            src={user.profile_photo_url}
-                                            user={user}
-                                        />
+                                        <Avatar.Root $size="32" className="size-8">
+                                            <Avatar.Image alt={user.name} src={user.profile_photo_url} />
+                                        </Avatar.Root>
                                         <p className="text-(--text-strong-950)">{user.name}</p>
                                     </div>
                                 </TableCell>

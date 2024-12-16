@@ -6,8 +6,9 @@ import { route } from "ziggy-js";
 import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "#/components/form/input-otp.tsx";
 import { TextField } from "#/components/form/text-field.tsx";
-import { StyledLink } from "#/components/link.tsx";
+import { Link } from "#/components/link.tsx";
 import * as Button from "#/components/ui/button.tsx";
+import * as LinkButton from "#/components/ui/link-button.tsx";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";
 
 export default function TwoFactorChallenge() {
@@ -109,9 +110,11 @@ export default function TwoFactorChallenge() {
                 )}
 
                 <div className="flex items-center justify-end gap-3 py-2">
-                    <StyledLink as="button" href={route("two-factor.login")} onClick={toggleRecovery}>
-                        {recovery ? "Use an authentication code" : "Use a recovery code"}
-                    </StyledLink>
+                    <LinkButton.Root $style="black" onClick={toggleRecovery}>
+                        <Link href={route("two-factor.login")}>
+                            {recovery ? "Use an authentication code" : "Use a recovery code"}
+                        </Link>
+                    </LinkButton.Root>
                 </div>
 
                 <Button.Root disabled={processing} type="submit">

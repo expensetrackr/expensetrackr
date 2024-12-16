@@ -1,10 +1,5 @@
-import { Head, Link } from "@inertiajs/react";
-import AddIcon from "virtual:icons/ri/add-line";
-import WalletIcon from "virtual:icons/ri/wallet-line";
-import { route } from "ziggy-js";
+import { Head } from "@inertiajs/react";
 
-import { PageHeader } from "#/components/page-header.tsx";
-import * as Button from "#/components/ui/button.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
 import { AppLayout } from "#/layouts/app-layout.tsx";
 import { type InertiaSharedProps } from "#/types/index.ts";
@@ -13,7 +8,7 @@ export default function AccountsPage() {
     return (
         <>
             <div className="flex flex-col gap-5">
-                <PageHeader className="-mb-5">
+                {/* <PageHeader className="-mb-5">
                     <PageHeader.Content>
                         <PageHeader.Icon>
                             <WalletIcon className="size-6" />
@@ -33,7 +28,7 @@ export default function AccountsPage() {
                             </Button.Root>
                         </PageHeader.Actions>
                     </PageHeader.Content>
-                </PageHeader>
+                </PageHeader> */}
 
                 <Divider.Root />
             </div>
