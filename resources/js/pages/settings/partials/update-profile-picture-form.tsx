@@ -4,9 +4,9 @@ import DeleteBinIcon from "virtual:icons/ri/delete-bin-line";
 import ImageEditIcon from "virtual:icons/ri/image-edit-line";
 import PencilIcon from "virtual:icons/ri/pencil-line";
 
-import { Dropdown, DropdownButton, DropdownItem, DropdownMenu } from "#/components/dropdown.tsx";
 import { FormSection } from "#/components/form-section.tsx";
 import * as Avatar from "#/components/ui/avatar.tsx";
+import * as Dropdown from "#/components/ui/dropdown.tsx";
 import * as Hint from "#/components/ui/hint.tsx";
 import * as Label from "#/components/ui/label.tsx";
 import { type InertiaSharedProps } from "#/types/index.ts";
@@ -89,34 +89,34 @@ export function UpdateProfilePictureForm() {
                                     <Avatar.Image alt={user?.name} src={photoPreview || user?.profile_photo_url} />
                                 </Avatar.Root>
 
-                                <Dropdown>
-                                    <DropdownButton
-                                        $size="xs"
-                                        $style="stroke"
-                                        $type="neutral"
+                                <Dropdown.Root>
+                                    <Dropdown.Trigger
+                                        // $size="xs"
+                                        // $style="stroke"
+                                        // $type="neutral"
                                         className="absolute bottom-2 left-2 px-2 py-1"
                                     >
                                         <PencilIcon />
                                         <span>Edit</span>
-                                    </DropdownButton>
+                                    </Dropdown.Trigger>
 
-                                    <DropdownMenu anchor="bottom end" className="min-w-32">
-                                        <DropdownItem
+                                    <Dropdown.Content className="min-w-32">
+                                        <Dropdown.Item
                                             onClick={() => photoRef.current?.click()}
                                             onFocus={() => photoRef.current?.focus()}
                                         >
                                             <ImageEditIcon />
                                             <span>Change photo</span>
-                                        </DropdownItem>
+                                        </Dropdown.Item>
 
                                         {user?.profile_photo_path ? (
-                                            <DropdownItem onClick={deletePhoto}>
+                                            <Dropdown.Item onClick={deletePhoto}>
                                                 <DeleteBinIcon />
                                                 <span>Remove photo</span>
-                                            </DropdownItem>
+                                            </Dropdown.Item>
                                         ) : null}
-                                    </DropdownMenu>
-                                </Dropdown>
+                                    </Dropdown.Content>
+                                </Dropdown.Root>
                             </div>
                         </div>
                     </div>

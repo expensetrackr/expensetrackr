@@ -18,12 +18,12 @@ import {
     DialogIcon,
     DialogTitle,
 } from "#/components/dialog.tsx";
-import { Dropdown, DropdownButton, DropdownItem, DropdownLabel, DropdownMenu } from "#/components/dropdown.tsx";
 import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
 import { Select } from "#/components/form/select.tsx";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "#/components/table.tsx";
 import * as Avatar from "#/components/ui/avatar.tsx";
 import * as Button from "#/components/ui/button.tsx";
+import * as Dropdown from "#/components/ui/dropdown.tsx";
 import { useUser } from "#/hooks/use-user.ts";
 import {
     type Role,
@@ -96,52 +96,49 @@ export function WorkspaceMemberManager({ workspace, availableRoles, permissions 
                                 currentUser.id === user.id ? (
                                     <TableCell>
                                         <div className="-mx-3 -my-1.5 sm:-mx-2.5">
-                                            <Dropdown>
-                                                <DropdownButton
-                                                    $size="xs"
-                                                    $style="ghost"
-                                                    $type="neutral"
-                                                    aria-label="Actions"
-                                                >
-                                                    <More2Icon className="size-5" />
-                                                </DropdownButton>
-                                                <DropdownMenu anchor="bottom end">
+                                            <Dropdown.Root>
+                                                <Dropdown.Trigger aria-label="Actions" asChild>
+                                                    <Button.Root $size="xs" $style="ghost" $type="neutral">
+                                                        <Button.Icon as={More2Icon} />
+                                                    </Button.Root>
+                                                </Dropdown.Trigger>
+                                                <Dropdown.Content>
                                                     {permissions.canAddWorkspaceMembers && availableRoles.length > 0 ? (
-                                                        <DropdownItem
+                                                        <Dropdown.Item
                                                             onClick={() =>
                                                                 setAction(getAction("WorkspaceMembersUpdate", user.id))
                                                             }
                                                         >
-                                                            <ShieldUserIcon />
-                                                            <DropdownLabel>Update role</DropdownLabel>
-                                                        </DropdownItem>
+                                                            <Dropdown.ItemIcon as={ShieldUserIcon} />
+                                                            <Dropdown.Label>Update role</Dropdown.Label>
+                                                        </Dropdown.Item>
                                                     ) : null}
 
                                                     {permissions.canRemoveWorkspaceMembers ? (
-                                                        <DropdownItem
+                                                        <Dropdown.Item
                                                             className="text-state-error-base data-focus:bg-(--color-red-alpha-10) [&>[data-slot=icon]]:text-state-error-base"
                                                             onClick={() =>
                                                                 setAction(getAction("WorkspaceMembersDestroy", user.id))
                                                             }
                                                         >
-                                                            <UserMinusIcon />
-                                                            <DropdownLabel>Remove member</DropdownLabel>
-                                                        </DropdownItem>
+                                                            <Dropdown.ItemIcon as={UserMinusIcon} />
+                                                            <Dropdown.Label>Remove member</Dropdown.Label>
+                                                        </Dropdown.Item>
                                                     ) : null}
 
                                                     {currentUser.id === user.id ? (
-                                                        <DropdownItem
+                                                        <Dropdown.Item
                                                             className="text-state-error-base data-focus:bg-(--color-red-alpha-10) [&>[data-slot=icon]]:text-state-error-base"
                                                             onClick={() =>
                                                                 setAction(getAction("WorkspaceMembersDestroy", user.id))
                                                             }
                                                         >
-                                                            <LogoutCircleRIcon />
-                                                            <DropdownLabel>Leave workspace</DropdownLabel>
-                                                        </DropdownItem>
+                                                            <Dropdown.ItemIcon as={LogoutCircleRIcon} />
+                                                            <Dropdown.Label>Leave workspace</Dropdown.Label>
+                                                        </Dropdown.Item>
                                                     ) : null}
-                                                </DropdownMenu>
-                                            </Dropdown>
+                                                </Dropdown.Content>
+                                            </Dropdown.Root>
 
                                             {permissions.canAddWorkspaceMembers && availableRoles.length > 0 ? (
                                                 <ManageRoleDialog
