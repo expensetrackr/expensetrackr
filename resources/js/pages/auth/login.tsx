@@ -4,8 +4,8 @@ import { toast } from "sonner";
 import { route } from "ziggy-js";
 
 import { Checkbox } from "#/components/form/checkbox.tsx";
-import { TextField } from "#/components/form/text-field.tsx";
 import { Socialstream } from "#/components/socialstream.tsx";
+import { TextField } from "#/components/text-field.tsx";
 import * as FancyButton from "#/components/ui/fancy-button.tsx";
 import * as LinkButton from "#/components/ui/link-button.tsx";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";

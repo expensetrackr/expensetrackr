@@ -5,8 +5,8 @@ import { route } from "ziggy-js";
 
 import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "#/components/form/input-otp.tsx";
-import { TextField } from "#/components/form/text-field.tsx";
 import { Link } from "#/components/link.tsx";
+import { TextField } from "#/components/text-field.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import * as LinkButton from "#/components/ui/link-button.tsx";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";

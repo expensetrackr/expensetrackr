@@ -4,8 +4,8 @@ import { useCallback, useEffect } from "react";
 import { toast } from "sonner";
 import { route } from "ziggy-js";
 
-import { TextField } from "#/components/form/text-field.tsx";
 import { FormSection } from "#/components/form-section.tsx";
+import { TextField } from "#/components/text-field.tsx";
 import { type User, type Workspace, type WorkspacePermissions } from "#/types/index.ts";
 
 interface UpdateWorkspaceNameFormProps {

@@ -9,8 +9,7 @@ import UserMinusIcon from "virtual:icons/ri/user-minus-line";
 import { route } from "ziggy-js";
 
 import { ActionSection } from "#/components/action-section.tsx";
-import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
-import { Select } from "#/components/form/select.tsx";
+import { Select } from "#/components/select.tsx";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "#/components/table.tsx";
 import * as Avatar from "#/components/ui/avatar.tsx";
 import * as Button from "#/components/ui/button.tsx";
@@ -216,22 +215,22 @@ function ManageRoleDialog({
 
                 <Modal.Body>
                     <form id={`update-workspace-members-role-${user.id}-form`} onSubmit={onSubmit}>
-                        <Field>
-                            <Label>Role</Label>
+                        {availableRoles.length > 0 ? (
                             <Select
-                                invalid={!!form.errors.role}
+                                error={form.errors.role}
+                                id="role"
+                                label="Role"
                                 name="role"
-                                onChange={(e) => form.setData("role", e.target.value)}
+                                onValueChange={(value) => form.setData("role", value)}
+                                options={availableRoles.map((role) => ({
+                                    value: role.name,
+                                    label: role.name,
+                                }))}
+                                placeholder="Select a role..."
+                                position="item-aligned"
                                 value={form.data.role}
-                            >
-                                {availableRoles.map((role) => (
-                                    <option key={role.name} value={role.name}>
-                                        {role.name}
-                                    </option>
-                                ))}
-                            </Select>
-                            {form.errors.role && <Hint invalid>{form.errors.role}</Hint>}
-                        </Field>
+                            />
+                        ) : null}
                     </form>
                 </Modal.Body>
 

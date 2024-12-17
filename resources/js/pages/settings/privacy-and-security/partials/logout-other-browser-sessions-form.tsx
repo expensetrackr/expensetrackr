@@ -6,8 +6,8 @@ import FirefoxIcon from "virtual:icons/ri/firefox-line";
 import LogoutCircleRIcon from "virtual:icons/ri/logout-circle-r-line";
 
 import { ActionSection } from "#/components/action-section.tsx";
-import { TextField } from "#/components/form/text-field.tsx";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "#/components/table.tsx";
+import { TextField } from "#/components/text-field.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import * as Modal from "#/components/ui/modal.tsx";
 import { type Session } from "#/types/index.ts";

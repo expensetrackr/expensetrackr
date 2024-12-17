@@ -2,7 +2,7 @@ import { Head, useForm } from "@inertiajs/react";
 import { useEffect } from "react";
 import { toast } from "sonner";
 
-import { TextField } from "#/components/form/text-field.tsx";
+import { TextField } from "#/components/text-field.tsx";
 import * as FancyButton from "#/components/ui/fancy-button.tsx";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";
 

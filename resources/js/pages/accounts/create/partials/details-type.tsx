@@ -1,10 +1,8 @@
 import { getInputProps, getTextareaProps, type useForm, useInputControl } from "@conform-to/react";
 
-import { Field } from "#/components/form/fieldset.tsx";
-import { Listbox, ListboxLabel, ListboxOption } from "#/components/form/listbox.tsx";
-import { TextField } from "#/components/form/text-field.tsx";
+import { Select } from "#/components/select.tsx";
+import { TextField } from "#/components/text-field.tsx";
 import { Textarea } from "#/components/textarea.tsx";
-import * as Hint from "#/components/ui/hint.tsx";
 import * as Label from "#/components/ui/label.tsx";
 import { accountTypeEnum, depositorySubtypeEnum, investmentSubtypeEnum } from "#/schemas/account.ts";
 import { useCreateAccountWizardStore } from "#/store/create-account-wizard.ts";
@@ -48,27 +46,21 @@ export function DetailsStep({ fields }: DetailsStepProps) {
             ></Textarea>
 
             {type && subtypeOptions[type as keyof typeof subtypeOptions] && (
-                <Field>
-                    <Label.Root>Subtype</Label.Root>
-                    <Listbox
-                        defaultValue={fields.subtype.initialValue}
-                        name={fields.subtype.name}
-                        onChange={subtypeControl.change}
-                        placeholder="Select a subtype"
-                    >
-                        {subtypeOptions[type as keyof typeof subtypeOptions].map((subtype) => (
-                            <ListboxOption key={subtype} value={subtype}>
-                                <ListboxLabel>{subtype}</ListboxLabel>
-                            </ListboxOption>
-                        ))}
-                    </Listbox>
-                    {fields.subtype.errors && (
-                        <Hint.Root $error>
-                            <Hint.Icon $error />
-                            {fields.subtype.errors}
-                        </Hint.Root>
-                    )}
-                </Field>
+                <Select
+                    defaultValue={fields.subtype.initialValue}
+                    error={fields.subtype.errors}
+                    id={fields.subtype.id}
+                    label="Subtype"
+                    name={fields.subtype.name}
+                    onValueChange={subtypeControl.change}
+                    options={subtypeOptions[type as keyof typeof subtypeOptions].map((subtype) => ({
+                        label: subtype,
+                        value: subtype,
+                    }))}
+                    placeholder="Select a subtype"
+                    position="item-aligned"
+                    value={subtypeControl.value}
+                />
             )}
         </>
     );

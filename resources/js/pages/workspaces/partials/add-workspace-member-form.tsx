@@ -3,9 +3,8 @@ import { parseAsStringEnum, useQueryState } from "nuqs";
 import TeamIcon from "virtual:icons/ri/team-line";
 import { route } from "ziggy-js";
 
-import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
-import { Select } from "#/components/form/select.tsx";
-import { TextField } from "#/components/form/text-field.tsx";
+import { Select } from "#/components/select.tsx";
+import { TextField } from "#/components/text-field.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import * as Modal from "#/components/ui/modal.tsx";
 import { type Role, type Workspace } from "#/types/index.ts";
@@ -70,23 +69,20 @@ export function AddWorkspaceMemberForm({ workspace, availableRoles }: AddWorkspa
                         />
 
                         {availableRoles.length > 0 ? (
-                            <Field>
-                                <Label>Role</Label>
-                                <Select
-                                    invalid={!!form.errors.role}
-                                    name="role"
-                                    onChange={(e) => form.setData("role", e.target.value)}
-                                    value={form.data.role}
-                                >
-                                    {availableRoles.map((role) => (
-                                        <option key={role.name} value={role.name}>
-                                            {role.name}
-                                        </option>
-                                    ))}
-                                </Select>
-
-                                {form.errors.role && <Hint invalid>{form.errors.role}</Hint>}
-                            </Field>
+                            <Select
+                                error={form.errors.role}
+                                id="role"
+                                label="Role"
+                                name="role"
+                                onValueChange={(value) => form.setData("role", value)}
+                                options={availableRoles.map((role) => ({
+                                    value: role.name,
+                                    label: role.name,
+                                }))}
+                                placeholder="Select a role..."
+                                position="item-aligned"
+                                value={form.data.role}
+                            />
                         ) : null}
                     </form>
                 </Modal.Body>
