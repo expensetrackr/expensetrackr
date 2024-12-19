@@ -45,7 +45,7 @@
         "react": "19.0.0",
         "react-dom": "19.0.0",
         "react-hotkeys-hook": "4.6.1",
-        "react-scan": "0.0.50",
+        "react-scan": "0.0.51",
         "react-twc": "1.4.2",
         "sonner": "1.7.1",
         "tailwind-merge": "2.5.5",
@@ -91,6 +91,6 @@
         "tailwindcss-aria-attributes": "2.0.1",
         "typescript": "5.7.2",
         "unplugin-icons": "0.22.0",
-        "vite": "6.0.3"
+        "vite": "6.0.4"
     }
 }
