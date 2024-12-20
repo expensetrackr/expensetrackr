@@ -10,7 +10,6 @@
     "editor.formatOnSave": true,
     "eslint.enable": true,
     "eslint.useFlatConfig": true,
-    "phpstan.configFile": "phpstan.neon",
     "tailwindCSS.classAttributes": [
         "class",
         "className",
