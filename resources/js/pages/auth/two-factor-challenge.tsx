@@ -1,13 +1,13 @@
 import { Head, useForm } from "@inertiajs/react";
-import { REGEXP_ONLY_DIGITS } from "input-otp";
 import { useState } from "react";
 import { route } from "ziggy-js";
 
-import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
-import { InputOTP, InputOTPGroup, InputOTPSlot } from "#/components/form/input-otp.tsx";
 import { Link } from "#/components/link.tsx";
 import { TextField } from "#/components/text-field.tsx";
 import * as Button from "#/components/ui/button.tsx";
+import * as DigitInput from "#/components/ui/digit-input.tsx";
+import * as Hint from "#/components/ui/hint.tsx";
+import * as Label from "#/components/ui/label.tsx";
 import * as LinkButton from "#/components/ui/link-button.tsx";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";
 
@@ -61,52 +61,22 @@ export default function TwoFactorChallenge() {
                         value={data.recovery_code}
                     />
                 ) : (
-                    <Field>
-                        <Label htmlFor="code">Code</Label>
-                        <InputOTP
-                            autoComplete="one-time-code"
-                            autoFocus
-                            id="code"
-                            maxLength={6}
+                    <div className="flex flex-col gap-1">
+                        <Label.Root htmlFor="code">Code</Label.Root>
+                        <DigitInput.Root
+                            $error={!!errors.code}
+                            numInputs={6}
                             onChange={(value) => setData("code", value)}
-                            pattern={REGEXP_ONLY_DIGITS}
+                            shouldAutoFocus
                             value={data.code}
-                        >
-                            <InputOTPGroup className="w-full gap-1">
-                                <InputOTPSlot
-                                    className="rounded-10 border after:rounded-[9px]"
-                                    index={0}
-                                    invalid={!!errors.code}
-                                />
-                                <InputOTPSlot
-                                    className="rounded-10 border after:rounded-[9px]"
-                                    index={1}
-                                    invalid={!!errors.code}
-                                />
-                                <InputOTPSlot
-                                    className="rounded-10 border after:rounded-[9px]"
-                                    index={2}
-                                    invalid={!!errors.code}
-                                />
-                                <InputOTPSlot
-                                    className="rounded-10 border after:rounded-[9px]"
-                                    index={3}
-                                    invalid={!!errors.code}
-                                />
-                                <InputOTPSlot
-                                    className="rounded-10 border after:rounded-[9px]"
-                                    index={4}
-                                    invalid={!!errors.code}
-                                />
-                                <InputOTPSlot
-                                    className="rounded-10 border after:rounded-[9px]"
-                                    index={5}
-                                    invalid={!!errors.code}
-                                />
-                            </InputOTPGroup>
-                        </InputOTP>
-                        {errors.code && <Hint invalid>{errors.code}</Hint>}
-                    </Field>
+                        />
+                        {errors.code && (
+                            <Hint.Root $error>
+                                <Hint.Icon />
+                                {errors.code}
+                            </Hint.Root>
+                        )}
+                    </div>
                 )}
 
                 <div className="flex items-center justify-end gap-3 py-2">
