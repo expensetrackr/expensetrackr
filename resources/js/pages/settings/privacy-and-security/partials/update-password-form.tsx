@@ -4,18 +4,9 @@ import { useRef } from "react";
 import LockPasswordIcon from "virtual:icons/ri/lock-password-line";
 
 import { ActionSection } from "#/components/action-section.tsx";
-import { Button } from "#/components/button.tsx";
-import {
-    Dialog,
-    DialogActions,
-    DialogBody,
-    DialogDescription,
-    DialogHeader,
-    DialogIcon,
-    DialogTitle,
-} from "#/components/dialog.tsx";
-import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
-import { Input } from "#/components/form/input.tsx";
+import { TextField } from "#/components/text-field.tsx";
+import * as Button from "#/components/ui/button.tsx";
+import * as Modal from "#/components/ui/modal.tsx";
 import { Action } from "#/utils/action.ts";
 
 export function UpdatePasswordForm() {
@@ -55,82 +46,84 @@ export function UpdatePasswordForm() {
     return (
         <ActionSection
             action={
-                <>
-                    <Button $color="neutral" $variant="stroke" onClick={() => setAction(Action.UserPasswordUpdate)}>
-                        Update password
-                    </Button>
-                    <Dialog onClose={() => setAction(null)} open={action === Action.UserPasswordUpdate}>
-                        <DialogHeader>
-                            <DialogIcon>
-                                <LockPasswordIcon className="size-6 text-(--icon-sub-600)" />
-                            </DialogIcon>
+                <Modal.Root
+                    onOpenChange={(open) => setAction(open ? Action.UserPasswordUpdate : null)}
+                    open={action === Action.UserPasswordUpdate}
+                >
+                    <Modal.Trigger asChild>
+                        <Button.Root
+                            $style="stroke"
+                            $type="neutral"
+                            onClick={() => setAction(Action.UserPasswordUpdate)}
+                        >
+                            Update password
+                        </Button.Root>
+                    </Modal.Trigger>
 
-                            <div className="flex flex-1 flex-col gap-1">
-                                <DialogTitle>Update password</DialogTitle>
-                                <DialogDescription>
-                                    Update your password to ensure your account remains secure.
-                                </DialogDescription>
-                            </div>
-                        </DialogHeader>
+                    <Modal.Content>
+                        <Modal.Header
+                            description="Update your password to ensure your account remains secure."
+                            icon={LockPasswordIcon}
+                            title="Update password"
+                        />
 
-                        <DialogBody>
+                        <Modal.Body>
                             <form className="flex flex-col gap-3" id="update-password-form" onSubmit={onSubmit}>
-                                <Field>
-                                    <Label>Current password</Label>
-                                    <Input
-                                        autoComplete="current-password"
-                                        autoFocus
-                                        invalid={!!errors.current_password}
-                                        name="current_password"
-                                        onChange={(e) => setData("current_password", e.target.value)}
-                                        placeholder="Enter your password"
-                                        ref={currentPasswordRef}
-                                        type="password"
-                                    />
-                                    {errors.current_password && <Hint invalid>{errors.current_password}</Hint>}
-                                </Field>
-                                <Field>
-                                    <Label>New password</Label>
-                                    <Input
-                                        autoComplete="new-password"
-                                        invalid={!!errors.password}
-                                        name="password"
-                                        onChange={(e) => setData("password", e.target.value)}
-                                        placeholder="8+ characters long, 1 capital letter"
-                                        ref={passwordRef}
-                                        type="password"
-                                    />
-                                    {errors.password && <Hint invalid>{errors.password}</Hint>}
-                                </Field>
-                                <Field>
-                                    <Label>Confirm password</Label>
-                                    <Input
-                                        autoComplete="new-password"
-                                        invalid={!!errors.password_confirmation}
-                                        name="password"
-                                        onChange={(e) => setData("password_confirmation", e.target.value)}
-                                        placeholder="Confirm your password"
-                                        type="password"
-                                    />
-                                    {errors.password_confirmation && (
-                                        <Hint invalid>{errors.password_confirmation}</Hint>
-                                    )}
-                                </Field>
-                            </form>
-                        </DialogBody>
+                                <TextField
+                                    $error={!!errors.current_password}
+                                    autoComplete="current-password"
+                                    autoFocus
+                                    hint={errors.current_password}
+                                    label="Current password"
+                                    name="current_password"
+                                    onChange={(e) => setData("current_password", e.target.value)}
+                                    placeholder="Enter your password"
+                                    type="password"
+                                    value={data.current_password}
+                                />
 
-                        <DialogActions>
-                            <Button
-                                $color="neutral"
-                                $size="sm"
-                                $variant="stroke"
-                                className="w-full"
-                                disabled={form.processing}
-                                onClick={() => setAction(null)}
-                            >
-                                Cancel
-                            </Button>
-                            <Button
+                                <TextField
+                                    $error={!!errors.password}
+                                    autoComplete="new-password"
+                                    autoFocus
+                                    hint={errors.password}
+                                    label="New password"
+                                    name="password"
+                                    onChange={(e) => setData("password", e.target.value)}
+                                    placeholder="8+ characters long, 1 capital letter"
+                                    type="password"
+                                    value={data.password}
+                                />
+
+                                <TextField
+                                    $error={!!errors.password_confirmation}
+                                    autoComplete="new-password"
+                                    autoFocus
+                                    hint={errors.password_confirmation}
+                                    label="Confirm password"
+                                    name="password"
+                                    onChange={(e) => setData("password_confirmation", e.target.value)}
+                                    placeholder="Confirm your password"
+                                    type="password"
+                                    value={data.password_confirmation}
+                                />
+                            </form>
+                        </Modal.Body>
+
+                        <Modal.Footer>
+                            <Modal.Close asChild>
+                                <Button.Root
+                                    $size="sm"
+                                    $style="stroke"
+                                    $type="neutral"
+                                    className="w-full"
+                                    disabled={form.processing}
+                                    onClick={() => setAction(null)}
+                                >
+                                    Cancel
+                                </Button.Root>
+                            </Modal.Close>
+                            <Button.Root
                                 $size="sm"
                                 className="w-full"
                                 disabled={form.processing}
@@ -138,10 +131,10 @@ export function UpdatePasswordForm() {
                                 type="submit"
                             >
                                 {form.processing ? "Updating..." : "Update"}
-                            </Button>
-                        </DialogActions>
-                    </Dialog>
-                </>
+                            </Button.Root>
+                        </Modal.Footer>
+                    </Modal.Content>
+                </Modal.Root>
             }
             description="Update password for enhanced account security."
             title="Update password"

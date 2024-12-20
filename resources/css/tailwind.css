@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@plugin "@tailwindcss/forms";
 @plugin "tailwindcss-animate";
 
 @variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
@@ -14,6 +13,12 @@
             "cv09" 1,
             "liga" 0,
             "calt" 0;
+
+        /* Prevent dragging */
+        -webkit-user-drag: none;
+        user-drag: none;
+        -webkit-app-region: no-drag;
+        app-region: no-drag;
     }
 
     body {
@@ -277,6 +282,16 @@
     --color-state-stable-light: var(--state-stable-light);
     --color-state-stable-lighter: var(--state-stable-lighter);
 
+    --color-social-apple: var(--social-apple);
+    --color-social-twitter: var(--social-twitter);
+    --color-social-github: var(--social-github);
+    --color-social-notion: var(--social-notion);
+    --color-social-tidal: var(--social-tidal);
+    --color-social-amazon: var(--social-amazon);
+    --color-social-zendesk: var(--social-zendesk);
+
+    --color-overlay: var(--overlay-gray);
+
     --text-*: initial;
 
     --text-h1: 3.5rem;
@@ -388,6 +403,15 @@
     --shadow-xs: 0 1px 2px 0 oklch(15.9% 0.0157 267deg / 3.14%);
     --shadow-sm: 0 2px 4px oklch(22.6% 0.00247 248deg / 3.92%);
     --shadow-md: 0 16px 32px -12px oklch(18.3% 0.0196 266deg / 10.2%);
+    --shadow-button-primary-focus: 0 0 0 2px var(--bg-white-0), 0 0 0 4px var(--color-brand-primary-alpha-10);
+    --shadow-button-important-focus: 0 0 0 2px var(--bg-white-0), 0 0 0 4px var(--color-neutral-alpha-16);
+    --shadow-button-error-focus: 0 0 0 2px var(--bg-white-0), 0 0 0 4px var(--color-red-alpha-10);
+    --shadow-fancy-buttons-neutral: 0 1px 2px 0 oklch(22.6% 0.00247 248deg / 47.8%),
+        0 0 0 1px oklch(26.7% 0.00473 248deg);
+    --shadow-fancy-buttons-primary: 0 1px 2px 0 oklch(18.3% 0.0196 266deg / 23.9%), 0 0 0 1px var(--color-primary);
+    --shadow-fancy-buttons-error: 0 1px 2px 0 oklch(18.3% 0.0196 266deg / 23.9%),
+        0 0 0 1px var(--color-state-error-base);
+    --shadow-fancy-buttons-stroke: 0 1px 3px 0 oklch(18.3% 0.0196 266deg / 12.2%), 0 0 0 1px var(--stroke-soft-200);
 
     --transition-timing-function-drawer: cubic-bezier(0.32, 0.72, 0, 1);
 

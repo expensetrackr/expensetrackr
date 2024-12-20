@@ -3,19 +3,10 @@ import { parseAsStringEnum, useQueryState } from "nuqs";
 import TeamIcon from "virtual:icons/ri/team-line";
 import { route } from "ziggy-js";
 
-import { Button } from "#/components/button.tsx";
-import {
-    Dialog,
-    DialogActions,
-    DialogBody,
-    DialogDescription,
-    DialogHeader,
-    DialogIcon,
-    DialogTitle,
-} from "#/components/dialog.tsx";
-import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
-import { Input } from "#/components/form/input.tsx";
-import { Select } from "#/components/form/select.tsx";
+import { Select } from "#/components/select.tsx";
+import { TextField } from "#/components/text-field.tsx";
+import * as Button from "#/components/ui/button.tsx";
+import * as Modal from "#/components/ui/modal.tsx";
 import { type Role, type Workspace } from "#/types/index.ts";
 import { Action } from "#/utils/action.ts";
 
@@ -28,7 +19,7 @@ export function AddWorkspaceMemberForm({ workspace, availableRoles }: AddWorkspa
     const [action, setAction] = useQueryState("action", parseAsStringEnum<Action>(Object.values(Action)));
     const form = useForm({
         email: "",
-        role: availableRoles[0]?.key,
+        role: availableRoles[0]?.name,
     });
 
     function onSubmit(e: React.FormEvent) {
@@ -45,75 +36,71 @@ export function AddWorkspaceMemberForm({ workspace, availableRoles }: AddWorkspa
     }
 
     return (
-        <>
-            <Button $size="sm" className="px-4" onClick={() => setAction(Action.WorkspaceMembersCreate)}>
-                Add workspace member
-            </Button>
+        <Modal.Root
+            onOpenChange={(open) => setAction(open ? Action.WorkspaceMembersCreate : null)}
+            open={action === Action.WorkspaceMembersCreate}
+        >
+            <Modal.Trigger asChild>
+                <Button.Root $size="sm" className="px-4" onClick={() => setAction(Action.WorkspaceMembersCreate)}>
+                    Add workspace member
+                </Button.Root>
+            </Modal.Trigger>
 
-            <Dialog onClose={() => setAction(null)} open={action === Action.WorkspaceMembersCreate}>
-                <DialogHeader>
-                    <DialogIcon>
-                        <TeamIcon className="size-6 text-(--icon-sub-600)" />
-                    </DialogIcon>
+            <Modal.Content className="max-w-[440px]">
+                <Modal.Header
+                    description="Add a new team member to your team, allowing them to collaborate with you."
+                    icon={TeamIcon}
+                    title="Add workspace member"
+                />
 
-                    <div className="flex flex-1 flex-col gap-1">
-                        <DialogTitle>Add workspace member</DialogTitle>
-                        <DialogDescription>
-                            Add a new team member to your team, allowing them to collaborate with you.
-                        </DialogDescription>
-                    </div>
-                </DialogHeader>
-
-                <DialogBody>
+                <Modal.Body>
                     <form className="flex flex-col gap-3" id="add-workspace-member-form" onSubmit={onSubmit}>
-                        <Field>
-                            <Label>Email address</Label>
-                            <Input
-                                autoComplete="off"
-                                autoFocus
-                                invalid={!!form.errors.email}
-                                name="email"
-                                onChange={(e) => form.setData("email", e.target.value)}
-                                placeholder="i.e. john@example.com"
-                                type="email"
-                            />
-                            {form.errors.email && <Hint invalid>{form.errors.email}</Hint>}
-                        </Field>
+                        <TextField
+                            $error={!!form.errors.email}
+                            autoComplete="off"
+                            autoFocus
+                            hint={form.errors.email}
+                            label="Email address"
+                            name="email"
+                            onChange={(e) => form.setData("email", e.target.value)}
+                            placeholder="i.e. john@example.com"
+                            type="email"
+                            value={form.data.email}
+                        />
 
                         {availableRoles.length > 0 ? (
-                            <Field>
-                                <Label>Role</Label>
-                                <Select
-                                    invalid={!!form.errors.role}
-                                    name="role"
-                                    onChange={(e) => form.setData("role", e.target.value)}
-                                    value={form.data.role}
-                                >
-                                    {availableRoles.map((role) => (
-                                        <option key={role.name} value={role.name}>
-                                            {role.name}
-                                        </option>
-                                    ))}
-                                </Select>
-
-                                {form.errors.role && <Hint invalid>{form.errors.role}</Hint>}
-                            </Field>
+                            <Select
+                                error={form.errors.role}
+                                id="role"
+                                label="Role"
+                                name="role"
+                                onValueChange={(value) => form.setData("role", value)}
+                                options={availableRoles.map((role) => ({
+                                    value: role.name,
+                                    label: role.name,
+                                }))}
+                                placeholder="Select a role..."
+                                position="item-aligned"
+                                value={form.data.role}
+                            />
                         ) : null}
                     </form>
-                </DialogBody>
+                </Modal.Body>
 
-                <DialogActions>
-                    <Button
-                        $color="neutral"
-                        $size="sm"
-                        $variant="stroke"
-                        className="w-full"
-                        disabled={form.processing}
-                        onClick={() => setAction(null)}
-                    >
-                        Cancel
-                    </Button>
-                    <Button
+                <Modal.Footer>
+                    <Modal.Close asChild>
+                        <Button.Root
+                            $size="sm"
+                            $style="stroke"
+                            $type="neutral"
+                            className="w-full"
+                            disabled={form.processing}
+                            onClick={() => setAction(null)}
+                        >
+                            Cancel
+                        </Button.Root>
+                    </Modal.Close>
+                    <Button.Root
                         $size="sm"
                         className="w-full"
                         disabled={form.processing}
@@ -121,9 +108,9 @@ export function AddWorkspaceMemberForm({ workspace, availableRoles }: AddWorkspa
                         type="submit"
                     >
                         {form.processing ? "Sending..." : "Send invitation"}
-                    </Button>
-                </DialogActions>
-            </Dialog>
-        </>
+                    </Button.Root>
+                </Modal.Footer>
+            </Modal.Content>
+        </Modal.Root>
     );
 }

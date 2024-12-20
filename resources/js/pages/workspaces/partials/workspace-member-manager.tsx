@@ -9,21 +9,12 @@ import UserMinusIcon from "virtual:icons/ri/user-minus-line";
 import { route } from "ziggy-js";
 
 import { ActionSection } from "#/components/action-section.tsx";
-import { Avatar } from "#/components/avatar.tsx";
-import { Button } from "#/components/button.tsx";
-import {
-    Dialog,
-    DialogActions,
-    DialogBody,
-    DialogDescription,
-    DialogHeader,
-    DialogIcon,
-    DialogTitle,
-} from "#/components/dialog.tsx";
-import { Dropdown, DropdownButton, DropdownItem, DropdownLabel, DropdownMenu } from "#/components/dropdown.tsx";
-import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
-import { Select } from "#/components/form/select.tsx";
+import { Select } from "#/components/select.tsx";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "#/components/table.tsx";
+import * as Avatar from "#/components/ui/avatar.tsx";
+import * as Button from "#/components/ui/button.tsx";
+import * as Dropdown from "#/components/ui/dropdown.tsx";
+import * as Modal from "#/components/ui/modal.tsx";
 import { useUser } from "#/hooks/use-user.ts";
 import {
     type Role,
@@ -44,7 +35,7 @@ interface UserMembership extends User {
 interface WorkspaceMemberManagerProps {
     workspace: Workspace & {
         owner: User;
-        workspace_invitations: WorkspaceInvitation[];
+        invitations: WorkspaceInvitation[];
         members: UserMembership[];
     };
     availableRoles: Role[];
@@ -82,12 +73,9 @@ export function WorkspaceMemberManager({ workspace, availableRoles, permissions 
                             <TableRow key={user.id}>
                                 <TableCell>
                                     <div className="inline-flex items-center gap-3">
-                                        <Avatar
-                                            alt={user.name}
-                                            className="size-8"
-                                            src={user.profile_photo_url}
-                                            user={user}
-                                        />
+                                        <Avatar.Root $size="32" className="size-8">
+                                            <Avatar.Image alt={user.name} src={user.profile_photo_url} />
+                                        </Avatar.Root>
                                         <p className="text-(--text-strong-950)">{user.name}</p>
                                     </div>
                                 </TableCell>
@@ -99,52 +87,49 @@ export function WorkspaceMemberManager({ workspace, availableRoles, permissions 
                                 currentUser.id === user.id ? (
                                     <TableCell>
                                         <div className="-mx-3 -my-1.5 sm:-mx-2.5">
-                                            <Dropdown>
-                                                <DropdownButton
-                                                    $color="neutral"
-                                                    $size="xs"
-                                                    $variant="ghost"
-                                                    aria-label="Actions"
-                                                >
-                                                    <More2Icon className="size-5" />
-                                                </DropdownButton>
-                                                <DropdownMenu anchor="bottom end">
+                                            <Dropdown.Root>
+                                                <Dropdown.Trigger aria-label="Actions" asChild>
+                                                    <Button.Root $size="xs" $style="ghost" $type="neutral">
+                                                        <Button.Icon as={More2Icon} />
+                                                    </Button.Root>
+                                                </Dropdown.Trigger>
+                                                <Dropdown.Content>
                                                     {permissions.canAddWorkspaceMembers && availableRoles.length > 0 ? (
-                                                        <DropdownItem
+                                                        <Dropdown.Item
                                                             onClick={() =>
                                                                 setAction(getAction("WorkspaceMembersUpdate", user.id))
                                                             }
                                                         >
-                                                            <ShieldUserIcon />
-                                                            <DropdownLabel>Update role</DropdownLabel>
-                                                        </DropdownItem>
+                                                            <Dropdown.ItemIcon as={ShieldUserIcon} />
+                                                            <Dropdown.Label>Update role</Dropdown.Label>
+                                                        </Dropdown.Item>
                                                     ) : null}
 
                                                     {permissions.canRemoveWorkspaceMembers ? (
-                                                        <DropdownItem
+                                                        <Dropdown.Item
                                                             className="text-state-error-base data-focus:bg-(--color-red-alpha-10) [&>[data-slot=icon]]:text-state-error-base"
                                                             onClick={() =>
                                                                 setAction(getAction("WorkspaceMembersDestroy", user.id))
                                                             }
                                                         >
-                                                            <UserMinusIcon />
-                                                            <DropdownLabel>Remove member</DropdownLabel>
-                                                        </DropdownItem>
+                                                            <Dropdown.ItemIcon as={UserMinusIcon} />
+                                                            <Dropdown.Label>Remove member</Dropdown.Label>
+                                                        </Dropdown.Item>
                                                     ) : null}
 
                                                     {currentUser.id === user.id ? (
-                                                        <DropdownItem
+                                                        <Dropdown.Item
                                                             className="text-state-error-base data-focus:bg-(--color-red-alpha-10) [&>[data-slot=icon]]:text-state-error-base"
                                                             onClick={() =>
                                                                 setAction(getAction("WorkspaceMembersDestroy", user.id))
                                                             }
                                                         >
-                                                            <LogoutCircleRIcon />
-                                                            <DropdownLabel>Leave workspace</DropdownLabel>
-                                                        </DropdownItem>
+                                                            <Dropdown.ItemIcon as={LogoutCircleRIcon} />
+                                                            <Dropdown.Label>Leave workspace</Dropdown.Label>
+                                                        </Dropdown.Item>
                                                     ) : null}
-                                                </DropdownMenu>
-                                            </Dropdown>
+                                                </Dropdown.Content>
+                                            </Dropdown.Root>
 
                                             {permissions.canAddWorkspaceMembers && availableRoles.length > 0 ? (
                                                 <ManageRoleDialog
@@ -217,64 +202,63 @@ function ManageRoleDialog({
     }
 
     return (
-        <Dialog
-            onClose={() => setAction(null)}
+        <Modal.Root
+            onOpenChange={() => setAction(null)}
             open={action === Action.WorkspaceMembersUpdate.replace("{id}", user.id.toString())}
         >
-            <DialogHeader>
-                <DialogIcon>
-                    <FolderShield2Icon className="size-6 text-(--icon-sub-600)" />
-                </DialogIcon>
+            <Modal.Content className="max-w-[440px]">
+                <Modal.Header
+                    description="Select the new role for this workspace member."
+                    icon={FolderShield2Icon}
+                    title="Manage role"
+                />
 
-                <div className="flex flex-1 flex-col gap-1">
-                    <DialogTitle>Manage role</DialogTitle>
-                    <DialogDescription>Select the new role for this workspace member.</DialogDescription>
-                </div>
-            </DialogHeader>
+                <Modal.Body>
+                    <form id={`update-workspace-members-role-${user.id}-form`} onSubmit={onSubmit}>
+                        {availableRoles.length > 0 ? (
+                            <Select
+                                error={form.errors.role}
+                                id="role"
+                                label="Role"
+                                name="role"
+                                onValueChange={(value) => form.setData("role", value)}
+                                options={availableRoles.map((role) => ({
+                                    value: role.name,
+                                    label: role.name,
+                                }))}
+                                placeholder="Select a role..."
+                                position="item-aligned"
+                                value={form.data.role}
+                            />
+                        ) : null}
+                    </form>
+                </Modal.Body>
 
-            <DialogBody>
-                <form id={`update-workspace-members-role-${user.id}-form`} onSubmit={onSubmit}>
-                    <Field>
-                        <Label>Role</Label>
-                        <Select
-                            invalid={!!form.errors.role}
-                            name="role"
-                            onChange={(e) => form.setData("role", e.target.value)}
-                            value={form.data.role}
+                <Modal.Footer>
+                    <Modal.Close asChild>
+                        <Button.Root
+                            $size="sm"
+                            $style="stroke"
+                            $type="neutral"
+                            className="w-full"
+                            disabled={form.processing}
+                            onClick={() => setAction(null)}
                         >
-                            {availableRoles.map((role) => (
-                                <option key={role.name} value={role.name}>
-                                    {role.name}
-                                </option>
-                            ))}
-                        </Select>
-                        {form.errors.role && <Hint invalid>{form.errors.role}</Hint>}
-                    </Field>
-                </form>
-            </DialogBody>
-
-            <DialogActions>
-                <Button
-                    $color="neutral"
-                    $size="sm"
-                    $variant="stroke"
-                    className="w-full"
-                    disabled={form.processing}
-                    onClick={() => setAction(null)}
-                >
-                    Cancel
-                </Button>
-                <Button
-                    $size="sm"
-                    className="w-full"
-                    disabled={form.processing}
-                    form={`manage-role-form-${user.id}`}
-                    type="submit"
-                >
-                    {form.processing ? "Updating..." : "Update role"}
-                </Button>
-            </DialogActions>
-        </Dialog>
+                            Cancel
+                        </Button.Root>
+                    </Modal.Close>
+                    <Button.Root
+                        $size="sm"
+                        className="w-full"
+                        disabled={form.processing}
+                        form={`manage-role-form-${user.id}`}
+                        type="submit"
+                    >
+                        {form.processing ? "Updating..." : "Update role"}
+                    </Button.Root>
+                </Modal.Footer>
+            </Modal.Content>
+        </Modal.Root>
     );
 }
 
@@ -309,47 +293,41 @@ function RemoveMemberDialog({
     }
 
     return (
-        <Dialog
-            onClose={() => setAction(null)}
+        <Modal.Root
+            onOpenChange={() => setAction(null)}
             open={action === Action.WorkspaceMembersDestroy.replace("{id}", user.id.toString())}
         >
-            <DialogHeader>
-                <DialogIcon>
-                    <EraserIcon className="size-6 text-(--icon-sub-600)" />
-                </DialogIcon>
+            <Modal.Content className="max-w-[440px]">
+                <Modal.Header description={dialogDescription} icon={EraserIcon} title={dialogTitle} />
 
-                <div className="flex flex-1 flex-col gap-1">
-                    <DialogTitle>{dialogTitle}</DialogTitle>
-                    <DialogDescription>{dialogDescription}</DialogDescription>
-                </div>
-            </DialogHeader>
+                <Modal.Body>
+                    <form className="sr-only" id={`destroy-workspace-members-${user.id}-form`} onSubmit={onSubmit} />
+                </Modal.Body>
 
-            <DialogBody>
-                <form className="sr-only" id={`destroy-workspace-members-${user.id}-form`} onSubmit={onSubmit} />
-            </DialogBody>
-
-            <DialogActions>
-                <Button
-                    $color="neutral"
-                    $size="sm"
-                    $variant="stroke"
-                    className="w-full"
-                    disabled={form.processing}
-                    onClick={() => setAction(null)}
-                >
-                    Cancel
-                </Button>
-                <Button
-                    $color="error"
-                    $size="sm"
-                    className="w-full"
-                    disabled={form.processing}
-                    form={`destroy-workspace-members-${user.id}-form`}
-                    type="submit"
-                >
-                    {form.processing ? "Removing..." : dialogSubmitLabel}
-                </Button>
-            </DialogActions>
-        </Dialog>
+                <Modal.Footer>
+                    <Modal.Close asChild>
+                        <Button.Root
+                            $size="sm"
+                            $style="stroke"
+                            $type="neutral"
+                            className="w-full"
+                            disabled={form.processing}
+                            onClick={() => setAction(null)}
+                        >
+                            Cancel
+                        </Button.Root>
+                    </Modal.Close>
+                    <Button.Root
+                        $size="sm"
+                        className="w-full"
+                        disabled={form.processing}
+                        form={`destroy-workspace-members-${user.id}-form`}
+                        type="submit"
+                    >
+                        {form.processing ? "Removing..." : dialogSubmitLabel}
+                    </Button.Root>
+                </Modal.Footer>
+            </Modal.Content>
+        </Modal.Root>
     );
 }

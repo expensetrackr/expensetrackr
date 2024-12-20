@@ -4,9 +4,8 @@ import { useCallback, useEffect } from "react";
 import { toast } from "sonner";
 import { route } from "ziggy-js";
 
-import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
-import { Input } from "#/components/form/input.tsx";
 import { FormSection } from "#/components/form-section.tsx";
+import { TextField } from "#/components/text-field.tsx";
 import { type User, type Workspace, type WorkspacePermissions } from "#/types/index.ts";
 
 interface UpdateWorkspaceNameFormProps {
@@ -49,21 +48,18 @@ export function UpdateWorkspaceNameForm({ workspace, permissions }: UpdateWorksp
     return (
         <FormSection description="Your workspace name is how others will recognize you on the platform." title="Name">
             <form className="w-full" id="update-workspace-name-form" onSubmit={onSubmit}>
-                <Field>
-                    <Label className="sr-only">Workspace name</Label>
-                    <Input
-                        autoComplete="name"
-                        disabled={form.processing}
-                        invalid={!!form.errors.name}
-                        name="name"
-                        onChange={(e) => form.setData("name", e.target.value)}
-                        placeholder="e.g. Apple"
-                        readOnly={!permissions.canUpdateWorkspace}
-                        type="text"
-                        value={form.data.name}
-                    />
-                    {form.errors.name && <Hint invalid>{form.errors.name}</Hint>}
-                </Field>
+                <TextField
+                    $error={!!form.errors.name}
+                    autoComplete="organization"
+                    autoFocus
+                    hint={form.errors.name}
+                    label="Workspace name"
+                    name="name"
+                    onChange={(e) => form.setData("name", e.target.value)}
+                    placeholder="e.g. Apple"
+                    readOnly={!permissions.canUpdateWorkspace}
+                    value={form.data.name}
+                />
             </form>
         </FormSection>
     );

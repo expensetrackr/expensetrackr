@@ -1,7 +1,8 @@
 import { Head } from "@inertiajs/react";
 import ShieldUserIcon from "virtual:icons/ri/shield-user-line";
 
-import { Divider } from "#/components/divider.tsx";
+import { Header } from "#/components/header.tsx";
+import * as Divider from "#/components/ui/divider.tsx";
 import { SettingsLayout } from "#/layouts/settings-layout.tsx";
 import { SetPasswordForm } from "#/pages/settings/privacy-and-security/partials/set-password-form.tsx";
 import { type InertiaSharedProps, type Session } from "#/types/index.ts";
@@ -25,33 +26,35 @@ export default function PrivacyAndSecurityShow({
 
     return (
         <>
-            {workspaces.canUpdatePassword && (
-                <>
-                    <Divider />
+            <div className="px-4 lg:px-8">
+                <Divider.Root />
+            </div>
 
-                    {canUpdatePassword ? <UpdatePasswordForm /> : <SetPasswordForm />}
-                </>
-            )}
+            <div className="flex w-full flex-col gap-5 px-4 py-6 lg:px-8">
+                {workspaces.canUpdatePassword && (
+                    <>{canUpdatePassword ? <UpdatePasswordForm /> : <SetPasswordForm />}</>
+                )}
 
-            {workspaces.canManageTwoFactorAuthentication && (
-                <>
-                    <Divider />
+                {workspaces.canManageTwoFactorAuthentication && (
+                    <>
+                        <Divider.Root $type="line-spacing" />
 
-                    <TwoFactorAuthenticationForm requiresConfirmation={confirmsTwoFactorAuthentication} />
-                </>
-            )}
+                        <TwoFactorAuthenticationForm requiresConfirmation={confirmsTwoFactorAuthentication} />
+                    </>
+                )}
 
-            <Divider />
+                <Divider.Root $type="line-spacing" />
 
-            <LogoutOtherBrowserSessionsForm sessions={sessions} />
+                <LogoutOtherBrowserSessionsForm sessions={sessions} />
 
-            {workspaces.hasAccountDeletionFeatures && (
-                <>
-                    <Divider />
+                {workspaces.hasAccountDeletionFeatures && (
+                    <>
+                        <Divider.Root $type="line-spacing" />
 
-                    <DeleteUserForm />
-                </>
-            )}
+                        <DeleteUserForm />
+                    </>
+                )}
+            </div>
         </>
     );
 }
@@ -59,13 +62,18 @@ export default function PrivacyAndSecurityShow({
 PrivacyAndSecurityShow.layout = (
     page: React.ReactNode & { props: InertiaSharedProps<PrivacyAndSecurityShowProps> },
 ) => (
-    <SettingsLayout
-        {...page.props}
-        description="Personalize your privacy settings and enhance the security of your account."
-        icon={ShieldUserIcon}
-        title="Privacy & Security"
-    >
+    <SettingsLayout {...page.props}>
         <Head title="Privacy & Security" />
+
+        <Header
+            description="Personalize your privacy settings and enhance the security of your account."
+            icon={
+                <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-(--bg-white-0) ring-1 shadow-xs ring-(--stroke-soft-200) ring-inset">
+                    <ShieldUserIcon className="size-6 text-(--text-sub-600)" />
+                </div>
+            }
+            title="Privacy & Security"
+        />
 
         {page}
     </SettingsLayout>

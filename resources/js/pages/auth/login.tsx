@@ -1,14 +1,13 @@
-import { Head, useForm } from "@inertiajs/react";
+import { Head, Link, useForm } from "@inertiajs/react";
 import { useEffect } from "react";
 import { toast } from "sonner";
 import { route } from "ziggy-js";
 
-import { Button } from "#/components/button.tsx";
-import { Checkbox, CheckboxField } from "#/components/checkbox.tsx";
-import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
-import { Input } from "#/components/form/input.tsx";
-import { StyledLink } from "#/components/link.tsx";
+import { Checkbox } from "#/components/checkbox.tsx";
 import { Socialstream } from "#/components/socialstream.tsx";
+import { TextField } from "#/components/text-field.tsx";
+import * as FancyButton from "#/components/ui/fancy-button.tsx";
+import * as LinkButton from "#/components/ui/link-button.tsx";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";
 import { type InertiaSharedProps } from "#/types/index.ts";
 
@@ -44,10 +43,10 @@ export default function Login({
             description="Welcome back! Please enter your details"
             footer={
                 <>
-                    Don’t your have account?{" "}
-                    <StyledLink $color="black" className="font-bold" href={route("register")}>
-                        Sign up
-                    </StyledLink>
+                    <span>Don&apos;t your have account?&nbsp;</span>
+                    <LinkButton.Root $style="black" asChild>
+                        <Link href={route("register")}>Sign up</Link>
+                    </LinkButton.Root>
                 </>
             }
             title="Log in to your account"
@@ -55,53 +54,50 @@ export default function Login({
             <Head title="Log in" />
 
             <form className="flex flex-col gap-3" onSubmit={submit}>
-                <Field>
-                    <Label>Email</Label>
-                    <Input
-                        autoComplete="username"
-                        autoFocus
-                        invalid={!!errors.email}
-                        name="email"
-                        onChange={(e) => setData("email", e.target.value)}
-                        placeholder="e.g. john@example.com"
-                        type="email"
-                        value={data.email}
-                    />
-                    {errors.email && <Hint invalid>{errors.email}</Hint>}
-                </Field>
+                <TextField
+                    $error={!!errors.email}
+                    autoComplete="username"
+                    autoFocus
+                    hint={errors.email}
+                    inputMode="email"
+                    label="Email"
+                    name="email"
+                    onChange={(e) => setData("email", e.target.value)}
+                    placeholder="e.g. john@example.com"
+                    type="email"
+                    value={data.email}
+                />
 
-                <Field>
-                    <Label>Password</Label>
-                    <Input
-                        autoComplete="current-password"
-                        invalid={!!errors.password}
-                        name="password"
-                        onChange={(e) => setData("password", e.target.value)}
-                        placeholder="Enter your password"
-                        type="password"
-                        value={data.password}
-                    />
-                    {errors.password && <Hint invalid>{errors.password}</Hint>}
-                </Field>
+                <TextField
+                    $error={!!errors.password}
+                    autoComplete="current-password"
+                    hint={errors.password}
+                    label="Password"
+                    name="password"
+                    onChange={(e) => setData("password", e.target.value)}
+                    placeholder="Enter your password"
+                    type="password"
+                    value={data.password}
+                />
 
                 <div className="flex items-center justify-between gap-3 py-2">
-                    <CheckboxField>
-                        <Checkbox
-                            checked={data.remember}
-                            name="remember"
-                            onChange={(checked) => setData("remember", checked)}
-                        />
-                        <Label className="text-paragraph-sm">Remember me</Label>
-                    </CheckboxField>
+                    <Checkbox
+                        checked={data.remember}
+                        label="Remember me"
+                        name="remember"
+                        onCheckedChange={(checked) => setData("remember", !!checked)}
+                    />
 
                     {canResetPassword && (
-                        <StyledLink href={route("password.request")}>Forgot your password?</StyledLink>
+                        <LinkButton.Root $underline asChild>
+                            <Link href={route("password.request")}>Forgot your password?</Link>
+                        </LinkButton.Root>
                     )}
                 </div>
 
-                <Button disabled={processing} type="submit">
+                <FancyButton.Root $type="primary" disabled={processing} type="submit">
                     Log in
-                </Button>
+                </FancyButton.Root>
             </form>
 
             {socialstream.show && <Socialstream />}

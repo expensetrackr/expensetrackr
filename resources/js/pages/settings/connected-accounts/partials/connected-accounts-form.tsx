@@ -1,20 +1,12 @@
-import { useForm, usePage } from "@inertiajs/react";
+import { Link, useForm, usePage } from "@inertiajs/react";
 import { parseAsStringEnum, useQueryState } from "nuqs";
 import ShareIcon from "virtual:icons/ri/share-line";
 import { route } from "ziggy-js";
 
 import { ActionSection } from "#/components/action-section.tsx";
-import { Button } from "#/components/button.tsx";
 import { ConnectedAccount } from "#/components/connected-account.tsx";
-import {
-    Dialog,
-    DialogActions,
-    DialogBody,
-    DialogDescription,
-    DialogHeader,
-    DialogIcon,
-    DialogTitle,
-} from "#/components/dialog.tsx";
+import * as Button from "#/components/ui/button.tsx";
+import * as Modal from "#/components/ui/modal.tsx";
 import { type InertiaSharedProps } from "#/types/index.ts";
 import { Action, getAction } from "#/utils/action.ts";
 
@@ -74,78 +66,76 @@ export default function ConnectedAccountsForm() {
                             {connectedAccount ? (
                                 <>
                                     {canRemoveConnectedAccount ? (
-                                        <Button
-                                            $color="error"
+                                        <Button.Root
                                             $size="sm"
-                                            $variant="stroke"
+                                            $style="stroke"
+                                            $type="error"
                                             className="px-4"
                                             onClick={() => onRemoveAccount(provider.id)}
                                         >
                                             Remove account
-                                        </Button>
+                                        </Button.Root>
                                     ) : null}
                                 </>
                             ) : (
-                                <Button
-                                    $size="sm"
-                                    $variant="stroke"
-                                    className="px-4"
-                                    href={route("oauth.redirect", {
-                                        provider: provider.id,
-                                    })}
-                                >
-                                    Connect account
-                                </Button>
+                                <Button.Root $size="sm" $style="stroke" asChild className="px-4">
+                                    <Link
+                                        href={route("oauth.redirect", {
+                                            provider: provider.id,
+                                        })}
+                                    >
+                                        Connect account
+                                    </Link>
+                                </Button.Root>
                             )}
 
-                            <Dialog
-                                onClose={() => setAction(null)}
+                            <Modal.Root
+                                onOpenChange={(open) =>
+                                    setAction(open ? getAction("ConnectedAccountsDestroy", provider.id) : null)
+                                }
                                 open={action === getAction("ConnectedAccountsDestroy", provider.id)}
                             >
-                                <DialogHeader>
-                                    <DialogIcon>
-                                        <ShareIcon className="size-6 text-(--icon-sub-600)" />
-                                    </DialogIcon>
-
-                                    <div className="flex flex-1 flex-col gap-1">
-                                        <DialogTitle>Are you sure you want to remove this account?</DialogTitle>
-                                        <DialogDescription>
-                                            This will remove the account from your connected accounts list.
-                                        </DialogDescription>
-                                    </div>
-                                </DialogHeader>
-
-                                <DialogBody>
-                                    <form
-                                        className="sr-only"
-                                        id={`destroy-connected-accounts-${provider.id}-form`}
-                                        onSubmit={onSubmit}
+                                <Modal.Content className="max-w-[440px]">
+                                    <Modal.Header
+                                        description="This will remove the account from your connected accounts list."
+                                        icon={ShareIcon}
+                                        title="Are you sure you want to remove this account?"
                                     />
-                                </DialogBody>
 
-                                <DialogActions>
-                                    <Button
-                                        $color="neutral"
-                                        $size="sm"
-                                        $variant="stroke"
-                                        className="w-full"
-                                        disabled={form.processing}
-                                        onClick={() => setAction(null)}
-                                    >
-                                        Cancel
-                                    </Button>
-                                    <Button
-                                        $color="error"
-                                        $size="sm"
-                                        className="w-full"
-                                        disabled={form.processing}
-                                        form={`destroy-connected-accounts-${provider.id}-form`}
-                                        type="submit"
-                                    >
-                                        {form.processing ? "Removing..." : "Yes, remove it"}
-                                    </Button>
-                                </DialogActions>
-                            </Dialog>
+                                    <Modal.Body>
+                                        <form
+                                            className="sr-only"
+                                            id={`destroy-connected-accounts-${provider.id}-form`}
+                                            onSubmit={onSubmit}
+                                        />
+                                    </Modal.Body>
+
+                                    <Modal.Footer>
+                                        <Modal.Close asChild>
+                                            <Button.Root
+                                                $size="sm"
+                                                $style="stroke"
+                                                $type="neutral"
+                                                className="w-full"
+                                                disabled={form.processing}
+                                                onClick={() => setAction(null)}
+                                            >
+                                                Cancel
+                                            </Button.Root>
+                                        </Modal.Close>
+                                        <Button.Root
+                                            $size="sm"
+                                            $type="error"
+                                            className="w-full"
+                                            disabled={form.processing}
+                                            form={`destroy-connected-accounts-${provider.id}-form`}
+                                            type="submit"
+                                        >
+                                            {form.processing ? "Removing..." : "Yes, remove it"}
+                                        </Button.Root>
+                                    </Modal.Footer>
+                                </Modal.Content>
+                            </Modal.Root>
                         </ConnectedAccount>
                     );
                 })}

@@ -4,11 +4,11 @@ import DeleteBinIcon from "virtual:icons/ri/delete-bin-line";
 import ImageEditIcon from "virtual:icons/ri/image-edit-line";
 import PencilIcon from "virtual:icons/ri/pencil-line";
 
-import { Avatar } from "#/components/avatar.tsx";
-import { Dropdown, DropdownButton, DropdownItem, DropdownMenu } from "#/components/dropdown.tsx";
-import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
-import { Input } from "#/components/form/input.tsx";
 import { FormSection } from "#/components/form-section.tsx";
+import * as Avatar from "#/components/ui/avatar.tsx";
+import * as Dropdown from "#/components/ui/dropdown.tsx";
+import * as Hint from "#/components/ui/hint.tsx";
+import * as Label from "#/components/ui/label.tsx";
 import { type InertiaSharedProps } from "#/types/index.ts";
 
 export function UpdateProfilePictureForm() {
@@ -71,12 +71,11 @@ export function UpdateProfilePictureForm() {
                 onSubmit={updateProfilePhoto}
                 ref={formRef}
             >
-                <Field>
-                    <Label className="sr-only">Profile photo</Label>
-                    <Input
+                <div className="flex flex-col gap-1">
+                    <Label.Root className="sr-only">Profile photo</Label.Root>
+                    <input
                         className="!sr-only"
                         disabled={form.processing}
-                        invalid={!!form.errors.photo}
                         name="photo"
                         onChange={handlePhotoChange}
                         ref={photoRef}
@@ -86,50 +85,49 @@ export function UpdateProfilePictureForm() {
                     <div className="flex flex-col gap-5">
                         <div className="flex items-center gap-5">
                             <div className="relative size-40">
-                                <Avatar
-                                    alt={user?.name}
-                                    className="size-40"
-                                    imageProps={{
-                                        className: "size-40 object-top object-cover",
-                                    }}
-                                    src={photoPreview || user?.profile_photo_url}
-                                    user={user}
-                                />
+                                <Avatar.Root>
+                                    <Avatar.Image alt={user?.name} src={photoPreview || user?.profile_photo_url} />
+                                </Avatar.Root>
 
-                                <Dropdown>
-                                    <DropdownButton
-                                        $color="neutral"
-                                        $size="xs"
-                                        $variant="stroke"
+                                <Dropdown.Root>
+                                    <Dropdown.Trigger
+                                        // $size="xs"
+                                        // $style="stroke"
+                                        // $type="neutral"
                                         className="absolute bottom-2 left-2 px-2 py-1"
                                     >
                                         <PencilIcon />
                                         <span>Edit</span>
-                                    </DropdownButton>
+                                    </Dropdown.Trigger>
 
-                                    <DropdownMenu anchor="bottom end" className="min-w-32">
-                                        <DropdownItem
+                                    <Dropdown.Content className="min-w-32">
+                                        <Dropdown.Item
                                             onClick={() => photoRef.current?.click()}
                                             onFocus={() => photoRef.current?.focus()}
                                         >
                                             <ImageEditIcon />
                                             <span>Change photo</span>
-                                        </DropdownItem>
+                                        </Dropdown.Item>
 
                                         {user?.profile_photo_path ? (
-                                            <DropdownItem onClick={deletePhoto}>
+                                            <Dropdown.Item onClick={deletePhoto}>
                                                 <DeleteBinIcon />
                                                 <span>Remove photo</span>
-                                            </DropdownItem>
+                                            </Dropdown.Item>
                                         ) : null}
-                                    </DropdownMenu>
-                                </Dropdown>
+                                    </Dropdown.Content>
+                                </Dropdown.Root>
                             </div>
                         </div>
                     </div>
 
-                    {form.errors.photo && <Hint invalid>{form.errors.photo}</Hint>}
-                </Field>
+                    {form.errors.photo && (
+                        <Hint.Root $error>
+                            <Hint.Icon />
+                            {form.errors.photo}
+                        </Hint.Root>
+                    )}
+                </div>
             </form>
         </FormSection>
     );

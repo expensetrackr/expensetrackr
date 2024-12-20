@@ -1,109 +1,300 @@
-import * as Headless from "@headlessui/react";
-import clsx from "clsx";
-import { LayoutGroup, motion } from "framer-motion";
+import { usePage } from "@inertiajs/react";
 import * as React from "react";
+import { useHotkeys } from "react-hotkeys-hook";
+import ArrowRightSIcon from "virtual:icons/ri/arrow-right-s-line";
+import HeadphoneIcon from "virtual:icons/ri/headphone-line";
+import LayoutGridIcon from "virtual:icons/ri/layout-grid-line";
+import Settings2Icon from "virtual:icons/ri/settings-2-line";
 
-import { cx } from "#/utils/cva.ts";
-import { twc } from "#/utils/twc.ts";
-import { TouchTarget } from "./button.tsx";
+import { cn } from "#/utils/cn.ts";
 import { Link } from "./link.tsx";
+import * as Divider from "./ui/divider.tsx";
+import { UserButton } from "./user-button.tsx";
+import { WorkspaceSwitch } from "./workspace-switch.tsx";
 
-export const Sidebar = twc.nav`flex h-full flex-col`;
+type NavigationLink = {
+    icon: React.ForwardRefExoticComponent<React.SVGProps<SVGSVGElement>>;
+    label: string;
+    href: string;
+    disabled?: boolean;
+};
 
-export const SidebarHeader = twc.div`flex flex-col p-3 [&>[data-slot=section]+[data-slot=section]]:mt-2.5`;
+export const navigationLinks: Array<NavigationLink> = [
+    { icon: LayoutGridIcon, label: "Dashboard", href: route("dashboard") },
+];
 
-export const SidebarBody = twc.div`flex flex-1 flex-col overflow-y-auto p-5 [&>[data-slot=section]+[data-slot=section]]:mt-8`;
+function useCollapsedState({ defaultCollapsed = false }: { defaultCollapsed?: boolean }): {
+    collapsed: boolean;
+    sidebarRef: React.RefObject<HTMLDivElement | null>;
+} {
+    const [collapsed, setCollapsed] = React.useState(defaultCollapsed);
+    const sidebarRef = React.useRef<HTMLDivElement>(null);
 
-export const SidebarFooter = twc.div`flex flex-col mx-5 p-3 border-t border-(--stroke-soft-200) [&>[data-slot=section]+[data-slot=section]]:mt-2.5`;
+    useHotkeys(["ctrl+b", "meta+b"], () => setCollapsed((prev) => !prev), { preventDefault: true }, [collapsed]);
 
-export function SidebarSection({ className, ...props }: React.ComponentPropsWithoutRef<"div">) {
-    const id = React.useId();
+    React.useEffect(() => {
+        if (!sidebarRef.current) return;
 
+        const elementsToHide = sidebarRef.current.querySelectorAll("[data-hide-collapsed]");
+
+        const listeners: { el: Element; listener: EventListener }[] = [];
+
+        elementsToHide.forEach((el) => {
+            const hideListener = () => {
+                el.classList.add("hidden");
+                el.classList.remove("transition", "duration-300");
+            };
+
+            const showListener = () => {
+                el.classList.remove("transition", "duration-300");
+            };
+
+            if (collapsed) {
+                el.classList.add("opacity-0", "transition", "duration-300");
+                el.addEventListener("transitionend", hideListener, { once: true });
+                listeners.push({ el, listener: hideListener });
+            } else {
+                el.classList.add("transition", "duration-300");
+                el.classList.remove("hidden");
+                setTimeout(() => {
+                    el.classList.remove("opacity-0");
+                }, 1);
+                el.addEventListener("transitionend", showListener, { once: true });
+                listeners.push({ el, listener: showListener });
+            }
+        });
+
+        return () => {
+            listeners.forEach(({ el, listener }) => {
+                el.removeEventListener("transitionend", listener);
+            });
+        };
+    }, [collapsed]);
+
+    return { collapsed, sidebarRef };
+}
+
+export function SidebarHeader({ collapsed }: { collapsed?: boolean }) {
     return (
-        <LayoutGroup id={id}>
-            <div {...props} className={cx("flex flex-col gap-1", className)} data-slot="section" />
-        </LayoutGroup>
+        <div
+            className={cn("lg:p-3", {
+                "lg:px-2": collapsed,
+            })}
+        >
+            <WorkspaceSwitch
+                className={cn("transition-all-default", {
+                    "w-16": collapsed,
+                })}
+            />
+        </div>
     );
 }
 
-export const SidebarDivider = twc.hr`border-t border-(--stroke-soft-200)`;
-
-export const SidebarSpacer = twc.div.attrs({
-    "aria-hidden": "true",
-})`mt-8 flex-1`;
-
-export const SidebarHeading = twc.h3`p-1 text-subheading-xs uppercase text-(--text-soft-400)`;
-
-type SidebarItemProps = {
-    current?: boolean;
-    currentIndicator?: boolean;
-    className?: string;
-    buttonClassName?: string;
-    children: React.ReactNode;
-    ref?: React.ForwardedRef<HTMLButtonElement>;
-} & (Omit<Headless.ButtonProps, "className"> | Omit<React.ComponentPropsWithoutRef<typeof Link>, "className">);
-
-export function SidebarItem({
-    ref,
-    current,
-    currentIndicator = true,
-    className,
-    buttonClassName,
-    children,
-    ...props
-}: SidebarItemProps) {
-    const classes = cx(
-        // Base
-        "flex w-full items-center gap-2 rounded-8 px-3 py-2 text-left text-label-sm text-(--text-sub-600) transition",
-        // Leading icon/icon-only
-        "*:data-[slot=icon]:size-5 data-[slot=icon]:*:shrink-0 data-[slot=icon]:*:text-(--icon-sub-600) data-[slot=icon]:*:transition",
-        // Trailing icon (down chevron or similar)
-        "data-[slot=icon]:last:*:ml-auto data-[slot=icon]:last:*:size-5 sm:data-[slot=icon]:last:*:size-4",
-        // Avatar
-        "data-[slot=avatar]:*:-m-0.5 data-[slot=avatar]:*:size-7 data-[slot=avatar]:*:[--ring-opacity:10%] sm:data-[slot=avatar]:*:size-6",
-        // Hover
-        "data-hover:bg-(--bg-weak-50) data-hover:*:data-[slot=icon]:text-(--icon-sub-600) data-current:data-hover:*:data-[slot=icon]:text-primary",
-        // Active
-        "data-active:bg-(--bg-weak-50) data-active:*:data-[slot=icon]:text-(--icon-sub-600)",
-        // Current
-        "data-current:bg-(--bg-weak-50) data-current:text-(--text-strong-950) data-current:*:data-[slot=icon]:text-primary",
-        // Custom classes
-        buttonClassName,
-    );
+function NavigationMenu({ collapsed }: { collapsed: boolean }) {
+    const url = usePage().url;
 
     return (
-        <span className={cx("relative", className)}>
-            {current && currentIndicator && (
-                <motion.span
-                    className="absolute inset-y-2 -left-5 h-5 w-1 rounded-r-4 bg-primary"
-                    layoutId="current-indicator"
-                />
-            )}
-            {"href" in props ? (
-                <Headless.CloseButton
-                    // @ts-expect-error - TODO: this type is wrong (Headless UI side)
-                    as={Link}
-                    {...props}
-                    className={classes}
-                    data-current={current ? "true" : undefined}
-                    ref={ref}
-                >
-                    <TouchTarget>{children}</TouchTarget>
-                </Headless.CloseButton>
-            ) : (
-                <Headless.Button
-                    {...props}
-                    className={cx(classes, "cursor-default")}
-                    data-current={current ? "true" : undefined}
-                    ref={ref}
-                >
-                    <TouchTarget>{children}</TouchTarget>
-                </Headless.Button>
-            )}
-        </span>
+        <div className="space-y-2">
+            <div
+                className={cn("p-1 text-subheading-xs text-(--text-soft-400) uppercase", {
+                    "-mx-2.5 w-14 px-0 text-center": collapsed,
+                })}
+            >
+                Main
+            </div>
+            <div className="space-y-1">
+                {navigationLinks.map(({ icon: Icon, label, href, disabled }, i) => (
+                    <Link
+                        aria-disabled={disabled}
+                        className={cn(
+                            "group relative flex items-center gap-2 rounded-8 py-2 whitespace-nowrap text-(--text-sub-600) hover:bg-(--bg-weak-50)",
+                            "transition",
+                            "aria-[current=page]:bg-(--bg-weak-50)",
+                            "aria-disabled:pointer-events-none aria-disabled:opacity-50",
+                            {
+                                "w-9 px-2": collapsed,
+                                "w-full px-3": !collapsed,
+                            },
+                        )}
+                        href={href}
+                        key={i}
+                    >
+                        <div
+                            className={cn(
+                                "absolute top-1/2 h-5 w-1 origin-left -translate-y-1/2 rounded-r-full bg-primary transition",
+                                {
+                                    "-left-[22px]": collapsed,
+                                    "-left-5": !collapsed,
+                                    "scale-100": url === href,
+                                    "scale-0": url !== href,
+                                },
+                            )}
+                        />
+                        <Icon
+                            className={cn(
+                                "size-5 shrink-0 text-(--text-sub-600) transition",
+                                "group-aria-[current=page]:text-primary",
+                            )}
+                        />
+
+                        <div className="flex w-[180px] shrink-0 items-center gap-2" data-hide-collapsed>
+                            <div className="flex-1 text-label-sm">{label}</div>
+                            {url === href && <ArrowRightSIcon className="text-text-sub-600 size-5" />}
+                        </div>
+                    </Link>
+                ))}
+            </div>
+        </div>
     );
 }
 
-export function SidebarLabel({ className, ...props }: React.ComponentPropsWithoutRef<"span">) {
-    return <span {...props} className={clsx(className, "truncate")} />;
+function SettingsAndSupport({ collapsed }: { collapsed: boolean }) {
+    const url = usePage().url;
+
+    const links = [
+        {
+            href: "/settings",
+            icon: Settings2Icon,
+            label: "Settings",
+        },
+        {
+            href: "/support",
+            icon: HeadphoneIcon,
+            label: "Support",
+            disabled: true,
+        },
+    ];
+
+    return (
+        <div className="space-y-2">
+            <div
+                className={cn("p-1 text-subheading-xs text-(--text-soft-400) uppercase", {
+                    "-mx-2.5 w-14 px-0 text-center": collapsed,
+                })}
+            >
+                Others
+            </div>
+            <div className="space-y-1">
+                {links.map(({ icon: Icon, label, href, disabled }, i) => {
+                    const isActivePage = url.startsWith(href);
+
+                    return (
+                        <Link
+                            aria-disabled={disabled}
+                            className={cn(
+                                "group relative flex items-center gap-2 rounded-8 py-2 whitespace-nowrap text-(--text-sub-600) hover:bg-(--bg-weak-50)",
+                                "transition",
+                                "aria-[current=page]:bg-(--bg-weak-50)",
+                                "aria-disabled:pointer-events-none aria-disabled:opacity-50",
+                                {
+                                    "w-9 px-2": collapsed,
+                                    "w-full px-3": !collapsed,
+                                },
+                            )}
+                            href={href}
+                            key={i}
+                        >
+                            <div
+                                className={cn(
+                                    "absolute top-1/2 h-5 w-1 origin-left -translate-y-1/2 rounded-r-full bg-primary transition",
+                                    {
+                                        "-left-[22px]": collapsed,
+                                        "-left-5": !collapsed,
+                                        "scale-100": isActivePage,
+                                        "scale-0": !isActivePage,
+                                    },
+                                )}
+                            />
+                            <Icon
+                                className={cn(
+                                    "size-5 shrink-0 text-(--text-sub-600) transition",
+                                    "group-aria-[current=page]:text-primary",
+                                )}
+                            />
+
+                            <div className="flex w-[180px] shrink-0 items-center gap-2" data-hide-collapsed>
+                                <div className="flex-1 text-label-sm">{label}</div>
+                                {isActivePage && <ArrowRightSIcon className="size-5 text-(--text-sub-600)" />}
+                            </div>
+                        </Link>
+                    );
+                })}
+            </div>
+        </div>
+    );
+}
+
+function UserProfile({ collapsed }: { collapsed: boolean }) {
+    return (
+        <div
+            className={cn("p-3", {
+                "px-2": collapsed,
+            })}
+        >
+            <UserButton
+                className={cn("transition-all", {
+                    "w-auto": collapsed,
+                })}
+            />
+        </div>
+    );
+}
+
+function SidebarDivider({ collapsed }: { collapsed: boolean }) {
+    return (
+        <div className="px-5">
+            <Divider.Root
+                className={cn("transition-all", {
+                    "w-10": collapsed,
+                })}
+            />
+        </div>
+    );
+}
+
+export function Sidebar({ defaultCollapsed = false }: { defaultCollapsed?: boolean }) {
+    const { collapsed, sidebarRef } = useCollapsedState({ defaultCollapsed });
+
+    return (
+        <>
+            <div
+                className={cn(
+                    "fixed top-0 left-0 z-40 hidden h-full overflow-hidden border-r border-(--stroke-soft-200) bg-(--bg-white-0) transition-all duration-300 lg:block",
+                    {
+                        "w-20": collapsed,
+                        "w-[272px]": !collapsed,
+                        "[&_[data-hide-collapsed]]:hidden": !collapsed ? false : defaultCollapsed,
+                    },
+                )}
+            >
+                <div className="flex h-full w-[272px] min-w-[272px] flex-col overflow-auto" ref={sidebarRef}>
+                    <SidebarHeader collapsed={collapsed} />
+
+                    <SidebarDivider collapsed={collapsed} />
+
+                    <div
+                        className={cn("flex flex-1 flex-col gap-5 pt-5 pb-4", {
+                            "px-[22px]": collapsed,
+                            "px-5": !collapsed,
+                        })}
+                    >
+                        <NavigationMenu collapsed={collapsed} />
+                        <SettingsAndSupport collapsed={collapsed} />
+                    </div>
+
+                    <SidebarDivider collapsed={collapsed} />
+
+                    <UserProfile collapsed={collapsed} />
+                </div>
+            </div>
+
+            {/* a necessary placeholder because of sidebar is fixed */}
+            <div
+                className={cn("shrink-0", {
+                    "w-[272px]": !collapsed,
+                    "w-20": collapsed,
+                })}
+            />
+        </>
+    );
 }

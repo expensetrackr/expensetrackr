@@ -3,9 +3,8 @@ import { useDebounce } from "@uidotdev/usehooks";
 import { useCallback, useEffect } from "react";
 import { toast } from "sonner";
 
-import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
-import { Input } from "#/components/form/input.tsx";
 import { FormSection } from "#/components/form-section.tsx";
+import { TextField } from "#/components/text-field.tsx";
 import { type InertiaSharedProps } from "#/types/index.ts";
 
 export function UpdateNameForm() {
@@ -43,20 +42,18 @@ export function UpdateNameForm() {
     return (
         <FormSection description="Use your real name to build trust with others." title="Full name">
             <form className="flex w-full flex-col gap-4" onSubmit={onSubmit}>
-                <Field>
-                    <Label className="sr-only">Full name</Label>
-                    <Input
-                        autoComplete="name"
-                        disabled={form.processing}
-                        invalid={!!errors.name}
-                        name="name"
-                        onChange={(e) => setData("name", e.target.value)}
-                        placeholder="e.g. John Doe"
-                        type="text"
-                        value={data.name}
-                    />
-                    {errors.name && <Hint invalid>{errors.name}</Hint>}
-                </Field>
+                <TextField
+                    $error={!!errors.name}
+                    autoComplete="name"
+                    autoFocus
+                    disabled={form.processing}
+                    hint={errors.name}
+                    label="Full name"
+                    name="name"
+                    onChange={(e) => setData("name", e.target.value)}
+                    placeholder="e.g. John Doe"
+                    value={data.name}
+                />
             </form>
         </FormSection>
     );

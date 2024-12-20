@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreAccountStepRequest;
 use App\Models\Account;
 use App\Services\AccountWizardService;
+use App\Services\CurrencyService;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
@@ -22,6 +23,7 @@ final class AccountController extends Controller
      */
     public function __construct(
         private readonly AccountWizardService $wizardService,
+        private readonly CurrencyService $currencyService
     ) {}
 
     /**
@@ -43,7 +45,9 @@ final class AccountController extends Controller
     {
         Gate::authorize('create', Account::class);
 
-        return Inertia::render('accounts/create/index');
+        return Inertia::render('accounts/create/index', [
+            'currencies' => $this->currencyService->getSupportedCurrencies(),
+        ]);
     }
 
     /**

@@ -1,7 +1,8 @@
 import { Head } from "@inertiajs/react";
-import UserIcon from "virtual:icons/ri/user-line";
+import UserSettingsIcon from "virtual:icons/ri/user-settings-line";
 
-import { Divider } from "#/components/divider.tsx";
+import { Header } from "#/components/header.tsx";
+import * as Divider from "#/components/ui/divider.tsx";
 import { SettingsLayout } from "#/layouts/settings-layout.tsx";
 import { type InertiaSharedProps } from "#/types/index.ts";
 import { UpdateEmailForm } from "./partials/update-email-form.tsx";
@@ -11,29 +12,38 @@ import { UpdateProfilePictureForm } from "./partials/update-profile-picture-form
 export default function SettingsShow() {
     return (
         <>
-            <Divider />
+            <div className="px-4 lg:px-8">
+                <Divider.Root />
+            </div>
 
-            <UpdateProfilePictureForm />
+            <div className="flex w-full flex-col gap-5 px-4 py-6 lg:px-8">
+                <UpdateProfilePictureForm />
 
-            <Divider />
+                <Divider.Root $type="line-spacing" />
 
-            <UpdateNameForm />
+                <UpdateNameForm />
 
-            <Divider />
+                <Divider.Root $type="line-spacing" />
 
-            <UpdateEmailForm />
+                <UpdateEmailForm />
+            </div>
         </>
     );
 }
 
 SettingsShow.layout = (page: React.ReactNode & { props: InertiaSharedProps }) => (
-    <SettingsLayout
-        {...page.props}
-        description="Customize and edit essential profile details."
-        icon={UserIcon}
-        title="Profile Settings"
-    >
+    <SettingsLayout {...page.props}>
         <Head title="Profile settings" />
+
+        <Header
+            description="Customize and edit essential profile details."
+            icon={
+                <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-(--bg-white-0) ring-1 shadow-xs ring-(--stroke-soft-200) ring-inset">
+                    <UserSettingsIcon className="size-6 text-(--text-sub-600)" />
+                </div>
+            }
+            title="Profile Settings"
+        />
 
         {page}
     </SettingsLayout>

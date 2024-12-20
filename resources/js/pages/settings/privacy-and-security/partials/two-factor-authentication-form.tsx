@@ -4,10 +4,9 @@ import { parseAsStringEnum, useQueryState } from "nuqs";
 import { useEffect, useState } from "react";
 
 import { ActionSection } from "#/components/action-section.tsx";
-import { Button } from "#/components/button.tsx";
 import { ConfirmsPassword } from "#/components/confirms-password.tsx";
-import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
-import { Input } from "#/components/form/input.tsx";
+import { TextField } from "#/components/text-field.tsx";
+import * as Button from "#/components/ui/button.tsx";
 import { type PageProps } from "#/types/index.ts";
 import { Action } from "#/utils/action.ts";
 
@@ -121,42 +120,46 @@ export function TwoFactorAuthenticationForm({ requiresConfirmation }: TwoFactorA
                     <>
                         {recoveryCodes.length > 0 && action !== Action.TwoFactorConfirm ? (
                             <ConfirmsPassword onConfirm={regenerateRecoveryCodes}>
-                                <Button $color="error" $variant="stroke">
+                                <Button.Root $style="stroke" $type="error">
                                     Regenerate recovery codes
-                                </Button>
+                                </Button.Root>
                             </ConfirmsPassword>
                         ) : null}
                         {action === Action.TwoFactorConfirm ? (
                             <ConfirmsPassword onConfirm={disableTwoFactorAuthentication}>
-                                <Button $color="neutral" $variant="stroke">
+                                <Button.Root $style="stroke" $type="neutral">
                                     Cancel
-                                </Button>
+                                </Button.Root>
                             </ConfirmsPassword>
                         ) : (
                             <ConfirmsPassword onConfirm={disableTwoFactorAuthentication}>
-                                <Button $color="error" $variant="stroke" disabled={action === Action.TwoFactorDisable}>
+                                <Button.Root
+                                    $style="stroke"
+                                    $type="error"
+                                    disabled={action === Action.TwoFactorDisable}
+                                >
                                     Disable 2FA
-                                </Button>
+                                </Button.Root>
                             </ConfirmsPassword>
                         )}
                         {action === Action.TwoFactorConfirm ? (
                             <ConfirmsPassword onConfirm={confirmTwoFactorAuthentication}>
-                                <Button>Finish setup</Button>
+                                <Button.Root>Finish setup</Button.Root>
                             </ConfirmsPassword>
                         ) : null}
                         {recoveryCodes.length === 0 && action !== Action.TwoFactorConfirm ? (
                             <ConfirmsPassword onConfirm={showRecoveryCodes}>
-                                <Button $color="neutral" $variant="stroke">
+                                <Button.Root $style="stroke" $type="neutral">
                                     Show recovery codes
-                                </Button>
+                                </Button.Root>
                             </ConfirmsPassword>
                         ) : null}
                     </>
                 ) : (
                     <ConfirmsPassword onConfirm={enableTwoFactorAuthentication}>
-                        <Button $color="neutral" $variant="stroke" disabled={action === Action.TwoFactorEnable}>
+                        <Button.Root $style="stroke" $type="neutral" disabled={action === Action.TwoFactorEnable}>
                             Enable 2FA
-                        </Button>
+                        </Button.Root>
                     </ConfirmsPassword>
                 )
             }
@@ -179,7 +182,7 @@ export function TwoFactorAuthenticationForm({ requiresConfirmation }: TwoFactorA
                                         />
                                     </div>
 
-                                    <div className="mx-auto flex h-3 w-full max-w-48 flex-row items-center gap-2.5 self-stretch text-subheading-2xs whitespace-nowrap text-(--text-soft-400) uppercase before:h-px before:w-full before:flex-grow before:bg-(--stroke-soft-200) after:h-px after:w-full after:flex-grow after:bg-(--stroke-soft-200)">
+                                    <div className="mx-auto flex h-3 w-full max-w-48 flex-row items-center gap-2.5 self-stretch text-subheading-2xs whitespace-nowrap text-(--text-soft-400) uppercase before:h-px before:w-full before:grow before:bg-(--stroke-soft-200) after:h-px after:w-full after:grow after:bg-(--stroke-soft-200)">
                                         or
                                     </div>
 
@@ -213,21 +216,17 @@ export function TwoFactorAuthenticationForm({ requiresConfirmation }: TwoFactorA
                                                 </li>
                                             </ol>
 
-                                            <Field>
-                                                <Label>Enter verification code</Label>
-                                                <Input
-                                                    autoComplete="one-time-code"
-                                                    autoFocus
-                                                    invalid={!!confirmationForm.errors.code}
-                                                    name="code"
-                                                    onChange={(e) => confirmationForm.setData("code", e.target.value)}
-                                                    type="numeric"
-                                                    value={confirmationForm.data.code}
-                                                />
-                                                {confirmationForm.errors.code && (
-                                                    <Hint invalid>{confirmationForm.errors.code}</Hint>
-                                                )}
-                                            </Field>
+                                            <TextField
+                                                $error={!!confirmationForm.errors.code}
+                                                autoComplete="one-time-code"
+                                                autoFocus
+                                                hint={confirmationForm.errors.code}
+                                                label="Enter verification code"
+                                                name="code"
+                                                onChange={(e) => confirmationForm.setData("code", e.target.value)}
+                                                type="numeric"
+                                                value={confirmationForm.data.code}
+                                            />
                                         </div>
                                     ) : null}
                                 </div>

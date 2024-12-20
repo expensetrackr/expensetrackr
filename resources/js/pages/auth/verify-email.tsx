@@ -1,9 +1,9 @@
-import { Head, useForm } from "@inertiajs/react";
+import { Head, Link, useForm } from "@inertiajs/react";
 import { useEffect } from "react";
 import { toast } from "sonner";
 import { route } from "ziggy-js";
 
-import { Button } from "#/components/button.tsx";
+import * as Button from "#/components/ui/button.tsx";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";
 
 export default function VerifyEmail({ status }: { status?: string }) {
@@ -26,13 +26,15 @@ export default function VerifyEmail({ status }: { status?: string }) {
             <Head title="Email Verification" />
 
             <form className="flex flex-col gap-3" onSubmit={submit}>
-                <Button disabled={processing} type="submit">
+                <Button.Root disabled={processing} type="submit">
                     Resend verification email
-                </Button>
+                </Button.Root>
 
-                <Button $color="neutral" $variant="stroke" as="button" href={route("logout")} method="post">
-                    Log Out
-                </Button>
+                <Button.Root $style="stroke" $type="neutral" asChild>
+                    <Link as="button" href={route("logout")} method="post">
+                        Log Out
+                    </Link>
+                </Button.Root>
             </form>
         </AuthLayout>
     );

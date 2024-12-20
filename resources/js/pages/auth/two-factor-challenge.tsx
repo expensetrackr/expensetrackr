@@ -1,13 +1,14 @@
 import { Head, useForm } from "@inertiajs/react";
-import { REGEXP_ONLY_DIGITS } from "input-otp";
 import { useState } from "react";
 import { route } from "ziggy-js";
 
-import { Button } from "#/components/button.tsx";
-import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
-import { InputOTP, InputOTPGroup, InputOTPSlot } from "#/components/form/input-otp.tsx";
-import { Input } from "#/components/form/input.tsx";
-import { StyledLink } from "#/components/link.tsx";
+import { Link } from "#/components/link.tsx";
+import { TextField } from "#/components/text-field.tsx";
+import * as Button from "#/components/ui/button.tsx";
+import * as DigitInput from "#/components/ui/digit-input.tsx";
+import * as Hint from "#/components/ui/hint.tsx";
+import * as Label from "#/components/ui/label.tsx";
+import * as LinkButton from "#/components/ui/link-button.tsx";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";
 
 export default function TwoFactorChallenge() {
@@ -50,76 +51,45 @@ export default function TwoFactorChallenge() {
 
             <form className="flex flex-col gap-3" onSubmit={submit}>
                 {recovery ? (
-                    <Field>
-                        <Label>Recovery code</Label>
-                        <Input
-                            autoComplete="name"
-                            autoFocus
-                            invalid={!!errors.recovery_code}
-                            name="name"
-                            onChange={(e) => setData("recovery_code", e.target.value)}
-                            value={data.recovery_code}
-                        />
-                        {errors.recovery_code && <Hint invalid>{errors.recovery_code}</Hint>}
-                    </Field>
+                    <TextField
+                        $error={!!errors.recovery_code}
+                        autoFocus
+                        hint={errors.recovery_code}
+                        label="Recovery code"
+                        name="recovery_code"
+                        onChange={(e) => setData("recovery_code", e.target.value)}
+                        value={data.recovery_code}
+                    />
                 ) : (
-                    <Field>
-                        <Label htmlFor="code">Code</Label>
-                        <InputOTP
-                            autoComplete="one-time-code"
-                            autoFocus
-                            id="code"
-                            maxLength={6}
+                    <div className="flex flex-col gap-1">
+                        <Label.Root htmlFor="code">Code</Label.Root>
+                        <DigitInput.Root
+                            $error={!!errors.code}
+                            numInputs={6}
                             onChange={(value) => setData("code", value)}
-                            pattern={REGEXP_ONLY_DIGITS}
+                            shouldAutoFocus
                             value={data.code}
-                        >
-                            <InputOTPGroup className="w-full gap-1">
-                                <InputOTPSlot
-                                    className="rounded-10 border after:rounded-[9px]"
-                                    index={0}
-                                    invalid={!!errors.code}
-                                />
-                                <InputOTPSlot
-                                    className="rounded-10 border after:rounded-[9px]"
-                                    index={1}
-                                    invalid={!!errors.code}
-                                />
-                                <InputOTPSlot
-                                    className="rounded-10 border after:rounded-[9px]"
-                                    index={2}
-                                    invalid={!!errors.code}
-                                />
-                                <InputOTPSlot
-                                    className="rounded-10 border after:rounded-[9px]"
-                                    index={3}
-                                    invalid={!!errors.code}
-                                />
-                                <InputOTPSlot
-                                    className="rounded-10 border after:rounded-[9px]"
-                                    index={4}
-                                    invalid={!!errors.code}
-                                />
-                                <InputOTPSlot
-                                    className="rounded-10 border after:rounded-[9px]"
-                                    index={5}
-                                    invalid={!!errors.code}
-                                />
-                            </InputOTPGroup>
-                        </InputOTP>
-                        {errors.code && <Hint invalid>{errors.code}</Hint>}
-                    </Field>
+                        />
+                        {errors.code && (
+                            <Hint.Root $error>
+                                <Hint.Icon />
+                                {errors.code}
+                            </Hint.Root>
+                        )}
+                    </div>
                 )}
 
                 <div className="flex items-center justify-end gap-3 py-2">
-                    <StyledLink as="button" href={route("two-factor.login")} onClick={toggleRecovery}>
-                        {recovery ? "Use an authentication code" : "Use a recovery code"}
-                    </StyledLink>
+                    <LinkButton.Root $style="black" onClick={toggleRecovery}>
+                        <Link href={route("two-factor.login")}>
+                            {recovery ? "Use an authentication code" : "Use a recovery code"}
+                        </Link>
+                    </LinkButton.Root>
                 </div>
 
-                <Button disabled={processing} type="submit">
+                <Button.Root disabled={processing} type="submit">
                     Log in
-                </Button>
+                </Button.Root>
             </form>
         </AuthLayout>
     );

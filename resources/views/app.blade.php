@@ -7,7 +7,7 @@
         <meta charset="utf-8" />
         <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport" />
 
-        <title inertia>{{ config('app.name', 'ExpenseTrackr') }}</title>
+        <title inertia>{{ config('app.name') }}</title>
 
         <link href="{{ url()->current() }}" rel="canonical" />
 

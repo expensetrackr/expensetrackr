@@ -6,19 +6,10 @@ import FirefoxIcon from "virtual:icons/ri/firefox-line";
 import LogoutCircleRIcon from "virtual:icons/ri/logout-circle-r-line";
 
 import { ActionSection } from "#/components/action-section.tsx";
-import { Button } from "#/components/button.tsx";
-import {
-    Dialog,
-    DialogActions,
-    DialogBody,
-    DialogDescription,
-    DialogHeader,
-    DialogIcon,
-    DialogTitle,
-} from "#/components/dialog.tsx";
-import { Field, Hint, Label } from "#/components/form/fieldset.tsx";
-import { Input } from "#/components/form/input.tsx";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "#/components/table.tsx";
+import { TextField } from "#/components/text-field.tsx";
+import * as Button from "#/components/ui/button.tsx";
+import * as Modal from "#/components/ui/modal.tsx";
 import { type Session } from "#/types/index.ts";
 import { Action } from "#/utils/action.ts";
 
@@ -53,78 +44,75 @@ export function LogoutOtherBrowserSessionsForm({ sessions }: LogoutOtherBrowserS
     return (
         <ActionSection
             action={
-                <>
-                    <Button
-                        $color="error"
-                        $variant="stroke"
-                        onClick={() => setAction(Action.OtherBrowserSessionsDestroy)}
-                    >
-                        Log out all sessions
-                    </Button>
+                <Modal.Root
+                    onOpenChange={(open) => setAction(open ? Action.OtherBrowserSessionsDestroy : null)}
+                    open={action === Action.OtherBrowserSessionsDestroy}
+                >
+                    <Modal.Trigger asChild>
+                        <Button.Root
+                            $style="stroke"
+                            $type="error"
+                            onClick={() => setAction(Action.OtherBrowserSessionsDestroy)}
+                        >
+                            Log out all sessions
+                        </Button.Root>
+                    </Modal.Trigger>
 
-                    <Dialog onClose={() => setAction(null)} open={action === Action.OtherBrowserSessionsDestroy}>
-                        <DialogHeader>
-                            <DialogIcon>
-                                <LogoutCircleRIcon className="size-6 text-(--icon-sub-600)" />
-                            </DialogIcon>
+                    <Modal.Content className="max-w-[440px]">
+                        <Modal.Header
+                            description="Please enter your password to confirm you would like to log out of your other browser sessions across all of your devices."
+                            icon={LogoutCircleRIcon}
+                            title="Log out other browser sessions"
+                        />
 
-                            <div className="flex flex-1 flex-col gap-1">
-                                <DialogTitle>Log out other browser sessions</DialogTitle>
-                                <DialogDescription>
-                                    Please enter your password to confirm you would like to log out of your other
-                                    browser sessions across all of your devices.
-                                </DialogDescription>
-                            </div>
-                        </DialogHeader>
-
-                        <DialogBody>
+                        <Modal.Body>
                             <form
                                 className="flex flex-col gap-3"
                                 id="logout-other-browser-sessions-form"
                                 onSubmit={onSubmit}
                             >
-                                <Field>
-                                    <Label>Password</Label>
-                                    <Input
-                                        autoComplete="current-password"
-                                        autoFocus
-                                        invalid={!!form.errors.password}
-                                        name="password"
-                                        onChange={(e) => form.setData("password", e.target.value)}
-                                        placeholder="Enter your password"
-                                        ref={passwordRef}
-                                        type="password"
-                                        value={form.data.password}
-                                    />
-                                    {form.errors.password && <Hint invalid>{form.errors.password}</Hint>}
-                                </Field>
+                                <TextField
+                                    $error={!!form.errors.password}
+                                    autoComplete="current-password"
+                                    autoFocus
+                                    disabled={form.processing}
+                                    hint={form.errors.password}
+                                    label="Password"
+                                    name="password"
+                                    onChange={(e) => form.setData("password", e.target.value)}
+                                    placeholder="Enter your password"
+                                    type="password"
+                                    value={form.data.password}
+                                />
                             </form>
-                        </DialogBody>
+                        </Modal.Body>
 
-                        <DialogActions>
-                            <Button
-                                $color="neutral"
+                        <Modal.Footer>
+                            <Modal.Close asChild>
+                                <Button.Root
+                                    $size="sm"
+                                    $style="stroke"
+                                    $type="neutral"
+                                    className="w-full"
+                                    disabled={form.processing}
+                                    onClick={closeModal}
+                                >
+                                    Cancel
+                                </Button.Root>
+                            </Modal.Close>
+                            <Button.Root
                                 $size="sm"
-                                $variant="stroke"
-                                className="w-full"
-                                disabled={form.processing}
-                                onClick={closeModal}
-                            >
-                                Cancel
-                            </Button>
-                            <Button
-                                $color="error"
-                                $size="sm"
+                                $type="error"
                                 className="w-full"
                                 disabled={form.processing}
                                 form="logout-other-browser-sessions-form"
                                 type="submit"
                             >
                                 {form.processing ? "Logging out..." : "Yes, log me out"}
-                            </Button>
-                        </DialogActions>
-                    </Dialog>
-                </>
+                            </Button.Root>
+                        </Modal.Footer>
+                    </Modal.Content>
+                </Modal.Root>
             }
             description="Manage and log out your active sessions on other browsers and devices."
             title="Browser sessions"
