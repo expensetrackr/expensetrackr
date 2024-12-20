@@ -1,9 +1,13 @@
 import { type useForm, useInputControl } from "@conform-to/react";
 import { resolveCurrencyFormat } from "@sumup/intl";
 import Decimal from "decimal.js";
+import { CurrencyInput } from "headless-currency-input";
+import * as React from "react";
 import { type NumberFormatValues } from "react-number-format";
 
-import { useCreateAccountWizardStore } from "#/store/create-account-wizard.ts";
+import { TextField } from "#/components/text-field.tsx";
+import * as InputPrimitives from "#/components/ui/input.tsx";
+import * as Select from "#/components/ui/select.tsx";
 import { type BalanceStepValues } from "./stepper.ts";
 
 type DetailsStepProps = {
@@ -12,7 +16,7 @@ type DetailsStepProps = {
 };
 
 export function BalanceStep({ currencies, fields }: DetailsStepProps) {
-    const { type } = useCreateAccountWizardStore();
+    // const { type } = useCreateAccountWizardStore();
     const currencyCodeControl = useInputControl(fields.currency_code);
     const currencyFormat = resolveCurrencyFormat("en", currencyCodeControl.value || "USD");
     const initialBalanceControl = useInputControl(fields.initial_balance);
@@ -24,30 +28,70 @@ export function BalanceStep({ currencies, fields }: DetailsStepProps) {
 
     return (
         <>
-            {/* <InputGroup>
-                <MoneyDollarCircleFillIcon />
-                <CurrencyInput
-                    currency={fields.currency_code.value || "USD"}
-                    customInput={Input}
-                    invalid={!!fields.initial_balance.errors}
-                    locale="en"
-                    name="initial_balance"
-                    onValueChange={handleBalanceChange}
-                    placeholder="e.g. 1000"
-                    value={initialBalanceControl.value}
-                />
-            </InputGroup>
-            <Field>
-                <Label>Initial balance</Label>
-                {fields.initial_balance.errors && <Hint invalid>{fields.initial_balance.errors}</Hint>}
-            </Field>
-
-            <CurrencySelector
-                currencies={currencies}
-                error={fields.currency_code.errors?.join(", ")}
-                onChange={currencyCodeControl.change}
-                value={currencyCodeControl.value || "USD"}
-            /> */}
+            <CurrencyInput
+                currency={currencyFormat?.currency || "USD"}
+                customInput={TextField}
+                error={fields.initial_balance.errors}
+                inlineLeadingNode={
+                    <InputPrimitives.InlineAffix>{currencyFormat?.currencySymbol}</InputPrimitives.InlineAffix>
+                }
+                name="initial_balance"
+                onValueChange={handleBalanceChange}
+                placeholder="e.g. 1000"
+                trailingNode={
+                    <SelectCurrencies
+                        currencies={currencies}
+                        onValueChange={currencyCodeControl.change}
+                        value={currencyCodeControl.value}
+                    />
+                }
+                value={initialBalanceControl.value}
+                withCurrencySymbol={false}
+            />
         </>
+    );
+}
+
+type SelectCurrenciesProps = React.CustomComponentPropsWithRef<typeof Select.Root> & {
+    currencies: Array<string>;
+};
+
+function SelectCurrencies({ currencies, ...rest }: SelectCurrenciesProps) {
+    const items = React.useMemo(() => currencies, [currencies]);
+
+    return (
+        <Select.Root $variant="compactForInput" defaultValue="USD" {...rest}>
+            <Select.Trigger>
+                <Select.Value>
+                    <span className="flex flex-1 items-center gap-2">
+                        <svg
+                            aria-label={`${rest.value || "USD"} flag`}
+                            className="size-5 rounded-full"
+                            preserveAspectRatio="xMidYMid meet"
+                            role="img"
+                        >
+                            <use href={`/img/flags.svg#${rest.value || "USD"}`} />
+                        </svg>
+                        <span>{rest.value || "USD"}</span>
+                    </span>
+                </Select.Value>
+            </Select.Trigger>
+            <Select.Content>
+                {items.map((item) => (
+                    <Select.Item key={item} value={item}>
+                        <Select.ItemIcon
+                            aria-label={`${item} flag`}
+                            as="svg"
+                            className="size-5 rounded-full"
+                            preserveAspectRatio="xMidYMid meet"
+                            role="img"
+                        >
+                            <use href={`/img/flags.svg#${item}`} />
+                        </Select.ItemIcon>
+                        {item}
+                    </Select.Item>
+                ))}
+            </Select.Content>
+        </Select.Root>
     );
 }

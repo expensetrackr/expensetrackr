@@ -303,9 +303,9 @@ function SelectContent({
                     // base
                     "relative z-50 overflow-hidden rounded-16 bg-(--bg-white-0) ring-1 shadow-md ring-(--stroke-soft-200) ring-inset",
                     // widths
-                    "max-w-[max(var(--radix-select-trigger-width),320px)] min-w-[--radix-select-trigger-width]",
+                    "max-w-[max(var(--radix-select-trigger-width),320px)] min-w-(--radix-select-trigger-width)",
                     // heights
-                    "max-h-[--radix-select-content-available-height]",
+                    "max-h-(--radix-select-content-available-height)",
                     // animation
                     position === "popper" && "data-[state=open]:animate-in data-[state=open]:fade-in-0",
                     position === "popper" && "data-[state=closed]:animate-out data-[state=closed]:fade-out-0",

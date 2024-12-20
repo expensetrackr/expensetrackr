@@ -30,6 +30,7 @@ export default function CreateAccountPage({ currencies }: CreateAccountPageProps
         constraint: getZodConstraint(stepper.current.schema),
         defaultValue: {
             type,
+            initial_balance: "0.00",
         },
         onValidate({ formData }) {
             return parseWithZod(formData, { schema: stepper.current.schema });

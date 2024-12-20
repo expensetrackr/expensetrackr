@@ -4,14 +4,15 @@ import { Input, type InputProps } from "./input.tsx";
 import * as Hint from "./ui/hint.tsx";
 import * as Label from "./ui/label.tsx";
 
-type TextFieldProps = InputProps & {
+type TextFieldProps = Omit<InputProps, "error"> & {
+    error?: string | Array<string>;
     label?: string;
     hint?: string | Array<string>;
 };
 
 export function TextField({
     $size,
-    $error,
+    error,
     label,
     leadingIcon: LeadingIcon,
     trailingIcon: TrailingIcon,
@@ -34,10 +35,10 @@ export function TextField({
             ) : null}
 
             <Input
-                $error={$error}
+                $error={!!error}
                 $size={$size}
-                aria-describedby={[$error && `${id}-error`, `${id}-description`].filter(Boolean).join(" ")}
-                aria-invalid={$error ? true : undefined}
+                aria-describedby={[error && `${id}-error`, `${id}-description`].filter(Boolean).join(" ")}
+                aria-invalid={error ? true : undefined}
                 id={id}
                 inlineLeadingNode={inlineLeadingNode}
                 inlineTrailingNode={inlineTrailingNode}
@@ -48,14 +49,14 @@ export function TextField({
                 {...rest}
             />
 
-            {hint ? (
+            {error || hint ? (
                 <Hint.Root
                     $disabled={rest.disabled}
-                    $error={$error}
-                    aria-describedby={$error ? `${id}-error` : `${id}-description`}
+                    $error={!!error}
+                    aria-describedby={error ? `${id}-error` : `${id}-description`}
                 >
                     <Hint.Icon />
-                    {hint}
+                    {error || hint}
                 </Hint.Root>
             ) : null}
         </div>
