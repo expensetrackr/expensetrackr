@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3e9fbe017bd345b46ca62b8c9098de58",
+    "content-hash": "9e0fa44d63420f7c2e8b184eb9b9b658",
     "packages": [
         {
             "name": "akaunting/laravel-money",
@@ -197,16 +197,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.336.1",
+            "version": "3.336.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "bef061855d6db932aac8f354f774b9b3ad84ad14"
+                "reference": "954bfdfc048840ca34afe2a2e1cbcff6681989c4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/bef061855d6db932aac8f354f774b9b3ad84ad14",
-                "reference": "bef061855d6db932aac8f354f774b9b3ad84ad14",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/954bfdfc048840ca34afe2a2e1cbcff6681989c4",
+                "reference": "954bfdfc048840ca34afe2a2e1cbcff6681989c4",
                 "shasum": ""
             },
             "require": {
@@ -289,9 +289,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.336.1"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.336.2"
             },
-            "time": "2024-12-19T19:03:08+00:00"
+            "time": "2024-12-20T19:05:10+00:00"
         },
         {
             "name": "bacon/bacon-qr-code",
@@ -1054,13 +1054,13 @@
             },
             "type": "library",
             "extra": {
-                "branch-alias": {
-                    "dev-main": "3.x-dev"
-                },
                 "phpstan": {
                     "includes": [
                         "extension.neon"
                     ]
+                },
+                "branch-alias": {
+                    "dev-main": "3.x-dev"
                 }
             },
             "autoload": {
@@ -3527,16 +3527,16 @@
         },
         {
             "name": "joelbutcher/socialstream",
-            "version": "v6.1.11",
+            "version": "v6.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joelbutcher/socialstream.git",
-                "reference": "75181a3f4302008d18dee9120109cc15ca1871b3"
+                "reference": "ae4dc3906f54fa792b296036d7b3dcea9a4d259b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joelbutcher/socialstream/zipball/75181a3f4302008d18dee9120109cc15ca1871b3",
-                "reference": "75181a3f4302008d18dee9120109cc15ca1871b3",
+                "url": "https://api.github.com/repos/joelbutcher/socialstream/zipball/ae4dc3906f54fa792b296036d7b3dcea9a4d259b",
+                "reference": "ae4dc3906f54fa792b296036d7b3dcea9a4d259b",
                 "shasum": ""
             },
             "require": {
@@ -3604,7 +3604,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-11-22T14:18:54+00:00"
+            "time": "2024-12-20T02:14:05+00:00"
         },
         {
             "name": "justinrainbow/json-schema",

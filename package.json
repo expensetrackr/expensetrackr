@@ -91,6 +91,6 @@
         "tailwindcss-aria-attributes": "2.0.1",
         "typescript": "5.7.2",
         "unplugin-icons": "0.22.0",
-        "vite": "6.0.4"
+        "vite": "6.0.5"
     }
 }
