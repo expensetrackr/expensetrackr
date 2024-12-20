@@ -2,8 +2,8 @@ import * as Headless from "@headlessui/react";
 import { useQueryState } from "nuqs";
 import ArrowDownSIcon from "virtual:icons/ri/arrow-down-s-line";
 
-import { ComboboxInput, ComboboxOption, ComboboxOptions } from "../combobox.tsx";
-import { Field, Hint, Label } from "./fieldset.tsx";
+import { ComboboxInput, ComboboxOption, ComboboxOptions } from "./combobox.tsx";
+import { Field } from "./field.tsx";
 
 interface CurrencySelectorProps {
     value: string;
@@ -20,8 +20,7 @@ export function CurrencySelector({ value, onChange, currencies, error }: Currenc
         : currencies?.filter((currency) => currency.toLowerCase().includes(query?.toLowerCase() ?? ""));
 
     return (
-        <Field>
-            <Label className="sr-only">Currency</Label>
+        <Field error={error} hiddenLabel id="currency_code" label="Currency">
             <Headless.Combobox
                 immediate
                 onChange={onChange}
@@ -58,7 +57,6 @@ export function CurrencySelector({ value, onChange, currencies, error }: Currenc
                     )}
                 </ComboboxOptions>
             </Headless.Combobox>
-            {error && <Hint invalid>{error}</Hint>}
         </Field>
     );
 }

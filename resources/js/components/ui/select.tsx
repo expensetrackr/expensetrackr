@@ -337,7 +337,7 @@ function SelectContent({
     );
 }
 
-function SelectItem({ className, children, ...rest }: React.CustomComponentPropsWithRef<typeof SelectPrimitives.Item>) {
+function SelectItem({ className, children, ...rest }: React.ComponentProps<typeof SelectPrimitives.Item>) {
     const { $size } = useSelectContext();
 
     return (

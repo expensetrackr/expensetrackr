@@ -1,7 +1,7 @@
 import { Head, Link, useForm } from "@inertiajs/react";
 import { route } from "ziggy-js";
 
-import { Checkbox } from "#/components/form/checkbox.tsx";
+import { Checkbox } from "#/components/checkbox.tsx";
 import { Socialstream } from "#/components/socialstream.tsx";
 import { TextField } from "#/components/text-field.tsx";
 import * as FancyButton from "#/components/ui/fancy-button.tsx";
