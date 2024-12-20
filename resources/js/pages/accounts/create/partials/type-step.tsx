@@ -1,5 +1,5 @@
 import { type useForm, useInputControl } from "@conform-to/react";
-import * as Headless from "@headlessui/react";
+import * as LabelPrimivites from "@radix-ui/react-label";
 import BoxesDuotone from "virtual:icons/lucide/package-search";
 import ChartLineIcon from "virtual:icons/mdi/finance";
 import BankDuotoneIcon from "virtual:icons/ph/bank-duotone";
@@ -9,11 +9,11 @@ import CryptoDuotone from "virtual:icons/tabler/currency-bitcoin";
 import ReceiptDuotone from "virtual:icons/tabler/receipt-2";
 import { type z } from "zod";
 
-import { Field, Hint } from "#/components/form/fieldset.tsx";
-import * as Button from "#/components/ui/button.tsx";
+import { Field } from "#/components/field.tsx";
+import * as Radio from "#/components/ui/radio.tsx";
 import { accountTypeEnum } from "#/schemas/account.ts";
 import { useCreateAccountWizardStore } from "#/store/create-account-wizard.ts";
-import { cx } from "#/utils/cva.ts";
+import { cn } from "#/utils/cn.ts";
 import { type typeStepSchema } from "./stepper.ts";
 
 export type TypeStepValues = z.infer<typeof typeStepSchema>;
@@ -73,30 +73,28 @@ export function TypeStep({ fields }: { fields: ReturnType<typeof useForm<TypeSte
     }
 
     return (
-        <>
-            <Field className="flex flex-col gap-1">
-                <Headless.RadioGroup
-                    className="flex flex-col gap-2"
-                    defaultValue={fields.type.initialValue}
-                    name={fields.type.name}
-                    onBlur={typeControl.blur}
-                    onChange={handleChange}
-                    onFocus={typeControl.focus}
-                >
-                    {accountTypeEnum.options.map((option) => {
-                        const Icon = accountTypes[option].icon;
-                        return (
-                            <Headless.Radio
-                                $size="none"
-                                $style="stroke"
-                                $type="neutral"
-                                as={Button.Root}
-                                className="w-full items-center justify-start gap-3 rounded-10 border-transparent p-2 aria-checked:bg-(--bg-weak-50) data-focus:border-(--stroke-strong-950)"
-                                key={option}
-                                value={option}
-                            >
+        <Field hiddenLabel id={fields.type.id} label="Account type">
+            <Radio.Group
+                className="flex flex-col gap-3"
+                defaultValue={fields.type.initialValue}
+                name={fields.type.name}
+                onBlur={typeControl.blur}
+                onFocus={typeControl.focus}
+                onValueChange={handleChange}
+            >
+                {accountTypeEnum.options.map((option) => {
+                    const Icon = accountTypes[option].icon;
+                    return (
+                        <LabelPrimivites.Root
+                            className="flex cursor-pointer items-center gap-2 rounded-10 border border-(--stroke-soft-200) p-2 transition duration-200 ease-out has-focus-visible:border-primary has-focus-visible:ring has-focus-visible:shadow-button-primary-focus has-focus-visible:ring-primary has-aria-[checked=true]:border-primary has-aria-[checked=true]:bg-(--bg-weak-50) has-aria-[checked=true]:ring has-aria-[checked=true]:ring-primary"
+                            htmlFor={option}
+                            key={option}
+                        >
+                            <Radio.Item className="sr-only absolute size-px" id={option} value={option} />
+
+                            <div className="flex items-center justify-start gap-3">
                                 <span
-                                    className={cx(
+                                    className={cn(
                                         "inline-flex size-10 items-center justify-center rounded-full",
                                         accountTypes[option].color,
                                     )}
@@ -104,24 +102,21 @@ export function TypeStep({ fields }: { fields: ReturnType<typeof useForm<TypeSte
                                     <Icon className="!size-6" />
                                 </span>
 
-                                <span className="inline-flex flex-1 flex-col items-start justify-start gap-1">
-                                    <span className="text-label-sm text-(--text-strong-950)">
-                                        {accountTypes[option].title}
-                                    </span>
-                                    <span className="text-start text-paragraph-xs font-normal text-(--text-sub-600)">
+                                <div>
+                                    <div className="flex flex-1 items-center gap-1">
+                                        <span className="text-paragraph-sm text-(--text-strong-950)">
+                                            {accountTypes[option].title}
+                                        </span>
+                                    </div>
+                                    <div className="mt-1 line-clamp-1 text-paragraph-xs text-(--text-sub-600)">
                                         {accountTypes[option].description}
-                                    </span>
-                                </span>
-                            </Headless.Radio>
-                        );
-                    })}
-                </Headless.RadioGroup>
-                {fields.type.errors && (
-                    <Hint id={fields.type.errorId} invalid>
-                        {fields.type.errors}
-                    </Hint>
-                )}
-            </Field>
-        </>
+                                    </div>
+                                </div>
+                            </div>
+                        </LabelPrimivites.Root>
+                    );
+                })}
+            </Radio.Group>
+        </Field>
     );
 }

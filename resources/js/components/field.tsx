@@ -6,6 +6,7 @@ import * as Label from "./ui/label.tsx";
 
 type FieldProps = {
     label?: React.ReactNode;
+    hiddenLabel?: boolean;
     hint?: string | Array<string>;
     id?: string;
     className?: string;
@@ -14,14 +15,14 @@ type FieldProps = {
     children: React.ReactNode;
 };
 
-export function Field({ error, className, label, children, hint, ...props }: FieldProps) {
+export function Field({ error, label, hiddenLabel, className, children, hint, ...props }: FieldProps) {
     const generatedId = React.useId();
     const id = props.id || generatedId;
 
     return (
         <div className={cn("flex flex-col gap-1", className)}>
             {label ? (
-                <Label.Root disabled={props.disabled} htmlFor={id}>
+                <Label.Root className={cn(hiddenLabel && "sr-only")} disabled={props.disabled} htmlFor={id}>
                     {label}
                 </Label.Root>
             ) : null}
