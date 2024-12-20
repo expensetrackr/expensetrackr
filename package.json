@@ -46,7 +46,6 @@
         "react-dom": "19.0.0",
         "react-hotkeys-hook": "4.6.1",
         "react-otp-input": "3.1.1",
-        "react-scan": "0.0.51",
         "react-twc": "1.4.2",
         "sonner": "1.7.1",
         "tailwind-merge": "2.5.5",
