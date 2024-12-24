@@ -1,4 +1,4 @@
-import { type useForm, useInputControl } from "@conform-to/react";
+import { getInputProps, type useForm, useInputControl } from "@conform-to/react";
 import { resolveCurrencyFormat } from "@sumup/intl";
 import Decimal from "decimal.js";
 import { CurrencyInput } from "headless-currency-input";
@@ -6,8 +6,10 @@ import * as React from "react";
 import { type NumberFormatValues } from "react-number-format";
 
 import { TextField } from "#/components/text-field.tsx";
+import * as Divider from "#/components/ui/divider.tsx";
 import * as InputPrimitives from "#/components/ui/input.tsx";
 import * as Select from "#/components/ui/select.tsx";
+import { useCreateAccountWizardStore } from "#/store/create-account-wizard.ts";
 import { type BalanceStepValues } from "./stepper.ts";
 
 type DetailsStepProps = {
@@ -16,18 +18,22 @@ type DetailsStepProps = {
 };
 
 export function BalanceStep({ currencies, fields }: DetailsStepProps) {
-    // const { type } = useCreateAccountWizardStore();
+    const { type } = useCreateAccountWizardStore();
     const currencyCodeControl = useInputControl(fields.currency_code);
     const currencyFormat = resolveCurrencyFormat("en", currencyCodeControl.value || "USD");
     const initialBalanceControl = useInputControl(fields.initial_balance);
+    const availableBalanceControl = useInputControl(fields.available_balance);
+    const minimumPaymentControl = useInputControl(fields.minimum_payment);
 
-    function handleBalanceChange(value: NumberFormatValues) {
+    function handleMoneyChange(value: NumberFormatValues) {
         const decimalValue = new Decimal(value.value).toDecimalPlaces(currencyFormat?.minimumFractionDigits);
         initialBalanceControl.change(decimalValue.toFixed(currencyFormat?.minimumFractionDigits));
     }
 
     return (
         <>
+            <input {...getInputProps(fields.type, { type: "hidden" })} value={type || ""} />
+
             <CurrencyInput
                 currency={currencyFormat?.currency || "USD"}
                 customInput={TextField}
@@ -35,9 +41,10 @@ export function BalanceStep({ currencies, fields }: DetailsStepProps) {
                 inlineLeadingNode={
                     <InputPrimitives.InlineAffix>{currencyFormat?.currencySymbol}</InputPrimitives.InlineAffix>
                 }
+                label="Initial balance"
                 name="initial_balance"
-                onValueChange={handleBalanceChange}
-                placeholder="e.g. 1000"
+                onValueChange={handleMoneyChange}
+                placeholder="e.g. 1.00"
                 trailingNode={
                     <SelectCurrencies
                         currencies={currencies}
@@ -48,6 +55,50 @@ export function BalanceStep({ currencies, fields }: DetailsStepProps) {
                 value={initialBalanceControl.value}
                 withCurrencySymbol={false}
             />
+
+            <Divider.Root />
+
+            <CurrencyInput
+                currency={currencyFormat?.currency || "USD"}
+                customInput={TextField}
+                error={fields.available_balance.errors}
+                inlineLeadingNode={
+                    <InputPrimitives.InlineAffix>{currencyFormat?.currencySymbol}</InputPrimitives.InlineAffix>
+                }
+                label="Available credit"
+                name="available_balance"
+                onValueChange={handleMoneyChange}
+                placeholder="e.g. 1.00"
+                value={availableBalanceControl.value}
+                withCurrencySymbol={false}
+            />
+
+            <div className="grid grid-cols-2 gap-4">
+                <CurrencyInput
+                    currency={currencyFormat?.currency || "USD"}
+                    customInput={TextField}
+                    error={fields.minimum_payment.errors}
+                    inlineLeadingNode={
+                        <InputPrimitives.InlineAffix>{currencyFormat?.currencySymbol}</InputPrimitives.InlineAffix>
+                    }
+                    label="Minimum payment"
+                    name="minimum_payment"
+                    onValueChange={handleMoneyChange}
+                    placeholder="e.g. 1.00"
+                    value={minimumPaymentControl.value}
+                    withCurrencySymbol={false}
+                />
+
+                <TextField
+                    error={fields.apr.errors}
+                    inlineTrailingNode={<InputPrimitives.InlineAffix>%</InputPrimitives.InlineAffix>}
+                    label="APR"
+                    placeholder="10"
+                    {...getInputProps(fields.apr, {
+                        type: "number",
+                    })}
+                />
+            </div>
         </>
     );
 }
