@@ -7,7 +7,7 @@ import { zodDecimal } from "#/utils/zod-decimal.ts";
 export const typeStepSchema = z.object({
     type: accountTypeEnum,
 });
-export const detailsSchema = accountSchema.pick({ name: true, description: true, subtype: true });
+export const detailsSchema = accountSchema.pick({ name: true, description: true, subtype: true }).merge(typeStepSchema);
 
 export const creditCardDetailsSchema = z.object({
     available_balance: zodDecimal().wholeNumber(10),
@@ -15,6 +15,13 @@ export const creditCardDetailsSchema = z.object({
     apr: zodDecimal().wholeNumber(10),
     annual_fee: zodDecimal().wholeNumber(10),
     expires_at: z.string().datetime(),
+});
+
+export const interestRateTypeEnum = z.enum(["fixed", "variable", "adjustable"]);
+export const loanDetailsSchema = z.object({
+    interest_rate: zodDecimal().wholeNumber(10),
+    interest_rate_type: interestRateTypeEnum,
+    term_months: z.number().min(1),
 });
 
 export const baseBalanceSchema = accountSchema.pick({
@@ -33,6 +40,10 @@ export const balanceSchema = z.discriminatedUnion("type", [
     baseBalanceSchema.extend({
         type: z.literal(accountTypeEnum.Enum.credit_card),
         ...creditCardDetailsSchema.shape,
+    }),
+    baseBalanceSchema.extend({
+        type: z.literal(accountTypeEnum.Enum.loan),
+        ...loanDetailsSchema.shape,
     }),
 ]);
 

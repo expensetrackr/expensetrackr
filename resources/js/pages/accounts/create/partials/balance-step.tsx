@@ -5,12 +5,13 @@ import { CurrencyInput } from "headless-currency-input";
 import * as React from "react";
 import { type NumberFormatValues } from "react-number-format";
 
+import { Select as SelectComponent } from "#/components/select.tsx";
 import { TextField } from "#/components/text-field.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
 import * as InputPrimitives from "#/components/ui/input.tsx";
 import * as Select from "#/components/ui/select.tsx";
 import { useCreateAccountWizardStore } from "#/store/create-account-wizard.ts";
-import { type BalanceStepValues } from "./stepper.ts";
+import { interestRateTypeEnum, type BalanceStepValues } from "./stepper.ts";
 
 type DetailsStepProps = {
     currencies: Array<string>;
@@ -24,6 +25,7 @@ export function BalanceStep({ currencies, fields }: DetailsStepProps) {
     const initialBalanceControl = useInputControl(fields.initial_balance);
     const availableBalanceControl = useInputControl(fields.available_balance);
     const minimumPaymentControl = useInputControl(fields.minimum_payment);
+    const interestRateTypeControl = useInputControl(fields.interest_rate_type);
 
     function handleMoneyChange(value: NumberFormatValues) {
         const decimalValue = new Decimal(value.value).toDecimalPlaces(currencyFormat?.minimumFractionDigits);
@@ -32,7 +34,7 @@ export function BalanceStep({ currencies, fields }: DetailsStepProps) {
 
     return (
         <>
-            <input {...getInputProps(fields.type, { type: "hidden" })} value={type || ""} />
+            <input {...getInputProps(fields.type, { type: "hidden", value: false })} value={type || ""} />
 
             <CurrencyInput
                 currency={currencyFormat?.currency || "USD"}
@@ -56,49 +58,96 @@ export function BalanceStep({ currencies, fields }: DetailsStepProps) {
                 withCurrencySymbol={false}
             />
 
-            <Divider.Root />
+            {type === "credit_card" || type === "loan" ? <Divider.Root /> : null}
 
-            <CurrencyInput
-                currency={currencyFormat?.currency || "USD"}
-                customInput={TextField}
-                error={fields.available_balance.errors}
-                inlineLeadingNode={
-                    <InputPrimitives.InlineAffix>{currencyFormat?.currencySymbol}</InputPrimitives.InlineAffix>
-                }
-                label="Available credit"
-                name="available_balance"
-                onValueChange={handleMoneyChange}
-                placeholder="e.g. 1.00"
-                value={availableBalanceControl.value}
-                withCurrencySymbol={false}
-            />
+            {type === "credit_card" ? (
+                <>
+                    <CurrencyInput
+                        currency={currencyFormat?.currency || "USD"}
+                        customInput={TextField}
+                        error={fields.available_balance.errors}
+                        inlineLeadingNode={
+                            <InputPrimitives.InlineAffix>{currencyFormat?.currencySymbol}</InputPrimitives.InlineAffix>
+                        }
+                        label="Available credit"
+                        name="available_balance"
+                        onValueChange={handleMoneyChange}
+                        placeholder="e.g. 1.00"
+                        value={availableBalanceControl.value}
+                        withCurrencySymbol={false}
+                    />
 
-            <div className="grid grid-cols-2 gap-4">
-                <CurrencyInput
-                    currency={currencyFormat?.currency || "USD"}
-                    customInput={TextField}
-                    error={fields.minimum_payment.errors}
-                    inlineLeadingNode={
-                        <InputPrimitives.InlineAffix>{currencyFormat?.currencySymbol}</InputPrimitives.InlineAffix>
-                    }
-                    label="Minimum payment"
-                    name="minimum_payment"
-                    onValueChange={handleMoneyChange}
-                    placeholder="e.g. 1.00"
-                    value={minimumPaymentControl.value}
-                    withCurrencySymbol={false}
-                />
+                    <div className="grid grid-cols-2 gap-4">
+                        <CurrencyInput
+                            currency={currencyFormat?.currency || "USD"}
+                            customInput={TextField}
+                            error={fields.minimum_payment.errors}
+                            inlineLeadingNode={
+                                <InputPrimitives.InlineAffix>
+                                    {currencyFormat?.currencySymbol}
+                                </InputPrimitives.InlineAffix>
+                            }
+                            label="Minimum payment"
+                            name="minimum_payment"
+                            onValueChange={handleMoneyChange}
+                            placeholder="e.g. 1.00"
+                            value={minimumPaymentControl.value}
+                            withCurrencySymbol={false}
+                        />
 
-                <TextField
-                    error={fields.apr.errors}
-                    inlineTrailingNode={<InputPrimitives.InlineAffix>%</InputPrimitives.InlineAffix>}
-                    label="APR"
-                    placeholder="10"
-                    {...getInputProps(fields.apr, {
-                        type: "number",
-                    })}
-                />
-            </div>
+                        <TextField
+                            error={fields.apr.errors}
+                            inlineTrailingNode={<InputPrimitives.InlineAffix>%</InputPrimitives.InlineAffix>}
+                            label="APR"
+                            placeholder="10"
+                            {...getInputProps(fields.apr, {
+                                type: "number",
+                            })}
+                        />
+                    </div>
+                </>
+            ) : null}
+
+            {type === "loan" ? (
+                <>
+                    <div className="grid grid-cols-2 gap-4">
+                        <TextField
+                            error={fields.interest_rate.errors}
+                            inlineTrailingNode={<InputPrimitives.InlineAffix>%</InputPrimitives.InlineAffix>}
+                            label="Interest rate"
+                            placeholder="9.33"
+                            {...getInputProps(fields.interest_rate, {
+                                type: "number",
+                            })}
+                        />
+
+                        <SelectComponent
+                            defaultValue={fields.interest_rate_type.initialValue}
+                            error={fields.interest_rate_type.errors}
+                            id={fields.interest_rate_type.id}
+                            label="Rate type"
+                            name={fields.interest_rate_type.name}
+                            onValueChange={interestRateTypeControl.change}
+                            options={interestRateTypeEnum.options.map((option) => ({
+                                label: option,
+                                value: option,
+                            }))}
+                            placeholder="Select a rate type"
+                            position="item-aligned"
+                            value={interestRateTypeControl.value}
+                        />
+                    </div>
+
+                    <TextField
+                        error={fields.term_months.errors}
+                        label="Term (months)"
+                        placeholder="48"
+                        {...getInputProps(fields.term_months, {
+                            type: "number",
+                        })}
+                    />
+                </>
+            ) : null}
         </>
     );
 }

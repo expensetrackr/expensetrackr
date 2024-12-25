@@ -23,6 +23,8 @@ export function DetailsStep({ fields }: DetailsStepProps) {
 
     return (
         <>
+            <input {...getInputProps(fields.type, { type: "hidden", value: false })} value={type || ""} />
+
             <TextField
                 $error={!!fields.name.errors}
                 hint={fields.name.errors}
@@ -45,7 +47,7 @@ export function DetailsStep({ fields }: DetailsStepProps) {
                 placeholder="e.g. Savings account for personal expenses"
             ></Textarea>
 
-            {type && subtypeOptions[type as keyof typeof subtypeOptions] && (
+            {type && subtypeOptions[type as keyof typeof subtypeOptions] ? (
                 <Select
                     defaultValue={fields.subtype.initialValue}
                     error={fields.subtype.errors}
@@ -61,7 +63,7 @@ export function DetailsStep({ fields }: DetailsStepProps) {
                     position="item-aligned"
                     value={subtypeControl.value}
                 />
-            )}
+            ) : null}
         </>
     );
 }

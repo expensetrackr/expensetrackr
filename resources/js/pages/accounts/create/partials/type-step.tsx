@@ -73,7 +73,7 @@ export function TypeStep({ fields }: { fields: ReturnType<typeof useForm<TypeSte
     }
 
     return (
-        <Field hiddenLabel id={fields.type.id} label="Account type">
+        <Field error={fields.type.errors} hiddenLabel id={fields.type.id} label="Account type">
             <Radio.Group
                 className="flex flex-col gap-3"
                 defaultValue={fields.type.initialValue}

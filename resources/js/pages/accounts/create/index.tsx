@@ -25,7 +25,7 @@ export default function CreateAccountPage({ currencies }: CreateAccountPageProps
     const { type } = useCreateAccountWizardStore();
     const [form, fields] = useForm({
         id: "create-account",
-        shouldValidate: "onBlur",
+        shouldValidate: "onSubmit",
         shouldRevalidate: "onInput",
         constraint: getZodConstraint(stepper.current.schema),
         defaultValue: {
@@ -38,6 +38,8 @@ export default function CreateAccountPage({ currencies }: CreateAccountPageProps
         onSubmit(event, { submission }) {
             event.preventDefault();
 
+            console.info("submission:", submission);
+
             console.log(`Form values for step ${stepper.current.id}:`, submission);
             if (stepper.isLast) {
                 stepper.reset();
@@ -46,8 +48,6 @@ export default function CreateAccountPage({ currencies }: CreateAccountPageProps
             }
         },
     });
-
-    console.info("errors", form.allErrors);
 
     return (
         <>

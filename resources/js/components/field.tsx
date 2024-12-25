@@ -11,7 +11,7 @@ type FieldProps = {
     id?: string;
     className?: string;
     disabled?: boolean;
-    error?: string;
+    error?: string | Array<string>;
     children: React.ReactNode;
 };
 
