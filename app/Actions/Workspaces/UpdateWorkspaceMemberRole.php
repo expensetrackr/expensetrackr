@@ -25,7 +25,7 @@ final class UpdateWorkspaceMemberRole
             'role' => ['required', 'string', 'exists:roles,name'],
         ])->validate();
 
-        tap($workspace->members->findOrFail($user), function (User $member) use ($role) {
+        tap($workspace->members->findOrFail($user), function (User $member) use ($role): void {
             $member->roles()->detach();
             $member->assignRole($role);
         });
