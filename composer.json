@@ -36,7 +36,7 @@
         "tightenco/ziggy": "2.4.1"
     },
     "require-dev": {
-        "barryvdh/laravel-ide-helper": "3.3.0",
+        "barryvdh/laravel-ide-helper": "3.4.0",
         "fakerphp/faker": "1.24.1",
         "larastan/larastan": "3.0.2",
         "laravel/pint": "1.18.3",
@@ -45,7 +45,7 @@
         "nunomaduro/collision": "8.5.0",
         "pestphp/pest": "3.7.1",
         "pestphp/pest-plugin-laravel": "3.0.0",
-        "pestphp/pest-plugin-type-coverage": "3.2.1",
+        "pestphp/pest-plugin-type-coverage": "3.2.3",
         "rector/rector": "2.0.4"
     },
     "autoload": {

@@ -80,7 +80,7 @@
         "eslint-plugin-react-compiler": "19.0.0-beta-b2e8e9c-20241220",
         "husky": "9.1.7",
         "laravel-vite-plugin": "1.1.1",
-        "lint-staged": "15.2.11",
+        "lint-staged": "15.3.0",
         "postcss": "8.4.49",
         "prettier": "3.4.2",
         "prettier-plugin-blade": "2.1.19",
