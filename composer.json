@@ -39,7 +39,7 @@
         "barryvdh/laravel-ide-helper": "3.4.0",
         "fakerphp/faker": "1.24.1",
         "larastan/larastan": "3.0.2",
-        "laravel/pint": "1.18.3",
+        "laravel/pint": "1.19.0",
         "laravel/sail": "1.39.1",
         "mockery/mockery": "1.6.12",
         "nunomaduro/collision": "8.5.0",
