@@ -19,7 +19,7 @@
         "php": "^8.3",
         "akaunting/laravel-money": "5.2.2",
         "cjmellor/browser-sessions": "1.2.0",
-        "filament/filament": "3.2.131",
+        "filament/filament": "3.2.132",
         "hirethunk/verbs": "0.6.4",
         "inertiajs/inertia-laravel": "2.0.0",
         "joelbutcher/socialstream": "6.2.0",
@@ -46,7 +46,7 @@
         "pestphp/pest": "3.7.1",
         "pestphp/pest-plugin-laravel": "3.0.0",
         "pestphp/pest-plugin-type-coverage": "3.2.3",
-        "rector/rector": "2.0.4"
+        "rector/rector": "2.0.5"
     },
     "autoload": {
         "psr-4": {

@@ -47,6 +47,8 @@ export const balanceSchema = z.discriminatedUnion("type", [
     }),
 ]);
 
+export const createAccountSchema = balanceSchema.and(detailsSchema);
+
 export type DetailsStepValues = z.infer<typeof detailsSchema>;
 export type BalanceStepValues = z.infer<typeof balanceSchema>;
 
@@ -54,5 +56,5 @@ export const { useStepper, Scoped } = defineStepper(
     { id: "type", label: "Type selection", schema: typeStepSchema },
     { id: "details", label: "Details", schema: detailsSchema },
     { id: "balance", label: "Balance & Currency", schema: balanceSchema },
-    { id: "complete", label: "Account Summary", schema: typeStepSchema },
+    { id: "complete", label: "Account Summary", schema: createAccountSchema },
 );
