@@ -31,7 +31,7 @@ function Calendar({ classNames, showOutsideDays = true, ...rest }: CalendarProps
                 head_cell:
                     "text-(--text-soft-400) text-label-sm uppercase size-10 flex items-center justify-center text-center select-none",
                 row: "grid grid-flow-col auto-cols-auto w-full mt-2 gap-2",
-                cell: cn(
+                day: cn(
                     // base
                     "group/cell relative size-10 shrink-0 select-none p-0",
                     // range
@@ -42,7 +42,7 @@ function Calendar({ classNames, showOutsideDays = true, ...rest }: CalendarProps
                     // last range el
                     "[&:not(:has(+_*_button))]:rounded-r-8",
                     // hide before if next sibling not selected
-                    "[&:not(:has(+_*_[type=button]))]:before:hidden",
+                    "[&:nt(:has(+_*_[type=button]))]:before:hidden",
                     // merged bg
                     "before:absolute before:inset-y-0 before:-right-2 before:hidden before:w-2 before:bg-brand-primary-alpha-10",
                     "last:[&:has(.day-range-middle)]:before:hidden",
@@ -53,7 +53,7 @@ function Calendar({ classNames, showOutsideDays = true, ...rest }: CalendarProps
                     // end
                     "[&:has(.day-range-end):not(:first-child)]:before:!block [&:has(.day-range-end)]:before:left-0 [&:has(.day-range-end)]:before:right-auto",
                 ),
-                day: cn(
+                day_button: cn(
                     // base
                     "flex size-10 shrink-0 items-center justify-center rounded-8 text-center text-label-sm text-(--text-sub-600) outline-none",
                     "transition duration-200 ease-out",
@@ -70,13 +70,17 @@ function Calendar({ classNames, showOutsideDays = true, ...rest }: CalendarProps
                 day_range_middle: "day-range-middle !text-primary !bg-transparent",
                 day_today: "day-today",
                 day_outside: "day-outside !text-(--text-disabled-300) aria-[selected]:!text-white",
-                day_disabled: "day-disabled !text-(--text-disabled-300)",
+                disabled: "day-disabled !text-(--text-disabled-300)",
                 day_hidden: "invisible",
                 ...classNames,
             }}
             components={{
-                IconLeft: () => <ArrowLeftSIcon className="size-5" />,
-                IconRight: () => <ArrowRightSIcon className="size-5" />,
+                Chevron: (props) => {
+                    if (props.orientation === "left") {
+                        return <ArrowLeftSIcon className="size-5" {...props} />;
+                    }
+                    return <ArrowRightSIcon className="size-5" {...props} />;
+                },
             }}
             showOutsideDays={showOutsideDays}
             {...rest}
