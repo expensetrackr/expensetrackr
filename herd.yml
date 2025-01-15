@@ -1,0 +1,16 @@
+name: expensetrackr
+php: '8.3'
+secured: true
+aliases: {  }
+services:
+    postgresql:
+        version: '16'
+        port: '${DB_PORT}'
+    redis:
+        version: 7.0.0
+        port: '${REDIS_PORT}'
+    minio:
+        version: RELEASE.2024-06-29
+        port: '${AWS_ENDPOINT}'
+integrations:
+    forge: {  }

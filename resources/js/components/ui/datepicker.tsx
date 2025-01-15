@@ -16,7 +16,7 @@ function Calendar({ classNames, showOutsideDays = true, ...rest }: CalendarProps
                 caption_end: "p-5",
                 months: "flex divide-x divide-(--stroke-soft-200)",
                 month: "space-y-2",
-                caption: "flex justify-center items-center relative rounded-lg bg-(--bg-weak-50) h-9",
+                caption: "flex justify-center items-center relative rounded-8 bg-(--bg-weak-50) h-9",
                 caption_label: "text-label-sm text-(--text-sub-600) select-none",
                 nav: "flex items-center",
                 nav_button: compactButtonVariants({
@@ -30,12 +30,12 @@ function Calendar({ classNames, showOutsideDays = true, ...rest }: CalendarProps
                 head_cell:
                     "text-(--text-soft-400) text-label-sm uppercase size-10 flex items-center justify-center text-center select-none",
                 row: "grid grid-flow-col auto-cols-auto w-full mt-2 gap-2",
-                day: cn(
+                cell: cn(
                     // base
                     "group/cell relative size-10 shrink-0 select-none p-0",
                     // range
                     "[&:has(.day-range-middle)]:bg-brand-primary-alpha-10",
-                    "first:[&:has([aria-selected])]:rounded-l-lg last:[&:has([aria-selected])]:rounded-r-8",
+                    "first:[&:has([aria-selected])]:rounded-l-8 last:[&:has([aria-selected])]:rounded-r-8",
                     // first range el
                     "[&:not(:has(button))+:has(.day-range-middle)]:rounded-l-8",
                     // last range el
@@ -52,7 +52,7 @@ function Calendar({ classNames, showOutsideDays = true, ...rest }: CalendarProps
                     // end
                     "[&:has(.day-range-end):not(:first-child)]:before:!block [&:has(.day-range-end)]:before:left-0 [&:has(.day-range-end)]:before:right-auto",
                 ),
-                day_button: cn(
+                day: cn(
                     // base
                     "flex size-10 shrink-0 items-center justify-center rounded-8 text-center text-label-sm text-(--text-sub-600) outline-none",
                     "transition duration-200 ease-out",
@@ -69,17 +69,13 @@ function Calendar({ classNames, showOutsideDays = true, ...rest }: CalendarProps
                 day_range_middle: "day-range-middle !text-primary !bg-transparent",
                 day_today: "day-today",
                 day_outside: "day-outside !text-(--text-disabled-300) aria-[selected]:!text-white",
-                disabled: "day-disabled !text-(--text-disabled-300)",
+                day_disabled: "day-disabled !text-(--text-disabled-300)",
                 day_hidden: "invisible",
                 ...classNames,
             }}
             components={{
-                Chevron: (props) => {
-                    if (props.orientation === "left") {
-                        return <ArrowLeftSIcon className="size-5" {...props} />;
-                    }
-                    return <ArrowRightSIcon className="size-5" {...props} />;
-                },
+                IconLeft: (props) => <ArrowLeftSIcon className="size-5" {...props} />,
+                IconRight: (props) => <ArrowRightSIcon className="size-5" {...props} />,
             }}
             showOutsideDays={showOutsideDays}
             {...rest}

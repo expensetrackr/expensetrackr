@@ -1,5 +1,6 @@
 import { getInputProps, type useForm, useInputControl } from "@conform-to/react";
 import { resolveCurrencyFormat } from "@sumup/intl";
+import { format } from "date-fns";
 import Decimal from "decimal.js";
 import { CurrencyInput } from "headless-currency-input";
 import * as React from "react";
@@ -7,8 +8,12 @@ import { type NumberFormatValues } from "react-number-format";
 
 import { Select as SelectComponent } from "#/components/select.tsx";
 import { TextField } from "#/components/text-field.tsx";
+import * as Button from "#/components/ui/button.tsx";
+import * as DatepickerPrimivites from "#/components/ui/datepicker.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
 import * as InputPrimitives from "#/components/ui/input.tsx";
+import * as Label from "#/components/ui/label.tsx";
+import * as Popover from "#/components/ui/popover.tsx";
 import * as Select from "#/components/ui/select.tsx";
 import { useCreateAccountWizardStore } from "#/store/create-account-wizard.ts";
 import { interestRateTypeEnum, type BalanceStepValues } from "./stepper.ts";
@@ -26,6 +31,7 @@ export function BalanceStep({ currencies, fields }: DetailsStepProps) {
     const availableBalanceControl = useInputControl(fields.available_balance);
     const minimumPaymentControl = useInputControl(fields.minimum_payment);
     const interestRateTypeControl = useInputControl(fields.interest_rate_type);
+    const expiresAtControl = useInputControl(fields.expires_at);
 
     function handleMoneyChange(value: NumberFormatValues) {
         const decimalValue = new Decimal(value.value).toDecimalPlaces(currencyFormat?.minimumFractionDigits);
@@ -104,6 +110,52 @@ export function BalanceStep({ currencies, fields }: DetailsStepProps) {
                                 type: "number",
                             })}
                         />
+                    </div>
+
+                    <div className="flex flex-col gap-1">
+                        <Label.Root htmlFor={fields.expires_at.id}>Expires at</Label.Root>
+                        <Popover.Root>
+                            <Popover.Trigger asChild>
+                                <Button.Root $style="stroke" $type="neutral" id={fields.expires_at.id}>
+                                    {expiresAtControl.value
+                                        ? format(expiresAtControl.value, "LLL dd, y")
+                                        : "Select a date"}
+                                </Button.Root>
+                            </Popover.Trigger>
+                            <Popover.Content className="p-0" showArrow={false}>
+                                <DatepickerPrimivites.Calendar
+                                    mode="single"
+                                    onSelect={(date) => {
+                                        expiresAtControl.change(date?.toISOString());
+                                    }}
+                                    selected={expiresAtControl.value ? new Date(expiresAtControl.value) : undefined}
+                                />
+                                <div className="flex items-center justify-between gap-4 border-t border-(--stroke-soft-200) p-4 py-5">
+                                    <Popover.Close asChild unstyled>
+                                        <Button.Root
+                                            $size="sm"
+                                            $style="stroke"
+                                            $type="neutral"
+                                            className="w-full"
+                                            //onClick={handleCancel}
+                                        >
+                                            Cancel
+                                        </Button.Root>
+                                    </Popover.Close>
+                                    <Popover.Close asChild unstyled>
+                                        <Button.Root
+                                            $size="sm"
+                                            $style="filled"
+                                            $type="primary"
+                                            className="w-full"
+                                            //onClick={handleApply}
+                                        >
+                                            Apply
+                                        </Button.Root>
+                                    </Popover.Close>
+                                </div>
+                            </Popover.Content>
+                        </Popover.Root>
                     </div>
                 </>
             ) : null}
