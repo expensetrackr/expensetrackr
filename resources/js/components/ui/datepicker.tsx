@@ -1,4 +1,3 @@
-import * as React from "react";
 import { DayPicker } from "react-day-picker";
 import ArrowLeftSIcon from "virtual:icons/ri/arrow-left-s-line";
 import ArrowRightSIcon from "virtual:icons/ri/arrow-right-s-line";
