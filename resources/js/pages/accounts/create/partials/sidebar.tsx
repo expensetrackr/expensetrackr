@@ -7,12 +7,12 @@ import HeadphoneIcon from "virtual:icons/ri/headphone-line";
 
 import * as Button from "#/components/ui/button.tsx";
 import * as VerticalStepper from "#/components/ui/vertical-stepper.tsx";
-import { type useStepper } from "./stepper.ts";
+import { utils, type useStepper } from "./stepper.ts";
 
 export function FlowSidebar({ stepper }: { stepper: ReturnType<typeof useStepper> }) {
     const getState = (index: number) => {
-        if (stepper.current.index > index) return "completed";
-        if (stepper.current.index === index) return "active";
+        if (utils.getIndex(stepper.current.id) > index) return "completed";
+        if (utils.getIndex(stepper.current.id) === index) return "active";
         return "default";
     };
 
@@ -54,7 +54,7 @@ export function FlowSidebar({ stepper }: { stepper: ReturnType<typeof useStepper
                     <div
                         className="h-full bg-primary transition-all duration-200 ease-out"
                         style={{
-                            width: `${(100 / stepper.all.length) * (stepper.current.index + 1)}%`,
+                            width: `${(100 / stepper.all.length) * (utils.getIndex(stepper.current.id) + 1)}%`,
                         }}
                     />
                 </div>
@@ -62,14 +62,14 @@ export function FlowSidebar({ stepper }: { stepper: ReturnType<typeof useStepper
                 <div className="flex items-center justify-between p-4">
                     <div className="flex items-center gap-2">
                         <div className="flex size-5 items-center justify-center rounded-full bg-primary text-label-xs text-white">
-                            {stepper.current.index + 1}
+                            {utils.getIndex(stepper.current.id) + 1}
                         </div>
                         <span className="text-paragraph-sm text-(--text-strong-950)">
-                            {stepper.all[stepper.current.index]?.label}
+                            {stepper.all[utils.getIndex(stepper.current.id)]?.label}
                         </span>
                     </div>
                     <div className="text-right text-paragraph-sm text-(--text-soft-400)">
-                        {stepper.current.index + 1}/{stepper.all.length}
+                        {utils.getIndex(stepper.current.id) + 1}/{stepper.all.length}
                     </div>
                 </div>
             </div>

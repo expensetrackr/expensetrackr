@@ -11,6 +11,7 @@ import { TextField } from "#/components/text-field.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import * as DatepickerPrimivites from "#/components/ui/datepicker.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
+import * as Hint from "#/components/ui/hint.tsx";
 import * as InputPrimitives from "#/components/ui/input.tsx";
 import * as Label from "#/components/ui/label.tsx";
 import * as Popover from "#/components/ui/popover.tsx";
@@ -114,6 +115,7 @@ export function BalanceStep({ currencies, fields }: DetailsStepProps) {
 
                     <div className="flex flex-col gap-1">
                         <Label.Root htmlFor={fields.expires_at.id}>Expires at</Label.Root>
+
                         <Popover.Root>
                             <Popover.Trigger asChild>
                                 <Button.Root $style="stroke" $type="neutral" id={fields.expires_at.id}>
@@ -156,6 +158,13 @@ export function BalanceStep({ currencies, fields }: DetailsStepProps) {
                                 </div>
                             </Popover.Content>
                         </Popover.Root>
+
+                        {fields.expires_at.errors ? (
+                            <Hint.Root $error aria-describedby={`${fields.expires_at.id}-error`}>
+                                <Hint.Icon />
+                                {fields.expires_at.errors}
+                            </Hint.Root>
+                        ) : null}
                     </div>
                 </>
             ) : null}

@@ -22,7 +22,7 @@ final class CurrencyRateCast implements CastsAttributes
 
         $floatValue = $value / (10 ** self::SCALE);
 
-        $strValue = rtrim(rtrim(number_format($floatValue, self::SCALE, '.', ''), '0'), '.');
+        $strValue = mb_rtrim(mb_rtrim(number_format($floatValue, self::SCALE, '.', ''), '0'), '.');
 
         return (float) $strValue;
     }
