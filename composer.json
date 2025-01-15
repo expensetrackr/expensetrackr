@@ -25,7 +25,7 @@
         "joelbutcher/socialstream": "6.2.0",
         "kongulov/interact-with-enum": "1.0.0",
         "laravel/fortify": "1.25.2",
-        "laravel/framework": "11.38.1",
+        "laravel/framework": "11.38.2",
         "laravel/octane": "2.6.0",
         "laravel/sanctum": "4.0.7",
         "laravel/tinker": "2.10.0",
