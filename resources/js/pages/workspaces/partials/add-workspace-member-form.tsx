@@ -3,8 +3,8 @@ import { parseAsStringEnum, useQueryState } from "nuqs";
 import TeamIcon from "virtual:icons/ri/team-line";
 import { route } from "ziggy-js";
 
-import { Select } from "#/components/select.tsx";
-import { TextField } from "#/components/text-field.tsx";
+import { Select } from "#/components/form/select.tsx";
+import { TextField } from "#/components/form/text-field.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import * as Modal from "#/components/ui/modal.tsx";
 import { type Role, type Workspace } from "#/types/index.ts";

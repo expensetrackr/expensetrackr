@@ -5,8 +5,10 @@ import { route } from "ziggy-js";
 
 import * as Button from "#/components/ui/button.tsx";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";
+import { AuthCard } from "#/layouts/partials/auth-card.tsx";
+import { type InertiaSharedProps } from "#/types/index.ts";
 
-export default function VerifyEmail({ status }: { status?: string }) {
+export default function VerifyEmailPage({ status }: { status?: string }) {
     const { post, processing } = useForm({});
 
     useEffect(() => {
@@ -22,9 +24,7 @@ export default function VerifyEmail({ status }: { status?: string }) {
     };
 
     return (
-        <AuthLayout description="Before continuing, could you verify your email address by clicking on the link we just emailed to you? If you didn't receive the email, we will gladly send you another.">
-            <Head title="Email Verification" />
-
+        <AuthCard description="Before continuing, could you verify your email address by clicking on the link we just emailed to you? If you didn't receive the email, we will gladly send you another.">
             <form className="flex flex-col gap-3" onSubmit={submit}>
                 <Button.Root disabled={processing} type="submit">
                     Resend verification email
@@ -36,6 +36,14 @@ export default function VerifyEmail({ status }: { status?: string }) {
                     </Link>
                 </Button.Root>
             </form>
-        </AuthLayout>
+        </AuthCard>
     );
 }
+
+VerifyEmailPage.layout = (page: React.ReactNode & { props: InertiaSharedProps }) => (
+    <AuthLayout {...page.props}>
+        <Head title="Email Verification" />
+
+        {page}
+    </AuthLayout>
+);

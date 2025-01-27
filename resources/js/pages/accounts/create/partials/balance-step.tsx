@@ -6,8 +6,8 @@ import { CurrencyInput } from "headless-currency-input";
 import * as React from "react";
 import { type NumberFormatValues } from "react-number-format";
 
-import { Select as SelectComponent } from "#/components/select.tsx";
-import { TextField } from "#/components/text-field.tsx";
+import { Select as SelectComponent } from "#/components/form/select.tsx";
+import { TextField } from "#/components/form/text-field.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import * as DatepickerPrimivites from "#/components/ui/datepicker.tsx";
 import * as Divider from "#/components/ui/divider.tsx";

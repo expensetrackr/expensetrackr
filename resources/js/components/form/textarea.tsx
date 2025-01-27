@@ -1,8 +1,8 @@
 import * as React from "react";
 
-import * as Hint from "./ui/hint.tsx";
-import * as Label from "./ui/label.tsx";
-import * as TextareaPrimitive from "./ui/textarea.tsx";
+import * as Hint from "../ui/hint.tsx";
+import * as Label from "../ui/label.tsx";
+import * as TextareaPrimitive from "../ui/textarea.tsx";
 
 type TextareaProps = TextareaPrimitive.TextareaProps & {
     label?: React.ReactNode;

@@ -1,8 +1,8 @@
 import { getInputProps, getTextareaProps, type useForm, useInputControl } from "@conform-to/react";
 
-import { Select } from "#/components/select.tsx";
-import { TextField } from "#/components/text-field.tsx";
-import { Textarea } from "#/components/textarea.tsx";
+import { Select } from "#/components/form/select.tsx";
+import { TextField } from "#/components/form/text-field.tsx";
+import { Textarea } from "#/components/form/textarea.tsx";
 import * as Label from "#/components/ui/label.tsx";
 import { accountTypeEnum, depositorySubtypeEnum, investmentSubtypeEnum } from "#/schemas/account.ts";
 import { useCreateAccountWizardStore } from "#/store/create-account-wizard.ts";

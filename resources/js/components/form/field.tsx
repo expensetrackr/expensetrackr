@@ -1,8 +1,8 @@
 import * as React from "react";
 
 import { cn } from "#/utils/cn.ts";
-import * as Hint from "./ui/hint.tsx";
-import * as Label from "./ui/label.tsx";
+import * as Hint from "../ui/hint.tsx";
+import * as Label from "../ui/label.tsx";
 
 type FieldProps = {
     label?: React.ReactNode;

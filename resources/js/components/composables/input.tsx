@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import * as InputPrimitives from "./ui/input.tsx";
+import * as InputPrimitives from "../ui/input.tsx";
 
 export type InputProps = React.CustomComponentPropsWithRef<typeof InputPrimitives.Input> &
     Pick<React.CustomComponentPropsWithRef<typeof InputPrimitives.Root>, "$error" | "$size"> & {

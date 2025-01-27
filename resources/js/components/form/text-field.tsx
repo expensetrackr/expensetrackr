@@ -1,8 +1,8 @@
 import * as React from "react";
 
-import { Input, type InputProps } from "./input.tsx";
-import * as Hint from "./ui/hint.tsx";
-import * as Label from "./ui/label.tsx";
+import { Input, type InputProps } from "../composables/input.tsx";
+import * as Hint from "../ui/hint.tsx";
+import * as Label from "../ui/label.tsx";
 
 type TextFieldProps = Omit<InputProps, "error"> & {
     error?: string | Array<string>;

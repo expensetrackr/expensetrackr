@@ -1,11 +1,13 @@
 import { Head, useForm } from "@inertiajs/react";
 import { route } from "ziggy-js";
 
-import { TextField } from "#/components/text-field.tsx";
+import { TextField } from "#/components/form/text-field.tsx";
 import * as FancyButton from "#/components/ui/fancy-button.tsx";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";
+import { AuthCard } from "#/layouts/partials/auth-card.tsx";
+import { type InertiaSharedProps } from "#/types/index.ts";
 
-export default function ConfirmPassword() {
+export default function ConfirmPasswordPage() {
     const { data, setData, post, processing, errors, reset } = useForm({
         password: "",
     });
@@ -21,9 +23,7 @@ export default function ConfirmPassword() {
     };
 
     return (
-        <AuthLayout description="This is a secure area of the application. Please confirm your password before continuing.">
-            <Head title="Confirm Password" />
-
+        <AuthCard description="This is a secure area of the application. Please confirm your password before continuing.">
             <form className="flex flex-col gap-3" onSubmit={submit}>
                 <TextField
                     $error={!!errors.password}
@@ -38,10 +38,18 @@ export default function ConfirmPassword() {
                     value={data.password}
                 />
 
-                <FancyButton.Root disabled={processing} type="submit">
+                <FancyButton.Root $type="primary" disabled={processing} type="submit">
                     Confirm
                 </FancyButton.Root>
             </form>
-        </AuthLayout>
+        </AuthCard>
     );
 }
+
+ConfirmPasswordPage.layout = (page: React.ReactNode & { props: InertiaSharedProps }) => (
+    <AuthLayout {...page.props}>
+        <Head title="Confirm Password" />
+
+        {page}
+    </AuthLayout>
+);

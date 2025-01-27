@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 import { ActionSection } from "#/components/action-section.tsx";
 import { ConfirmsPassword } from "#/components/confirms-password.tsx";
-import { TextField } from "#/components/text-field.tsx";
+import { TextField } from "#/components/form/text-field.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import { type PageProps } from "#/types/index.ts";
 import { Action } from "#/utils/action.ts";

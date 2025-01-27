@@ -9,7 +9,7 @@ import CryptoDuotone from "virtual:icons/tabler/currency-bitcoin";
 import ReceiptDuotone from "virtual:icons/tabler/receipt-2";
 import { type z } from "zod";
 
-import { Field } from "#/components/field.tsx";
+import { Field } from "#/components/form/field.tsx";
 import * as Radio from "#/components/ui/radio.tsx";
 import { accountTypeEnum } from "#/schemas/account.ts";
 import { useCreateAccountWizardStore } from "#/store/create-account-wizard.ts";

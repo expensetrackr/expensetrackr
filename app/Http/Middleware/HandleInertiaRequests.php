@@ -52,12 +52,33 @@ final class HandleInertiaRequests extends Middleware
                 ->mapWithKeys(fn ($notification, $key): array => ['type' => $key, 'message' => $notification]),
             'language' => app()->getLocale(),
             'languages' => LanguageResource::collection(Language::cases()),
-            'translations' => fn () => cache()->rememberForever('translations.'.app()->getLocale(), fn () => collect(File::allFiles(base_path('lang/'.app()->getLocale())))
-                ->flatMap(function ($file) {
-                    $fileContents = File::getRequire($file->getRealPath());
+            'translations' => function () {
+                $locale = app()->getLocale();
+                $files = File::allFiles(base_path('lang/'.$locale));
 
-                    return is_array($fileContents) ? Arr::dot($fileContents, $file->getBasename('.'.$file->getExtension()).'.') : [];
-                })),
+                // Get last modified time of all translation files
+                $lastModified = collect($files)->max(function ($file) {
+                    return $file->getMTime();
+                });
+
+                $cacheKey = 'translations.'.$locale;
+                $lastModifiedKey = 'translations_modified.'.$locale;
+
+                // If cached last modified time differs, invalidate cache
+                if (cache()->get($lastModifiedKey) !== $lastModified) {
+                    cache()->forget($cacheKey);
+                }
+
+                return cache()->remember($cacheKey, now()->addYear(), function () use ($files, $lastModified, $lastModifiedKey) {
+                    cache()->forever($lastModifiedKey, $lastModified);
+
+                    return collect($files)->flatMap(function ($file) {
+                        $fileContents = File::getRequire($file->getRealPath());
+
+                        return is_array($fileContents) ? Arr::dot($fileContents, $file->getBasename('.'.$file->getExtension()).'.') : [];
+                    });
+                });
+            },
         ]);
     }
 }

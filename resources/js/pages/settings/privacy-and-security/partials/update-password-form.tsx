@@ -4,7 +4,7 @@ import { useRef } from "react";
 import LockPasswordIcon from "virtual:icons/ri/lock-password-line";
 
 import { ActionSection } from "#/components/action-section.tsx";
-import { TextField } from "#/components/text-field.tsx";
+import { TextField } from "#/components/form/text-field.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import * as Modal from "#/components/ui/modal.tsx";
 import { Action } from "#/utils/action.ts";

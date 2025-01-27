@@ -2,6 +2,9 @@
     "[jsonc]": {
         "editor.defaultFormatter": "vscode.json-language-features"
     },
+    "[php]": {
+        "editor.defaultFormatter": "open-southeners.laravel-pint"
+    },
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": "always",
         "source.removeUnusedImports": "always"

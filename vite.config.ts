@@ -5,6 +5,9 @@ import Icons from "unplugin-icons/vite";
 import { defineConfig } from "vite";
 
 export default defineConfig({
+    server: {
+        cors: true,
+    },
     build: {
         cssMinify: process.env.NODE_ENV === "production",
         sourcemap: true,

@@ -15,15 +15,15 @@ return [
     |
     */
 
-    'failed' => 'These credentials do not match our records.',
-    'password' => 'The provided password is incorrect.',
-    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+    'failed' => 'Estas credenciales no coinciden con nuestros registros.',
+    'password' => 'La contraseña proporcionada es incorrecta.',
+    'throttle' => 'Demasiados intentos de acceso. Por favor intenta nuevamente en :seconds segundos.',
 
     'actions' => [
-        'dont_have_account' => 'Don\'t have an account?',
-        'register' => 'Register',
-        'already_have_account' => 'Already have an account?',
-        'login' => 'Login',
-        'changed_mind' => 'Changed your mind?',
+        'dont_have_account' => '¿No tienes una cuenta?',
+        'register' => 'Registrate',
+        'already_have_account' => '¿Ya tienes una cuenta?',
+        'login' => 'Iniciar sesión',
+        'changed_mind' => '¿Cambiaste de opinión?',
     ],
 ];

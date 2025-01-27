@@ -1,8 +1,8 @@
 import * as React from "react";
 
-import * as Hint from "./ui/hint.tsx";
-import * as Label from "./ui/label.tsx";
-import * as SelectPrimitives from "./ui/select.tsx";
+import * as Hint from "../ui/hint.tsx";
+import * as Label from "../ui/label.tsx";
+import * as SelectPrimitives from "../ui/select.tsx";
 
 type SelectProps = Omit<React.CustomComponentPropsWithRef<typeof SelectPrimitives.Root>, "$error"> & {
     error?: string | Array<string>;

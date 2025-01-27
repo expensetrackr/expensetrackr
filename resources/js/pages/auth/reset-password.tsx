@@ -1,11 +1,14 @@
 import { Head, useForm } from "@inertiajs/react";
+import DoorLockIcon from "virtual:icons/ri/door-lock-fill";
 import { route } from "ziggy-js";
 
-import { TextField } from "#/components/text-field.tsx";
+import { TextField } from "#/components/form/text-field.tsx";
 import * as FancyButton from "#/components/ui/fancy-button.tsx";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";
+import { AuthCard } from "#/layouts/partials/auth-card.tsx";
+import { type InertiaSharedProps } from "#/types/index.ts";
 
-export default function ResetPassword({ token, email }: { token: string; email: string }) {
+export default function ResetPasswordPage({ token, email }: { token: string; email: string }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         token,
         email,
@@ -24,9 +27,7 @@ export default function ResetPassword({ token, email }: { token: string; email: 
     };
 
     return (
-        <AuthLayout>
-            <Head title="Reset Password" />
-
+        <AuthCard cardIcon={DoorLockIcon} description="Enter your new password and confirm it." title="Reset Password">
             <form className="flex flex-col gap-3" onSubmit={submit}>
                 <TextField
                     $error={!!errors.email}
@@ -65,10 +66,18 @@ export default function ResetPassword({ token, email }: { token: string; email: 
                     value={data.password_confirmation}
                 />
 
-                <FancyButton.Root disabled={processing} type="submit">
+                <FancyButton.Root $type="primary" disabled={processing} type="submit">
                     Reset password
                 </FancyButton.Root>
             </form>
-        </AuthLayout>
+        </AuthCard>
     );
 }
+
+ResetPasswordPage.layout = (page: React.ReactNode & { props: InertiaSharedProps }) => (
+    <AuthLayout {...page.props}>
+        <Head title="Reset Password" />
+
+        {page}
+    </AuthLayout>
+);

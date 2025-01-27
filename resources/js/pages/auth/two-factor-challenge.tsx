@@ -2,16 +2,18 @@ import { Head, useForm } from "@inertiajs/react";
 import { useState } from "react";
 import { route } from "ziggy-js";
 
+import { TextField } from "#/components/form/text-field.tsx";
 import { Link } from "#/components/link.tsx";
-import { TextField } from "#/components/text-field.tsx";
-import * as Button from "#/components/ui/button.tsx";
 import * as DigitInput from "#/components/ui/digit-input.tsx";
+import * as FancyButton from "#/components/ui/fancy-button.tsx";
 import * as Hint from "#/components/ui/hint.tsx";
 import * as Label from "#/components/ui/label.tsx";
 import * as LinkButton from "#/components/ui/link-button.tsx";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";
+import { AuthCard } from "#/layouts/partials/auth-card.tsx";
+import { type InertiaSharedProps } from "#/types/index.ts";
 
-export default function TwoFactorChallenge() {
+export default function TwoFactorChallengePage() {
     const [recovery, setRecovery] = useState(false);
     const { data, setData, post, errors, processing } = useForm({
         code: "",
@@ -39,7 +41,7 @@ export default function TwoFactorChallenge() {
     };
 
     return (
-        <AuthLayout
+        <AuthCard
             description={
                 recovery
                     ? "Please confirm access to your account by entering one of your emergency recovery codes."
@@ -47,8 +49,6 @@ export default function TwoFactorChallenge() {
             }
             title="Two-Factor Confirmation"
         >
-            <Head title="Two-Factor Confirmation" />
-
             <form className="flex flex-col gap-3" onSubmit={submit}>
                 {recovery ? (
                     <TextField
@@ -87,10 +87,18 @@ export default function TwoFactorChallenge() {
                     </LinkButton.Root>
                 </div>
 
-                <Button.Root disabled={processing} type="submit">
+                <FancyButton.Root $type="primary" disabled={processing} type="submit">
                     Log in
-                </Button.Root>
+                </FancyButton.Root>
             </form>
-        </AuthLayout>
+        </AuthCard>
     );
 }
+
+TwoFactorChallengePage.layout = (page: React.ReactNode & { props: InertiaSharedProps }) => (
+    <AuthLayout {...page.props}>
+        <Head title="Two-Factor Confirmation" />
+
+        {page}
+    </AuthLayout>
+);

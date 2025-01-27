@@ -1,12 +1,15 @@
 import { Head, useForm } from "@inertiajs/react";
 import { useEffect } from "react";
 import { toast } from "sonner";
+import DoorLockIcon from "virtual:icons/ri/door-lock-fill";
 
-import { TextField } from "#/components/text-field.tsx";
+import { TextField } from "#/components/form/text-field.tsx";
 import * as FancyButton from "#/components/ui/fancy-button.tsx";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";
+import { AuthCard } from "#/layouts/partials/auth-card.tsx";
+import { type InertiaSharedProps } from "#/types/index.ts";
 
-export default function ForgotPassword({ status }: { status?: string }) {
+export default function ForgotPasswordPage({ status }: { status?: string }) {
     const { data, setData, post, processing, errors } = useForm({
         email: "",
     });
@@ -24,12 +27,7 @@ export default function ForgotPassword({ status }: { status?: string }) {
     };
 
     return (
-        <AuthLayout
-            description="No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one."
-            title="Forgot your password?"
-        >
-            <Head title="Forgot Password" />
-
+        <AuthCard cardIcon={DoorLockIcon} description="Enter your email to reset your password." title="Reset Password">
             <form className="flex flex-col gap-3" onSubmit={submit}>
                 <TextField
                     $error={!!errors.email}
@@ -44,10 +42,18 @@ export default function ForgotPassword({ status }: { status?: string }) {
                     value={data.email}
                 />
 
-                <FancyButton.Root disabled={processing} type="submit">
+                <FancyButton.Root $type="primary" disabled={processing} type="submit">
                     Email password reset link
                 </FancyButton.Root>
             </form>
-        </AuthLayout>
+        </AuthCard>
     );
 }
+
+ForgotPasswordPage.layout = (page: React.ReactNode & { props: InertiaSharedProps }) => (
+    <AuthLayout {...page.props}>
+        <Head title="Forgot Password" />
+
+        {page}
+    </AuthLayout>
+);

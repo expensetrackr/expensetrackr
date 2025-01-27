@@ -9,7 +9,7 @@ import UserMinusIcon from "virtual:icons/ri/user-minus-line";
 import { route } from "ziggy-js";
 
 import { ActionSection } from "#/components/action-section.tsx";
-import { Select } from "#/components/select.tsx";
+import { Select } from "#/components/form/select.tsx";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "#/components/table.tsx";
 import * as Avatar from "#/components/ui/avatar.tsx";
 import * as Button from "#/components/ui/button.tsx";

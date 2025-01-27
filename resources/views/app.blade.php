@@ -39,15 +39,15 @@
         <meta content="https://expensetrackr.app/img/logo.png" property="twitter:image" />
 
         <!-- Favicon -->
-        <link href="/img/favicon/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180" />
-        <link href="/img/favicon/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png" />
-        <link href="/img/favicon/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png" />
-        <link href="/img/favicon/site.webmanifest" rel="manifest" />
-        <link color="#ff2d20" href="/img/favicon/safari-pinned-tab.svg" rel="mask-icon" />
+        <link href="/favicons/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180" />
+        <link href="/favicons/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png" />
+        <link href="/favicons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png" />
+        <link href="/favicons/site.webmanifest" rel="manifest" />
+        <link color="#ff2d20" href="/favicons/safari-pinned-tab.svg" rel="mask-icon" />
         <link class="js-site-favicon" href="/img/favicon-light.png" rel="alternate icon" type="image/png" />
         <link class="js-site-favicon" href="/img/favicon-light.svg" rel="icon" type="image/svg+xml" />
         <meta content="#335CFF" name="msapplication-TileColor" />
-        <meta content="/img/favicon/browserconfig.xml" name="msapplication-config" />
+        <meta content="/favicons/browserconfig.xml" name="msapplication-config" />
         <meta content="#ffffff" name="theme-color" />
         <meta content="light" name="color-scheme" />
 

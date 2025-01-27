@@ -1,22 +1,34 @@
 import { Head, Link, useForm } from "@inertiajs/react";
 import { useEffect } from "react";
 import { toast } from "sonner";
+import LockLineIcon from "virtual:icons/ri/lock-line";
+import MailLineIcon from "virtual:icons/ri/mail-line";
+import UserIcon from "virtual:icons/ri/user-fill";
 import { route } from "ziggy-js";
 
-import { Checkbox } from "#/components/checkbox.tsx";
+import { Checkbox } from "#/components/form/checkbox.tsx";
+import { Field } from "#/components/form/field.tsx";
+import { PasswordInput } from "#/components/form/password-input.tsx";
+import { TextField } from "#/components/form/text-field.tsx";
 import { Socialstream } from "#/components/socialstream.tsx";
-import { TextField } from "#/components/text-field.tsx";
 import * as FancyButton from "#/components/ui/fancy-button.tsx";
 import * as LinkButton from "#/components/ui/link-button.tsx";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";
+import { AuthCard } from "#/layouts/partials/auth-card.tsx";
 import { type InertiaSharedProps } from "#/types/index.ts";
 
-export default function Login({
+type LoginForm = {
+    email: string;
+    password: string;
+    remember: boolean;
+};
+
+export default function LoginPage({
     status,
     canResetPassword,
     socialstream,
 }: InertiaSharedProps<{ status?: string; canResetPassword: boolean }>) {
-    const { data, setData, post, processing, errors, reset } = useForm({
+    const { data, setData, post, processing, errors, reset } = useForm<LoginForm>({
         email: "",
         password: "",
         remember: false,
@@ -28,7 +40,7 @@ export default function Login({
         }
     }, [status]);
 
-    const submit: React.FormEventHandler = (e) => {
+    const handleSubmit: React.FormEventHandler = (e) => {
         e.preventDefault();
 
         post(route("login"), {
@@ -39,21 +51,14 @@ export default function Login({
     };
 
     return (
-        <AuthLayout
+        <AuthCard
+            cardIcon={UserIcon}
             description="Welcome back! Please enter your details"
-            footer={
-                <>
-                    <span>Don&apos;t your have account?&nbsp;</span>
-                    <LinkButton.Root $style="black" asChild>
-                        <Link href={route("register")}>Sign up</Link>
-                    </LinkButton.Root>
-                </>
-            }
-            title="Log in to your account"
+            title="Login to your account"
         >
             <Head title="Log in" />
 
-            <form className="flex flex-col gap-3" onSubmit={submit}>
+            <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
                 <TextField
                     $error={!!errors.email}
                     autoComplete="username"
@@ -61,6 +66,7 @@ export default function Login({
                     hint={errors.email}
                     inputMode="email"
                     label="Email"
+                    leadingIcon={MailLineIcon}
                     name="email"
                     onChange={(e) => setData("email", e.target.value)}
                     placeholder="e.g. john@example.com"
@@ -68,17 +74,18 @@ export default function Login({
                     value={data.email}
                 />
 
-                <TextField
-                    $error={!!errors.password}
-                    autoComplete="current-password"
-                    hint={errors.password}
-                    label="Password"
-                    name="password"
-                    onChange={(e) => setData("password", e.target.value)}
-                    placeholder="Enter your password"
-                    type="password"
-                    value={data.password}
-                />
+                <Field error={errors.password} id="password" label="Password">
+                    <PasswordInput
+                        $error={!!errors.password}
+                        autoComplete="current-password"
+                        disabled={processing}
+                        id="password"
+                        leadingIcon={LockLineIcon}
+                        name="password"
+                        onChange={(e) => setData("password", e.target.value)}
+                        value={data.password}
+                    />
+                </Field>
 
                 <div className="flex items-center justify-between gap-3 py-2">
                     <Checkbox
@@ -100,7 +107,15 @@ export default function Login({
                 </FancyButton.Root>
             </form>
 
-            {socialstream.show && <Socialstream />}
-        </AuthLayout>
+            {socialstream.show ? <Socialstream /> : null}
+        </AuthCard>
     );
 }
+
+LoginPage.layout = (page: React.ReactNode & { props: InertiaSharedProps }) => (
+    <AuthLayout {...page.props}>
+        <Head title="Accounts" />
+
+        {page}
+    </AuthLayout>
+);

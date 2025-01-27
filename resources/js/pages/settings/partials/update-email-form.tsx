@@ -3,8 +3,8 @@ import { useDebounce } from "@uidotdev/usehooks";
 import { useCallback, useEffect } from "react";
 import { toast } from "sonner";
 
+import { TextField } from "#/components/form/text-field.tsx";
 import { FormSection } from "#/components/form-section.tsx";
-import { TextField } from "#/components/text-field.tsx";
 import { type InertiaSharedProps } from "#/types/index.ts";
 
 export function UpdateEmailForm() {

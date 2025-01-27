@@ -1,16 +1,27 @@
 import { Head, Link, useForm } from "@inertiajs/react";
+import UserAddLineIcon from "virtual:icons/ri/user-add-fill";
 import { route } from "ziggy-js";
 
-import { Checkbox } from "#/components/checkbox.tsx";
+import { Checkbox } from "#/components/form/checkbox.tsx";
+import { TextField } from "#/components/form/text-field.tsx";
 import { Socialstream } from "#/components/socialstream.tsx";
-import { TextField } from "#/components/text-field.tsx";
 import * as FancyButton from "#/components/ui/fancy-button.tsx";
 import * as LinkButton from "#/components/ui/link-button.tsx";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";
+import { AuthCard } from "#/layouts/partials/auth-card.tsx";
 import { type InertiaSharedProps } from "#/types/index.ts";
 
-export default function Register({ socialstream }: InertiaSharedProps) {
-    const { data, setData, post, processing, errors, reset } = useForm({
+type RegisterForm = {
+    name: string;
+    email: string;
+    password: string;
+    password_confirmation: string;
+    terms: boolean;
+    remember: boolean;
+};
+
+export default function RegisterPage({ socialstream }: InertiaSharedProps) {
+    const { data, setData, post, processing, errors, reset } = useForm<RegisterForm>({
         name: "",
         email: "",
         password: "",
@@ -19,7 +30,7 @@ export default function Register({ socialstream }: InertiaSharedProps) {
         remember: false,
     });
 
-    const submit: React.FormEventHandler = (e) => {
+    const handleSubmit: React.FormEventHandler = (e) => {
         e.preventDefault();
 
         post(route("register"), {
@@ -30,21 +41,12 @@ export default function Register({ socialstream }: InertiaSharedProps) {
     };
 
     return (
-        <AuthLayout
+        <AuthCard
+            cardIcon={UserAddLineIcon}
             description="Create an account to start tracking your expenses"
-            footer={
-                <>
-                    <span>Already have account?&nbsp;</span>
-                    <LinkButton.Root $style="black" asChild>
-                        <Link href={route("login")}>Log in</Link>
-                    </LinkButton.Root>
-                </>
-            }
-            title="Sign up"
+            title="Create a new account"
         >
-            <Head title="Register" />
-
-            <form className="flex flex-col gap-3" onSubmit={submit}>
+            <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
                 <TextField
                     $error={!!errors.name}
                     autoComplete="name"
@@ -102,11 +104,11 @@ export default function Register({ socialstream }: InertiaSharedProps) {
                         label={
                             <>
                                 <span>I agree with the&nbsp;</span>
-                                <LinkButton.Root $style="black" asChild className="whitespace-normal">
+                                <LinkButton.Root $style="black" $underline asChild className="whitespace-normal">
                                     <Link href={route("terms.show")}>Terms of Service</Link>
                                 </LinkButton.Root>
                                 <span>&nbsp;and&nbsp;</span>
-                                <LinkButton.Root $style="black" asChild className="whitespace-normal">
+                                <LinkButton.Root $style="black" $underline asChild className="whitespace-normal">
                                     <Link href={route("policy.show")}>Privacy Policy</Link>
                                 </LinkButton.Root>
                             </>
@@ -121,39 +123,6 @@ export default function Register({ socialstream }: InertiaSharedProps) {
                         name="remember"
                         onCheckedChange={(checked) => setData("remember", !!checked)}
                     />
-                    {/* <CheckboxField className="items-start">
-                        <Checkbox
-                            checked={data.terms}
-                            className="mt-px"
-                            name="terms"
-                            onChange={(checked) => setData("terms", checked)}
-                        />
-                        <Label className="text-paragraph-sm">
-                            I agree with the{" "}
-                            <Link className="font-bold" href={route("terms.show")}>
-                                Terms of Service
-                            </Link>{" "}
-                            and{" "}
-                            <Link className="font-bold" href={route("policy.show")}>
-                                Privacy Policy
-                            </Link>
-                        </Label>
-
-                        {errors.terms && (
-                            <Hint className="col-span-full" invalid>
-                                {errors.terms}
-                            </Hint>
-                        )}
-                    </CheckboxField>
-
-                    <CheckboxField>
-                        <Checkbox
-                            checked={data.remember}
-                            name="remember"
-                            onChange={(checked) => setData("remember", checked)}
-                        />
-                        <Label className="text-paragraph-sm">Remember me</Label>
-                    </CheckboxField> */}
                 </div>
 
                 <FancyButton.Root $type="primary" disabled={processing} type="submit">
@@ -161,7 +130,15 @@ export default function Register({ socialstream }: InertiaSharedProps) {
                 </FancyButton.Root>
             </form>
 
-            {socialstream.show && <Socialstream />}
-        </AuthLayout>
+            {socialstream.show ? <Socialstream /> : null}
+        </AuthCard>
     );
 }
+
+RegisterPage.layout = (page: React.ReactNode & { props: InertiaSharedProps }) => (
+    <AuthLayout {...page.props}>
+        <Head title="Register" />
+
+        {page}
+    </AuthLayout>
+);
