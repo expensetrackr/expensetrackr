@@ -4,6 +4,14 @@
 @variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 @layer base {
+    *,
+    ::after,
+    ::before,
+    ::backdrop,
+    ::file-selector-button {
+        border-color: var(--stroke-soft-200, currentColor);
+    }
+
     * {
         /* Prevent grid and flex items from spilling out their container. */
         min-width: 0;
@@ -22,8 +30,6 @@
     }
 
     body {
-        border-color: var(--stroke-soft-200);
-
         /* Ensure that the body fills the entire viewport. */
         @apply min-h-dvh;
     }
@@ -45,18 +51,18 @@
     --color-*: initial;
 
     /* neutral colors */
-    --color-neutral-950: oklch(18.2% 0.0198 266deg);
-    --color-neutral-900: oklch(22.4% 0.0201 272deg);
-    --color-neutral-800: oklch(26.7% 0.021 273deg);
-    --color-neutral-700: oklch(30.9% 0.021 266deg);
-    --color-neutral-600: oklch(46% 0.0241 267deg);
-    --color-neutral-500: oklch(56.8% 0.0213 266deg);
-    --color-neutral-400: oklch(70.4% 0.022 264deg);
-    --color-neutral-300: oklch(85.3% 0.0136 263deg);
-    --color-neutral-200: oklch(91.8% 0.00873 265deg);
-    --color-neutral-100: oklch(96.9% 0.00511 248deg);
-    --color-neutral-50: oklch(97.6% 0.00447 258deg);
-    --color-neutral-0: oklch(100% 0.0000000000000005 0deg);
+    --color-neutral-950: oklch(18.2% 0.0198 266deg); /* #0E121B */
+    --color-neutral-900: oklch(22.4% 0.0201 272deg); /* #181B25 */
+    --color-neutral-800: oklch(26.7% 0.021 273deg); /* #222530 */
+    --color-neutral-700: oklch(30.9% 0.021 266deg); /* #2B303B */
+    --color-neutral-600: oklch(46% 0.0241 267deg); /* #525866 */
+    --color-neutral-500: oklch(56.8% 0.0213 266deg); /* #717784 */
+    --color-neutral-400: oklch(70.4% 0.022 264deg); /* #99A0AE */
+    --color-neutral-300: oklch(85.3% 0.0136 263deg); /* #CACFD8 */
+    --color-neutral-200: oklch(91.8% 0.00873 265deg); /* #E1E4EA */
+    --color-neutral-100: oklch(96.9% 0.00511 248deg); /* #F2F5F8 */
+    --color-neutral-50: oklch(97.6% 0.00447 258deg); /* #F5F7FA */
+    --color-neutral-0: oklch(100% 0.0000000000000005 0deg); /* #FFFFFF */
     --color-neutral-alpha-24: hsl(220deg, 11.5%, 64.1%, 0.24);
     --color-neutral-alpha-16: hsl(220deg, 11.5%, 64.1%, 0.16);
     --color-neutral-alpha-10: hsl(220deg, 11.5%, 64.1%, 0.1);
@@ -416,6 +422,11 @@
     --transition-timing-function-drawer: cubic-bezier(0.32, 0.72, 0, 1);
 
     --animate-caret-blink: caret-blink 1.25s ease-out infinite;
+}
+
+@utility container {
+    margin-inline: auto;
+    padding-inline: 1rem;
 }
 
 @keyframes caret-blink {
