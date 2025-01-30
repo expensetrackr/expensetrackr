@@ -3,6 +3,7 @@ import { Image } from "@unpic/react";
 import IsotypeDark from "#/assets/isotype-dark.svg";
 import IsotypeLight from "#/assets/isotype-light.svg";
 
+import { BentoSubscriptions } from "#/components/bento/subscriptions.tsx";
 import { BentoCard } from "#/components/bento-card.tsx";
 import { Link } from "#/components/link.tsx";
 import { MultiCurrency } from "#/components/multi-currency.tsx";
@@ -20,7 +21,7 @@ export default function WelcomePage(props: PageProps<{ laravelVersion: string; p
                 {/* Hero */}
                 <div className="relative w-full py-14">
                     {/* Header */}
-                    <div className="container">
+                    <div className="container max-w-7xl">
                         <div className="relative z-50 flex items-center justify-between rounded-12 border bg-(--bg-white-0)/25 px-6 py-2 backdrop-blur-xs">
                             <div className="flex items-center gap-1">
                                 <Image alt="" className="hidden dark:block" height={40} src={IsotypeDark} width={64} />
@@ -86,17 +87,24 @@ export default function WelcomePage(props: PageProps<{ laravelVersion: string; p
                 </div>
 
                 {/* Bento */}
-                <div className="container">
+                <div className="container max-w-7xl">
                     <div className="grid grid-cols-1 gap-5 lg:grid-cols-12">
                         <BentoCard
                             className="bg-gradient-to-tr lg:col-span-4"
                             eyebrow="multi-currency"
-                            graphic={(isHovered) => <MultiCurrency isHovered={isHovered} />}
+                            graphic={(isHovered) => (
+                                <MultiCurrency className="mx-auto max-w-40" isHovered={isHovered} />
+                            )}
                             title="Tu dinero, en todos los idiomas"
                         />
                         <BentoCard
                             className="bg-gradient-to-bl lg:col-span-5"
                             eyebrow="suscripciones"
+                            graphic={(isHovered) => (
+                                <div className="mx-auto max-w-96">
+                                    <BentoSubscriptions isHovered={isHovered} />
+                                </div>
+                            )}
                             title="Tus subscripciones, bajo control"
                         />
                         <BentoCard

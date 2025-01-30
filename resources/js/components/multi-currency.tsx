@@ -5,6 +5,7 @@ import { useEffect, useMemo, useRef } from "react";
 
 import { useCycle } from "#/hooks/use-cycle.ts";
 import { useTranslation } from "#/hooks/use-translation.ts";
+import { cnMerge } from "#/utils/cn.ts";
 
 const items = [
     {
@@ -21,9 +22,13 @@ const items = [
     },
 ];
 
-export function MultiCurrency({ isHovered }: { isHovered: boolean }) {
+type MultiCurrencyProps = React.ComponentPropsWithRef<"div"> & {
+    isHovered: boolean;
+};
+
+export function MultiCurrency({ isHovered, className, ...props }: MultiCurrencyProps) {
     return (
-        <div className="flex flex-col items-center gap-1.5">
+        <div {...props} className={cnMerge("flex flex-col items-center gap-1.5", className)}>
             {items.map((item, index) => (
                 <MultiCurrencyItem key={index} {...item} isHovered={isHovered} />
             ))}
@@ -71,7 +76,7 @@ function MultiCurrencyItem({ numbers, currencies, isHovered }: MultiCurrencyItem
     );
 
     return (
-        <div className="flex w-40 items-center gap-1.5 rounded-full border px-2.5 py-1.5">
+        <div className="flex w-full items-center gap-1.5 rounded-full border px-2.5 py-1.5">
             <AnimatePresence mode="wait">
                 <motion.svg
                     animate={{ opacity: 1, y: 0 }}
