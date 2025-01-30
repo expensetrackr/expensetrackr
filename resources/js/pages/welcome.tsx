@@ -3,16 +3,16 @@ import { Image } from "@unpic/react";
 import IsotypeDark from "#/assets/isotype-dark.svg";
 import IsotypeLight from "#/assets/isotype-light.svg";
 
+import { BentoAccountsTransfers } from "#/components/bento/accounts-transfers.tsx";
+import { MultiCurrency } from "#/components/bento/multi-currency.tsx";
+import { BentoNotifications } from "#/components/bento/notifications.tsx";
 import { BentoSubscriptions } from "#/components/bento/subscriptions.tsx";
 import { BentoCard } from "#/components/bento-card.tsx";
 import { Link } from "#/components/link.tsx";
-import { MultiCurrency } from "#/components/multi-currency.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import { type PageProps } from "#/types/index.ts";
 
-export default function WelcomePage(props: PageProps<{ laravelVersion: string; phpVersion: string }>) {
-    console.info(props);
-
+export default function WelcomePage(_props: PageProps<{ laravelVersion: string; phpVersion: string }>) {
     return (
         <>
             <Head title="Welcome" />
@@ -100,21 +100,20 @@ export default function WelcomePage(props: PageProps<{ laravelVersion: string; p
                         <BentoCard
                             className="bg-gradient-to-bl lg:col-span-5"
                             eyebrow="suscripciones"
-                            graphic={(isHovered) => (
-                                <div className="mx-auto max-w-96">
-                                    <BentoSubscriptions isHovered={isHovered} />
-                                </div>
-                            )}
+                            graphic={(isHovered) => <BentoSubscriptions isHovered={isHovered} />}
                             title="Tus subscripciones, bajo control"
                         />
                         <BentoCard
                             className="bg-gradient-to-tl lg:col-span-3"
                             eyebrow="notificaciones"
+                            fade={["bottom"]}
+                            graphic={(isHovered) => <BentoNotifications isHovered={isHovered} />}
                             title="No te pierdas ningún gasto"
                         />
                         <BentoCard
                             className="bg-radial lg:col-span-4"
                             eyebrow="transferencias entre cuentas"
+                            graphic={(isHovered) => <BentoAccountsTransfers isHovered={isHovered} />}
                             title="Pasa tu dinero sin dramas"
                         />
                         <BentoCard

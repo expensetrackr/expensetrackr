@@ -9,15 +9,15 @@ import { cnMerge } from "#/utils/cn.ts";
 
 const items = [
     {
-        numbers: [1, 20.35, 3.45],
-        currencies: ["EUR", "RUB", "AMD"],
-    },
-    {
-        numbers: [1.2, 178.3, 746.5],
+        numbers: [1, 1.44, 5.86],
         currencies: ["USD", "CAD", "BRL"],
     },
     {
-        numbers: [1058, 4059, 74320],
+        numbers: [0.96, 99.25, 155],
+        currencies: ["EUR", "RUB", "JPY"],
+    },
+    {
+        numbers: [57.39, 4169.58, 1051.24],
         currencies: ["VES", "COP", "ARS"],
     },
 ];

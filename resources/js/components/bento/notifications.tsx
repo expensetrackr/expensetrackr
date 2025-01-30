@@ -1,0 +1,47 @@
+import Notification3Icon from "virtual:icons/ri/notification-3-line";
+
+import * as TopbarItemButton from "#/components/topbar-item-button.tsx";
+import * as Divider from "#/components/ui/divider.tsx";
+import * as LinkButton from "#/components/ui/link-button.tsx";
+import * as Popover from "#/components/ui/popover.tsx";
+import { cnMerge } from "#/utils/cn.ts";
+
+type BentoNotificationsProps = React.ComponentPropsWithRef<"div"> & {
+    isHovered: boolean;
+};
+
+export function BentoNotifications({ isHovered, className, ...props }: BentoNotificationsProps) {
+    return (
+        <div {...props} className={cnMerge("flex size-full flex-col items-center justify-center gap-1", className)}>
+            <div className="mb-5 flex size-full flex-col items-center justify-center gap-2">
+                <Popover.Root open={isHovered}>
+                    <Popover.Trigger asChild>
+                        <TopbarItemButton.Root hasNotification>
+                            <TopbarItemButton.Icon as={Notification3Icon} />
+                        </TopbarItemButton.Root>
+                    </Popover.Trigger>
+
+                    <Popover.Content
+                        className="pointer-events-none w-screen max-w-2xs rounded-20 p-0 shadow-none"
+                        showArrow={false}
+                    >
+                        <div className="flex h-14 items-center justify-between px-5">
+                            <span className="text-label-sm text-(--text-strong-950)">Notifications</span>
+                            <LinkButton.Root $size="sm" $style="primary">
+                                Mark all as read
+                            </LinkButton.Root>
+                        </div>
+
+                        <Divider.Root />
+
+                        <div className="flex flex-col gap-5 p-5">
+                            <p className="text-center text-label-sm text-(--text-sub-600)">I was wrong 😝</p>
+                        </div>
+                    </Popover.Content>
+                </Popover.Root>
+
+                <p className="text-center text-label-sm text-(--text-sub-600)">I think you have 10 notifications</p>
+            </div>
+        </div>
+    );
+}

@@ -16,7 +16,7 @@ function TopbarItemButton({ children, asChild, hasNotification, className, ...re
         <Component
             className={cnMerge(
                 // base
-                "transition-default relative flex size-10 shrink-0 items-center justify-center rounded-10 text-(--text-sub-600)",
+                "transition-default relative flex size-10 shrink-0 items-center justify-center rounded-10 text-(--text-sub-600) outline-none",
                 // hover
                 "hover:bg-(--bg-weak-50)",
                 // open
@@ -40,7 +40,7 @@ function TopbarItemButtonIcon<T extends React.ElementType>({
 }: PolymorphicComponentProps<T, React.HTMLAttributes<HTMLDivElement>>) {
     const Component = as || "div";
 
-    return <Component className="size-5" {...rest} />;
+    return <Component className={cnMerge("size-5", className)} {...rest} />;
 }
 
 export { TopbarItemButton as Root, TopbarItemButtonIcon as Icon };

@@ -103,7 +103,7 @@ type BentoSubscriptionItemProps = React.ComponentPropsWithRef<"div"> & {
     isHovered: boolean;
 };
 
-const MotionBadge = motion(Badge.Root);
+const MotionBadge = motion.create(Badge.Root);
 
 function BentoSubscriptionItem({ subscriptions, isHovered, className, ...props }: BentoSubscriptionItemProps) {
     const [item, cycleItem] = useCycle(subscriptions);
