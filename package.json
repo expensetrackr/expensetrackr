@@ -32,7 +32,7 @@
         "@radix-ui/react-select": "2.1.5",
         "@radix-ui/react-slot": "1.1.1",
         "@radix-ui/react-tabs": "1.1.2",
-        "@stepperize/react": "4.2.0",
+        "@stepperize/react": "5.0.0",
         "@sumup/intl": "1.6.0",
         "@uidotdev/usehooks": "2.4.1",
         "@unpic/react": "1.0.0",
