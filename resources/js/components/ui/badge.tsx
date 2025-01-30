@@ -396,37 +396,45 @@ export const badgeVariants = tv({
 type BadgeSharedProps = VariantProps<typeof badgeVariants>;
 
 type BadgeRootProps = VariantProps<typeof badgeVariants> &
-    React.HTMLAttributes<HTMLDivElement> & {
+    React.ComponentPropsWithRef<"div"> & {
         asChild?: boolean;
     };
 
-const BadgeRoot = React.forwardRef<HTMLDivElement, BadgeRootProps>(
-    ({ asChild, $size, $style, $color, disabled, $square, children, className, ...rest }, forwardedRef) => {
-        const uniqueId = React.useId();
-        const Component = asChild ? Slot : "div";
-        const { root } = badgeVariants({ $size, $style, $color, disabled, $square });
+function BadgeRoot({
+    asChild,
+    $size,
+    $style,
+    $color,
+    disabled,
+    $square,
+    children,
+    className,
+    ...rest
+}: BadgeRootProps) {
+    const uniqueId = React.useId();
+    const Component = asChild ? Slot : "div";
+    const { root } = badgeVariants({ $size, $style, $color, disabled, $square });
 
-        const sharedProps: BadgeSharedProps = {
-            $size,
-            $style,
-            $color,
-        };
+    const sharedProps: BadgeSharedProps = {
+        $size,
+        $style,
+        $color,
+    };
 
-        const extendedChildren = recursiveCloneChildren(
-            children as React.ReactElement[],
-            sharedProps,
-            [BADGE_ICON_NAME, BADGE_DOT_NAME],
-            uniqueId,
-            asChild,
-        );
+    const extendedChildren = recursiveCloneChildren(
+        children as React.ReactElement[],
+        sharedProps,
+        [BADGE_ICON_NAME, BADGE_DOT_NAME],
+        uniqueId,
+        asChild,
+    );
 
-        return (
-            <Component className={root({ class: className })} ref={forwardedRef} {...rest}>
-                {extendedChildren}
-            </Component>
-        );
-    },
-);
+    return (
+        <Component className={root({ class: className })} {...rest}>
+            {extendedChildren}
+        </Component>
+    );
+}
 BadgeRoot.displayName = BADGE_ROOT_NAME;
 
 function BadgeIcon<T extends React.ElementType>({

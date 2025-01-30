@@ -19,10 +19,7 @@ function IconIndeterminate({ ...rest }: React.SVGProps<SVGSVGElement>) {
     );
 }
 
-const Checkbox = React.forwardRef<
-    React.ComponentRef<typeof CheckboxPrimitive.Root>,
-    React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root>
->(({ className, checked, ...rest }, forwardedRef) => {
+function Checkbox({ className, checked, ...rest }: React.CustomComponentPropsWithRef<typeof CheckboxPrimitive.Root>) {
     const filterId = React.useId();
 
     // precalculated by .getTotalLength()
@@ -37,7 +34,6 @@ const Checkbox = React.forwardRef<
                 "focus:outline-none",
                 className,
             )}
-            ref={forwardedRef}
             {...rest}
         >
             <svg fill="none" height="20" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
@@ -149,7 +145,7 @@ const Checkbox = React.forwardRef<
             </CheckboxPrimitive.Indicator>
         </CheckboxPrimitive.Root>
     );
-});
+}
 Checkbox.displayName = CheckboxPrimitive.Root.displayName;
 
 export { Checkbox as Root };

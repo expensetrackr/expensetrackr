@@ -183,36 +183,34 @@ export const socialButtonVariants = tv({
 type SocialButtonSharedProps = VariantProps<typeof socialButtonVariants>;
 
 type SocialButtonProps = VariantProps<typeof socialButtonVariants> &
-    React.ButtonHTMLAttributes<HTMLButtonElement> & {
+    React.ComponentPropsWithRef<"button"> & {
         asChild?: boolean;
     };
 
-const SocialButtonRoot = React.forwardRef<HTMLButtonElement, SocialButtonProps>(
-    ({ asChild, children, $style, $brand, className, ...rest }, forwardedRef) => {
-        const uniqueId = React.useId();
-        const Component = asChild ? Slot : "button";
-        const { root } = socialButtonVariants({ $brand, $style });
+function SocialButtonRoot({ asChild, children, $style, $brand, className, ...rest }: SocialButtonProps) {
+    const uniqueId = React.useId();
+    const Component = asChild ? Slot : "button";
+    const { root } = socialButtonVariants({ $brand, $style });
 
-        const sharedProps: SocialButtonSharedProps = {
-            $style,
-            $brand,
-        };
+    const sharedProps: SocialButtonSharedProps = {
+        $style,
+        $brand,
+    };
 
-        const extendedChildren = recursiveCloneChildren(
-            children as React.ReactElement[],
-            sharedProps,
-            [SOCIAL_BUTTON_ICON_NAME],
-            uniqueId,
-            asChild,
-        );
+    const extendedChildren = recursiveCloneChildren(
+        children as React.ReactElement[],
+        sharedProps,
+        [SOCIAL_BUTTON_ICON_NAME],
+        uniqueId,
+        asChild,
+    );
 
-        return (
-            <Component className={root({ class: className })} ref={forwardedRef} {...rest}>
-                {extendedChildren}
-            </Component>
-        );
-    },
-);
+    return (
+        <Component className={root({ class: className })} {...rest}>
+            {extendedChildren}
+        </Component>
+    );
+}
 SocialButtonRoot.displayName = SOCIAL_BUTTON_ROOT_NAME;
 
 function SocialButtonIcon<T extends React.ElementType>({

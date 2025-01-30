@@ -70,36 +70,34 @@ const verticalStepperItemVariants = tv({
 
 type VerticalStepperItemSharedProps = VariantProps<typeof verticalStepperItemVariants>;
 
-type VerticalStepperItemProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
+type VerticalStepperItemProps = React.ComponentPropsWithRef<"button"> &
     VariantProps<typeof verticalStepperItemVariants> & {
         asChild?: boolean;
     };
 
-const VerticalStepperItem = React.forwardRef<HTMLButtonElement, VerticalStepperItemProps>(
-    ({ asChild, children, $state, className, ...rest }, forwardedRef) => {
-        const uniqueId = React.useId();
-        const Component = asChild ? Slot : "button";
-        const { root } = verticalStepperItemVariants({ $state });
+function VerticalStepperItem({ asChild, children, $state, className, ...rest }: VerticalStepperItemProps) {
+    const uniqueId = React.useId();
+    const Component = asChild ? Slot : "button";
+    const { root } = verticalStepperItemVariants({ $state });
 
-        const sharedProps: VerticalStepperItemSharedProps = {
-            $state,
-        };
+    const sharedProps: VerticalStepperItemSharedProps = {
+        $state,
+    };
 
-        const extendedChildren = recursiveCloneChildren(
-            children as React.ReactElement[],
-            sharedProps,
-            [VERTICAL_STEPPER_ITEM_INDICATOR_NAME],
-            uniqueId,
-            asChild,
-        );
+    const extendedChildren = recursiveCloneChildren(
+        children as React.ReactElement[],
+        sharedProps,
+        [VERTICAL_STEPPER_ITEM_INDICATOR_NAME],
+        uniqueId,
+        asChild,
+    );
 
-        return (
-            <Component className={root({ class: className })} ref={forwardedRef} {...rest}>
-                {extendedChildren}
-            </Component>
-        );
-    },
-);
+    return (
+        <Component className={root({ class: className })} {...rest}>
+            {extendedChildren}
+        </Component>
+    );
+}
 VerticalStepperItem.displayName = VERTICAL_STEPPER_ITEM_NAME;
 
 function VerticalStepperItemIndicator({

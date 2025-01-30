@@ -214,13 +214,12 @@ function InputWrapper({
 }
 InputWrapper.displayName = INPUT_WRAPPER_NAME;
 
-const Input = React.forwardRef<
-    HTMLInputElement,
-    React.InputHTMLAttributes<HTMLInputElement> &
-        InputSharedProps & {
-            asChild?: boolean;
-        }
->(({ className, type = "text", $size, $error, asChild, ...rest }, forwardedRef) => {
+type InputProps = React.ComponentPropsWithRef<"input"> &
+    InputSharedProps & {
+        asChild?: boolean;
+    };
+
+function Input({ className, type = "text", $size, $error, asChild, ...rest }: InputProps) {
     const Component = asChild ? Slot : "input";
 
     const { input } = inputVariants({
@@ -228,8 +227,8 @@ const Input = React.forwardRef<
         $error,
     });
 
-    return <Component className={input({ class: className })} ref={forwardedRef} type={type} {...rest} />;
-});
+    return <Component className={input({ class: className })} type={type} {...rest} />;
+}
 Input.displayName = INPUT_EL_NAME;
 
 function InputIcon<T extends React.ElementType = "div">({
