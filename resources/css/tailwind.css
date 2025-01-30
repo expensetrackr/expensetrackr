@@ -21,6 +21,12 @@
             "cv09" 1,
             "liga" 0,
             "calt" 0;
+
+        /* Prevent dragging */
+        -webkit-user-drag: none;
+        user-drag: none;
+        -webkit-app-region: no-drag;
+        app-region: no-drag;
     }
 
     body {
