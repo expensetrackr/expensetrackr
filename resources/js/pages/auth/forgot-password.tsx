@@ -1,5 +1,5 @@
 import { Head, useForm } from "@inertiajs/react";
-import { useEffect } from "react";
+import * as React from "react";
 import { toast } from "sonner";
 import DoorLockIcon from "virtual:icons/ri/door-lock-fill";
 
@@ -14,7 +14,7 @@ export default function ForgotPasswordPage({ status }: { status?: string }) {
         email: "",
     });
 
-    useEffect(() => {
+    React.useEffect(() => {
         if (status) {
             toast.info(status);
         }

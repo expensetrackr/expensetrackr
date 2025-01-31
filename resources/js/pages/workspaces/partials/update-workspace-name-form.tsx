@@ -1,6 +1,6 @@
 import { useForm } from "@inertiajs/react";
 import { useDebounce } from "@uidotdev/usehooks";
-import { useCallback, useEffect } from "react";
+import * as React from "react";
 import { toast } from "sonner";
 import { route } from "ziggy-js";
 
@@ -21,7 +21,7 @@ export function UpdateWorkspaceNameForm({ workspace, permissions }: UpdateWorksp
     });
     const debouncedName = useDebounce(form.data.name, 1000);
 
-    const sendRequest = useCallback(() => {
+    const sendRequest = React.useCallback(() => {
         form.put(route("workspaces.update", [workspace.id]), {
             errorBag: "updateTeamName",
             preserveScroll: true,
@@ -31,7 +31,7 @@ export function UpdateWorkspaceNameForm({ workspace, permissions }: UpdateWorksp
         });
     }, [form, workspace.id]);
 
-    useEffect(() => {
+    React.useEffect(() => {
         if (!permissions.canUpdateWorkspace || workspace.name === debouncedName) return;
 
         sendRequest();

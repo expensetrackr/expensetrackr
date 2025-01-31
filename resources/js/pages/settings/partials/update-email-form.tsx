@@ -1,6 +1,6 @@
 import { useForm, usePage } from "@inertiajs/react";
 import { useDebounce } from "@uidotdev/usehooks";
-import { useCallback, useEffect } from "react";
+import * as React from "react";
 import { toast } from "sonner";
 
 import { TextField } from "#/components/form/text-field.tsx";
@@ -17,7 +17,7 @@ export function UpdateEmailForm() {
     });
     const debouncedEmail = useDebounce(data.email, 1000);
 
-    const sendRequest = useCallback(() => {
+    const sendRequest = React.useCallback(() => {
         form.post(route("user-profile-information.update"), {
             errorBag: "updateProfileInformation",
             preserveScroll: true,
@@ -25,7 +25,7 @@ export function UpdateEmailForm() {
         });
     }, [form]);
 
-    useEffect(() => {
+    React.useEffect(() => {
         if (user?.email === debouncedEmail) return;
 
         sendRequest();

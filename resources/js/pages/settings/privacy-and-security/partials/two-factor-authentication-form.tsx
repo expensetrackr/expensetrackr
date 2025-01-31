@@ -1,7 +1,7 @@
 import { router, useForm, usePage } from "@inertiajs/react";
 import axios from "axios";
 import { parseAsStringEnum, useQueryState } from "nuqs";
-import { useEffect, useState } from "react";
+import * as React from "react";
 
 import { ActionSection } from "#/components/action-section.tsx";
 import { ConfirmsPassword } from "#/components/confirms-password.tsx";
@@ -17,15 +17,15 @@ interface TwoFactorAuthenticationFormProps {
 export function TwoFactorAuthenticationForm({ requiresConfirmation }: TwoFactorAuthenticationFormProps) {
     const page = usePage<PageProps>();
     const [action, setAction] = useQueryState("action", parseAsStringEnum<Action>(Object.values(Action)));
-    const [qrCode, setQrCode] = useState<string | null>(null);
-    const [recoveryCodes, setRecoveryCodes] = useState<string[]>([]);
-    const [setupKey, setSetupKey] = useState<string | null>(null);
+    const [qrCode, setQrCode] = React.useState<string | null>(null);
+    const [recoveryCodes, setRecoveryCodes] = React.useState<string[]>([]);
+    const [setupKey, setSetupKey] = React.useState<string | null>(null);
     const confirmationForm = useForm({
         code: "",
     });
     const twoFactorEnabled = action !== Action.TwoFactorEnable && page.props?.auth?.user?.two_factor_enabled;
 
-    useEffect(() => {
+    React.useEffect(() => {
         if (action === Action.TwoFactorConfirm && !qrCode) {
             void setAction(null);
         }

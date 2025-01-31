@@ -1,6 +1,6 @@
 import { router } from "@inertiajs/react";
 import { parseAsStringEnum, useQueryState } from "nuqs";
-import { useState } from "react";
+import * as React from "react";
 import MailCloseIcon from "virtual:icons/ri/mail-close-line";
 import { route } from "ziggy-js";
 
@@ -74,7 +74,7 @@ export function WorkspaceMemberInvitations({ workspace, permissions }: Workspace
 
 function CancelInvitation({ invitation }: { invitation: WorkspaceInvitation }) {
     const [action, setAction] = useQueryState("action", parseAsStringEnum<Action>(Object.values(Action)));
-    const [isCancelling, setCancelling] = useState(false);
+    const [isCancelling, setCancelling] = React.useState(false);
 
     function cancelWorkspaceInvitation(invitation: WorkspaceInvitation) {
         setCancelling(true);

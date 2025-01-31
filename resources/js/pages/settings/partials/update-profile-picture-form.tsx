@@ -1,5 +1,5 @@
 import { router, useForm, usePage } from "@inertiajs/react";
-import { useRef, useState } from "react";
+import * as React from "react";
 import DeleteBinIcon from "virtual:icons/ri/delete-bin-line";
 import ImageEditIcon from "virtual:icons/ri/image-edit-line";
 import PencilIcon from "virtual:icons/ri/pencil-line";
@@ -12,9 +12,9 @@ import * as Label from "#/components/ui/label.tsx";
 import { type InertiaSharedProps } from "#/types/index.ts";
 
 export function UpdateProfilePictureForm() {
-    const [photoPreview, setPhotoPreview] = useState<string | null>(null);
-    const photoRef = useRef<HTMLInputElement>(null);
-    const formRef = useRef<HTMLFormElement>(null);
+    const [photoPreview, setPhotoPreview] = React.useState<string | null>(null);
+    const photoRef = React.useRef<HTMLInputElement>(null);
+    const formRef = React.useRef<HTMLFormElement>(null);
     const page = usePage<InertiaSharedProps>();
     const user = page.props.auth.user;
     const form = useForm({

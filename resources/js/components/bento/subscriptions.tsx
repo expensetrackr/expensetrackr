@@ -2,7 +2,7 @@ import NumberFlow, { type Format } from "@number-flow/react";
 import { resolveCurrencyFormat } from "@sumup/intl";
 import { Image } from "@unpic/react";
 import { AnimatePresence, motion } from "motion/react";
-import { useRef, useEffect, useMemo } from "react";
+import * as React from "react";
 
 import * as Badge from "#/components/ui/badge.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
@@ -110,8 +110,8 @@ function BentoSubscriptionItem({ subscriptions, isHovered, className, ...props }
     const { language } = useTranslation();
     const currencyFormat = resolveCurrencyFormat(language, item.currency);
 
-    const timeoutRef = useRef<NodeJS.Timeout>(undefined);
-    useEffect(() => {
+    const timeoutRef = React.useRef<NodeJS.Timeout>(undefined);
+    React.useEffect(() => {
         if (!isHovered) return;
 
         cycleItem();
@@ -125,7 +125,7 @@ function BentoSubscriptionItem({ subscriptions, isHovered, className, ...props }
         };
     }, [cycleItem, isHovered]);
 
-    const format: Format = useMemo(
+    const format: Format = React.useMemo(
         () => ({
             style: "currency",
             currency: item.currency,

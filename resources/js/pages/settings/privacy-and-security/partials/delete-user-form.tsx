@@ -1,6 +1,6 @@
 import { useForm } from "@inertiajs/react";
 import { parseAsStringEnum, useQueryState } from "nuqs";
-import { useRef } from "react";
+import * as React from "react";
 import DeleteBinFillIcon from "virtual:icons/ri/delete-bin-fill";
 
 import { ActionSection } from "#/components/action-section.tsx";
@@ -14,7 +14,7 @@ export function DeleteUserForm() {
     const form = useForm({
         password: "",
     });
-    const passwordRef = useRef<HTMLInputElement>(null);
+    const passwordRef = React.useRef<HTMLInputElement>(null);
 
     function onSubmit(e: React.FormEvent) {
         e.preventDefault();

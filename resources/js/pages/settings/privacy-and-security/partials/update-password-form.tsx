@@ -1,6 +1,6 @@
 import { useForm } from "@inertiajs/react";
 import { parseAsStringEnum, useQueryState } from "nuqs";
-import { useRef } from "react";
+import * as React from "react";
 import LockPasswordIcon from "virtual:icons/ri/lock-password-line";
 
 import { ActionSection } from "#/components/action-section.tsx";
@@ -16,8 +16,8 @@ export function UpdatePasswordForm() {
         password: "",
         password_confirmation: "",
     });
-    const currentPasswordRef = useRef<HTMLInputElement>(null);
-    const passwordRef = useRef<HTMLInputElement>(null);
+    const currentPasswordRef = React.useRef<HTMLInputElement>(null);
+    const passwordRef = React.useRef<HTMLInputElement>(null);
 
     function onSubmit(e: React.FormEvent) {
         e.preventDefault();

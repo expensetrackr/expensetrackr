@@ -1,5 +1,5 @@
 import { Head, Link, useForm } from "@inertiajs/react";
-import { useEffect } from "react";
+import * as React from "react";
 import { toast } from "sonner";
 import { route } from "ziggy-js";
 
@@ -11,7 +11,7 @@ import { type InertiaSharedProps } from "#/types/index.ts";
 export default function VerifyEmailPage({ status }: { status?: string }) {
     const { post, processing } = useForm({});
 
-    useEffect(() => {
+    React.useEffect(() => {
         if (status) {
             toast.info(status);
         }

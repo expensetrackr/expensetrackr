@@ -1,7 +1,7 @@
 import { useForm } from "@inertiajs/react";
 import axios from "axios";
 import { parseAsStringEnum, useQueryState } from "nuqs";
-import { useRef } from "react";
+import * as React from "react";
 import LockPasswordIcon from "virtual:icons/ri/lock-password-line";
 
 import { Action } from "#/utils/action.ts";
@@ -19,7 +19,7 @@ export function ConfirmsPassword({ onConfirm, children }: ConfirmsPasswordProps)
     const { data, setData, errors, ...form } = useForm({
         password: "",
     });
-    const passwordRef = useRef<HTMLInputElement>(null);
+    const passwordRef = React.useRef<HTMLInputElement>(null);
 
     async function startConfirmingPassword() {
         return axios.get(route("password.confirmation")).then(async (response) => {

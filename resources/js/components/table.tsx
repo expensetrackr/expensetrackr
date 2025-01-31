@@ -1,9 +1,9 @@
-import { createContext, useContext, useState } from "react";
+import * as React from "react";
 
 import { cx } from "#/utils/cva.ts";
 import { Link } from "./link.tsx";
 
-const TableContext = createContext<{
+const TableContext = React.createContext<{
     bleed: boolean;
     dense: boolean;
     grid: boolean;
@@ -50,7 +50,7 @@ export function TableBody(props: React.ComponentPropsWithoutRef<"tbody">) {
     return <tbody {...props} />;
 }
 
-const TableRowContext = createContext<{
+const TableRowContext = React.createContext<{
     href?: string;
     target?: string;
     title?: string;
@@ -71,7 +71,7 @@ export function TableRow({
     target?: string;
     title?: string;
 } & React.ComponentPropsWithoutRef<"tr">) {
-    const { striped } = useContext(TableContext);
+    const { striped } = React.useContext(TableContext);
 
     return (
         <TableRowContext.Provider value={{ href, target, title } as React.ContextType<typeof TableRowContext>}>
@@ -80,7 +80,7 @@ export function TableRow({
                 className={cx(
                     className,
                     href &&
-                        "has-[[data-row-link][data-focus]]:outline has-[[data-row-link][data-focus]]:outline-2 has-[[data-row-link][data-focus]]:-outline-offset-2 has-[[data-row-link][data-focus]]:outline-blue-500 dark:focus-within:bg-white/[2.5%]",
+                        "has-[[data-row-link][data-focus]]:outline-2 has-[[data-row-link][data-focus]]:-outline-offset-2 has-[[data-row-link][data-focus]]:outline-blue-500 dark:focus-within:bg-white/[2.5%]",
                     striped && "even:bg-zinc-950/[2.5%] dark:even:bg-white/[2.5%]",
                     href && striped && "hover:bg-zinc-950/5 dark:hover:bg-white/5",
                     href && !striped && "hover:bg-zinc-950/[2.5%] dark:hover:bg-white/[2.5%]",
@@ -91,7 +91,7 @@ export function TableRow({
 }
 
 export function TableHeader({ className, ...props }: React.ComponentPropsWithoutRef<"th">) {
-    const { bleed, grid } = useContext(TableContext);
+    const { bleed, grid } = React.useContext(TableContext);
 
     return (
         <th
@@ -107,9 +107,9 @@ export function TableHeader({ className, ...props }: React.ComponentPropsWithout
 }
 
 export function TableCell({ className, children, ...props }: React.ComponentPropsWithoutRef<"td">) {
-    const { bleed, dense, grid } = useContext(TableContext);
-    const { href, target, title } = useContext(TableRowContext);
-    const [cellRef, setCellRef] = useState<HTMLElement | null>(null);
+    const { bleed, dense, grid } = React.useContext(TableContext);
+    const { href, target, title } = React.useContext(TableRowContext);
+    const [cellRef, setCellRef] = React.useState<HTMLElement | null>(null);
 
     return (
         <td

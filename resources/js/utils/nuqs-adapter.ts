@@ -1,7 +1,7 @@
 import { router } from "@inertiajs/react";
 import mitt from "mitt";
 import { renderQueryString, type unstable_AdapterOptions, unstable_createAdapterProvider } from "nuqs/adapters/custom";
-import { useEffect, useState } from "react";
+import * as React from "react";
 
 const emitter = mitt<{ update: URLSearchParams }>();
 
@@ -17,14 +17,14 @@ function updateUrl(search: URLSearchParams, options: unstable_AdapterOptions) {
 }
 
 function useNuqsInertiaAdapter() {
-    const [searchParams, setSearchParams] = useState(() => {
+    const [searchParams, setSearchParams] = React.useState(() => {
         if (typeof location === "undefined") {
             return new URLSearchParams();
         }
         return new URLSearchParams(location.search);
     });
 
-    useEffect(() => {
+    React.useEffect(() => {
         // Popstate event is only fired when the user navigates
         // via the browser's back/forward buttons.
         const onPopState = () => {

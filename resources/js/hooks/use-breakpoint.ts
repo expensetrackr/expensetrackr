@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import * as React from "react";
 
 const breakpoints = {
     sm: 640,
@@ -23,10 +23,10 @@ const useBreakpoint = () => {
           )
         : ({} as Record<BreakpointKeys, boolean>);
 
-    const [currentBreakpoints, setCurrentBreakpoints] = useState(initialState);
-    const [prevBreakpoints, setPrevBreakpoints] = useState(initialState);
+    const [currentBreakpoints, setCurrentBreakpoints] = React.useState(initialState);
+    const [prevBreakpoints, setPrevBreakpoints] = React.useState(initialState);
 
-    useEffect(() => {
+    React.useEffect(() => {
         if (!isBrowser) return undefined;
 
         const handleResize = () => {

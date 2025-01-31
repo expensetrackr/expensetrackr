@@ -1,7 +1,7 @@
 import NumberFlow, { type Format } from "@number-flow/react";
 import { resolveCurrencyFormat } from "@sumup/intl";
 import { AnimatePresence, motion } from "motion/react";
-import { useEffect, useMemo, useRef } from "react";
+import * as React from "react";
 
 import { useCycle } from "#/hooks/use-cycle.ts";
 import { useTranslation } from "#/hooks/use-translation.ts";
@@ -46,8 +46,8 @@ function MultiCurrencyItem({ numbers, currencies, isHovered }: MultiCurrencyItem
     const { language } = useTranslation();
     const currencyFormat = resolveCurrencyFormat(language, currency);
 
-    const timeoutRef = useRef<NodeJS.Timeout>(undefined);
-    useEffect(() => {
+    const timeoutRef = React.useRef<NodeJS.Timeout>(undefined);
+    React.useEffect(() => {
         if (!isHovered) return;
 
         // Immediate first cycle
@@ -65,7 +65,7 @@ function MultiCurrencyItem({ numbers, currencies, isHovered }: MultiCurrencyItem
         };
     }, [cycleCurrency, cycleValue, isHovered]);
 
-    const format: Format = useMemo(
+    const format: Format = React.useMemo(
         () => ({
             style: "currency",
             currency: currency,

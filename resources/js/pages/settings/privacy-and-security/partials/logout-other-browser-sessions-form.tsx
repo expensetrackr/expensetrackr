@@ -1,6 +1,6 @@
 import { useForm } from "@inertiajs/react";
 import { parseAsStringEnum, useQueryState } from "nuqs";
-import { useRef } from "react";
+import * as React from "react";
 import ChromeIcon from "virtual:icons/ri/chrome-line";
 import FirefoxIcon from "virtual:icons/ri/firefox-line";
 import LogoutCircleRIcon from "virtual:icons/ri/logout-circle-r-line";
@@ -22,7 +22,7 @@ export function LogoutOtherBrowserSessionsForm({ sessions }: LogoutOtherBrowserS
     const form = useForm({
         password: "",
     });
-    const passwordRef = useRef<HTMLInputElement>(null);
+    const passwordRef = React.useRef<HTMLInputElement>(null);
 
     function onSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();

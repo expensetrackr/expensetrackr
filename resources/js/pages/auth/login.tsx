@@ -1,5 +1,5 @@
 import { Head, Link, useForm } from "@inertiajs/react";
-import { useEffect } from "react";
+import * as React from "react";
 import { toast } from "sonner";
 import LockLineIcon from "virtual:icons/ri/lock-line";
 import MailLineIcon from "virtual:icons/ri/mail-line";
@@ -34,7 +34,7 @@ export default function LoginPage({
         remember: false,
     });
 
-    useEffect(() => {
+    React.useEffect(() => {
         if (status) {
             toast.info(status);
         }

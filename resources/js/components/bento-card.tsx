@@ -1,5 +1,5 @@
 import { motion, type HTMLMotionProps } from "motion/react";
-import { useState } from "react";
+import * as React from "react";
 
 import { cnMerge } from "#/utils/cn.ts";
 
@@ -11,7 +11,7 @@ type BentoCardProps = HTMLMotionProps<"div"> & {
 };
 
 export function BentoCard({ eyebrow, title, graphic, fade = [], className, ...props }: BentoCardProps) {
-    const [isHovered, setIsHovered] = useState(false);
+    const [isHovered, setIsHovered] = React.useState(false);
 
     return (
         <motion.div

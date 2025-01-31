@@ -1,5 +1,5 @@
 import { Head, useForm } from "@inertiajs/react";
-import { useState } from "react";
+import * as React from "react";
 import { route } from "ziggy-js";
 
 import { TextField } from "#/components/form/text-field.tsx";
@@ -14,7 +14,7 @@ import { AuthCard } from "#/layouts/partials/auth-card.tsx";
 import { type InertiaSharedProps } from "#/types/index.ts";
 
 export default function TwoFactorChallengePage() {
-    const [recovery, setRecovery] = useState(false);
+    const [recovery, setRecovery] = React.useState(false);
     const { data, setData, post, errors, processing } = useForm({
         code: "",
         recovery_code: "",

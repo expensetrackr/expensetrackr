@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import * as React from "react";
 import { toast } from "sonner";
 
 import { HeaderMobile } from "#/components/header-mobile.tsx";
@@ -12,7 +12,7 @@ export function SettingsLayout({
 }: InertiaSharedProps<{
     children: React.ReactNode;
 }>) {
-    useEffect(() => {
+    React.useEffect(() => {
         if (props.toast?.type) {
             toast[props.toast.type](props.toast.message);
         }
