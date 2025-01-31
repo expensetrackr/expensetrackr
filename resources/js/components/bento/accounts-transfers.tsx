@@ -8,7 +8,9 @@ import ArrowLeftRightIcon from "virtual:icons/ri/arrow-left-right-line";
 import ArrowLeftSIcon from "virtual:icons/ri/arrow-left-s-line";
 import ArrowRightSIcon from "virtual:icons/ri/arrow-right-s-line";
 import CheckboxCircleFillIcon from "virtual:icons/ri/checkbox-circle-fill";
+import SendPlaneFillIcon from "virtual:icons/ri/send-plane-fill";
 
+import * as Button from "#/components/ui/button.tsx";
 import * as CompactButton from "#/components/ui/compact-button.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
 import * as WidgetBox from "#/components/widget-box.tsx";
@@ -110,6 +112,7 @@ export function BentoAccountsTransfers(_: { isHovered: boolean }) {
     });
     const [canScrollPrev, setCanScrollPrev] = React.useState(false);
     const [canScrollNext, setCanScrollNext] = React.useState(false);
+    const [amount, setAmount] = React.useState("0");
 
     React.useEffect(() => {
         if (!emblaApi) return;
@@ -134,8 +137,8 @@ export function BentoAccountsTransfers(_: { isHovered: boolean }) {
 
     return (
         <WidgetBox.Root>
-            <WidgetBox.Header>
-                <WidgetBox.HeaderIcon as={ArrowLeftRightIcon} />
+            <WidgetBox.Header className="md:text-label-sm">
+                <WidgetBox.HeaderIcon as={ArrowLeftRightIcon} className="size-5" />
                 Quick Transfer
             </WidgetBox.Header>
 
@@ -144,7 +147,7 @@ export function BentoAccountsTransfers(_: { isHovered: boolean }) {
 
                 <div className="flex flex-col gap-3">
                     <div className="flex items-center justify-between gap-2">
-                        <div className="text-text-soft-400 text-subheading-xs uppercase">
+                        <div className="text-subheading-xs text-(--text-soft-400) uppercase">
                             My Accounts ({accountsList.length})
                         </div>
                         <div className="flex gap-2">
@@ -191,7 +194,7 @@ export function BentoAccountsTransfers(_: { isHovered: boolean }) {
                                 src="https://public-assets.expensetrackr.app/major-brands/mastercard.svg"
                                 width={20}
                             />
-                            <div className="text-paragraph-sm text-(--text-sub-600)">My Physical Card</div>
+                            <div className="text-paragraph-sm text-(--text-sub-600)">Fast Pay</div>
                         </div>
                         <ArrowDownSIcon className="size-5 shrink-0 text-(--text-sub-600)" />
                     </div>
@@ -204,7 +207,8 @@ export function BentoAccountsTransfers(_: { isHovered: boolean }) {
                                 <CurrencyInput
                                     className="text-center text-h4 tabular-nums outline-none"
                                     maxLength={11}
-                                    value="100.00"
+                                    onValueChange={(values) => setAmount(values.value)}
+                                    value={amount}
                                 />
                             </div>
                         </div>
@@ -215,6 +219,11 @@ export function BentoAccountsTransfers(_: { isHovered: boolean }) {
                         </div>
                     </div>
                 </div>
+
+                <Button.Root $size="sm" $style="stroke" $type="neutral" disabled={amount === "0" || amount === "0.00"}>
+                    Transfer to account
+                    <Button.Icon as={SendPlaneFillIcon} />
+                </Button.Root>
             </div>
         </WidgetBox.Root>
     );
