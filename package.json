@@ -55,7 +55,7 @@
         "react-otp-input": "3.1.1",
         "react-twc": "1.4.2",
         "sonner": "1.7.3",
-        "tailwind-merge": "2.6.0",
+        "tailwind-merge": "3.0.1",
         "tailwind-variants": "0.3.1",
         "zod": "3.24.1",
         "zustand": "5.0.3"
@@ -76,7 +76,7 @@
         "@tailwindcss/postcss": "4.0.1",
         "@tailwindcss/typography": "0.5.16",
         "@total-typescript/ts-reset": "0.6.1",
-        "@types/node": "20",
+        "@types/node": "22",
         "@types/react": "npm:types-react@rc",
         "@types/react-dom": "npm:types-react-dom@rc",
         "@vitejs/plugin-react": "4.3.4",
