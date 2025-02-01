@@ -19,7 +19,7 @@
         "php": "^8.3",
         "akaunting/laravel-money": "5.2.2",
         "cjmellor/browser-sessions": "1.3.0",
-        "filament/filament": "3.2.135",
+        "filament/filament": "3.2.136",
         "hirethunk/verbs": "0.6.4",
         "inertiajs/inertia-laravel": "2.0.0",
         "joelbutcher/socialstream": "6.2.2",
@@ -31,9 +31,9 @@
         "laravel/tinker": "2.10.1",
         "league/flysystem-aws-s3-v3": "3.29.0",
         "pinkary-project/type-guard": "0.1.0",
-        "spatie/laravel-permission": "6.11.0",
+        "spatie/laravel-permission": "6.12.0",
         "spatie/laravel-prefixed-ids": "1.4.0",
-        "tightenco/ziggy": "2.5.0"
+        "tightenco/ziggy": "2.5.1"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "3.5.4",
