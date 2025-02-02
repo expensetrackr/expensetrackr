@@ -23,12 +23,12 @@ export const badgeVariants = tv({
     },
     variants: {
         $size: {
-            small: {
+            sm: {
                 root: "h-4 gap-1.5 px-2 text-subheading-2xs uppercase has-[>.dot]:gap-2",
                 icon: "-mx-1 size-3",
                 dot: "-mx-2 size-4",
             },
-            medium: {
+            md: {
                 root: "h-5 gap-1.5 px-2 text-label-xs",
                 icon: "-mx-1 size-4",
                 dot: "-mx-1.5 size-4",
@@ -360,14 +360,14 @@ export const badgeVariants = tv({
 
         //#region square
         {
-            $size: "small",
+            $size: "sm",
             $square: true,
             class: {
                 root: "min-w-4 px-1",
             },
         },
         {
-            $size: "medium",
+            $size: "md",
             $square: true,
             class: {
                 root: "min-w-5 px-1",
@@ -388,7 +388,7 @@ export const badgeVariants = tv({
     ],
     defaultVariants: {
         $style: "filled",
-        $size: "small",
+        $size: "sm",
         $color: "gray",
     },
 });

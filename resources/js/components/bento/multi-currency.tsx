@@ -98,7 +98,6 @@ function MultiCurrencyItem({ numbers, currencies, isHovered }: MultiCurrencyItem
                 className="text-label-xs [--number-flow-char-height:0.85em]"
                 format={format}
                 locales={language}
-                trend={0}
                 value={value}
                 willChange
             />

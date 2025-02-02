@@ -26,7 +26,7 @@ export function BentoCard({ eyebrow, title, graphic, fade = [], className, ...pr
             whileHover="active"
             {...props}
         >
-            <div className="flex h-full flex-col gap-5">
+            <div className="relative z-10 flex h-full flex-col gap-5">
                 {(eyebrow || title) && (
                     <div className="flex flex-col">
                         {eyebrow && <p className="text-subheading-2xs text-(--text-soft-400) uppercase">{eyebrow}</p>}

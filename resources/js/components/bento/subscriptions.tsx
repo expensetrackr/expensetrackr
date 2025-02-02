@@ -8,7 +8,7 @@ import * as Badge from "#/components/ui/badge.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
 import { useCycle } from "#/hooks/use-cycle.ts";
 import { useTranslation } from "#/hooks/use-translation.ts";
-import { cnMerge } from "#/utils/cn.ts";
+import { cn, cnMerge } from "#/utils/cn.ts";
 
 type Subscription = {
     type: string;
@@ -82,9 +82,13 @@ const subscriptions: Subscriptions = {
     ],
 };
 
-export function BentoSubscriptions({ isHovered }: { isHovered: boolean }) {
+export function BentoSubscriptions({
+    isHovered,
+    className,
+    ...props
+}: React.ComponentPropsWithRef<"div"> & { isHovered: boolean }) {
     return (
-        <div className="flex flex-col gap-2">
+        <div className={cn("flex flex-col gap-2", className)} {...props}>
             <BentoSubscriptionItem isHovered={isHovered} subscriptions={subscriptions.music} />
 
             <Divider.Root $type="line-spacing" />
@@ -201,7 +205,7 @@ function BentoSubscriptionItem({ subscriptions, isHovered, className, ...props }
 
             <MotionBadge
                 $color={getStatusColor(item.status)}
-                $size="medium"
+                $size="md"
                 $style="lighter"
                 animate={{
                     opacity: 1,

@@ -9,6 +9,7 @@ import ArrowLeftSIcon from "virtual:icons/ri/arrow-left-s-line";
 import ArrowRightSIcon from "virtual:icons/ri/arrow-right-s-line";
 import CheckboxCircleFillIcon from "virtual:icons/ri/checkbox-circle-fill";
 import SendPlaneFillIcon from "virtual:icons/ri/send-plane-fill";
+import Settings4Icon from "virtual:icons/ri/settings-4-line";
 
 import * as Button from "#/components/ui/button.tsx";
 import * as CompactButton from "#/components/ui/compact-button.tsx";
@@ -104,7 +105,7 @@ function AccountPill({ account, selected, className, ref, ...rest }: AccountPill
     );
 }
 
-export function BentoAccountsTransfers(_: { isHovered: boolean }) {
+export function BentoAccountsTransfers(props: React.CustomComponentPropsWithRef<typeof WidgetBox.Root>) {
     const [selectedAccounts, setSelectedAccounts] = React.useState<string[]>(["1", "3"]);
     const [emblaRef, emblaApi] = useEmblaCarousel({
         loop: false,
@@ -136,10 +137,14 @@ export function BentoAccountsTransfers(_: { isHovered: boolean }) {
     const scrollNext = () => emblaApi?.scrollNext();
 
     return (
-        <WidgetBox.Root>
-            <WidgetBox.Header className="md:text-label-sm">
-                <WidgetBox.HeaderIcon as={ArrowLeftRightIcon} className="size-5" />
+        <WidgetBox.Root {...props}>
+            <WidgetBox.Header>
+                <WidgetBox.HeaderIcon as={ArrowLeftRightIcon} />
                 Quick Transfer
+                <Button.Root $size="xs" $style="stroke" $type="neutral">
+                    <Button.Icon as={Settings4Icon} />
+                    Advanced
+                </Button.Root>
             </WidgetBox.Header>
 
             <div className="flex flex-col gap-4">
@@ -220,7 +225,7 @@ export function BentoAccountsTransfers(_: { isHovered: boolean }) {
                     </div>
                 </div>
 
-                <Button.Root $size="sm" $style="stroke" $type="neutral" disabled={amount === "0" || amount === "0.00"}>
+                <Button.Root $size="sm" $type="neutral" disabled={amount === "0" || amount === "0.00"}>
                     Transfer to account
                     <Button.Icon as={SendPlaneFillIcon} />
                 </Button.Root>

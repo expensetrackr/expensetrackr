@@ -6,18 +6,14 @@ import * as LinkButton from "#/components/ui/link-button.tsx";
 import * as Popover from "#/components/ui/popover.tsx";
 import { cnMerge } from "#/utils/cn.ts";
 
-type BentoNotificationsProps = React.ComponentPropsWithRef<"div"> & {
-    isHovered: boolean;
-};
-
-export function BentoNotifications({ isHovered, className, ...props }: BentoNotificationsProps) {
+export function BentoNotifications({ className, ...props }: React.ComponentPropsWithRef<"div">) {
     return (
-        <div {...props} className={cnMerge("flex size-full flex-col items-center justify-center gap-1", className)}>
+        <div className={cnMerge("flex size-full flex-col items-center justify-center gap-1", className)} {...props}>
             <div className="mb-5 flex size-full flex-col items-center justify-center gap-2">
-                <Popover.Root open={isHovered}>
+                <Popover.Root>
                     <Popover.Trigger asChild>
-                        <TopbarItemButton.Root hasNotification>
-                            <TopbarItemButton.Icon as={Notification3Icon} />
+                        <TopbarItemButton.Root className="size-12" hasNotification>
+                            <TopbarItemButton.Icon as={Notification3Icon} className="size-6" />
                         </TopbarItemButton.Root>
                     </Popover.Trigger>
 
@@ -41,6 +37,9 @@ export function BentoNotifications({ isHovered, className, ...props }: BentoNoti
                 </Popover.Root>
 
                 <p className="text-center text-label-sm text-(--text-sub-600)">I think you have 10 notifications</p>
+                <p className="text-center text-label-xs text-(--text-soft-400)">
+                    Try to click the bell icon to see notifications
+                </p>
             </div>
         </div>
     );
