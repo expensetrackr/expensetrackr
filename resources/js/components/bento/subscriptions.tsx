@@ -154,7 +154,7 @@ function BentoSubscriptionItem({ subscriptions, isHovered, className, ...props }
                         alt={item.name}
                         className="size-6"
                         height={24}
-                        src={`https://res.cloudinary.com/expensetrackr/image/upload/major-brands/${item.type}.svg`}
+                        src={`${import.meta.env.VITE_PUBLIC_ASSETS_URL}/major-brands/${item.type}.svg`}
                         width={24}
                     />
                 </motion.div>

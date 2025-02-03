@@ -92,7 +92,7 @@ export function BentoWorkspaces(props: React.CustomComponentPropsWithRef<typeof 
                                     <Image
                                         alt={member.name}
                                         height={40}
-                                        src={`https://res.cloudinary.com/expensetrackr/image/upload${member.avatar}`}
+                                        src={`${import.meta.env.VITE_PUBLIC_ASSETS_URL}${member.avatar}`}
                                         width={40}
                                     />
                                 </Avatar.Image>

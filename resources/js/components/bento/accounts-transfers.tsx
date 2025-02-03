@@ -196,7 +196,7 @@ export function BentoAccountsTransfers(props: React.CustomComponentPropsWithRef<
                                 alt="MasterCard"
                                 className="size-5 shrink-0"
                                 height={20}
-                                src="https://res.cloudinary.com/expensetrackr/image/upload/major-brands/mastercard.svg"
+                                src={`${import.meta.env.VITE_PUBLIC_ASSETS_URL}/major-brands/mastercard.svg`}
                                 width={20}
                             />
                             <div className="text-paragraph-sm text-(--text-sub-600)">Fast Pay</div>

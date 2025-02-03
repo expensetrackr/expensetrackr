@@ -5,6 +5,7 @@ import IsotypeDark from "#/assets/isotype-dark.svg";
 import IsotypeLight from "#/assets/isotype-light.svg";
 import { BentoAccountsTransfers } from "#/components/bento/accounts-transfers.tsx";
 import { BentoHistoricalGraphics } from "#/components/bento/graphics.tsx";
+import { BentoLogoCluster } from "#/components/bento/logo-cluster.tsx";
 import { MultiCurrency } from "#/components/bento/multi-currency.tsx";
 import { BentoNotifications } from "#/components/bento/notifications.tsx";
 import { BentoRecentTransactions } from "#/components/bento/recent-transactions.tsx";
@@ -50,11 +51,11 @@ export default function WelcomePage(_props: PageProps<{ laravelVersion: string; 
                     <div className="absolute inset-0">
                         <Image
                             alt=""
-                            className="absolute inset-0 size-full object-cover object-center"
+                            className="absolute inset-0 size-full object-cover object-center invert dark:invert-0"
                             layout="fullWidth"
                             priority
                             role="presentation"
-                            src="https://res.cloudinary.com/expensetrackr/image/upload/hero.jpg"
+                            src={`${import.meta.env.VITE_PUBLIC_ASSETS_URL}/hero.jpg`}
                         />
                         <div className="absolute inset-0 bg-(--bg-white-0) mix-blend-color" />
                         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-(--bg-white-0)" />
@@ -141,14 +142,15 @@ export default function WelcomePage(_props: PageProps<{ laravelVersion: string; 
                                 title="Trabajo en equipo, nivel pro"
                             />
                             <BentoCard
-                                className="bg-gradient-to-tr lg:col-span-8"
+                                className="bg-gradient-to-tr lg:col-span-7"
                                 eyebrow="gráficas"
                                 graphic={<BentoHistoricalGraphics />}
                                 title="Tu pasado financiero en un vistazo"
                             />
                             <BentoCard
-                                className="bg-gradient-to-tr lg:col-span-4"
+                                className="bg-gradient-to-tr pb-0 lg:col-span-5"
                                 eyebrow="sincronización con tu banco (en desarrollo)"
+                                graphic={<BentoLogoCluster className="-mx-6 h-80 md:h-full" />}
                                 title="Conecta tu banco, ahorra tiempo"
                             />
                         </div>
