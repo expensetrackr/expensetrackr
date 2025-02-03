@@ -4,6 +4,7 @@ import { Image } from "@unpic/react";
 import IsotypeDark from "#/assets/isotype-dark.svg";
 import IsotypeLight from "#/assets/isotype-light.svg";
 import { BentoAccountsTransfers } from "#/components/bento/accounts-transfers.tsx";
+import { BentoHistoricalGraphics } from "#/components/bento/graphics.tsx";
 import { MultiCurrency } from "#/components/bento/multi-currency.tsx";
 import { BentoNotifications } from "#/components/bento/notifications.tsx";
 import { BentoRecentTransactions } from "#/components/bento/recent-transactions.tsx";
@@ -49,12 +50,11 @@ export default function WelcomePage(_props: PageProps<{ laravelVersion: string; 
                     <div className="absolute inset-0">
                         <Image
                             alt=""
-                            cdn="bunny"
                             className="absolute inset-0 size-full object-cover object-center"
                             layout="fullWidth"
                             priority
                             role="presentation"
-                            src="https://public-assets.expensetrackr.app/hero-image.jpeg"
+                            src="https://res.cloudinary.com/expensetrackr/image/upload/hero.jpg"
                         />
                         <div className="absolute inset-0 bg-(--bg-white-0) mix-blend-color" />
                         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-(--bg-white-0)" />
@@ -143,6 +143,7 @@ export default function WelcomePage(_props: PageProps<{ laravelVersion: string; 
                             <BentoCard
                                 className="bg-gradient-to-tr lg:col-span-8"
                                 eyebrow="gráficas"
+                                graphic={<BentoHistoricalGraphics />}
                                 title="Tu pasado financiero en un vistazo"
                             />
                             <BentoCard

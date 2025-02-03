@@ -19,7 +19,7 @@ export function TransactionItem({
 }: Omit<React.ComponentPropsWithRef<"button">, "type"> & Omit<Transaction, "id">) {
     const renderIcon = () => {
         if (typeof icon === "string") {
-            return <Image alt={name} cdn="bunny" className="size-6" height={24} src={icon} width={24} />;
+            return <Image alt={name} className="size-6" height={24} src={icon} width={24} />;
         }
         const IconComponent = icon as React.ElementType;
         return <IconComponent className="size-5" />;
