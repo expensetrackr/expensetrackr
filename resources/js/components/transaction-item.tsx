@@ -2,6 +2,7 @@ import { Image } from "@unpic/react";
 import ArrowRightSIcon from "virtual:icons/ri/arrow-right-s-line";
 
 import * as CompactButton from "#/components/ui/compact-button.tsx";
+import { useTranslation } from "#/hooks/use-translation.ts";
 import { type Transaction } from "#/lib/cards-data.ts";
 import { cn, cnMerge } from "#/utils/cn.ts";
 import { formatDate } from "#/utils/date-formatter.ts";
@@ -17,6 +18,8 @@ export function TransactionItem({
     className,
     ...props
 }: Omit<React.ComponentPropsWithRef<"button">, "type"> & Omit<Transaction, "id">) {
+    const { language } = useTranslation();
+
     const renderIcon = () => {
         if (typeof icon === "string") {
             return <Image alt={name} className="size-6" height={24} src={icon} width={24} />;
@@ -55,7 +58,7 @@ export function TransactionItem({
                 <div className="truncate text-paragraph-xs text-(--text-sub-600)">{description}</div>
             </div>
             <div className="space-y-1 text-right">
-                <div className="text-label-sm">{currencyFormatter.format(transaction)}</div>
+                <div className="text-label-sm">{currencyFormatter({ locale: language }).format(transaction)}</div>
                 <div className="text-paragraph-xs text-(--text-sub-600)">{formatDate(date)}</div>
             </div>
             <CompactButton.Root $size="md" $style="ghost" asChild>

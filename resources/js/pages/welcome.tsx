@@ -22,9 +22,22 @@ export default function WelcomePage(_props: PageProps<{ laravelVersion: string; 
             <Head title="Welcome" />
 
             <div className="relative">
-                {/* Hero */}
-                <div className="relative w-full py-14">
-                    {/* Header */}
+                <div aria-hidden="true" className="pointer-events-none absolute h-[80dvh] w-full">
+                    <Image
+                        alt=""
+                        className="absolute inset-0 size-full object-cover object-center invert dark:invert-0"
+                        layout="fullWidth"
+                        priority
+                        role="presentation"
+                        src={`${import.meta.env.VITE_PUBLIC_ASSETS_URL}/hero`}
+                    />
+                    <div className="absolute inset-0 bg-(--bg-white-0) mix-blend-color" />
+                    <div className="absolute inset-0 bg-gradient-to-b from-transparent to-(--bg-white-0)" />
+                    <div className="absolute inset-0 bg-gradient-to-b from-transparent to-(--bg-white-0)" />
+                    <div className="absolute inset-0 bg-linear-to-t from-(--bg-white-0) to-50%" />
+                </div>
+
+                <div className="fixed top-14 z-50 w-full overscroll-contain">
                     <div className="container">
                         <div className="relative z-50 flex items-center justify-between rounded-12 border bg-linear-270 from-(--bg-white-0)/40 from-[3.14%] to-(--bg-white-0)/40 to-[101.19%] px-6 py-2 backdrop-blur-[2px]">
                             <div className="flex items-center gap-1">
@@ -47,50 +60,35 @@ export default function WelcomePage(_props: PageProps<{ laravelVersion: string; 
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <div className="absolute inset-0">
-                        <Image
-                            alt=""
-                            className="absolute inset-0 size-full object-cover object-center invert dark:invert-0"
-                            layout="fullWidth"
-                            priority
-                            role="presentation"
-                            src={`${import.meta.env.VITE_PUBLIC_ASSETS_URL}/hero.jpg`}
-                        />
-                        <div className="absolute inset-0 bg-(--bg-white-0) mix-blend-color" />
-                        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-(--bg-white-0)" />
-                        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-(--bg-white-0)" />
-                    </div>
+                {/* Hero */}
+                <div className="relative z-10 container py-56 pb-14">
+                    <div className="relative flex flex-col gap-8">
+                        <div className="mx-auto flex max-w-[640px] flex-col gap-5">
+                            <h1 className="text-center text-h2">
+                                The best financial <span className="font-bold">management app</span>
+                            </h1>
 
-                    <div className="relative z-10 container py-28">
-                        <div className="relative flex flex-col gap-8">
-                            <div className="mx-auto flex max-w-[640px] flex-col gap-5">
-                                <h1 className="text-center text-h2">
-                                    The best financial <span className="font-bold">management app</span>
-                                </h1>
+                            <p className="text-center text-paragraph-md">
+                                Manage your finances with confidence. Track your expenses, budgets, investments, and
+                                assets.
+                            </p>
+                        </div>
 
-                                <p className="text-center text-paragraph-md">
-                                    Manage your finances with confidence. Track your expenses, budgets, investments, and
-                                    assets.
-                                </p>
-                            </div>
-
-                            <div className="flex flex-col items-center justify-center gap-4 lg:flex-row lg:gap-6">
-                                <Button.Root $style="stroke" className="w-full lg:w-auto lg:min-w-36">
-                                    Contact us
-                                </Button.Root>
-                                <Button.Root asChild className="w-full lg:w-auto lg:min-w-36">
-                                    <Link href={route("register")}>Get started</Link>
-                                </Button.Root>
-                            </div>
+                        <div className="flex flex-col items-center justify-center gap-4 lg:flex-row lg:gap-6">
+                            <Button.Root $style="stroke" className="w-full lg:w-auto lg:min-w-36">
+                                Contact us
+                            </Button.Root>
+                            <Button.Root asChild className="w-full lg:w-auto lg:min-w-36">
+                                <Link href={route("register")}>Get started</Link>
+                            </Button.Root>
                         </div>
                     </div>
-
-                    <div className="absolute inset-0 bg-linear-to-t from-(--bg-white-0) to-50%" />
                 </div>
 
                 {/* Bento */}
-                <div className="container">
+                <div className="relative container">
                     <div className="flex flex-col gap-24">
                         <div className="flex flex-col gap-2">
                             <h2 className="text-center text-h4">La mejor experiencia en su clase</h2>

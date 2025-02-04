@@ -3,6 +3,7 @@ import * as React from "react";
 import { Bar, BarChart, type BarProps, Tooltip as RechartsTooltip, XAxis, YAxis } from "recharts";
 
 import useBreakpoint from "#/hooks/use-breakpoint.ts";
+import { useTranslation } from "#/hooks/use-translation.ts";
 import { currencyFormatter } from "#/utils/number-formatter.ts";
 import { ChartContainer, type ChartConfig } from "./chart.tsx";
 import { tooltipVariants } from "./ui/tooltip.tsx";
@@ -50,20 +51,22 @@ const CustomTooltip = ({ active, payload, renderContent }: CustomTooltipProps) =
     return null;
 };
 
-const tooltipContent = ({ payload }: { payload: any }): React.ReactNode => {
+const TooltipContent = ({ payload }: { payload: any }) => {
+    const { language } = useTranslation();
+
     return (
         <div className="flex flex-col gap-1">
             <p className="text-state-information-base">
                 <span className="font-bold">Income: </span>
-                <span>{currencyFormatter.format(payload[0].payload.income)}</span>
+                <span>{currencyFormatter({ locale: language }).format(payload[0].payload.income)}</span>
             </p>
             <p className="text-state-verified-base">
                 <span className="font-bold">Expenses: </span>
-                <span>{currencyFormatter.format(payload[0].payload.expenses)}</span>
+                <span>{currencyFormatter({ locale: language }).format(payload[0].payload.expenses)}</span>
             </p>
             <p className="text-state-feature-base">
                 <span className="font-bold">Scheduled: </span>
-                <span>{currencyFormatter.format(payload[0].payload.scheduled)}</span>
+                <span>{currencyFormatter({ locale: language }).format(payload[0].payload.scheduled)}</span>
             </p>
         </div>
     );
@@ -94,7 +97,7 @@ export function BudgetOverviewChart({ data }: { data: any }) {
                         y: true,
                     }}
                     animationDuration={200}
-                    content={<CustomTooltip renderContent={tooltipContent} />}
+                    content={<CustomTooltip renderContent={TooltipContent} />}
                     cursor={false}
                     isAnimationActive={true}
                     offset={0}
