@@ -15,7 +15,11 @@ void createInertiaApp({
     resolve: (name) => resolvePageComponent(`./pages/${name}.tsx`, import.meta.glob("./pages/**/*.tsx")),
     setup({ el, App, props }) {
         if (import.meta.env.DEV) {
-            createRoot(el).render(
+            createRoot(el, {
+                onCaughtError: (error, errorInfo) => {
+                    console.error("Caught error", error, errorInfo.componentStack);
+                },
+            }).render(
                 <NuqsAdapter>
                     <App {...props} />
                 </NuqsAdapter>,

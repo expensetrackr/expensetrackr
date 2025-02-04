@@ -8,8 +8,8 @@ type CardFormProps = {
     title?: string;
     description?: string;
     icon?: React.ForwardRefExoticComponent<React.SVGProps<SVGSVGElement>>;
+    stepper?: ReturnType<typeof useStepper>;
     children: React.ReactNode;
-    stepper: ReturnType<typeof useStepper>;
 };
 
 export function Card({ icon, title, description, children, stepper }: CardFormProps) {
@@ -41,7 +41,7 @@ export function Card({ icon, title, description, children, stepper }: CardFormPr
                                 {description ? (
                                     <Text
                                         className="text-center lg:text-paragraph-md"
-                                        key={`${stepper.current.id}-description`}
+                                        key={`${stepper?.current.id}-description`}
                                     >
                                         {description}
                                     </Text>
@@ -55,7 +55,7 @@ export function Card({ icon, title, description, children, stepper }: CardFormPr
                     <div className="flex flex-col gap-3.5 p-4">{children}</div>
 
                     <div className="flex items-center gap-3 border-t border-t-(--stroke-soft-200) px-5 py-4">
-                        {!stepper.isFirst && (
+                        {stepper && !stepper.isFirst && (
                             <Button.Root
                                 $size="sm"
                                 $style="stroke"
