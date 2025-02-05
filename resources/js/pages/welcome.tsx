@@ -1,7 +1,7 @@
 import { getFormProps, useForm } from "@conform-to/react";
 import { getZodConstraint, parseWithZod } from "@conform-to/zod";
 import { Head } from "@inertiajs/react";
-import { Image } from "@unpic/react";
+import { Image, Source } from "@unpic/react";
 import * as React from "react";
 import MoneyDollarCircleFillIcon from "virtual:icons/ri/money-dollar-circle-fill";
 
@@ -37,7 +37,6 @@ export default function WelcomePage(_props: PageProps<{ laravelVersion: string; 
                         className="absolute inset-0 size-full object-cover object-center hue-rotate-90 invert dark:invert-0"
                         layout="fullWidth"
                         priority
-                        role="presentation"
                         src={`${import.meta.env.VITE_PUBLIC_ASSETS_URL}/hero`}
                     />
                     <div className="absolute inset-0 bg-(--bg-white-0) mix-blend-color" />
@@ -76,6 +75,8 @@ export default function WelcomePage(_props: PageProps<{ laravelVersion: string; 
                 <BentoSection />
 
                 <ImageAndTextSection />
+
+                <FeatureSection />
             </div>
         </>
     );
@@ -233,8 +234,31 @@ function ImageAndTextSection() {
                         ))}
                     </div>
                 </div>
-                <div className="col-span-12 lg:col-span-5 lg:col-start-8">
-                    <form method="post" {...getFormProps(form)} className="flex w-full justify-center">
+                <div className="relative col-span-12 overflow-hidden lg:col-span-5 lg:col-start-8">
+                    <picture>
+                        <Source
+                            height={752.27}
+                            media="(prefers-color-scheme: light)"
+                            src={`${import.meta.env.VITE_PUBLIC_ASSETS_URL}/steps-pattern`}
+                            width={921}
+                        />
+                        <Source
+                            height={752.27}
+                            media="(prefers-color-scheme: dark)"
+                            src={`${import.meta.env.VITE_PUBLIC_ASSETS_URL}/steps-pattern-dark`}
+                            width={921}
+                        />
+                        <Image
+                            alt=""
+                            className="pointer-events-none absolute bottom-8 h-auto !w-230"
+                            height={752.27}
+                            objectFit="contain"
+                            src={`${import.meta.env.VITE_PUBLIC_ASSETS_URL}/steps-pattern`}
+                            width={921}
+                        />
+                    </picture>
+
+                    <form method="post" {...getFormProps(form)} className="relative flex w-full justify-center">
                         <Card
                             description="Enter your account's balance and currency. The available options are customized based on your selected account type."
                             icon={MoneyDollarCircleFillIcon}
@@ -247,6 +271,46 @@ function ImageAndTextSection() {
                             />
                         </Card>
                     </form>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+function FeatureSection() {
+    return (
+        <div className="container py-12">
+            <div className="flex flex-col gap-5.5">
+                <div className="mx-auto flex max-w-160 flex-col">
+                    <h2 className="text-center text-h4">Controla tus finanzas, seas quien seas</h2>
+                    <p className="text-center text-paragraph-md">
+                        Si quieres dominar tus finanzas sin complicaciones, somos el "boring expense tracker" que hace
+                        el trabajo pesado por ti
+                    </p>
+                </div>
+
+                <div className="grid grid-cols-12">
+                    <div className="relative col-span-12 lg:col-span-10 lg:col-start-2">
+                        <picture>
+                            <Source
+                                layout="fullWidth"
+                                media="(prefers-color-scheme: light)"
+                                src={`${import.meta.env.VITE_PUBLIC_ASSETS_URL}/ui`}
+                            />
+                            <Source
+                                layout="fullWidth"
+                                media="(prefers-color-scheme: dark)"
+                                src={`${import.meta.env.VITE_PUBLIC_ASSETS_URL}/ui-dark`}
+                            />
+                            <Image
+                                alt=""
+                                className="rounded-16"
+                                layout="fullWidth"
+                                src={`${import.meta.env.VITE_PUBLIC_ASSETS_URL}/ui`}
+                            />
+                        </picture>
+                        <div className="absolute inset-0 rounded-12 bg-linear-to-t from-(--bg-white-0) to-90%" />
+                    </div>
                 </div>
             </div>
         </div>
