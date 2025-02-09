@@ -1,8 +1,11 @@
 import { getFormProps, useForm } from "@conform-to/react";
 import { getZodConstraint, parseWithZod } from "@conform-to/zod";
 import { Head } from "@inertiajs/react";
+import NumberFlow, { type Format } from "@number-flow/react";
+import { resolveCurrencyFormat } from "@sumup/intl";
 import { Image, Source } from "@unpic/react";
 import * as React from "react";
+import CheckboxCircleFillIcon from "virtual:icons/ri/checkbox-circle-fill";
 import MoneyDollarCircleFillIcon from "virtual:icons/ri/money-dollar-circle-fill";
 
 import IsotypeDark from "#/assets/isotype-dark.svg";
@@ -16,11 +19,16 @@ import { BentoRecentTransactions } from "#/components/bento/recent-transactions.
 import { BentoSubscriptions } from "#/components/bento/subscriptions.tsx";
 import { BentoWorkspaces } from "#/components/bento/workspaces.tsx";
 import { BentoCard } from "#/components/bento-card.tsx";
+import * as Glow from "#/components/glow.tsx";
 import { Link } from "#/components/link.tsx";
 import * as Button from "#/components/ui/button.tsx";
+import * as Divider from "#/components/ui/divider.tsx";
+import * as SegmentedControl from "#/components/ui/segmented-control.tsx";
 import { useTranslation } from "#/hooks/use-translation.ts";
 import { useCreateAccountWizardStore } from "#/store/create-account-wizard.ts";
 import { type PageProps } from "#/types/index.ts";
+import { cx } from "#/utils/cva.ts";
+import { plans } from "#/utils/plans.ts";
 import { BalanceStep } from "./accounts/create/partials/balance-step.tsx";
 import { Card } from "./accounts/create/partials/card.tsx";
 import { balanceSchema } from "./accounts/create/partials/stepper.ts";
@@ -77,6 +85,8 @@ export default function WelcomePage(_props: PageProps<{ laravelVersion: string; 
                 <ImageAndTextSection />
 
                 <FeatureSection />
+
+                <PricingSection />
             </div>
         </>
     );
@@ -314,5 +324,181 @@ function FeatureSection() {
                 </div>
             </div>
         </div>
+    );
+}
+
+function PricingSection() {
+    const [interval, setInterval] = React.useState("monthly");
+    const { language, t } = useTranslation();
+    const currencyFormat = resolveCurrencyFormat(language, "USD");
+
+    const format: Format = React.useMemo(
+        () => ({
+            style: "currency",
+            currency: "USD",
+            minimumFractionDigits: currencyFormat?.minimumFractionDigits,
+            maximumFractionDigits: currencyFormat?.maximumFractionDigits,
+        }),
+        [currencyFormat?.maximumFractionDigits, currencyFormat?.minimumFractionDigits],
+    );
+
+    return (
+        <Glow.Area className="container py-12">
+            <div className="flex flex-col gap-8">
+                <div className="mx-auto flex max-w-160 flex-col">
+                    <h2 className="text-center text-h4">{t("home.sections.pricing.title")}</h2>
+                    <p className="text-center text-paragraph-md">{t("home.sections.pricing.description")}</p>
+                </div>
+
+                <div className="flex flex-col items-center gap-8">
+                    <SegmentedControl.Root defaultValue={interval} onValueChange={setInterval}>
+                        <SegmentedControl.List
+                            className="w-fit gap-2 rounded-full"
+                            floatingBgClassName="rounded-full bg-primary"
+                        >
+                            <SegmentedControl.Trigger
+                                className="px-3 text-(--text-strong-950) data-[state=active]:text-white"
+                                value="monthly"
+                            >
+                                {t("common.monthly")}
+                            </SegmentedControl.Trigger>
+                            <SegmentedControl.Trigger
+                                className="px-3 text-(--text-strong-950) data-[state=active]:text-white"
+                                value="yearly"
+                            >
+                                {t("common.yearly")}
+                            </SegmentedControl.Trigger>
+                        </SegmentedControl.List>
+                    </SegmentedControl.Root>
+
+                    <div className="grid grid-cols-12">
+                        <div className="col-span-12 lg:col-span-10 lg:col-start-2">
+                            <div className="grid grid-cols-12 items-center">
+                                {plans.map((plan) => {
+                                    const features = t(`home.sections.pricing.plans.${plan.code}.features`)?.split(",");
+                                    const comingSoon = t(`home.sections.pricing.plans.${plan.code}.coming_soon`)?.split(
+                                        ",",
+                                    );
+
+                                    return (
+                                        <Glow.Root
+                                            className="col-span-12 rounded-20 lg:col-span-4"
+                                            color={plan.glowColor}
+                                            key={plan.code}
+                                        >
+                                            <div
+                                                className={cx(
+                                                    "flex flex-col gap-6 px-5 py-12",
+                                                    plan.featured
+                                                        ? "z-10 rounded-20 border bg-linear-41 from-(--bg-white-0) from-1% to-(--bg-weak-50) to-178% shadow-(color:--bg-weak-50)"
+                                                        : "rounded-[18px] border-[0.3px] bg-(--bg-white-0)",
+                                                )}
+                                                style={{
+                                                    ...(plan.featured && {
+                                                        boxShadow:
+                                                            "0px 0px 56.962px 0px var(--tw-shadow-color), 0px 0px 16.275px 0px var(--tw-shadow-color), 0px 0px 8.137px 0px var(--tw-shadow-color)",
+                                                    }),
+                                                }}
+                                            >
+                                                <div className="flex flex-col gap-5">
+                                                    <div className="flex gap-2">
+                                                        <div className="flex flex-1 flex-col gap-0.5">
+                                                            <h5 className="text-h5">
+                                                                {t(`home.sections.pricing.plans.${plan.code}.title`)}
+                                                            </h5>
+                                                            <p className="text-paragraph-sm text-(--text-sub-600)">
+                                                                {t(
+                                                                    `home.sections.pricing.plans.${plan.code}.description`,
+                                                                )}
+                                                            </p>
+                                                        </div>
+
+                                                        <div
+                                                            className={cx(
+                                                                "flex size-10 items-center justify-center rounded-full",
+                                                                plan.iconBg,
+                                                            )}
+                                                        >
+                                                            <plan.icon className="size-5 text-white" />
+                                                        </div>
+                                                    </div>
+
+                                                    <h2 className="text-h2">
+                                                        {plan.code === "free" ? (
+                                                            <></>
+                                                        ) : (
+                                                            <>
+                                                                <NumberFlow
+                                                                    className="[--number-flow-char-height:0.85em]"
+                                                                    format={format}
+                                                                    locales={language}
+                                                                    value={
+                                                                        plan.price?.[
+                                                                            interval as keyof typeof plan.price
+                                                                        ] ??
+                                                                        plan.price?.onetime ??
+                                                                        0
+                                                                    }
+                                                                    willChange
+                                                                />
+
+                                                                {plan.price?.[interval as keyof typeof plan.price] && (
+                                                                    <span
+                                                                        className="ml-3 text-h6 text-(--text-soft-400) animate-in fade-in"
+                                                                        key={interval}
+                                                                    >
+                                                                        / {interval}
+                                                                    </span>
+                                                                )}
+                                                            </>
+                                                        )}
+                                                    </h2>
+                                                </div>
+
+                                                <Divider.Root />
+
+                                                <ul className="flex flex-col gap-3">
+                                                    {features?.map((feature, idx) => (
+                                                        <li
+                                                            className="inline-flex items-center gap-1 text-paragraph-sm"
+                                                            key={idx}
+                                                        >
+                                                            <CheckboxCircleFillIcon className="size-6" />
+                                                            <span dangerouslySetInnerHTML={{ __html: feature }} />
+                                                        </li>
+                                                    ))}
+                                                </ul>
+
+                                                {comingSoon?.length && (
+                                                    <div className="flex flex-col gap-2">
+                                                        <p className="text-paragraph-sm text-(--text-soft-400)">
+                                                            {t("home.sections.pricing.coming_soon")}
+                                                        </p>
+
+                                                        {comingSoon.map((feature, idx) => (
+                                                            <li
+                                                                className="inline-flex items-center gap-1 text-paragraph-sm"
+                                                                key={idx}
+                                                            >
+                                                                <CheckboxCircleFillIcon className="size-6" />
+                                                                <span dangerouslySetInnerHTML={{ __html: feature }} />
+                                                            </li>
+                                                        ))}
+                                                    </div>
+                                                )}
+
+                                                <Button.Root $style="filled" $type="neutral">
+                                                    {t(`home.sections.pricing.plans.${plan.code}.button_label`)}
+                                                </Button.Root>
+                                            </div>
+                                        </Glow.Root>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </Glow.Area>
     );
 }

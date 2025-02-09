@@ -30,4 +30,34 @@ return [
         ],
     ],
 
+    'sections' => [
+        'pricing' => [
+            'title' => 'Level up your finances',
+            'description' => 'Choose the plan that best suits your needs. We offer a free trial for all our plans.',
+            'coming_soon' => 'More coming soon',
+            'plans' => [
+                'free' => [
+                    'title' => 'Free',
+                    'description' => 'For solo users who want to get a grip on their finances',
+                    'features' => 'Personal workspace, Up to 3 accounts, Up to 15 transactions per month, Default categories, Up to 30 days of graph history, Manual accounts',
+                    'coming_soon' => ' ',
+                    'button_label' => 'Get started for free',
+                ],
+                'analyst' => [
+                    'title' => 'Analyst',
+                    'description' => 'For small and large teams (or families) or even solo users who want to get a grip on their finances',
+                    'features' => 'Unlimited workspaces and members, Unlimited accounts and transactions, File attachments for transactions, Default and custom categories, Custom graph history, <strong>CSV imports</strong>, <strong>Multi-currency</strong>',
+                    'coming_soon' => 'Connect your bank accounts',
+                    'button_label' => 'Subscribe now',
+                ],
+                'lifetime' => [
+                    'title' => 'Lifetime',
+                    'description' => 'For teams, families or solo users who want to get a grip on their finances and never pay again',
+                    'features' => '<strong>All features of Analyst plan</strong>, <strong>All future features</strong>, No recurring payments, Priority support',
+                    'coming_soon' => ' ',
+                    'button_label' => 'Buy now ',
+                ],
+            ],
+        ],
+    ],
 ];
