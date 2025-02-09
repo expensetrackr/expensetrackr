@@ -1,6 +1,6 @@
+import { composeRefs } from "@radix-ui/react-compose-refs";
 import { Slottable } from "@radix-ui/react-slot";
 import * as TabsPrimitive from "@radix-ui/react-tabs";
-import mergeRefs from "merge-refs";
 import * as React from "react";
 
 import { useTabObserver } from "#/hooks/use-tab-observer.ts";
@@ -33,7 +33,7 @@ function SegmentedControlList({
                 className,
             )}
             {...props}
-            ref={mergeRefs(props.ref, listRef)}
+            ref={composeRefs(props.ref, listRef)}
         >
             <Slottable>{children}</Slottable>
 

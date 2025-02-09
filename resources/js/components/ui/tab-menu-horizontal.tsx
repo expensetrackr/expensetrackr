@@ -1,6 +1,6 @@
+import { composeRefs } from "@radix-ui/react-compose-refs";
 import { Slottable } from "@radix-ui/react-slot";
 import * as TabsPrimitive from "@radix-ui/react-tabs";
-import mergeRefs from "merge-refs";
 import * as React from "react";
 
 import { useTabObserver } from "#/hooks/use-tab-observer.ts";
@@ -56,7 +56,7 @@ function TabMenuHorizontalList({
                     "group/tab-list relative flex h-12 items-center gap-6 border-y border-(--stroke-soft-200) whitespace-nowrap",
                     className,
                 )}
-                ref={mergeRefs(rest.ref, listRef)}
+                ref={composeRefs(rest.ref, listRef)}
                 {...rest}
             >
                 <Slottable>{children}</Slottable>
