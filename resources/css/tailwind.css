@@ -48,6 +48,8 @@
 }
 
 @theme static {
+    --color-*: initial;
+
     /* neutral colors */
     --color-neutral-950: oklch(18.2% 0.0198 266deg); /* #0E121B */
     --color-neutral-900: oklch(22.4% 0.0201 272deg); /* #181B25 */
@@ -210,10 +212,6 @@
     --color-black-alpha-24: oklch(0% 0 0deg / 24%);
     --color-black-alpha-16: oklch(0% 0 0deg / 16%);
     --color-black-alpha-10: oklch(0% 0 0deg / 10%);
-}
-
-@theme {
-    --color-*: initial;
 
     /* brand colors */
     --color-brand-primary-50: oklch(97.2% 0.0136 255deg);
@@ -299,7 +297,9 @@
     --color-social-zendesk: var(--social-zendesk);
 
     --color-overlay: var(--overlay-gray);
+}
 
+@theme {
     --text-*: initial;
 
     --text-h1: 3.5rem;
