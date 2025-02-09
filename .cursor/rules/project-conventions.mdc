@@ -1,0 +1,90 @@
+---
+description: This rule explains project tech stack and some basic code conventions
+globs: *
+---
+This rule serves as high-level documentation for how the ExpenseTrackr codebase is structured.
+
+## Rules for AI
+
+- Use this file to understand how the codebase works
+- Treat this rule/file as your "source of truth" when making code recommendations
+- When creating migrations, always use `php artisan make:migration` instead of creating the file yourself
+
+## Project Tech Stack
+
+- Web framework: Laravel
+  - FilamentPHP for the admin side
+  - PestPHP and Faker for testing
+  - Inertia for the communication between Laravel and React
+  - React for all the frontend
+  - TailwindCSS for styles
+  - unplugin-icons for icons
+- Database: PostgreSQL
+- Jobs: Jobs and Queues from Laravel
+- External
+  - Payments: Polar
+  - Market data: SynthFinance
+
+## Project conventions
+
+These conventions should be used when writing code for ExpenseTrackr.
+
+### Convention 1: Minimize dependencies, vanilla Laravel is plenty
+
+Dependencies are a natural part of building software, but we aim to minimize them when possible to keep this open-source codebase easy to understand, maintain, and contribute to.
+
+- Push Laravel to its limits before adding new dependencies
+- When a new dependency is added, there must be a strong technical or business reason to add it
+- When adding dependencies, you should favor old and reliable over new and flashy 
+
+### Convention 2: Leverage the use of Laravel design patterns for better project organization and functionality
+
+This codebase adopts a simple convention from a few projects built on Laravel, that are:
+
+- [pinkary.com](mdc:https:/github.com/pinkary-project/pinkary.com)
+- [akaunting.com](mdc:https:/github.com/akaunting/akaunting)
+- [erpsaas](mdc:https:/github.com/andrewdwallo/erpsaas/tree/3.x) (this one is were we found more information about Filament)
+- [cachet](mdc:https:/github.com/cachethq/cachet)
+- [financial-freedom](mdc:https:/serversideup.net/open-source/financial-freedom)
+
+- Organize large pieces of business logic into MVC, Action / Command, Facades and Repository patterns.
+- When possible, models should answer questions about themselves—for example, we might have a method, `account->transactions` that returns an array of all the transactions owned by the account.
+
+### Convention 3: Prefer server-side solutions over client-side solutions
+
+- When possible, leverage Inertia + Laravel frames over complex, JS-driven client-side solutions
+- When writing a client-side solution, use Inertia renders and keep it simple!
+- Especially when dealing with money and currencies, calculate + format server-side and then pass that to the client to display
+- You can do some render using `@number-flow/react` (for animated numbers), `@sumup/intl` (to get the correct format with currency and language) and `headless-currency-input` (for unstyled inputs) dependencies on the frontend 
+- Keep client-side code for where it truly shines.  For example, @index.tsx is a case where server-side solutions would degrade the user experience significantly. When creating multi step forms using server-side solutions will degrade the performance of the app
+
+### Convention 4: Sacrifice performance, optimize for simplicitly and clarity
+
+This codebase is still young. We are still rapidly iterating on domain designs and features. Because of this, code should be optimized for simplicitly and clarity over performance.
+
+- Focus on good OOP design first, performance second
+- Be mindful of large performance bottlenecks, but don't sweat the small stuff
+
+### Convention 5: Prefer semantic, native HTML features
+
+The HTML spec has improved tremendously over the years and offers a ton of functionality out of the box. We prefer semantic, native HTML solutions over JS-based ones. A few examples of this include:
+
+- Using `Image` component from `@unpic/react` for optimize images
+- Using components under `resources/js/components/ui` folders that are based on `@radix-ui`
+
+Radix components works very well with these native elements and have been optimized for this.
+
+### Convention 6: Use PestPHP and Faker for testing
+
+Due to the open-source nature of this project, we have chosen MPestPHP and Faker for testing to maximize familiarity and predictability on the Laravel ecosystem.
+
+- Always use PestPHP and Faker for testing.
+- Faker must be used to mock any object and data.
+- We will implement Dusk in the project for browser testing in the future so keep that in mind.
+
+### Convention 7: Use EloquentORM for complex validations, DB for simple ones, keep business logic out of DB
+
+- Enforce `null` checks, unique indexes, and other simple validations in the DB
+- Always prefer client-side form validation when possible but keeping in mind that the fields must have the correct types
+- Complex validations and business logic should be on client-side and have a mirror on server-side using Laravel validations
+

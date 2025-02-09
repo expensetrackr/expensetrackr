@@ -1,0 +1,34 @@
+---
+description: This rule explains the system architecture and data flow of the Laravel app
+globs: *
+---
+This file outlines how the codebase is structured and how data flows through the app.
+
+This is a personal and team finance application built in Laravel. The primary domain entities for this app are outlined below. For an authoritative overview of the relationships, [app/Models](mdc:app/Models) is the source of truth.
+
+## Workspaces and Users
+
+- `Workspace` - all financial accounts, and the majority of preferences are stored at the [Workspace.php](mdc:app/Models/Workspace.php) level.
+- `User` - A user belongs to a `Workspace` and can either be an `admin` or a `member`. Typically, a `Workspace` has a single admin, or "head of household" that manages finances while there will be several `member` users who can see the workspace's finances from varying perspectives.
+
+## Accounts
+
+The center of the app's domain is the [Account.php](mdc:app/Models/Account.php). This represents a single financial account that has a `balance` and `currency`. For example, an `Account` could be "Personal PayPal", which is a single financial account at PayPal. A user could have multiple accounts at a single institution (i.e. "Citibank Checking", "Citibank Credit Card", "Citibank Savings") or an account could be a standalone account, such as "My Home" (a primary residence).
+
+### Accountables
+
+In the app, [Account.php](mdc:app/Models/Account.php) is a Laravel morhp parent table with the following subtypes (separate DB tables).  Each account has a `classification` or either `asset` or `liability`.  While the types are a flat hierarchy, below, they have been organized by their classification:
+
+- Asset accountables
+  - [Depository.php](mdc:app/Models/Depository.php) - a typical "bank account" such as a savings or checking account
+  - [Investment.php](mdc:app/Models/Investment.php) - an account that has "holdings" such as a brokerage, 401k, etc.
+  - [Crypto.php](mdc:app/Models/Crypto.php) - an account that tracks the value of one or more crypto holdings
+  - [OtherAsset.php](mdc:app/Models/OtherAsset.php) - an asset that cannot be classified by the other account types.  For example, "jewelry".
+- Liability accountables
+  - [CreditCard.php](mdc:app/Models/CreditCard.php) - an account that tracks the debt owed on a credit card
+  - [Loan.php](mdc:app/Models/Loan.php) - an account that tracks the debt owed on a loan (i.e. mortgage, student loan)
+  - [OtherLiability.php](mdc:app/Models/OtherLiability.php) - a liability that cannot be classified by the other account types.  For example, "IOU to a friend"
+
+## MoneyCast
+
+We use [MoneyCast.php](mdc:app/Casts/MoneyCast.php) to correctly format the balance, money, values that need to use currency and formatting. Under the hood we also use `akaunting/laravel-money` package to setup some macros and have the ability to swap money depending on the currency and language.
