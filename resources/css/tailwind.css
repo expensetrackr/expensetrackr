@@ -414,14 +414,14 @@
     --shadow-button-primary-focus: 0 0 0 2px var(--bg-white-0), 0 0 0 4px var(--color-brand-primary-alpha-10);
     --shadow-button-important-focus: 0 0 0 2px var(--bg-white-0), 0 0 0 4px var(--color-neutral-alpha-16);
     --shadow-button-error-focus: 0 0 0 2px var(--bg-white-0), 0 0 0 4px var(--color-red-alpha-10);
-    --shadow-fancy-buttons-neutral: 0 1px 2px 0 oklch(22.6% 0.00247 248deg / 47.8%),
-        0 0 0 1px oklch(26.7% 0.00473 248deg);
+    --shadow-fancy-buttons-neutral:
+        0 1px 2px 0 oklch(22.6% 0.00247 248deg / 47.8%), 0 0 0 1px oklch(26.7% 0.00473 248deg);
     --shadow-fancy-buttons-primary: 0 1px 2px 0 oklch(18.3% 0.0196 266deg / 23.9%), 0 0 0 1px var(--color-primary);
-    --shadow-fancy-buttons-error: 0 1px 2px 0 oklch(18.3% 0.0196 266deg / 23.9%),
-        0 0 0 1px var(--color-state-error-base);
+    --shadow-fancy-buttons-error:
+        0 1px 2px 0 oklch(18.3% 0.0196 266deg / 23.9%), 0 0 0 1px var(--color-state-error-base);
     --shadow-fancy-buttons-stroke: 0 1px 3px 0 oklch(18.3% 0.0196 266deg / 12.2%), 0 0 0 1px var(--stroke-soft-200);
-    --shadow-toggle-switch: 0 6px 10px 0 oklch(18.3% 0.0196 266deg / 5.88%),
-        0 2px 4px 0 oklch(18.3% 0.0196 266deg / 3.14%);
+    --shadow-toggle-switch:
+        0 6px 10px 0 oklch(18.3% 0.0196 266deg / 5.88%), 0 2px 4px 0 oklch(18.3% 0.0196 266deg / 3.14%);
 
     --transition-timing-function-drawer: cubic-bezier(0.32, 0.72, 0, 1);
 

@@ -10,7 +10,9 @@
         "dev": "vite",
         "format": "prettier --write ./resources",
         "lint": "eslint ./resources",
+        "pint": "./vendor/bin/pint .",
         "prepare": "husky",
+        "translate": "languine translate",
         "typecheck": "tsc"
     },
     "lint-staged": {

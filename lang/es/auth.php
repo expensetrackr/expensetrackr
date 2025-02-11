@@ -11,6 +11,6 @@ return [
         'register' => 'Registrarse',
         'already_have_account' => '¿Ya tienes una cuenta?',
         'login' => 'Iniciar sesión',
-        'changed_mind' => '¿Has cambiado de opinión?'
-    ]
+        'changed_mind' => '¿Has cambiado de opinión?',
+    ],
 ];

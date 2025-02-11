@@ -4,5 +4,5 @@ declare(strict_types=1);
 
 return [
     'monthly' => 'Mensual',
-    'yearly' => 'Anual'
+    'yearly' => 'Anual',
 ];

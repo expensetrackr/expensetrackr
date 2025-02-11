@@ -19,7 +19,7 @@ return [
         'array' => 'El campo :attribute debe tener entre :min y :max elementos.',
         'file' => 'El campo :attribute debe estar entre :min y :max kilobytes.',
         'numeric' => 'El campo :attribute debe estar entre :min y :max.',
-        'string' => 'El campo :attribute debe tener entre :min y :max caracteres.'
+        'string' => 'El campo :attribute debe tener entre :min y :max caracteres.',
     ],
     'boolean' => 'El campo :attribute debe ser verdadero o falso.',
     'can' => 'El campo :attribute contiene un valor no autorizado.',
@@ -50,13 +50,13 @@ return [
         'array' => 'El campo :attribute debe tener más de :value elementos.',
         'file' => 'El campo :attribute debe ser mayor que :value kilobytes.',
         'numeric' => 'El campo :attribute debe ser mayor que :value.',
-        'string' => 'El campo :attribute debe ser mayor que :value caracteres.'
+        'string' => 'El campo :attribute debe ser mayor que :value caracteres.',
     ],
     'gte' => [
         'array' => 'El campo :attribute debe tener :value elementos o más.',
         'file' => 'El campo :attribute debe ser mayor o igual a :value kilobytes.',
         'numeric' => 'El campo :attribute debe ser mayor o igual a :value.',
-        'string' => 'El campo :attribute debe ser mayor o igual a :value caracteres.'
+        'string' => 'El campo :attribute debe ser mayor o igual a :value caracteres.',
     ],
     'hex_color' => 'El campo :attribute debe ser un color hexadecimal válido.',
     'image' => 'El campo :attribute debe ser una imagen.',
@@ -73,20 +73,20 @@ return [
         'array' => 'El campo :attribute debe tener menos de :value elementos.',
         'file' => 'El campo :attribute debe ser menor que :value kilobytes.',
         'numeric' => 'El campo :attribute debe ser menor que :value.',
-        'string' => 'El campo :attribute debe ser menor que :value caracteres.'
+        'string' => 'El campo :attribute debe ser menor que :value caracteres.',
     ],
     'lte' => [
         'array' => 'El campo :attribute no debe tener más de :value elementos.',
         'file' => 'El campo :attribute debe ser menor o igual a :value kilobytes.',
         'numeric' => 'El campo :attribute debe ser menor o igual a :value.',
-        'string' => 'El campo :attribute debe ser menor o igual a :value caracteres.'
+        'string' => 'El campo :attribute debe ser menor o igual a :value caracteres.',
     ],
     'mac_address' => 'El campo :attribute debe ser una dirección MAC válida.',
     'max' => [
         'array' => 'El campo :attribute no debe tener más de :max elementos.',
         'file' => 'El campo :attribute no debe ser mayor que :max kilobytes.',
         'numeric' => 'El campo :attribute no debe ser mayor que :max.',
-        'string' => 'El campo :attribute no debe ser mayor que :max caracteres.'
+        'string' => 'El campo :attribute no debe ser mayor que :max caracteres.',
     ],
     'max_digits' => 'El campo :attribute no debe tener más de :max dígitos.',
     'mimes' => 'El campo :attribute debe ser un archivo de tipo: :values.',
@@ -95,7 +95,7 @@ return [
         'array' => 'El campo :attribute debe tener al menos :min elementos.',
         'file' => 'El campo :attribute debe tener al menos :min kilobytes.',
         'numeric' => 'El campo :attribute debe tener al menos :min.',
-        'string' => 'El campo :attribute debe tener al menos :min caracteres.'
+        'string' => 'El campo :attribute debe tener al menos :min caracteres.',
     ],
     'min_digits' => 'El campo :attribute debe tener al menos :min dígitos.',
     'missing' => 'El campo :attribute debe estar ausente.',
@@ -112,7 +112,7 @@ return [
         'mixed' => 'El campo :attribute debe contener al menos una letra mayúscula y una letra minúscula.',
         'numbers' => 'El campo :attribute debe contener al menos un número.',
         'symbols' => 'El campo :attribute debe contener al menos un símbolo.',
-        'uncompromised' => 'El :attribute dado ha aparecido en una filtración de datos. Por favor, elige un :attribute diferente.'
+        'uncompromised' => 'El :attribute dado ha aparecido en una filtración de datos. Por favor, elige un :attribute diferente.',
     ],
     'present' => 'El campo :attribute debe estar presente.',
     'present_if' => 'El campo :attribute debe estar presente cuando :other es :value.',
@@ -139,7 +139,7 @@ return [
         'array' => 'El campo :attribute debe contener :size elementos.',
         'file' => 'El campo :attribute debe ser de :size kilobytes.',
         'numeric' => 'El campo :attribute debe ser :size.',
-        'string' => 'El campo :attribute debe ser de :size caracteres.'
+        'string' => 'El campo :attribute debe ser de :size caracteres.',
     ],
     'starts_with' => 'El campo :attribute debe comenzar con uno de los siguientes: :values.',
     'string' => 'El campo :attribute debe ser una cadena.',
@@ -152,7 +152,7 @@ return [
     'uuid' => 'El campo :attribute debe ser un UUID válido.',
     'custom' => [
         'attribute-name' => [
-            'rule-name' => 'mensaje-personalizado'
-        ]
-    ]
+            'rule-name' => 'mensaje-personalizado',
+        ],
+    ],
 ];
