@@ -1,15 +1,14 @@
 import { getFormProps, useForm } from "@conform-to/react";
 import { getZodConstraint, parseWithZod } from "@conform-to/zod";
-import { Head } from "@inertiajs/react";
 import NumberFlow, { type Format } from "@number-flow/react";
 import { resolveCurrencyFormat } from "@sumup/intl";
 import { Image, Source } from "@unpic/react";
 import * as React from "react";
+import MailIcon from "virtual:icons/material-symbols/mail";
+import GithubIcon from "virtual:icons/mdi/github";
 import CheckboxCircleFillIcon from "virtual:icons/ri/checkbox-circle-fill";
 import MoneyDollarCircleFillIcon from "virtual:icons/ri/money-dollar-circle-fill";
 
-import IsotypeDark from "#/assets/isotype-dark.svg";
-import IsotypeLight from "#/assets/isotype-light.svg";
 import { BentoAccountsTransfers } from "#/components/bento/accounts-transfers.tsx";
 import { BentoHistoricalGraphics } from "#/components/bento/graphics.tsx";
 import { BentoLogoCluster } from "#/components/bento/logo-cluster.tsx";
@@ -36,8 +35,6 @@ import { balanceSchema } from "./accounts/create/partials/stepper.ts";
 export default function WelcomePage(_props: PageProps<{ laravelVersion: string; phpVersion: string }>) {
     return (
         <>
-            <Head title="Welcome" />
-
             <div className="relative">
                 <div aria-hidden="true" className="pointer-events-none absolute h-[80dvh] w-full">
                     <Image
@@ -57,8 +54,29 @@ export default function WelcomePage(_props: PageProps<{ laravelVersion: string; 
                     <div className="container">
                         <div className="relative z-50 flex items-center justify-between rounded-12 border bg-linear-270 from-(--bg-white-0)/40 from-[3.14%] to-(--bg-white-0)/40 to-[101.19%] px-6 py-2 backdrop-blur-[2px]">
                             <div className="flex items-center gap-1">
-                                <Image alt="" className="hidden dark:block" height={40} src={IsotypeDark} width={64} />
-                                <Image alt="" className="block dark:hidden" height={40} src={IsotypeLight} width={64} />
+                                <picture>
+                                    <Source
+                                        height={40}
+                                        media="(prefers-color-scheme: light)"
+                                        priority
+                                        src={`${import.meta.env.VITE_PUBLIC_ASSETS_URL}/isotype`}
+                                        width={64}
+                                    />
+                                    <Source
+                                        height={40}
+                                        media="(prefers-color-scheme: dark)"
+                                        priority
+                                        src={`${import.meta.env.VITE_PUBLIC_ASSETS_URL}/isotype-dark`}
+                                        width={64}
+                                    />
+                                    <Image
+                                        alt="ExpenseTrackr"
+                                        height={40}
+                                        priority
+                                        src={`${import.meta.env.VITE_PUBLIC_ASSETS_URL}/isotype`}
+                                        width={64}
+                                    />
+                                </picture>
 
                                 <span className="text-h5 font-light">
                                     Expense<span className="font-bold">Trackr</span>
@@ -87,6 +105,8 @@ export default function WelcomePage(_props: PageProps<{ laravelVersion: string; 
                 <FeatureSection />
 
                 <PricingSection />
+
+                <Footer />
             </div>
         </>
     );
@@ -390,7 +410,7 @@ function PricingSection() {
                                                 className={cx(
                                                     "flex flex-col gap-6 px-5 py-12",
                                                     plan.featured
-                                                        ? "z-10 rounded-20 border bg-linear-41 from-(--bg-white-0) from-1% to-(--bg-weak-50) to-178% shadow-(color:--bg-weak-50)"
+                                                        ? "relative z-10 rounded-20 border bg-linear-41 from-(--bg-white-0) from-1% to-(--bg-weak-50) to-178% shadow-(color:--bg-weak-50)"
                                                         : "rounded-[18px] border-[0.3px] bg-(--bg-white-0)",
                                                 )}
                                                 style={{
@@ -500,5 +520,58 @@ function PricingSection() {
                 </div>
             </div>
         </Glow.Area>
+    );
+}
+
+function Footer() {
+    return (
+        <footer className="border-t-[0.2px] py-8">
+            <div className="container">
+                <div className="flex items-center justify-between">
+                    <Link href={route("home")}>
+                        <picture>
+                            <Source
+                                height={40}
+                                media="(prefers-color-scheme: light)"
+                                priority
+                                src={`${import.meta.env.VITE_PUBLIC_ASSETS_URL}/isotype`}
+                                width={64}
+                            />
+                            <Source
+                                height={40}
+                                media="(prefers-color-scheme: dark)"
+                                priority
+                                src={`${import.meta.env.VITE_PUBLIC_ASSETS_URL}/isotype-dark`}
+                                width={64}
+                            />
+                            <Image
+                                alt="ExpenseTrackr"
+                                height={40}
+                                priority
+                                src={`${import.meta.env.VITE_PUBLIC_ASSETS_URL}/isotype`}
+                                width={64}
+                            />
+                        </picture>
+                    </Link>
+
+                    <ul className="flex items-center gap-5">
+                        <li>
+                            <a
+                                href="https://github.com/expensetrackr/expensetrackr.app"
+                                rel="noopener noreferrer"
+                                target="_blank"
+                            >
+                                <GithubIcon className="size-6" />
+                            </a>
+                        </li>
+                        <li>
+                            <a href="mailto:hi@expensetrackr.app" rel="noopener noreferrer" target="_blank">
+                                <MailIcon className="size-6" />
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
     );
 }

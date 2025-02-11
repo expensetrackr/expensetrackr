@@ -11,7 +11,7 @@ import { NuqsAdapter } from "#/utils/nuqs-adapter.ts";
 const appName = import.meta.env.VITE_APP_NAME || "ExpenseTrackr";
 
 void createInertiaApp({
-    title: (title) => `${title} - ${appName}`,
+    title: (title) => (title ? `${title} - ${appName}` : `${appName} - Manage your expenses effortlessly`),
     resolve: (name) => resolvePageComponent(`./pages/${name}.tsx`, import.meta.glob("./pages/**/*.tsx")),
     setup({ el, App, props }) {
         if (import.meta.env.DEV) {

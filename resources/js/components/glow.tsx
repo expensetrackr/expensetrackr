@@ -73,7 +73,7 @@ function GlowRoot(props: GlowProps) {
                 {...rest}
                 className={cn(
                     className,
-                    "pointer-events-none absolute inset-0 mix-blend-multiply after:absolute after:inset-0.25 after:rounded-[inherit] after:bg-(--bg-white-0)/90 after:content-[''] dark:mix-blend-lighten",
+                    "pointer-events-none absolute inset-0 z-20 mix-blend-multiply after:absolute after:inset-0.25 after:rounded-[inherit] after:bg-(--bg-white-0)/90 after:content-[''] dark:mix-blend-lighten",
                 )}
                 style={{
                     backgroundImage: `radial-gradient(
