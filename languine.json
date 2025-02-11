@@ -1,0 +1,16 @@
+{
+  "projectId": "prj_HLKNJ45Mf64yMxdIHmM8Y",
+  "locale": {
+    "source": "en",
+    "targets": [
+      "es"
+    ]
+  },
+  "files": {
+    "php": {
+      "include": [
+        "lang/[locale]/*.php"
+      ]
+    }
+  }
+}
