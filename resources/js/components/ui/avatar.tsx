@@ -15,7 +15,7 @@ const AVATAR_NOTIFICATION_NAME = "AvatarNotification";
 
 export const avatarVariants = tv({
     slots: {
-        root: ["relative flex shrink-0 items-center justify-center rounded-full", "select-none text-center uppercase"],
+        root: ["relative flex shrink-0 items-center justify-center rounded-full", "text-center uppercase select-none"],
         image: "size-full rounded-full object-cover",
         indicator: "absolute flex size-8 items-center justify-center drop-shadow-[0_2px_4px_#1b1c1d0a]",
     },

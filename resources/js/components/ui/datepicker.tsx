@@ -32,7 +32,7 @@ function Calendar({ classNames, showOutsideDays = true, ...rest }: CalendarProps
                 row: "grid grid-flow-col auto-cols-auto w-full mt-2 gap-2",
                 cell: cn(
                     // base
-                    "group/cell relative size-10 shrink-0 select-none p-0",
+                    "group/cell relative size-10 shrink-0 p-0 select-none",
                     // range
                     "[&:has(.day-range-middle)]:bg-brand-primary-alpha-10",
                     "first:[&:has([aria-selected])]:rounded-l-8 last:[&:has([aria-selected])]:rounded-r-8",
@@ -50,7 +50,7 @@ function Calendar({ classNames, showOutsideDays = true, ...rest }: CalendarProps
                     // start
                     "[&:has(.day-range-start)]:before:block [&:has(.day-range-start)]:before:w-3",
                     // end
-                    "[&:has(.day-range-end):not(:first-child)]:before:!block [&:has(.day-range-end)]:before:left-0 [&:has(.day-range-end)]:before:right-auto",
+                    "[&:has(.day-range-end)]:before:right-auto [&:has(.day-range-end)]:before:left-0 [&:has(.day-range-end):not(:first-child)]:before:!block",
                 ),
                 day: cn(
                     // base

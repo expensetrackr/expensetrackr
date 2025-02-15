@@ -46,7 +46,7 @@ final class ApiTokenController extends Controller
         }
 
         return back()->with('flash', [
-            'token' => explode('|', $token->plainTextToken, 2)[1],
+            'token' => explode('|', (string) $token->plainTextToken, 2)[1],
         ]);
     }
 

@@ -20,7 +20,7 @@ export const inputVariants = tv({
             "transition duration-200 ease-out",
             "divide-x divide-(--stroke-soft-200)",
             // before
-            "before:absolute before:inset-0 before:ring-1 before:ring-inset before:ring-(--stroke-soft-200)",
+            "before:absolute before:inset-0 before:ring-1 before:ring-(--stroke-soft-200) before:ring-inset",
             "before:pointer-events-none before:rounded-[inherit]",
             "before:transition before:duration-200 before:ease-out",
             // hover
@@ -44,7 +44,7 @@ export const inputVariants = tv({
             "w-full bg-transparent bg-none text-paragraph-sm outline-none",
             "transition duration-200 ease-out",
             // placeholder
-            "placeholder:select-none placeholder:text-(--text-soft-400) placeholder:transition placeholder:duration-200 placeholder:ease-out",
+            "placeholder:text-(--text-soft-400) placeholder:transition placeholder:duration-200 placeholder:ease-out placeholder:select-none",
             // hover placeholder
             "group-hover/input-wrapper:placeholder:text-(--text-sub-600)",
             // focus
@@ -56,7 +56,7 @@ export const inputVariants = tv({
         ],
         icon: [
             // base
-            "flex size-5 shrink-0 select-none items-center justify-center",
+            "flex size-5 shrink-0 items-center justify-center select-none",
             "transition duration-200 ease-out",
             // placeholder state
             "group-has-[:placeholder-shown]:text-(--text-soft-400)",

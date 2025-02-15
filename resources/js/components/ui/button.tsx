@@ -146,7 +146,7 @@ export const buttonVariants = tv({
             class: {
                 root: [
                     // base
-                    "bg-(--bg-white-0) text-(--text-sub-600) shadow-regular-xs ring-(--stroke-soft-200)",
+                    "shadow-regular-xs bg-(--bg-white-0) text-(--text-sub-600) ring-(--stroke-soft-200)",
                     // hover
                     "hover:bg-(--bg-weak-50) hover:text-(--text-strong-950) hover:shadow-none hover:ring-transparent",
                     // focus
@@ -162,7 +162,7 @@ export const buttonVariants = tv({
                     // base
                     "bg-(--bg-weak-50) text-(--text-sub-600) ring-transparent",
                     // hover
-                    "hover:bg-(--bg-white-0) hover:text-(--text-strong-950) hover:shadow-regular-xs hover:ring-(--stroke-soft-200)",
+                    "hover:shadow-regular-xs hover:bg-(--bg-white-0) hover:text-(--text-strong-950) hover:ring-(--stroke-soft-200)",
                     // focus
                     "focus-visible:bg-(--bg-white-0) focus-visible:text-(--text-strong-950) focus-visible:shadow-button-important-focus focus-visible:ring-(--stroke-strong-950)",
                 ],

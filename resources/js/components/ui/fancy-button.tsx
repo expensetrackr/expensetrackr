@@ -12,7 +12,7 @@ export const fancyButtonVariants = tv({
     slots: {
         root: [
             // base
-            "group relative inline-flex items-center justify-center whitespace-nowrap text-label-sm outline-none",
+            "group relative inline-flex items-center justify-center text-label-sm whitespace-nowrap outline-none",
             "transition duration-200 ease-out",
             // focus
             "focus:outline-none",
@@ -20,7 +20,7 @@ export const fancyButtonVariants = tv({
             "disabled:pointer-events-none disabled:text-(--text-disabled-300)",
             "disabled:bg-(--bg-weak-50) disabled:bg-none disabled:shadow-none disabled:before:hidden disabled:after:hidden",
         ],
-        icon: "relative z-10 $size-5 shrink-0",
+        icon: "$size-5 relative z-10 shrink-0",
     },
     variants: {
         $type: {

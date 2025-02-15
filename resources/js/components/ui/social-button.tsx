@@ -12,7 +12,7 @@ export const socialButtonVariants = tv({
     slots: {
         root: [
             // base
-            "relative inline-flex h-10 items-center justify-center gap-3.5 whitespace-nowrap rounded-10 px-4 text-label-sm outline-none",
+            "relative inline-flex h-10 items-center justify-center gap-3.5 rounded-10 px-4 text-label-sm whitespace-nowrap outline-none",
             "transition duration-200 ease-out",
             // focus
             "focus:outline-none",
@@ -45,7 +45,7 @@ export const socialButtonVariants = tv({
             stroke: {
                 root: [
                     // base
-                    "bg-(--bg-white-0) text-(--text-strong-950) shadow-regular-xs ring-1 ring-inset ring-(--stroke-soft-200)",
+                    "shadow-regular-xs bg-(--bg-white-0) text-(--text-strong-950) ring-1 ring-(--stroke-soft-200) ring-inset",
                     // hover
                     "hover:bg-(--bg-weak-50) hover:shadow-none hover:ring-transparent",
                     // focus

@@ -57,9 +57,7 @@ final class HandleInertiaRequests extends Middleware
                 $files = File::allFiles(base_path('lang/'.$locale));
 
                 // Get last modified time of all translation files
-                $lastModified = collect($files)->max(function ($file) {
-                    return $file->getMTime();
-                });
+                $lastModified = collect($files)->max(fn ($file) => $file->getMTime());
 
                 $cacheKey = 'translations.'.$locale;
                 $lastModifiedKey = 'translations_modified.'.$locale;

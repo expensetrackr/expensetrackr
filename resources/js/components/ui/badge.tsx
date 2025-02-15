@@ -41,7 +41,7 @@ export const badgeVariants = tv({
             light: {},
             lighter: {},
             stroke: {
-                root: "ring-1 ring-inset ring-current",
+                root: "ring-1 ring-current ring-inset",
             },
         },
         $color: {
@@ -381,7 +381,7 @@ export const badgeVariants = tv({
             $style: ["stroke", "filled", "light", "lighter"],
             $color: ["red", "gray", "blue", "orange", "green", "yellow", "purple", "sky", "pink", "teal"],
             class: {
-                root: ["ring-1 ring-inset ring-stroke-soft-200", "bg-transparent text-text-disabled-300"],
+                root: ["ring-stroke-soft-200 ring-1 ring-inset", "text-text-disabled-300 bg-transparent"],
             },
         },
         //#endregion

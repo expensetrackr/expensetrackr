@@ -6,12 +6,12 @@ export const dividerVariants = tv({
     base: "relative flex w-full items-center",
     variants: {
         $type: {
-            line: "h-0 before:absolute before:left-0 before:top-1/2 before:h-px before:w-full before:-translate-y-1/2 before:bg-(--stroke-soft-200)",
+            line: "h-0 before:absolute before:top-1/2 before:left-0 before:h-px before:w-full before:-translate-y-1/2 before:bg-(--stroke-soft-200)",
             "line-spacing": [
                 // base
                 "h-1",
                 // before
-                "before:absolute before:left-0 before:top-1/2 before:h-px before:w-full before:-translate-y-1/2 before:bg-(--stroke-soft-200)",
+                "before:absolute before:top-1/2 before:left-0 before:h-px before:w-full before:-translate-y-1/2 before:bg-(--stroke-soft-200)",
             ],
             "line-text": [
                 // base
