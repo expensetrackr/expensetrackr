@@ -13,6 +13,7 @@ use Database\Factories\CurrencyFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\Factory as TFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -33,6 +34,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property CarbonImmutable|null $created_at
  * @property CarbonImmutable|null $updated_at
  * @property-read Workspace $workspace
+ * @property-read TFactory|null $use_factory
  *
  * @method static CurrencyFactory factory($count = null, $state = [])
  * @method static Builder<static>|Currency newModelQuery()

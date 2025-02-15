@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="InertiaPackage">
+    <option name="defaultLibrary" value="react" />
+    <option name="defaultLibraryLanguage" value="ts" />
+    <option name="directoryPaths">
+      <list>
+        <option value="resources/js/pages/" />
+      </list>
+    </option>
+    <option name="setupLibraryManually" value="true" />
+  </component>
+  <component name="LaravelIdeaMainSettings">
+    <option name="codeGeneration">
+      <LaravelCodeGeneration>
+        <option name="addPhpDocs" value="true" />
+        <option name="generationStringSettings">
+          <map>
+            <entry key="createModel:namespace" value="Models" />
+          </map>
+        </option>
+      </LaravelCodeGeneration>
+    </option>
+    <option name="frameworkFound" value="true" />
+    <option name="translation">
+      <LaravelTranslation>
+        <option name="defaultPath" value="lang" />
+      </LaravelTranslation>
+    </option>
+    <option name="userClassName" value="\App\Models\User" />
+  </component>
+</project>

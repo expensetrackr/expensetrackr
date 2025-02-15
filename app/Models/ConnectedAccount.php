@@ -9,6 +9,7 @@ use Database\Factories\ConnectedAccountFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasTimestamps;
+use Illuminate\Database\Eloquent\Factories\Factory as TFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use JoelButcher\Socialstream\ConnectedAccount as SocialstreamConnectedAccount;
 use JoelButcher\Socialstream\Events\ConnectedAccountCreated;
@@ -32,6 +33,7 @@ use JoelButcher\Socialstream\Events\ConnectedAccountUpdated;
  * @property CarbonImmutable|null $created_at
  * @property CarbonImmutable|null $updated_at
  * @property-read User|null $user
+ * @property-read TFactory|null $use_factory
  *
  * @method static ConnectedAccountFactory factory($count = null, $state = [])
  * @method static Builder<static>|ConnectedAccount newModelQuery()

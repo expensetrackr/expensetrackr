@@ -12,6 +12,7 @@ use Database\Factories\WorkspaceFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\Factory as TFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -31,6 +32,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read int|null $members_count
  * @property-read Collection<int, WorkspaceInvitation> $invitations
  * @property-read int|null $invitations_count
+ * @property-read TFactory|null $use_factory
  *
  * @method static WorkspaceFactory factory($count = null, $state = [])
  * @method static Builder<static>|Workspace newModelQuery()

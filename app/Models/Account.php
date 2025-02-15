@@ -12,6 +12,7 @@ use Carbon\CarbonImmutable;
 use Database\Factories\AccountFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\Factory as TFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -39,6 +40,7 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @property-read User|null $updatedBy
  * @property-read Workspace $workspace
  * @property-read string|null $prefixed_id
+ * @property-read TFactory|null $use_factory
  *
  * @method static AccountFactory factory($count = null, $state = [])
  * @method static Builder<static>|Account newModelQuery()
