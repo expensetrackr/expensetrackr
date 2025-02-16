@@ -9,7 +9,6 @@ use App\Events\AddingWorkspace;
 use App\Models\User;
 use App\Models\Workspace;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Gate;
 
 final class CreateWorkspace implements CreatesWorkspaces
 {
@@ -20,8 +19,6 @@ final class CreateWorkspace implements CreatesWorkspaces
      */
     public function handle(User $user, array $input): Workspace|Model
     {
-        Gate::forUser($user)->authorize('create', new Workspace);
-
         AddingWorkspace::dispatch($user);
 
         $user->switchWorkspace($workspace = $user->ownedWorkspaces()->create([

@@ -83,9 +83,6 @@ final class ManageWorkspaceMemberRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        /** @var User|null */
-        $user = $this->user();
-
-        return $user !== null && $user->can('addWorkspaceMember', $this->workspace);
+        return $this->user()?->can('addWorkspaceMember', $this->workspace) ?? false;
     }
 }

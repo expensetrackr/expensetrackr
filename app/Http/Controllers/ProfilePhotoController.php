@@ -7,9 +7,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
 
-final class ProfilePhotoController extends Controller
+final class ProfilePhotoController
 {
     /**
      * Delete the current user's profile photo.

@@ -7,7 +7,6 @@ namespace App\Actions\Workspaces;
 use App\Contracts\UpdatesWorkspaces;
 use App\Models\User;
 use App\Models\Workspace;
-use Illuminate\Support\Facades\Gate;
 
 final class UpdateWorkspace implements UpdatesWorkspaces
 {
@@ -18,8 +17,6 @@ final class UpdateWorkspace implements UpdatesWorkspaces
      */
     public function handle(User $user, Workspace $workspace, array $input): void
     {
-        Gate::forUser($user)->authorize('update', $workspace);
-
         $workspace->forceFill([
             'name' => $input['name'],
         ])->save();

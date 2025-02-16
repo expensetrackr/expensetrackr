@@ -8,13 +8,12 @@ use App\Actions\Workspaces\DeleteUser;
 use App\Models\User;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 use Laravel\Fortify\Actions\ConfirmPassword;
 use Symfony\Component\HttpFoundation\Response;
 
-final class CurrentUserController extends Controller
+final class CurrentUserController
 {
     /**
      * Delete the current user.

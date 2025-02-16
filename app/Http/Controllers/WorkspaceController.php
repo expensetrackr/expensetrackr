@@ -14,27 +14,25 @@ use App\Http\Requests\UpdateWorkspaceRequest;
 use App\Models\User;
 use App\Models\Workspace;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Inertia\Response;
 use Spatie\Permission\Models\Role;
 
-final class WorkspaceController extends Controller
+final class WorkspaceController
 {
-    use RedirectsActions;
+    use AuthorizesRequests, RedirectsActions;
 
     /**
      * Show the workspace management screen.
      */
-    public function show(int $workspaceId): Response
+    public function show(Workspace $workspace): Response
     {
-        $workspace = Workspace::findOrFail($workspaceId);
-
-        Gate::authorize('view', $workspace);
+        $this->authorize('view', $workspace);
 
         return Inertia::render('workspaces/show', [
             'workspace' => $workspace->load('owner', 'members', 'invitations'),
@@ -66,7 +64,7 @@ final class WorkspaceController extends Controller
      */
     public function create()
     {
-        Gate::authorize('create', Workspace::class);
+        $this->authorize('create', Workspace::class);
 
         return Inertia::render('Workspaces/Create');
     }
@@ -86,6 +84,8 @@ final class WorkspaceController extends Controller
      */
     public function destroy(Request $request, Workspace $workspace, DeleteWorkspace $action): Application|RedirectResponse|\Illuminate\Http\Response|Redirector|Response
     {
+        $this->authorize('delete', $workspace);
+
         app(ValidateWorkspaceDeletion::class)->validate(type($request->user())->as(User::class), $workspace);
 
         $action->handle($workspace);

@@ -14,9 +14,8 @@ use App\Models\Workspace;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
 
-final class WorkspaceMemberController extends Controller
+final class WorkspaceMemberController
 {
     use AuthorizesRequests;
 
@@ -25,8 +24,6 @@ final class WorkspaceMemberController extends Controller
      */
     public function store(ManageWorkspaceMemberRequest $request, Workspace $workspace, ManageWorkspaceMember $action): RedirectResponse
     {
-        $this->authorize('addWorkspaceMember', $workspace);
-
         $validated = $request->validated();
         $currentUser = type($request->user())->as(User::class);
 
@@ -45,8 +42,6 @@ final class WorkspaceMemberController extends Controller
      */
     public function update(UpdateWorkspaceMemberRequest $request, Workspace $workspace, User $member, UpdateWorkspaceMemberRole $action): RedirectResponse
     {
-        $this->authorize('updateWorkspaceMember', $workspace);
-
         $validated = $request->validated();
         $currentUser = type($request->user())->as(User::class);
 

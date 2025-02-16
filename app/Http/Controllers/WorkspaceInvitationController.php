@@ -10,9 +10,8 @@ use App\Models\WorkspaceInvitation;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
 
-final class WorkspaceInvitationController extends Controller
+final class WorkspaceInvitationController
 {
     use AuthorizesRequests;
 
@@ -22,10 +21,11 @@ final class WorkspaceInvitationController extends Controller
     public function accept(Request $request, WorkspaceInvitation $invitation, ManageWorkspaceMember $action): RedirectResponse
     {
         $this->authorize('addWorkspaceMember', $invitation->workspace);
-        $user = type($request->user())->as(User::class);
+
+        $currentUser = type($request->user())->as(User::class);
 
         $action->handle(
-            $user,
+            $currentUser,
             $invitation->workspace,
             $invitation->email,
             $invitation->role,
@@ -33,7 +33,7 @@ final class WorkspaceInvitationController extends Controller
         );
 
         setPermissionsTeamId($invitation->workspace->id);
-        $user->assignRole($invitation->role);
+        $currentUser->assignRole($invitation->role);
 
         $invitation->delete();
 

@@ -7,31 +7,24 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreAccountStepRequest;
 use App\Models\Account;
 use App\Services\AccountWizardService;
-use App\Services\CurrencyService;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Inertia\Response;
 use InvalidArgumentException;
 
-final class AccountController extends Controller
+final class AccountController
 {
-    /**
-     * Create a new instance of the Account controller.
-     */
-    public function __construct(
-        private readonly AccountWizardService $wizardService,
-        private readonly CurrencyService $currencyService
-    ) {}
+    use AuthorizesRequests;
 
     /**
      * Display all accounts.
      */
     public function index(): Response
     {
-        Gate::authorize('viewAny', Account::class);
+        $this->authorize('viewAny', Account::class);
 
         return Inertia::render('accounts/index', [
             'accounts' => Account::all()->sortBy('name'),
@@ -43,7 +36,7 @@ final class AccountController extends Controller
      */
     public function create(): Response
     {
-        Gate::authorize('create', Account::class);
+        $this->authorize('create', Account::class);
 
         return Inertia::render('accounts/create/index', [
             'currencies' => $this->currencyService->getSupportedCurrencies(),
@@ -57,8 +50,6 @@ final class AccountController extends Controller
      */
     public function store(StoreAccountStepRequest $request, string $step): RedirectResponse
     {
-        Gate::authorize('create', Account::class);
-
         try {
             $this->wizardService->validateStep($step);
         } catch (InvalidArgumentException $e) {

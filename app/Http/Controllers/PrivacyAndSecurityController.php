@@ -7,12 +7,11 @@ namespace App\Http\Controllers;
 use App\Concerns\ConfirmsTwoFactorAuthentication;
 use Cjmellor\BrowserSessions\Facades\BrowserSessions;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
 use Inertia\Inertia;
 use Inertia\Response;
 use Laravel\Fortify\Features;
 
-final class PrivacyAndSecurityController extends Controller
+final class PrivacyAndSecurityController
 {
     use ConfirmsTwoFactorAuthentication;
 

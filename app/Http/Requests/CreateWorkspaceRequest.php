@@ -24,6 +24,6 @@ final class CreateWorkspaceRequest extends FormRequest
 
     public function authorize(): bool
     {
-        return true;
+        return $this->user()?->can('create', $this->workspace) ?? false;
     }
 }

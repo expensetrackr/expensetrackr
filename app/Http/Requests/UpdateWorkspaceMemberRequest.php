@@ -13,7 +13,7 @@ final class UpdateWorkspaceMemberRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return $this->user()?->can('updateWorkspaceMember', $this->workspace) ?? false;
     }
 
     /**

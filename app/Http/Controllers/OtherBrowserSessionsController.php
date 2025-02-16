@@ -10,11 +10,10 @@ use Illuminate\Auth\AuthenticationException;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
 use Illuminate\Validation\ValidationException;
 use Laravel\Fortify\Actions\ConfirmPassword;
 
-final class OtherBrowserSessionsController extends Controller
+final class OtherBrowserSessionsController
 {
     /**
      * Log out from other browser sessions.

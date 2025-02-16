@@ -6,11 +6,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
 use Inertia\Inertia;
 use Inertia\Response;
 
-final class ApiTokenController extends Controller
+final class ApiTokenController
 {
     /**
      * Show the user API token screen.
