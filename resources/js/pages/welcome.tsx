@@ -106,6 +106,8 @@ export default function WelcomePage(_props: PageProps<{ laravelVersion: string; 
 
                 <PricingSection />
 
+                <CallToAction />
+
                 <Footer />
             </div>
         </>
@@ -114,7 +116,7 @@ export default function WelcomePage(_props: PageProps<{ laravelVersion: string; 
 
 function HeroSection() {
     return (
-        <div className="relative z-10 container py-56 pb-12">
+        <section className="relative z-10 container py-56 pb-12" id="hero">
             <div className="relative flex flex-col gap-8">
                 <div className="mx-auto flex max-w-[640px] flex-col gap-5">
                     <h1 className="text-center text-h2">
@@ -135,13 +137,13 @@ function HeroSection() {
                     </Button.Root>
                 </div>
             </div>
-        </div>
+        </section>
     );
 }
 
 function BentoSection() {
     return (
-        <div className="relative container py-12">
+        <section className="relative container py-12" id="bento">
             <div className="flex flex-col gap-24">
                 <div className="flex flex-col gap-2">
                     <h2 className="text-center text-h4">La mejor experiencia en su clase</h2>
@@ -203,7 +205,7 @@ function BentoSection() {
                     />
                 </div>
             </div>
-        </div>
+        </section>
     );
 }
 
@@ -234,7 +236,7 @@ function ImageAndTextSection() {
     }, [setType]);
 
     return (
-        <div className="container py-12">
+        <section className="container py-12" id="image-and-text">
             <div className="grid grid-cols-12 gap-5">
                 <div className="col-span-12 lg:col-span-6">
                     <h2 className="max-w-md text-h4">{t("home.image_and_text_section.title")}</h2>
@@ -303,13 +305,13 @@ function ImageAndTextSection() {
                     </form>
                 </div>
             </div>
-        </div>
+        </section>
     );
 }
 
 function FeatureSection() {
     return (
-        <div className="container py-12">
+        <section className="container py-12" id="feature">
             <div className="flex flex-col gap-5.5">
                 <div className="mx-auto flex max-w-160 flex-col">
                     <h2 className="text-center text-h4">Controla tus finanzas, seas quien seas</h2>
@@ -343,7 +345,7 @@ function FeatureSection() {
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
     );
 }
 
@@ -363,7 +365,7 @@ function PricingSection() {
     );
 
     return (
-        <Glow.Area className="container py-12">
+        <Glow.Area className="container py-12" id="pricing">
             <div className="flex flex-col gap-8">
                 <div className="mx-auto flex max-w-160 flex-col">
                     <h2 className="text-center text-h4">{t("home.sections.pricing.title")}</h2>
@@ -520,6 +522,28 @@ function PricingSection() {
                 </div>
             </div>
         </Glow.Area>
+    );
+}
+
+function CallToAction() {
+    return (
+        <section className="w-full py-5" id="call-to-action">
+            <div className="container">
+                <div className="grid grid-cols-12">
+                    <div className="col-span-12 bg-radial-[50%_50%_at_50%_50%] from-(--bg-weak-50) to-(--bg-white-0) to-110% py-21 backdrop-blur-2xl lg:col-span-10 lg:col-start-2">
+                        <div className="flex flex-col items-center gap-2">
+                            <h2 className="text-h4">Controla tus gastos y aumenta tus ahorros</h2>
+                            <p className="text-paragraph-md text-(--text-sub-600)">
+                                Anima a los usuarios a tomar control de sus finanzas
+                            </p>
+                            <Button.Root asChild>
+                                <Link href={route("register")}>Empieza gratis</Link>
+                            </Button.Root>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     );
 }
 
