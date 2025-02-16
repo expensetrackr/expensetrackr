@@ -4,7 +4,7 @@ import * as Hint from "../ui/hint.tsx";
 import * as Label from "../ui/label.tsx";
 import * as TextareaPrimitive from "../ui/textarea.tsx";
 
-type TextareaProps = TextareaPrimitive.TextareaProps & {
+type TextareaProps = TextareaPrimitive.TextareaRootProps & {
     label?: React.ReactNode;
     hint?: string | Array<string>;
     charCounterCurrent?: number;
