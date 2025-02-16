@@ -23,7 +23,7 @@ final readonly class DeleteUser implements DeletesUsers
     /**
      * Delete the given user.
      */
-    public function delete(User $user): void
+    public function handle(User $user): void
     {
         DB::transaction(function () use ($user): void {
             $this->deleteWorkspaces($user);

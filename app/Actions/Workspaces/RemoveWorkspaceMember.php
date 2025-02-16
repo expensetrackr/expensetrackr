@@ -17,7 +17,7 @@ final class RemoveWorkspaceMember implements RemovesWorkspaceMembers
     /**
      * Remove the workspace member from the given workspace.
      */
-    public function remove(User $user, Workspace $workspace, User $workspaceMember): void
+    public function handle(User $user, Workspace $workspace, User $workspaceMember): void
     {
         $this->authorize($user, $workspace, $workspaceMember);
 

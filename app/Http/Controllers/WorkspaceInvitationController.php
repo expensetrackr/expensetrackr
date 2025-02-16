@@ -4,34 +4,36 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Actions\Workspaces\AddWorkspaceMember;
+use App\Actions\Workspaces\ManageWorkspaceMember;
 use App\Models\User;
 use App\Models\WorkspaceInvitation;
-use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Gate;
 
 final class WorkspaceInvitationController extends Controller
 {
+    use AuthorizesRequests;
+
     /**
      * Accept a workspace invitation.
      */
-    public function accept(Request $request, int $invitationId): RedirectResponse
+    public function accept(Request $request, WorkspaceInvitation $invitation, ManageWorkspaceMember $action): RedirectResponse
     {
-        $invitation = WorkspaceInvitation::whereKey($invitationId)->firstOrFail();
+        $this->authorize('addWorkspaceMember', $invitation->workspace);
+        $user = type($request->user())->as(User::class);
 
-        app(AddWorkspaceMember::class)->add(
-            type($invitation->workspace->owner)->as(User::class),
+        $action->handle(
+            $user,
             $invitation->workspace,
             $invitation->email,
-            $invitation->role
+            $invitation->role,
+            true // Force direct add since we're accepting an invitation
         );
 
         setPermissionsTeamId($invitation->workspace->id);
-
-        $request->user()?->assignRole($invitation->role);
+        $user->assignRole($invitation->role);
 
         $invitation->delete();
 
@@ -42,13 +44,9 @@ final class WorkspaceInvitationController extends Controller
     /**
      * Cancel the given workspace invitation.
      */
-    public function destroy(Request $request, int $invitationId): RedirectResponse
+    public function destroy(Request $request, WorkspaceInvitation $invitation): RedirectResponse
     {
-        $invitation = WorkspaceInvitation::whereKey($invitationId)->firstOrFail();
-
-        if (! Gate::forUser($request->user())->check('removeWorkspaceMember', $invitation->workspace)) {
-            throw new AuthorizationException;
-        }
+        $this->authorize('removeWorkspaceMember', $invitation->workspace);
 
         $invitation->delete();
 

@@ -19,7 +19,7 @@ final class CurrentUserController extends Controller
     /**
      * Delete the current user.
      */
-    public function destroy(Request $request, StatefulGuard $guard): Response
+    public function destroy(Request $request, StatefulGuard $guard, DeleteUser $action): Response
     {
         $user = type($request->user())->as(User::class);
         $confirmed = app(ConfirmPassword::class)(
@@ -34,7 +34,7 @@ final class CurrentUserController extends Controller
             ]);
         }
 
-        app(DeleteUser::class)->delete(type($user->fresh())->as(User::class));
+        $action->handle($user);
 
         $guard->logout();
 

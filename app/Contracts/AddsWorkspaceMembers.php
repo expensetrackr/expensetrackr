@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User;
 
 /**
- * @method void add(User $user, Model $workspace, string $email, string $role = null)
+ * @method void handle(User $user, Model $workspace, string $email, string $role = null)
  */
 interface AddsWorkspaceMembers
 {
