@@ -34,7 +34,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property CarbonImmutable|null $created_at
  * @property CarbonImmutable|null $updated_at
  * @property-read Workspace $workspace
- * @property-read TFactory|null $use_factory
+ * @property-read TFactory<Currency>|null $use_factory
  *
  * @method static CurrencyFactory factory($count = null, $state = [])
  * @method static Builder<static>|Currency newModelQuery()
@@ -63,6 +63,11 @@ final class Currency extends Model
     /** @use HasFactory<CurrencyFactory> */
     use HasFactory, WorkspaceOwned;
 
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var list<string>
+     */
     protected $appends = ['live_rate'];
 
     /**
@@ -84,13 +89,9 @@ final class Currency extends Model
      *
      * @phpstan-ignore method.unused
      */
-    private function liveRate(): Attribute
+    private function getLiveRateAttribute(): Attribute
     {
         return Attribute::get(static function (mixed $value, mixed $attributes = null): ?float {
-            if (! is_array($attributes)) {
-                return null;
-            }
-
             $baseCurrency = CurrencyAccessor::getDefaultCurrency() ?? 'USD';
             $targetCurrency = type($attributes['code'])->asString();
 

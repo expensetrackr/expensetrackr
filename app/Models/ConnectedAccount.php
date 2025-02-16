@@ -33,7 +33,7 @@ use JoelButcher\Socialstream\Events\ConnectedAccountUpdated;
  * @property CarbonImmutable|null $created_at
  * @property CarbonImmutable|null $updated_at
  * @property-read User|null $user
- * @property-read TFactory|null $use_factory
+ * @property-read TFactory<ConnectedAccount>|null $use_factory
  *
  * @method static ConnectedAccountFactory factory($count = null, $state = [])
  * @method static Builder<static>|ConnectedAccount newModelQuery()

@@ -54,6 +54,16 @@ final class CurrencyAccessor
      */
     public static function getAllCurrencies(): array
     {
+        /** @var array<string, array{
+         *   name: string,
+         *   code: int,
+         *   precision: int,
+         *   subunit: int,
+         *   symbol: string,
+         *   symbol_first: bool,
+         *   decimal_mark: string,
+         *   thousands_separator: string
+         * }> */
         return ISOCurrencies::getCurrencies();
     }
 

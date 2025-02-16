@@ -15,7 +15,7 @@ final class MacroServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Money::macro('swapAmountFor', function (string $newCurrency): int {
-            $oldCurrency = $this->currency->getCurrency();
+            $oldCurrency = $this->getCurrency()->getCurrency();
             $balanceInSubunits = $this->getAmount();
 
             $oldCurrencySubunit = currency($oldCurrency)->getSubunit();
@@ -39,7 +39,7 @@ final class MacroServiceProvider extends ServiceProvider
         Money::macro('formatWithCode', function (bool $codeBefore = false) {
             $formatted = $this->format();
 
-            $currencyCode = $this->currency->getCurrency();
+            $currencyCode = $this->getCurrency()->getCurrency();
 
             if ($currencyCode === CurrencyAccessor::getDefaultCurrency()) {
                 return $formatted;

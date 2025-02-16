@@ -13,17 +13,23 @@ trait RedirectsActions
 {
     /**
      * Get the redirect response for the given action.
+     *
+     * @param  object  $action  The action object containing redirect information
      */
-    public function redirectPath(mixed $action): Application|RedirectResponse|Redirector|Response
+    public function redirectPath(object $action): Application|RedirectResponse|Redirector|Response
     {
-        if (method_exists($action, 'redirectTo')) { // @phpstan-ignore-line
-            $response = $action->redirectTo(); // @phpstan-ignore-line
+        if (method_exists($action, 'redirectTo')) {
+            $response = $action->redirectTo();
         } else {
-            $response = property_exists($action, 'redirectTo') // @phpstan-ignore-line
-                ? $action->redirectTo // @phpstan-ignore-line
+            $response = property_exists($action, 'redirectTo')
+                ? $action->redirectTo
                 : config('fortify.home');
         }
 
-        return $response instanceof Response ? $response : redirect($response);
+        if ($response instanceof Response) {
+            return $response;
+        }
+
+        return redirect(is_string($response) ? $response : type(config('fortify.home'))->asString());
     }
 }

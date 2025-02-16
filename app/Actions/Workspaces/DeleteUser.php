@@ -42,7 +42,7 @@ final readonly class DeleteUser implements DeletesUsers
         $user->workspaces()->detach();
 
         $user->ownedWorkspaces->each(function ($workspace): void {
-            $this->deleteWorkspaces->delete($workspace);
+            $this->deleteWorkspaces->handle($workspace);
         });
     }
 }

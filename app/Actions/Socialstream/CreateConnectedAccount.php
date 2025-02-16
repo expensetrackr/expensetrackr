@@ -19,6 +19,7 @@ final class CreateConnectedAccount implements CreatesConnectedAccounts
      */
     public function create(mixed $user, string $provider, ProviderUser $providerUser): ConnectedAccount
     {
+        /** @var ConnectedAccount */
         return Socialstream::connectedAccountModel()::forceCreate([
             'user_id' => $user->id,
             'provider' => mb_strtolower($provider),
@@ -30,7 +31,7 @@ final class CreateConnectedAccount implements CreatesConnectedAccounts
             'token' => $providerUser->token ?? null,
             'secret' => $providerUser->tokenSecret ?? null,
             'refresh_token' => $providerUser->refreshToken ?? null,
-            'expires_at' => property_exists($providerUser, 'expiresIn') ? now()->addSeconds($providerUser->expiresIn) : null,
+            'expires_at' => property_exists($providerUser, 'expiresIn') ? now()->addSeconds(type($providerUser->expiresIn)->asInt()) : null,
         ]);
     }
 }

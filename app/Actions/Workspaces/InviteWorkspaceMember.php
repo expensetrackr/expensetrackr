@@ -78,7 +78,7 @@ final class InviteWorkspaceMember implements InvitesWorkspaceMembers
      */
     private function ensureUserIsNotAlreadyOnWorkspace(Workspace $workspace, string $email): Closure
     {
-        return function ($validator) use ($workspace, $email): void {
+        return function (\Illuminate\Validation\Validator $validator) use ($workspace, $email): void {
             $validator->errors()->addIf(
                 $workspace->hasUserWithEmail($email),
                 'email',

@@ -65,7 +65,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read int|null $permissions_count
  * @property-read Collection<int, Role> $roles
  * @property-read int|null $roles_count
- * @property-read TFactory|null $use_factory
+ * @property-read TFactory<User>|null $use_factory
  *
  * @method static UserFactory factory($count = null, $state = [])
  * @method static Builder<static>|User newModelQuery()
@@ -127,7 +127,7 @@ final class User extends Authenticatable
      *
      * @return Attribute<string|null, never>
      */
-    public function profilePhotoUrl(): Attribute
+    public function getProfilePhotoUrlAttribute(): Attribute
     {
         return filter_var($this->profile_photo_path, FILTER_VALIDATE_URL)
             ? Attribute::get(fn () => $this->profile_photo_path)

@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User;
 
 /**
- * @method void update(User $user, Model $workspace, array<string, string> $input)
+ * @method void handle(User $user, Model $workspace, array<string, mixed> $input)
  */
-interface UpdatesWorkspaceNames
+interface UpdatesWorkspaces
 {
     //
 }

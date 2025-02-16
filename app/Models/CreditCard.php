@@ -23,7 +23,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property CarbonImmutable|null $created_at
  * @property CarbonImmutable|null $updated_at
  * @property-read Account|null $account
- * @property-read TFactory|null $use_factory
+ * @property-read TFactory<CreditCard>|null $use_factory
  *
  * @method static CreditCardFactory factory($count = null, $state = [])
  * @method static Builder<static>|CreditCard newModelQuery()

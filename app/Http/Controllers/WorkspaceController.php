@@ -6,9 +6,11 @@ namespace App\Http\Controllers;
 
 use App\Actions\Workspaces\CreateWorkspace;
 use App\Actions\Workspaces\DeleteWorkspace;
-use App\Actions\Workspaces\UpdateWorkspaceName;
+use App\Actions\Workspaces\UpdateWorkspace;
 use App\Actions\Workspaces\ValidateWorkspaceDeletion;
 use App\Concerns\RedirectsActions;
+use App\Http\Requests\CreateWorkspaceRequest;
+use App\Http\Requests\UpdateWorkspaceRequest;
 use App\Models\User;
 use App\Models\Workspace;
 use Illuminate\Contracts\Foundation\Application;
@@ -50,13 +52,11 @@ final class WorkspaceController extends Controller
     /**
      * Create a new workspace.
      */
-    public function store(Request $request): Application|RedirectResponse|\Illuminate\Http\Response|Redirector|Response
+    public function store(CreateWorkspaceRequest $request, CreateWorkspace $action): Application|RedirectResponse|\Illuminate\Http\Response|Redirector|Response
     {
-        $creator = app(CreateWorkspace::class);
+        $action->handle(type($request->user())->as(User::class), $request->validated());
 
-        $creator->create(type($request->user())->as(User::class), $request->all());
-
-        return $this->redirectPath($creator);
+        return $this->redirectPath($action);
     }
 
     /**
@@ -74,11 +74,9 @@ final class WorkspaceController extends Controller
     /**
      * Update the given workspaces name.
      */
-    public function update(Request $request, int $workspaceId): RedirectResponse
+    public function update(UpdateWorkspaceRequest $request, Workspace $workspace, UpdateWorkspace $action): RedirectResponse
     {
-        $workspace = Workspace::findOrFail($workspaceId);
-
-        app(UpdateWorkspaceName::class)->update(type($request->user())->as(User::class), $workspace, $request->all());
+        $action->handle(type($request->user())->as(User::class), $workspace, $request->validated());
 
         return back(303);
     }
@@ -86,16 +84,12 @@ final class WorkspaceController extends Controller
     /**
      * Delete the given workspace.
      */
-    public function destroy(Request $request, int $workspaceId): Application|RedirectResponse|\Illuminate\Http\Response|Redirector|Response
+    public function destroy(Request $request, Workspace $workspace, DeleteWorkspace $action): Application|RedirectResponse|\Illuminate\Http\Response|Redirector|Response
     {
-        $workspace = Workspace::findOrFail($workspaceId);
-
         app(ValidateWorkspaceDeletion::class)->validate(type($request->user())->as(User::class), $workspace);
 
-        $deleter = app(DeleteWorkspace::class);
+        $action->handle($workspace);
 
-        $deleter->delete($workspace);
-
-        return $this->redirectPath($deleter);
+        return $this->redirectPath($action);
     }
 }

@@ -10,7 +10,7 @@ use App\Actions\Workspaces\DeleteUser;
 use App\Actions\Workspaces\DeleteWorkspace;
 use App\Actions\Workspaces\InviteWorkspaceMember;
 use App\Actions\Workspaces\RemoveWorkspaceMember;
-use App\Actions\Workspaces\UpdateWorkspaceName;
+use App\Actions\Workspaces\UpdateWorkspace;
 use Illuminate\Support\ServiceProvider;
 
 final class WorkspacesServiceProvider extends ServiceProvider
@@ -21,11 +21,11 @@ final class WorkspacesServiceProvider extends ServiceProvider
     public function boot(): void
     {
         app()->singleton(CreateWorkspace::class);
-        app()->singleton(UpdateWorkspaceName::class);
+        app()->singleton(UpdateWorkspace::class);
+        app()->singleton(DeleteWorkspace::class);
         app()->singleton(AddWorkspaceMember::class);
         app()->singleton(InviteWorkspaceMember::class);
         app()->singleton(RemoveWorkspaceMember::class);
-        app()->singleton(DeleteWorkspace::class);
         app()->singleton(DeleteUser::class);
     }
 }

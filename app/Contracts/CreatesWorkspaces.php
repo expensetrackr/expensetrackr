@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User;
 
 /**
- * @method Model create(User $user, array<string, string> $input)
+ * @method Model handle(User $user, array<string, mixed> $input)
  */
 interface CreatesWorkspaces
 {

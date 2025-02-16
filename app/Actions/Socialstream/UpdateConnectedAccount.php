@@ -29,7 +29,7 @@ final class UpdateConnectedAccount implements UpdatesConnectedAccounts
             'token' => $providerUser->token ?? null,
             'secret' => $providerUser->tokenSecret ?? null,
             'refresh_token' => $providerUser->refreshToken ?? null,
-            'expires_at' => property_exists($providerUser, 'expiresIn') ? now()->addSeconds($providerUser->expiresIn) : null,
+            'expires_at' => property_exists($providerUser, 'expiresIn') ? now()->addSeconds(type($providerUser->expiresIn)->asInt()) : null,
         ])->save();
 
         return $connectedAccount;

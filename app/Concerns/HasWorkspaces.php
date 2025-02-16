@@ -18,7 +18,7 @@ trait HasWorkspaces
      */
     public function isCurrentWorkspace(Workspace $workspace): bool
     {
-        return $workspace->id === $this->currentWorkspace?->id;
+        return $workspace->is($this->currentWorkspace);
     }
 
     /**
@@ -38,9 +38,9 @@ trait HasWorkspaces
     /**
      * Switch the user's context to the given workspace.
      */
-    public function switchWorkspace(Workspace $workspace): bool
+    public function switchWorkspace(?Workspace $workspace): bool
     {
-        if (! $this->belongsToWorkspace($workspace)) {
+        if (is_null($workspace) || ! $this->belongsToWorkspace($workspace)) {
             return false;
         }
 

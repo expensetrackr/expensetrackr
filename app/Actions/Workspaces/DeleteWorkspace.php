@@ -12,7 +12,7 @@ final class DeleteWorkspace implements DeletesWorkspaces
     /**
      * Delete the given workspace.
      */
-    public function delete(Workspace $workspace): void
+    public function handle(Workspace $workspace): void
     {
         $workspace->purge();
     }

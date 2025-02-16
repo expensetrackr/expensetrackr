@@ -40,7 +40,7 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @property-read User|null $updatedBy
  * @property-read Workspace $workspace
  * @property-read string|null $prefixed_id
- * @property-read TFactory|null $use_factory
+ * @property-read TFactory<Account>|null $use_factory
  *
  * @method static AccountFactory factory($count = null, $state = [])
  * @method static Builder<static>|Account newModelQuery()

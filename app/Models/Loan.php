@@ -21,7 +21,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property CarbonImmutable|null $created_at
  * @property CarbonImmutable|null $updated_at
  * @property-read Account|null $account
- * @property-read TFactory|null $use_factory
+ * @property-read TFactory<Loan>|null $use_factory
  *
  * @method static LoanFactory factory($count = null, $state = [])
  * @method static Builder<static>|Loan newModelQuery()

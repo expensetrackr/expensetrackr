@@ -32,7 +32,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read int|null $members_count
  * @property-read Collection<int, WorkspaceInvitation> $invitations
  * @property-read int|null $invitations_count
- * @property-read TFactory|null $use_factory
+ * @property-read TFactory<Workspace>|null $use_factory
  *
  * @method static WorkspaceFactory factory($count = null, $state = [])
  * @method static Builder<static>|Workspace newModelQuery()

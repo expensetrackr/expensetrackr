@@ -38,7 +38,7 @@ final class HandleInertiaRequests extends Middleware
      *
      * @see https://inertiajs.com/shared-data
      *
-     * @return array<string, mixed>
+     * @return array<array-key, mixed>
      */
     public function share(Request $request): array
     {

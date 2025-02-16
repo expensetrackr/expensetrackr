@@ -7,7 +7,7 @@ namespace App\Contracts;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @method void delete(Model $workspace)
+ * @method void handle(Model $workspace)
  */
 interface DeletesWorkspaces
 {
