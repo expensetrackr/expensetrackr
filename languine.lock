@@ -183,3 +183,12 @@ files:
     ulid: 4c5b540775afdce1cbdee2102bc7d28c
     uuid: f5d1315f71c752ab44012304bcf016da
     custom.attribute-name.rule-name: 188d89635249211d1f16c358852d3b2f
+  lang/en/login.php:
+    title: 15cb3b43610751d8b2e241abfba63e10
+    description: 5d83c2159bcd9be5a3af1df2eec0d221
+    email.label: ce8ae9da5b7cd6c3df2929543a9af92d
+    email.placeholder: 8fb55f02608a8562905dc0f87d2c5977
+    password.label: dc647eb65e6711e155375218212b3964
+    remember.label: 878530871f0db73f004f5bd6591eeb76
+    forgot_password.label: 01a569ddc6cf67ddec2a683f0a5f5956
+    submit.label: bffe9a3c9a7e00ba00a11749e022d911

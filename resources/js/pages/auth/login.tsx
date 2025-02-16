@@ -13,6 +13,7 @@ import { TextField } from "#/components/form/text-field.tsx";
 import { Socialstream } from "#/components/socialstream.tsx";
 import * as FancyButton from "#/components/ui/fancy-button.tsx";
 import * as LinkButton from "#/components/ui/link-button.tsx";
+import { useTranslation } from "#/hooks/use-translation.ts";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";
 import { AuthCard } from "#/layouts/partials/auth-card.tsx";
 import { type InertiaSharedProps } from "#/types/index.ts";
@@ -33,6 +34,7 @@ export default function LoginPage({
         password: "",
         remember: false,
     });
+    const { t } = useTranslation();
 
     React.useEffect(() => {
         if (status) {
@@ -51,11 +53,7 @@ export default function LoginPage({
     };
 
     return (
-        <AuthCard
-            cardIcon={UserIcon}
-            description="Welcome back! Please enter your details"
-            title="Login to your account"
-        >
+        <AuthCard cardIcon={UserIcon} description={t("login.description")} title={t("login.title")}>
             <Head title="Log in" />
 
             <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
@@ -65,16 +63,16 @@ export default function LoginPage({
                     autoFocus
                     hint={errors.email}
                     inputMode="email"
-                    label="Email"
+                    label={t("login.email.label")}
                     leadingIcon={MailLineIcon}
                     name="email"
                     onChange={(e) => setData("email", e.target.value)}
-                    placeholder="e.g. john@example.com"
+                    placeholder={t("login.email.placeholder")}
                     type="email"
                     value={data.email}
                 />
 
-                <Field error={errors.password} id="password" label="Password">
+                <Field error={errors.password} id="password" label={t("login.password.label")}>
                     <PasswordInput
                         $error={!!errors.password}
                         autoComplete="current-password"
@@ -90,20 +88,20 @@ export default function LoginPage({
                 <div className="flex items-center justify-between gap-3 py-2">
                     <Checkbox
                         checked={data.remember}
-                        label="Remember me"
+                        label={t("login.remember.label")}
                         name="remember"
                         onCheckedChange={(checked) => setData("remember", !!checked)}
                     />
 
                     {canResetPassword && (
                         <LinkButton.Root $underline asChild>
-                            <Link href={route("password.request")}>Forgot your password?</Link>
+                            <Link href={route("password.request")}>{t("login.forgot_password.label")}</Link>
                         </LinkButton.Root>
                     )}
                 </div>
 
                 <FancyButton.Root $type="primary" disabled={processing} type="submit">
-                    Log in
+                    {t("login.submit.label")}
                 </FancyButton.Root>
             </form>
 
