@@ -31,8 +31,8 @@
         "laravel/tinker": "2.10.1",
         "league/flysystem-aws-s3-v3": "3.29.0",
         "pinkary-project/type-guard": "0.1.0",
-        "spatie/laravel-permission": "6.14.0",
-        "spatie/laravel-prefixed-ids": "1.4.0",
+        "spatie/laravel-permission": "6.15.0",
+        "spatie/laravel-prefixed-ids": "1.4.1",
         "tightenco/ziggy": "2.5.1"
     },
     "require-dev": {
