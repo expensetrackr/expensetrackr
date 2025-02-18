@@ -48,4 +48,8 @@ return [
         'base_url' => 'https://api.synthfinance.com',
     ],
 
+    'polar' => [
+        'api_key' => env('POLAR_API_KEY'),
+        'api_url' => env('POLAR_API_URL', 'https://sandbox-api.polar.sh/v1'),
+    ],
 ];

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Concerns\Billable;
 use App\Concerns\HasProfilePhoto;
 use App\Concerns\HasWorkspaces;
 use App\Observers\UserObserver;
@@ -95,7 +96,7 @@ use Spatie\Permission\Traits\HasRoles;
 final class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
-    use HasApiTokens, HasConnectedAccounts, HasFactory, HasRoles, HasWorkspaces, MustVerifyEmail, Notifiable, SetsProfilePhotoFromUrl, TwoFactorAuthenticatable;
+    use Billable, HasApiTokens, HasConnectedAccounts, HasFactory, HasRoles, HasWorkspaces, MustVerifyEmail, Notifiable, SetsProfilePhotoFromUrl, TwoFactorAuthenticatable;
 
     use HasProfilePhoto {
         HasProfilePhoto::profilePhotoUrl as getPhotoUrl;
