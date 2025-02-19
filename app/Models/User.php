@@ -67,6 +67,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read Collection<int, Role> $roles
  * @property-read int|null $roles_count
  * @property-read TFactory<User>|null $use_factory
+ * @property-read Customer|null $customer
  *
  * @method static UserFactory factory($count = null, $state = [])
  * @method static Builder<static>|User newModelQuery()

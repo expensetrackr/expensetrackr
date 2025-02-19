@@ -15,6 +15,8 @@ trait ManagesCustomer
 {
     /**
      * Create a customer record for the billable model.
+     *
+     * @param  array<string, string|int>  $attributes
      */
     public function createAsCustomer(array $attributes = []): Customer
     {
@@ -48,32 +50,6 @@ trait ManagesCustomer
     }
 
     /**
-     * Get the billable's country to associate with Polar.
-     *
-     * This needs to be a 2 letter code.
-     */
-    public function polarCountry(): ?string
-    {
-        return $this->country ?? null; // 'US'
-    }
-
-    /**
-     * Get the billable's zip code to associate with Polar.
-     */
-    public function polarZip(): ?string
-    {
-        return $this->zip ?? null; // '10038'
-    }
-
-    /**
-     * Get the billable's tax number to associate with Polar.
-     */
-    public function polarTaxId(): ?string
-    {
-        return $this->tax_id ?? null; // 'GB123456789'
-    }
-
-    /**
      * Generate a redirect response to the billable's customer portal.
      */
     public function redirectToCustomerPortal(): RedirectResponse
@@ -89,7 +65,9 @@ trait ManagesCustomer
      */
     public function customerPortalUrl(): string
     {
-        $this->assertCustomerExists();
+        if (is_null($this->customer) || is_null($this->customer->polar_id)) {
+            throw InvalidCustomer::notYetCreated($this);
+        }
 
         /**
          * @var object{
@@ -127,17 +105,5 @@ trait ManagesCustomer
         ]);
 
         return $response->customer_portal_url;
-    }
-
-    /**
-     * Determine if the billable is already a Polar customer and throw an exception if not.
-     *
-     * @throws InvalidCustomer
-     */
-    protected function assertCustomerExists(): void
-    {
-        if (is_null($this->customer) || is_null($this->customer->polar_id)) {
-            throw InvalidCustomer::notYetCreated($this);
-        }
     }
 }

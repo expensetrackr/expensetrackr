@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Data\Polar\PolarError;
 use App\Exceptions\PolarApiError;
+use Exception;
 use Illuminate\Support\Facades\Http;
 
 final class PolarService
@@ -14,17 +16,20 @@ final class PolarService
     /**
      * Perform a Polar.sh API call.
      *
-     * @return array<string, mixed>
+     * @param  array<string, mixed>  $payload
      *
      * @throws Exception
      * @throws PolarApiError
      */
-    public static function api(string $method, string $uri, array $payload = []): array
+    public static function api(string $method, string $uri, array $payload = []): mixed
     {
-        if (empty($apiKey = config('services.polar.api_key'))) {
-            throw new Exception('Polar.sh API key not set.');
+        $apiKey = config('services.polar.api_key');
+
+        if (empty($apiKey) || ! is_string($apiKey)) {
+            throw new Exception('Polar.sh API key not set or invalid.');
         }
 
+        /** @var string */
         $apiUrl = config('services.polar.api_url', 'https://sandbox-api.polar.sh/v1');
 
         /** @var \Illuminate\Http\Client\Response $response */
@@ -32,20 +37,17 @@ final class PolarService
             ->accept('application/json')
             ->contentType('application/json')
             ->withUserAgent('Polar.sh\Laravel\ExpenseTracker/'.self::VERSION)
-            ->$method($apiUrl."/{$uri}".'/', $payload);
+            ->$method($apiUrl.'/'.$uri, $payload);
 
         if ($response->notFound()) {
-            throw new PolarApiError($response['error']['detail'], 404);
-        }
-
-        if ($response->status() === 422) {
-            throw new PolarApiError($response['detail'][0]['msg'], 422);
+            throw new PolarApiError('Not found', 404);
         }
 
         if ($response->failed()) {
-            throw new PolarApiError($response['error']['detail'], $response->status());
+            $error = PolarError::from($response->json());
+            throw new PolarApiError($error->detail->first()->msg ?? 'Unknown error', $response->status());
         }
 
-        return $response->json();
+        return $response->json() ?? [];
     }
 }

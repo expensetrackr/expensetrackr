@@ -122,10 +122,11 @@ final class CreateCheckoutData extends Data
     /**
      * Convert the data object to an array and remove null values.
      *
-     * @return array<mixed>
+     * @return array<string, mixed>
      */
     public function toFilteredArray(): array
     {
+        /** @var array<string, mixed> */
         return array_filter(
             $this->toArray(),
             fn ($value): bool => $value !== null
