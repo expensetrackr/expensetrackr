@@ -1,0 +1,35 @@
+---
+description: Best practices and guidelines for Inertia.js
+globs: resources/js/**/*.{ts,tsx,js,jsx}
+---
+## Core Concepts
+
+-   Use Inertia for server-side routing instead of React Router
+-   Handle all data fetching through Laravel controllers
+-   Return only necessary data as props to minimize payload size
+-   Use Inertia's form handling instead of raw XHR/fetch requests
+-   Implement proper CSRF protection via Laravel's built-in mechanisms
+
+## Page Components
+
+-   Store page components in resources/js/pages directory
+-   Use PascalCase for page component names
+-   Implement layouts as React components with children prop
+-   Use TypeScript interfaces for page props
+-   Avoid accessing props directly from usePage() when possible
+
+## Form Handling
+
+-   Use Inertia's useForm hook for form state management
+-   Handle file uploads using FormData automatically via useForm
+-   Implement proper validation error handling using form.errors
+-   Use error bags for forms with duplicate field names
+-   Leverage form helper methods (processing, progress, etc)
+
+## TypeScript Integration
+
+-   Define proper interfaces for all page props
+-   Type form data using generics with useForm
+-   Use proper typing for Inertia's router methods
+-   Define shared props interface for common data
+  
