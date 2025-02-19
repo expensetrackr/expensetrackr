@@ -13,6 +13,7 @@
     "editor.formatOnSave": true,
     "eslint.enable": true,
     "eslint.useFlatConfig": true,
+    "prettier.printWidth": 120,
     "tailwindCSS.classAttributes": [
         "class",
         "className",

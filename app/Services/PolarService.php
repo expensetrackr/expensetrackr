@@ -19,7 +19,7 @@ final class PolarService
      * @throws Exception
      * @throws PolarApiError
      */
-    public static function api(string $method, string $uri, array $payload = []): object
+    public static function api(string $method, string $uri, array $payload = []): array
     {
         if (empty($apiKey = config('services.polar.api_key'))) {
             throw new Exception('Polar.sh API key not set.');
@@ -46,6 +46,6 @@ final class PolarService
             throw new PolarApiError($response['error']['detail'], $response->status());
         }
 
-        return json_decode(json_encode($response->json()));
+        return $response->json();
     }
 }
