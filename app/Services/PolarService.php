@@ -7,7 +7,12 @@ namespace App\Services;
 use App\Data\Polar\PolarError;
 use App\Exceptions\PolarApiError;
 use Exception;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Facades\Http;
+use Polar\Models\Components;
+use Polar\Models\Components\Checkout;
+use Polar\Models\Errors;
+use Polar\Polar;
 
 final class PolarService
 {
@@ -49,5 +54,32 @@ final class PolarService
         }
 
         return $response->json() ?? [];
+    }
+
+    public function createCheckoutSession(Components\CheckoutProductsCreate $request): Checkout
+    {
+        try {
+            $responses = $this->sdk()->checkouts->create(request: $request);
+
+            return $responses->checkout;
+        } catch (Errors\HTTPValidationErrorThrowable $e) {
+            dd($e->container->detail);
+            throw new PolarApiError($e->container->detail, 422);
+        } catch (Errors\APIException $e) {
+            throw new PolarApiError($e->getMessage(), 400);
+        }
+    }
+
+    /**
+     * Get the Polar SDK instance.
+     *
+     * @throws BindingResolutionException
+     */
+    private static function sdk(): Polar
+    {
+        return Polar::builder()
+            ->setSecurity(config('services.polar.api_key'))
+            ->setServer(app()->environment('production') ? 'production' : 'sandbox')
+            ->build();
     }
 }

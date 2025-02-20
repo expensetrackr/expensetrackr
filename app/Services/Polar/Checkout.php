@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace App\Services\Polar;
 
-use App\Data\Polar\CheckoutResponseData;
-use App\Data\Polar\CreateCheckoutData;
 use App\Services\PolarService;
 use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
+use Polar\Models\Components;
 
 final class Checkout implements Responsable
 {
@@ -33,17 +32,7 @@ final class Checkout implements Responsable
 
     private ?string $customerIpAddress = null;
 
-    /**
-     * @var array{
-     *     country: string,
-     *     line1?: string|null,
-     *     line2?: string|null,
-     *     postal_code?: string|null,
-     *     city?: string|null,
-     *     state?: string|null
-     * }|null
-     */
-    private ?array $customerBillingAddress = null;
+    private ?Components\Address $customerBillingAddress = null;
 
     private ?string $customerTaxId = null;
 
@@ -56,12 +45,11 @@ final class Checkout implements Responsable
 
     private ?string $embedOrigin = null;
 
-    /** @var array<string> */
-    private array $products = [];
+    public function __construct(private array $products) {}
 
-    public static function make(): static
+    public static function make(array $products): static
     {
-        return new self();
+        return new self($products);
     }
 
     /**
@@ -157,17 +145,7 @@ final class Checkout implements Responsable
         return $this;
     }
 
-    /**
-     * @param  array{
-     *     country: string,
-     *     line1?: string|null,
-     *     line2?: string|null,
-     *     postal_code?: string|null,
-     *     city?: string|null,
-     *     state?: string|null
-     * }|null  $customerBillingAddress
-     */
-    public function withCustomerBillingAddress(?array $customerBillingAddress): self
+    public function withCustomerBillingAddress(?Components\Address $customerBillingAddress): self
     {
         $this->customerBillingAddress = $customerBillingAddress;
 
@@ -231,18 +209,6 @@ final class Checkout implements Responsable
         return $this;
     }
 
-    /**
-     * List of product IDs available to select at that checkout. The first one will be selected by default.
-     *
-     * @param  array<string>  $products
-     */
-    public function withProducts(array $products): self
-    {
-        $this->products = $products;
-
-        return $this;
-    }
-
     public function toResponse($request): RedirectResponse
     {
         return $this->redirect();
@@ -258,27 +224,27 @@ final class Checkout implements Responsable
      */
     public function url(): string
     {
-        $data = CreateCheckoutData::from([
-            'metadata' => $this->metadata,
-            'custom_field_data' => $this->customFieldData,
-            'discount_id' => $this->discountId,
-            'allow_discount_codes' => $this->allowDiscountCodes,
-            'amount' => $this->amount,
-            'customer_id' => $this->customerId,
-            'customer_name' => $this->customerName,
-            'customer_email' => $this->customerEmail,
-            'customer_ip_address' => $this->customerIpAddress,
-            'customer_billing_address' => $this->customerBillingAddress,
-            'customer_tax_id' => $this->customerTaxId,
-            'customer_metadata' => $this->customerMetadata,
-            'subscription_id' => $this->subscriptionId,
-            'success_url' => $this->successUrl,
-            'embed_origin' => $this->embedOrigin,
-            'products' => $this->products,
-        ]);
+        $service = app(PolarService::class);
+        $request = new Components\CheckoutProductsCreate(
+            products: $this->products,
+            metadata: $this->metadata,
+            customFieldData: $this->customFieldData,
+            customerMetadata: $this->customerMetadata,
+            discountId: $this->discountId,
+            amount: $this->amount,
+            customerId: $this->customerId,
+            customerName: $this->customerName,
+            customerEmail: $this->customerEmail,
+            customerIpAddress: $this->customerIpAddress,
+            customerBillingAddress: $this->customerBillingAddress,
+            customerTaxId: $this->customerTaxId,
+            subscriptionId: $this->subscriptionId,
+            successUrl: $this->successUrl,
+            embedOrigin: $this->embedOrigin,
+            allowDiscountCodes: $this->allowDiscountCodes,
+        );
 
-        $response = PolarService::api('POST', 'checkouts', $data->toFilteredArray());
-        $checkout = CheckoutResponseData::from($response);
+        $checkout = $service->createCheckoutSession($request);
 
         return $checkout->url;
     }
