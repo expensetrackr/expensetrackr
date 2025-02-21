@@ -35,6 +35,8 @@
         "spatie/laravel-data": "4.13.1",
         "spatie/laravel-permission": "6.15.0",
         "spatie/laravel-prefixed-ids": "1.4.1",
+        "spatie/laravel-webhook-client": "3.4.3",
+        "standard-webhooks/standard-webhooks": "dev-main",
         "tightenco/ziggy": "2.5.1"
     },
     "require-dev": {

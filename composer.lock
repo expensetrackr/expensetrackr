@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cd514b8928863ed0ca63f5d5ecca9394",
+    "content-hash": "2e3167e535ba4be782b916eaf9c687a4",
     "packages": [
         {
             "name": "akaunting/laravel-money",
@@ -9701,6 +9701,81 @@
             "time": "2025-02-17T09:58:35+00:00"
         },
         {
+            "name": "spatie/laravel-webhook-client",
+            "version": "3.4.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-webhook-client.git",
+                "reference": "c7148e271a52b85da666bc7e3e1112b56138568b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-webhook-client/zipball/c7148e271a52b85da666bc7e3e1112b56138568b",
+                "reference": "c7148e271a52b85da666bc7e3e1112b56138568b",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/bus": "^9.0 || ^10.0 || ^11.0 || ^12.0",
+                "illuminate/database": "^9.0 || ^10.0 || ^11.0 || ^12.0",
+                "illuminate/support": "^9.0 || ^10.0 || ^11.0 || ^12.0",
+                "php": "^8.1 || ^8.2",
+                "spatie/laravel-package-tools": "^1.11"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^7.0 || ^8.0 || ^9.0 || ^10.0",
+                "phpstan/extension-installer": "^1.0",
+                "phpstan/phpstan-deprecation-rules": "^1.0",
+                "phpstan/phpstan-phpunit": "^1.0",
+                "phpunit/phpunit": "^9.3 || ^10.5 || ^11.5.3 || ^12.0",
+                "spatie/laravel-ray": "^1.24"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Spatie\\WebhookClient\\WebhookClientServiceProvider"
+                    ]
+                },
+                "branch-alias": {
+                    "dev-master": "11.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\WebhookClient\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Receive webhooks in Laravel apps",
+            "homepage": "https://github.com/spatie/laravel-webhook-client",
+            "keywords": [
+                "laravel-webhook-client",
+                "spatie"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/laravel-webhook-client/issues",
+                "source": "https://github.com/spatie/laravel-webhook-client/tree/3.4.3"
+            },
+            "funding": [
+                {
+                    "url": "https://spatie.be/open-source/support-us",
+                    "type": "custom"
+                }
+            ],
+            "time": "2025-02-14T13:01:09+00:00"
+        },
+        {
             "name": "spatie/php-structure-discoverer",
             "version": "2.3.1",
             "source": {
@@ -9879,6 +9954,56 @@
                 }
             ],
             "time": "2024-10-22T20:26:39+00:00"
+        },
+        {
+            "name": "standard-webhooks/standard-webhooks",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ariesclark/standward-webhooks-php.git",
+                "reference": "b42c7ba80f42088771aab6c46998c9be57ee700e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ariesclark/standward-webhooks-php/zipball/b42c7ba80f42088771aab6c46998c9be57ee700e",
+                "reference": "b42c7ba80f42088771aab6c46998c9be57ee700e",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": ">=5.6.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.0",
+                "phpstan/phpstan": "^0.12.89 || ^1.0.0",
+                "phpunit/phpunit": "^8"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "StandardWebhooks\\": "php/src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Standard Webhooks"
+                }
+            ],
+            "description": "Standard Webhooks PHP Library",
+            "homepage": "https://github.com/standard-webhooks/standard-webhooks/tree/main/libraries/php",
+            "keywords": [
+                "webhooks"
+            ],
+            "support": {
+                "issues": "https://github.com/ariesclark/standward-webhooks-php/issues",
+                "source": "https://github.com/ariesclark/standward-webhooks-php/tree/main"
+            },
+            "time": "2024-10-23T00:03:54+00:00"
         },
         {
             "name": "symfony/clock",
@@ -16597,7 +16722,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {},
+    "stability-flags": {
+        "standard-webhooks/standard-webhooks": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
