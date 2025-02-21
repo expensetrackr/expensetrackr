@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Concerns\Billable;
 use App\Concerns\HasProfilePhoto;
 use App\Concerns\HasWorkspaces;
+use App\Concerns\Polar\Billable;
 use App\Models\Polar\Customer;
+use App\Models\Polar\Subscription;
 use App\Observers\UserObserver;
 use Carbon\CarbonImmutable;
 use Database\Factories\UserFactory;
@@ -24,6 +25,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
+use JoelButcher\Socialstream\ConnectedAccount;
 use JoelButcher\Socialstream\HasConnectedAccounts;
 use JoelButcher\Socialstream\SetsProfilePhotoFromUrl;
 use Laravel\Fortify\TwoFactorAuthenticatable;
@@ -49,7 +51,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property CarbonImmutable|null $two_factor_confirmed_at
  * @property-read Collection<int, Account> $accounts
  * @property-read int|null $accounts_count
- * @property-read Collection<int, \JoelButcher\Socialstream\ConnectedAccount> $connectedAccounts
+ * @property-read Collection<int, ConnectedAccount> $connectedAccounts
  * @property-read int|null $connected_accounts_count
  * @property-read Workspace $currentWorkspace
  * @property-read string|null $get_photo_url
@@ -67,8 +69,12 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read int|null $permissions_count
  * @property-read Collection<int, Role> $roles
  * @property-read int|null $roles_count
- * @property-read TFactory<User>|null $use_factory
  * @property-read Customer|null $customer
+ * @property-read Collection<int, Subscription> $subscriptions
+ * @property-read int|null $subscriptions_count
+ * @property-read Collection<int, Polar\Order> $orders
+ * @property-read int|null $orders_count
+ * @property-read TFactory<User>|null $use_factory
  *
  * @method static UserFactory factory($count = null, $state = [])
  * @method static Builder<static>|User newModelQuery()

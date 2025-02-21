@@ -28,7 +28,7 @@ use Polar\Models\Components;
  * @property CarbonImmutable|null $ends_at
  * @property CarbonImmutable|null $created_at
  * @property CarbonImmutable|null $updated_at
- * @property-read Subscription $billable
+ * @property-read Model $billable
  *
  * @method static Builder<static>|Subscription active()
  * @method static Builder<static>|Subscription cancelled()

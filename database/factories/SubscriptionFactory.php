@@ -7,9 +7,7 @@ namespace Database\Factories;
 use App\Models\Polar\Subscription;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends Factory<Subscription>
- */
+/** @extends Factory<Subscription> */
 final class SubscriptionFactory extends Factory
 {
     /**

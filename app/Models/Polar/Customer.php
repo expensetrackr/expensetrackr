@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models\Polar;
 
-use App\Contracts\Billable as BillableContract;
 use Carbon\CarbonInterface;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
@@ -18,7 +17,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property string|null $polar_id
  * @property CarbonInterface|null $created_at
  * @property CarbonInterface|null $updated_at
- * @property-read BillableContract $billable
+ * @property-read Model $billable
  *
  * @method static Builder<static>|Customer newModelQuery()
  * @method static Builder<static>|Customer newQuery()
