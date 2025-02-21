@@ -13,6 +13,8 @@
     "editor.formatOnSave": true,
     "eslint.enable": true,
     "eslint.useFlatConfig": true,
+    "intelliphp.inlineSuggestionsEnabled": false,
+    "php.format.codeStyle": "Laravel",
     "prettier.printWidth": 120,
     "tailwindCSS.classAttributes": [
         "class",

@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Services\Polar;
 
+use App\Exceptions\PolarApiError;
 use App\Services\PolarService;
+use DateTime;
 use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
@@ -12,11 +14,14 @@ use Polar\Models\Components;
 
 final class Checkout implements Responsable
 {
-    /** @var null|array<string, string|int|bool> */
+    /** @var ?array<string, string|int|bool> */
     private ?array $metadata = null;
 
-    /** @var null|array<string, string|int|bool> */
+    /** @var ?array<string, string|int|bool|DateTime|null> */
     private ?array $customFieldData = null;
+
+    /** @var ?array<string, string|int|bool> */
+    private ?array $customerMetadata = null;
 
     private ?string $discountId = null;
 
@@ -36,17 +41,20 @@ final class Checkout implements Responsable
 
     private ?string $customerTaxId = null;
 
-    /** @var null|array<string, string|int|bool> */
-    private ?array $customerMetadata = null;
-
     private ?string $subscriptionId = null;
 
     private ?string $successUrl = null;
 
     private ?string $embedOrigin = null;
 
-    public function __construct(private array $products) {}
+    /**
+     * @param  array<string>  $products
+     */
+    public function __construct(private readonly array $products) {}
 
+    /**
+     * @param  array<string>  $products
+     */
     public static function make(array $products): static
     {
         return new self($products);
@@ -63,9 +71,9 @@ final class Checkout implements Responsable
      *
      * You can store up to **50 key-value pairs**.
      *
-     * @param  array<string, string|int|bool>  $metadata
+     * @param  ?array<string, string|int|bool>  $metadata
      */
-    public function withMetadata(array $metadata): self
+    public function withMetadata(?array $metadata): self
     {
         $this->metadata = $metadata;
 
@@ -75,11 +83,31 @@ final class Checkout implements Responsable
     /**
      * Key-value object storing custom field values.
      *
-     * @param  array<string, string|int|bool>  $customFieldData
+     * @param  ?array<string, string|int|bool|DateTime|null>  $customFieldData
      */
-    public function withCustomFieldData(array $customFieldData): self
+    public function withCustomFieldData(?array $customFieldData): self
     {
         $this->customFieldData = $customFieldData;
+
+        return $this;
+    }
+
+    /**
+     * Key-value object allowing you to store additional information that'll be copied to the created customer.
+     *
+     * The key must be a string with a maximum length of **40 characters**. The value must be either:
+     *
+     * - A string with a maximum length of **500 characters**
+     * - An integer
+     * - A boolean
+     *
+     * You can store up to **50 key-value pairs**.
+     *
+     * @param  array<string, string|int|bool>  $customerMetadata
+     */
+    public function withCustomerMetadata(array $customerMetadata): self
+    {
+        $this->customerMetadata = $customerMetadata;
 
         return $this;
     }
@@ -160,26 +188,6 @@ final class Checkout implements Responsable
     }
 
     /**
-     * Key-value object allowing you to store additional information that'll be copied to the created customer.
-     *
-     * The key must be a string with a maximum length of **40 characters**. The value must be either:
-     *
-     * - A string with a maximum length of **500 characters**
-     * - An integer
-     * - A boolean
-     *
-     * You can store up to **50 key-value pairs**.
-     *
-     * @param  array<string, string|int|bool>  $customerMetadata
-     */
-    public function withCustomerMetadata(array $customerMetadata): self
-    {
-        $this->customerMetadata = $customerMetadata;
-
-        return $this;
-    }
-
-    /**
      * ID of a subscription to upgrade. It must be on a free pricing. If checkout is successful, metadata set on this checkout will be copied to the subscription, and existing keys will be overwritten.
      */
     public function withSubscriptionId(string $subscriptionId): self
@@ -245,6 +253,10 @@ final class Checkout implements Responsable
         );
 
         $checkout = $service->createCheckoutSession($request);
+
+        if (! $checkout) {
+            throw new PolarApiError('Failed to create checkout session');
+        }
 
         return $checkout->url;
     }

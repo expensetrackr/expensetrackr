@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Concerns\Billable;
 use App\Concerns\HasProfilePhoto;
 use App\Concerns\HasWorkspaces;
+use App\Models\Polar\Customer;
 use App\Observers\UserObserver;
 use Carbon\CarbonImmutable;
 use Database\Factories\UserFactory;

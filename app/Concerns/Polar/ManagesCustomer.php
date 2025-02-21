@@ -2,14 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Concerns;
+namespace App\Concerns\Polar;
 
 use App\Exceptions\InvalidCustomer;
 use App\Exceptions\PolarApiError;
-use App\Models\Customer;
+use App\Models\Polar\Customer;
 use App\Services\PolarService;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Http\RedirectResponse;
+use Polar\Models\Components;
 
 trait ManagesCustomer
 {
@@ -69,41 +70,15 @@ trait ManagesCustomer
             throw InvalidCustomer::notYetCreated($this);
         }
 
-        /**
-         * @var object{
-         *   created_at: string,
-         *   modified_at: string|null,
-         *   id: string,
-         *   token: string,
-         *   expires_at: string,
-         *   customer_portal_url: string,
-         *   customer_id: string,
-         *   customer: object{
-         *     created_at: string,
-         *     modified_at: string|null,
-         *     id: string,
-         *     metadata: array<string, string|int|bool>,
-         *     email: string,
-         *     email_verified: bool,
-         *     name: string|null,
-         *     billing_address: object{
-         *       line1: string|null,
-         *       line2: string|null,
-         *       postal_code: string|null,
-         *       city: string|null,
-         *       state: string|null,
-         *       country: string
-         *     }|null,
-         *     tax_id: array{string, string}|null,
-         *     organization_id: string,
-         *     avatar_url: string
-         *   }
-         * } $response
-         */
-        $response = PolarService::api('GET', 'customers/customer-sessions', [
-            'customer_id' => $this->customer->polar_id,
-        ]);
+        $service = app(PolarService::class);
+        $response = $service->createCustomerSession(new Components\CustomerSessionCreate(
+            customerId: $this->customer->polar_id,
+        ));
 
-        return $response->customer_portal_url;
+        if (! $response) {
+            throw new PolarApiError('Failed to create customer session');
+        }
+
+        return $response->customerPortalUrl;
     }
 }

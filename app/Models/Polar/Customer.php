@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Models;
+namespace App\Models\Polar;
 
 use App\Contracts\Billable as BillableContract;
 use Carbon\CarbonInterface;
@@ -23,11 +23,22 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @method static Builder<static>|Customer newModelQuery()
  * @method static Builder<static>|Customer newQuery()
  * @method static Builder<static>|Customer query()
+ * @method static Builder<static>|Customer whereBillableId($value)
+ * @method static Builder<static>|Customer whereBillableType($value)
+ * @method static Builder<static>|Customer whereCreatedAt($value)
+ * @method static Builder<static>|Customer whereId($value)
+ * @method static Builder<static>|Customer wherePolarId($value)
+ * @method static Builder<static>|Customer whereUpdatedAt($value)
  *
  * @mixin Eloquent
  */
 final class Customer extends Model
 {
+    /**
+     * The table associated with the model.
+     */
+    protected $table = 'polar_customers';
+
     /**
      * Get the billable model related to the customer.
      *

@@ -10,7 +10,6 @@ use Exception;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Facades\Http;
 use Polar\Models\Components;
-use Polar\Models\Components\Checkout;
 use Polar\Models\Errors;
 use Polar\Polar;
 
@@ -56,15 +55,49 @@ final class PolarService
         return $response->json() ?? [];
     }
 
-    public function createCheckoutSession(Components\CheckoutProductsCreate $request): Checkout
+    /**
+     * Create a checkout session.
+     *
+     * @throws PolarApiError
+     */
+    public function createCheckoutSession(Components\CheckoutProductsCreate $request): ?Components\Checkout
     {
         try {
             $responses = $this->sdk()->checkouts->create(request: $request);
 
             return $responses->checkout;
-        } catch (Errors\HTTPValidationErrorThrowable $e) {
-            dd($e->container->detail);
-            throw new PolarApiError($e->container->detail, 422);
+        } catch (Errors\APIException $e) {
+            throw new PolarApiError($e->getMessage(), 400);
+        }
+    }
+
+    /**
+     * Update a subscription.
+     *
+     * @throws PolarApiError
+     */
+    public function updateSubscription(string $subscriptionId, Components\SubscriptionUpdateProduct|Components\SubscriptionCancel $request): ?Components\Subscription
+    {
+        try {
+            $responses = $this->sdk()->subscriptions->update(id: $subscriptionId, subscriptionUpdate: $request);
+
+            return $responses->subscription;
+        } catch (Errors\APIException $e) {
+            throw new PolarApiError($e->getMessage(), 400);
+        }
+    }
+
+    /**
+     * Create a customer session.
+     *
+     * @throws PolarApiError
+     */
+    public function createCustomerSession(Components\CustomerSessionCreate $request): ?Components\CustomerSession
+    {
+        try {
+            $responses = $this->sdk()->customerSessions->create(request: $request);
+
+            return $responses->customerSession;
         } catch (Errors\APIException $e) {
             throw new PolarApiError($e->getMessage(), 400);
         }
@@ -75,10 +108,10 @@ final class PolarService
      *
      * @throws BindingResolutionException
      */
-    private static function sdk(): Polar
+    private function sdk(): Polar
     {
         return Polar::builder()
-            ->setSecurity(config('services.polar.api_key'))
+            ->setSecurity(type(config('services.polar.api_key'))->asString())
             ->setServer(app()->environment('production') ? 'production' : 'sandbox')
             ->build();
     }

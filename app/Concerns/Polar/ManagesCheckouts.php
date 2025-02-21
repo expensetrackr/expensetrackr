@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Concerns;
+namespace App\Concerns\Polar;
 
 use App\Services\Polar\Checkout;
 use Illuminate\Database\Eloquent\Model;
+use Polar\Models\Components;
 
 /** @mixin Model */
 trait ManagesCheckouts
@@ -13,12 +14,13 @@ trait ManagesCheckouts
     /**
      * Create a new checkout instance to sell a product with a custom price.
      *
+     * @param  array<string>  $products
      * @param  array<string, string|int>  $options
      * @param  array<string, string|int|bool>  $metadata
      */
-    public function charge(int $amount, string $variant, array $options = [], array $metadata = []): Checkout
+    public function charge(int $amount, array $products, array $options = [], array $metadata = []): Checkout
     {
-        return $this->checkout($variant, array_merge($options, [
+        return $this->checkout($products, array_merge($options, [
             'amount' => $amount,
         ]), $metadata);
     }
@@ -26,10 +28,11 @@ trait ManagesCheckouts
     /**
      * Create a new checkout instance to sell a product.
      *
+     * @param  array<string>  $products
      * @param  array<string, string|int>  $options
      * @param  array<string, string|int|bool>  $metadata
      */
-    public function checkout(string $variant, array $options = [], array $metadata = []): Checkout
+    public function checkout(array $products, array $options = [], array $metadata = []): Checkout
     {
         /** @var string|int $key */
         $key = $this->getKey();
@@ -39,19 +42,20 @@ trait ManagesCheckouts
             'billable_type' => $this->getMorphClass(),
         ]);
 
+        /** @var Components\Address|null */
         $billingAddress = null;
         if (isset($options['country'])) {
-            $billingAddress = array_filter([
-                'country' => (string) $options['country'],
-                'postal_code' => isset($options['zip']) ? (string) $options['zip'] : null,
-                'line1' => isset($options['line1']) ? (string) $options['line1'] : null,
-                'line2' => isset($options['line2']) ? (string) $options['line2'] : null,
-                'city' => isset($options['city']) ? (string) $options['city'] : null,
-                'state' => isset($options['state']) ? (string) $options['state'] : null,
-            ], fn ($value): bool => $value !== null);
+            $billingAddress = new Components\Address(
+                country: (string) $options['country'],
+                line1: isset($options['line1']) ? (string) $options['line1'] : null,
+                line2: isset($options['line2']) ? (string) $options['line2'] : null,
+                postalCode: isset($options['zip']) ? (string) $options['zip'] : null,
+                city: isset($options['city']) ? (string) $options['city'] : null,
+                state: isset($options['state']) ? (string) $options['state'] : null,
+            );
         }
 
-        $checkout = Checkout::make()
+        $checkout = Checkout::make($products)
             ->withCustomerName((string) ($options['customer_name'] ?? $this->polarName() ?? ''))
             ->withCustomerEmail((string) ($options['customer_email'] ?? $this->polarEmail() ?? ''))
             ->withCustomerBillingAddress($billingAddress)
