@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models\Polar;
 
+use App\Exceptions\PolarApiError;
 use App\Services\PolarService;
 use Carbon\CarbonImmutable;
 use Database\Factories\SubscriptionFactory;
@@ -32,6 +33,8 @@ use Polar\Models\Components;
  *
  * @method static Builder<static>|Subscription active()
  * @method static Builder<static>|Subscription cancelled()
+ * @method static Builder<static>|Subscription incomplete()
+ * @method static Builder<static>|Subscription incompleteExpired()
  * @method static Builder<static>|Subscription newModelQuery()
  * @method static Builder<static>|Subscription newQuery()
  * @method static Builder<static>|Subscription onTrial()
@@ -74,7 +77,7 @@ final class Subscription extends Model
     }
 
     /**
-     * Determine if the subscription is active, on trial, past due, paused for free, or within its grace period.
+     * Determine if the subscription is active, on trial, past due, or within its grace period.
      */
     public function valid(): bool
     {
@@ -82,8 +85,49 @@ final class Subscription extends Model
     }
 
     /**
-     * Check if the subscription is on trial.
+     * Determine if the subscription is incomplete.
      */
+    public function incomplete(): bool
+    {
+        return $this->status === Components\SubscriptionStatus::Incomplete->value;
+    }
+
+    /**
+     * Filter query by incomplete.
+     *
+     * @param  Builder<Subscription>  $query
+     */
+    public function scopeIncomplete(Builder $query): void
+    {
+        $query->where('status', Components\SubscriptionStatus::Incomplete);
+    }
+
+    /**
+     * Determine if the subscription is incomplete expired.
+     */
+    public function incompleteExpired(): bool
+    {
+        return $this->status === Components\SubscriptionStatus::IncompleteExpired->value;
+    }
+
+    /**
+     * Filter query by incomplete expired.
+     *
+     * @param  Builder<Subscription>  $query
+     */
+    public function scopeIncompleteExpired(Builder $query): void
+    {
+        $query->where('status', Components\SubscriptionStatus::IncompleteExpired);
+    }
+
+    /**
+     * Determine if the subscription is trialing.
+     */
+    public function trialing(): bool
+    {
+        return $this->status === Components\SubscriptionStatus::Trialing->value;
+    }
+
     public function onTrial(): bool
     {
         return $this->status === Components\SubscriptionStatus::Trialing->value;
@@ -226,14 +270,37 @@ final class Subscription extends Model
     /**
      * Cancel the subscription.
      */
-    public function cancel(): void
+    public function cancel(): self
     {
         $service = app(PolarService::class);
-
-        $service->updateSubscription(
+        $response = $service->updateSubscription(
             subscriptionId: $this->polar_id,
             request: new Components\SubscriptionCancel(cancelAtPeriodEnd: true),
         );
+
+        $this->sync($response);
+
+        return $this;
+    }
+
+    /**
+     * Resume the subscription.
+     */
+    public function resume(): self
+    {
+        if ($this->incompleteExpired()) {
+            throw new PolarApiError('Subscription is incomplete and expired.');
+        }
+
+        $service = app(PolarService::class);
+        $response = $service->updateSubscription(
+            subscriptionId: $this->polar_id,
+            request: new Components\SubscriptionCancel(cancelAtPeriodEnd: false),
+        );
+
+        $this->sync($response);
+
+        return $this;
     }
 
     /**
