@@ -28,6 +28,9 @@ return Application::configure(basePath: dirname(__DIR__))
             AddWorkspaceToRequest::class,
             SetLanguage::class,
         ]);
+        $middleware->validateCsrfTokens(except: [
+            'webhooks/polar',
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

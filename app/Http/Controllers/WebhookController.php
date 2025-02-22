@@ -6,7 +6,7 @@ namespace App\Http\Controllers;
 
 final class WebhookController
 {
-    public function __invoke()
+    public function __invoke(): void
     {
         //
     }

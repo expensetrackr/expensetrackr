@@ -10,8 +10,6 @@ use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use InvalidArgumentException;
-use Polar\Models\Components;
 
 /**
  * @property int $id
@@ -150,26 +148,25 @@ final class Order extends Model
 
     /**
      * Sync the order with the given attributes.
+     *
+     * @param  array<string, mixed>  $attributes
      */
-    public function sync(?Components\Order $order): self
+    public function sync(array $attributes): self
     {
-        if (! $order instanceof Components\Order) {
-            throw new InvalidArgumentException('The order must be an instance of Polar\Models\Components\Order');
-        }
-
         $this->update([
-            'polar_id' => $order->id,
-            'status' => $order->status,
-            'amount' => $order->amount,
-            'tax_amount' => $order->taxAmount,
-            'refunded_amount' => $order->refundedAmount,
-            'refunded_tax_amount' => $order->refundedTaxAmount,
-            'currency' => $order->currency,
-            'billing_reason' => $order->billingReason,
-            'customer_id' => $order->customerId,
-            'product_id' => $order->productId,
-            'product_price_id' => $order->productPriceId,
-            'ordered_at' => $order->createdAt,
+            'polar_id' => $attributes['id'],
+            'status' => $attributes['status'],
+            'amount' => $attributes['amount'],
+            'tax_amount' => $attributes['tax_amount'],
+            'refunded_amount' => $attributes['refunded_amount'],
+            'refunded_tax_amount' => $attributes['refunded_tax_amount'],
+            'currency' => $attributes['currency'],
+            'billing_reason' => $attributes['billing_reason'],
+            'customer_id' => $attributes['customer_id'],
+            'product_id' => $attributes['product_id'],
+            'product_price_id' => $attributes['product_price_id'],
+            'refunded_at' => $attributes['refunded_at'],
+            'ordered_at' => $attributes['ordered_at'],
         ]);
 
         return $this;

@@ -254,7 +254,7 @@ final class Subscription extends Model
             ),
         );
 
-        $this->sync($response);
+        $this->sync((array) $response);
 
         return $this;
     }
@@ -278,7 +278,7 @@ final class Subscription extends Model
             request: new Components\SubscriptionCancel(cancelAtPeriodEnd: true),
         );
 
-        $this->sync($response);
+        $this->sync((array) $response);
 
         return $this;
     }
@@ -298,26 +298,24 @@ final class Subscription extends Model
             request: new Components\SubscriptionCancel(cancelAtPeriodEnd: false),
         );
 
-        $this->sync($response);
+        $this->sync((array) $response);
 
         return $this;
     }
 
     /**
      * Sync the subscription with the given attributes.
+     *
+     * @param  array<string, mixed>  $attributes
      */
-    public function sync(?Components\Subscription $subscription): self
+    public function sync(array $attributes): self
     {
-        if (! $subscription instanceof Components\Subscription) {
-            return $this;
-        }
-
         $this->update([
-            'status' => $subscription->status,
-            'product_id' => $subscription->productId,
-            'price_id' => $subscription->priceId,
-            'current_period_end' => isset($subscription->currentPeriodEnd) ? Carbon::make($subscription->currentPeriodEnd) : null,
-            'ends_at' => isset($subscription->endsAt) ? Carbon::make($subscription->endsAt) : null,
+            'status' => $attributes['status'],
+            'product_id' => $attributes['product_id'],
+            'price_id' => $attributes['price_id'],
+            'current_period_end' => isset($attributes['current_period_end']) ? Carbon::make($attributes['current_period_end']) : null,
+            'ends_at' => isset($attributes['ends_at']) ? Carbon::make($attributes['ends_at']) : null,
         ]);
 
         return $this;

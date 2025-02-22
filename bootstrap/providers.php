@@ -11,4 +11,5 @@ return [
     App\Providers\MacroServiceProvider::class,
     App\Providers\PrefixedIdsServiceProvider::class,
     App\Providers\SocialstreamServiceProvider::class,
+    Spatie\WebhookClient\WebhookClientServiceProvider::class,
 ];
