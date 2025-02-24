@@ -4,32 +4,32 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9fd511714f6f4bc8a79aa8e4ee3560fc",
+    "content-hash": "8606433126c1789c2a910ecf4df22a5d",
     "packages": [
         {
             "name": "akaunting/laravel-money",
-            "version": "6.0.1",
+            "version": "6.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/akaunting/laravel-money.git",
-                "reference": "1864f4274cb73278256d9677ccd20b6e59143fe4"
+                "reference": "5dca81f4297b99f8dbf0f4a6bb4d45c56acbd76a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/akaunting/laravel-money/zipball/1864f4274cb73278256d9677ccd20b6e59143fe4",
-                "reference": "1864f4274cb73278256d9677ccd20b6e59143fe4",
+                "url": "https://api.github.com/repos/akaunting/laravel-money/zipball/5dca81f4297b99f8dbf0f4a6bb4d45c56acbd76a",
+                "reference": "5dca81f4297b99f8dbf0f4a6bb4d45c56acbd76a",
                 "shasum": ""
             },
             "require": {
-                "illuminate/contracts": "^10.0|^11.0",
-                "illuminate/support": "^10.0|^11.0",
-                "illuminate/validation": "^10.0|^11.0",
-                "illuminate/view": "^10.0|^11.0",
+                "illuminate/contracts": "^10.0|^11.0|^12",
+                "illuminate/support": "^10.0|^11.0|^12",
+                "illuminate/validation": "^10.0|^11.0|^12",
+                "illuminate/view": "^10.0|^11.0|^12",
                 "php": "^8.2",
                 "vlucas/phpdotenv": "^5.4.1"
             },
             "require-dev": {
-                "orchestra/testbench": "^8.0|^9.0",
+                "orchestra/testbench": "^8.0|^9.0|^10",
                 "phpunit/phpunit": "^10.5|^11.0",
                 "vimeo/psalm": "^6.0"
             },
@@ -70,9 +70,9 @@
                 "money"
             ],
             "support": {
-                "source": "https://github.com/akaunting/laravel-money/tree/6.0.1"
+                "source": "https://github.com/akaunting/laravel-money/tree/6.0.2"
             },
-            "time": "2025-02-08T22:35:02+00:00"
+            "time": "2025-02-22T11:28:38+00:00"
         },
         {
             "name": "amphp/amp",

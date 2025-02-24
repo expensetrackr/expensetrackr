@@ -1,0 +1,4 @@
+{
+    "upgrade": true,
+    "reject": ["react-day-picker"]
+}
