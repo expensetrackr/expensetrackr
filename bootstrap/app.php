@@ -29,7 +29,7 @@ return Application::configure(basePath: dirname(__DIR__))
             SetLanguage::class,
         ]);
         $middleware->validateCsrfTokens(except: [
-            'webhooks/polar',
+            'polar/webhook',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

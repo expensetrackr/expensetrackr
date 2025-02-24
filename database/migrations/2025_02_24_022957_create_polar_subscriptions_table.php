@@ -11,9 +11,9 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
-        Schema::create('polar_subscriptions', function (Blueprint $table): void {
+        Schema::create('polar_subscriptions', function (Blueprint $table) {
             $table->id();
             $table->morphs('billable');
             $table->string('type');
@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('product_id');
             $table->string('price_id');
             $table->timestamp('current_period_end')->nullable();
+            $table->timestamp('trial_ends_at')->nullable();
             $table->timestamp('ends_at')->nullable();
             $table->timestamps();
         });

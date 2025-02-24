@@ -6,11 +6,9 @@ namespace App\Models;
 
 use App\Concerns\HasProfilePhoto;
 use App\Concerns\HasWorkspaces;
-use App\Concerns\Polar\Billable;
-use App\Models\Polar\Customer;
-use App\Models\Polar\Subscription;
 use App\Observers\UserObserver;
 use Carbon\CarbonImmutable;
+use Danestves\LaravelPolar\Billable;
 use Database\Factories\UserFactory;
 use Eloquent;
 use Illuminate\Auth\MustVerifyEmail;
@@ -69,11 +67,6 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read int|null $permissions_count
  * @property-read Collection<int, Role> $roles
  * @property-read int|null $roles_count
- * @property-read Customer|null $customer
- * @property-read Collection<int, Subscription> $subscriptions
- * @property-read int|null $subscriptions_count
- * @property-read Collection<int, Polar\Order> $orders
- * @property-read int|null $orders_count
  * @property-read TFactory<User>|null $use_factory
  *
  * @method static UserFactory factory($count = null, $state = [])

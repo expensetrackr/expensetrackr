@@ -8,9 +8,12 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public function up(): void
+    /**
+     * Run the migrations.
+     */
+    public function up()
     {
-        Schema::create('webhook_calls', function (Blueprint $table): void {
+        Schema::create('webhook_calls', function (Blueprint $table) {
             $table->bigIncrements('id');
 
             $table->string('name');
@@ -21,5 +24,13 @@ return new class extends Migration
 
             $table->timestamps();
         });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down()
+    {
+        Schema::dropIfExists('webhook_calls');
     }
 };

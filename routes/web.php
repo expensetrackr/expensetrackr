@@ -45,7 +45,5 @@ Route::middleware([
 
 Route::post('/language', LanguageController::class)->name('language.store');
 
-Route::webhooks('/webhooks/polar', 'polar');
-
 require __DIR__.'/socialstream.php';
 require __DIR__.'/workspaces.php';

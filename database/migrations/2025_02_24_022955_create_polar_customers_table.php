@@ -11,12 +11,13 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
-        Schema::create('polar_customers', function (Blueprint $table): void {
+        Schema::create('polar_customers', function (Blueprint $table) {
             $table->id();
             $table->morphs('billable');
             $table->string('polar_id')->nullable()->unique();
+            $table->timestamp('trial_ends_at')->nullable();
             $table->timestamps();
         });
     }

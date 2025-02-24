@@ -11,9 +11,9 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
-        Schema::create('polar_orders', function (Blueprint $table): void {
+        Schema::create('polar_orders', function (Blueprint $table) {
             $table->id();
             $table->morphs('billable');
             $table->string('polar_id')->nullable();
