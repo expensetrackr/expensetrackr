@@ -45,7 +45,7 @@ const transactions: Transaction[] = [
         description: "Refund of Order No #124235",
         transaction: 36.24,
         date: new Date("09/12/2024"),
-        icon: `${import.meta.env.VITE_PUBLIC_ASSETS_URL}/major-brands/amazon.svg`,
+        icon: `${ENV.PUBLIC_ASSETS_URL}/major-brands/amazon.svg`,
     },
 ];
 

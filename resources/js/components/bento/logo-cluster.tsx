@@ -49,7 +49,7 @@ function Circles() {
 
 function MainLogo() {
     return (
-        <div className="absolute top-1/2 left-1/2 flex size-16 -translate-1/2 items-center justify-center rounded-full bg-(--bg-white-0) ring shadow-sm ring-(--stroke-soft-200) ring-inset">
+        <div className="absolute top-1/2 left-1/2 flex size-16 -translate-1/2 items-center justify-center rounded-full bg-(--bg-white-0) shadow-sm ring ring-(--stroke-soft-200) ring-inset">
             <Image alt="" className="hidden h-7 dark:block" height={40} src={IsotypeDark} width={64} />
             <Image alt="" className="block h-7 dark:hidden" height={40} src={IsotypeLight} width={64} />
         </div>
@@ -69,7 +69,7 @@ function Logo({
 }) {
     return (
         <motion.div
-            className="absolute flex size-16 items-center justify-center rounded-full bg-(--bg-white-0) ring shadow-sm ring-(--stroke-soft-200) ring-inset dark:bg-(--bg-weak-50)"
+            className="absolute flex size-16 items-center justify-center rounded-full bg-(--bg-white-0) shadow-sm ring ring-(--stroke-soft-200) ring-inset dark:bg-(--bg-weak-50)"
             style={{ left, top } as React.CSSProperties}
             variants={{
                 idle: { x: 0, y: 0, rotate: 0 },
@@ -102,7 +102,7 @@ export function BentoLogoCluster({ className, ...props }: React.ComponentPropsWi
                     <Image
                         className="size-10"
                         height={40}
-                        src={`${import.meta.env.VITE_PUBLIC_ASSETS_URL}/major-brands/hsbc`}
+                        src={`${ENV.PUBLIC_ASSETS_URL}/major-brands/hsbc`}
                         width={40}
                     />
                 </Logo>
@@ -110,7 +110,7 @@ export function BentoLogoCluster({ className, ...props }: React.ComponentPropsWi
                     <Image
                         className="size-10"
                         height={40}
-                        src={`${import.meta.env.VITE_PUBLIC_ASSETS_URL}/major-brands/bofa`}
+                        src={`${ENV.PUBLIC_ASSETS_URL}/major-brands/bofa`}
                         width={40}
                     />
                 </Logo>
@@ -118,7 +118,7 @@ export function BentoLogoCluster({ className, ...props }: React.ComponentPropsWi
                     <Image
                         className="size-10"
                         height={40}
-                        src={`${import.meta.env.VITE_PUBLIC_ASSETS_URL}/major-brands/payoneer`}
+                        src={`${ENV.PUBLIC_ASSETS_URL}/major-brands/payoneer`}
                         width={40}
                     />
                 </Logo>

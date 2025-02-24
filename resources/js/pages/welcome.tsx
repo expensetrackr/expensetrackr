@@ -42,7 +42,7 @@ export default function WelcomePage(_props: PageProps<{ laravelVersion: string; 
                         className="absolute inset-0 size-full object-cover object-center hue-rotate-90 invert dark:invert-0"
                         layout="fullWidth"
                         priority
-                        src={`${import.meta.env.VITE_PUBLIC_ASSETS_URL}/hero`}
+                        src={`${ENV.PUBLIC_ASSETS_URL}/hero`}
                     />
                     <div className="absolute inset-0 bg-(--bg-white-0) mix-blend-color" />
                     <div className="absolute inset-0 bg-gradient-to-b from-transparent to-(--bg-white-0)" />
@@ -59,21 +59,21 @@ export default function WelcomePage(_props: PageProps<{ laravelVersion: string; 
                                         height={40}
                                         media="(prefers-color-scheme: light)"
                                         priority
-                                        src={`${import.meta.env.VITE_PUBLIC_ASSETS_URL}/isotype`}
+                                        src={`${ENV.PUBLIC_ASSETS_URL}/isotype`}
                                         width={64}
                                     />
                                     <Source
                                         height={40}
                                         media="(prefers-color-scheme: dark)"
                                         priority
-                                        src={`${import.meta.env.VITE_PUBLIC_ASSETS_URL}/isotype-dark`}
+                                        src={`${ENV.PUBLIC_ASSETS_URL}/isotype-dark`}
                                         width={64}
                                     />
                                     <Image
                                         alt="ExpenseTrackr"
                                         height={40}
                                         priority
-                                        src={`${import.meta.env.VITE_PUBLIC_ASSETS_URL}/isotype`}
+                                        src={`${ENV.PUBLIC_ASSETS_URL}/isotype`}
                                         width={64}
                                     />
                                 </picture>
@@ -272,13 +272,13 @@ function ImageAndTextSection() {
                         <Source
                             height={752.27}
                             media="(prefers-color-scheme: light)"
-                            src={`${import.meta.env.VITE_PUBLIC_ASSETS_URL}/steps-pattern`}
+                            src={`${ENV.PUBLIC_ASSETS_URL}/steps-pattern`}
                             width={921}
                         />
                         <Source
                             height={752.27}
                             media="(prefers-color-scheme: dark)"
-                            src={`${import.meta.env.VITE_PUBLIC_ASSETS_URL}/steps-pattern-dark`}
+                            src={`${ENV.PUBLIC_ASSETS_URL}/steps-pattern-dark`}
                             width={921}
                         />
                         <Image
@@ -286,7 +286,7 @@ function ImageAndTextSection() {
                             className="pointer-events-none absolute bottom-8 h-auto !w-230"
                             height={752.27}
                             objectFit="contain"
-                            src={`${import.meta.env.VITE_PUBLIC_ASSETS_URL}/steps-pattern`}
+                            src={`${ENV.PUBLIC_ASSETS_URL}/steps-pattern`}
                             width={921}
                         />
                     </picture>
@@ -327,18 +327,18 @@ function FeatureSection() {
                             <Source
                                 layout="fullWidth"
                                 media="(prefers-color-scheme: light)"
-                                src={`${import.meta.env.VITE_PUBLIC_ASSETS_URL}/ui`}
+                                src={`${ENV.PUBLIC_ASSETS_URL}/ui`}
                             />
                             <Source
                                 layout="fullWidth"
                                 media="(prefers-color-scheme: dark)"
-                                src={`${import.meta.env.VITE_PUBLIC_ASSETS_URL}/ui-dark`}
+                                src={`${ENV.PUBLIC_ASSETS_URL}/ui-dark`}
                             />
                             <Image
                                 alt=""
                                 className="rounded-16"
                                 layout="fullWidth"
-                                src={`${import.meta.env.VITE_PUBLIC_ASSETS_URL}/ui`}
+                                src={`${ENV.PUBLIC_ASSETS_URL}/ui`}
                             />
                         </picture>
                         <div className="absolute inset-0 rounded-12 bg-linear-to-t from-(--bg-white-0) to-90%" />
@@ -560,21 +560,21 @@ function Footer() {
                                 height={40}
                                 media="(prefers-color-scheme: light)"
                                 priority
-                                src={`${import.meta.env.VITE_PUBLIC_ASSETS_URL}/isotype`}
+                                src={`${ENV.PUBLIC_ASSETS_URL}/isotype`}
                                 width={64}
                             />
                             <Source
                                 height={40}
                                 media="(prefers-color-scheme: dark)"
                                 priority
-                                src={`${import.meta.env.VITE_PUBLIC_ASSETS_URL}/isotype-dark`}
+                                src={`${ENV.PUBLIC_ASSETS_URL}/isotype-dark`}
                                 width={64}
                             />
                             <Image
                                 alt="ExpenseTrackr"
                                 height={40}
                                 priority
-                                src={`${import.meta.env.VITE_PUBLIC_ASSETS_URL}/isotype`}
+                                src={`${ENV.PUBLIC_ASSETS_URL}/isotype`}
                                 width={64}
                             />
                         </picture>

@@ -144,7 +144,7 @@ function BentoSubscriptionItem({ subscriptions, isHovered, className, ...props }
             <AnimatePresence mode="wait">
                 <motion.div
                     animate={{ opacity: 1, y: 0 }}
-                    className="flex size-10 shrink-0 items-center justify-center rounded-full bg-(--bg-white-0) ring-1 shadow-xs ring-(--stroke-soft-200) ring-inset"
+                    className="flex size-10 shrink-0 items-center justify-center rounded-full bg-(--bg-white-0) shadow-xs ring-1 ring-(--stroke-soft-200) ring-inset"
                     exit={{ opacity: 0, y: -2 }}
                     initial={{ opacity: 0, y: 2 }}
                     key={item.type}
@@ -154,7 +154,7 @@ function BentoSubscriptionItem({ subscriptions, isHovered, className, ...props }
                         alt={item.name}
                         className="size-6"
                         height={24}
-                        src={`${import.meta.env.VITE_PUBLIC_ASSETS_URL}/major-brands/${item.type}.svg`}
+                        src={`${ENV.PUBLIC_ASSETS_URL}/major-brands/${item.type}.svg`}
                         width={24}
                     />
                 </motion.div>
