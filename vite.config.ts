@@ -5,9 +5,6 @@ import Icons from "unplugin-icons/vite";
 import { defineConfig } from "vite";
 
 export default defineConfig({
-    server: {
-        cors: true,
-    },
     esbuild: {
         jsx: "automatic",
     },
@@ -28,7 +25,7 @@ export default defineConfig({
             },
         }),
         laravel({
-            input: ["resources/js/app.tsx", "resources/js/ssr.tsx"],
+            input: ["resources/js/app.tsx"],
             ssr: "resources/js/ssr.tsx",
             refresh: true,
         }),
