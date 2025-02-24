@@ -9,8 +9,8 @@ return [
             'placeholder' => 'e.g. john@example.com',
         ],
         'password' => [
-            'label' => 'Enter your password',
-            'placeholder' => 'e.g. **********',
+            'label' => 'Password',
+            'placeholder' => 'Enter your password',
         ],
         'remember' => [
             'label' => 'Remember me',
@@ -59,6 +59,12 @@ return [
         'term_months' => [
             'label' => 'Term (months)',
             'placeholder' => '48',
+        ],
+        'recovery_code' => [
+            'label' => 'Recovery code',
+        ],
+        'code' => [
+            'label' => 'Code',
         ],
     ],
 ];

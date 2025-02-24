@@ -9,6 +9,34 @@ files:
     actions.already_have_account: 21bdc5689c12595ae14298354d5550d5
     actions.login: 99dea78007133396a7b8ed70578ac6ae
     actions.changed_mind: 37a57e95ccd768633cb76f90e652b5b9
+    confirm_password.description: 282d66f1ea32b322ed499e758bf82de6
+    confirm_password.actions.submit.label: 70d9be9b139893aa6c69b5e77e614311
+    forgot_password.title: 9ec54ec336b65da6179cf750de33ecd7
+    forgot_password.description: f3b12a855bd0165a39927057b5eec90c
+    forgot_password.actions.submit.label: 9106877b0a27335322395e103a051290
+    login.title: 15cb3b43610751d8b2e241abfba63e10
+    login.description: 5d83c2159bcd9be5a3af1df2eec0d221
+    login.actions.forgot_password.label: 01a569ddc6cf67ddec2a683f0a5f5956
+    login.actions.submit.label: bffe9a3c9a7e00ba00a11749e022d911
+    register.title: fe1f636b83baeffd7a2ec09518a81ab8
+    register.description: 79b83b887cf853e4472ace22583bdec4
+    register.terms.label: dc8c1fcec1db1601b26ff97ce09642a9
+    register.terms.link.label: 3b6c2b4caaf4f14f8d7feeddc4ac3f4d
+    register.terms.and: c19f6440f9045503d42ee3622933e005
+    register.terms.link2.label: fa2ead697d9998cbc65c81384e6533d5
+    register.actions.submit.label: be11c74c1dd7f307bb80183a90dc2067
+    reset_password.title: 6072e83b7f35887c76e64920bd370f4a
+    reset_password.description: 53548115e2a72ed8df3bdd819234bc8e
+    reset_password.actions.submit.label: 3b5b0f1e26d98a827ef82af202c2e85b
+    two_factor_challenge.title: d73ae304cac09dcd637d7e9589600b63
+    two_factor_challenge.description.recovery: fe3d52c09ca920c2241551922f81bda3
+    two_factor_challenge.description.code: 90845e07db830719fdfc7de5ce277635
+    two_factor_challenge.actions.login.recovery: 74e2e33e4fa65523e4a8ae2c1e8634fe
+    two_factor_challenge.actions.login.code: 4ad62e417151c0bb48058c1c3a318fcb
+    two_factor_challenge.actions.submit.label: bffe9a3c9a7e00ba00a11749e022d911
+    verify_email.description: 30afccd4c7cd3194c3f2850c9367d7e8
+    verify_email.actions.submit.label: dfdf2f349b19558e6bfb34b9f1793a03
+    verify_email.actions.logout.label: b0c2b25b3312c7a32d7aa9d701b6ae1d
   lang/en/common.php:
     monthly: 9030e39f00132d583da4122532e509e9
     yearly: cf5ea7953dc47105e0eb179dbefaaf46
@@ -205,8 +233,8 @@ files:
   lang/en/form.php:
     fields.email.label: ce8ae9da5b7cd6c3df2929543a9af92d
     fields.email.placeholder: 8fb55f02608a8562905dc0f87d2c5977
-    fields.password.label: e8d28194f9b3498d21fbda21321d0226
-    fields.password.placeholder: ef0bd6c0bc2891fc919ec090ac1770a7
+    fields.password.label: dc647eb65e6711e155375218212b3964
+    fields.password.placeholder: e8d28194f9b3498d21fbda21321d0226
     fields.remember.label: 878530871f0db73f004f5bd6591eeb76
     fields.name.label: 49ee3087348e8d44e1feda1917443987
     fields.name.placeholder: d29d6b1a47d1fec49ae2228edd28eaa6
@@ -231,6 +259,8 @@ files:
     fields.interest_rate_type.placeholder: 131e62456d58b26683580f4f2ac12c93
     fields.term_months.label: a92ac988e36fc291cfc32fbf6243583f
     fields.term_months.placeholder: 642e92efb79421734881b53e1e1b18b6
+    fields.recovery_code.label: b13ef50aebd7b461d84e260cc6fad5a1
+    fields.code.label: ca0dbad92a874b2f69b549293387925e
   lang/en/socialstream.php:
     continue_with: 97917fc183d9fe574ce5e9351ec9c532
   lang/en/register.php:

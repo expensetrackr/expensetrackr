@@ -9,8 +9,8 @@ return [
             'placeholder' => 'p. ej. john@example.com',
         ],
         'password' => [
-            'label' => 'Introduce tu contraseña',
-            'placeholder' => 'p. ej. **********',
+            'label' => 'Contraseña',
+            'placeholder' => 'Introduce tu contraseña',
         ],
         'remember' => [
             'label' => 'Recuérdame',
@@ -32,7 +32,7 @@ return [
             'placeholder' => '10',
         ],
         'expires_at' => [
-            'label' => 'Expira el',
+            'label' => 'Vence el',
             'placeholder' => 'Selecciona una fecha',
         ],
         'interest_rate' => [
@@ -59,6 +59,12 @@ return [
         'confirm_password' => [
             'label' => 'Confirmar contraseña',
             'placeholder' => 'Confirma tu contraseña',
+        ],
+        'recovery_code' => [
+            'label' => 'Código de recuperación',
+        ],
+        'code' => [
+            'label' => 'Código',
         ],
     ],
 ];

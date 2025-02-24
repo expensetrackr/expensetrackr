@@ -4,6 +4,7 @@ import { route } from "ziggy-js";
 
 import { TextField } from "#/components/form/text-field.tsx";
 import * as FancyButton from "#/components/ui/fancy-button.tsx";
+import { useTranslation } from "#/hooks/use-translation.ts";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";
 import { AuthCard } from "#/layouts/partials/auth-card.tsx";
 import { type InertiaSharedProps } from "#/types/index.ts";
@@ -15,6 +16,7 @@ export default function ResetPasswordPage({ token, email }: { token: string; ema
         password: "",
         password_confirmation: "",
     });
+    const { t } = useTranslation();
 
     const submit: React.FormEventHandler = (e) => {
         e.preventDefault();
@@ -27,17 +29,21 @@ export default function ResetPasswordPage({ token, email }: { token: string; ema
     };
 
     return (
-        <AuthCard cardIcon={DoorLockIcon} description="Enter your new password and confirm it." title="Reset Password">
+        <AuthCard
+            cardIcon={DoorLockIcon}
+            description={t("auth.reset_password.description")}
+            title={t("auth.reset_password.title")}
+        >
             <form className="flex flex-col gap-3" onSubmit={submit}>
                 <TextField
                     $error={!!errors.email}
                     autoComplete="username"
                     autoFocus
                     hint={errors.email}
-                    label="Email"
+                    label={t("form.fields.email.label")}
                     name="email"
                     onChange={(e) => setData("email", e.target.value)}
-                    placeholder="e.g. john@example.com"
+                    placeholder={t("form.fields.email.placeholder")}
                     type="email"
                     value={data.email}
                 />
@@ -45,11 +51,11 @@ export default function ResetPasswordPage({ token, email }: { token: string; ema
                 <TextField
                     $error={!!errors.password}
                     autoComplete="new-password"
-                    hint={errors.password || "Must be at least 8 characters long"}
-                    label="Password"
+                    hint={errors.password || t("form.fields.new_password.placeholder")}
+                    label={t("form.fields.password.label")}
                     name="password"
                     onChange={(e) => setData("password", e.target.value)}
-                    placeholder="8+ characters long, 1 capital letter"
+                    placeholder={t("form.fields.new_password.placeholder")}
                     type="password"
                     value={data.password}
                 />
@@ -58,16 +64,16 @@ export default function ResetPasswordPage({ token, email }: { token: string; ema
                     $error={!!errors.password_confirmation}
                     autoComplete="new-password"
                     hint={errors.password_confirmation}
-                    label="Confirm password"
+                    label={t("form.fields.password_confirmation.label")}
                     name="password_confirmation"
                     onChange={(e) => setData("password_confirmation", e.target.value)}
-                    placeholder="Confirm your password"
+                    placeholder={t("form.fields.password_confirmation.placeholder")}
                     type="password"
                     value={data.password_confirmation}
                 />
 
                 <FancyButton.Root $type="primary" disabled={processing} type="submit">
-                    Reset password
+                    {t("auth.reset_password.actions.submit.label")}
                 </FancyButton.Root>
             </form>
         </AuthCard>

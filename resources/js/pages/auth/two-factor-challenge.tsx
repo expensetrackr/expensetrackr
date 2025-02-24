@@ -9,6 +9,7 @@ import * as FancyButton from "#/components/ui/fancy-button.tsx";
 import * as Hint from "#/components/ui/hint.tsx";
 import * as Label from "#/components/ui/label.tsx";
 import * as LinkButton from "#/components/ui/link-button.tsx";
+import { useTranslation } from "#/hooks/use-translation.ts";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";
 import { AuthCard } from "#/layouts/partials/auth-card.tsx";
 import { type InertiaSharedProps } from "#/types/index.ts";
@@ -19,6 +20,7 @@ export default function TwoFactorChallengePage() {
         code: "",
         recovery_code: "",
     });
+    const { t } = useTranslation();
 
     const toggleRecovery = (e: React.FormEvent) => {
         e.preventDefault();
@@ -44,10 +46,10 @@ export default function TwoFactorChallengePage() {
         <AuthCard
             description={
                 recovery
-                    ? "Please confirm access to your account by entering one of your emergency recovery codes."
-                    : "Please confirm access to your account by entering the authentication code provided by your authenticator application."
+                    ? t("auth.two_factor_challenge.description.recovery")
+                    : t("auth.two_factor_challenge.description.code")
             }
-            title="Two-Factor Confirmation"
+            title={t("auth.two_factor_challenge.title")}
         >
             <form className="flex flex-col gap-3" onSubmit={submit}>
                 {recovery ? (
@@ -55,14 +57,14 @@ export default function TwoFactorChallengePage() {
                         $error={!!errors.recovery_code}
                         autoFocus
                         hint={errors.recovery_code}
-                        label="Recovery code"
+                        label={t("form.fields.recovery_code.label")}
                         name="recovery_code"
                         onChange={(e) => setData("recovery_code", e.target.value)}
                         value={data.recovery_code}
                     />
                 ) : (
                     <div className="flex flex-col gap-1">
-                        <Label.Root htmlFor="code">Code</Label.Root>
+                        <Label.Root htmlFor="code">{t("form.fields.code.label")}</Label.Root>
                         <DigitInput.Root
                             $error={!!errors.code}
                             numInputs={6}
@@ -82,13 +84,15 @@ export default function TwoFactorChallengePage() {
                 <div className="flex items-center justify-end gap-3 py-2">
                     <LinkButton.Root $style="black" onClick={toggleRecovery}>
                         <Link href={route("two-factor.login")}>
-                            {recovery ? "Use an authentication code" : "Use a recovery code"}
+                            {recovery
+                                ? t("auth.two_factor_challenge.actions.login.recovery")
+                                : t("auth.two_factor_challenge.actions.login.code")}
                         </Link>
                     </LinkButton.Root>
                 </div>
 
                 <FancyButton.Root $type="primary" disabled={processing} type="submit">
-                    Log in
+                    {t("auth.two_factor_challenge.actions.submit.label")}
                 </FancyButton.Root>
             </form>
         </AuthCard>

@@ -5,7 +5,7 @@ declare(strict_types=1);
 return [
     'sections' => [
         'hero' => [
-            'title' => 'La mejor <span class="font-bold">aplicación de gestión financiera</span>',
+            'title' => 'La mejor <span class="font-bold">app de gestión financiera</span>',
             'description' => 'Gestiona tus finanzas con confianza. Controla tus gastos, presupuestos, inversiones y activos.',
             'contact_us' => 'Contáctanos',
             'get_started' => 'Empieza gratis',
@@ -27,11 +27,11 @@ return [
                 ],
                 '4' => [
                     'title' => 'Analiza tus finanzas',
-                    'description' => 'Descubre la imagen completa. Usa gráficos detallados e informes para tomar mejores decisiones.',
+                    'description' => 'Descubre el panorama completo. Usa gráficos y reportes detallados para tomar mejores decisiones.',
                 ],
                 '5' => [
                     'title' => 'Colabora en equipo',
-                    'description' => 'No estás solo. Crea espacios de trabajo, invita a tu equipo y trabajen juntos para gestionar tus finanzas.',
+                    'description' => 'No estás solo. Crea espacios de trabajo, invita a tu equipo y trabaja juntos para gestionar tus finanzas.',
                 ],
             ],
             'balance_step' => [
@@ -41,7 +41,7 @@ return [
         ],
         'feature' => [
             'title' => 'Controla tus finanzas, sin importar quién seas',
-            'description' => 'Si deseas dominar tus finanzas sin complicaciones, somos el "seguimiento de gastos aburrido" que hace el trabajo pesado por ti.',
+            'description' => 'Si deseas dominar tus finanzas sin complicaciones, somos el "monitoreador de gastos aburrido" que hace el trabajo pesado por ti.',
         ],
         'pricing' => [
             'title' => 'Mejora tus finanzas',
@@ -50,24 +50,24 @@ return [
             'plans' => [
                 'free' => [
                     'title' => 'Gratis',
-                    'description' => 'Para usuarios individuales que quieren hacerse cargo de sus finanzas',
+                    'description' => 'Para usuarios individuales que quieren tomar el control de sus finanzas',
                     'features' => 'Espacio de trabajo personal, Hasta 3 cuentas, Hasta 15 transacciones por mes, Categorías predeterminadas, Hasta 30 días de historial gráfico, Cuentas manuales',
                     'coming_soon' => ' ',
                     'button_label' => 'Empieza gratis',
                 ],
                 'analyst' => [
                     'title' => 'Analista',
-                    'description' => 'Para equipos pequeños y grandes (o familias) o incluso usuarios individuales que quieren hacerse cargo de sus finanzas',
+                    'description' => 'Para equipos pequeños y grandes (o familias) o incluso usuarios individuales que quieren tomar el control de sus finanzas',
                     'features' => 'Espacios de trabajo y miembros ilimitados, Cuentas y transacciones ilimitadas, Archivos adjuntos para transacciones, Categorías predeterminadas y personalizadas, Historial gráfico personalizado, <strong>Importaciones CSV</strong>, <strong>Múltiples monedas</strong>',
                     'coming_soon' => 'Conecta tus cuentas bancarias',
                     'button_label' => 'Suscríbete ahora',
                 ],
                 'lifetime' => [
                     'title' => 'De por vida',
-                    'description' => 'Para equipos, familias o usuarios individuales que quieren hacerse cargo de sus finanzas y nunca volver a pagar',
-                    'features' => '<strong>Todas las características del plan Analista</strong>, <strong>Todas las características futuras</strong>, Sin pagos recurrentes, Soporte prioritario',
+                    'description' => 'Para equipos, familias o usuarios individuales que quieren tomar el control de sus finanzas y nunca volver a pagar',
+                    'features' => '<strong>Todas las características del plan Analista</strong>, <strong>Todas las futuras características</strong>, Sin pagos recurrentes, Soporte prioritario',
                     'coming_soon' => ' ',
-                    'button_label' => 'Compra ahora',
+                    'button_label' => 'Compra ahora ',
                 ],
             ],
         ],

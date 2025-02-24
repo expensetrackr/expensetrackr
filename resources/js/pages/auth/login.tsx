@@ -53,9 +53,7 @@ export default function LoginPage({
     };
 
     return (
-        <AuthCard cardIcon={UserIcon} description={t("login.description")} title={t("login.title")}>
-            <Head title="Log in" />
-
+        <AuthCard cardIcon={UserIcon} description={t("auth.login.description")} title={t("auth.login.title")}>
             <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
                 <TextField
                     $error={!!errors.email}
@@ -95,13 +93,15 @@ export default function LoginPage({
 
                     {canResetPassword && (
                         <LinkButton.Root $underline asChild>
-                            <Link href={route("password.request")}>{t("login.forgot_password.label")}</Link>
+                            <Link href={route("password.request")}>
+                                {t("auth.login.actions.forgot_password.label")}
+                            </Link>
                         </LinkButton.Root>
                     )}
                 </div>
 
                 <FancyButton.Root $type="primary" disabled={processing} type="submit">
-                    {t("login.submit.label")}
+                    {t("auth.login.actions.submit.label")}
                 </FancyButton.Root>
             </form>
 
@@ -112,7 +112,7 @@ export default function LoginPage({
 
 LoginPage.layout = (page: React.ReactNode & { props: InertiaSharedProps }) => (
     <AuthLayout {...page.props}>
-        <Head title="Accounts" />
+        <Head title="Log in" />
 
         {page}
     </AuthLayout>

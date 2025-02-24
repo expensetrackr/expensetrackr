@@ -43,7 +43,11 @@ export default function RegisterPage({ socialstream }: InertiaSharedProps) {
     };
 
     return (
-        <AuthCard cardIcon={UserAddLineIcon} description={t("register.description")} title={t("register.title")}>
+        <AuthCard
+            cardIcon={UserAddLineIcon}
+            description={t("auth.register.description")}
+            title={t("auth.register.title")}
+        >
             <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
                 <TextField
                     $error={!!errors.name}
@@ -101,13 +105,13 @@ export default function RegisterPage({ socialstream }: InertiaSharedProps) {
                         hint={errors.terms}
                         label={
                             <>
-                                <span dangerouslySetInnerHTML={{ __html: t("register.terms.label") }} />
+                                <span dangerouslySetInnerHTML={{ __html: t("auth.register.terms.label") }} />
                                 <LinkButton.Root $style="black" $underline asChild className="whitespace-normal">
-                                    <Link href={route("terms.show")}>{t("register.terms.link.label")}</Link>
+                                    <Link href={route("terms.show")}>{t("auth.register.terms.link.label")}</Link>
                                 </LinkButton.Root>
-                                <span dangerouslySetInnerHTML={{ __html: t("register.terms.and") }} />
+                                <span dangerouslySetInnerHTML={{ __html: t("auth.register.terms.and") }} />
                                 <LinkButton.Root $style="black" $underline asChild className="whitespace-normal">
-                                    <Link href={route("policy.show")}>{t("register.terms.link2.label")}</Link>
+                                    <Link href={route("policy.show")}>{t("auth.register.terms.link2.label")}</Link>
                                 </LinkButton.Root>
                             </>
                         }
@@ -124,7 +128,7 @@ export default function RegisterPage({ socialstream }: InertiaSharedProps) {
                 </div>
 
                 <FancyButton.Root $type="primary" disabled={processing} type="submit">
-                    {t("register.actions.submit.label")}
+                    {t("auth.register.actions.submit.label")}
                 </FancyButton.Root>
             </form>
 

@@ -3,6 +3,7 @@ import { route } from "ziggy-js";
 
 import { TextField } from "#/components/form/text-field.tsx";
 import * as FancyButton from "#/components/ui/fancy-button.tsx";
+import { useTranslation } from "#/hooks/use-translation.ts";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";
 import { AuthCard } from "#/layouts/partials/auth-card.tsx";
 import { type InertiaSharedProps } from "#/types/index.ts";
@@ -11,6 +12,7 @@ export default function ConfirmPasswordPage() {
     const { data, setData, post, processing, errors, reset } = useForm({
         password: "",
     });
+    const { t } = useTranslation();
 
     const submit: React.FormEventHandler = (e) => {
         e.preventDefault();
@@ -23,23 +25,23 @@ export default function ConfirmPasswordPage() {
     };
 
     return (
-        <AuthCard description="This is a secure area of the application. Please confirm your password before continuing.">
+        <AuthCard description={t("auth.confirm_password.description")} title={t("auth.confirm_password.title")}>
             <form className="flex flex-col gap-3" onSubmit={submit}>
                 <TextField
                     $error={!!errors.password}
                     autoComplete="current-password"
                     autoFocus
                     hint={errors.password}
-                    label="Password"
+                    label={t("form.fields.password.label")}
                     name="password"
                     onChange={(e) => setData("password", e.target.value)}
-                    placeholder="Enter your password"
+                    placeholder={t("form.fields.password.placeholder")}
                     type="password"
                     value={data.password}
                 />
 
                 <FancyButton.Root $type="primary" disabled={processing} type="submit">
-                    Confirm
+                    {t("auth.confirm_password.actions.submit.label")}
                 </FancyButton.Root>
             </form>
         </AuthCard>

@@ -5,6 +5,7 @@ import DoorLockIcon from "virtual:icons/ri/door-lock-fill";
 
 import { TextField } from "#/components/form/text-field.tsx";
 import * as FancyButton from "#/components/ui/fancy-button.tsx";
+import { useTranslation } from "#/hooks/use-translation.ts";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";
 import { AuthCard } from "#/layouts/partials/auth-card.tsx";
 import { type InertiaSharedProps } from "#/types/index.ts";
@@ -13,6 +14,7 @@ export default function ForgotPasswordPage({ status }: { status?: string }) {
     const { data, setData, post, processing, errors } = useForm({
         email: "",
     });
+    const { t } = useTranslation();
 
     React.useEffect(() => {
         if (status) {
@@ -27,23 +29,27 @@ export default function ForgotPasswordPage({ status }: { status?: string }) {
     };
 
     return (
-        <AuthCard cardIcon={DoorLockIcon} description="Enter your email to reset your password." title="Reset Password">
+        <AuthCard
+            cardIcon={DoorLockIcon}
+            description={t("auth.forgot_password.description")}
+            title={t("auth.forgot_password.title")}
+        >
             <form className="flex flex-col gap-3" onSubmit={submit}>
                 <TextField
                     $error={!!errors.email}
                     autoComplete="username"
                     autoFocus
                     hint={errors.email}
-                    label="Email"
+                    label={t("form.fields.email.label")}
                     name="email"
                     onChange={(e) => setData("email", e.target.value)}
-                    placeholder="e.g. john@example.com"
+                    placeholder={t("form.fields.email.placeholder")}
                     type="email"
                     value={data.email}
                 />
 
                 <FancyButton.Root $type="primary" disabled={processing} type="submit">
-                    Email password reset link
+                    {t("auth.forgot_password.actions.submit.label")}
                 </FancyButton.Root>
             </form>
         </AuthCard>
