@@ -3,6 +3,7 @@ import react from "@vitejs/plugin-react";
 import laravel from "laravel-vite-plugin";
 import Icons from "unplugin-icons/vite";
 import { defineConfig } from "vite";
+import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
     esbuild: {
@@ -34,6 +35,7 @@ export default defineConfig({
                 plugins: [["babel-plugin-react-compiler", {}]],
             },
         }),
+        tailwindcss(),
     ],
     resolve: {
         alias: {
