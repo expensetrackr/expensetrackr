@@ -66,5 +66,11 @@
 
     <body class="h-full bg-(--bg-white-0) text-(--text-strong-950)">
         @inertia
+
+        <script>
+            window.ENV = {
+                PUBLIC_ASSETS_URL: '{{ config('services.public_assets.url') }}',
+            };
+        </script>
     </body>
 </html>

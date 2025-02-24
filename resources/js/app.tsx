@@ -10,6 +10,9 @@ import { NuqsAdapter } from "#/utils/nuqs-adapter.ts";
 
 declare global {
     const route: typeof routeFn;
+    const ENV: {
+        PUBLIC_ASSETS_URL: string;
+    };
 }
 
 const appName = import.meta.env.VITE_APP_NAME || "ExpenseTrackr";

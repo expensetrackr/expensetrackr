@@ -48,4 +48,8 @@ return [
         'base_url' => 'https://api.synthfinance.com',
     ],
 
+    'public_assets' => [
+        'url' => env('PUBLIC_ASSETS_URL'),
+    ],
+
 ];
