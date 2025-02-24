@@ -25,14 +25,18 @@ final class AccountPolicy
      */
     public function view(User $user, Account $account): bool
     {
-        return $account->workspace()->is($user->currentWorkspace);
+        return $account->workspace->is($user->currentWorkspace);
     }
 
     /**
      * Determine whether the user can create models.
      */
-    public function create(): bool
+    public function create(User $user): bool
     {
+        if ($user->accounts()->count() >= 3 && ! $user->subscribed()) {
+            return false;
+        }
+
         return true;
     }
 
@@ -41,7 +45,7 @@ final class AccountPolicy
      */
     public function update(User $user, Account $account): bool
     {
-        return $account->workspace()->is($user->currentWorkspace) && $account->createdBy()->is($user);
+        return $account->workspace->is($user->currentWorkspace) && $account->createdBy->is($user);
     }
 
     /**
@@ -49,6 +53,6 @@ final class AccountPolicy
      */
     public function delete(User $user, Account $account): bool
     {
-        return $account->workspace()->is($user->currentWorkspace) && $account->createdBy()->is($user);
+        return $account->workspace->is($user->currentWorkspace) && $account->createdBy->is($user);
     }
 }

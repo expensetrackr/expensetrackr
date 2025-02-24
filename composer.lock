@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "216f2e0c9955387ab2ca4a6107045267",
+    "content-hash": "9fd511714f6f4bc8a79aa8e4ee3560fc",
     "packages": [
         {
             "name": "akaunting/laravel-money",
@@ -2214,16 +2214,16 @@
         },
         {
             "name": "danestves/laravel-polar",
-            "version": "0.1.1",
+            "version": "0.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/danestves/laravel-polar.git",
-                "reference": "9aea6aa326f9662f750ad02ba33a1ca4730d7121"
+                "reference": "4d31d3ae0011e505bda12e92df8761adaec95162"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/danestves/laravel-polar/zipball/9aea6aa326f9662f750ad02ba33a1ca4730d7121",
-                "reference": "9aea6aa326f9662f750ad02ba33a1ca4730d7121",
+                "url": "https://api.github.com/repos/danestves/laravel-polar/zipball/4d31d3ae0011e505bda12e92df8761adaec95162",
+                "reference": "4d31d3ae0011e505bda12e92df8761adaec95162",
                 "shasum": ""
             },
             "require": {
@@ -2287,7 +2287,7 @@
             ],
             "support": {
                 "issues": "https://github.com/danestves/laravel-polar/issues",
-                "source": "https://github.com/danestves/laravel-polar/tree/v0.1.1"
+                "source": "https://github.com/danestves/laravel-polar/tree/v0.1.2"
             },
             "funding": [
                 {
@@ -2295,7 +2295,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-02-24T02:27:27+00:00"
+            "time": "2025-02-24T02:52:01+00:00"
         },
         {
             "name": "danharrin/date-format-converter",
@@ -16809,9 +16809,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "standard-webhooks/standard-webhooks": 20
-    },
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
