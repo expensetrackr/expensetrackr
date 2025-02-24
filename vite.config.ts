@@ -8,6 +8,9 @@ export default defineConfig({
     server: {
         cors: true,
     },
+    esbuild: {
+        jsx: "automatic",
+    },
     build: {
         cssMinify: process.env.NODE_ENV === "production",
         sourcemap: true,
@@ -25,7 +28,7 @@ export default defineConfig({
             },
         }),
         laravel({
-            input: "resources/js/app.tsx",
+            input: ["resources/js/app.tsx", "resources/js/ssr.tsx"],
             ssr: "resources/js/ssr.tsx",
             refresh: true,
         }),

@@ -1,12 +1,16 @@
-import "./bootstrap.ts";
 import "../css/tailwind.css";
 import "../css/app.css";
 
 import { createInertiaApp } from "@inertiajs/react";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { createRoot, hydrateRoot } from "react-dom/client";
+import { type route as routeFn } from "ziggy-js";
 
 import { NuqsAdapter } from "#/utils/nuqs-adapter.ts";
+
+declare global {
+    const route: typeof routeFn;
+}
 
 const appName = import.meta.env.VITE_APP_NAME || "ExpenseTrackr";
 

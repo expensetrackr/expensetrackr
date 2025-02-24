@@ -46,10 +46,10 @@ final class MacroServiceProvider extends ServiceProvider
             }
 
             if ($codeBefore) {
-                return $currencyCode.' '.$formatted;
+                return "$currencyCode $formatted";
             }
 
-            return $formatted.' '.$currencyCode;
+            return "$formatted $currencyCode";
         });
     }
 }

@@ -45,7 +45,7 @@ final class AccountPolicy
      */
     public function update(User $user, Account $account): bool
     {
-        return $account->workspace->is($user->currentWorkspace) && $account->createdBy->is($user);
+        return $account->workspace->is($user->currentWorkspace) && $account->createdBy?->is($user);
     }
 
     /**
@@ -53,6 +53,6 @@ final class AccountPolicy
      */
     public function delete(User $user, Account $account): bool
     {
-        return $account->workspace->is($user->currentWorkspace) && $account->createdBy->is($user);
+        return $account->workspace->is($user->currentWorkspace) && $account->createdBy?->is($user);
     }
 }
