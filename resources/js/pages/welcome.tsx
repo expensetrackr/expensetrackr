@@ -115,25 +115,26 @@ export default function WelcomePage(_props: PageProps<{ laravelVersion: string; 
 }
 
 function HeroSection() {
+    const { t } = useTranslation();
+
     return (
         <section className="relative z-10 container py-56 pb-12" id="hero">
             <div className="relative flex flex-col gap-8">
                 <div className="mx-auto flex max-w-[640px] flex-col gap-5">
-                    <h1 className="text-center text-h2">
-                        The best financial <span className="font-bold">management app</span>
-                    </h1>
+                    <h1
+                        className="text-center text-h2"
+                        dangerouslySetInnerHTML={{ __html: t("home.sections.hero.title") }}
+                    />
 
-                    <p className="text-center text-paragraph-md">
-                        Manage your finances with confidence. Track your expenses, budgets, investments, and assets.
-                    </p>
+                    <p className="text-center text-paragraph-md">{t("home.sections.hero.description")}</p>
                 </div>
 
                 <div className="flex flex-col items-center justify-center gap-4 lg:flex-row lg:gap-6">
                     <Button.Root $style="stroke" className="w-full lg:w-auto lg:min-w-36">
-                        Contact us
+                        {t("home.sections.hero.contact_us")}
                     </Button.Root>
                     <Button.Root asChild className="w-full lg:w-auto lg:min-w-36">
-                        <Link href={route("register")}>Get started</Link>
+                        <Link href={route("register")}>{t("home.sections.hero.get_started")}</Link>
                     </Button.Root>
                 </div>
             </div>
@@ -239,7 +240,7 @@ function ImageAndTextSection() {
         <section className="container py-12" id="image-and-text">
             <div className="grid grid-cols-12 gap-5">
                 <div className="col-span-12 lg:col-span-6">
-                    <h2 className="max-w-md text-h4">{t("home.image_and_text_section.title")}</h2>
+                    <h2 className="max-w-md text-h4">{t("home.sections.image_and_text.title")}</h2>
 
                     <div className="relative flex flex-col gap-8 py-14 pl-12">
                         {/* Line that connects the steps */}
@@ -256,10 +257,10 @@ function ImageAndTextSection() {
                                 </div>
                                 <div className="flex flex-col">
                                     <h3 className="font-display text-label-lg">
-                                        {t(`home.image_and_text_section.steps.${index + 1}.title`)}
+                                        {t(`home.sections.image_and_text.steps.${index + 1}.title`)}
                                     </h3>
                                     <p className="text-paragraph-md text-(--text-sub-600)">
-                                        {t(`home.image_and_text_section.steps.${index + 1}.description`)}
+                                        {t(`home.sections.image_and_text.steps.${index + 1}.description`)}
                                     </p>
                                 </div>
                             </div>
@@ -292,9 +293,9 @@ function ImageAndTextSection() {
 
                     <form method="post" {...getFormProps(form)} className="relative flex w-full justify-center">
                         <Card
-                            description="Enter your account's balance and currency. The available options are customized based on your selected account type."
+                            description={t("home.sections.image_and_text.balance_step.description")}
                             icon={MoneyDollarCircleFillIcon}
-                            title="Balance & Currency"
+                            title={t("home.sections.image_and_text.balance_step.title")}
                         >
                             <BalanceStep
                                 currencies={["USD", "CAD", "EUR", "GBP", "ARS", "VES"]}
@@ -310,15 +311,14 @@ function ImageAndTextSection() {
 }
 
 function FeatureSection() {
+    const { t } = useTranslation();
+
     return (
         <section className="container py-12" id="feature">
             <div className="flex flex-col gap-5.5">
                 <div className="mx-auto flex max-w-160 flex-col">
-                    <h2 className="text-center text-h4">Controla tus finanzas, seas quien seas</h2>
-                    <p className="text-center text-paragraph-md">
-                        Si quieres dominar tus finanzas sin complicaciones, somos el "boring expense tracker" que hace
-                        el trabajo pesado por ti
-                    </p>
+                    <h2 className="text-center text-h4">{t("home.sections.feature.title")}</h2>
+                    <p className="text-center text-paragraph-md">{t("home.sections.feature.description")}</p>
                 </div>
 
                 <div className="grid grid-cols-12">
@@ -526,18 +526,20 @@ function PricingSection() {
 }
 
 function CallToAction() {
+    const { t } = useTranslation();
+
     return (
         <section className="w-full py-5" id="call-to-action">
             <div className="container">
                 <div className="grid grid-cols-12">
-                    <div className="col-span-12 bg-radial-[50%_50%_at_50%_50%] from-(--bg-weak-50) to-(--bg-white-0) to-110% py-21 backdrop-blur-2xl lg:col-span-10 lg:col-start-2">
+                    <div className="col-span-12 bg-radial-[50%_50%_at_50%_50%] from-(--bg-soft-200) to-(--bg-white-0) py-21 backdrop-blur-2xl lg:col-span-10 lg:col-start-2">
                         <div className="flex flex-col items-center gap-2">
-                            <h2 className="text-h4">Controla tus gastos y aumenta tus ahorros</h2>
+                            <h2 className="text-h4">{t("home.sections.call_to_action.title")}</h2>
                             <p className="text-paragraph-md text-(--text-sub-600)">
-                                Anima a los usuarios a tomar control de sus finanzas
+                                {t("home.sections.call_to_action.description")}
                             </p>
                             <Button.Root asChild>
-                                <Link href={route("register")}>Empieza gratis</Link>
+                                <Link href={route("register")}>{t("home.sections.call_to_action.button_label")}</Link>
                             </Button.Root>
                         </div>
                     </div>

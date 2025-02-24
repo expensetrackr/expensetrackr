@@ -7,6 +7,7 @@ import { TextField } from "#/components/form/text-field.tsx";
 import { Socialstream } from "#/components/socialstream.tsx";
 import * as FancyButton from "#/components/ui/fancy-button.tsx";
 import * as LinkButton from "#/components/ui/link-button.tsx";
+import { useTranslation } from "#/hooks/use-translation.ts";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";
 import { AuthCard } from "#/layouts/partials/auth-card.tsx";
 import { type InertiaSharedProps } from "#/types/index.ts";
@@ -29,6 +30,7 @@ export default function RegisterPage({ socialstream }: InertiaSharedProps) {
         terms: false,
         remember: false,
     });
+    const { t } = useTranslation();
 
     const handleSubmit: React.FormEventHandler = (e) => {
         e.preventDefault();
@@ -41,21 +43,17 @@ export default function RegisterPage({ socialstream }: InertiaSharedProps) {
     };
 
     return (
-        <AuthCard
-            cardIcon={UserAddLineIcon}
-            description="Create an account to start tracking your expenses"
-            title="Create a new account"
-        >
+        <AuthCard cardIcon={UserAddLineIcon} description={t("register.description")} title={t("register.title")}>
             <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
                 <TextField
                     $error={!!errors.name}
                     autoComplete="name"
                     autoFocus
                     hint={errors.name}
-                    label="Name"
+                    label={t("form.fields.name.label")}
                     name="name"
                     onChange={(e) => setData("name", e.target.value)}
-                    placeholder="e.g. John Doe"
+                    placeholder={t("form.fields.name.placeholder")}
                     value={data.name}
                 />
 
@@ -63,10 +61,10 @@ export default function RegisterPage({ socialstream }: InertiaSharedProps) {
                     $error={!!errors.email}
                     autoComplete="email"
                     hint={errors.email}
-                    label="Email"
+                    label={t("form.fields.email.label")}
                     name="email"
                     onChange={(e) => setData("email", e.target.value)}
-                    placeholder="e.g. john@example.com"
+                    placeholder={t("form.fields.email.placeholder")}
                     type="email"
                     value={data.email}
                 />
@@ -74,11 +72,11 @@ export default function RegisterPage({ socialstream }: InertiaSharedProps) {
                 <TextField
                     $error={!!errors.password}
                     autoComplete="new-password"
-                    hint={errors.password ?? "Must be at least 8 characters long"}
-                    label="Password"
+                    hint={errors.password ?? t("form.fields.new_password.hint")}
+                    label={t("form.fields.password.label")}
                     name="password"
                     onChange={(e) => setData("password", e.target.value)}
-                    placeholder="8+ characters long, 1 capital letter"
+                    placeholder={t("form.fields.new_password.placeholder")}
                     type="password"
                     value={data.password}
                 />
@@ -87,10 +85,10 @@ export default function RegisterPage({ socialstream }: InertiaSharedProps) {
                     $error={!!errors.password_confirmation}
                     autoComplete="new-password"
                     hint={errors.password_confirmation}
-                    label="Confirm password"
+                    label={t("form.fields.confirm_password.label")}
                     name="password_confirmation"
                     onChange={(e) => setData("password_confirmation", e.target.value)}
-                    placeholder="Confirm your password"
+                    placeholder={t("form.fields.confirm_password.placeholder")}
                     type="password"
                     value={data.password_confirmation}
                 />
@@ -103,13 +101,13 @@ export default function RegisterPage({ socialstream }: InertiaSharedProps) {
                         hint={errors.terms}
                         label={
                             <>
-                                <span>I agree with the&nbsp;</span>
+                                <span dangerouslySetInnerHTML={{ __html: t("register.terms.label") }} />
                                 <LinkButton.Root $style="black" $underline asChild className="whitespace-normal">
-                                    <Link href={route("terms.show")}>Terms of Service</Link>
+                                    <Link href={route("terms.show")}>{t("register.terms.link.label")}</Link>
                                 </LinkButton.Root>
-                                <span>&nbsp;and&nbsp;</span>
+                                <span dangerouslySetInnerHTML={{ __html: t("register.terms.and") }} />
                                 <LinkButton.Root $style="black" $underline asChild className="whitespace-normal">
-                                    <Link href={route("policy.show")}>Privacy Policy</Link>
+                                    <Link href={route("policy.show")}>{t("register.terms.link2.label")}</Link>
                                 </LinkButton.Root>
                             </>
                         }
@@ -119,14 +117,14 @@ export default function RegisterPage({ socialstream }: InertiaSharedProps) {
 
                     <Checkbox
                         checked={data.remember}
-                        label="Remember me"
+                        label={t("form.fields.remember.label")}
                         name="remember"
                         onCheckedChange={(checked) => setData("remember", !!checked)}
                     />
                 </div>
 
                 <FancyButton.Root $type="primary" disabled={processing} type="submit">
-                    Get started
+                    {t("register.actions.submit.label")}
                 </FancyButton.Root>
             </form>
 

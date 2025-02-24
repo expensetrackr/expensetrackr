@@ -63,16 +63,16 @@ export default function LoginPage({
                     autoFocus
                     hint={errors.email}
                     inputMode="email"
-                    label={t("login.email.label")}
+                    label={t("form.fields.email.label")}
                     leadingIcon={MailLineIcon}
                     name="email"
                     onChange={(e) => setData("email", e.target.value)}
-                    placeholder={t("login.email.placeholder")}
+                    placeholder={t("form.fields.email.placeholder")}
                     type="email"
                     value={data.email}
                 />
 
-                <Field error={errors.password} id="password" label={t("login.password.label")}>
+                <Field error={errors.password} id="password" label={t("form.fields.password.label")}>
                     <PasswordInput
                         $error={!!errors.password}
                         autoComplete="current-password"
@@ -88,7 +88,7 @@ export default function LoginPage({
                 <div className="flex items-center justify-between gap-3 py-2">
                     <Checkbox
                         checked={data.remember}
-                        label={t("login.remember.label")}
+                        label={t("form.fields.remember.label")}
                         name="remember"
                         onCheckedChange={(checked) => setData("remember", !!checked)}
                     />

@@ -93,6 +93,8 @@ export function SidebarHeader({ collapsed }: { collapsed?: boolean }) {
 function NavigationMenu({ collapsed }: { collapsed: boolean }) {
     const url = usePage().url;
 
+    console.info({ url });
+
     return (
         <div className="space-y-2">
             <div
@@ -121,13 +123,8 @@ function NavigationMenu({ collapsed }: { collapsed: boolean }) {
                     >
                         <div
                             className={cn(
-                                "absolute top-1/2 h-5 w-1 origin-left -translate-y-1/2 rounded-r-full bg-primary transition",
-                                {
-                                    "-left-[22px]": collapsed,
-                                    "-left-5": !collapsed,
-                                    "scale-100": url === href,
-                                    "scale-0": url !== href,
-                                },
+                                "absolute top-1/2 h-5 w-1 origin-left -translate-y-1/2 scale-0 rounded-r-full bg-primary transition group-aria-[current=page]:scale-100",
+                                collapsed ? "-left-[22px]" : "-left-5",
                             )}
                         />
                         <Icon
@@ -139,7 +136,7 @@ function NavigationMenu({ collapsed }: { collapsed: boolean }) {
 
                         <div className="flex w-[180px] shrink-0 items-center gap-2" data-hide-collapsed>
                             <div className="flex-1 text-label-sm">{label}</div>
-                            {url === href && <ArrowRightSIcon className="text-text-sub-600 size-5" />}
+                            {url === href && <ArrowRightSIcon className="size-5 text-(--text-sub-600)" />}
                         </div>
                     </Link>
                 ))}

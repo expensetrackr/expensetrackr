@@ -17,6 +17,7 @@ import * as InputPrimitives from "#/components/ui/input.tsx";
 import * as Label from "#/components/ui/label.tsx";
 import * as Popover from "#/components/ui/popover.tsx";
 import * as Select from "#/components/ui/select.tsx";
+import { useTranslation } from "#/hooks/use-translation.ts";
 import { useCreateAccountWizardStore } from "#/store/create-account-wizard.ts";
 import { interestRateTypeEnum, type BalanceStepValues } from "./stepper.ts";
 
@@ -131,6 +132,7 @@ function CreditCardFields({ fields, currencyFormat, handleMoneyChange }: CreditC
     const availableBalanceControl = useInputControl(fields.available_balance);
     const minimumPaymentControl = useInputControl(fields.minimum_payment);
     const expiresAtControl = useInputControl(fields.expires_at);
+    const { t } = useTranslation();
 
     return (
         <>
@@ -141,10 +143,10 @@ function CreditCardFields({ fields, currencyFormat, handleMoneyChange }: CreditC
                 inlineLeadingNode={
                     <InputPrimitives.InlineAffix>{currencyFormat?.currencySymbol}</InputPrimitives.InlineAffix>
                 }
-                label="Available credit"
+                label={t("form.fields.available_balance.label")}
                 name="available_balance"
                 onValueChange={handleMoneyChange}
-                placeholder="e.g. 1.00"
+                placeholder={t("form.fields.available_balance.placeholder")}
                 value={availableBalanceControl.value}
                 withCurrencySymbol={false}
             />
@@ -157,10 +159,10 @@ function CreditCardFields({ fields, currencyFormat, handleMoneyChange }: CreditC
                     inlineLeadingNode={
                         <InputPrimitives.InlineAffix>{currencyFormat?.currencySymbol}</InputPrimitives.InlineAffix>
                     }
-                    label="Minimum payment"
+                    label={t("form.fields.minimum_payment.label")}
                     name="minimum_payment"
                     onValueChange={handleMoneyChange}
-                    placeholder="e.g. 1.00"
+                    placeholder={t("form.fields.minimum_payment.placeholder")}
                     value={minimumPaymentControl.value}
                     withCurrencySymbol={false}
                 />
@@ -168,8 +170,8 @@ function CreditCardFields({ fields, currencyFormat, handleMoneyChange }: CreditC
                 <TextField
                     error={fields.apr.errors}
                     inlineTrailingNode={<InputPrimitives.InlineAffix>%</InputPrimitives.InlineAffix>}
-                    label="APR"
-                    placeholder="10"
+                    label={t("form.fields.apr.label")}
+                    placeholder={t("form.fields.apr.placeholder")}
                     {...getInputProps(fields.apr, {
                         type: "number",
                     })}
@@ -177,12 +179,14 @@ function CreditCardFields({ fields, currencyFormat, handleMoneyChange }: CreditC
             </div>
 
             <div className="flex flex-col gap-1">
-                <Label.Root htmlFor={fields.expires_at.id}>Expires at</Label.Root>
+                <Label.Root htmlFor={fields.expires_at.id}>{t("form.fields.expires_at.label")}</Label.Root>
 
                 <Popover.Root>
                     <Popover.Trigger asChild>
                         <Button.Root $style="stroke" $type="neutral" id={fields.expires_at.id}>
-                            {expiresAtControl.value ? format(expiresAtControl.value, "LLL dd, y") : "Select a date"}
+                            {expiresAtControl.value
+                                ? format(expiresAtControl.value, "LLL dd, y")
+                                : t("form.fields.expires_at.placeholder")}
                         </Button.Root>
                     </Popover.Trigger>
                     <Popover.Content className="p-0" showArrow={false}>
@@ -202,7 +206,7 @@ function CreditCardFields({ fields, currencyFormat, handleMoneyChange }: CreditC
                                     className="w-full"
                                     //onClick={handleCancel}
                                 >
-                                    Cancel
+                                    {t("common.cancel")}
                                 </Button.Root>
                             </Popover.Close>
                             <Popover.Close asChild unstyled>
@@ -213,7 +217,7 @@ function CreditCardFields({ fields, currencyFormat, handleMoneyChange }: CreditC
                                     className="w-full"
                                     //onClick={handleApply}
                                 >
-                                    Apply
+                                    {t("common.apply")}
                                 </Button.Root>
                             </Popover.Close>
                         </div>
@@ -237,6 +241,7 @@ type LoanFieldsProps = {
 
 function LoanFields({ fields }: LoanFieldsProps) {
     const interestRateTypeControl = useInputControl(fields.interest_rate_type);
+    const { t } = useTranslation();
 
     return (
         <>
@@ -244,8 +249,8 @@ function LoanFields({ fields }: LoanFieldsProps) {
                 <TextField
                     error={fields.interest_rate.errors}
                     inlineTrailingNode={<InputPrimitives.InlineAffix>%</InputPrimitives.InlineAffix>}
-                    label="Interest rate"
-                    placeholder="9.33"
+                    label={t("form.fields.interest_rate.label")}
+                    placeholder={t("form.fields.interest_rate.placeholder")}
                     {...getInputProps(fields.interest_rate, {
                         type: "number",
                     })}
@@ -255,14 +260,14 @@ function LoanFields({ fields }: LoanFieldsProps) {
                     defaultValue={fields.interest_rate_type.initialValue}
                     error={fields.interest_rate_type.errors}
                     id={fields.interest_rate_type.id}
-                    label="Rate type"
+                    label={t("form.fields.interest_rate_type.label")}
                     name={fields.interest_rate_type.name}
                     onValueChange={interestRateTypeControl.change}
                     options={interestRateTypeEnum.options.map((option) => ({
                         label: option,
                         value: option,
                     }))}
-                    placeholder="Select a rate type"
+                    placeholder={t("form.fields.interest_rate_type.placeholder")}
                     position="item-aligned"
                     value={interestRateTypeControl.value}
                 />
@@ -270,8 +275,8 @@ function LoanFields({ fields }: LoanFieldsProps) {
 
             <TextField
                 error={fields.term_months.errors}
-                label="Term (months)"
-                placeholder="48"
+                label={t("form.fields.term_months.label")}
+                placeholder={t("form.fields.term_months.placeholder")}
                 {...getInputProps(fields.term_months, {
                     type: "number",
                 })}

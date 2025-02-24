@@ -3,11 +3,11 @@
 declare(strict_types=1);
 
 return [
-    'title' => 'Inicia sesión en tu cuenta',
-    'description' => '¡Bienvenido de nuevo! Por favor, ingresa tus datos',
+    'title' => 'Inicie sesión en su cuenta',
+    'description' => '¡Bienvenido de nuevo! Por favor, ingrese sus datos',
     'email' => [
         'label' => 'Correo electrónico',
-        'placeholder' => 'p. ej. juan@ejemplo.com',
+        'placeholder' => 'p. ej. john@example.com',
     ],
     'password' => [
         'label' => 'Contraseña',
@@ -16,7 +16,7 @@ return [
         'label' => 'Recuérdame',
     ],
     'forgot_password' => [
-        'label' => '¿Olvidaste tu contraseña?',
+        'label' => '¿Olvidó su contraseña?',
     ],
     'submit' => [
         'label' => 'Iniciar sesión',

@@ -37,7 +37,7 @@ export function Checkbox({ $error, label, hint, ...props }: CheckboxProps) {
                         <Hint.Root
                             $disabled={props.disabled}
                             $error={$error}
-                            aria-describedby={$error ? `${id}-error` : `${id}-description`}
+                            aria-describedby={[$error && `${id}-error`, `${id}-description`].filter(Boolean).join(" ")}
                         >
                             <Hint.Icon $disabled={props.disabled} $error={$error} />
                             {hint}

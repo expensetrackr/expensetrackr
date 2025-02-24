@@ -13,7 +13,7 @@ export const selectVariants = tv({
     slots: {
         triggerRoot: [
             // base
-            "group/trigger min-w-0 shrink-0 bg-(--bg-white-0) ring-1 shadow-xs ring-(--stroke-soft-200) outline-none ring-inset",
+            "group/trigger min-w-0 shrink-0 bg-(--bg-white-0) shadow-xs ring-1 ring-(--stroke-soft-200) outline-none ring-inset",
             "text-paragraph-sm text-(--text-strong-950)",
             "flex items-center text-left",
             "transition duration-200 ease-out",
@@ -57,7 +57,7 @@ export const selectVariants = tv({
             "group-disabled/trigger:[&:not(.remixicon)]:opacity-[.48]",
         ],
         selectItemIcon: [
-            "text-text-sub-600 size-5 shrink-0 bg-[length:1.25rem]",
+            "size-5 shrink-0 bg-[length:1.25rem] text-(--text-sub-600)",
             // 'group-has-[&]-ml-0.5',
             // disabled
             "[[data-disabled]_&]:text-(--text-disabled-300) [[data-disabled]_&:not(.remixicon)]:opacity-[.48]",
@@ -79,15 +79,15 @@ export const selectVariants = tv({
             compactForInput: {
                 triggerRoot: [
                     // base
-                    "w-auto rounded-none ring-0 shadow-none",
+                    "w-auto rounded-none shadow-none ring-0",
                     // focus
-                    "focus:bg-(--bg-weak-50) focus:ring-0 focus:shadow-none focus:ring-transparent",
+                    "focus:bg-(--bg-weak-50) focus:shadow-none focus:ring-0 focus:ring-transparent",
                 ],
             },
             inline: {
                 triggerRoot: [
                     // base
-                    "h-5 min-h-5 w-auto gap-0 rounded-none bg-transparent p-0 text-(--text-sub-600) ring-0 shadow-none",
+                    "h-5 min-h-5 w-auto gap-0 rounded-none bg-transparent p-0 text-(--text-sub-600) shadow-none ring-0",
                     // hover
                     "hover:bg-transparent hover:text-(--text-strong-950)",
                     // focus
@@ -301,7 +301,7 @@ function SelectContent({
             <SelectPrimitives.Content
                 className={cnMerge(
                     // base
-                    "relative z-50 overflow-hidden rounded-16 bg-(--bg-white-0) ring-1 shadow-md ring-(--stroke-soft-200) ring-inset",
+                    "relative z-50 overflow-hidden rounded-16 bg-(--bg-white-0) shadow-md ring-1 ring-(--stroke-soft-200) ring-inset",
                     // widths
                     "max-w-[max(var(--radix-select-trigger-width),320px)] min-w-(--radix-select-trigger-width)",
                     // heights

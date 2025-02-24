@@ -3,6 +3,7 @@ import GoogleIcon from "virtual:icons/flat-color-icons/google";
 
 import * as Divider from "#/components/ui/divider.tsx";
 import * as SocialButton from "#/components/ui/social-button.tsx";
+import { useTranslation } from "#/hooks/use-translation.ts";
 import { type InertiaSharedProps, type ProviderType } from "#/types/index.ts";
 
 const socialsIcons = {
@@ -11,10 +12,13 @@ const socialsIcons = {
 
 export function Socialstream() {
     const page = usePage<InertiaSharedProps>();
+    const { t } = useTranslation();
 
     return (
         <div className="mt-1 mb-2 flex flex-col gap-4">
-            <Divider.Root $type="line-text">OR</Divider.Root>
+            <Divider.Root $type="line-text" className="uppercase">
+                {t("common.or")}
+            </Divider.Root>
 
             <div className="flex flex-col gap-4 lg:flex-row">
                 {page.props.socialstream.providers.map((provider) => {
@@ -28,7 +32,7 @@ export function Socialstream() {
                         >
                             <Link href={route("oauth.redirect", provider)}>
                                 <SocialButton.Icon as={socialsIcons[provider.id]} />
-                                Continue with {provider.name}
+                                {t("socialstream.continue_with", { provider: provider.name })}
                             </Link>
                         </SocialButton.Root>
                     );

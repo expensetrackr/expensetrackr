@@ -12,18 +12,29 @@ files:
   lang/en/common.php:
     monthly: 9030e39f00132d583da4122532e509e9
     yearly: cf5ea7953dc47105e0eb179dbefaaf46
+    cancel: ea4788705e6873b424c65e91c2846b19
+    apply: 9639e32cab248434a17ab32237cb3b71
+    or: e81c4e4f2b7b93b481e13a8553c2ae1b
   lang/en/home.php:
-    image_and_text_section.title: 6b20f214468640bf73f6642a0456ff3e
-    image_and_text_section.steps.1.title: 38ed9750831df42c33908d73a4d2abed
-    image_and_text_section.steps.1.description: e40fb25c6257c47e2fea4320dd0dd9fe
-    image_and_text_section.steps.2.title: 011ab05be31d63842ad3e33d9c2d1ce6
-    image_and_text_section.steps.2.description: fdbecce06c8bfee62ca58003c12f93aa
-    image_and_text_section.steps.3.title: 101be6437959fe6a46c8c3f668c2f661
-    image_and_text_section.steps.3.description: cc38ffdef9bfbaa13d532f4ea3ee91a9
-    image_and_text_section.steps.4.title: 6333ad11ffc081c9955147ba23b4fc04
-    image_and_text_section.steps.4.description: d9e8d6bbeb5fb7b2b55f60dd260bedc9
-    image_and_text_section.steps.5.title: dd84fbf566345dd8b78d99fde0c88ba2
-    image_and_text_section.steps.5.description: 8591ec01a27142379852b3deda2a55c1
+    sections.hero.title: 851e524ab6702d2603c94c5103e99439
+    sections.hero.description: 5e7be62ffc7a261f2211dd534e41406d
+    sections.hero.contact_us: 02d4482d332e1aef3437cd61c9bcc624
+    sections.hero.get_started: 54f742623dc735530ef5c2d581f34130
+    sections.image_and_text.title: 6b20f214468640bf73f6642a0456ff3e
+    sections.image_and_text.steps.1.title: 38ed9750831df42c33908d73a4d2abed
+    sections.image_and_text.steps.1.description: e40fb25c6257c47e2fea4320dd0dd9fe
+    sections.image_and_text.steps.2.title: 011ab05be31d63842ad3e33d9c2d1ce6
+    sections.image_and_text.steps.2.description: fdbecce06c8bfee62ca58003c12f93aa
+    sections.image_and_text.steps.3.title: 101be6437959fe6a46c8c3f668c2f661
+    sections.image_and_text.steps.3.description: cc38ffdef9bfbaa13d532f4ea3ee91a9
+    sections.image_and_text.steps.4.title: 6333ad11ffc081c9955147ba23b4fc04
+    sections.image_and_text.steps.4.description: d9e8d6bbeb5fb7b2b55f60dd260bedc9
+    sections.image_and_text.steps.5.title: dd84fbf566345dd8b78d99fde0c88ba2
+    sections.image_and_text.steps.5.description: 8591ec01a27142379852b3deda2a55c1
+    sections.image_and_text.balance_step.title: e0cb6250f3eb65bd45a034bc505123ef
+    sections.image_and_text.balance_step.description: 428e46527eea7403cf4881af17f59c9a
+    sections.feature.title: 5206c98dce3adec93a8f0eed55afb201
+    sections.feature.description: 313fb1a1893907b3a4c9823b6ecc1641
     sections.pricing.title: 185877b46bf79849e937de72ef2d1c9a
     sections.pricing.description: 5a880150604f1e2a804f780200f79785
     sections.pricing.coming_soon: 713cbd93b2ba47b4561b53a841624b51
@@ -42,6 +53,9 @@ files:
     sections.pricing.plans.lifetime.features: ba0d964f096a2b4a8b7373540735d76d
     sections.pricing.plans.lifetime.coming_soon: 7215ee9c7d9dc229d2921a40e899ec5f
     sections.pricing.plans.lifetime.button_label: 8a4a8a2660620fd6c1b7b5a85bfbca34
+    sections.call_to_action.title: 3744153c0f7a426bb0d9326a5c03684f
+    sections.call_to_action.description: f09cfc77cd870d6cf44702a192ee48de
+    sections.call_to_action.button_label: 256b3a00717defddea38d6c92c9af9d2
   lang/en/pagination.php:
     previous: 8bd433e5954b8223fb89dd22fe327696
     next: f7d387020520aa6845529615215c7217
@@ -186,9 +200,44 @@ files:
   lang/en/login.php:
     title: 15cb3b43610751d8b2e241abfba63e10
     description: 5d83c2159bcd9be5a3af1df2eec0d221
-    email.label: ce8ae9da5b7cd6c3df2929543a9af92d
-    email.placeholder: 8fb55f02608a8562905dc0f87d2c5977
-    password.label: dc647eb65e6711e155375218212b3964
-    remember.label: 878530871f0db73f004f5bd6591eeb76
     forgot_password.label: 01a569ddc6cf67ddec2a683f0a5f5956
     submit.label: bffe9a3c9a7e00ba00a11749e022d911
+  lang/en/form.php:
+    fields.email.label: ce8ae9da5b7cd6c3df2929543a9af92d
+    fields.email.placeholder: 8fb55f02608a8562905dc0f87d2c5977
+    fields.password.label: e8d28194f9b3498d21fbda21321d0226
+    fields.password.placeholder: ef0bd6c0bc2891fc919ec090ac1770a7
+    fields.remember.label: 878530871f0db73f004f5bd6591eeb76
+    fields.name.label: 49ee3087348e8d44e1feda1917443987
+    fields.name.placeholder: d29d6b1a47d1fec49ae2228edd28eaa6
+    fields.new_password.label: 3544848f820b9d94a3f3871a382cf138
+    fields.new_password.placeholder: 43a5dac9a2a84d2f02d3445c524f9d2c
+    fields.new_password.hint: 10142a34184b526b68fd897d381fae40
+    fields.confirm_password.label: 4c231e0da3eaaa6a9752174f7f9cfb31
+    fields.confirm_password.placeholder: 65f13145802f7e6f8f02c1d7d3afc32d
+    fields.initial_balance.label: 3952bc855a33594bd0371fa31580e0ef
+    fields.initial_balance.placeholder: 4571457f2443b28ab9d2cea5c0d4bdf4
+    fields.available_balance.label: 16ad069644e4d2beb3a554007a0ebf7d
+    fields.available_balance.placeholder: 4571457f2443b28ab9d2cea5c0d4bdf4
+    fields.minimum_payment.label: f7b2f13820aabb7248ce58177b279305
+    fields.minimum_payment.placeholder: 4571457f2443b28ab9d2cea5c0d4bdf4
+    fields.apr.label: 400b07623925470b21ca55c3ce9913f4
+    fields.apr.placeholder: d3d9446802a44259755d38e6d163e820
+    fields.expires_at.label: 8d7f12bd0dc53389421144669ff4ee63
+    fields.expires_at.placeholder: 64de260a0ad2c3d96dece47bb581b78e
+    fields.interest_rate.label: 7dfa44aee8e21e5967e2fde5a6b0cfa8
+    fields.interest_rate.placeholder: 4571457f2443b28ab9d2cea5c0d4bdf4
+    fields.interest_rate_type.label: c4f728963b6642da147d9753843ba035
+    fields.interest_rate_type.placeholder: 131e62456d58b26683580f4f2ac12c93
+    fields.term_months.label: a92ac988e36fc291cfc32fbf6243583f
+    fields.term_months.placeholder: 642e92efb79421734881b53e1e1b18b6
+  lang/en/socialstream.php:
+    continue_with: 97917fc183d9fe574ce5e9351ec9c532
+  lang/en/register.php:
+    title: fe1f636b83baeffd7a2ec09518a81ab8
+    description: 79b83b887cf853e4472ace22583bdec4
+    terms.label: dc8c1fcec1db1601b26ff97ce09642a9
+    terms.link.label: 3b6c2b4caaf4f14f8d7feeddc4ac3f4d
+    terms.and: c19f6440f9045503d42ee3622933e005
+    terms.link2.label: fa2ead697d9998cbc65c81384e6533d5
+    actions.submit.label: be11c74c1dd7f307bb80183a90dc2067

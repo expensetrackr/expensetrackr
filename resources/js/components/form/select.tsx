@@ -60,7 +60,7 @@ export function Select({
                 <Hint.Root
                     $disabled={rest.disabled}
                     $error={!!error}
-                    aria-describedby={error ? `${id}-error` : `${id}-description`}
+                    aria-describedby={[!!error && `${id}-error`, `${id}-description`].filter(Boolean).join(" ")}
                 >
                     <Hint.Icon />
                     {error || hint}

@@ -50,7 +50,7 @@ final class HandleInertiaRequests extends Middleware
             ],
             'toast' => collect(Arr::only($request->session()->all(), ['error', 'warning', 'success', 'info']))
                 ->mapWithKeys(fn ($notification, $key): array => ['type' => $key, 'message' => $notification]),
-            'language' => app()->getLocale(),
+            'language' => session()->get('language', app()->getLocale()),
             'languages' => LanguageResource::collection(Language::cases()),
             'translations' => function () {
                 $locale = app()->getLocale();

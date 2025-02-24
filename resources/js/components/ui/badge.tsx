@@ -381,7 +381,7 @@ export const badgeVariants = tv({
             $style: ["stroke", "filled", "light", "lighter"],
             $color: ["red", "gray", "blue", "orange", "green", "yellow", "purple", "sky", "pink", "teal"],
             class: {
-                root: ["ring-stroke-soft-200 ring-1 ring-inset", "text-text-disabled-300 bg-transparent"],
+                root: ["ring-stroke-soft-200 ring-1 ring-inset", "bg-transparent text-(--text-disabled-300)"],
             },
         },
         //#endregion

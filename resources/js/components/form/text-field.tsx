@@ -11,6 +11,7 @@ type TextFieldProps = Omit<InputProps, "error"> & {
 };
 
 export function TextField({
+    $error,
     $size,
     error,
     label,
@@ -52,8 +53,8 @@ export function TextField({
             {error || hint ? (
                 <Hint.Root
                     $disabled={rest.disabled}
-                    $error={!!error}
-                    aria-describedby={error ? `${id}-error` : `${id}-description`}
+                    $error={$error}
+                    aria-describedby={[$error && `${id}-error`, `${id}-description`].filter(Boolean).join(" ")}
                 >
                     <Hint.Icon />
                     {error || hint}
