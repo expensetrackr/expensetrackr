@@ -8,13 +8,9 @@ use App\Casts\MoneyCast;
 use App\Concerns\Blamable;
 use App\Concerns\WorkspaceOwned;
 use App\Enums\AccountSubtype;
-use Carbon\CarbonImmutable;
-use Database\Factories\AccountFactory;
-use Eloquent;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Factories\Factory as TFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
 
@@ -28,46 +24,48 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @property bool $is_default
  * @property string $public_id
  * @property int $workspace_id
- * @property AccountSubtype|null $subtype
  * @property int|null $created_by
  * @property int|null $updated_by
- * @property CarbonImmutable|null $created_at
- * @property CarbonImmutable|null $updated_at
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
  * @property string $accountable_type
  * @property int $accountable_id
- * @property-read Model|Eloquent $accountable
+ * @property AccountSubtype|null $subtype
+ * @property int|null $bank_connection_id
+ * @property-read Model $accountable
+ * @property-read BankConnection|null $bankConnection
  * @property-read User|null $createdBy
+ * @property-read string|null $prefixed_id
  * @property-read User|null $updatedBy
  * @property-read Workspace $workspace
- * @property-read string|null $prefixed_id
- * @property-read TFactory<Account>|null $use_factory
  *
- * @method static AccountFactory factory($count = null, $state = [])
- * @method static Builder<static>|Account newModelQuery()
- * @method static Builder<static>|Account newQuery()
- * @method static Builder<static>|Account query()
- * @method static Builder<static>|Account whereAccountableId($value)
- * @method static Builder<static>|Account whereAccountableType($value)
- * @method static Builder<static>|Account whereCreatedAt($value)
- * @method static Builder<static>|Account whereCreatedBy($value)
- * @method static Builder<static>|Account whereCurrencyCode($value)
- * @method static Builder<static>|Account whereCurrentBalance($value)
- * @method static Builder<static>|Account whereDescription($value)
- * @method static Builder<static>|Account whereId($value)
- * @method static Builder<static>|Account whereInitialBalance($value)
- * @method static Builder<static>|Account whereIsDefault($value)
- * @method static Builder<static>|Account whereName($value)
- * @method static Builder<static>|Account wherePublicId($value)
- * @method static Builder<static>|Account whereUpdatedAt($value)
- * @method static Builder<static>|Account whereUpdatedBy($value)
- * @method static Builder<static>|Account whereWorkspaceId($value)
- * @method static Builder<static>|Account whereSubtype($value)
+ * @method static \Database\Factories\AccountFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Account newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Account newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Account query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereAccountableId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereAccountableType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereBankConnectionId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereCreatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereCurrencyCode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereCurrentBalance($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereInitialBalance($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereIsDefault($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Account wherePublicId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereSubtype($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereWorkspaceId($value)
  *
- * @mixin Eloquent
+ * @mixin \Eloquent
  */
 final class Account extends Model
 {
-    /** @use HasFactory<AccountFactory> */
+    /** @use HasFactory<\Database\Factories\AccountFactory> */
     use Blamable, HasFactory, HasPrefixedId, WorkspaceOwned;
 
     /**
@@ -78,6 +76,16 @@ final class Account extends Model
     public function accountable(): MorphTo
     {
         return $this->morphTo();
+    }
+
+    /**
+     * The bank connection that the account belongs to.
+     *
+     * @return BelongsTo<BankConnection, covariant $this>
+     */
+    public function bankConnection(): BelongsTo
+    {
+        return $this->belongsTo(BankConnection::class);
     }
 
     /**
