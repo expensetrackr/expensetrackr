@@ -1,35 +1,129 @@
 ---
 description: Best practices and guidelines for Inertia.js
 globs: resources/js/**/*.{ts,tsx,js,jsx}
+alwaysApply: false
 ---
+# Inertia.js Best Practices for ExpenseTrackr
+
 ## Core Concepts
 
--   Use Inertia for server-side routing instead of React Router
--   Handle all data fetching through Laravel controllers
--   Return only necessary data as props to minimize payload size
--   Use Inertia's form handling instead of raw XHR/fetch requests
--   Implement proper CSRF protection via Laravel's built-in mechanisms
+- Use Inertia for server-side routing instead of React Router or other client-side routers
+- Handle all data fetching through Laravel controllers, not client-side fetch
+- Return only necessary data as props to minimize payload size (reduce page weight)
+- Use Inertia's form handling instead of raw XHR/fetch requests
+- Implement proper CSRF protection via Laravel's built-in mechanisms
+- Leverage Ziggy for route generation to maintain a single source of truth for routes
+- Use TypeScript for all Inertia components for better type safety and developer experience
+- Follow React's functional component patterns with hooks for all Inertia components
 
-## Page Components
+## Project Structure
 
--   Store page components in resources/js/pages directory
--   Use PascalCase for page component names
--   Implement layouts as React components with children prop
--   Use TypeScript interfaces for page props
--   Avoid accessing props directly from usePage() when possible
+### Page Components
+- Store page components in `resources/js/pages` directory
+- Use PascalCase for page component names
+- Follow a nested directory structure that mirrors the route structure (e.g., `settings/connected-accounts/show.tsx`)
+- Keep page components focused on layout and composition, delegating complex logic to hooks and utilities
+- Implement layouts as React components with children prop (located in `resources/js/layouts`)
+- Use shared layouts consistently for related pages (e.g., `AppLayout`, `AuthLayout`, `SettingsLayout`)
+
+### TypeScript Integration
+- Define comprehensive interfaces for all page props in `resources/js/types`
+- Extend the base `InertiaSharedProps` or `PageProps` interface for page-specific props
+- Type form data using generics with `useForm`
+- Use proper typing for Inertia's router methods
+- Define shared props interface for common data
 
 ## Form Handling
 
--   Use Inertia's useForm hook for form state management
--   Handle file uploads using FormData automatically via useForm
--   Implement proper validation error handling using form.errors
--   Use error bags for forms with duplicate field names
--   Leverage form helper methods (processing, progress, etc)
+### Form Components and Hooks
+- Use Inertia's `useForm` hook for form state management
+- Create reusable form components in `resources/js/components/form/`
+- Implement consistent error handling and validation UI across all forms
+- Handle file uploads using FormData automatically via `useForm`
+- Implement proper validation error handling using `form.errors`
+- Use error bags for forms with duplicate field names
+- Leverage form helper methods (`processing`, `progress`, etc.)
 
-## TypeScript Integration
+### Form Validation
+- Validate forms on both client and server sides
+- Validate form input in real-time where appropriate
+- Display validation errors inline with form fields
+- Use Laravel validation rules on the server side
+- Clear validation errors when users begin typing in fields
+- Implement password confirmation patterns using the `ConfirmsPassword` component
 
--   Define proper interfaces for all page props
--   Type form data using generics with useForm
--   Use proper typing for Inertia's router methods
--   Define shared props interface for common data
-  
+## State Management
+
+- Use Inertia's shared data for global state accessible across components
+- Leverage React context for state that needs to be shared across multiple components
+- Create custom hooks for reusable state logic and component behavior
+- Use Inertia's `usePage()` for accessing shared data, but prefer props for component-specific data
+
+## Performance Optimization
+
+- Implement code-splitting using Dynamic Imports for non-critical components
+- Use partial reloads with Inertia.js for updating only necessary parts of the page
+- Implement skeleton loading states while waiting for server responses
+- Minimize page props by using shared data for common information
+- Leverage Inertia's progress indicators for better UX during page transitions
+- Optimize assets following Vite best practices
+- Use SSR for initial page loads to improve performance and SEO
+
+## Error Handling
+
+- Implement consistent error pages and error boundaries
+- Handle network errors gracefully with retry mechanisms
+- Use toast notifications for errors, warnings, and success messages
+- Implement error logging for client-side errors
+- Provide helpful error messages to users
+- Handle authentication and authorization errors consistently
+
+## Authentication and Authorization
+
+- Use Laravel Sanctum for authentication
+- Implement role-based access control using workspaces
+- Check for permissions before rendering sensitive UI components
+- Handle unauthorized access gracefully with appropriate redirects and messages
+- Implement two-factor authentication flows consistently
+
+## User Experience
+
+- Implement consistent loading states using the progress API
+- Use skeleton loaders for content that takes time to load
+- Implement toast notifications for system messages
+- Handle form submissions with appropriate feedback
+- Maintain scroll position during page transitions where appropriate
+- Implement proper focus management for accessibility
+- Support dark mode and user preferences
+
+## Testing
+
+- Write unit tests for React components
+- Test Inertia page transitions and form submissions
+- Write end-to-end tests for critical user journeys
+- Test error states and edge cases
+- Mock Inertia responses for component testing
+
+## Internationalization
+
+- Use the translation system for all user-facing text
+- Support language switching with consistent UI
+- Properly handle RTL languages with appropriate CSS
+- Ensure date formats respect user locale
+
+## API Integration
+
+- Use Laravel controllers as an API layer between Inertia and external services
+- Define TypeScript interfaces for all API responses
+- Handle API errors consistently
+- Implement caching strategies for API responses
+- Use proper HTTP status codes for API responses
+
+## Security
+
+- Implement proper CSRF protection
+- Validate and sanitize all user inputs
+- Implement proper content security policies
+- Follow Laravel security best practices
+- Implement proper rate limiting for sensitive operations
+- Use HTTPS for all requests

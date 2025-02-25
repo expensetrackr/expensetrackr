@@ -1,6 +1,7 @@
 ---
 description: This rule explains project tech stack and some basic code conventions
 globs: *
+alwaysApply: true
 ---
 This rule serves as high-level documentation for how the ExpenseTrackr codebase is structured.
 
