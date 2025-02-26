@@ -31,12 +31,14 @@
         "laravel/sanctum": "4.0.8",
         "laravel/tinker": "2.10.1",
         "league/flysystem-aws-s3-v3": "3.29.0",
+        "levizoesch/teller-sdk": "2.0.17",
         "pinkary-project/type-guard": "0.1.0",
         "polar-sh/sdk": "0.1.1",
         "spatie/laravel-data": "4.13.1",
         "spatie/laravel-permission": "6.15.0",
         "spatie/laravel-prefixed-ids": "1.4.1",
-        "tightenco/ziggy": "2.5.1"
+        "tightenco/ziggy": "2.5.1",
+        "typesense/typesense-php": "5.0.2"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "3.5.5",
