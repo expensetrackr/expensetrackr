@@ -18,7 +18,7 @@
     "require": {
         "php": "^8.3",
         "akaunting/laravel-money": "6.0.2",
-        "cjmellor/browser-sessions": "1.3.0",
+        "cjmellor/browser-sessions": "1.3.1",
         "danestves/laravel-polar": "0.1.2",
         "filament/filament": "3.3.0",
         "hirethunk/verbs": "0.6.4",
