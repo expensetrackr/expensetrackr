@@ -18,19 +18,18 @@ import { BentoRecentTransactions } from "#/components/bento/recent-transactions.
 import { BentoSubscriptions } from "#/components/bento/subscriptions.tsx";
 import { BentoWorkspaces } from "#/components/bento/workspaces.tsx";
 import { BentoCard } from "#/components/bento-card.tsx";
+import { BalanceStep } from "#/components/create-account/balance-step.tsx";
 import * as Glow from "#/components/glow.tsx";
 import { Link } from "#/components/link.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
 import * as SegmentedControl from "#/components/ui/segmented-control.tsx";
 import { useTranslation } from "#/hooks/use-translation.ts";
-import { useCreateAccountWizardStore } from "#/store/create-account-wizard.ts";
 import { type PageProps } from "#/types/index.ts";
 import { cx } from "#/utils/cva.ts";
 import { plans } from "#/utils/plans.ts";
-import { BalanceStep } from "./accounts/create/partials/balance-step.tsx";
-import { Card } from "./accounts/create/partials/card.tsx";
-import { balanceSchema } from "./accounts/create/partials/stepper.ts";
+import { balanceSchema } from "#/utils/steppers/create-account.steps.ts";
+import { Card } from "../components/create-account/card.tsx";
 
 export default function WelcomePage(_props: PageProps<{ laravelVersion: string; phpVersion: string }>) {
     return (
@@ -212,14 +211,13 @@ function BentoSection() {
 
 function ImageAndTextSection() {
     const { t } = useTranslation();
-    const { type, setType } = useCreateAccountWizardStore();
     const [form, fields] = useForm({
         id: "create-account-example",
         shouldValidate: "onSubmit",
         shouldRevalidate: "onInput",
         constraint: getZodConstraint(balanceSchema),
         defaultValue: {
-            type,
+            type: "credit_card",
             initial_balance: "0.00",
         },
         onValidate({ formData }) {
@@ -231,10 +229,6 @@ function ImageAndTextSection() {
             console.info("submission:", submission);
         },
     });
-
-    React.useEffect(() => {
-        setType("credit_card");
-    }, [setType]);
 
     return (
         <section className="container py-12" id="image-and-text">

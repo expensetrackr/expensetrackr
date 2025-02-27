@@ -188,7 +188,7 @@ function AvatarImage({ asChild, className, $size, $color, ...rest }: AvatarImage
     const Component = asChild ? Slot : "img";
     const { image } = avatarVariants({ $size, $color });
 
-    return <Component className={image({ class: className })} {...rest} />;
+    return <Component className={image({ className })} {...rest} />;
 }
 AvatarImage.displayName = AVATAR_IMAGE_NAME;
 

@@ -2,6 +2,7 @@ import "../css/tailwind.css";
 import "../css/app.css";
 
 import { createInertiaApp } from "@inertiajs/react";
+import { TooltipProvider } from "@radix-ui/react-tooltip";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { createRoot, hydrateRoot } from "react-dom/client";
 import { type route as routeFn } from "ziggy-js";
@@ -28,7 +29,9 @@ void createInertiaApp({
                 },
             }).render(
                 <NuqsAdapter>
-                    <App {...props} />
+                    <TooltipProvider>
+                        <App {...props} />
+                    </TooltipProvider>
                 </NuqsAdapter>,
             );
             return;
@@ -37,7 +40,9 @@ void createInertiaApp({
         hydrateRoot(
             el,
             <NuqsAdapter>
-                <App {...props} />
+                <TooltipProvider>
+                    <App {...props} />
+                </TooltipProvider>
             </NuqsAdapter>,
         );
     },

@@ -1,16 +1,16 @@
 import { getInputProps, getTextareaProps, type useForm, useInputControl } from "@conform-to/react";
 
-import { Select } from "#/components/form/select.tsx";
-import { TextField } from "#/components/form/text-field.tsx";
-import { Textarea } from "#/components/form/textarea.tsx";
-import * as Label from "#/components/ui/label.tsx";
+import { useCreateAccountStates } from "#/hooks/use-create-account-states.ts";
 import { accountTypeEnum, depositorySubtypeEnum, investmentSubtypeEnum } from "#/schemas/account.ts";
-import { useCreateAccountWizardStore } from "#/store/create-account-wizard.ts";
-import { type DetailsStepValues } from "./stepper.ts";
+import { type DetailsStepValues } from "#/utils/steppers/create-account.steps.ts";
+import { Select } from "../form/select.tsx";
+import { TextField } from "../form/text-field.tsx";
+import { Textarea } from "../form/textarea.tsx";
+import * as Label from "../ui/label.tsx";
 
 const subtypeOptions = {
-    [accountTypeEnum.Enum.depository]: depositorySubtypeEnum.options,
-    [accountTypeEnum.Enum.investment]: investmentSubtypeEnum.options,
+    [accountTypeEnum.enum.depository]: depositorySubtypeEnum.options,
+    [accountTypeEnum.enum.investment]: investmentSubtypeEnum.options,
 };
 
 type DetailsStepProps = {
@@ -19,11 +19,11 @@ type DetailsStepProps = {
 
 export function DetailsStep({ fields }: DetailsStepProps) {
     const subtypeControl = useInputControl(fields.subtype);
-    const { type } = useCreateAccountWizardStore();
+    const { state } = useCreateAccountStates();
 
     return (
         <>
-            <input {...getInputProps(fields.type, { type: "hidden", value: false })} value={type || ""} />
+            <input {...getInputProps(fields.type, { type: "hidden", value: false })} value={state.type || ""} />
 
             <TextField
                 $error={!!fields.name.errors}
@@ -47,7 +47,7 @@ export function DetailsStep({ fields }: DetailsStepProps) {
                 placeholder="e.g. Savings account for personal expenses"
             ></Textarea>
 
-            {type && subtypeOptions[type as keyof typeof subtypeOptions] ? (
+            {state.type && subtypeOptions[state.type as keyof typeof subtypeOptions] ? (
                 <Select
                     defaultValue={fields.subtype.initialValue}
                     error={fields.subtype.errors}
@@ -55,7 +55,7 @@ export function DetailsStep({ fields }: DetailsStepProps) {
                     label="Subtype"
                     name={fields.subtype.name}
                     onValueChange={subtypeControl.change}
-                    options={subtypeOptions[type as keyof typeof subtypeOptions].map((subtype) => ({
+                    options={subtypeOptions[state.type as keyof typeof subtypeOptions].map((subtype) => ({
                         label: subtype,
                         value: subtype,
                     }))}

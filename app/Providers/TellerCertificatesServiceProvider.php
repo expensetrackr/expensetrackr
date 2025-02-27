@@ -16,7 +16,7 @@ final class TellerCertificatesServiceProvider extends ServiceProvider
         $this->setupTellerCertificates();
     }
 
-    private function setupTellerCertificates()
+    private function setupTellerCertificates(): void
     {
         // Check if we have the base64 encoded certs in environment
         $certBase64 = env('TELLER_CERT_BASE64');
@@ -28,14 +28,14 @@ final class TellerCertificatesServiceProvider extends ServiceProvider
             $keyPath = config('teller.KEY_PATH');
 
             // Create directory if it doesn't exist
-            $directory = dirname($certPath);
+            $directory = dirname((string) $certPath);
             if (! is_dir($directory)) {
                 mkdir($directory, 0755, true);
             }
 
             // Write decoded content to the files
-            file_put_contents($certPath, base64_decode($certBase64));
-            file_put_contents($keyPath, base64_decode($keyBase64));
+            file_put_contents($certPath, base64_decode((string) $certBase64));
+            file_put_contents($keyPath, base64_decode((string) $keyBase64));
 
             // Set proper permissions
             chmod($keyPath, 0600); // Private key should be more restricted

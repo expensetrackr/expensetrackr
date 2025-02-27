@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use Exception;
 use MeiliSearch\Client;
 
-final class MeilisearchService
+final readonly class MeilisearchService
 {
     private Client $client;
 
@@ -26,6 +27,39 @@ final class MeilisearchService
         $index = $this->client->index($indexName);
 
         return $index->addDocuments($documents);
+    }
+
+    /**
+     * Search documents in an index or retrieve all documents if no query is provided
+     *
+     * @param  string  $indexName  The name of the index to search in
+     * @param  string|null  $query  The search query (optional)
+     * @param  array  $searchParams  Additional search parameters like filters, sort, etc. (optional)
+     * @return array Search results
+     */
+    public function search(string $indexName, ?string $query = null, array $searchParams = []): array
+    {
+        $index = $this->client->index($indexName);
+
+        return $index->search($query, array_merge($searchParams, ['showRankingScore' => true]))->getHits();
+    }
+
+    /**
+     * Get a specific document by its ID
+     *
+     * @param  string  $indexName  The name of the index
+     * @param  string  $documentId  The ID of the document to retrieve
+     * @return array|null The document or null if not found
+     */
+    public function getDocument(string $indexName, string $documentId): ?array
+    {
+        $index = $this->client->index($indexName);
+
+        try {
+            return $index->getDocument($documentId);
+        } catch (Exception) {
+            return null;
+        }
     }
 
     /**
@@ -76,5 +110,28 @@ final class MeilisearchService
     public function getClient(): Client
     {
         return $this->client;
+    }
+
+    /**
+     * Update a single document by its ID
+     *
+     * @param  string  $indexName  The name of the index
+     * @param  string  $documentId  The ID of the document to update
+     * @param  mixed  $document  The updated document data
+     * @return array The update operation result
+     */
+    public function updateDocument(string $indexName, string $documentId, mixed $document): array
+    {
+        $index = $this->client->index($indexName);
+
+        // Convert to array if it's not already
+        $documentData = is_array($document) ? $document : (method_exists($document, 'toArray') ? $document->toArray() : (array) $document);
+
+        // Ensure the document contains the ID
+        $documentData['id'] = $documentId;
+
+        dump('Updating document: ', $documentData);
+
+        return $index->updateDocuments([$documentData]);
     }
 }

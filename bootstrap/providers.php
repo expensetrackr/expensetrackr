@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 return [
     App\Providers\AppServiceProvider::class,
-    App\Providers\CurrencyServiceProvider::class,
     App\Providers\EventServiceProvider::class,
     App\Providers\FortifyServiceProvider::class,
     App\Providers\JsonResourceProvider::class,
@@ -13,4 +12,5 @@ return [
     App\Providers\SocialstreamServiceProvider::class,
     App\Providers\TellerCertificatesServiceProvider::class,
     Spatie\WebhookClient\WebhookClientServiceProvider::class,
+    App\Providers\CurrencyServiceProvider::class,
 ];

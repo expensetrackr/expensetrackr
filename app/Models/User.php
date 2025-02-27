@@ -39,7 +39,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read int|null $accounts_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \JoelButcher\Socialstream\ConnectedAccount> $connectedAccounts
  * @property-read int|null $connected_accounts_count
- * @property-read Workspace|null $currentWorkspace
+ * @property-read Workspace $currentWorkspace
  * @property-read \Danestves\LaravelPolar\Customer|null $customer
  * @property-read string|null $get_photo_url
  * @property-read string|null $profile_photo_url

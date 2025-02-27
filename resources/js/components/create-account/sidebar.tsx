@@ -1,15 +1,24 @@
 import * as TabsPrimitives from "@radix-ui/react-tabs";
+import { type Step, type Utils } from "@stepperize/core";
+import { type Stepper } from "@stepperize/react";
 import * as React from "react";
 import ArrowLeftSIcon from "virtual:icons/ri/arrow-left-s-line";
 import ArrowRightSIcon from "virtual:icons/ri/arrow-right-s-line";
 import CloseIcon from "virtual:icons/ri/close-line";
 import HeadphoneIcon from "virtual:icons/ri/headphone-line";
 
-import * as Button from "#/components/ui/button.tsx";
-import * as VerticalStepper from "#/components/ui/vertical-stepper.tsx";
-import { utils, type useStepper } from "./stepper.ts";
+import { useCreateAccountStates } from "#/hooks/use-create-account-states.ts";
+import * as Button from "../ui/button.tsx";
+import * as VerticalStepper from "../ui/vertical-stepper.tsx";
 
-export function FlowSidebar({ stepper }: { stepper: ReturnType<typeof useStepper> }) {
+type FlowSidebarProps<Steps extends Step[]> = {
+    stepper: Stepper<Steps>;
+    utils: Utils<Steps>;
+};
+
+export function FlowSidebar<Steps extends Step[]>({ stepper, utils }: FlowSidebarProps<Steps>) {
+    const { state } = useCreateAccountStates();
+
     const getState = (index: number) => {
         if (utils.getIndex(stepper.current.id) > index) return "completed";
         if (utils.getIndex(stepper.current.id) === index) return "active";
@@ -64,9 +73,7 @@ export function FlowSidebar({ stepper }: { stepper: ReturnType<typeof useStepper
                         <div className="flex size-5 items-center justify-center rounded-full bg-primary text-label-xs text-white">
                             {utils.getIndex(stepper.current.id) + 1}
                         </div>
-                        <span className="text-paragraph-sm text-(--text-strong-950)">
-                            {stepper.all[utils.getIndex(stepper.current.id)]?.label}
-                        </span>
+                        <span className="text-paragraph-sm text-(--text-strong-950)">{stepper.current.id}</span>
                     </div>
                     <div className="text-right text-paragraph-sm text-(--text-soft-400)">
                         {utils.getIndex(stepper.current.id) + 1}/{stepper.all.length}
@@ -83,19 +90,34 @@ export function FlowSidebar({ stepper }: { stepper: ReturnType<typeof useStepper
                         <TabsPrimitives.Root value={stepper.current.id}>
                             <VerticalStepper.Root asChild className="w-[232px] shrink-0">
                                 <TabsPrimitives.List>
-                                    {stepper.all.map((step, index) => (
-                                        <React.Fragment key={step.id}>
-                                            <VerticalStepper.Item $state={getState(index)} asChild>
-                                                <TabsPrimitives.Trigger value={step.id}>
-                                                    <VerticalStepper.ItemIndicator>
-                                                        {index + 1}
-                                                    </VerticalStepper.ItemIndicator>
-                                                    {step.label}
-                                                    {stepper.current.id !== step.id ? <VerticalStepper.Arrow /> : null}
-                                                </TabsPrimitives.Trigger>
-                                            </VerticalStepper.Item>
-                                        </React.Fragment>
-                                    ))}
+                                    {stepper.all
+                                        .filter((step) => {
+                                            // if connection type is connect, remove the following steps: details, balance, complete
+                                            if (state.connection_type === "connect") {
+                                                if (
+                                                    step.id === "details" ||
+                                                    step.id === "balance" ||
+                                                    step.id === "complete"
+                                                )
+                                                    return false;
+                                            }
+                                            return true;
+                                        })
+                                        .map((step, index) => (
+                                            <React.Fragment key={step.id}>
+                                                <VerticalStepper.Item $state={getState(index)} asChild>
+                                                    <TabsPrimitives.Trigger value={step.id}>
+                                                        <VerticalStepper.ItemIndicator>
+                                                            {index + 1}
+                                                        </VerticalStepper.ItemIndicator>
+                                                        {step.label}
+                                                        {stepper.current.id !== step.id ? (
+                                                            <VerticalStepper.Arrow />
+                                                        ) : null}
+                                                    </TabsPrimitives.Trigger>
+                                                </VerticalStepper.Item>
+                                            </React.Fragment>
+                                        ))}
                                 </TabsPrimitives.List>
                             </VerticalStepper.Root>
                         </TabsPrimitives.Root>

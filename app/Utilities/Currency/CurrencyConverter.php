@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Utilities\Currency;
 
-use App\Services\CurrencyService;
+use App\Facades\Forex;
 use Filament\Forms\Set;
 
 final class CurrencyConverter
@@ -61,8 +61,8 @@ final class CurrencyConverter
     {
         $currency = currency($state);
         $defaultCurrencyCode = CurrencyAccessor::getDefaultCurrency() ?? 'USD';
-        $forexEnabled = app(CurrencyService::class)->isEnabled();
-        $exchangeRate = $forexEnabled ? app(CurrencyService::class)->getCachedExchangeRate($defaultCurrencyCode, $state) : null;
+        $forexEnabled = Forex::isEnabled();
+        $exchangeRate = $forexEnabled ? Forex::getCachedExchangeRate($defaultCurrencyCode, $state) : null;
 
         $set('name', $currency->getName());
 

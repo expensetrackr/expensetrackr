@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Console\Commands;
 
 use Akaunting\Money\Currency;
+use App\Facades\Forex;
 use App\Models\CurrencyList;
 use App\Services\CurrencyService;
 use Illuminate\Console\Command;
@@ -35,7 +36,7 @@ final class InitializeCurrenciesCommand extends Command
 
         $apiSupportedCurrencies = $this->currencyService->getSupportedCurrencies();
 
-        if (! $this->isEnabled()) {
+        if (Forex::isDisabled()) {
             $this->error('The Currency Exchange Rate feature is disabled.');
 
             return;

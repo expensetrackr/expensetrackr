@@ -15,11 +15,14 @@ final class CurrencyServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(CurrencyHandler::class, function (Application $app): CurrencyService {
-            $apiKey = type(config('services.currency_api.key'))->asString();
-            $baseUrl = type(config('services.currency_api.base_url'))->asString();
             $client = $app->make(Client::class);
 
-            return new CurrencyService($apiKey, $baseUrl, $client);
+            return new CurrencyService(client: $client);
         });
+    }
+
+    public function boot(): void
+    {
+        //
     }
 }

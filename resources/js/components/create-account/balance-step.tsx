@@ -7,19 +7,19 @@ import { CurrencyInput } from "headless-currency-input";
 import * as React from "react";
 import { type NumberFormatValues } from "react-number-format";
 
-import { Select as SelectComponent } from "#/components/form/select.tsx";
-import { TextField } from "#/components/form/text-field.tsx";
-import * as Button from "#/components/ui/button.tsx";
-import * as DatepickerPrimivites from "#/components/ui/datepicker.tsx";
-import * as Divider from "#/components/ui/divider.tsx";
-import * as Hint from "#/components/ui/hint.tsx";
-import * as InputPrimitives from "#/components/ui/input.tsx";
-import * as Label from "#/components/ui/label.tsx";
-import * as Popover from "#/components/ui/popover.tsx";
-import * as Select from "#/components/ui/select.tsx";
+import { useCreateAccountStates } from "#/hooks/use-create-account-states.ts";
 import { useTranslation } from "#/hooks/use-translation.ts";
-import { useCreateAccountWizardStore } from "#/store/create-account-wizard.ts";
-import { interestRateTypeEnum, type BalanceStepValues } from "./stepper.ts";
+import { type BalanceStepValues, interestRateTypeEnum } from "#/utils/steppers/create-account.steps.ts";
+import { Select as SelectComponent } from "../form/select.tsx";
+import { TextField } from "../form/text-field.tsx";
+import * as Button from "../ui/button.tsx";
+import * as DatepickerPrimivites from "../ui/datepicker.tsx";
+import * as Divider from "../ui/divider.tsx";
+import * as Hint from "../ui/hint.tsx";
+import * as InputPrimitives from "../ui/input.tsx";
+import * as Label from "../ui/label.tsx";
+import * as Popover from "../ui/popover.tsx";
+import * as Select from "../ui/select.tsx";
 
 type DetailsStepProps = {
     currencies: Array<string>;
@@ -27,7 +27,7 @@ type DetailsStepProps = {
 };
 
 export function BalanceStep({ currencies, fields }: DetailsStepProps) {
-    const { type } = useCreateAccountWizardStore();
+    const { state } = useCreateAccountStates();
     const currencyCodeControl = useInputControl(fields.currency_code);
     const currencyFormat = resolveCurrencyFormat("en", currencyCodeControl.value || "USD");
     const initialBalanceControl = useInputControl(fields.initial_balance);
@@ -39,7 +39,7 @@ export function BalanceStep({ currencies, fields }: DetailsStepProps) {
 
     return (
         <>
-            <input {...getInputProps(fields.type, { type: "hidden", value: false })} value={type || ""} />
+            <input {...getInputProps(fields.type, { type: "hidden", value: false })} value={state.type || ""} />
 
             <CurrencyInput
                 currency={currencyFormat?.currency || "USD"}
@@ -63,9 +63,9 @@ export function BalanceStep({ currencies, fields }: DetailsStepProps) {
                 withCurrencySymbol={false}
             />
 
-            {(type === "credit_card" || type === "loan") && <Divider.Root />}
+            {(state.type === "credit_card" || state.type === "loan") && <Divider.Root />}
 
-            {type === "credit_card" && (
+            {state.type === "credit_card" && (
                 <CreditCardFields
                     currencyFormat={currencyFormat}
                     fields={fields}
@@ -73,7 +73,7 @@ export function BalanceStep({ currencies, fields }: DetailsStepProps) {
                 />
             )}
 
-            {type === "loan" && <LoanFields fields={fields} />}
+            {state.type === "loan" && <LoanFields fields={fields} />}
         </>
     );
 }

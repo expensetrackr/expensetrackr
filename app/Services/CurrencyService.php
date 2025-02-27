@@ -10,17 +10,26 @@ use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 
-final readonly class CurrencyService implements CurrencyHandler
+final class CurrencyService implements CurrencyHandler
 {
     /**
      * Create a new instance of the Currency service.
      */
     public function __construct(
-        private ?string $apiKey,
-        private ?string $baseUrl,
-        private Client $client
+        private readonly Client $client,
+        private ?string $apiKey = null,
+        private ?string $baseUrl = null,
     ) {
-        //
+        $this->apiKey = config('services.currency_api.key');
+        $this->baseUrl = config('services.currency_api.base_url');
+    }
+
+    /**
+     * Determine if the Currency Exchange Rate feature is enabled.
+     */
+    public function isEnabled(): bool
+    {
+        return filled($this->apiKey) && filled($this->baseUrl);
     }
 
     public function getCachedExchangeRate(string $baseCurrency, string $targetCurrency): ?float
@@ -174,10 +183,5 @@ final readonly class CurrencyService implements CurrencyHandler
 
             return null;
         });
-    }
-
-    public function isEnabled(): bool
-    {
-        return filled($this->apiKey) && filled($this->baseUrl);
     }
 }

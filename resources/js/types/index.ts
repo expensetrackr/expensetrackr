@@ -117,3 +117,10 @@ export type PageProps<T extends Record<string, unknown> = Record<string, unknown
     };
     ziggy: Config & { location: string; query: Record<string, string> };
 };
+
+export type InstitutionSearchResult = {
+    id: string;
+    name: string;
+    logo: string | null;
+    provider: string;
+};

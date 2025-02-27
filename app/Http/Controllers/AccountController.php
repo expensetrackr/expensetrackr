@@ -6,9 +6,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Account;
 use App\Services\CurrencyService;
+use App\Services\MeilisearchService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -31,13 +33,33 @@ final class AccountController
     /**
      * Create a new account
      */
-    public function create(CurrencyService $currencyService): Response
+    public function create(): Response
     {
         $this->authorize('create', Account::class);
 
-        return Inertia::render('accounts/create/index', [
-            'currencies' => $currencyService->getSupportedCurrencies(),
-        ]);
+        return Inertia::render('accounts/create/page');
+    }
+
+    /**
+     * Create an account of a specific type
+     */
+    public function createAccountByType(Request $request, CurrencyService $currencyService, MeilisearchService $meilisearchService, string $connectionType): Response
+    {
+        $this->authorize('create', Account::class);
+
+        $data = [];
+
+        if ($connectionType === 'manual') {
+            $data['currencies'] = $currencyService->getSupportedCurrencies();
+        }
+
+        if ($connectionType === 'connect') {
+            $data['institutions'] = $meilisearchService->search('institutions', $request->input('q'), [
+                'limit' => 48,
+            ]);
+        }
+
+        return Inertia::render("accounts/create/{$connectionType}/page", $data);
     }
 
     /**

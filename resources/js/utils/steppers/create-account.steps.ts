@@ -2,12 +2,13 @@ import { defineStepper } from "@stepperize/react";
 import { z } from "zod";
 
 import { accountSchema, accountTypeEnum } from "#/schemas/account.ts";
-import { zodDecimal } from "#/utils/zod-decimal.ts";
+import { zodDecimal } from "../zod-decimal.ts";
 
-export const typeStepSchema = z.object({
-    type: accountTypeEnum,
-});
-export const detailsSchema = accountSchema.pick({ name: true, description: true, subtype: true }).merge(typeStepSchema);
+export const detailsSchema = accountSchema.pick({ name: true, description: true, subtype: true }).merge(
+    z.object({
+        type: accountTypeEnum,
+    }),
+);
 
 export const creditCardDetailsSchema = z.object({
     available_balance: zodDecimal().wholeNumber(10),
@@ -49,12 +50,18 @@ export const balanceSchema = z.discriminatedUnion("type", [
 
 export const createAccountSchema = balanceSchema.and(detailsSchema);
 
-export type DetailsStepValues = z.infer<typeof detailsSchema>;
-export type BalanceStepValues = z.infer<typeof balanceSchema>;
+export const createAccount = defineStepper(
+    { id: "type", label: "Type" },
+    { id: "connection_type", label: "Connection" },
+);
 
-export const { useStepper, Scoped, utils } = defineStepper(
-    { id: "type", label: "Type selection", schema: typeStepSchema },
+export const createManualAccount = defineStepper(
     { id: "details", label: "Details", schema: detailsSchema },
     { id: "balance", label: "Balance & Currency", schema: balanceSchema },
     { id: "complete", label: "Account Summary", schema: createAccountSchema },
 );
+
+export const createConnectAccount = defineStepper({ id: "bank-selection", label: "Bank selection" });
+
+export type DetailsStepValues = z.infer<typeof detailsSchema>;
+export type BalanceStepValues = z.infer<typeof balanceSchema>;

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Utilities\Currency;
 
 use Akaunting\Money\Currency as ISOCurrencies;
+use App\Facades\Forex;
 use App\Models\Currency;
-use App\Services\CurrencyService;
 use Illuminate\Support\Facades\Cache;
 
 final class CurrencyAccessor
@@ -18,7 +18,7 @@ final class CurrencyAccessor
      */
     public static function getForexSupportedCurrencies(): ?array
     {
-        return app(CurrencyService::class)->getSupportedCurrencies();
+        return Forex::getSupportedCurrencies();
     }
 
     /**
