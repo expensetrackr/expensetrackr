@@ -3,13 +3,13 @@ import { toast } from "sonner";
 
 import { HeaderMobile } from "#/components/header-mobile.tsx";
 import { Sidebar } from "#/components/sidebar.tsx";
-import { type InertiaSharedProps } from "#/types/index.ts";
+import { type PageProps } from "#/types/globals.js";
 import { SettingsVerticalMenu } from "./partials/settings-menu.tsx";
 
 export function SettingsLayout({
     children,
     ...props
-}: InertiaSharedProps<{
+}: PageProps<{
     children: React.ReactNode;
 }>) {
     React.useEffect(() => {

@@ -1,4 +1,4 @@
-import { router, usePage } from "@inertiajs/react";
+import { router } from "@inertiajs/react";
 import ArrowRightSIcon from "virtual:icons/ri/arrow-right-s-line";
 import EqualizerIcon from "virtual:icons/ri/equalizer-line";
 import PlanetIcon from "virtual:icons/ri/planet-line";
@@ -9,10 +9,12 @@ import { Link } from "#/components/link.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
 import * as TabMenuHorizontal from "#/components/ui/tab-menu-horizontal.tsx";
 import * as TabMenuVertical from "#/components/ui/tab-menu-vertical.tsx";
-import { type InertiaSharedProps } from "#/types/index.ts";
+import { useCurrentWorkspace } from "#/hooks/use-current-workspace.ts";
+import { usePageProps } from "#/hooks/use-page-props.ts";
 
 export function SettingsVerticalMenu() {
-    const { url, ...rest } = usePage<InertiaSharedProps>();
+    const { url } = usePageProps();
+    const currentWorkspace = useCurrentWorkspace();
 
     const links = [
         {
@@ -23,7 +25,7 @@ export function SettingsVerticalMenu() {
         {
             label: "Workspace",
             icon: PlanetIcon,
-            href: `/workspaces/${rest.props.auth.user?.current_workspace_id}`,
+            href: `/workspaces/${currentWorkspace.id}`,
         },
         {
             label: "Privacy & Security",

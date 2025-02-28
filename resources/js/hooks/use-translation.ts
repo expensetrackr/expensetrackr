@@ -1,9 +1,7 @@
-import { usePage } from "@inertiajs/react";
-
-import { type InertiaSharedProps } from "#/types/index.ts";
+import { usePageProps } from "./use-page-props.ts";
 
 export function useTranslation() {
-    const pageProps = usePage<InertiaSharedProps>().props;
+    const pageProps = usePageProps().props;
     const translations = pageProps.translations;
 
     return {

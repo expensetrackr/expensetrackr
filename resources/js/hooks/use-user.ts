@@ -1,9 +1,8 @@
-import { usePage } from "@inertiajs/react";
-
-import { type PageProps } from "#/types/index.ts";
+import { type PageProps } from "#/types/globals";
+import { usePageProps } from "./use-page-props.ts";
 
 export function useUser() {
-    const page = usePage<PageProps>();
+    const { auth } = usePageProps<PageProps>().props;
 
-    return page.props.auth.user;
+    return auth?.user as unknown as App.Data.UserData;
 }

@@ -1,7 +1,7 @@
 import { Head } from "@inertiajs/react";
 
 import { AppLayout } from "#/layouts/app-layout.tsx";
-import { type InertiaSharedProps } from "#/types/index.ts";
+import { type PageProps } from "#/types/globals.js";
 
 export default function Dashboard() {
     return (
@@ -19,6 +19,4 @@ export default function Dashboard() {
     );
 }
 
-Dashboard.layout = (page: React.ReactNode & { props: InertiaSharedProps }) => (
-    <AppLayout {...page.props}>{page}</AppLayout>
-);
+Dashboard.layout = (page: React.ReactNode & { props: PageProps }) => <AppLayout {...page.props}>{page}</AppLayout>;

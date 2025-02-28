@@ -19,8 +19,8 @@ final class TellerCertificatesServiceProvider extends ServiceProvider
     private function setupTellerCertificates(): void
     {
         // Check if we have the base64 encoded certs in environment
-        $certBase64 = env('TELLER_CERT_BASE64');
-        $keyBase64 = env('TELLER_KEY_BASE64');
+        $certBase64 = config('services.teller.cert_base64');
+        $keyBase64 = config('services.teller.key_base64');
 
         if ($certBase64 && $keyBase64) {
             // Define the paths from your config
@@ -28,18 +28,30 @@ final class TellerCertificatesServiceProvider extends ServiceProvider
             $keyPath = config('teller.KEY_PATH');
 
             // Create directory if it doesn't exist
-            $directory = dirname((string) $certPath);
+            $certPathString = is_string($certPath) ? $certPath : '';
+            $directory = dirname($certPathString);
+
             if (! is_dir($directory)) {
                 mkdir($directory, 0755, true);
             }
 
             // Write decoded content to the files
-            file_put_contents($certPath, base64_decode((string) $certBase64));
-            file_put_contents($keyPath, base64_decode((string) $keyBase64));
+            if (is_string($certPath) && is_string($certBase64)) {
+                file_put_contents($certPath, base64_decode($certBase64));
+            }
+
+            if (is_string($keyPath) && is_string($keyBase64)) {
+                file_put_contents($keyPath, base64_decode($keyBase64));
+            }
 
             // Set proper permissions
-            chmod($keyPath, 0600); // Private key should be more restricted
-            chmod($certPath, 0644);
+            if (is_string($keyPath)) {
+                chmod($keyPath, 0600); // Private key should be more restricted
+            }
+
+            if (is_string($certPath)) {
+                chmod($certPath, 0644);
+            }
         }
     }
 }

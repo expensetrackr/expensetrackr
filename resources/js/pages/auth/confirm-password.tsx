@@ -6,7 +6,7 @@ import * as FancyButton from "#/components/ui/fancy-button.tsx";
 import { useTranslation } from "#/hooks/use-translation.ts";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";
 import { AuthCard } from "#/layouts/partials/auth-card.tsx";
-import { type InertiaSharedProps } from "#/types/index.ts";
+import { type PageProps } from "#/types/globals.js";
 
 export default function ConfirmPasswordPage() {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -48,7 +48,7 @@ export default function ConfirmPasswordPage() {
     );
 }
 
-ConfirmPasswordPage.layout = (page: React.ReactNode & { props: InertiaSharedProps }) => (
+ConfirmPasswordPage.layout = (page: React.ReactNode & { props: PageProps }) => (
     <AuthLayout {...page.props}>
         <Head title="Confirm Password" />
 

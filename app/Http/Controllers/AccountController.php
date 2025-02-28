@@ -53,8 +53,14 @@ final class AccountController
             $data['currencies'] = $currencyService->getSupportedCurrencies();
         }
 
+        /** @var array{q: ?string} $validated */
+        $validated = $request->validate([
+            'q' => ['nullable', 'string', 'max:255'],
+        ]);
+
         if ($connectionType === 'connect') {
-            $data['institutions'] = $meilisearchService->search('institutions', $request->input('q'), [
+            $query = $validated['q'] ?? '';
+            $data['institutions'] = $meilisearchService->search('institutions', $query, [
                 'limit' => 48,
             ]);
         }

@@ -16,7 +16,7 @@ import * as LinkButton from "#/components/ui/link-button.tsx";
 import { useTranslation } from "#/hooks/use-translation.ts";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";
 import { AuthCard } from "#/layouts/partials/auth-card.tsx";
-import { type InertiaSharedProps } from "#/types/index.ts";
+import { type PageProps } from "#/types/globals.js";
 
 type LoginForm = {
     email: string;
@@ -28,7 +28,7 @@ export default function LoginPage({
     status,
     canResetPassword,
     socialstream,
-}: InertiaSharedProps<{ status?: string; canResetPassword: boolean }>) {
+}: PageProps<{ status?: string; canResetPassword: boolean }>) {
     const { data, setData, post, processing, errors, reset } = useForm<LoginForm>({
         email: "",
         password: "",
@@ -110,7 +110,7 @@ export default function LoginPage({
     );
 }
 
-LoginPage.layout = (page: React.ReactNode & { props: InertiaSharedProps }) => (
+LoginPage.layout = (page: React.ReactNode & { props: PageProps }) => (
     <AuthLayout {...page.props}>
         <Head title="Log in" />
 

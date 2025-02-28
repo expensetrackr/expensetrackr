@@ -1,15 +1,14 @@
-import { useForm, usePage } from "@inertiajs/react";
+import { useForm } from "@inertiajs/react";
 import { useDebounce } from "@uidotdev/usehooks";
 import * as React from "react";
 import { toast } from "sonner";
 
 import { TextField } from "#/components/form/text-field.tsx";
 import { FormSection } from "#/components/form-section.tsx";
-import { type InertiaSharedProps } from "#/types/index.ts";
+import { useUser } from "#/hooks/use-user.ts";
 
 export function UpdateEmailForm() {
-    const page = usePage<InertiaSharedProps>();
-    const user = page.props.auth.user;
+    const user = useUser();
     const { data, setData, errors, ...form } = useForm({
         _method: "PUT",
         name: user?.name,

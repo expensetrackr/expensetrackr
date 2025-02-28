@@ -10,11 +10,21 @@ import { TextField } from "#/components/form/text-field.tsx";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "#/components/table.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import * as Modal from "#/components/ui/modal.tsx";
-import { type Session } from "#/types/index.ts";
 import { Action } from "#/utils/action.ts";
 
 interface LogoutOtherBrowserSessionsFormProps {
-    sessions: Session[];
+    sessions: Array<{
+        ip_address: string;
+        is_current_device: boolean;
+        device: {
+            browser: string;
+            desktop: boolean;
+            mobile: boolean;
+            tablet: boolean;
+            platform: string;
+        };
+        last_active: string;
+    }>;
 }
 
 export function LogoutOtherBrowserSessionsForm({ sessions }: LogoutOtherBrowserSessionsFormProps) {

@@ -1,14 +1,12 @@
 import GoogleIcon from "virtual:icons/logos/google-icon";
 
-import { type ConnectedAccountType, type Provider } from "#/types/index.ts";
-
 type ConnectedAccountProps = {
-    provider: Provider;
-    connectedAccount?: ConnectedAccountType;
+    provider: App.Data.Socialstream.ProviderData;
+    connectedAccount?: App.Data.Socialstream.ConnectedAccount;
     children?: React.ReactNode;
 };
 
-const providerIcons = {
+const providerIcons: Record<App.Enums.Socialstream.Provider, React.ReactNode> = {
     google: <GoogleIcon className="size-7" />,
 };
 

@@ -131,7 +131,9 @@ final class InstitutionsGetCommand extends Command
             // Dispatch all batches to jobs
             $batchNumber = 1;
             foreach ($batches as $batch) {
-                ProcessInstitutionLogos::dispatch($batch->toArray());
+                /** @var array<int, array<string, mixed>> $typedBatch */
+                $typedBatch = $batch->toArray();
+                ProcessInstitutionLogos::dispatch($typedBatch);
 
                 $this->info("Dispatched batch {$batchNumber} of {$batchCount} with ".count($batch).' institutions');
 

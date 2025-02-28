@@ -8,22 +8,21 @@ import { ActionSection } from "#/components/action-section.tsx";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "#/components/table.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import * as Modal from "#/components/ui/modal.tsx";
-import { type User, type Workspace, type WorkspaceInvitation, type WorkspacePermissions } from "#/types/index.ts";
 import { Action, getAction } from "#/utils/action.ts";
 
-interface UserMembership extends User {
+interface UserMembership extends App.Data.UserData {
     membership: {
         role: string;
     };
 }
 
 interface WorkspaceMemberInvitationsProps {
-    workspace: Workspace & {
-        owner: User;
-        invitations: WorkspaceInvitation[];
+    workspace: App.Data.WorkspaceData & {
+        owner: App.Data.UserData;
+        invitations: App.Data.WorkspaceInvitationData[];
         members: UserMembership[];
     };
-    permissions: WorkspacePermissions;
+    permissions: App.Data.WorkspacePermissionsData;
 }
 
 export function WorkspaceMemberInvitations({ workspace, permissions }: WorkspaceMemberInvitationsProps) {
@@ -72,11 +71,11 @@ export function WorkspaceMemberInvitations({ workspace, permissions }: Workspace
     );
 }
 
-function CancelInvitation({ invitation }: { invitation: WorkspaceInvitation }) {
+function CancelInvitation({ invitation }: { invitation: App.Data.WorkspaceInvitationData }) {
     const [action, setAction] = useQueryState("action", parseAsStringEnum<Action>(Object.values(Action)));
     const [isCancelling, setCancelling] = React.useState(false);
 
-    function cancelWorkspaceInvitation(invitation: WorkspaceInvitation) {
+    function cancelWorkspaceInvitation(invitation: App.Data.WorkspaceInvitationData) {
         setCancelling(true);
 
         router.delete(route("workspace-invitations.destroy", [invitation.id]), {

@@ -8,7 +8,7 @@ import * as FancyButton from "#/components/ui/fancy-button.tsx";
 import { useTranslation } from "#/hooks/use-translation.ts";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";
 import { AuthCard } from "#/layouts/partials/auth-card.tsx";
-import { type InertiaSharedProps } from "#/types/index.ts";
+import { type PageProps } from "#/types/globals.js";
 
 export default function ForgotPasswordPage({ status }: { status?: string }) {
     const { data, setData, post, processing, errors } = useForm({
@@ -56,7 +56,7 @@ export default function ForgotPasswordPage({ status }: { status?: string }) {
     );
 }
 
-ForgotPasswordPage.layout = (page: React.ReactNode & { props: InertiaSharedProps }) => (
+ForgotPasswordPage.layout = (page: React.ReactNode & { props: PageProps }) => (
     <AuthLayout {...page.props}>
         <Head title="Forgot Password" />
 

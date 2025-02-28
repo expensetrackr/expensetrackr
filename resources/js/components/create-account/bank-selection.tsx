@@ -4,7 +4,6 @@ import { useQueryState } from "nuqs";
 import KeyCmd16Icon from "virtual:icons/qlementine-icons/key-cmd-16";
 import Search2Icon from "virtual:icons/ri/search-2-line";
 
-import { type InstitutionSearchResult } from "#/types/index.ts";
 import { InstitutionInfo } from "../institution-info.tsx";
 import { PlaceholderLogo } from "../placeholder-logo.tsx";
 import * as Avatar from "../ui/avatar.tsx";
@@ -15,7 +14,7 @@ import * as Kbd from "../ui/kbd.tsx";
 import * as Label from "../ui/label.tsx";
 
 type BankSelectionProps = {
-    institutions: Array<InstitutionSearchResult>;
+    institutions: Array<App.Data.SearchableInstitutionData>;
 };
 
 export function BankSelection({ institutions }: BankSelectionProps) {

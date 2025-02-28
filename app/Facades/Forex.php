@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Facade;
 /**
  * @method static bool isEnabled()
  * @method static array<string>|null getSupportedCurrencies()
- * @method static array<string, float>|null getCachedExchangeRates(string $baseCurrency, array $targetCurrencies)
+ * @method static array<string, float>|null getCachedExchangeRates(string $baseCurrency, array<string> $targetCurrencies)
  * @method static float|null getCachedExchangeRate(string $baseCurrency, string $targetCurrency)
  *
  * @see CurrencyHandler

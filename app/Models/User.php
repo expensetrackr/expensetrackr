@@ -149,6 +149,7 @@ final class User extends Authenticatable
             'password' => 'hashed',
             'email_verified_at' => 'datetime',
             'two_factor_confirmed_at' => 'datetime',
+            'profile_photo_url' => 'string',
         ];
     }
 }

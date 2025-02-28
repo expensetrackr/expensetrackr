@@ -6,13 +6,12 @@ import { route } from "ziggy-js";
 
 import { TextField } from "#/components/form/text-field.tsx";
 import { FormSection } from "#/components/form-section.tsx";
-import { type User, type Workspace, type WorkspacePermissions } from "#/types/index.ts";
 
 interface UpdateWorkspaceNameFormProps {
-    workspace: Workspace & {
-        owner: User;
+    workspace: App.Data.WorkspaceData & {
+        owner: App.Data.UserData;
     };
-    permissions: WorkspacePermissions;
+    permissions: App.Data.WorkspacePermissionsData;
 }
 
 export function UpdateWorkspaceNameForm({ workspace, permissions }: UpdateWorkspaceNameFormProps) {

@@ -16,30 +16,23 @@ import * as Button from "#/components/ui/button.tsx";
 import * as Dropdown from "#/components/ui/dropdown.tsx";
 import * as Modal from "#/components/ui/modal.tsx";
 import { useUser } from "#/hooks/use-user.ts";
-import {
-    type Role,
-    type User,
-    type Workspace,
-    type WorkspaceInvitation,
-    type WorkspacePermissions,
-} from "#/types/index.ts";
 import { Action, getAction } from "#/utils/action.ts";
 import { AddWorkspaceMemberForm } from "./add-workspace-member-form.tsx";
 
-interface UserMembership extends User {
+interface UserMembership extends App.Data.UserData {
     membership: {
         role: string;
     };
 }
 
 interface WorkspaceMemberManagerProps {
-    workspace: Workspace & {
-        owner: User;
-        invitations: WorkspaceInvitation[];
+    workspace: App.Data.WorkspaceData & {
+        owner: App.Data.UserData;
+        invitations: App.Data.WorkspaceInvitationData[];
         members: UserMembership[];
     };
-    availableRoles: Role[];
-    permissions: WorkspacePermissions;
+    availableRoles: Array<{ name: string }>;
+    permissions: App.Data.WorkspacePermissionsData;
 }
 
 export function WorkspaceMemberManager({ workspace, availableRoles, permissions }: WorkspaceMemberManagerProps) {
@@ -74,7 +67,7 @@ export function WorkspaceMemberManager({ workspace, availableRoles, permissions 
                                 <TableCell>
                                     <div className="inline-flex items-center gap-3">
                                         <Avatar.Root $size="32" className="size-8">
-                                            <Avatar.Image alt={user.name} src={user.profile_photo_url} />
+                                            <Avatar.Image alt={user.name} src={user.profile_photo_url ?? undefined} />
                                         </Avatar.Root>
                                         <p className="text-(--text-strong-950)">{user.name}</p>
                                     </div>
@@ -180,9 +173,9 @@ function ManageRoleDialog({
     user,
     availableRoles,
 }: {
-    workspace: Workspace;
+    workspace: App.Data.WorkspaceData;
     user: UserMembership;
-    availableRoles: Role[];
+    availableRoles: Array<{ name: string }>;
 }) {
     const [action, setAction] = useQueryState("action", parseAsStringEnum<Action>(Object.values(Action)));
     const form = useForm({
@@ -269,8 +262,8 @@ function RemoveMemberDialog({
     dialogDescription = "Are you sure you would like to remove this person from the workspace?",
     dialogSubmitLabel = "Yes, remove it",
 }: {
-    workspace: Workspace;
-    user: UserMembership | User;
+    workspace: App.Data.WorkspaceData;
+    user: UserMembership | App.Data.UserData;
     dialogTitle?: string;
     dialogDescription?: string;
     dialogSubmitLabel?: string;

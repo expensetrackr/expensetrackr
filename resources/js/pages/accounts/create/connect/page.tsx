@@ -7,11 +7,10 @@ import { BankSelection } from "#/components/create-account/bank-selection.tsx";
 import { Card } from "#/components/create-account/card.tsx";
 import { FlowSidebar } from "#/components/create-account/sidebar.tsx";
 import * as Button from "#/components/ui/button.tsx";
-import { type InstitutionSearchResult } from "#/types/index.ts";
 import { createConnectAccount } from "#/utils/steppers/create-account.steps.ts";
 
 type CreateAccountConnectPageProps = {
-    institutions: Array<InstitutionSearchResult>;
+    institutions: Array<App.Data.SearchableInstitutionData>;
 };
 
 export default function CreateAccountConnectPage({ institutions }: CreateAccountConnectPageProps) {

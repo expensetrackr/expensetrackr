@@ -1,4 +1,4 @@
-import { router, useForm, usePage } from "@inertiajs/react";
+import { router, useForm } from "@inertiajs/react";
 import * as React from "react";
 import DeleteBinIcon from "virtual:icons/ri/delete-bin-line";
 import ImageEditIcon from "virtual:icons/ri/image-edit-line";
@@ -9,14 +9,13 @@ import * as Avatar from "#/components/ui/avatar.tsx";
 import * as Dropdown from "#/components/ui/dropdown.tsx";
 import * as Hint from "#/components/ui/hint.tsx";
 import * as Label from "#/components/ui/label.tsx";
-import { type InertiaSharedProps } from "#/types/index.ts";
+import { useUser } from "#/hooks/use-user.ts";
 
 export function UpdateProfilePictureForm() {
     const [photoPreview, setPhotoPreview] = React.useState<string | null>(null);
     const photoRef = React.useRef<HTMLInputElement>(null);
     const formRef = React.useRef<HTMLFormElement>(null);
-    const page = usePage<InertiaSharedProps>();
-    const user = page.props.auth.user;
+    const user = useUser();
     const form = useForm({
         _method: "PUT",
         photo: null as File | null,
@@ -86,7 +85,10 @@ export function UpdateProfilePictureForm() {
                         <div className="flex items-center gap-5">
                             <div className="relative size-40">
                                 <Avatar.Root>
-                                    <Avatar.Image alt={user?.name} src={photoPreview || user?.profile_photo_url} />
+                                    <Avatar.Image
+                                        alt={user?.name}
+                                        src={(photoPreview || user?.profile_photo_url) ?? undefined}
+                                    />
                                 </Avatar.Root>
 
                                 <Dropdown.Root>

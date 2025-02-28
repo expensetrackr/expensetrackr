@@ -5,38 +5,26 @@ import { Header } from "#/components/header.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
 import { SettingsLayout } from "#/layouts/settings-layout.tsx";
 import { WorkspaceMemberInvitations } from "#/pages/workspaces/partials/workspace-member-invitations.tsx";
-import {
-    type InertiaSharedProps,
-    type Role,
-    type User,
-    type Workspace,
-    type WorkspaceInvitation,
-    type WorkspacePermissions,
-} from "#/types/index.ts";
 import { UpdateWorkspaceNameForm } from "./partials/update-workspace-name-form.tsx";
 import { WorkspaceMemberManager } from "./partials/workspace-member-manager.tsx";
 
-interface UserMembership extends User {
+interface UserMembership extends App.Data.UserData {
     membership: {
         role: string;
     };
 }
 
 type WorkspacesShowProps = {
-    workspace: Workspace & {
-        owner: User;
-        invitations: WorkspaceInvitation[];
+    workspace: App.Data.WorkspaceData & {
+        owner: App.Data.UserData;
+        invitations: App.Data.WorkspaceInvitationData[];
         members: UserMembership[];
     };
-    availableRoles: Role[];
-    permissions: WorkspacePermissions;
+    availableRoles: Array<{ name: string }>;
+    permissions: App.Data.WorkspacePermissionsData;
 };
 
-export default function WorkspacesShow({
-    workspace,
-    availableRoles,
-    permissions,
-}: InertiaSharedProps<WorkspacesShowProps>) {
+export default function WorkspacesShow({ workspace, availableRoles, permissions }: WorkspacesShowProps) {
     return (
         <>
             <div className="px-4 lg:px-8">
@@ -62,14 +50,14 @@ export default function WorkspacesShow({
     );
 }
 
-WorkspacesShow.layout = (page: React.ReactNode & { props: InertiaSharedProps<WorkspacesShowProps> }) => (
+WorkspacesShow.layout = (page: React.ReactNode & { props: App.Data.SharedInertiaData }) => (
     <SettingsLayout {...page.props}>
         <Head title="Workspace settings" />
 
         <Header
             description="Customize and edit essential workspace details."
             icon={
-                <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-(--bg-white-0) ring-1 shadow-xs ring-(--stroke-soft-200) ring-inset">
+                <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-(--bg-white-0) shadow-xs ring-1 ring-(--stroke-soft-200) ring-inset">
                     <PlanetIcon className="size-6 text-(--text-sub-600)" />
                 </div>
             }

@@ -20,8 +20,8 @@ final class CurrencyService implements CurrencyHandler
         private ?string $apiKey = null,
         private ?string $baseUrl = null,
     ) {
-        $this->apiKey = config('services.currency_api.key');
-        $this->baseUrl = config('services.currency_api.base_url');
+        $this->apiKey = type(config('services.currency_api.key'))->asString();
+        $this->baseUrl = type(config('services.currency_api.base_url'))->asString();
     }
 
     /**

@@ -1,18 +1,23 @@
-import { router, usePage } from "@inertiajs/react";
+import { router } from "@inertiajs/react";
 import AddIcon from "virtual:icons/ri/add-line";
 import CheckIcon from "virtual:icons/ri/check-line";
 import ExpandUpDownIcon from "virtual:icons/ri/expand-up-down-line";
 import Settings2Icon from "virtual:icons/ri/settings-2-line";
 
-import { type Workspace, type InertiaSharedProps, type User } from "#/types/index.ts";
+import { useCurrentWorkspace } from "#/hooks/use-current-workspace.ts";
+import { useUser } from "#/hooks/use-user.ts";
+import { useWorkspacesPermissions } from "#/hooks/use-workspaces-permissions.ts";
+import { useWorkspaces } from "#/hooks/use-workspaces.ts";
 import { cnMerge } from "#/utils/cn.ts";
 import { Link } from "./link.tsx";
 import * as Avatar from "./ui/avatar.tsx";
 import * as Divider from "./ui/divider.tsx";
 import * as Dropdown from "./ui/dropdown.tsx";
 
-function WorkspaceItem({ user, workspace }: { user: User; workspace: Workspace }) {
-    function switchToWorkspace(workspace: Workspace) {
+function WorkspaceItem({ workspace }: { workspace: App.Data.WorkspaceData }) {
+    const currentWorkspace = useCurrentWorkspace();
+
+    function switchToWorkspace(workspace: App.Data.WorkspaceData) {
         router.put(
             route("current-workspace.update"),
             {
@@ -30,7 +35,7 @@ function WorkspaceItem({ user, workspace }: { user: User; workspace: Workspace }
             onClick={() => switchToWorkspace(workspace)}
             type="button"
         >
-            <div className="flex size-10 items-center justify-center rounded-full ring-1 shadow-xs ring-(--stroke-soft-200) ring-inset">
+            <div className="flex size-10 items-center justify-center rounded-full shadow-xs ring-1 ring-(--stroke-soft-200) ring-inset">
                 <Avatar.Root $size="24">
                     {workspace.name
                         .split(" ")
@@ -43,15 +48,16 @@ function WorkspaceItem({ user, workspace }: { user: User; workspace: Workspace }
             <div className="flex-1 space-y-1">
                 <div className="text-label-sm">{workspace.name}</div>
             </div>
-            {workspace.id === user.current_workspace_id ? <CheckIcon className="size-5 text-(--text-sub-600)" /> : null}
+            {workspace.id === currentWorkspace.id ? <CheckIcon className="size-5 text-(--text-sub-600)" /> : null}
         </button>
     );
 }
 
 export function WorkspaceSwitch({ className }: { className?: string }) {
-    const { auth, workspaces } = usePage<InertiaSharedProps>().props;
-    const user = auth.user;
-    const workspace = user?.current_workspace;
+    const user = useUser();
+    const currentWorkspace = useCurrentWorkspace();
+    const workspaces = useWorkspaces();
+    const permissions = useWorkspacesPermissions();
 
     return (
         <Dropdown.Root>
@@ -62,7 +68,7 @@ export function WorkspaceSwitch({ className }: { className?: string }) {
                 )}
             >
                 <Avatar.Root $size="40">
-                    {workspace?.name
+                    {currentWorkspace?.name
                         .split(" ")
                         .slice(0, 2)
                         .map((word) => word[0])
@@ -71,7 +77,7 @@ export function WorkspaceSwitch({ className }: { className?: string }) {
                 </Avatar.Root>
                 <div className="flex w-[172px] shrink-0 items-center gap-3" data-hide-collapsed>
                     <div className="flex-1 space-y-1">
-                        <div className="text-label-sm">{user?.current_workspace.name}</div>
+                        <div className="text-label-sm">{currentWorkspace?.name}</div>
                     </div>
                     <div className="flex size-6 items-center justify-center rounded-6 border border-(--stroke-soft-200) bg-(--bg-white-0) shadow-xs">
                         <ExpandUpDownIcon className="size-5 text-(--text-sub-600)" />
@@ -80,13 +86,13 @@ export function WorkspaceSwitch({ className }: { className?: string }) {
             </Dropdown.Trigger>
 
             <Dropdown.Content align="start" side="right" sideOffset={24}>
-                {user && workspaces.hasWorkspaceFeatures ? (
+                {user && permissions.hasWorkspaceFeatures ? (
                     <>
                         <Dropdown.Group>
                             <Dropdown.Item asChild>
                                 <Link
                                     href={route("workspaces.show", {
-                                        workspace: user.current_workspace_id,
+                                        workspace: currentWorkspace.id,
                                     })}
                                 >
                                     <Dropdown.ItemIcon as={Settings2Icon} />
@@ -99,17 +105,17 @@ export function WorkspaceSwitch({ className }: { className?: string }) {
                     </>
                 ) : null}
 
-                {user?.all_workspaces && user.all_workspaces?.length > 1 ? (
+                {workspaces.length > 1 ? (
                     <>
-                        {user.all_workspaces.map((workspace) => (
-                            <WorkspaceItem key={workspace.id} user={user} workspace={workspace} />
+                        {workspaces.map((workspace) => (
+                            <WorkspaceItem key={workspace.id} workspace={workspace} />
                         ))}
 
                         <Divider.Root $type="line-spacing" />
                     </>
                 ) : null}
 
-                {workspaces.canCreateWorkspaces ? (
+                {permissions.canCreateWorkspaces ? (
                     <Dropdown.Group>
                         <Dropdown.Item asChild>
                             <Link href={route("workspaces.create")}>

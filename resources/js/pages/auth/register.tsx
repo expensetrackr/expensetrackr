@@ -10,7 +10,7 @@ import * as LinkButton from "#/components/ui/link-button.tsx";
 import { useTranslation } from "#/hooks/use-translation.ts";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";
 import { AuthCard } from "#/layouts/partials/auth-card.tsx";
-import { type InertiaSharedProps } from "#/types/index.ts";
+import { type PageProps } from "#/types/globals.js";
 
 type RegisterForm = {
     name: string;
@@ -21,7 +21,7 @@ type RegisterForm = {
     remember: boolean;
 };
 
-export default function RegisterPage({ socialstream }: InertiaSharedProps) {
+export default function RegisterPage({ socialstream }: PageProps) {
     const { data, setData, post, processing, errors, reset } = useForm<RegisterForm>({
         name: "",
         email: "",
@@ -137,7 +137,7 @@ export default function RegisterPage({ socialstream }: InertiaSharedProps) {
     );
 }
 
-RegisterPage.layout = (page: React.ReactNode & { props: InertiaSharedProps }) => (
+RegisterPage.layout = (page: React.ReactNode & { props: PageProps }) => (
     <AuthLayout {...page.props}>
         <Head title="Register" />
 

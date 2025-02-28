@@ -4,12 +4,20 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
+use App\Data\Common\ToastData;
+use App\Data\SharedInertiaData;
+use App\Data\UserData;
+use App\Data\WorkspaceData;
+use App\Data\WorkspacesPermissionsData;
 use App\Enums\Language;
 use App\Http\Resources\LanguageResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
 use Inertia\Middleware;
+use JoelButcher\Socialstream\ConnectedAccount;
+use JoelButcher\Socialstream\Socialstream;
+use stdClass;
 use Tighten\Ziggy\Ziggy;
 
 final class HandleInertiaRequests extends Middleware
@@ -38,45 +46,93 @@ final class HandleInertiaRequests extends Middleware
      *
      * @see https://inertiajs.com/shared-data
      *
-     * @return array<array-key, mixed>
+     * @return array<mixed>
      */
     public function share(Request $request): array
     {
-        return array_merge(parent::share($request), [
-            'ziggy' => fn () => [
-                ...(new Ziggy)->toArray(),
-                'location' => $request->url(),
-                'query' => $request->query(),
-            ],
-            'toast' => collect(Arr::only($request->session()->all(), ['error', 'warning', 'success', 'info']))
-                ->mapWithKeys(fn ($notification, $key): array => ['type' => $key, 'message' => $notification]),
-            'language' => session()->get('language', app()->getLocale()),
-            'languages' => LanguageResource::collection(Language::cases()),
-            'translations' => function () {
-                $locale = app()->getLocale();
-                $files = File::allFiles(base_path('lang/'.$locale));
+        return SharedInertiaData::from(
+            array_merge(
+                parent::share($request),
+                $this->authData($request),
+                $this->workspacesData($request),
+                [
+                    'ziggy' => (new Ziggy)->toArray(),
+                    'socialstream' => [
+                        'show' => Socialstream::show(),
+                        'prompt' => config('socialstream.prompt', 'Or Login Via'),
+                        'providers' => Socialstream::providers(),
+                        'hasPassword' => $request->user()?->getAuthPassword() !== null,
+                        'connectedAccounts' => $request->user() ? $request->user()->connectedAccounts
+                            ->map(fn (ConnectedAccount $account): stdClass => (object) $account->getSharedInertiaData()) : [],
+                    ],
+                    'toast' => ToastData::fromSession($request->session()->all()),
+                    'language' => session()->get('language', app()->getLocale()),
+                    'languages' => LanguageResource::collection(Language::cases())->toArray($request),
+                    'translations' => function () {
+                        $locale = app()->getLocale();
+                        $files = File::allFiles(base_path("lang/$locale"));
 
-                // Get last modified time of all translation files
-                $lastModified = collect($files)->max(fn ($file) => $file->getMTime());
+                        // Get last modified time of all translation files
+                        $lastModified = collect($files)->max(fn ($file) => $file->getMTime());
 
-                $cacheKey = 'translations.'.$locale;
-                $lastModifiedKey = 'translations_modified.'.$locale;
+                        $cacheKey = "translations.$locale";
+                        $lastModifiedKey = "translations_modified.$locale";
 
-                // If cached last modified time differs, invalidate cache
-                if (cache()->get($lastModifiedKey) !== $lastModified) {
-                    cache()->forget($cacheKey);
-                }
+                        // If cached last modified time differs, invalidate cache
+                        if (cache()->get($lastModifiedKey) !== $lastModified) {
+                            cache()->forget($cacheKey);
+                        }
 
-                return cache()->remember($cacheKey, now()->addYear(), function () use ($files, $lastModified, $lastModifiedKey) {
-                    cache()->forever($lastModifiedKey, $lastModified);
+                        return cache()->remember($cacheKey, now()->addYear(), function () use ($files, $lastModified, $lastModifiedKey) {
+                            cache()->forever($lastModifiedKey, $lastModified);
 
-                    return collect($files)->flatMap(function ($file) {
-                        $fileContents = File::getRequire($file->getRealPath());
+                            return collect($files)->flatMap(function ($file) {
+                                $fileContents = File::getRequire($file->getRealPath());
 
-                        return is_array($fileContents) ? Arr::dot($fileContents, $file->getBasename('.'.$file->getExtension()).'.') : [];
-                    });
-                });
-            },
-        ]);
+                                return is_array($fileContents) ? Arr::dot($fileContents, $file->getBasename('.'.$file->getExtension()).'.') : [];
+                            });
+                        });
+                    },
+                ]
+            )
+        )->toArray();
+    }
+
+    /**
+     * Get the workspaces data for the current user.
+     *
+     * @param  Request  $request  The current request
+     * @return array<string, mixed> The workspaces data
+     */
+    private function workspacesData(Request $request): array
+    {
+        $user = $request->user();
+
+        return [
+            'workspaces' => WorkspacesPermissionsData::from($user),
+        ];
+    }
+
+    /**
+     * Get the authentication data for the current user.
+     *
+     * @param  Request  $request  The current request
+     * @return array<string, mixed> The authentication data
+     */
+    private function authData(Request $request): array
+    {
+        if ($user = $request->user()) {
+            $user->loadMissing(['workspaces']);
+
+            return [
+                'auth' => [
+                    'user' => UserData::from($user),
+                    'currentWorkspace' => WorkspaceData::optional($user->currentWorkspace),
+                    'workspaces' => WorkspaceData::collect($user->workspaces),
+                ],
+            ];
+        }
+
+        return ['auth' => null];
     }
 }

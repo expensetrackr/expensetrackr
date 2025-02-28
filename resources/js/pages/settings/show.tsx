@@ -4,7 +4,7 @@ import UserSettingsIcon from "virtual:icons/ri/user-settings-line";
 import { Header } from "#/components/header.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
 import { SettingsLayout } from "#/layouts/settings-layout.tsx";
-import { type InertiaSharedProps } from "#/types/index.ts";
+import { type PageProps } from "#/types/globals.js";
 import { UpdateEmailForm } from "./partials/update-email-form.tsx";
 import { UpdateNameForm } from "./partials/update-name-form.tsx";
 import { UpdateProfilePictureForm } from "./partials/update-profile-picture-form.tsx";
@@ -31,14 +31,14 @@ export default function SettingsShow() {
     );
 }
 
-SettingsShow.layout = (page: React.ReactNode & { props: InertiaSharedProps }) => (
+SettingsShow.layout = (page: React.ReactNode & { props: PageProps }) => (
     <SettingsLayout {...page.props}>
         <Head title="Profile settings" />
 
         <Header
             description="Customize and edit essential profile details."
             icon={
-                <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-(--bg-white-0) ring-1 shadow-xs ring-(--stroke-soft-200) ring-inset">
+                <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-(--bg-white-0) shadow-xs ring-1 ring-(--stroke-soft-200) ring-inset">
                     <UserSettingsIcon className="size-6 text-(--text-sub-600)" />
                 </div>
             }

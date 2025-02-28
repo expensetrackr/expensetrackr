@@ -12,7 +12,7 @@ import * as LinkButton from "#/components/ui/link-button.tsx";
 import { useTranslation } from "#/hooks/use-translation.ts";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";
 import { AuthCard } from "#/layouts/partials/auth-card.tsx";
-import { type InertiaSharedProps } from "#/types/index.ts";
+import { type PageProps } from "#/types/globals.js";
 
 export default function TwoFactorChallengePage() {
     const [recovery, setRecovery] = React.useState(false);
@@ -99,7 +99,7 @@ export default function TwoFactorChallengePage() {
     );
 }
 
-TwoFactorChallengePage.layout = (page: React.ReactNode & { props: InertiaSharedProps }) => (
+TwoFactorChallengePage.layout = (page: React.ReactNode & { props: PageProps }) => (
     <AuthLayout {...page.props}>
         <Head title="Two-Factor Confirmation" />
 

@@ -25,13 +25,12 @@ import * as Button from "#/components/ui/button.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
 import * as SegmentedControl from "#/components/ui/segmented-control.tsx";
 import { useTranslation } from "#/hooks/use-translation.ts";
-import { type PageProps } from "#/types/index.ts";
 import { cx } from "#/utils/cva.ts";
 import { plans } from "#/utils/plans.ts";
 import { balanceSchema } from "#/utils/steppers/create-account.steps.ts";
 import { Card } from "../components/create-account/card.tsx";
 
-export default function WelcomePage(_props: PageProps<{ laravelVersion: string; phpVersion: string }>) {
+export default function WelcomePage() {
     return (
         <>
             <div className="relative">

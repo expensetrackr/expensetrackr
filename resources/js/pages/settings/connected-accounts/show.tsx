@@ -4,7 +4,6 @@ import EqualizerIcon from "virtual:icons/ri/equalizer-line";
 import { Header } from "#/components/header.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
 import { SettingsLayout } from "#/layouts/settings-layout.tsx";
-import { type InertiaSharedProps } from "#/types/index.ts";
 import ConnectedAccountsForm from "./partials/connected-accounts-form.tsx";
 
 export default function ConnectedAccountsShow() {
@@ -21,14 +20,14 @@ export default function ConnectedAccountsShow() {
     );
 }
 
-ConnectedAccountsShow.layout = (page: React.ReactNode & { props: InertiaSharedProps }) => (
+ConnectedAccountsShow.layout = (page: React.ReactNode & { props: App.Data.SharedInertiaData }) => (
     <SettingsLayout {...page.props}>
         <Head title="Social accounts" />
 
         <Header
             description="Manage your social connected accounts."
             icon={
-                <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-(--bg-white-0) ring-1 shadow-xs ring-(--stroke-soft-200) ring-inset">
+                <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-(--bg-white-0) shadow-xs ring-1 ring-(--stroke-soft-200) ring-inset">
                     <EqualizerIcon className="size-6 text-(--text-sub-600)" />
                 </div>
             }

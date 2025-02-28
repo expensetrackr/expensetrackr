@@ -1,4 +1,4 @@
-import { Link, usePage } from "@inertiajs/react";
+import { Link } from "@inertiajs/react";
 import ArrowDownSIcon from "virtual:icons/ri/arrow-down-s-line";
 import ArrowRightSIcon from "virtual:icons/ri/arrow-right-s-line";
 import LightbulbIcon from "virtual:icons/ri/lightbulb-fill";
@@ -7,14 +7,14 @@ import Settings2Icon from "virtual:icons/ri/settings-2-line";
 import ShieldCheckIcon from "virtual:icons/ri/shield-check-fill";
 import UserSettingsIcon from "virtual:icons/ri/user-settings-line";
 
-import { type InertiaSharedProps } from "#/types/index.ts";
+import { useUser } from "#/hooks/use-user.ts";
 import { cn, cnMerge } from "#/utils/cn.ts";
 import * as Avatar from "./ui/avatar.tsx";
 import * as Divider from "./ui/divider.tsx";
 import * as Dropdown from "./ui/dropdown.tsx";
 
 export function UserButton({ className }: { className?: string }) {
-    const user = usePage<InertiaSharedProps>().props.auth.user;
+    const user = useUser();
 
     return (
         <Dropdown.Root>
@@ -25,7 +25,7 @@ export function UserButton({ className }: { className?: string }) {
                 )}
             >
                 <Avatar.Root $color="blue" $size="40">
-                    <Avatar.Image alt={user?.name} src={user?.profile_photo_url} />
+                    <Avatar.Image alt={user?.name} src={user?.profile_photo_url ?? undefined} />
                 </Avatar.Root>
 
                 <div className="flex w-[172px] shrink-0 items-center gap-3" data-hide-collapsed>
@@ -86,7 +86,7 @@ export function UserButton({ className }: { className?: string }) {
 }
 
 export function UserButtonMobile({ className }: { className?: string }) {
-    const user = usePage<InertiaSharedProps>().props.auth.user;
+    const user = useUser();
 
     return (
         <Dropdown.Root modal={false}>
@@ -97,7 +97,7 @@ export function UserButtonMobile({ className }: { className?: string }) {
                 )}
             >
                 <Avatar.Root $color="blue" $size="48">
-                    <Avatar.Image alt={user?.name} src={user?.profile_photo_url} />
+                    <Avatar.Image alt={user?.name} src={user?.profile_photo_url ?? undefined} />
                 </Avatar.Root>
                 <div className="flex-1 space-y-1">
                     <div className="flex items-center gap-0.5 text-label-md">{user?.name}</div>

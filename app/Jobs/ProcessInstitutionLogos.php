@@ -34,11 +34,10 @@ final class ProcessInstitutionLogos implements ShouldQueue
 
     /**
      * Create a new job instance.
+     *
+     * @param  array<int, array<string, mixed>>  $batch  The batch of institutions to process
      */
     public function __construct(
-        /**
-         * The batch of institutions to process.
-         */
         private array $batch
     ) {}
 
@@ -53,9 +52,24 @@ final class ProcessInstitutionLogos implements ShouldQueue
 
         foreach ($this->batch as $institution) {
             try {
-                $id = $institution['id'];
-                $folder = $institution['folder'];
-                $imageUrl = $institution['imageUrl'];
+                if (! isset($institution['id']) ||
+                    ! isset($institution['folder']) ||
+                    ! isset($institution['imageUrl'])) {
+                    Log::warning('Invalid institution data', ['institution' => $institution]);
+
+                    continue;
+                }
+
+                // Ensure we have string values
+                $id = is_scalar($institution['id']) ? (string) $institution['id'] : '';
+                $folder = is_scalar($institution['folder']) ? (string) $institution['folder'] : '';
+                $imageUrl = is_scalar($institution['imageUrl']) ? (string) $institution['imageUrl'] : '';
+
+                if ($id === '' || $folder === '' || $imageUrl === '') {
+                    Log::warning('Invalid institution data values', ['institution' => $institution]);
+
+                    continue;
+                }
 
                 // First check if logo already exists in Cloudinary
                 $existingLogo = $this->getLogoFromCloudinary($folder, $id);
@@ -79,13 +93,20 @@ final class ProcessInstitutionLogos implements ShouldQueue
                 unset($institution['folder']);
 
                 // Only add to index if we have a logo
-                if (! empty($institution['logo'])) {
+                if (isset($institution['logo']) && ! empty($institution['logo'])) {
                     $readyToIndex[] = $institution;
                 }
             } catch (Exception $e) {
-                Log::error("Error processing institution: {$institution['id']}", [
+                $institutionId = '';
+                if (isset($institution['id'])) {
+                    $institutionId = is_scalar($institution['id']) ? (string) $institution['id'] : 'unknown';
+                } else {
+                    $institutionId = 'unknown';
+                }
+
+                Log::error("Error processing institution: {$institutionId}", [
                     'error' => $e->getMessage(),
-                    'institution' => $institution['id'],
+                    'institution' => $institutionId,
                 ]);
 
                 // Continue processing other items in batch
@@ -116,10 +137,14 @@ final class ProcessInstitutionLogos implements ShouldQueue
     private function getLogoFromCloudinary(string $folder, string $id): ?string
     {
         try {
-            $cloudinaryUrl = config('services.public_assets.url')."/{$folder}/{$id}";
+            $baseUrl = config('services.public_assets.url');
+            $baseUrlString = is_string($baseUrl) ? $baseUrl : '';
+
+            $cloudinaryUrl = $baseUrlString."/{$folder}/{$id}";
             $response = Http::head($cloudinaryUrl);
 
-            if ($response->successful() && str_contains($response->header('Content-Type') ?? '', 'image')) {
+            $contentType = $response->header('Content-Type');
+            if ($response->successful() && $contentType && str_contains($contentType, 'image')) {
                 Log::info("Logo for {$id} already exists in Cloudinary");
 
                 return $cloudinaryUrl;
@@ -147,7 +172,8 @@ final class ProcessInstitutionLogos implements ShouldQueue
             // Verify the source image exists
             $response = Http::head($imageUrl);
 
-            if ($response->successful() && str_contains($response->header('Content-Type') ?? '', 'image')) {
+            $contentType = $response->header('Content-Type');
+            if ($response->successful() && $contentType && str_contains($contentType, 'image')) {
                 // Upload to Cloudinary
                 $uploadResult = cloudinary()->upload($imageUrl, [
                     'public_id' => $id,
@@ -156,7 +182,9 @@ final class ProcessInstitutionLogos implements ShouldQueue
 
                 Log::info("Uploaded new logo for {$id} to Cloudinary");
 
-                return $uploadResult->getUrl();
+                $url = $uploadResult->getUrl('');
+
+                return $url ?: '';
             }
 
             Log::warning("Source image for {$id} is not valid", [

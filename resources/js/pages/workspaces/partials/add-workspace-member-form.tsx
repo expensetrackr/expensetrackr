@@ -7,12 +7,11 @@ import { Select } from "#/components/form/select.tsx";
 import { TextField } from "#/components/form/text-field.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import * as Modal from "#/components/ui/modal.tsx";
-import { type Role, type Workspace } from "#/types/index.ts";
 import { Action } from "#/utils/action.ts";
 
 interface AddWorkspaceMemberFormProps {
-    workspace: Workspace;
-    availableRoles: Role[];
+    workspace: App.Data.WorkspaceData;
+    availableRoles: Array<{ name: string }>;
 }
 
 export function AddWorkspaceMemberForm({ workspace, availableRoles }: AddWorkspaceMemberFormProps) {

@@ -1,4 +1,4 @@
-import { Link, useForm, usePage } from "@inertiajs/react";
+import { Link, useForm } from "@inertiajs/react";
 import { parseAsStringEnum, useQueryState } from "nuqs";
 import ShareIcon from "virtual:icons/ri/share-line";
 import { route } from "ziggy-js";
@@ -7,17 +7,16 @@ import { ActionSection } from "#/components/action-section.tsx";
 import { ConnectedAccount } from "#/components/connected-account.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import * as Modal from "#/components/ui/modal.tsx";
-import { type InertiaSharedProps } from "#/types/index.ts";
+import { useSocialstream } from "#/hooks/use-socialstream.ts";
 import { Action, getAction } from "#/utils/action.ts";
 
 export default function ConnectedAccountsForm() {
     const [action, setAction] = useQueryState("action", parseAsStringEnum<Action>(Object.values(Action)));
-    const page = usePage<InertiaSharedProps>();
     const form = useForm({
         _method: "DELETE",
         bag: "removeConnectedAccount",
     });
-    const socialStream = page.props.socialstream;
+    const socialStream = useSocialstream();
 
     function onSubmit(e: React.FormEvent) {
         e.preventDefault();

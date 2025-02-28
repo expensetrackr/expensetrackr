@@ -5,14 +5,14 @@ import { Header } from "#/components/header.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
 import { SettingsLayout } from "#/layouts/settings-layout.tsx";
 import { SetPasswordForm } from "#/pages/settings/privacy-and-security/partials/set-password-form.tsx";
-import { type InertiaSharedProps, type Session } from "#/types/index.ts";
+import { type PageProps } from "#/types/globals.js";
 import { DeleteUserForm } from "./partials/delete-user-form.tsx";
 import { LogoutOtherBrowserSessionsForm } from "./partials/logout-other-browser-sessions-form.tsx";
 import { TwoFactorAuthenticationForm } from "./partials/two-factor-authentication-form.tsx";
 import { UpdatePasswordForm } from "./partials/update-password-form.tsx";
 
 type PrivacyAndSecurityShowProps = {
-    sessions: Session[];
+    sessions: App.Data.SessionData[];
     confirmsTwoFactorAuthentication: boolean;
 };
 
@@ -20,9 +20,9 @@ export default function PrivacyAndSecurityShow({
     sessions,
     confirmsTwoFactorAuthentication,
     ...props
-}: InertiaSharedProps<PrivacyAndSecurityShowProps>) {
+}: PageProps<PrivacyAndSecurityShowProps>) {
     const workspaces = props.workspaces;
-    const canUpdatePassword = workspaces.canUpdatePassword && props.socialstream.hasPassword;
+    const canUpdatePassword = workspaces?.canUpdatePassword && props.socialstream.hasPassword;
 
     return (
         <>
@@ -31,11 +31,11 @@ export default function PrivacyAndSecurityShow({
             </div>
 
             <div className="flex w-full flex-col gap-5 px-4 py-6 lg:px-8">
-                {workspaces.canUpdatePassword && (
+                {workspaces?.canUpdatePassword && (
                     <>{canUpdatePassword ? <UpdatePasswordForm /> : <SetPasswordForm />}</>
                 )}
 
-                {workspaces.canManageTwoFactorAuthentication && (
+                {workspaces?.canManageTwoFactorAuthentication && (
                     <>
                         <Divider.Root $type="line-spacing" />
 
@@ -47,7 +47,7 @@ export default function PrivacyAndSecurityShow({
 
                 <LogoutOtherBrowserSessionsForm sessions={sessions} />
 
-                {workspaces.hasAccountDeletionFeatures && (
+                {workspaces?.hasAccountDeletionFeatures && (
                     <>
                         <Divider.Root $type="line-spacing" />
 
@@ -59,16 +59,14 @@ export default function PrivacyAndSecurityShow({
     );
 }
 
-PrivacyAndSecurityShow.layout = (
-    page: React.ReactNode & { props: InertiaSharedProps<PrivacyAndSecurityShowProps> },
-) => (
+PrivacyAndSecurityShow.layout = (page: React.ReactNode & { props: PageProps<PrivacyAndSecurityShowProps> }) => (
     <SettingsLayout {...page.props}>
         <Head title="Privacy & Security" />
 
         <Header
             description="Personalize your privacy settings and enhance the security of your account."
             icon={
-                <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-(--bg-white-0) ring-1 shadow-xs ring-(--stroke-soft-200) ring-inset">
+                <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-(--bg-white-0) shadow-xs ring-1 ring-(--stroke-soft-200) ring-inset">
                     <ShieldUserIcon className="size-6 text-(--text-sub-600)" />
                 </div>
             }

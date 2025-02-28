@@ -2,7 +2,7 @@ import { Head } from "@inertiajs/react";
 
 import * as Divider from "#/components/ui/divider.tsx";
 import { AppLayout } from "#/layouts/app-layout.tsx";
-import { type InertiaSharedProps } from "#/types/index.ts";
+import { type PageProps } from "#/types/globals.js";
 
 export default function AccountsPage() {
     return (
@@ -36,7 +36,7 @@ export default function AccountsPage() {
     );
 }
 
-AccountsPage.layout = (page: React.ReactNode & { props: InertiaSharedProps }) => (
+AccountsPage.layout = (page: React.ReactNode & { props: PageProps }) => (
     <AppLayout {...page.props}>
         <Head title="Accounts" />
 

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Services;
 
 use Exception;
-use MeiliSearch\Client;
+use Meilisearch\Client;
 
 final readonly class MeilisearchService
 {
@@ -14,19 +14,25 @@ final readonly class MeilisearchService
     public function __construct()
     {
         $this->client = new Client(
-            config('scout.meilisearch.host'),
-            config('scout.meilisearch.key')
+            type(config('scout.meilisearch.host'))->asString(),
+            type(config('scout.meilisearch.key'))->asString()
         );
     }
 
     /**
      * Add documents to a specified index
+     *
+     * @param  string  $indexName  The name of the index
+     * @param  array<int|string, mixed>  $documents  The documents to add
+     * @return array<mixed> The operation result
      */
     public function addDocuments(string $indexName, array $documents): array
     {
         $index = $this->client->index($indexName);
 
-        return $index->addDocuments($documents);
+        $result = $index->addDocuments($documents);
+
+        return is_array($result) ? $result : [];
     }
 
     /**
@@ -34,8 +40,8 @@ final readonly class MeilisearchService
      *
      * @param  string  $indexName  The name of the index to search in
      * @param  string|null  $query  The search query (optional)
-     * @param  array  $searchParams  Additional search parameters like filters, sort, etc. (optional)
-     * @return array Search results
+     * @param  array<string, mixed>  $searchParams  Additional search parameters like filters, sort, etc. (optional)
+     * @return array<mixed> Search results
      */
     public function search(string $indexName, ?string $query = null, array $searchParams = []): array
     {
@@ -49,14 +55,16 @@ final readonly class MeilisearchService
      *
      * @param  string  $indexName  The name of the index
      * @param  string  $documentId  The ID of the document to retrieve
-     * @return array|null The document or null if not found
+     * @return array<mixed>|null The document or null if not found
      */
     public function getDocument(string $indexName, string $documentId): ?array
     {
         $index = $this->client->index($indexName);
 
         try {
-            return $index->getDocument($documentId);
+            $document = $index->getDocument($documentId);
+
+            return is_array($document) ? $document : null;
         } catch (Exception) {
             return null;
         }
@@ -64,35 +72,52 @@ final readonly class MeilisearchService
 
     /**
      * Add or replace documents in an index
+     *
+     * @param  string  $indexName  The name of the index
+     * @param  array<int|string, mixed>  $documents  The documents to update
+     * @return array<mixed> The operation result
      */
     public function updateDocuments(string $indexName, array $documents): array
     {
         $index = $this->client->index($indexName);
 
-        return $index->updateDocuments($documents);
+        $result = $index->updateDocuments($documents);
+
+        return is_array($result) ? $result : [];
     }
 
     /**
      * Set specific settings for an index
+     *
+     * @param  string  $indexName  The name of the index
+     * @param  array<string, mixed>  $settings  The settings to update
      */
     public function updateSettings(string $indexName, array $settings): void
     {
         $index = $this->client->index($indexName);
 
-        if (isset($settings['searchableAttributes'])) {
-            $index->updateSearchableAttributes($settings['searchableAttributes']);
+        if (isset($settings['searchableAttributes']) && is_array($settings['searchableAttributes'])) {
+            /** @var list<non-empty-string> $searchableAttributes */
+            $searchableAttributes = array_values(array_filter($settings['searchableAttributes'], 'is_string'));
+            $index->updateSearchableAttributes($searchableAttributes);
         }
 
-        if (isset($settings['filterableAttributes'])) {
-            $index->updateFilterableAttributes($settings['filterableAttributes']);
+        if (isset($settings['filterableAttributes']) && is_array($settings['filterableAttributes'])) {
+            /** @var list<non-empty-string> $filterableAttributes */
+            $filterableAttributes = array_values(array_filter($settings['filterableAttributes'], 'is_string'));
+            $index->updateFilterableAttributes($filterableAttributes);
         }
 
-        if (isset($settings['sortableAttributes'])) {
-            $index->updateSortableAttributes($settings['sortableAttributes']);
+        if (isset($settings['sortableAttributes']) && is_array($settings['sortableAttributes'])) {
+            /** @var list<non-empty-string> $sortableAttributes */
+            $sortableAttributes = array_values(array_filter($settings['sortableAttributes'], 'is_string'));
+            $index->updateSortableAttributes($sortableAttributes);
         }
 
-        if (isset($settings['rankingRules'])) {
-            $index->updateRankingRules($settings['rankingRules']);
+        if (isset($settings['rankingRules']) && is_array($settings['rankingRules'])) {
+            /** @var list<non-empty-string> $rankingRules */
+            $rankingRules = array_values(array_filter($settings['rankingRules'], 'is_string'));
+            $index->updateRankingRules($rankingRules);
         }
     }
 
@@ -118,20 +143,32 @@ final readonly class MeilisearchService
      * @param  string  $indexName  The name of the index
      * @param  string  $documentId  The ID of the document to update
      * @param  mixed  $document  The updated document data
-     * @return array The update operation result
+     * @return array<mixed> The update operation result
      */
     public function updateDocument(string $indexName, string $documentId, mixed $document): array
     {
         $index = $this->client->index($indexName);
 
         // Convert to array if it's not already
-        $documentData = is_array($document) ? $document : (method_exists($document, 'toArray') ? $document->toArray() : (array) $document);
+        $documentData = [];
+
+        if (is_array($document)) {
+            $documentData = $document;
+        } elseif (is_object($document) && method_exists($document, 'toArray')) {
+            $documentData = $document->toArray();
+        } elseif (is_object($document)) {
+            $documentData = (array) $document;
+        }
 
         // Ensure the document contains the ID
-        $documentData['id'] = $documentId;
+        if (is_array($documentData)) {
+            $documentData['id'] = $documentId;
+        }
 
         dump('Updating document: ', $documentData);
 
-        return $index->updateDocuments([$documentData]);
+        $result = $index->updateDocuments([$documentData]);
+
+        return is_array($result) ? $result : [];
     }
 }
