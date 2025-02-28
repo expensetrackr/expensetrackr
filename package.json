@@ -65,10 +65,10 @@
         "zustand": "5.0.3"
     },
     "devDependencies": {
-        "@epic-web/config": "1.17.2",
+        "@epic-web/config": "1.17.0",
         "@iconify-json/flat-color-icons": "1.2.1",
         "@iconify-json/logos": "1.2.4",
-        "@iconify-json/lucide": "1.2.27",
+        "@iconify-json/lucide": "1.2.26",
         "@iconify-json/material-symbols": "1.2.14",
         "@iconify-json/mdi": "1.2.3",
         "@iconify-json/ph": "1.2.2",
