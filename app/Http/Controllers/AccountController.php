@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Data\Teller\AccountData;
+use App\Enums\ProviderType;
 use App\Models\Account;
 use App\Services\CurrencyService;
 use App\Services\MeilisearchService;
@@ -11,8 +13,10 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use Inertia\Response;
+use TellerSDK\TellerClient;
 
 final class AccountController
 {
@@ -56,6 +60,9 @@ final class AccountController
         /** @var array{q: ?string} $validated */
         $validated = $request->validate([
             'q' => ['nullable', 'string', 'max:255'],
+            'enrollment_id' => ['sometimes', 'string'],
+            'provider' => ['sometimes', Rule::enum(ProviderType::class)],
+            'token' => ['sometimes', 'string'],
         ]);
 
         if ($connectionType === 'connect') {
@@ -63,6 +70,11 @@ final class AccountController
             $data['institutions'] = $meilisearchService->search('institutions', $query, [
                 'limit' => 48,
             ]);
+
+            if ($validated['enrollment_id'] && $validated['provider'] && $validated['token']) {
+                $teller = new TellerClient($validated['token']);
+                $data['bankAccounts'] = AccountData::collect($teller->listAccounts());
+            }
         }
 
         return Inertia::render("accounts/create/{$connectionType}/page", $data);

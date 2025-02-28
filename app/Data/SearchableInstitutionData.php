@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Data;
 
+use App\Enums\ProviderType;
 use Spatie\LaravelData\Data;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
@@ -17,6 +18,6 @@ final class SearchableInstitutionData extends Data
         /** @var array<string> */
         public array $countries,
         public int $popularity,
-        public string $provider,
+        public ProviderType $provider,
     ) {}
 }

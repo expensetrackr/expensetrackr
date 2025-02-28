@@ -10,7 +10,7 @@ declare namespace App.Data {
         logo: string;
         countries: Array<string>;
         popularity: number;
-        provider: string;
+        provider: App.Enums.ProviderType;
     };
     export type SessionData = {
         ip_address: string;
@@ -104,6 +104,19 @@ declare namespace App.Data.Socialstream {
         buttonLabel: string | null;
     };
 }
+declare namespace App.Data.Teller {
+    export type AccountData = {
+        currency: string;
+        enrollmentId: string;
+        id: string;
+        institution: any;
+        lastFour: string;
+        name: string;
+        type: App.Enums.Teller.AccountType;
+        status: App.Enums.Teller.AccountStatus;
+        subtype: App.Enums.Teller.AccountSubtype;
+    };
+}
 declare namespace App.Data.Ziggy {
     export type RouteData = {
         uri: string;
@@ -152,4 +165,16 @@ declare namespace App.Enums {
 }
 declare namespace App.Enums.Socialstream {
     export type Provider = "google";
+}
+declare namespace App.Enums.Teller {
+    export type AccountStatus = "open" | "closed";
+    export type AccountSubtype =
+        | "checking"
+        | "savings"
+        | "money_market"
+        | "certificate_of_deposit"
+        | "treasury"
+        | "sweep"
+        | "credit_card";
+    export type AccountType = "depository" | "credit";
 }

@@ -13,6 +13,8 @@ declare global {
     const route: typeof routeFn;
     const ENV: {
         PUBLIC_ASSETS_URL: string;
+        TELLER_APP_ID: string;
+        TELLER_ENVIRONMENT: "sandbox" | "development" | "production";
     };
 }
 

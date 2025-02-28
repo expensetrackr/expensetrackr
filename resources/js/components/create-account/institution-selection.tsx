@@ -1,29 +1,29 @@
 import * as ScrollAreaPrimitives from "@radix-ui/react-scroll-area";
 import { Image } from "@unpic/react";
-import { useQueryState } from "nuqs";
 import KeyCmd16Icon from "virtual:icons/qlementine-icons/key-cmd-16";
 import Search2Icon from "virtual:icons/ri/search-2-line";
 
+import { useConnectParams } from "#/hooks/use-connect-params.ts";
+import { ConnectBankProvider } from "../connect-bank-provider.tsx";
 import { InstitutionInfo } from "../institution-info.tsx";
 import { PlaceholderLogo } from "../placeholder-logo.tsx";
 import * as Avatar from "../ui/avatar.tsx";
-import * as Button from "../ui/button.tsx";
 import * as Divider from "../ui/divider.tsx";
 import * as Input from "../ui/input.tsx";
 import * as Kbd from "../ui/kbd.tsx";
 import * as Label from "../ui/label.tsx";
 
-type BankSelectionProps = {
+type InstitutionSelectionProps = {
     institutions: Array<App.Data.SearchableInstitutionData>;
 };
 
-export function BankSelection({ institutions }: BankSelectionProps) {
-    const [search, setSearch] = useQueryState("q", { defaultValue: "", throttleMs: 500 });
+export function InstitutionSelection({ institutions }: InstitutionSelectionProps) {
+    const { q: query, setParams } = useConnectParams();
 
     return (
         <div className="flex shrink-0 flex-col gap-3">
             <div className="flex flex-col gap-1">
-                <Label.Root htmlFor="search">Choose a bank</Label.Root>
+                <Label.Root htmlFor="search">Choose an institution</Label.Root>
                 <Input.Root $size="md">
                     <Input.Wrapper>
                         <Input.Icon as={Search2Icon} />
@@ -31,9 +31,9 @@ export function BankSelection({ institutions }: BankSelectionProps) {
                             id="search"
                             inputMode="search"
                             name="search"
-                            onChange={(e) => setSearch(e.target.value)}
-                            placeholder="Search for a bank..."
-                            value={search}
+                            onChange={(e) => setParams({ q: e.target.value })}
+                            placeholder="Search for an institution..."
+                            value={query}
                         />
                         <Kbd.Root>
                             <KeyCmd16Icon className="size-4" />1
@@ -67,10 +67,10 @@ type SearchResultProps = {
     id: string;
     name: string;
     logo: string | null;
-    provider: string;
+    provider: App.Enums.ProviderType;
 };
 
-function SearchResult({ name, logo, provider }: SearchResultProps) {
+function SearchResult({ id, name, logo, provider }: SearchResultProps) {
     return (
         <div className="flex items-center gap-3 p-2">
             {logo ? (
@@ -99,9 +99,8 @@ function SearchResult({ name, logo, provider }: SearchResultProps) {
                     </div>
                 </InstitutionInfo>
             </div>
-            <Button.Root $size="xs" $style="stroke" $type="neutral">
-                Connect
-            </Button.Root>
+
+            <ConnectBankProvider id={id} name={name} provider={provider} />
         </div>
     );
 }

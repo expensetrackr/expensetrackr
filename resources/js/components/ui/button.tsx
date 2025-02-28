@@ -252,7 +252,7 @@ export const buttonVariants = tv({
 
 type ButtonSharedProps = VariantProps<typeof buttonVariants>;
 
-type ButtonRootProps = VariantProps<typeof buttonVariants> &
+export type ButtonRootProps = VariantProps<typeof buttonVariants> &
     React.ComponentPropsWithRef<"button"> & {
         asChild?: boolean;
     };

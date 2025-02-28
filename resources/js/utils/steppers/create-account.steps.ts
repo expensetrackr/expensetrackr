@@ -61,7 +61,10 @@ export const createManualAccount = defineStepper(
     { id: "complete", label: "Account Summary", schema: createAccountSchema },
 );
 
-export const createConnectAccount = defineStepper({ id: "bank-selection", label: "Bank selection" });
+export const ConnectAccountStepper = defineStepper(
+    { id: "institution-selection", label: "Institution selection" },
+    { id: "bank-accounts-selection", label: "Bank accounts selection" },
+);
 
 export type DetailsStepValues = z.infer<typeof detailsSchema>;
 export type BalanceStepValues = z.infer<typeof balanceSchema>;
