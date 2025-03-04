@@ -109,7 +109,7 @@ final class HandleInertiaRequests extends Middleware
         $user = $request->user();
 
         return [
-            'workspaces' => WorkspacesPermissionsData::from($user),
+            'workspaces' => WorkspacesPermissionsData::fromUser($user),
         ];
     }
 

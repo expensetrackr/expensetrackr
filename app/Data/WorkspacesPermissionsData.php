@@ -28,7 +28,7 @@ final class WorkspacesPermissionsData extends Data
         public readonly bool $managesProfilePhotos,
     ) {}
 
-    public static function fromUser(User $user): self
+    public static function fromUser(?User $user): self
     {
         return self::from([
             'canCreateWorkspaces' => Gate::forUser($user)->check('create', Workspace::class),
