@@ -3,6 +3,7 @@ import CloseIcon from "virtual:icons/ri/close-line";
 import HeadphoneIcon from "virtual:icons/ri/headphone-line";
 import MenuSearchIcon from "virtual:icons/ri/menu-search-line";
 
+import { BankAccountsSelectionStep } from "#/components/create-account/bank-accounts-selection-step.tsx";
 import { Card } from "#/components/create-account/card.tsx";
 import { InstitutionSelection } from "#/components/create-account/institution-selection.tsx";
 import { FlowSidebar } from "#/components/create-account/sidebar.tsx";
@@ -12,7 +13,7 @@ import { ConnectAccountStepper } from "#/utils/steppers/create-account.steps.ts"
 
 type CreateAccountConnectPageProps = {
     institutions: Array<App.Data.SearchableInstitutionData>;
-    bankAccounts: Array<App.Data.Teller.AccountData>;
+    bankAccounts: Array<App.Data.AccountData>;
 };
 
 export default function CreateAccountConnectPage({ institutions, bankAccounts }: CreateAccountConnectPageProps) {
@@ -32,7 +33,6 @@ export default function CreateAccountConnectPage({ institutions, bankAccounts }:
 function PageContent({ institutions, bankAccounts }: CreateAccountConnectPageProps) {
     const stepper = ConnectAccountStepper.useStepper();
 
-    console.info(bankAccounts);
     return (
         <div className="flex min-h-screen flex-col lg:grid lg:grid-cols-[auto_minmax(0,1fr)] lg:items-start">
             <FlowSidebar stepper={stepper} utils={ConnectAccountStepper.utils} />
@@ -74,13 +74,23 @@ function PageContent({ institutions, bankAccounts }: CreateAccountConnectPagePro
                         ),
                         "bank-accounts-selection": (step) => (
                             <Card
-                                className="[&_[data-card-content-wrapper]]:ring-0 [&_[data-card-content]]:p-0"
-                                description="Choose a bank account to connect your account from our list of supported bank accounts."
+                                actions={
+                                    <Button.Root
+                                        $size="sm"
+                                        className="w-full"
+                                        form="bank-accounts-selection"
+                                        type="submit"
+                                    >
+                                        Connect
+                                    </Button.Root>
+                                }
+                                description="Choose the bank accounts that you want to sync with our app."
                                 icon={MenuSearchIcon}
+                                key={step.id}
                                 stepper={stepper}
                                 title="Bank accounts selection"
                             >
-                                Hola
+                                <BankAccountsSelectionStep bankAccounts={bankAccounts} />
                             </Card>
                         ),
                     })}

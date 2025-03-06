@@ -14,7 +14,10 @@ export function AppLayout({
 }>) {
     React.useEffect(() => {
         if (props.toast?.type) {
-            toast[props.toast.type](props.toast.message);
+            toast[props.toast.type](props.toast.title, {
+                description: props.toast.description,
+                duration: props.toast.duration ?? 5000,
+            });
         }
     }, [props.toast]);
 

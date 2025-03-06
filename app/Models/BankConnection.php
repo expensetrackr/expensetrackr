@@ -9,6 +9,7 @@ use App\Enums\ProviderType;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
 
 /**
  * @property int $id
@@ -59,7 +60,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 final class BankConnection extends Model
 {
-    use WorkspaceOwned;
+    use HasPrefixedId, WorkspaceOwned;
 
     /**
      * The attributes that should be hidden for arrays.

@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Data\Teller\AccountData;
+use App\Actions\BankAccounts\CreateBankConnection;
+use App\Data\CreateBankConnectionData;
 use App\Enums\ProviderType;
+use App\Http\Requests\BankConnectionRequest;
 use App\Models\Account;
 use App\Services\CurrencyService;
 use App\Services\MeilisearchService;
+use App\Services\TellerService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
@@ -16,7 +19,6 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use Inertia\Response;
-use TellerSDK\TellerClient;
 
 final class AccountController
 {
@@ -71,13 +73,31 @@ final class AccountController
                 'limit' => 48,
             ]);
 
-            if ($validated['enrollment_id'] && $validated['provider'] && $validated['token']) {
-                $teller = new TellerClient($validated['token']);
-                $data['bankAccounts'] = AccountData::collect($teller->listAccounts());
+            if (isset($validated['enrollment_id']) && isset($validated['provider']) && isset($validated['token'])) {
+                $teller = new TellerService($validated['token']);
+                $data['bankAccounts'] = $teller->listAccounts();
             }
         }
 
         return Inertia::render("accounts/create/{$connectionType}/page", $data);
+    }
+
+    /**
+     * Handle form submission for the bank accounts selection step
+     */
+    public function storeBankConnections(BankConnectionRequest $request, CreateBankConnection $action): RedirectResponse
+    {
+        $action->create(CreateBankConnectionData::from($request->validated()));
+
+        return redirect(route('accounts.index'))
+            ->with('toast',
+                [
+                    'type' => 'success',
+                    'title' => __('Great! You have connected your bank accounts.'),
+                    'description' => __('We are syncing them now. This may take a few minutes.'),
+                    'duration' => 10000,
+                ]
+            );
     }
 
     /**

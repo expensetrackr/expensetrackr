@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
-use App\Data\Common\ToastData;
 use App\Data\SharedInertiaData;
+use App\Data\ToastData;
 use App\Data\UserData;
 use App\Data\WorkspaceData;
 use App\Data\WorkspacesPermissionsData;

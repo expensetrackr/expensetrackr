@@ -18,7 +18,7 @@ final class PrefixedIdsServiceProvider extends ServiceProvider
     {
         PrefixedIds::registerModels([
             'acc_' => Account::class,
-            'bc_' => BankConnection::class,
+            'bconn_' => BankConnection::class,
         ]);
     }
 }

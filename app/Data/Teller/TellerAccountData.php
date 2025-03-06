@@ -12,19 +12,20 @@ use Spatie\LaravelData\Data;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
 #[TypeScript]
-final class AccountData extends Data
+final class TellerAccountData extends Data
 {
     public function __construct(
         public readonly string $currency,
         #[MapName('enrollment_id')]
         public readonly string $enrollmentId,
         public readonly string $id,
-        public readonly InstitutionData $institution,
+        public readonly TellerInstitutionData $institution,
         #[MapName('last_four')]
         public readonly string $lastFour,
         public readonly string $name,
         public readonly AccountType $type,
         public readonly AccountStatus $status,
         public readonly AccountSubtype $subtype,
+        public ?TellerAccountBalanceData $balances,
     ) {}
 }

@@ -1,8 +1,53 @@
 declare namespace App.Data {
+    export type AccountData = {
+        id: string;
+        name: string;
+        currency: string;
+        type: App.Enums.AccountType;
+        subtype: App.Enums.AccountSubtype;
+        institution: App.Data.InstitutionData;
+        balance: App.Data.BalanceData;
+        enrollmentId: string | null;
+        institutionCode: string | null;
+        expiresAt: string | null;
+    };
+    export type BalanceData = {
+        currency: string;
+        amount: number;
+    };
+    export type CreateBankConnectionAccountData = {
+        institutionId: string;
+        institutionLogoUrl: string | null;
+        institutionName: string;
+        name: string;
+        accountId: string;
+        currency: string;
+        balance: number;
+        enabled: boolean;
+        type: App.Enums.AccountType;
+        subtype: App.Enums.AccountSubtype;
+        tokenExpiresAt: string | null;
+    };
+    export type CreateBankConnectionData = {
+        providerConnectionId: string | null;
+        providerType: App.Enums.ProviderType;
+        accessToken: string;
+        accounts: Array<App.Data.CreateBankConnectionAccountData>;
+    };
     export type InertiaAuthData = {
         user: App.Data.UserData | null;
         currentWorkspace: App.Data.WorkspaceData | any | null;
         workspaces: Array<App.Data.WorkspaceData> | any | null;
+    };
+    export type InstitutionData = {
+        id: string;
+        name: string;
+        logo: string | null;
+        provider: App.Enums.ProviderType;
+    };
+    export type LanguageData = {
+        code: string;
+        name: string;
     };
     export type SearchableInstitutionData = {
         id: string;
@@ -22,9 +67,9 @@ declare namespace App.Data {
         auth: App.Data.InertiaAuthData | null;
         workspaces: App.Data.WorkspacesPermissionsData | null;
         ziggy: App.Data.Ziggy.ZiggyData | null;
-        toast: App.Data.Common.ToastData | null;
+        toast: App.Data.ToastData | null;
         language: App.Enums.Language;
-        languages: Array<App.Data.Common.LanguageData> | null;
+        languages: Array<App.Data.LanguageData> | null;
         translations: Record<string, string>;
         socialstream: App.Data.SocialstreamData;
         errors: { [key: string]: string } | null;
@@ -34,6 +79,12 @@ declare namespace App.Data {
         show: boolean;
         connectedAccounts: Array<App.Data.Socialstream.ConnectedAccount>;
         hasPassword: boolean;
+    };
+    export type ToastData = {
+        type: App.Enums.ToastType;
+        title: string;
+        description: string | null;
+        duration: number | null;
     };
     export type UserAgentData = {
         browser: string;
@@ -81,16 +132,6 @@ declare namespace App.Data {
         managesProfilePhotos: boolean;
     };
 }
-declare namespace App.Data.Common {
-    export type LanguageData = {
-        code: string;
-        name: string;
-    };
-    export type ToastData = {
-        type: App.Enums.ToastType;
-        message: string;
-    };
-}
 declare namespace App.Data.Socialstream {
     export type ConnectedAccount = {
         id: number;
@@ -105,16 +146,26 @@ declare namespace App.Data.Socialstream {
     };
 }
 declare namespace App.Data.Teller {
-    export type AccountData = {
+    export type TellerAccountBalanceData = {
+        accountId: string;
+        ledger: string | null;
+        available: string | null;
+    };
+    export type TellerAccountData = {
         currency: string;
         enrollmentId: string;
         id: string;
-        institution: any;
+        institution: App.Data.Teller.TellerInstitutionData;
         lastFour: string;
         name: string;
         type: App.Enums.Teller.AccountType;
         status: App.Enums.Teller.AccountStatus;
         subtype: App.Enums.Teller.AccountSubtype;
+        balances: App.Data.Teller.TellerAccountBalanceData | null;
+    };
+    export type TellerInstitutionData = {
+        id: string;
+        name: string;
     };
 }
 declare namespace App.Data.Ziggy {
@@ -177,4 +228,5 @@ declare namespace App.Enums.Teller {
         | "sweep"
         | "credit_card";
     export type AccountType = "depository" | "credit";
+    export type EnvironmentType = "sandbox" | "development" | "production";
 }

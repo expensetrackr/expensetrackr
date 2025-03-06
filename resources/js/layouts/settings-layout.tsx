@@ -14,7 +14,9 @@ export function SettingsLayout({
 }>) {
     React.useEffect(() => {
         if (props.toast?.type) {
-            toast[props.toast.type](props.toast.message);
+            toast[props.toast.type](props.toast.title, {
+                description: props.toast.description,
+            });
         }
     }, [props.toast]);
 

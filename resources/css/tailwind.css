@@ -422,6 +422,8 @@
     --shadow-fancy-buttons-stroke: 0 1px 3px 0 oklch(18.3% 0.0196 266deg / 12.2%), 0 0 0 1px var(--stroke-soft-200);
     --shadow-toggle-switch:
         0 6px 10px 0 oklch(18.3% 0.0196 266deg / 5.88%), 0 2px 4px 0 oklch(18.3% 0.0196 266deg / 3.14%);
+    --shadow-switch-thumb:
+        0 4px 8px 0 oklch(22.6% 0.00247 248deg / 5.88%), 0 2px 4px 0 oklch(18.3% 0.0196 266deg / 7.84%);
 
     --transition-timing-function-drawer: cubic-bezier(0.32, 0.72, 0, 1);
 

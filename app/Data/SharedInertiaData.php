@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Data;
 
-use App\Data\Common\LanguageData;
-use App\Data\Common\ToastData;
 use App\Data\Ziggy\ZiggyData;
 use App\Enums\Language;
 use Closure;

@@ -24,6 +24,7 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @property bool $is_default
  * @property string $public_id
  * @property int $workspace_id
+ * @property string|null $external_id
  * @property int|null $created_by
  * @property int|null $updated_by
  * @property \Carbon\CarbonImmutable|null $created_at
@@ -60,6 +61,7 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereUpdatedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereWorkspaceId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereExternalId($value)
  *
  * @mixin \Eloquent
  */

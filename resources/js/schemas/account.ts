@@ -1,5 +1,7 @@
+import * as v from "valibot";
 import { z } from "zod";
 
+import { AccountSubtype, AccountType } from "#/models/account.ts";
 import { zodDecimal } from "#/utils/zod-decimal.ts";
 
 export const accountTypeEnum = z.enum([
@@ -11,6 +13,8 @@ export const accountTypeEnum = z.enum([
     "other_asset",
     "other_liability",
 ]);
+export const AccountTypeSchema = v.enum(AccountType);
+export const AccountSubtypeSchema = v.enum(AccountSubtype);
 export const connectionTypeEnum = z.enum(["connect", "manual"]);
 
 export const depositorySubtypeEnum = z.enum(["none", "checking", "savings"]);

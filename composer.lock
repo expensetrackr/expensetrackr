@@ -1004,16 +1004,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.340.5",
+            "version": "3.341.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "8fbe5046498c5adfa0de0bf31e1f6f8f3254d832"
+                "reference": "8b82bdb43b202fd8c596a096ddcc9915f59f780a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/8fbe5046498c5adfa0de0bf31e1f6f8f3254d832",
-                "reference": "8fbe5046498c5adfa0de0bf31e1f6f8f3254d832",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/8b82bdb43b202fd8c596a096ddcc9915f59f780a",
+                "reference": "8b82bdb43b202fd8c596a096ddcc9915f59f780a",
                 "shasum": ""
             },
             "require": {
@@ -1095,9 +1095,9 @@
             "support": {
                 "forum": "https://github.com/aws/aws-sdk-php/discussions",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.340.5"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.341.0"
             },
-            "time": "2025-03-03T19:15:56+00:00"
+            "time": "2025-03-04T19:13:46+00:00"
         },
         {
             "name": "bacon/bacon-qr-code",
@@ -3967,29 +3967,29 @@
         },
         {
             "name": "glhd/bits",
-            "version": "0.5.0",
+            "version": "0.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/glhd/bits.git",
-                "reference": "1dae45814448623c86dba34d3325d08cdc2afc2f"
+                "reference": "c2a0101f2a24afd64109760b5d4c621d8f405980"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/glhd/bits/zipball/1dae45814448623c86dba34d3325d08cdc2afc2f",
-                "reference": "1dae45814448623c86dba34d3325d08cdc2afc2f",
+                "url": "https://api.github.com/repos/glhd/bits/zipball/c2a0101f2a24afd64109760b5d4c621d8f405980",
+                "reference": "c2a0101f2a24afd64109760b5d4c621d8f405980",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "illuminate/contracts": "^9|^10|^11|12.x-dev|dev-master",
-                "illuminate/support": "^9|^10|^11|12.x-dev|dev-master",
+                "illuminate/contracts": "^9|^10|^11|^12|13.x-dev|dev-master|dev-main",
+                "illuminate/support": "^9|^10|^11|^12|13.x-dev|dev-master|dev-main",
                 "nesbot/carbon": "^2.62.1|^3.0",
                 "php": "^8.1"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^3.5",
-                "orchestra/testbench": "^7.10|^8|^9|9.x-dev|10.x-dev|dev-master",
-                "spatie/laravel-ray": "^1.32"
+                "orchestra/testbench": "^7.10|^8.33|^9.11|^10.0|11.x-dev|dev-master|dev-main",
+                "phpunit/phpunit": "^10.5|^11.5"
             },
             "type": "library",
             "extra": {
@@ -4019,9 +4019,9 @@
             ],
             "support": {
                 "issues": "https://github.com/glhd/bits/issues",
-                "source": "https://github.com/glhd/bits/tree/0.5.0"
+                "source": "https://github.com/glhd/bits/tree/0.6.1"
             },
-            "time": "2024-07-10T19:39:07+00:00"
+            "time": "2025-03-04T22:11:35+00:00"
         },
         {
             "name": "graham-campbell/result-type",
@@ -6986,16 +6986,16 @@
         },
         {
             "name": "livewire/livewire",
-            "version": "v3.6.0",
+            "version": "v3.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/livewire/livewire.git",
-                "reference": "4c66b569cb729ba9b2f4a3c4e79f50fd8f2b71d1"
+                "reference": "0df0a762698176d714e42e2dfed92b6b9e24b8e4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/livewire/livewire/zipball/4c66b569cb729ba9b2f4a3c4e79f50fd8f2b71d1",
-                "reference": "4c66b569cb729ba9b2f4a3c4e79f50fd8f2b71d1",
+                "url": "https://api.github.com/repos/livewire/livewire/zipball/0df0a762698176d714e42e2dfed92b6b9e24b8e4",
+                "reference": "0df0a762698176d714e42e2dfed92b6b9e24b8e4",
                 "shasum": ""
             },
             "require": {
@@ -7050,7 +7050,7 @@
             "description": "A front-end framework for Laravel.",
             "support": {
                 "issues": "https://github.com/livewire/livewire/issues",
-                "source": "https://github.com/livewire/livewire/tree/v3.6.0"
+                "source": "https://github.com/livewire/livewire/tree/v3.6.1"
             },
             "funding": [
                 {
@@ -7058,7 +7058,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-02-26T00:57:32+00:00"
+            "time": "2025-03-04T21:48:52+00:00"
         },
         {
             "name": "masterminds/html5",

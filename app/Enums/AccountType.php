@@ -20,6 +20,19 @@ enum AccountType: string
     case OtherLiability = 'other_liability';
 
     /**
+     * Create an enum instance from a string value, with support for external type mapping
+     */
+    public static function fromExternal(string $type): self
+    {
+        $mappedType = match ($type) {
+            'credit' => self::CreditCard->value,
+            default => $type,
+        };
+
+        return self::from($mappedType);
+    }
+
+    /**
      * Get all asset account types.
      *
      * @return array<int, self>

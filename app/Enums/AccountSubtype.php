@@ -28,4 +28,21 @@ enum AccountSubtype: string
     case TraditionalIRA = 'traditional_ira';
     case RothIRA = 'roth_ira';
     case Angel = 'angel';
+
+    /**
+     * Create an enum instance from a string value, with support for external type mapping
+     */
+    public static function fromExternal(string $type): self
+    {
+        $mappedType = match ($type) {
+            'money_market' => self::None->value,
+            'certificate_of_deposit' => self::None->value,
+            'treasury' => self::None->value,
+            'sweep' => self::None->value,
+            'credit_card' => self::None->value,
+            default => $type,
+        };
+
+        return self::from($mappedType);
+    }
 }

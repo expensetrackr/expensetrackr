@@ -13,4 +13,5 @@ return [
     App\Providers\TellerCertificatesServiceProvider::class,
     Spatie\WebhookClient\WebhookClientServiceProvider::class,
     App\Providers\CurrencyServiceProvider::class,
+    App\Providers\BankSyncServiceProvider::class,
 ];

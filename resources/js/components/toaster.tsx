@@ -25,7 +25,7 @@ export function Toaster(props: SonnerProps) {
                     toast: cx(
                         "group toast flex w-(--width) items-start",
                         "backdrop-blur-2xl group-[.toaster]:bg-state-faded-base group-[.toaster]:text-white group-[.toaster]:data-[type=error]:bg-state-error-base group-[.toaster]:data-[type=info]:bg-state-information-base group-[.toaster]:data-[type=success]:bg-state-success-base group-[.toaster]:data-[type=warning]:bg-state-warning-base",
-                        "gap-3 rounded-12 p-3.5",
+                        "gap-3 rounded-12 p-3.5 [&_[data-content]]:flex [&_[data-content]]:flex-1 [&_[data-content]]:flex-col [&_[data-content]]:gap-1",
                     ),
                     icon: "!size-5 !m-0 mt-0.5",
                     title: "text-label-sm h-5",

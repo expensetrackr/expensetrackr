@@ -165,8 +165,6 @@ final readonly class MeilisearchService
             $documentData['id'] = $documentId;
         }
 
-        dump('Updating document: ', $documentData);
-
         $result = $index->updateDocuments([$documentData]);
 
         return is_array($result) ? $result : [];
