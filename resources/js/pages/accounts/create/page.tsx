@@ -9,20 +9,20 @@ import { ConnectionTypeStep } from "#/components/create-account/connection-type-
 import { FlowSidebar } from "#/components/create-account/sidebar.tsx";
 import { TypeStep } from "#/components/create-account/type-step.tsx";
 import * as Button from "#/components/ui/button.tsx";
-import { useCreateAccountStates } from "#/hooks/use-create-account-states.ts";
-import { createAccount } from "#/utils/steppers/create-account.steps.ts";
+import { useCreateAccountParams } from "#/hooks/use-create-account-params.ts";
+import { CreateAccountStepper } from "#/utils/steppers/create-account.steps.ts";
 
 export default function CreateAccountPage() {
-    const stepper = createAccount.useStepper();
-    const { state } = useCreateAccountStates();
+    const stepper = CreateAccountStepper.useStepper();
+    const { type, connection_type: connectionType } = useCreateAccountParams();
 
     return (
         <>
             <Head title="Create account" />
 
-            <createAccount.Scoped>
+            <CreateAccountStepper.Scoped>
                 <div className="flex min-h-screen flex-col lg:grid lg:grid-cols-[auto_minmax(0,1fr)] lg:items-start">
-                    <FlowSidebar stepper={stepper} utils={createAccount.utils} />
+                    <FlowSidebar stepper={stepper} utils={CreateAccountStepper.utils} />
 
                     <div className="relative isolate mx-auto flex w-full max-w-[1392px] flex-1 flex-col">
                         <img
@@ -46,7 +46,7 @@ export default function CreateAccountPage() {
                             {stepper.when("type", (step) => (
                                 <Card
                                     actions={
-                                        state.type && (
+                                        type && (
                                             <Button.Root $size="sm" className="w-full" onClick={stepper.next}>
                                                 Continue
                                             </Button.Root>
@@ -64,12 +64,12 @@ export default function CreateAccountPage() {
                             {stepper.when("connection_type", (step) => (
                                 <Card
                                     actions={
-                                        state.connection_type && (
+                                        connectionType && (
                                             <Button.Root $size="sm" asChild className="w-full" type="submit">
                                                 <Link
                                                     href={route("accounts.create.connection-type", {
-                                                        connectionType: state.connection_type,
-                                                        type: state.type,
+                                                        connectionType,
+                                                        type,
                                                     })}
                                                 >
                                                     Continue
@@ -105,7 +105,7 @@ export default function CreateAccountPage() {
                         </div>
                     </div>
                 </div>
-            </createAccount.Scoped>
+            </CreateAccountStepper.Scoped>
         </>
     );
 }

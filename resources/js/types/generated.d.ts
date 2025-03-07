@@ -156,7 +156,6 @@ declare namespace App.Data.Teller {
         enrollmentId: string;
         id: string;
         institution: App.Data.Teller.TellerInstitutionData;
-        lastFour: string;
         name: string;
         type: App.Enums.Teller.AccountType;
         status: App.Enums.Teller.AccountStatus;

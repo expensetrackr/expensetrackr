@@ -1,6 +1,7 @@
-import { FormProvider, FormStateInput, getFormProps, useForm } from "@conform-to/react";
-import { getZodConstraint, parseWithZod } from "@conform-to/zod";
-import { Head, Link } from "@inertiajs/react";
+import { getFormProps, useForm } from "@conform-to/react";
+import { Head, Link, useForm as useInertiaForm } from "@inertiajs/react";
+import { parseWithValibot, getValibotConstraint } from "conform-to-valibot";
+import type * as v from "valibot";
 import TextboxDuotone from "virtual:icons/ph/textbox-duotone";
 import CloseIcon from "virtual:icons/ri/close-line";
 import HeadphoneIcon from "virtual:icons/ri/headphone-line";
@@ -11,11 +12,11 @@ import { Card } from "#/components/create-account/card.tsx";
 import { DetailsStep } from "#/components/create-account/details-step.tsx";
 import { FlowSidebar } from "#/components/create-account/sidebar.tsx";
 import * as Button from "#/components/ui/button.tsx";
-import { useCreateAccountStates } from "#/hooks/use-create-account-states.ts";
+import { useCreateAccountParams } from "#/hooks/use-create-account-params.ts";
 import {
-    type BalanceStepValues,
-    createManualAccount,
-    type DetailsStepValues,
+    type BalanceSchema,
+    CreateManualAccountStepper,
+    type DetailsSchema,
 } from "#/utils/steppers/create-account.steps";
 
 type CreateAccountPageProps = {
@@ -23,30 +24,33 @@ type CreateAccountPageProps = {
 };
 
 export default function CreateManualAccountPage({ currencies }: CreateAccountPageProps) {
-    const stepper = createManualAccount.useStepper();
-    const { state } = useCreateAccountStates();
+    const stepper = CreateManualAccountStepper.useStepper();
+    const { type } = useCreateAccountParams();
+    const { transform, post } = useInertiaForm();
     const [form, fields] = useForm({
-        id: "create-account",
+        id: `create-account-${stepper.current.id}-form`,
         shouldValidate: "onSubmit",
         shouldRevalidate: "onInput",
-        constraint: getZodConstraint(stepper.current.schema),
+        constraint: getValibotConstraint(stepper.current.schema),
         defaultValue: {
-            ...state,
+            type,
             initial_balance: "0.00",
         },
         onValidate({ formData }) {
-            return parseWithZod(formData, { schema: stepper.current.schema });
+            return parseWithValibot(formData, { schema: stepper.current.schema });
         },
         onSubmit(event, { submission }) {
             event.preventDefault();
 
-            console.info("submission:", submission);
+            // check if value key is present on submission object
+            if (submission && "value" in submission) {
+                if (stepper.isLast) {
+                    transform((data) => ({ ...data, ...submission.value }));
 
-            console.log(`Form values for step ${stepper.current.id}:`, submission);
-            if (stepper.isLast) {
-                stepper.reset();
-            } else {
-                stepper.next();
+                    post(route("accounts.create.manual"));
+                } else {
+                    stepper.next();
+                }
             }
         },
     });
@@ -55,9 +59,9 @@ export default function CreateManualAccountPage({ currencies }: CreateAccountPag
         <>
             <Head title="Create account manually" />
 
-            <createManualAccount.Scoped>
+            <CreateManualAccountStepper.Scoped>
                 <div className="flex min-h-screen flex-col lg:grid lg:grid-cols-[auto_minmax(0,1fr)] lg:items-start">
-                    <FlowSidebar stepper={stepper} utils={createManualAccount.utils} />
+                    <FlowSidebar stepper={stepper} utils={CreateManualAccountStepper.utils} />
 
                     <div className="relative isolate mx-auto flex w-full max-w-[1392px] flex-1 flex-col">
                         <img
@@ -80,56 +84,70 @@ export default function CreateManualAccountPage({ currencies }: CreateAccountPag
                             </Link>
                         </Button.Root>
 
-                        <FormProvider context={form.context}>
-                            <FormStateInput />
-
-                            <form method="post" {...getFormProps(form)} className="flex w-full justify-center py-12">
-                                {stepper.switch({
-                                    details: (step) => (
-                                        <Card
-                                            actions={
-                                                <Button.Root $size="sm" className="w-full" form={form.id} type="submit">
-                                                    Continue
-                                                </Button.Root>
+                        <form {...getFormProps(form)} className="flex w-full justify-center py-12">
+                            {stepper.switch({
+                                details: (step) => (
+                                    <Card
+                                        actions={
+                                            <Button.Root
+                                                $size="sm"
+                                                className="w-full"
+                                                form={`create-account-${step.id}-form`}
+                                                type="submit"
+                                            >
+                                                Continue
+                                            </Button.Root>
+                                        }
+                                        description="Enter your account's name and any additional details. The available options are customized based on your selected account type."
+                                        icon={TextboxDuotone}
+                                        key={step.id}
+                                        stepper={stepper}
+                                        title="Account details"
+                                    >
+                                        <DetailsStep
+                                            fields={
+                                                fields as ReturnType<
+                                                    typeof useForm<v.InferOutput<typeof DetailsSchema>>
+                                                >[1]
                                             }
-                                            description="Enter your account's name and any additional details. The available options are customized based on your selected account type."
-                                            icon={TextboxDuotone}
-                                            key={step.id}
-                                            stepper={stepper}
-                                            title="Account details"
-                                        >
-                                            <DetailsStep
-                                                fields={fields as ReturnType<typeof useForm<DetailsStepValues>>[1]}
-                                            />
-                                        </Card>
-                                    ),
-                                    balance: (step) => (
-                                        <Card
-                                            actions={
-                                                <Button.Root $size="sm" className="w-full" form={form.id} type="submit">
-                                                    Continue
-                                                </Button.Root>
+                                        />
+                                    </Card>
+                                ),
+                                balance: (step) => (
+                                    <Card
+                                        actions={
+                                            <Button.Root
+                                                $size="sm"
+                                                className="w-full"
+                                                form={`create-account-${step.id}-form`}
+                                                type="submit"
+                                            >
+                                                Continue
+                                            </Button.Root>
+                                        }
+                                        description="Enter your account's balance and currency. The available options are customized based on your selected account type."
+                                        icon={MoneyDollarCircleFillIcon}
+                                        key={step.id}
+                                        stepper={stepper}
+                                        title="Balance & Currency"
+                                    >
+                                        <BalanceStep
+                                            currencies={currencies}
+                                            fields={
+                                                fields as ReturnType<
+                                                    typeof useForm<v.InferOutput<typeof BalanceSchema>>
+                                                >[1]
                                             }
-                                            description="Enter your account's balance and currency. The available options are customized based on your selected account type."
-                                            icon={MoneyDollarCircleFillIcon}
-                                            key={step.id}
-                                            stepper={stepper}
-                                            title="Balance & Currency"
-                                        >
-                                            <BalanceStep
-                                                currencies={currencies}
-                                                fields={fields as ReturnType<typeof useForm<BalanceStepValues>>[1]}
-                                            />
-                                        </Card>
-                                    ),
-                                })}
-                            </form>
-                        </FormProvider>
+                                        />
+                                    </Card>
+                                ),
+                            })}
+                        </form>
 
                         <div className="mx-auto flex w-full max-w-md flex-col gap-3 p-4 lg:hidden">
                             <div className="flex flex-col gap-4 text-center">
                                 <div className="text-paragraph-sm text-(--text-sub-600)">
-                                    Having trouble with transfer?
+                                    Having trouble with account creation?
                                 </div>
                                 <Button.Root $style="stroke" $type="neutral">
                                     <Button.Icon as={HeadphoneIcon} />
@@ -143,7 +161,7 @@ export default function CreateManualAccountPage({ currencies }: CreateAccountPag
                         </div>
                     </div>
                 </div>
-            </createManualAccount.Scoped>
+            </CreateManualAccountStepper.Scoped>
         </>
     );
 }

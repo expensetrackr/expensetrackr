@@ -7,7 +7,7 @@ import * as Label from "../ui/label.tsx";
 type TextFieldProps = Omit<InputProps, "error"> & {
     error?: string | Array<string>;
     label?: string;
-    hint?: string | Array<string>;
+    hint?: string | Array<string> | Array<undefined>;
 };
 
 export function TextField({
@@ -53,7 +53,7 @@ export function TextField({
             {error || hint ? (
                 <Hint.Root
                     $disabled={rest.disabled}
-                    $error={$error}
+                    $error={!!error}
                     aria-describedby={[$error && `${id}-error`, `${id}-description`].filter(Boolean).join(" ")}
                 >
                     <Hint.Icon />

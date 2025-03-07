@@ -7,7 +7,8 @@ import ArrowRightSIcon from "virtual:icons/ri/arrow-right-s-line";
 import CloseIcon from "virtual:icons/ri/close-line";
 import HeadphoneIcon from "virtual:icons/ri/headphone-line";
 
-import { useCreateAccountStates } from "#/hooks/use-create-account-states.ts";
+import { useCreateAccountParams } from "#/hooks/use-create-account-params.ts";
+import { ConnectionTypeEnum } from "#/schemas/account.ts";
 import * as Button from "../ui/button.tsx";
 import * as VerticalStepper from "../ui/vertical-stepper.tsx";
 
@@ -17,7 +18,7 @@ type FlowSidebarProps<Steps extends Step[]> = {
 };
 
 export function FlowSidebar<Steps extends Step[]>({ stepper, utils }: FlowSidebarProps<Steps>) {
-    const { state } = useCreateAccountStates();
+    const { connection_type: connectionType } = useCreateAccountParams();
 
     const getState = (index: number) => {
         if (utils.getIndex(stepper.current.id) > index) return "completed";
@@ -93,7 +94,7 @@ export function FlowSidebar<Steps extends Step[]>({ stepper, utils }: FlowSideba
                                     {stepper.all
                                         .filter((step) => {
                                             // if connection type is connect, remove the following steps: details, balance, complete
-                                            if (state.connection_type === "connect") {
+                                            if (connectionType === ConnectionTypeEnum.enum.Connect) {
                                                 if (
                                                     step.id === "details" ||
                                                     step.id === "balance" ||

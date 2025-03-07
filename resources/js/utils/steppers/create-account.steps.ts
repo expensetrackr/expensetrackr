@@ -1,91 +1,78 @@
 import { defineStepper } from "@stepperize/react";
-import { z } from "zod";
+import * as v from "valibot";
 
-import { accountSchema, accountTypeEnum } from "#/schemas/account.ts";
-import { bankAccountProvider } from "#/schemas/bank-account.ts";
-import { zodDecimal } from "../zod-decimal.ts";
+import { AccountSchema, AccountTypeEnum } from "#/schemas/account.ts";
 
-export const detailsSchema = accountSchema.pick({ name: true, description: true, subtype: true }).merge(
-    z.object({
-        type: accountTypeEnum,
-    }),
-);
-
-export const creditCardDetailsSchema = z.object({
-    available_balance: zodDecimal().wholeNumber(10),
-    minimum_payment: zodDecimal().wholeNumber(10),
-    apr: zodDecimal().wholeNumber(10),
-    annual_fee: zodDecimal().wholeNumber(10),
-    expires_at: z.string().datetime(),
+export const DetailsSchema = v.object({
+    ...v.pick(AccountSchema, ["name", "description", "subtype"]).entries,
+    type: AccountTypeEnum,
 });
 
-export const interestRateTypeEnum = z.enum(["fixed", "variable", "adjustable"]);
-export const loanDetailsSchema = z.object({
-    interest_rate: zodDecimal().wholeNumber(10),
-    interest_rate_type: interestRateTypeEnum,
-    term_months: z.number().min(1),
-});
-
-export const baseBalanceSchema = accountSchema.pick({
-    initial_balance: true,
-    current_balance: true,
-    currency_code: true,
-});
-
-export const balanceSchema = z.discriminatedUnion("type", [
-    baseBalanceSchema.extend({
-        type: z.literal(accountTypeEnum.Enum.depository),
-    }),
-    baseBalanceSchema.extend({
-        type: z.literal(accountTypeEnum.Enum.investment),
-    }),
-    baseBalanceSchema.extend({
-        type: z.literal(accountTypeEnum.Enum.credit_card),
-        ...creditCardDetailsSchema.shape,
-    }),
-    baseBalanceSchema.extend({
-        type: z.literal(accountTypeEnum.Enum.loan),
-        ...loanDetailsSchema.shape,
-    }),
-]);
-
-export const createAccountSchema = balanceSchema.and(detailsSchema);
-
-export const connectAccountsSchema = z.object({
-    provider_connection_id: z.string().nullish(),
-    provider_type: bankAccountProvider,
-    access_token: z.string(),
-    accounts: z.array(
-        z.object({
-            institution_id: z.string(),
-            institution_logo_url: z.string().nullish(),
-            institution_name: z.string(),
-            name: z.string(),
-            account_id: z.string(),
-            currency: z.string(),
-            balance: zodDecimal().wholeNumber(10),
-            enabled: z.boolean(),
-            type: accountTypeEnum,
-            token_expires_at: z.string().datetime().nullish(),
-        }),
+export const CreditCardDetailsSchema = v.object({
+    available_balance: v.pipe(v.string(), v.decimal("The decimal is badly formatted.")),
+    minimum_payment: v.pipe(v.string(), v.decimal("The decimal is badly formatted.")),
+    apr: v.pipe(
+        v.number("You must provide an APR."),
+        v.minValue(0, "The APR must be greater than 0%."),
+        v.maxValue(100, "The APR must be less than 100%."),
+    ),
+    annual_fee: v.pipe(v.string(), v.decimal("The decimal is badly formatted.")),
+    expires_at: v.pipe(
+        v.string("You must provide an expiration date."),
+        v.minLength(10, "The expiration date is invalid."),
     ),
 });
 
-export const createAccount = defineStepper(
+const InterestRateType = {
+    Fixed: "fixed",
+    Variable: "variable",
+    Adjustable: "adjustable",
+} as const;
+export const InterestRateTypeEnum = v.enum(InterestRateType);
+
+export const LoanDetailsSchema = v.object({
+    interest_rate: v.pipe(v.string(), v.decimal("The decimal is badly formatted.")),
+    interest_rate_type: InterestRateTypeEnum,
+    term_months: v.pipe(v.number(), v.minValue(1)),
+});
+
+export const BaseBalanceSchema = v.pick(AccountSchema, ["initial_balance", "current_balance", "currency_code"]);
+
+export const BalanceSchema = v.variant("type", [
+    v.object({
+        type: v.literal(AccountTypeEnum.enum.Depository),
+        ...BaseBalanceSchema.entries,
+    }),
+    v.object({
+        type: v.literal(AccountTypeEnum.enum.Investment),
+        ...BaseBalanceSchema.entries,
+    }),
+    v.object({
+        type: v.literal(AccountTypeEnum.enum.CreditCard),
+        ...BaseBalanceSchema.entries,
+        ...CreditCardDetailsSchema.entries,
+    }),
+    v.object({
+        type: v.literal(AccountTypeEnum.enum.Loan),
+        ...BaseBalanceSchema.entries,
+        ...LoanDetailsSchema.entries,
+    }),
+]);
+
+export const CreateAccountSchema = v.intersect([BalanceSchema, DetailsSchema]);
+
+export const CreateAccountStepper = defineStepper(
     { id: "type", label: "Type" },
     { id: "connection_type", label: "Connection" },
 );
 
-export const createManualAccount = defineStepper(
-    { id: "details", label: "Details", schema: detailsSchema },
-    { id: "balance", label: "Balance & Currency", schema: balanceSchema },
-    { id: "complete", label: "Account Summary", schema: createAccountSchema },
+export const CreateManualAccountStepper = defineStepper(
+    { id: "details", label: "Details", schema: DetailsSchema },
+    { id: "balance", label: "Balance & Currency", schema: BalanceSchema },
+    { id: "complete", label: "Account Summary", schema: CreateAccountSchema },
 );
 
 export const ConnectAccountStepper = defineStepper(
     { id: "institution-selection", label: "Institution selection" },
-    { id: "bank-accounts-selection", label: "Bank accounts selection", schema: connectAccountsSchema },
+    { id: "bank-accounts-selection", label: "Bank accounts selection" },
 );
-
-export type DetailsStepValues = z.infer<typeof detailsSchema>;
-export type BalanceStepValues = z.infer<typeof balanceSchema>;

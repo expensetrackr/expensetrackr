@@ -1,4 +1,5 @@
 import * as LabelPrimivites from "@radix-ui/react-label";
+import type * as v from "valibot";
 import BoxesDuotone from "virtual:icons/lucide/package-search";
 import ChartLineIcon from "virtual:icons/mdi/finance";
 import BankDuotoneIcon from "virtual:icons/ph/bank-duotone";
@@ -6,51 +7,50 @@ import BankCardDuotoneIcon from "virtual:icons/ph/credit-card-duotone";
 import HandCoinsDuotone from "virtual:icons/ph/hand-coins-duotone";
 import CryptoDuotone from "virtual:icons/tabler/currency-bitcoin";
 import ReceiptDuotone from "virtual:icons/tabler/receipt-2";
-import { type z } from "zod";
 
-import { useCreateAccountStates } from "#/hooks/use-create-account-states.ts";
-import { accountTypeEnum } from "#/schemas/account.ts";
+import { useCreateAccountParams } from "#/hooks/use-create-account-params.ts";
+import { AccountTypeEnum, ConnectionTypeEnum } from "#/schemas/account.ts";
 import { cn } from "#/utils/cn.ts";
 import * as Radio from "../ui/radio.tsx";
 
 const accountTypes = {
-    [accountTypeEnum.enum.depository]: {
+    [AccountTypeEnum.enum.Depository]: {
         icon: BankDuotoneIcon,
         title: "Depository",
         description: "Checking, savings, or money market accounts",
         color: "bg-blue-50 text-blue-500 dark:bg-blue-400/20 dark:text-blue-400",
     },
-    [accountTypeEnum.enum.investment]: {
+    [AccountTypeEnum.enum.Investment]: {
         icon: ChartLineIcon,
         title: "Investment",
         description: "Stocks, bonds, mutual funds, and other investment accounts",
         color: "bg-teal-50 text-teal-500 dark:bg-teal-400/20 dark:text-teal-400",
     },
-    [accountTypeEnum.enum.crypto]: {
+    [AccountTypeEnum.enum.Crypto]: {
         icon: CryptoDuotone,
         title: "Crypto",
         description: "Cryptocurrency and digital asset accounts",
         color: "bg-yellow-50 text-yellow-500 dark:bg-yellow-400/20 dark:text-yellow-400",
     },
-    [accountTypeEnum.enum.credit_card]: {
+    [AccountTypeEnum.enum.CreditCard]: {
         icon: BankCardDuotoneIcon,
         title: "Credit card",
         description: "Track credit card balances and payments",
         color: "bg-purple-50 text-purple-500 dark:bg-purple-400/20 dark:text-purple-400",
     },
-    [accountTypeEnum.enum.loan]: {
+    [AccountTypeEnum.enum.Loan]: {
         icon: HandCoinsDuotone,
         title: "Loan",
         description: "Personal, auto, student, or mortgage loans",
         color: "bg-sky-50 text-sky-500 dark:bg-sky-400/20 dark:text-sky-400",
     },
-    [accountTypeEnum.enum.other_asset]: {
+    [AccountTypeEnum.enum.OtherAsset]: {
         icon: BoxesDuotone,
         title: "Other asset",
         description: "Vehicles, property, or other valuable assets",
         color: "bg-teal-50 text-teal-500 dark:bg-teal-400/20 dark:text-teal-400",
     },
-    [accountTypeEnum.enum.other_liability]: {
+    [AccountTypeEnum.enum.OtherLiability]: {
         icon: ReceiptDuotone,
         title: "Other liability",
         description: "Any other debts or financial obligations",
@@ -59,14 +59,15 @@ const accountTypes = {
 };
 
 export function TypeStep() {
-    const { state, setState } = useCreateAccountStates();
+    const { type, connection_type: connectionType, setParams } = useCreateAccountParams();
 
-    async function handleChange(value: z.infer<typeof accountTypeEnum>) {
-        const isConnectionAvailable = value === "depository" || value === "credit_card";
+    async function handleChange(value: v.InferOutput<typeof AccountTypeEnum>) {
+        const isConnectionAvailable =
+            value === AccountTypeEnum.enum.Depository || value === AccountTypeEnum.enum.CreditCard;
 
-        await setState({
+        await setParams({
             type: value,
-            ...(!isConnectionAvailable && state.connection_type === "connect"
+            ...(!isConnectionAvailable && connectionType === ConnectionTypeEnum.enum.Connect
                 ? {
                       connection_type: null,
                   }
@@ -80,9 +81,9 @@ export function TypeStep() {
             name="type"
             onValueChange={handleChange}
             required
-            value={state.type ?? undefined}
+            value={type ?? undefined}
         >
-            {accountTypeEnum.options.map((option) => {
+            {AccountTypeEnum.options.map((option) => {
                 const Icon = accountTypes[option].icon;
                 return (
                     <LabelPrimivites.Root

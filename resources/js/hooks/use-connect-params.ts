@@ -1,6 +1,6 @@
 import { parseAsString, useQueryStates, parseAsStringEnum } from "nuqs";
 
-import { bankAccountProvider } from "#/schemas/bank-account";
+import { BankConnectionProviderSchema } from "#/schemas/bank-connection.ts";
 
 export function useConnectParams(initialCountryCode?: string) {
     const [params, setParams] = useQueryStates({
@@ -8,7 +8,7 @@ export function useConnectParams(initialCountryCode?: string) {
             "institution-selection",
         ),
         countryCode: parseAsString.withDefault(initialCountryCode ?? ""),
-        provider: parseAsStringEnum(bankAccountProvider.options),
+        provider: parseAsStringEnum(BankConnectionProviderSchema.options),
         token: parseAsString,
         enrollment_id: parseAsString,
         institution_id: parseAsString,

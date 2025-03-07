@@ -20,8 +20,6 @@ final class TellerAccountData extends Data
         public readonly string $enrollmentId,
         public readonly string $id,
         public readonly TellerInstitutionData $institution,
-        #[MapName('last_four')]
-        public readonly string $lastFour,
         public readonly string $name,
         public readonly AccountType $type,
         public readonly AccountStatus $status,

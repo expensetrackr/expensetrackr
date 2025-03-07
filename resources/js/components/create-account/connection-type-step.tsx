@@ -1,21 +1,21 @@
 import * as LabelPrimivites from "@radix-ui/react-label";
+import type * as v from "valibot";
 import KeyboardIcon from "virtual:icons/ri/keyboard-line";
 import LinkIcon from "virtual:icons/ri/link";
-import { type z } from "zod";
 
-import { useCreateAccountStates } from "#/hooks/use-create-account-states.ts";
-import { connectionTypeEnum } from "#/schemas/account.ts";
+import { useCreateAccountParams } from "#/hooks/use-create-account-params.ts";
+import { ConnectionTypeEnum } from "#/schemas/account.ts";
 import { cn } from "#/utils/cn.ts";
 import * as Radio from "../ui/radio.tsx";
 
 const connectionTypes = {
-    [connectionTypeEnum.enum.connect]: {
+    [ConnectionTypeEnum.enum.Connect]: {
         icon: LinkIcon,
         title: "Connect your bank",
         description: "Connect your account using one of our supported providers",
         color: "bg-blue-50 text-blue-500 dark:bg-blue-400/20 dark:text-blue-400",
     },
-    [connectionTypeEnum.enum.manual]: {
+    [ConnectionTypeEnum.enum.Manual]: {
         icon: KeyboardIcon,
         title: "Manual",
         description: "Manually add your account information",
@@ -24,10 +24,10 @@ const connectionTypes = {
 };
 
 export function ConnectionTypeStep() {
-    const { state, setState } = useCreateAccountStates();
+    const { type, connection_type: connectionType, setParams } = useCreateAccountParams();
 
-    const handleChange = async (value: z.infer<typeof connectionTypeEnum>) => {
-        await setState({ connection_type: value });
+    const handleChange = async (value: v.InferOutput<typeof ConnectionTypeEnum>) => {
+        await setParams({ connection_type: value });
     };
 
     return (
@@ -36,13 +36,11 @@ export function ConnectionTypeStep() {
             name="connection_type"
             onValueChange={handleChange}
             required
-            value={state.connection_type ?? undefined}
+            value={connectionType ?? undefined}
         >
-            {connectionTypeEnum.options
+            {ConnectionTypeEnum.options
                 .filter((option) =>
-                    state.type !== "depository" && state.type !== "credit_card"
-                        ? option === connectionTypeEnum.enum.manual
-                        : true,
+                    type !== "depository" && type !== "credit_card" ? option === ConnectionTypeEnum.enum.Manual : true,
                 )
                 .map((option) => {
                     const Icon = connectionTypes[option].icon;

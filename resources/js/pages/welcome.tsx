@@ -1,8 +1,8 @@
 import { getFormProps, useForm } from "@conform-to/react";
-import { getZodConstraint, parseWithZod } from "@conform-to/zod";
 import NumberFlow, { type Format } from "@number-flow/react";
 import { resolveCurrencyFormat } from "@sumup/intl";
 import { Image, Source } from "@unpic/react";
+import { getValibotConstraint, parseWithValibot } from "conform-to-valibot";
 import * as React from "react";
 import MailIcon from "virtual:icons/material-symbols/mail";
 import GithubIcon from "virtual:icons/mdi/github";
@@ -27,7 +27,7 @@ import * as SegmentedControl from "#/components/ui/segmented-control.tsx";
 import { useTranslation } from "#/hooks/use-translation.ts";
 import { cx } from "#/utils/cva.ts";
 import { plans } from "#/utils/plans.ts";
-import { balanceSchema } from "#/utils/steppers/create-account.steps.ts";
+import { BalanceSchema } from "#/utils/steppers/create-account.steps.ts";
 import { Card } from "../components/create-account/card.tsx";
 
 export default function WelcomePage() {
@@ -214,13 +214,13 @@ function ImageAndTextSection() {
         id: "create-account-example",
         shouldValidate: "onSubmit",
         shouldRevalidate: "onInput",
-        constraint: getZodConstraint(balanceSchema),
+        constraint: getValibotConstraint(BalanceSchema),
         defaultValue: {
             type: "credit_card",
             initial_balance: "0.00",
         },
         onValidate({ formData }) {
-            return parseWithZod(formData, { schema: balanceSchema });
+            return parseWithValibot(formData, { schema: BalanceSchema });
         },
         onSubmit(event, { submission }) {
             event.preventDefault();

@@ -33,5 +33,3 @@ export const AccountSubtype = {
     ...DepositorySubtype,
     ...InvestmentSubtype,
 } as const;
-
-export type AccountTypes = (typeof AccountType)[keyof typeof AccountType];

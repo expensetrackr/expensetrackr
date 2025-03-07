@@ -6,10 +6,11 @@ import Decimal from "decimal.js";
 import { CurrencyInput } from "headless-currency-input";
 import * as React from "react";
 import { type NumberFormatValues } from "react-number-format";
+import type * as v from "valibot";
 
-import { useCreateAccountStates } from "#/hooks/use-create-account-states.ts";
+import { useCreateAccountParams } from "#/hooks/use-create-account-params.ts";
 import { useTranslation } from "#/hooks/use-translation.ts";
-import { type BalanceStepValues, interestRateTypeEnum } from "#/utils/steppers/create-account.steps.ts";
+import { InterestRateTypeEnum, type BalanceSchema } from "#/utils/steppers/create-account.steps.ts";
 import { Select as SelectComponent } from "../form/select.tsx";
 import { TextField } from "../form/text-field.tsx";
 import * as Button from "../ui/button.tsx";
@@ -23,11 +24,11 @@ import * as Select from "../ui/select.tsx";
 
 type DetailsStepProps = {
     currencies: Array<string>;
-    fields: ReturnType<typeof useForm<BalanceStepValues>>[1];
+    fields: ReturnType<typeof useForm<v.InferOutput<typeof BalanceSchema>>>[1];
 };
 
 export function BalanceStep({ currencies, fields }: DetailsStepProps) {
-    const { state } = useCreateAccountStates();
+    const { type } = useCreateAccountParams();
     const currencyCodeControl = useInputControl(fields.currency_code);
     const currencyFormat = resolveCurrencyFormat("en", currencyCodeControl.value || "USD");
     const initialBalanceControl = useInputControl(fields.initial_balance);
@@ -39,7 +40,7 @@ export function BalanceStep({ currencies, fields }: DetailsStepProps) {
 
     return (
         <>
-            <input {...getInputProps(fields.type, { type: "hidden", value: false })} value={state.type || ""} />
+            <input {...getInputProps(fields.type, { type: "hidden", value: false })} value={type || ""} />
 
             <CurrencyInput
                 currency={currencyFormat?.currency || "USD"}
@@ -63,9 +64,9 @@ export function BalanceStep({ currencies, fields }: DetailsStepProps) {
                 withCurrencySymbol={false}
             />
 
-            {(state.type === "credit_card" || state.type === "loan") && <Divider.Root />}
+            {(type === "credit_card" || type === "loan") && <Divider.Root />}
 
-            {state.type === "credit_card" && (
+            {type === "credit_card" && (
                 <CreditCardFields
                     currencyFormat={currencyFormat}
                     fields={fields}
@@ -73,7 +74,7 @@ export function BalanceStep({ currencies, fields }: DetailsStepProps) {
                 />
             )}
 
-            {state.type === "loan" && <LoanFields fields={fields} />}
+            {type === "loan" && <LoanFields fields={fields} />}
         </>
     );
 }
@@ -123,7 +124,7 @@ function SelectCurrencies({ currencies, ...rest }: SelectCurrenciesProps) {
 }
 
 type CreditCardFieldsProps = {
-    fields: ReturnType<typeof useForm<BalanceStepValues>>[1];
+    fields: ReturnType<typeof useForm<v.InferOutput<typeof BalanceSchema>>>[1];
     currencyFormat: NumberFormat | null;
     handleMoneyChange(value: NumberFormatValues): void;
 };
@@ -136,6 +137,8 @@ function CreditCardFields({ fields, currencyFormat, handleMoneyChange }: CreditC
 
     return (
         <>
+            <input {...getInputProps(fields.expires_at, { type: "hidden" })} />
+
             <CurrencyInput
                 currency={currencyFormat?.currency || "USD"}
                 customInput={TextField}
@@ -236,7 +239,7 @@ function CreditCardFields({ fields, currencyFormat, handleMoneyChange }: CreditC
 }
 
 type LoanFieldsProps = {
-    fields: ReturnType<typeof useForm<BalanceStepValues>>[1];
+    fields: ReturnType<typeof useForm<v.InferOutput<typeof BalanceSchema>>>[1];
 };
 
 function LoanFields({ fields }: LoanFieldsProps) {
@@ -263,7 +266,7 @@ function LoanFields({ fields }: LoanFieldsProps) {
                     label={t("form.fields.interest_rate_type.label")}
                     name={fields.interest_rate_type.name}
                     onValueChange={interestRateTypeControl.change}
-                    options={interestRateTypeEnum.options.map((option) => ({
+                    options={InterestRateTypeEnum.options.map((option) => ({
                         label: option,
                         value: option,
                     }))}

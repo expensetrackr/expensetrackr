@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Data\AccountData;
 use App\Data\BalanceData;
+use App\Data\InstitutionData;
+use App\Data\Teller\TellerAccountBalanceData;
 use App\Data\Teller\TellerAccountData;
 use App\Enums\AccountSubtype;
 use App\Enums\AccountType;
@@ -40,10 +43,10 @@ final class TellerService
     {
         $accounts = collect(TellerAccountData::collect($this->get('/accounts')));
 
-        return $accounts->map(function (TellerAccountData $account): TellerAccountData {
+        return $accounts->map(function (TellerAccountData $account): AccountData {
             $balance = $this->getAccountBalances($account->id);
 
-            return TellerAccountData::from([
+            return AccountData::from([
                 'id' => $account->id,
                 'name' => $account->name,
                 'currency' => $account->currency,
