@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "72ba9e060adc7c24500f014ae0ed2229",
+    "content-hash": "70d370fc8fc16e2c734d74f5a18e5852",
     "packages": [
         {
             "name": "akaunting/laravel-money",
@@ -2474,23 +2474,23 @@
         },
         {
             "name": "danestves/laravel-polar",
-            "version": "0.2.0",
+            "version": "v0.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/danestves/laravel-polar.git",
-                "reference": "03fa84ff1644cb6ed37d5b3378aa78c9ccd14daa"
+                "reference": "0ead4aa009c8b501c5cd2e6732b3989563e8d8ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/danestves/laravel-polar/zipball/03fa84ff1644cb6ed37d5b3378aa78c9ccd14daa",
-                "reference": "03fa84ff1644cb6ed37d5b3378aa78c9ccd14daa",
+                "url": "https://api.github.com/repos/danestves/laravel-polar/zipball/0ead4aa009c8b501c5cd2e6732b3989563e8d8ef",
+                "reference": "0ead4aa009c8b501c5cd2e6732b3989563e8d8ef",
                 "shasum": ""
             },
             "require": {
                 "illuminate/contracts": "^10.0||^11.0||^12.0",
                 "php": "^8.3",
                 "pinkary-project/type-guard": "0.1.0",
-                "polar-sh/sdk": "0.1.1",
+                "polar-sh/sdk": "0.2.0",
                 "spatie/laravel-package-tools": "1.19.0",
                 "spatie/laravel-webhook-client": "3.4.3",
                 "standard-webhooks/standard-webhooks": "dev-main"
@@ -2500,7 +2500,7 @@
                 "laravel/pint": "1.21.0",
                 "mockery/mockery": "^0.9||^1.5",
                 "nunomaduro/collision": "^8.1.1||^7.10.0",
-                "orchestra/testbench": "^8.0||^9.0",
+                "orchestra/testbench": "^8.0||^9.0||^10.0",
                 "pestphp/pest": "^2.0||^3.0",
                 "pestphp/pest-plugin-arch": "^2.0||^3.0",
                 "pestphp/pest-plugin-laravel": "^2.0||^3.0",
@@ -2547,7 +2547,7 @@
             ],
             "support": {
                 "issues": "https://github.com/danestves/laravel-polar/issues",
-                "source": "https://github.com/danestves/laravel-polar/tree/v0.2.0"
+                "source": "https://github.com/danestves/laravel-polar/tree/v0.3.0"
             },
             "funding": [
                 {
@@ -2559,7 +2559,7 @@
                     "type": "polar"
                 }
             ],
-            "time": "2025-03-03T19:52:58+00:00"
+            "time": "2025-03-07T15:59:25+00:00"
         },
         {
             "name": "danharrin/date-format-converter",
@@ -8723,16 +8723,16 @@
         },
         {
             "name": "polar-sh/sdk",
-            "version": "v0.1.1",
+            "version": "v0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/polarsource/polar-php.git",
-                "reference": "5f95fd42e86fa538460d89304423537cd0da2d4a"
+                "reference": "68e75d362497ff4e04347426a86b71e2ee95ce14"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/polarsource/polar-php/zipball/5f95fd42e86fa538460d89304423537cd0da2d4a",
-                "reference": "5f95fd42e86fa538460d89304423537cd0da2d4a",
+                "url": "https://api.github.com/repos/polarsource/polar-php/zipball/68e75d362497ff4e04347426a86b71e2ee95ce14",
+                "reference": "68e75d362497ff4e04347426a86b71e2ee95ce14",
                 "shasum": ""
             },
             "require": {
@@ -8742,7 +8742,7 @@
                 "guzzlehttp/guzzle": "^7.0",
                 "php": "^8.2",
                 "phpdocumentor/type-resolver": "^1.8",
-                "speakeasy/serializer": "^4.0.0"
+                "speakeasy/serializer": "^4.0.3"
             },
             "require-dev": {
                 "laravel/pint": "^1.18.1",
@@ -8770,9 +8770,9 @@
             ],
             "support": {
                 "issues": "https://github.com/polarsource/polar-php/issues",
-                "source": "https://github.com/polarsource/polar-php/tree/v0.1.1"
+                "source": "https://github.com/polarsource/polar-php/tree/v0.2.0"
             },
-            "time": "2025-02-20T09:08:36+00:00"
+            "time": "2025-03-07T08:46:09+00:00"
         },
         {
             "name": "pragmarx/google2fa",
