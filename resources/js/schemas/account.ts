@@ -13,14 +13,20 @@ export const InvestmentSubtypeEnum = v.enum(InvestmentSubtype);
 export const AccountSubtypeEnum = v.enum(AccountSubtype);
 export const ConnectionTypeEnum = v.enum(ConnectionType);
 
+export const SubtypeOptions = {
+    [AccountTypeEnum.enum.Depository]: DepositorySubtypeEnum.options,
+    [AccountTypeEnum.enum.Investment]: InvestmentSubtypeEnum.options,
+};
+
 export const AccountSchema = v.object({
     id: v.number(),
     name: v.string(),
-    description: v.nullable(v.string()),
+    description: v.optional(v.nullable(v.string())),
     subtype: v.optional(v.nullable(AccountSubtypeEnum)),
     currency_code: v.string(),
-    initial_balance: v.pipe(v.string(), v.decimal("The decimal is badly formatted.")),
-    current_balance: v.pipe(v.string(), v.decimal("The decimal is badly formatted.")),
+    // TODO: properly validate decimals
+    initial_balance: v.string(),
+    current_balance: v.string(),
     is_default: v.boolean(),
     public_id: v.string(),
     workspace_id: v.number(),

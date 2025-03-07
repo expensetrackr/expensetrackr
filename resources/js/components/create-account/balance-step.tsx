@@ -10,7 +10,7 @@ import type * as v from "valibot";
 
 import { useCreateAccountParams } from "#/hooks/use-create-account-params.ts";
 import { useTranslation } from "#/hooks/use-translation.ts";
-import { InterestRateTypeEnum, type BalanceSchema } from "#/utils/steppers/create-account.steps.ts";
+import { InterestRateTypeEnum, type BalanceSchema } from "#/utils/steppers/create-account.step.ts";
 import { Select as SelectComponent } from "../form/select.tsx";
 import { TextField } from "../form/text-field.tsx";
 import * as Button from "../ui/button.tsx";
@@ -29,18 +29,21 @@ type DetailsStepProps = {
 
 export function BalanceStep({ currencies, fields }: DetailsStepProps) {
     const { type } = useCreateAccountParams();
+    const { language } = useTranslation();
     const currencyCodeControl = useInputControl(fields.currency_code);
-    const currencyFormat = resolveCurrencyFormat("en", currencyCodeControl.value || "USD");
+    const currencyFormat = resolveCurrencyFormat(language, currencyCodeControl.value || "USD");
     const initialBalanceControl = useInputControl(fields.initial_balance);
 
     function handleMoneyChange(value: NumberFormatValues) {
         const decimalValue = new Decimal(value.value).toDecimalPlaces(currencyFormat?.minimumFractionDigits);
-        initialBalanceControl.change(decimalValue.toFixed(currencyFormat?.minimumFractionDigits));
+
+        return decimalValue.toFixed(currencyFormat?.minimumFractionDigits);
     }
 
     return (
         <>
             <input {...getInputProps(fields.type, { type: "hidden", value: false })} value={type || ""} />
+            <input {...getInputProps(fields.currency_code, { type: "hidden" })} />
 
             <CurrencyInput
                 currency={currencyFormat?.currency || "USD"}
@@ -126,13 +129,14 @@ function SelectCurrencies({ currencies, ...rest }: SelectCurrenciesProps) {
 type CreditCardFieldsProps = {
     fields: ReturnType<typeof useForm<v.InferOutput<typeof BalanceSchema>>>[1];
     currencyFormat: NumberFormat | null;
-    handleMoneyChange(value: NumberFormatValues): void;
+    handleMoneyChange(value: NumberFormatValues): string;
 };
 
 function CreditCardFields({ fields, currencyFormat, handleMoneyChange }: CreditCardFieldsProps) {
     const availableBalanceControl = useInputControl(fields.available_balance);
     const minimumPaymentControl = useInputControl(fields.minimum_payment);
     const expiresAtControl = useInputControl(fields.expires_at);
+    const annualFeeControl = useInputControl(fields.annual_fee);
     const { t } = useTranslation();
 
     return (
@@ -148,7 +152,7 @@ function CreditCardFields({ fields, currencyFormat, handleMoneyChange }: CreditC
                 }
                 label={t("form.fields.available_balance.label")}
                 name="available_balance"
-                onValueChange={handleMoneyChange}
+                onValueChange={(values) => availableBalanceControl.change(handleMoneyChange(values))}
                 placeholder={t("form.fields.available_balance.placeholder")}
                 value={availableBalanceControl.value}
                 withCurrencySymbol={false}
@@ -164,7 +168,7 @@ function CreditCardFields({ fields, currencyFormat, handleMoneyChange }: CreditC
                     }
                     label={t("form.fields.minimum_payment.label")}
                     name="minimum_payment"
-                    onValueChange={handleMoneyChange}
+                    onValueChange={(values) => minimumPaymentControl.change(handleMoneyChange(values))}
                     placeholder={t("form.fields.minimum_payment.placeholder")}
                     value={minimumPaymentControl.value}
                     withCurrencySymbol={false}
@@ -181,58 +185,75 @@ function CreditCardFields({ fields, currencyFormat, handleMoneyChange }: CreditC
                 />
             </div>
 
-            <div className="flex flex-col gap-1">
-                <Label.Root htmlFor={fields.expires_at.id}>{t("form.fields.expires_at.label")}</Label.Root>
+            <div className="grid grid-cols-2 gap-4">
+                <div className="flex flex-col gap-1">
+                    <Label.Root htmlFor={fields.expires_at.id}>{t("form.fields.expires_at.label")}</Label.Root>
 
-                <Popover.Root>
-                    <Popover.Trigger asChild>
-                        <Button.Root $style="stroke" $type="neutral" id={fields.expires_at.id}>
-                            {expiresAtControl.value
-                                ? format(expiresAtControl.value, "LLL dd, y")
-                                : t("form.fields.expires_at.placeholder")}
-                        </Button.Root>
-                    </Popover.Trigger>
-                    <Popover.Content className="p-0" showArrow={false}>
-                        <DatepickerPrimivites.Calendar
-                            mode="single"
-                            onSelect={(date) => {
-                                expiresAtControl.change(date?.toISOString());
-                            }}
-                            selected={expiresAtControl.value ? new Date(expiresAtControl.value) : undefined}
-                        />
-                        <div className="flex items-center justify-between gap-4 border-t border-(--stroke-soft-200) p-4 py-5">
-                            <Popover.Close asChild unstyled>
-                                <Button.Root
-                                    $size="sm"
-                                    $style="stroke"
-                                    $type="neutral"
-                                    className="w-full"
-                                    //onClick={handleCancel}
-                                >
-                                    {t("common.cancel")}
-                                </Button.Root>
-                            </Popover.Close>
-                            <Popover.Close asChild unstyled>
-                                <Button.Root
-                                    $size="sm"
-                                    $style="filled"
-                                    $type="primary"
-                                    className="w-full"
-                                    //onClick={handleApply}
-                                >
-                                    {t("common.apply")}
-                                </Button.Root>
-                            </Popover.Close>
-                        </div>
-                    </Popover.Content>
-                </Popover.Root>
+                    <Popover.Root>
+                        <Popover.Trigger asChild>
+                            <Button.Root $style="stroke" $type="neutral" id={fields.expires_at.id}>
+                                {expiresAtControl.value
+                                    ? format(expiresAtControl.value, "LLL dd, y")
+                                    : t("form.fields.expires_at.placeholder")}
+                            </Button.Root>
+                        </Popover.Trigger>
+                        <Popover.Content className="p-0" showArrow={false}>
+                            <DatepickerPrimivites.Calendar
+                                mode="single"
+                                onSelect={(date) => {
+                                    expiresAtControl.change(date?.toISOString());
+                                }}
+                                selected={expiresAtControl.value ? new Date(expiresAtControl.value) : undefined}
+                            />
+                            <div className="flex items-center justify-between gap-4 border-t border-(--stroke-soft-200) p-4 py-5">
+                                <Popover.Close asChild unstyled>
+                                    <Button.Root
+                                        $size="sm"
+                                        $style="stroke"
+                                        $type="neutral"
+                                        className="w-full"
+                                        //onClick={handleCancel}
+                                    >
+                                        {t("common.cancel")}
+                                    </Button.Root>
+                                </Popover.Close>
+                                <Popover.Close asChild unstyled>
+                                    <Button.Root
+                                        $size="sm"
+                                        $style="filled"
+                                        $type="primary"
+                                        className="w-full"
+                                        //onClick={handleApply}
+                                    >
+                                        {t("common.apply")}
+                                    </Button.Root>
+                                </Popover.Close>
+                            </div>
+                        </Popover.Content>
+                    </Popover.Root>
 
-                {fields.expires_at.errors ? (
-                    <Hint.Root $error aria-describedby={`${fields.expires_at.id}-error`}>
-                        <Hint.Icon />
-                        {fields.expires_at.errors}
-                    </Hint.Root>
-                ) : null}
+                    {fields.expires_at.errors ? (
+                        <Hint.Root $error aria-describedby={`${fields.expires_at.id}-error`}>
+                            <Hint.Icon />
+                            {fields.expires_at.errors}
+                        </Hint.Root>
+                    ) : null}
+                </div>
+
+                <CurrencyInput
+                    currency={currencyFormat?.currency || "USD"}
+                    customInput={TextField}
+                    error={fields.annual_fee.errors}
+                    inlineLeadingNode={
+                        <InputPrimitives.InlineAffix>{currencyFormat?.currencySymbol}</InputPrimitives.InlineAffix>
+                    }
+                    label={t("form.fields.annual_fee.label")}
+                    name="annual_fee"
+                    onValueChange={(values) => annualFeeControl.change(handleMoneyChange(values))}
+                    placeholder={t("form.fields.annual_fee.placeholder")}
+                    value={annualFeeControl.value}
+                    withCurrencySymbol={false}
+                />
             </div>
         </>
     );

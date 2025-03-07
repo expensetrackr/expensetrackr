@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Actions\BankAccounts\CreateAccount;
 use App\Actions\BankAccounts\CreateBankConnection;
+use App\Data\CreateAccountData;
 use App\Data\CreateBankConnectionData;
 use App\Enums\ProviderType;
 use App\Http\Requests\BankConnectionRequest;
+use App\Http\Requests\CreateAccountRequest;
 use App\Models\Account;
 use App\Services\CurrencyService;
 use App\Services\MeilisearchService;
@@ -105,8 +108,19 @@ final class AccountController
      *
      * @throws AuthorizationException
      */
-    public function store(): RedirectResponse
+    public function store(CreateAccountRequest $request, CreateAccount $action): RedirectResponse
     {
-        return redirect()->route('accounts.create');
+        $action->create(CreateAccountData::from([
+            ...$request->validated(),
+            'isDefault' => false,
+        ]));
+
+        return redirect()->route('accounts.index')
+            ->with('toast',
+                [
+                    'type' => 'success',
+                    'title' => __('Account created successfully'),
+                ]
+            );
     }
 }

@@ -11,7 +11,7 @@ use Spatie\LaravelData\Data;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
 #[TypeScript]
-final class AccountData extends Data
+final class BankAccountData extends Data
 {
     public function __construct(
         public readonly string $id,

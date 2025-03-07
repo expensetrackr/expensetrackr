@@ -2,17 +2,12 @@ import { getInputProps, getTextareaProps, useInputControl, type useForm } from "
 import type * as v from "valibot";
 
 import { useCreateAccountParams } from "#/hooks/use-create-account-params.ts";
-import { AccountTypeEnum, DepositorySubtypeEnum, InvestmentSubtypeEnum } from "#/schemas/account.ts";
-import { type DetailsSchema } from "#/utils/steppers/create-account.steps.ts";
+import { SubtypeOptions } from "#/schemas/account.ts";
+import { type DetailsSchema } from "#/utils/steppers/create-account.step.ts";
 import { Select } from "../form/select.tsx";
 import { TextField } from "../form/text-field.tsx";
 import { Textarea } from "../form/textarea.tsx";
 import * as Label from "../ui/label.tsx";
-
-const subtypeOptions = {
-    [AccountTypeEnum.enum.Depository]: DepositorySubtypeEnum.options,
-    [AccountTypeEnum.enum.Investment]: InvestmentSubtypeEnum.options,
-};
 
 type DetailsStepProps = {
     fields: ReturnType<typeof useForm<v.InferOutput<typeof DetailsSchema>>>[1];
@@ -48,7 +43,7 @@ export function DetailsStep({ fields }: DetailsStepProps) {
                 placeholder="e.g. Savings account for personal expenses"
             ></Textarea>
 
-            {type && subtypeOptions[type as keyof typeof subtypeOptions] ? (
+            {type && SubtypeOptions[type as keyof typeof SubtypeOptions] ? (
                 <Select
                     defaultValue={fields.subtype.initialValue}
                     error={fields.subtype.errors}
@@ -56,7 +51,7 @@ export function DetailsStep({ fields }: DetailsStepProps) {
                     label="Subtype"
                     name={fields.subtype.name}
                     onValueChange={subtypeControl.change}
-                    options={subtypeOptions[type as keyof typeof subtypeOptions].map((subtype) => ({
+                    options={SubtypeOptions[type as keyof typeof SubtypeOptions].map((subtype) => ({
                         label: subtype,
                         value: subtype,
                     }))}

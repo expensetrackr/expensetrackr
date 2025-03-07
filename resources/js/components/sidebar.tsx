@@ -93,8 +93,6 @@ export function SidebarHeader({ collapsed }: { collapsed?: boolean }) {
 function NavigationMenu({ collapsed }: { collapsed: boolean }) {
     const url = usePage().url;
 
-    console.info({ url });
-
     return (
         <div className="space-y-2">
             <div

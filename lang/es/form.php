@@ -35,6 +35,10 @@ return [
             'label' => 'Vence el',
             'placeholder' => 'Selecciona una fecha',
         ],
+        'annual_fee' => [
+            'label' => 'Cuota anual',
+            'placeholder' => 'p. ej. 1.00',
+        ],
         'interest_rate' => [
             'label' => 'Tasa de interés',
             'placeholder' => 'p. ej. 1.00',

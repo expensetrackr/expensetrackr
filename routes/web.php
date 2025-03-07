@@ -26,6 +26,7 @@ Route::middleware([
         return Inertia::render('dashboard');
     })->name('dashboard');
 
+    Route::post('/accounts', [AccountController::class, 'store'])->name('accounts.store');
     Route::post('/accounts/bank-connections', [AccountController::class, 'storeBankConnections'])->name('accounts.bank-connections.store');
     Route::get('/accounts', [AccountController::class, 'index'])->name('accounts.index');
     Route::get('/accounts/create', [AccountController::class, 'create'])->name('accounts.create');

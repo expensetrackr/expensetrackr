@@ -9,14 +9,14 @@ export const DetailsSchema = v.object({
 });
 
 export const CreditCardDetailsSchema = v.object({
-    available_balance: v.pipe(v.string(), v.decimal("The decimal is badly formatted.")),
-    minimum_payment: v.pipe(v.string(), v.decimal("The decimal is badly formatted.")),
+    available_balance: v.string(),
+    minimum_payment: v.string(),
     apr: v.pipe(
         v.number("You must provide an APR."),
         v.minValue(0, "The APR must be greater than 0%."),
         v.maxValue(100, "The APR must be less than 100%."),
     ),
-    annual_fee: v.pipe(v.string(), v.decimal("The decimal is badly formatted.")),
+    annual_fee: v.string(),
     expires_at: v.pipe(
         v.string("You must provide an expiration date."),
         v.minLength(10, "The expiration date is invalid."),
@@ -36,7 +36,7 @@ export const LoanDetailsSchema = v.object({
     term_months: v.pipe(v.number(), v.minValue(1)),
 });
 
-export const BaseBalanceSchema = v.pick(AccountSchema, ["initial_balance", "current_balance", "currency_code"]);
+export const BaseBalanceSchema = v.pick(AccountSchema, ["initial_balance", "currency_code"]);
 
 export const BalanceSchema = v.variant("type", [
     v.object({
@@ -69,7 +69,7 @@ export const CreateAccountStepper = defineStepper(
 export const CreateManualAccountStepper = defineStepper(
     { id: "details", label: "Details", schema: DetailsSchema },
     { id: "balance", label: "Balance & Currency", schema: BalanceSchema },
-    { id: "complete", label: "Account Summary", schema: CreateAccountSchema },
+    { id: "summary", label: "Account Summary", schema: CreateAccountSchema },
 );
 
 export const ConnectAccountStepper = defineStepper(

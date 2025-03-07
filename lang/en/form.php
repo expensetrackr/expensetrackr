@@ -48,6 +48,10 @@ return [
             'label' => 'Expires at',
             'placeholder' => 'Select a date',
         ],
+        'annual_fee' => [
+            'label' => 'Annual fee',
+            'placeholder' => 'e.g. 1.00',
+        ],
         'interest_rate' => [
             'label' => 'Interest rate',
             'placeholder' => 'e.g. 1.00',

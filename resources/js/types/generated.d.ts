@@ -1,5 +1,9 @@
 declare namespace App.Data {
-    export type AccountData = {
+    export type BalanceData = {
+        currency: string;
+        amount: number;
+    };
+    export type BankAccountData = {
         id: string;
         name: string;
         currency: string;
@@ -11,9 +15,15 @@ declare namespace App.Data {
         institutionCode: string | null;
         expiresAt: string | null;
     };
-    export type BalanceData = {
-        currency: string;
-        amount: number;
+    export type CreateAccountData = {
+        bankConnectionId: number | null;
+        name: string;
+        currencyCode: string;
+        initialBalance: number;
+        isDefault: boolean | null;
+        externalId: string | null;
+        type: App.Enums.AccountType;
+        subtype: App.Enums.AccountSubtype | null;
     };
     export type CreateBankConnectionAccountData = {
         institutionId: string;

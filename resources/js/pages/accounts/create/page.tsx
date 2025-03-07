@@ -10,7 +10,7 @@ import { FlowSidebar } from "#/components/create-account/sidebar.tsx";
 import { TypeStep } from "#/components/create-account/type-step.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import { useCreateAccountParams } from "#/hooks/use-create-account-params.ts";
-import { CreateAccountStepper } from "#/utils/steppers/create-account.steps.ts";
+import { CreateAccountStepper } from "#/utils/steppers/create-account.step";
 
 export default function CreateAccountPage() {
     const stepper = CreateAccountStepper.useStepper();
@@ -91,7 +91,7 @@ export default function CreateAccountPage() {
                         <div className="mx-auto flex w-full max-w-md flex-col gap-3 p-4 lg:hidden">
                             <div className="flex flex-col gap-4 text-center">
                                 <div className="text-paragraph-sm text-(--text-sub-600)">
-                                    Having trouble with transfer?
+                                    Having trouble with account creation?
                                 </div>
                                 <Button.Root $style="stroke" $type="neutral">
                                     <Button.Icon as={HeadphoneIcon} />

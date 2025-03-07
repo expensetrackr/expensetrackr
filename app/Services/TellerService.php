@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Data\AccountData;
 use App\Data\BalanceData;
+use App\Data\BankAccountData;
 use App\Data\InstitutionData;
 use App\Data\Teller\TellerAccountBalanceData;
 use App\Data\Teller\TellerAccountData;
@@ -43,10 +43,10 @@ final class TellerService
     {
         $accounts = collect(TellerAccountData::collect($this->get('/accounts')));
 
-        return $accounts->map(function (TellerAccountData $account): AccountData {
+        return $accounts->map(function (TellerAccountData $account): BankAccountData {
             $balance = $this->getAccountBalances($account->id);
 
-            return AccountData::from([
+            return BankAccountData::from([
                 'id' => $account->id,
                 'name' => $account->name,
                 'currency' => $account->currency,

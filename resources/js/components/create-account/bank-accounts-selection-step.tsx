@@ -38,7 +38,7 @@ const FormSchema = v.object({
 });
 
 type BankAccountsSelectionStepProps = {
-    bankAccounts: Array<App.Data.AccountData>;
+    bankAccounts: Array<App.Data.BankAccountData>;
 };
 
 export function BankAccountsSelectionStep({ bankAccounts }: BankAccountsSelectionStepProps) {
@@ -94,7 +94,11 @@ export function BankAccountsSelectionStep({ bankAccounts }: BankAccountsSelectio
                 const fields = account.getFieldset();
 
                 return (
-                    <BankAccount account={bankAccounts[index] as App.Data.AccountData} fields={fields} key={account.id}>
+                    <BankAccount
+                        account={bankAccounts[index] as App.Data.BankAccountData}
+                        fields={fields}
+                        key={account.id}
+                    >
                         <input {...getInputProps(fields.institution_id, { type: "hidden" })} />
                         <input {...getInputProps(fields.institution_logo_url, { type: "hidden" })} />
                         <input {...getInputProps(fields.institution_name, { type: "hidden" })} />
@@ -114,7 +118,7 @@ export function BankAccountsSelectionStep({ bankAccounts }: BankAccountsSelectio
 }
 
 type BankAccountProps = {
-    account: App.Data.AccountData;
+    account: App.Data.BankAccountData;
     fields: ReturnType<
         ReturnType<
             ReturnType<typeof useForm<v.InferOutput<typeof FormSchema>>>[1]["accounts"]["getFieldList"]

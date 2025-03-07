@@ -27,7 +27,7 @@ import * as SegmentedControl from "#/components/ui/segmented-control.tsx";
 import { useTranslation } from "#/hooks/use-translation.ts";
 import { cx } from "#/utils/cva.ts";
 import { plans } from "#/utils/plans.ts";
-import { BalanceSchema } from "#/utils/steppers/create-account.steps.ts";
+import { BalanceSchema } from "#/utils/steppers/create-account.step.ts";
 import { Card } from "../components/create-account/card.tsx";
 
 export default function WelcomePage() {

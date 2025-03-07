@@ -9,11 +9,11 @@ import { InstitutionSelection } from "#/components/create-account/institution-se
 import { FlowSidebar } from "#/components/create-account/sidebar.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import { useConnectParams } from "#/hooks/use-connect-params.ts";
-import { ConnectAccountStepper } from "#/utils/steppers/create-account.steps.ts";
+import { ConnectAccountStepper } from "#/utils/steppers/create-account.step";
 
 type CreateAccountConnectPageProps = {
     institutions: Array<App.Data.SearchableInstitutionData>;
-    bankAccounts: Array<App.Data.AccountData>;
+    bankAccounts: Array<App.Data.BankAccountData>;
 };
 
 export default function CreateAccountConnectPage({ institutions, bankAccounts }: CreateAccountConnectPageProps) {
@@ -98,7 +98,9 @@ function PageContent({ institutions, bankAccounts }: CreateAccountConnectPagePro
 
                 <div className="mx-auto flex w-full max-w-md flex-col gap-3 p-4 lg:hidden">
                     <div className="flex flex-col gap-4 text-center">
-                        <div className="text-paragraph-sm text-(--text-sub-600)">Having trouble with transfer?</div>
+                        <div className="text-paragraph-sm text-(--text-sub-600)">
+                            Having trouble with account connection?
+                        </div>
                         <Button.Root $style="stroke" $type="neutral">
                             <Button.Icon as={HeadphoneIcon} />
                             Contact

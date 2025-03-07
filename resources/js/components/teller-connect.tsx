@@ -3,7 +3,7 @@ import * as React from "react";
 import { toast } from "sonner";
 
 import { useConnectParams } from "#/hooks/use-connect-params.ts";
-import { ConnectAccountStepper } from "#/utils/steppers/create-account.steps.ts";
+import { ConnectAccountStepper } from "#/utils/steppers/create-account.step.ts";
 import { BankConnectionButton } from "./bank-connection-button.tsx";
 
 type TellerConnectProps = {
@@ -55,6 +55,8 @@ export function TellerConnect({ id, onSelect }: TellerConnectProps) {
 
             teller.open();
         }
+        // eslint-disable-next-line react-compiler/react-compiler
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [institution]);
 
     return (
