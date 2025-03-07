@@ -72,7 +72,22 @@
                 PUBLIC_ASSETS_URL: '{{ config('services.public_assets.url') }}',
                 TELLER_APP_ID: '{{ config('teller.APP_ID') }}',
                 TELLER_ENVIRONMENT: '{{ config('teller.ENVIRONMENT') }}',
+                OPENPANEL_CLIENT_ID: '{{ config('openpanel.client_id') }}',
             };
         </script>
+        <script>
+            window.op =
+                window.op ||
+                function (...args) {
+                    (window.op.q = window.op.q || []).push(args);
+                };
+            window.op('init', {
+                clientId: '{{ config('openpanel.client_id') }}',
+                trackScreenViews: true,
+                trackOutgoingLinks: true,
+                trackAttributes: true,
+            });
+        </script>
+        <script src="https://openpanel.dev/op1.js" defer async></script>
     </body>
 </html>

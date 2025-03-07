@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "08493f1243612fc2547c1083d88c1277",
+    "content-hash": "72ba9e060adc7c24500f014ae0ed2229",
     "packages": [
         {
             "name": "akaunting/laravel-money",
@@ -1302,6 +1302,67 @@
                 }
             ],
             "time": "2025-02-13T20:35:06+00:00"
+        },
+        {
+            "name": "bleckert/openpanel-laravel",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tbleckert/openpanel-laravel.git",
+                "reference": "d891e38e76d53d151391c66ba432fb4b5683f4fb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tbleckert/openpanel-laravel/zipball/d891e38e76d53d151391c66ba432fb4b5683f4fb",
+                "reference": "d891e38e76d53d151391c66ba432fb4b5683f4fb",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^10.0|^11.0",
+                "php": "^8.2"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.13",
+                "phpunit/phpunit": "^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Bleckert\\OpenpanelLaravel\\OpenpanelLaravelServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Bleckert\\OpenpanelLaravel\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tobias Bleckert",
+                    "email": "hola@tobiasbleckert.se",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Laravel provider for Openpanel",
+            "homepage": "https://github.com/tbleckert/openpanel-laravel",
+            "keywords": [
+                "analytics",
+                "events",
+                "laravel",
+                "openpanel",
+                "tracking"
+            ],
+            "support": {
+                "issues": "https://github.com/tbleckert/openpanel-laravel/issues",
+                "source": "https://github.com/tbleckert/openpanel-laravel/tree/v2.0.0"
+            },
+            "time": "2024-10-25T13:17:22+00:00"
         },
         {
             "name": "brick/date-time",
@@ -16676,16 +16737,16 @@
         },
         {
             "name": "sebastian/comparator",
-            "version": "6.3.0",
+            "version": "6.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/comparator.git",
-                "reference": "d4e47a769525c4dd38cea90e5dcd435ddbbc7115"
+                "reference": "24b8fbc2c8e201bb1308e7b05148d6ab393b6959"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/d4e47a769525c4dd38cea90e5dcd435ddbbc7115",
-                "reference": "d4e47a769525c4dd38cea90e5dcd435ddbbc7115",
+                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/24b8fbc2c8e201bb1308e7b05148d6ab393b6959",
+                "reference": "24b8fbc2c8e201bb1308e7b05148d6ab393b6959",
                 "shasum": ""
             },
             "require": {
@@ -16704,7 +16765,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "6.2-dev"
+                    "dev-main": "6.3-dev"
                 }
             },
             "autoload": {
@@ -16744,7 +16805,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/comparator/issues",
                 "security": "https://github.com/sebastianbergmann/comparator/security/policy",
-                "source": "https://github.com/sebastianbergmann/comparator/tree/6.3.0"
+                "source": "https://github.com/sebastianbergmann/comparator/tree/6.3.1"
             },
             "funding": [
                 {
@@ -16752,7 +16813,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-01-06T10:28:19+00:00"
+            "time": "2025-03-07T06:57:01+00:00"
         },
         {
             "name": "sebastian/complexity",
