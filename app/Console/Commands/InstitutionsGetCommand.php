@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
-use App\Data\SearchableInstitutionData;
-use App\Data\TellerInstitutionItemData;
+use App\Data\Banking\Institution\SearchableInstitutionData;
+use App\Data\Teller\TellerInstitutionItemData;
+use App\Enums\ProviderType;
 use App\Jobs\ProcessInstitutionLogos;
 use App\Services\MeilisearchService;
 use Exception;
@@ -105,7 +106,7 @@ final class InstitutionsGetCommand extends Command
                 logo: '',
                 countries: ['US'],
                 popularity: $this->getPopularity($institution->id) > 0 ? $this->getPopularity($institution->id) : 10, // We want to rank Teller institutions higher than others
-                provider: 'teller',
+                provider: ProviderType::Teller,
             ));
 
             // Create institutions with processing data

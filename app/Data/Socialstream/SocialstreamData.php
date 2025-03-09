@@ -2,10 +2,8 @@
 
 declare(strict_types=1);
 
-namespace App\Data;
+namespace App\Data\Socialstream;
 
-use App\Data\Socialstream\ConnectedAccount;
-use App\Data\Socialstream\ProviderData;
 use Spatie\LaravelData\Data;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 

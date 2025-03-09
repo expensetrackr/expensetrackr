@@ -2,8 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Data;
+namespace App\Data\Shared;
 
+use App\Data\Auth\InertiaAuthData;
+use App\Data\Socialstream\SocialstreamData;
+use App\Data\Workspace\WorkspacesPermissionsData;
 use App\Data\Ziggy\ZiggyData;
 use App\Enums\Language;
 use Closure;

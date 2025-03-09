@@ -34,7 +34,7 @@ final class BankSyncServiceProvider extends ServiceProvider
                 BankConnection::chunk(100, function ($connections) use ($schedule): void {
                     foreach ($connections as $connection) {
                         // Extract the time from the connection's created_at timestamp
-                        $syncTime = $connection->created_at->format('H:i');
+                        $syncTime = $connection->created_at ? $connection->created_at->format('H:i') : '00:00';
 
                         // Schedule the job to run daily at the same time the connection was created
                         $schedule->job(new SyncBankAccounts(

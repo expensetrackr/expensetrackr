@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Data;
+namespace App\Data\Shared;
 
 use App\Enums\ToastType;
 use Illuminate\Support\Arr;
@@ -38,35 +38,42 @@ final class ToastData extends Data
      */
     public static function fromSession(array $sessionData): ?self
     {
+        /** @var array{type?: string, title?: string, description: string|null, duration: int|null}|null */
         $toast = collect(Arr::only($sessionData, ['toast']))
             ->filter()
-            ->map(fn ($content): array => [
-                'type' => $content['type'],
-                'title' => $content['title'],
-                'description' => $content['description'] ?? null,
-                'duration' => $content['duration'] ?? null,
-            ])
+            ->map(function ($content): array {
+                if (! is_array($content)) {
+                    return [
+                        'type' => ToastType::Info->value,
+                        'title' => 'Notification',
+                        'description' => null,
+                        'duration' => null,
+                    ];
+                }
+
+                return [
+                    'type' => $content['type'] ?? ToastType::Info->value,
+                    'title' => $content['title'] ?? 'Notification',
+                    'description' => $content['description'] ?? null,
+                    'duration' => $content['duration'] ?? null,
+                ];
+            })
             ->first();
 
         if (! $toast) {
             return null;
         }
 
-        $title = $toast['title'];
-        if (! is_string($title)) {
-            $title = is_scalar($title) ? (string) $title : (json_encode($title) ?: '');
-        }
-
-        $description = $toast['description'];
-        if (! is_string($description)) {
-            $description = is_scalar($description) ? (string) $description : (json_encode($description) ?: '');
-        }
+        $type = isset($toast['type']) ? ToastType::from($toast['type'])->value : ToastType::Info->value;
+        $title = $toast['title'] ?? 'Notification';
+        $description = $toast['description'] ?? null;
+        $duration = $toast['duration'] ?? null;
 
         return new self(
-            ToastType::from($toast['type']),
+            ToastType::from($type),
             $title,
             $description,
-            $toast['duration'],
+            $duration,
         );
     }
 }

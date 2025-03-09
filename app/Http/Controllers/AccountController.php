@@ -6,8 +6,8 @@ namespace App\Http\Controllers;
 
 use App\Actions\BankAccounts\CreateAccount;
 use App\Actions\BankAccounts\CreateBankConnection;
-use App\Data\CreateAccountData;
-use App\Data\CreateBankConnectionData;
+use App\Data\Banking\Account\CreateAccountData;
+use App\Data\Banking\Connection\CreateBankConnectionData;
 use App\Enums\ProviderType;
 use App\Http\Requests\BankConnectionRequest;
 use App\Http\Requests\CreateAccountRequest;
@@ -62,7 +62,7 @@ final class AccountController
             $data['currencies'] = $currencyService->getSupportedCurrencies();
         }
 
-        /** @var array{q: ?string} $validated */
+        /** @var array{q: ?string, enrollment_id: ?string, provider: ?ProviderType, token: ?string} $validated */
         $validated = $request->validate([
             'q' => ['nullable', 'string', 'max:255'],
             'enrollment_id' => ['sometimes', 'string'],

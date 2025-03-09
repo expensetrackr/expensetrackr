@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Data;
+namespace App\Data\Banking\Account;
 
+use App\Data\Banking\Institution\InstitutionData;
 use App\Enums\AccountSubtype;
 use App\Enums\AccountType;
 use Spatie\LaravelData\Attributes\MapName;

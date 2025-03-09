@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
-use App\Data\SharedInertiaData;
-use App\Data\ToastData;
-use App\Data\UserData;
-use App\Data\WorkspaceData;
-use App\Data\WorkspacesPermissionsData;
+use App\Data\Auth\UserData;
+use App\Data\Shared\SharedInertiaData;
+use App\Data\Shared\ToastData;
+use App\Data\Workspace\WorkspaceData;
+use App\Data\Workspace\WorkspacesPermissionsData;
 use App\Enums\Language;
 use App\Http\Resources\LanguageResource;
 use Illuminate\Http\Request;

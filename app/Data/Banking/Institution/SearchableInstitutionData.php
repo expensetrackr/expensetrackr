@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Data;
+namespace App\Data\Banking\Institution;
 
 use App\Enums\ProviderType;
 use Spatie\LaravelData\Data;

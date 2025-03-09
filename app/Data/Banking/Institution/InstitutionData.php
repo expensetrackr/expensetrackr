@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Data;
+namespace App\Data\Banking\Institution;
 
 use App\Enums\ProviderType;
 use Spatie\LaravelData\Data;
@@ -17,6 +17,6 @@ final class InstitutionData extends Data
         public ?string $logo,
         public readonly ProviderType $provider,
     ) {
-        $this->logo = config('services.public_assets.url')."/banks/{$id}";
+        $this->logo = type(config('services.public_assets.url'))->asString()."/banks/{$id}";
     }
 }

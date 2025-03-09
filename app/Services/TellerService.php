@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Data\BalanceData;
-use App\Data\BankAccountData;
-use App\Data\InstitutionData;
+use App\Data\Banking\Account\BalanceData;
+use App\Data\Banking\Account\BankAccountData;
+use App\Data\Banking\Institution\InstitutionData;
 use App\Data\Teller\TellerAccountBalanceData;
 use App\Data\Teller\TellerAccountData;
 use App\Enums\AccountSubtype;
@@ -17,6 +17,9 @@ use App\Exceptions\MissingTellerCertException;
 use App\Exceptions\MissingTellerConfigurationException;
 use App\Exceptions\MissingTellerKeyException;
 use Exception;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 use JsonException;
 
 final class TellerService
@@ -25,9 +28,9 @@ final class TellerService
 
     private readonly string $access_token;
 
-    public function __construct($accessToken)
+    public function __construct(string $accessToken)
     {
-        if ($accessToken === null) {
+        if ($accessToken === '') {
             throw new Exception('Access token is required');
         }
 
@@ -35,13 +38,13 @@ final class TellerService
     }
 
     /**
-     * Get all accounts
+     * List all accounts for the authenticated user.
      *
-     * @return array|\Illuminate\Contracts\Pagination\CursorPaginator|\Illuminate\Contracts\Pagination\Paginator|\Illuminate\Pagination\AbstractCursorPaginator|\Illuminate\Pagination\AbstractPaginator|\Illuminate\Support\Collection|\Illuminate\Support\Enumerable|\Illuminate\Support\LazyCollection|\Spatie\LaravelData\CursorPaginatedDataCollection|\Spatie\LaravelData\DataCollection|\Spatie\LaravelData\PaginatedDataCollection
+     * @return Collection<int, BankAccountData>
      */
-    public function listAccounts()
+    public function listAccounts(): Collection
     {
-        $accounts = collect(TellerAccountData::collect($this->get('/accounts')));
+        $accounts = collect(TellerAccountData::collect((array) $this->get('/accounts')));
 
         return $accounts->map(function (TellerAccountData $account): BankAccountData {
             $balance = $this->getAccountBalances($account->id);
@@ -52,16 +55,19 @@ final class TellerService
                 'currency' => $account->currency,
                 'type' => AccountType::fromExternal($account->type->value),
                 'subtype' => AccountSubtype::fromExternal($account->subtype->value),
-                'institution' => InstitutionData::from([
-                    'id' => $account->institution->id,
-                    'name' => $account->institution->name,
-                    'provider' => ProviderType::Teller->value,
-                ]),
-                'balance' => BalanceData::from([
-                    'currency' => 'USD',
-                    'amount' => (float) $balance->available,
-                ]),
-                'enrollmentId' => $account->enrollmentId,
+                'institution' => new InstitutionData(
+                    id: $account->institution->id,
+                    name: $account->institution->name,
+                    logo: null,
+                    provider: ProviderType::Teller,
+                ),
+                'balance' => new BalanceData(
+                    currency: 'USD',
+                    amount: (int) $balance->available,
+                ),
+                'enrollment_id' => $account->enrollmentId,
+                'institution_code' => null,
+                'expires_at' => null,
             ]);
         });
     }
@@ -74,6 +80,14 @@ final class TellerService
         return TellerAccountBalanceData::from($this->get("/accounts/{$accountId}/balances"));
     }
 
+    /**
+     * List account transactions for a specific account.
+     *
+     * @param  string  $accountId  The account ID
+     * @param  bool|null  $latest  Whether to get only the latest transactions
+     * @param  int|null  $count  The number of transactions to get
+     * @return array<int, mixed>|null
+     */
     public function listAccountTransactions(string $accountId, ?bool $latest = false, ?int $count = 0): ?array
     {
         $transactions = $this->get("/accounts/{$accountId}/transactions", [
@@ -107,7 +121,6 @@ final class TellerService
      */
     private function request(string $method, string $path, ?array $data = null): bool|string
     {
-
         $configFilePath = config_path('teller.php');
 
         if (! file_exists($configFilePath)) {
@@ -145,6 +158,12 @@ final class TellerService
             curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data, JSON_THROW_ON_ERROR));
         }
 
+        // Check if we have a cached response for this request
+        $cacheKey = md5($method.$path.json_encode($data));
+        if (Cache::has($cacheKey)) {
+            return Cache::get($cacheKey);
+        }
+
         if ($tellerEnvironment === EnvironmentType::Production || $tellerEnvironment === EnvironmentType::Development) {
             $certPath = config('teller.CERT_PATH');
             $keyPath = config('teller.KEY_PATH');
@@ -173,6 +192,9 @@ final class TellerService
         curl_close($curl);
 
         if ($statusCode === 200) {
+            // Cache the response
+            Cache::put($cacheKey, $response, now()->addMinutes(5));
+
             return $response;
         }
 
@@ -182,7 +204,8 @@ final class TellerService
             $errorCode = $errorObj['error']['code'];
             $errorMessage = $errorObj['error']['message'];
 
-            return "Error (HTTP $statusCode): $errorCode - $errorMessage";
+            Log::error("Teller API Error: {$errorCode} - {$errorMessage}");
+            throw new Exception("Teller API Error: {$errorCode} - {$errorMessage}");
         }
 
         throw new Exception('Unexpected error response');

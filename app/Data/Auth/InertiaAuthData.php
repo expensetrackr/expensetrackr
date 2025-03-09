@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Data;
+namespace App\Data\Auth;
 
+use App\Data\Workspace\WorkspaceData;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\Optional;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;

@@ -2,13 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Data;
+namespace App\Data\Banking\Connection;
 
 use App\Enums\ProviderType;
-use Spatie\LaravelData\Attributes\DataCollectionOf;
 use Spatie\LaravelData\Attributes\MapName;
 use Spatie\LaravelData\Data;
-use Spatie\LaravelData\DataCollection;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
 #[TypeScript]
@@ -21,8 +19,7 @@ final class CreateBankConnectionData extends Data
         public readonly ProviderType $providerType,
         #[MapName('access_token')]
         public readonly string $accessToken,
-        /** @var DataCollection<CreateBankConnectionAccountData> */
-        #[DataCollectionOf(CreateBankConnectionAccountData::class)]
-        public readonly DataCollection $accounts,
+        /** @var array<CreateBankConnectionAccountData> */
+        public readonly array $accounts,
     ) {}
 }

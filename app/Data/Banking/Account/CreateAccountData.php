@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Data;
+namespace App\Data\Banking\Account;
 
 use App\Enums\AccountSubtype;
 use App\Enums\AccountType;

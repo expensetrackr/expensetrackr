@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Actions\BankAccounts;
 
-use App\Data\CreateAccountData;
-use App\Data\CreateBankConnectionData;
+use App\Data\Banking\Account\CreateAccountData;
+use App\Data\Banking\Connection\CreateBankConnectionData;
 use App\Jobs\SyncBankAccounts;
 use App\Models\BankConnection;
 use Illuminate\Support\Facades\Context;
@@ -21,7 +21,7 @@ final readonly class CreateBankConnection
      */
     public function create(CreateBankConnectionData $payload): void
     {
-        $account = $payload->accounts->first();
+        $account = $payload->accounts[0];
 
         $bankConnection = BankConnection::updateOrCreate(
             [
@@ -54,8 +54,9 @@ final readonly class CreateBankConnection
         // Trigger an initial sync of the accounts
         // This will run immediately for the first time
         // The scheduled job will run daily at the same time the connection was created
+        $workspaceId = type(Context::get('currentWorkspace'))->asInt();
         SyncBankAccounts::dispatch(
-            Context::get('currentWorkspace'),
+            $workspaceId,
             $bankConnection->id
         )->onQueue('bank-sync');
     }

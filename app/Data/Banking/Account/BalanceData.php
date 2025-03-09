@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Data;
+namespace App\Data\Banking\Account;
 
 use Spatie\LaravelData\Data;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
 #[TypeScript]
-final class LanguageData extends Data
+final class BalanceData extends Data
 {
     public function __construct(
-        public string $code,
-        public string $name,
+        public readonly string $currency,
+        public readonly int $amount,
     ) {}
 }

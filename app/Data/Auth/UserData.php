@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Data;
+namespace App\Data\Auth;
 
 use App\Models\User;
 use Laravel\Fortify\Features;

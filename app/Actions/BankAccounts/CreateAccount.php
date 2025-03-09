@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Actions\BankAccounts;
 
-use App\Data\CreateAccountData;
+use App\Data\Banking\Account\CreateAccountData;
 use App\Enums\AccountType;
 use App\Enums\RateType;
 use App\Models\Account;
@@ -15,7 +15,6 @@ use App\Models\Investment;
 use App\Models\Loan;
 use App\Models\OtherAsset;
 use App\Models\OtherLiability;
-use Exception;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Context;
 
@@ -32,7 +31,6 @@ final class CreateAccount
             AccountType::Crypto => Crypto::class,
             AccountType::OtherAsset => OtherAsset::class,
             AccountType::OtherLiability => OtherLiability::class,
-            default => throw new Exception('Unsupported account type'),
         };
 
         // Create the accountable model based on the account type with default values
