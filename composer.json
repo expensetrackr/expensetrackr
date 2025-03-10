@@ -41,6 +41,7 @@
         "spatie/laravel-data": "4.13.2",
         "spatie/laravel-permission": "6.16.0",
         "spatie/laravel-prefixed-ids": "1.4.1",
+        "spatie/laravel-query-builder": "6.3.1",
         "spatie/laravel-typescript-transformer": "2.5.1",
         "tightenco/ziggy": "2.5.2"
     },

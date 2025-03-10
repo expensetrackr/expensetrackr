@@ -1,14 +1,17 @@
 import * as React from "react";
 
+import { cx } from "#/utils/cva.ts";
 import * as Hint from "../ui/hint.tsx";
 import * as Label from "../ui/label.tsx";
 import * as SelectPrimitives from "../ui/select.tsx";
 
 type SelectProps = Omit<React.CustomComponentPropsWithRef<typeof SelectPrimitives.Root>, "$error"> & {
+    wrapperClassName?: string;
     error?: string | Array<string>;
     label?: string;
     id?: string;
     position?: "item-aligned" | "popper";
+    triggerIcon?: React.ForwardRefExoticComponent<React.SVGProps<SVGSVGElement>>;
     placeholder?: React.ReactNode;
     options: Array<{
         value: string;
@@ -20,11 +23,13 @@ type SelectProps = Omit<React.CustomComponentPropsWithRef<typeof SelectPrimitive
 };
 
 export function Select({
+    wrapperClassName,
     $size,
     $variant,
     error,
     label,
     id: idProp,
+    triggerIcon,
     placeholder,
     position = "popper",
     options,
@@ -35,7 +40,7 @@ export function Select({
     const id = idProp || generatedId;
 
     return (
-        <div className="flex flex-col gap-1">
+        <div className={cx("flex flex-col gap-1", wrapperClassName)}>
             {label ? (
                 <Label.Root disabled={rest.disabled} htmlFor={id}>
                     {label}
@@ -44,6 +49,7 @@ export function Select({
 
             <SelectPrimitives.Root $error={!!error} $size={$size} $variant={$variant} {...rest}>
                 <SelectPrimitives.Trigger id={id}>
+                    {triggerIcon ? <SelectPrimitives.TriggerIcon as={triggerIcon} /> : null}
                     <SelectPrimitives.Value placeholder={placeholder} />
                 </SelectPrimitives.Trigger>
                 <SelectPrimitives.Content position={position}>

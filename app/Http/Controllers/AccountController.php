@@ -11,6 +11,7 @@ use App\Data\Banking\Connection\CreateBankConnectionData;
 use App\Enums\ProviderType;
 use App\Http\Requests\BankConnectionRequest;
 use App\Http\Requests\CreateAccountRequest;
+use App\Http\Resources\AccountResource;
 use App\Models\Account;
 use App\Services\CurrencyService;
 use App\Services\MeilisearchService;
@@ -22,6 +23,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use Inertia\Response;
+use Spatie\QueryBuilder\QueryBuilder;
 
 final class AccountController
 {
@@ -30,12 +32,21 @@ final class AccountController
     /**
      * Display all accounts.
      */
-    public function index(): Response
+    public function index(Request $request): Response
     {
         $this->authorize('viewAny', Account::class);
 
-        return Inertia::render('accounts/index', [
-            'accounts' => Account::all()->sortBy('name'),
+        return Inertia::render('accounts/page', [
+            'query' => $request->query(),
+            'accounts' => AccountResource::collection(QueryBuilder::for(Account::class)
+                ->allowedFilters([])
+                ->tap(function ($builder) use ($request) {
+                    if (filled($request->search)) {
+                        return $builder->whereIn('id', Account::search($request->search)->get()->pluck('id'));
+                    }
+                })
+                ->paginate(100)
+                ->appends($request->query())),
         ]);
     }
 

@@ -19,20 +19,20 @@ import { useUser } from "#/hooks/use-user.ts";
 import { Action, getAction } from "#/utils/action.ts";
 import { AddWorkspaceMemberForm } from "./add-workspace-member-form.tsx";
 
-interface UserMembership extends App.Data.UserData {
+interface UserMembership extends App.Data.Auth.UserData {
     membership: {
         role: string;
     };
 }
 
 interface WorkspaceMemberManagerProps {
-    workspace: App.Data.WorkspaceData & {
-        owner: App.Data.UserData;
-        invitations: App.Data.WorkspaceInvitationData[];
+    workspace: App.Data.Workspace.WorkspaceData & {
+        owner: App.Data.Auth.UserData;
+        invitations: App.Data.Workspace.WorkspaceInvitationData[];
         members: UserMembership[];
     };
     availableRoles: Array<{ name: string }>;
-    permissions: App.Data.WorkspacePermissionsData;
+    permissions: App.Data.Workspace.WorkspacePermissionsData;
 }
 
 export function WorkspaceMemberManager({ workspace, availableRoles, permissions }: WorkspaceMemberManagerProps) {
@@ -173,7 +173,7 @@ function ManageRoleDialog({
     user,
     availableRoles,
 }: {
-    workspace: App.Data.WorkspaceData;
+    workspace: App.Data.Workspace.WorkspaceData;
     user: UserMembership;
     availableRoles: Array<{ name: string }>;
 }) {
@@ -262,8 +262,8 @@ function RemoveMemberDialog({
     dialogDescription = "Are you sure you would like to remove this person from the workspace?",
     dialogSubmitLabel = "Yes, remove it",
 }: {
-    workspace: App.Data.WorkspaceData;
-    user: UserMembership | App.Data.UserData;
+    workspace: App.Data.Workspace.WorkspaceData;
+    user: UserMembership | App.Data.Auth.UserData;
     dialogTitle?: string;
     dialogDescription?: string;
     dialogSubmitLabel?: string;

@@ -8,20 +8,20 @@ import { WorkspaceMemberInvitations } from "#/pages/workspaces/partials/workspac
 import { UpdateWorkspaceNameForm } from "./partials/update-workspace-name-form.tsx";
 import { WorkspaceMemberManager } from "./partials/workspace-member-manager.tsx";
 
-interface UserMembership extends App.Data.UserData {
+interface UserMembership extends App.Data.Auth.UserData {
     membership: {
         role: string;
     };
 }
 
 type WorkspacesShowProps = {
-    workspace: App.Data.WorkspaceData & {
-        owner: App.Data.UserData;
-        invitations: App.Data.WorkspaceInvitationData[];
+    workspace: App.Data.Workspace.WorkspaceData & {
+        owner: App.Data.Auth.UserData;
+        invitations: App.Data.Workspace.WorkspaceInvitationData[];
         members: UserMembership[];
     };
     availableRoles: Array<{ name: string }>;
-    permissions: App.Data.WorkspacePermissionsData;
+    permissions: App.Data.Workspace.WorkspacePermissionsData;
 };
 
 export default function WorkspacesShow({ workspace, availableRoles, permissions }: WorkspacesShowProps) {
@@ -50,7 +50,7 @@ export default function WorkspacesShow({ workspace, availableRoles, permissions 
     );
 }
 
-WorkspacesShow.layout = (page: React.ReactNode & { props: App.Data.SharedInertiaData }) => (
+WorkspacesShow.layout = (page: React.ReactNode & { props: App.Data.Shared.SharedInertiaData }) => (
     <SettingsLayout {...page.props}>
         <Head title="Workspace settings" />
 

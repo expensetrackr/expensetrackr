@@ -14,7 +14,7 @@ import * as Kbd from "../ui/kbd.tsx";
 import * as Label from "../ui/label.tsx";
 
 type InstitutionSelectionProps = {
-    institutions: Array<App.Data.SearchableInstitutionData>;
+    institutions: Array<App.Data.Banking.Institution.SearchableInstitutionData>;
 };
 
 export function InstitutionSelection({ institutions }: InstitutionSelectionProps) {

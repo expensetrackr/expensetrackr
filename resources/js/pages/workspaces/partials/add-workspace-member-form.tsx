@@ -10,7 +10,7 @@ import * as Modal from "#/components/ui/modal.tsx";
 import { Action } from "#/utils/action.ts";
 
 interface AddWorkspaceMemberFormProps {
-    workspace: App.Data.WorkspaceData;
+    workspace: App.Data.Workspace.WorkspaceData;
     availableRoles: Array<{ name: string }>;
 }
 

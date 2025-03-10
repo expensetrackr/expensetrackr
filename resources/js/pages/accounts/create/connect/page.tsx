@@ -12,8 +12,8 @@ import { useConnectParams } from "#/hooks/use-connect-params.ts";
 import { ConnectAccountStepper } from "#/utils/steppers/create-account.step";
 
 type CreateAccountConnectPageProps = {
-    institutions: Array<App.Data.SearchableInstitutionData>;
-    bankAccounts: Array<App.Data.BankAccountData>;
+    institutions: Array<App.Data.Banking.Institution.SearchableInstitutionData>;
+    bankAccounts: Array<App.Data.Banking.Account.BankAccountData>;
 };
 
 export default function CreateAccountConnectPage({ institutions, bankAccounts }: CreateAccountConnectPageProps) {

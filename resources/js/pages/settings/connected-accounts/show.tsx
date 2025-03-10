@@ -20,7 +20,7 @@ export default function ConnectedAccountsShow() {
     );
 }
 
-ConnectedAccountsShow.layout = (page: React.ReactNode & { props: App.Data.SharedInertiaData }) => (
+ConnectedAccountsShow.layout = (page: React.ReactNode & { props: App.Data.Shared.SharedInertiaData }) => (
     <SettingsLayout {...page.props}>
         <Head title="Social accounts" />
 

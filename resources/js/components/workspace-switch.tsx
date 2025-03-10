@@ -14,10 +14,10 @@ import * as Avatar from "./ui/avatar.tsx";
 import * as Divider from "./ui/divider.tsx";
 import * as Dropdown from "./ui/dropdown.tsx";
 
-function WorkspaceItem({ workspace }: { workspace: App.Data.WorkspaceData }) {
+function WorkspaceItem({ workspace }: { workspace: App.Data.Workspace.WorkspaceData }) {
     const currentWorkspace = useCurrentWorkspace();
 
-    function switchToWorkspace(workspace: App.Data.WorkspaceData) {
+    function switchToWorkspace(workspace: App.Data.Workspace.WorkspaceData) {
         router.put(
             route("current-workspace.update"),
             {

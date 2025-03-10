@@ -1,20 +1,25 @@
 import * as React from "react";
 
+import { cx } from "#/utils/cva.ts";
 import { Input, type InputProps } from "../composables/input.tsx";
 import * as Hint from "../ui/hint.tsx";
 import * as Label from "../ui/label.tsx";
 
 type TextFieldProps = Omit<InputProps, "error"> & {
-    error?: string | Array<string>;
+    wrapperClassName?: string;
     label?: string;
+    hiddenLabel?: boolean;
     hint?: string | Array<string> | Array<undefined>;
+    error?: string | Array<string>;
 };
 
 export function TextField({
+    wrapperClassName,
     $error,
     $size,
     error,
     label,
+    hiddenLabel,
     leadingIcon: LeadingIcon,
     trailingIcon: TrailingIcon,
     leadingNode,
@@ -28,9 +33,9 @@ export function TextField({
     const id = rest.id || generatedId;
 
     return (
-        <div className="flex flex-col gap-1">
+        <div className={cx("flex flex-col gap-1", wrapperClassName)}>
             {label ? (
-                <Label.Root disabled={rest.disabled} htmlFor={id}>
+                <Label.Root className={cx({ "sr-only": hiddenLabel })} disabled={rest.disabled} htmlFor={id}>
                     {label}
                 </Label.Root>
             ) : null}

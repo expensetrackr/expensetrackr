@@ -8,10 +8,10 @@ import { TextField } from "#/components/form/text-field.tsx";
 import { FormSection } from "#/components/form-section.tsx";
 
 interface UpdateWorkspaceNameFormProps {
-    workspace: App.Data.WorkspaceData & {
-        owner: App.Data.UserData;
+    workspace: App.Data.Workspace.WorkspaceData & {
+        owner: App.Data.Auth.UserData;
     };
-    permissions: App.Data.WorkspacePermissionsData;
+    permissions: App.Data.Workspace.WorkspacePermissionsData;
 }
 
 export function UpdateWorkspaceNameForm({ workspace, permissions }: UpdateWorkspaceNameFormProps) {

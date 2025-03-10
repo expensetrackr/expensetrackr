@@ -12,7 +12,7 @@ import { TwoFactorAuthenticationForm } from "./partials/two-factor-authenticatio
 import { UpdatePasswordForm } from "./partials/update-password-form.tsx";
 
 type PrivacyAndSecurityShowProps = {
-    sessions: App.Data.SessionData[];
+    sessions: App.Data.Auth.SessionData[];
     confirmsTwoFactorAuthentication: boolean;
 };
 

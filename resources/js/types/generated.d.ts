@@ -1,4 +1,32 @@
-declare namespace App.Data {
+declare namespace App.Data.Auth {
+    export type InertiaAuthData = {
+        user: App.Data.Auth.UserData | null;
+        currentWorkspace: App.Data.Workspace.WorkspaceData | any | null;
+        workspaces: Array<App.Data.Workspace.WorkspaceData> | any | null;
+    };
+    export type SessionData = {
+        ip_address: string;
+        is_current_device: boolean;
+        device: App.Data.Auth.UserAgentData;
+        last_active: string;
+    };
+    export type UserAgentData = {
+        browser: string;
+        desktop: boolean;
+        mobile: boolean;
+        tablet: boolean;
+        platform: string;
+    };
+    export type UserData = {
+        id: number;
+        name: string;
+        email: string;
+        profile_photo_path: string | null;
+        profile_photo_url: string | null;
+        two_factor_enabled: boolean;
+    };
+}
+declare namespace App.Data.Banking.Account {
     export type BalanceData = {
         currency: string;
         amount: number;
@@ -9,8 +37,8 @@ declare namespace App.Data {
         currency: string;
         type: App.Enums.AccountType;
         subtype: App.Enums.AccountSubtype;
-        institution: App.Data.InstitutionData;
-        balance: App.Data.BalanceData;
+        institution: App.Data.Banking.Institution.InstitutionData;
+        balance: App.Data.Banking.Account.BalanceData;
         enrollmentId: string | null;
         institutionCode: string | null;
         expiresAt: string | null;
@@ -25,6 +53,8 @@ declare namespace App.Data {
         type: App.Enums.AccountType;
         subtype: App.Enums.AccountSubtype | null;
     };
+}
+declare namespace App.Data.Banking.Connection {
     export type CreateBankConnectionAccountData = {
         institutionId: string;
         institutionLogoUrl: string | null;
@@ -42,22 +72,15 @@ declare namespace App.Data {
         providerConnectionId: string | null;
         providerType: App.Enums.ProviderType;
         accessToken: string;
-        accounts: Array<App.Data.CreateBankConnectionAccountData>;
+        accounts: Array<App.Data.Banking.Connection.CreateBankConnectionAccountData>;
     };
-    export type InertiaAuthData = {
-        user: App.Data.UserData | null;
-        currentWorkspace: App.Data.WorkspaceData | any | null;
-        workspaces: Array<App.Data.WorkspaceData> | any | null;
-    };
+}
+declare namespace App.Data.Banking.Institution {
     export type InstitutionData = {
         id: string;
         name: string;
         logo: string | null;
         provider: App.Enums.ProviderType;
-    };
-    export type LanguageData = {
-        code: string;
-        name: string;
     };
     export type SearchableInstitutionData = {
         id: string;
@@ -67,28 +90,22 @@ declare namespace App.Data {
         popularity: number;
         provider: App.Enums.ProviderType;
     };
-    export type SessionData = {
-        ip_address: string;
-        is_current_device: boolean;
-        device: App.Data.UserAgentData;
-        last_active: string;
+}
+declare namespace App.Data.Shared {
+    export type LanguageData = {
+        code: string;
+        name: string;
     };
     export type SharedInertiaData = {
-        auth: App.Data.InertiaAuthData | null;
-        workspaces: App.Data.WorkspacesPermissionsData | null;
+        auth: App.Data.Auth.InertiaAuthData | null;
+        workspaces: App.Data.Workspace.WorkspacesPermissionsData | null;
         ziggy: App.Data.Ziggy.ZiggyData | null;
-        toast: App.Data.ToastData | null;
+        toast: App.Data.Shared.ToastData | null;
         language: App.Enums.Language;
-        languages: Array<App.Data.LanguageData> | null;
+        languages: Array<App.Data.Shared.LanguageData> | null;
         translations: Record<string, string>;
-        socialstream: App.Data.SocialstreamData;
+        socialstream: App.Data.Socialstream.SocialstreamData;
         errors: { [key: string]: string } | null;
-    };
-    export type SocialstreamData = {
-        providers: Array<App.Data.Socialstream.ProviderData>;
-        show: boolean;
-        connectedAccounts: Array<App.Data.Socialstream.ConnectedAccount>;
-        hasPassword: boolean;
     };
     export type ToastData = {
         type: App.Enums.ToastType;
@@ -96,21 +113,49 @@ declare namespace App.Data {
         description: string | null;
         duration: number | null;
     };
-    export type UserAgentData = {
-        browser: string;
-        desktop: boolean;
-        mobile: boolean;
-        tablet: boolean;
-        platform: string;
-    };
-    export type UserData = {
+}
+declare namespace App.Data.Socialstream {
+    export type ConnectedAccount = {
         id: number;
-        name: string;
-        email: string;
-        profile_photo_path: string | null;
-        profile_photo_url: string | null;
-        two_factor_enabled: boolean;
+        provider: string;
+        avatar_path: string;
+        created_at: string;
     };
+    export type ProviderData = {
+        id: App.Enums.Socialstream.Provider;
+        name: string;
+        buttonLabel: string | null;
+    };
+    export type SocialstreamData = {
+        providers: Array<App.Data.Socialstream.ProviderData>;
+        show: boolean;
+        connectedAccounts: Array<App.Data.Socialstream.ConnectedAccount>;
+        hasPassword: boolean;
+    };
+}
+declare namespace App.Data.Teller {
+    export type TellerAccountBalanceData = {
+        accountId: string;
+        ledger: string | null;
+        available: string | null;
+    };
+    export type TellerAccountData = {
+        currency: string;
+        enrollmentId: string;
+        id: string;
+        institution: App.Data.Teller.TellerInstitutionData;
+        name: string;
+        type: App.Enums.Teller.AccountType;
+        status: App.Enums.Teller.AccountStatus;
+        subtype: App.Enums.Teller.AccountSubtype;
+        balances: App.Data.Teller.TellerAccountBalanceData | null;
+    };
+    export type TellerInstitutionData = {
+        id: string;
+        name: string;
+    };
+}
+declare namespace App.Data.Workspace {
     export type WorkspaceData = {
         id: number;
         name: string;
@@ -140,41 +185,6 @@ declare namespace App.Data {
         hasWorkspaceFeatures: boolean;
         hasTermsAndPrivacyPolicyFeature: boolean;
         managesProfilePhotos: boolean;
-    };
-}
-declare namespace App.Data.Socialstream {
-    export type ConnectedAccount = {
-        id: number;
-        provider: string;
-        avatar_path: string;
-        created_at: string;
-    };
-    export type ProviderData = {
-        id: App.Enums.Socialstream.Provider;
-        name: string;
-        buttonLabel: string | null;
-    };
-}
-declare namespace App.Data.Teller {
-    export type TellerAccountBalanceData = {
-        accountId: string;
-        ledger: string | null;
-        available: string | null;
-    };
-    export type TellerAccountData = {
-        currency: string;
-        enrollmentId: string;
-        id: string;
-        institution: App.Data.Teller.TellerInstitutionData;
-        name: string;
-        type: App.Enums.Teller.AccountType;
-        status: App.Enums.Teller.AccountStatus;
-        subtype: App.Enums.Teller.AccountSubtype;
-        balances: App.Data.Teller.TellerAccountBalanceData | null;
-    };
-    export type TellerInstitutionData = {
-        id: string;
-        name: string;
     };
 }
 declare namespace App.Data.Ziggy {
@@ -238,4 +248,11 @@ declare namespace App.Enums.Teller {
         | "credit_card";
     export type AccountType = "depository" | "credit";
     export type EnvironmentType = "sandbox" | "development" | "production";
+}
+declare namespace App.Http.Resources {
+    export type AccountResource = {
+        resource: any;
+        with: Array<any>;
+        additional: Array<any>;
+    };
 }
