@@ -10,7 +10,7 @@ import * as Kbd from "#/components/ui/kbd.tsx";
 
 export function Filters() {
     return (
-        <div className="flex flex-col justify-between gap-4 lg:flex-row lg:flex-wrap lg:items-center lg:gap-3">
+        <div className="flex flex-col justify-end gap-4 lg:flex-row lg:flex-wrap lg:items-center lg:gap-3">
             <TextField
                 inlineTrailingNode={
                     <button type="button">
