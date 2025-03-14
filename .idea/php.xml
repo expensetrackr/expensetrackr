@@ -241,6 +241,25 @@
       <path value="$PROJECT_DIR$/vendor/amphp/process" />
       <path value="$PROJECT_DIR$/vendor/amphp/socket" />
       <path value="$PROJECT_DIR$/vendor/phpdocumentor/reflection" />
+      <path value="$PROJECT_DIR$/vendor/standard-webhooks/standard-webhooks" />
+      <path value="$PROJECT_DIR$/vendor/php-http/discovery" />
+      <path value="$PROJECT_DIR$/vendor/spatie/laravel-webhook-client" />
+      <path value="$PROJECT_DIR$/vendor/spatie/enum" />
+      <path value="$PROJECT_DIR$/vendor/vagebond/runtype" />
+      <path value="$PROJECT_DIR$/vendor/spatie/laravel-typescript-transformer" />
+      <path value="$PROJECT_DIR$/vendor/spatie/typescript-transformer" />
+      <path value="$PROJECT_DIR$/vendor/spatie/laravel-query-builder" />
+      <path value="$PROJECT_DIR$/vendor/levizoesch/teller-sdk" />
+      <path value="$PROJECT_DIR$/vendor/levizoesch/laravel-set-environment" />
+      <path value="$PROJECT_DIR$/vendor/cloudinary-labs/cloudinary-laravel" />
+      <path value="$PROJECT_DIR$/vendor/cloudinary/transformation-builder-sdk" />
+      <path value="$PROJECT_DIR$/vendor/cloudinary/cloudinary_php" />
+      <path value="$PROJECT_DIR$/vendor/bleckert/openpanel-laravel" />
+      <path value="$PROJECT_DIR$/vendor/meilisearch/meilisearch-php" />
+      <path value="$PROJECT_DIR$/vendor/danestves/laravel-polar" />
+      <path value="$PROJECT_DIR$/vendor/laravel/scout" />
+      <path value="$PROJECT_DIR$/vendor/laravel/pail" />
+      <path value="$PROJECT_DIR$/vendor/pestphp/pest-plugin-drift" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.3" />

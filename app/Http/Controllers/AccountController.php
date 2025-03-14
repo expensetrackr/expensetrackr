@@ -36,17 +36,21 @@ final class AccountController
     {
         $this->authorize('viewAny', Account::class);
 
+        $accounts = AccountResource::collection(QueryBuilder::for(Account::class)
+            ->with('bankConnection')
+            ->allowedFilters(['name'])
+            ->allowedSorts(sorts: 'created_at')
+            ->tap(function ($builder) use ($request) {
+                if (filled($request->search)) {
+                    return $builder->whereIn('id', Account::search($request->search)->get()->pluck('id'));
+                }
+            })
+            ->paginate(100)
+            ->appends($request->query()));
+
         return Inertia::render('accounts/page', [
             'query' => $request->query(),
-            'accounts' => AccountResource::collection(QueryBuilder::for(Account::class)
-                ->allowedFilters([])
-                ->tap(function ($builder) use ($request) {
-                    if (filled($request->search)) {
-                        return $builder->whereIn('id', Account::search($request->search)->get()->pluck('id'));
-                    }
-                })
-                ->paginate(100)
-                ->appends($request->query())),
+            'accounts' => $accounts,
         ]);
     }
 

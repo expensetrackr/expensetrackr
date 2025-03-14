@@ -3,7 +3,7 @@
         "editor.defaultFormatter": "vscode.json-language-features"
     },
     "[php]": {
-        "editor.defaultFormatter": "open-southeners.laravel-pint"
+        "editor.defaultFormatter": "DEVSENSE.phptools-vscode"
     },
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": "always",

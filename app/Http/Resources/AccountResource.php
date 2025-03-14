@@ -7,12 +7,17 @@ namespace App\Http\Resources;
 use App\Models\Account;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
 /** @mixin Account */
-#[TypeScript]
 final class AccountResource extends JsonResource
 {
+    /**
+     * The resource that this resource collects.
+     *
+     * @var string
+     */
+    public $collects = Account::class;
+
     /**
      * Transform the resource collection into an array.
      *
@@ -24,12 +29,16 @@ final class AccountResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
-            'currency_code' => $this->currency_code,
-            'initial_balance' => $this->initial_balance,
-            'current_balance' => $this->current_balance,
-            'is_default' => $this->is_default,
-            'public_id' => $this->public_id,
-            'external_id' => $this->external_id,
+            'currencyCode' => $this->currency_code,
+            'initialBalance' => $this->initial_balance,
+            'currentBalance' => $this->current_balance,
+            'isDefault' => $this->is_default,
+            'publicId' => $this->public_id,
+            'externalId' => $this->external_id,
+            'institution' => $this->bankConnection ? [
+                'logoUrl' => $this->bankConnection->institution_logo_url,
+                'status' => $this->bankConnection->is_active ? 'active' : 'inactive',
+            ] : null,
         ];
     }
 }

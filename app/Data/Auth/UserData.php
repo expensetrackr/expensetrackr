@@ -6,6 +6,7 @@ namespace App\Data\Auth;
 
 use App\Models\User;
 use Laravel\Fortify\Features;
+use Spatie\LaravelData\Attributes\MapName;
 use Spatie\LaravelData\Data;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
@@ -16,9 +17,12 @@ final class UserData extends Data
         public readonly int $id,
         public readonly string $name,
         public readonly string $email,
-        public readonly ?string $profile_photo_path,
-        public readonly ?string $profile_photo_url,
-        public readonly bool $two_factor_enabled,
+        #[MapName('profile_photo_path')]
+        public readonly ?string $profilePhotoPath,
+        #[MapName('profile_photo_url')]
+        public readonly ?string $profilePhotoUrl,
+        #[MapName('two_factor_enabled')]
+        public readonly bool $twoFactorEnabled,
     ) {}
 
     public static function fromModel(User $user): self
@@ -27,9 +31,9 @@ final class UserData extends Data
             'id' => $user->id,
             'name' => $user->name,
             'email' => $user->email,
-            'profile_photo_path' => $user->profile_photo_path,
-            'profile_photo_url' => $user->getAttributeValue('profile_photo_path'),
-            'two_factor_enabled' => Features::enabled(Features::twoFactorAuthentication())
+            'profilePhotoPath' => $user->profile_photo_path,
+            'profilePhotoUrl' => $user->getAttributeValue('profile_photo_path'),
+            'twoFactorEnabled' => Features::enabled(Features::twoFactorAuthentication())
                 && $user->two_factor_secret !== null,
         ]);
     }

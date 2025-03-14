@@ -7,8 +7,15 @@ import { Select } from "#/components/form/select.tsx";
 import { TextField } from "#/components/form/text-field.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import * as Kbd from "#/components/ui/kbd.tsx";
+import { useAccountParams } from "#/hooks/use-account-params.ts";
 
 export function Filters() {
+    const { setParams, ...params } = useAccountParams();
+
+    const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        await setParams({ "filter[name]": e.target.value });
+    };
+
     return (
         <div className="flex flex-col justify-end gap-4 lg:flex-row lg:flex-wrap lg:items-center lg:gap-3">
             <TextField
@@ -18,7 +25,9 @@ export function Filters() {
                     </button>
                 }
                 leadingIcon={Search2Icon}
+                onChange={handleSearch}
                 placeholder="Search..."
+                value={params["filter[name]"] ?? ""}
                 wrapperClassName="lg:hidden"
             />
 
@@ -32,7 +41,9 @@ export function Filters() {
                         </Kbd.Root>
                     }
                     leadingIcon={Search2Icon}
+                    onChange={handleSearch}
                     placeholder="Search..."
+                    value={params["filter[name]"] ?? ""}
                 />
 
                 <Button.Root $size="sm" $style="stroke" $type="neutral" className="flex-1 min-[560px]:flex-none">
@@ -42,18 +53,20 @@ export function Filters() {
 
                 <Select
                     $size="sm"
+                    onValueChange={(value) => setParams({ sort: value })}
                     options={[
                         {
-                            value: "asc",
+                            value: "created_at",
                             label: "ASC",
                         },
                         {
-                            value: "desc",
+                            value: "-created_at",
                             label: "DESC",
                         },
                     ]}
                     placeholder="Sort by"
                     triggerIcon={SortDescIcon}
+                    value={params.sort || undefined}
                     wrapperClassName="w-auto flex-1 min-[560px]:flex-none"
                 />
             </div>

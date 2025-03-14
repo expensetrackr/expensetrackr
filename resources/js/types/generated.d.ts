@@ -5,10 +5,10 @@ declare namespace App.Data.Auth {
         workspaces: Array<App.Data.Workspace.WorkspaceData> | any | null;
     };
     export type SessionData = {
-        ip_address: string;
-        is_current_device: boolean;
+        ipAddress: string;
+        isCurrentDevice: boolean;
         device: App.Data.Auth.UserAgentData;
-        last_active: string;
+        lastActive: string;
     };
     export type UserAgentData = {
         browser: string;
@@ -21,9 +21,9 @@ declare namespace App.Data.Auth {
         id: number;
         name: string;
         email: string;
-        profile_photo_path: string | null;
-        profile_photo_url: string | null;
-        two_factor_enabled: boolean;
+        profilePhotoPath: string | null;
+        profilePhotoUrl: string | null;
+        twoFactorEnabled: boolean;
     };
 }
 declare namespace App.Data.Banking.Account {
@@ -118,8 +118,8 @@ declare namespace App.Data.Socialstream {
     export type ConnectedAccount = {
         id: number;
         provider: string;
-        avatar_path: string;
-        created_at: string;
+        avatarPath: string;
+        createdAt: string;
     };
     export type ProviderData = {
         id: App.Enums.Socialstream.Provider;
@@ -159,11 +159,11 @@ declare namespace App.Data.Workspace {
     export type WorkspaceData = {
         id: number;
         name: string;
-        personal_workspace: boolean;
+        personalWorkspace: boolean;
     };
     export type WorkspaceInvitationData = {
         id: number;
-        workspace_id: number;
+        workspaceId: number;
         email: string;
         role: string;
     };
@@ -248,11 +248,4 @@ declare namespace App.Enums.Teller {
         | "credit_card";
     export type AccountType = "depository" | "credit";
     export type EnvironmentType = "sandbox" | "development" | "production";
-}
-declare namespace App.Http.Resources {
-    export type AccountResource = {
-        resource: any;
-        with: Array<any>;
-        additional: Array<any>;
-    };
 }

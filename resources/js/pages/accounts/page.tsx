@@ -5,10 +5,18 @@ import { Header } from "#/components/header.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
 import { AppLayout } from "#/layouts/app-layout.tsx";
 import { type PageProps } from "#/types/globals.js";
+import { type PaginatedResponse } from "#/types/pagination.ts";
+import { type AccountResourceType } from "#/types/runtype.js";
+import { AccountsList } from "./__components/accounts-lists.tsx";
 import { Filters } from "./__components/filters.tsx";
 
-export default function AccountsPage(props: PageProps) {
-    console.info(props);
+type AccountsPageProps = {
+    accounts: PaginatedResponse<AccountResourceType>;
+};
+
+export default function AccountsPage({ accounts }: AccountsPageProps) {
+    console.info(accounts);
+
     return (
         <>
             <Header
@@ -30,6 +38,7 @@ export default function AccountsPage(props: PageProps) {
 
             <div className="flex flex-col gap-6 px-4 py-6 lg:px-8">
                 <Filters />
+                <AccountsList accounts={accounts.data} />
             </div>
         </>
     );

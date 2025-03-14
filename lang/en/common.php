@@ -8,4 +8,6 @@ return [
     'cancel' => 'Cancel',
     'apply' => 'Apply',
     'or' => 'or',
+    'active' => 'Active',
+    'inactive' => 'Inactive',
 ];

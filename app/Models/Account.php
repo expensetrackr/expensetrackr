@@ -99,8 +99,8 @@ final class Account extends Model
     protected function casts(): array
     {
         return [
-            'initial_balance' => MoneyCast::class,
-            'current_balance' => MoneyCast::class,
+            // 'initial_balance' => MoneyCast::class,
+            // 'current_balance' => MoneyCast::class,
             'subtype' => AccountSubtype::class,
         ];
     }
