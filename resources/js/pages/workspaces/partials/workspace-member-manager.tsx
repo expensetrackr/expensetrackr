@@ -67,7 +67,7 @@ export function WorkspaceMemberManager({ workspace, availableRoles, permissions 
                                 <TableCell>
                                     <div className="inline-flex items-center gap-3">
                                         <Avatar.Root $size="32" className="size-8">
-                                            <Avatar.Image alt={user.name} src={user.profile_photo_url ?? undefined} />
+                                            <Avatar.Image alt={user.name} src={user.profilePhotoUrl ?? undefined} />
                                         </Avatar.Root>
                                         <p className="text-(--text-strong-950)">{user.name}</p>
                                     </div>

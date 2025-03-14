@@ -56,12 +56,12 @@ export function VirtualCard({ account, className, ...rest }: CreditCardProps) {
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
                     <div className="flex items-center gap-2">
-                        {account.institution?.logoUrl ? (
+                        {account.connection?.institutionLogoUrl ? (
                             <Image
                                 alt={account.name}
                                 className="size-8 shrink-0 rounded-8"
                                 height={32}
-                                src={account.institution.logoUrl}
+                                src={account.connection.institutionLogoUrl}
                                 width={32}
                             />
                         ) : (
@@ -73,17 +73,17 @@ export function VirtualCard({ account, className, ...rest }: CreditCardProps) {
                                 width={32}
                             />
                         )}
-                        {account.institution?.status && (
+                        {account.connection?.isActive && (
                             <LoopRightIcon className="size-5 rotate-90 text-(--text-sub-600)" />
                         )}
                     </div>
-                    {account.institution?.status && (
+                    {account.connection?.isActive && (
                         <StatusBadge.Root
-                            status={account.institution.status === "active" ? "completed" : "disabled"}
+                            status={account.connection.isActive ? "completed" : "disabled"}
                             variant="stroke"
                         >
                             <StatusBadge.Icon as={CheckboxCircleFillIcon} />
-                            {t(`common.${account.institution.status}`)}
+                            {t(`common.${account.connection.isActive ? "active" : "disabled"}`)}
                         </StatusBadge.Root>
                     )}
                 </div>

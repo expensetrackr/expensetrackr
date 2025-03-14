@@ -3,7 +3,7 @@ import { parseAsString, parseAsStringEnum, useQueryStates } from "nuqs";
 export function useAccountParams() {
     const [params, setParams] = useQueryStates(
         {
-            accountId: parseAsString,
+            account_id: parseAsString,
             "filter[name]": parseAsString.withDefault("").withOptions({
                 throttleMs: 500,
             }),

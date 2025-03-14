@@ -13,18 +13,7 @@ import * as Modal from "#/components/ui/modal.tsx";
 import { Action } from "#/utils/action.ts";
 
 interface LogoutOtherBrowserSessionsFormProps {
-    sessions: Array<{
-        ip_address: string;
-        is_current_device: boolean;
-        device: {
-            browser: string;
-            desktop: boolean;
-            mobile: boolean;
-            tablet: boolean;
-            platform: string;
-        };
-        last_active: string;
-    }>;
+    sessions: App.Data.Auth.SessionData[];
 }
 
 export function LogoutOtherBrowserSessionsForm({ sessions }: LogoutOtherBrowserSessionsFormProps) {
@@ -153,9 +142,9 @@ export function LogoutOtherBrowserSessionsForm({ sessions }: LogoutOtherBrowserS
                                     </p>
                                 </TableCell>
                                 <TableCell>
-                                    {session.is_current_device ? "Current Session" : session.last_active}
+                                    {session.isCurrentDevice ? "Current Session" : session.lastActive}
                                 </TableCell>
-                                <TableCell>{session.ip_address}</TableCell>
+                                <TableCell>{session.ipAddress}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

@@ -47,8 +47,8 @@ export function AccountBox({ account, className, ...rest }: CreditCardProps) {
     return (
         <div
             className={cnMerge(
-                "group/account-box relative mx-auto flex h-[188px] w-full max-w-96 shrink-0 flex-col gap-3 rounded-16 bg-(--bg-white-0) p-5 pb-[18px] ring-1 ring-(--stroke-soft-200) ring-inset",
-                "hover:ring-primary",
+                "relative mx-auto flex h-[188px] w-full max-w-96 shrink-0 flex-col gap-3 rounded-16 bg-(--bg-white-0) p-5 pb-[18px] ring-1 ring-(--stroke-soft-200) ring-inset",
+                "group-hover/account-link:ring-primary group-hover/account-link:[--tw-ring-inset:_] group-focus-visible/account-link:ring-primary group-focus-visible/account-link:[--tw-ring-inset:_]",
                 "transition duration-700 [transition-timing-function:cubic-bezier(0.4,0.2,0.2,1)] [backface-visibility:hidden] [transform-style:preserve-3d]",
                 className,
             )}
@@ -57,12 +57,12 @@ export function AccountBox({ account, className, ...rest }: CreditCardProps) {
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
                     <div className="flex items-center gap-2">
-                        {account.institution?.logoUrl ? (
+                        {account.connection?.institutionLogoUrl ? (
                             <Image
                                 alt={account.name}
                                 className="size-8 shrink-0 rounded-8"
                                 height={32}
-                                src={account.institution.logoUrl}
+                                src={account.connection.institutionLogoUrl}
                                 width={32}
                             />
                         ) : (
@@ -74,31 +74,31 @@ export function AccountBox({ account, className, ...rest }: CreditCardProps) {
                                 width={32}
                             />
                         )}
-                        {account.institution?.status && (
+                        {account.connection?.isActive && (
                             <LoopRightIcon className="size-5 rotate-90 text-(--text-sub-600)" />
                         )}
                     </div>
-                    {account.institution?.status && (
+                    {account.connection?.isActive && (
                         <StatusBadge.Root
-                            status={account.institution.status === "active" ? "completed" : "disabled"}
+                            status={account.connection.isActive ? "completed" : "disabled"}
                             variant="stroke"
                         >
                             <StatusBadge.Icon as={CheckboxCircleFillIcon} />
-                            {t(`common.${account.institution.status}`)}
+                            {t(`common.${account.connection.isActive ? "active" : "disabled"}`)}
                         </StatusBadge.Root>
                     )}
                 </div>
             </div>
 
-            <div className="mt-auto flex flex-col gap-1">
+            <div className="relative z-10 mt-auto flex flex-col gap-1">
                 <div className="text-paragraph-sm text-(--text-sub-600)">{account.name}</div>
-                <div className="space-x-1 text-h4">
+                <div className="line-clamp-1 space-x-1 text-h4">
                     <NumberFlow format={format} value={new Decimal(account.currentBalance).toNumber() / 100} />
                     <span className="text-paragraph-sm text-(--text-soft-400)">{account.currencyCode}</span>
                 </div>
             </div>
 
-            <SVGCardBg className="absolute top-0 right-0 text-(--stroke-soft-200) transition duration-700 group-hover/account-box:text-primary/50" />
+            <SVGCardBg className="absolute top-0 right-0 text-(--stroke-soft-200) transition duration-700 group-hover/account-link:text-primary/50 group-focus-visible/account-link:text-primary/50" />
         </div>
     );
 }

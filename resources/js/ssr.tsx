@@ -23,7 +23,11 @@ createServer((page) =>
                     location: new URL(page.props.ziggy.location),
                 });
 
-            return <NuqsAdapter>{<App {...props} />}</NuqsAdapter>;
+            return (
+                <NuqsAdapter>
+                    <App {...props} />
+                </NuqsAdapter>
+            );
         },
     }),
 );

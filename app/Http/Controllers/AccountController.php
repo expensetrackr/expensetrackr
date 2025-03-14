@@ -36,10 +36,13 @@ final class AccountController
     {
         $this->authorize('viewAny', Account::class);
 
+        $accountPublicId = $request->query('account_id');
+
         $accounts = AccountResource::collection(QueryBuilder::for(Account::class)
             ->with('bankConnection')
             ->allowedFilters(['name'])
             ->allowedSorts(sorts: 'created_at')
+            ->defaultSort('-created_at')
             ->tap(function ($builder) use ($request) {
                 if (filled($request->search)) {
                     return $builder->whereIn('id', Account::search($request->search)->get()->pluck('id'));
@@ -48,9 +51,16 @@ final class AccountController
             ->paginate(100)
             ->appends($request->query()));
 
+        $account = null;
+        if ($accountPublicId) {
+            $account = Account::findByPrefixedIdOrFail($accountPublicId)->with('bankConnection')->first();
+            $account = new AccountResource($account);
+        }
+
         return Inertia::render('accounts/page', [
             'query' => $request->query(),
             'accounts' => $accounts,
+            'account' => $account,
         ]);
     }
 

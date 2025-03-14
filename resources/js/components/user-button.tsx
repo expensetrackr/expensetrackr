@@ -25,7 +25,7 @@ export function UserButton({ className }: { className?: string }) {
                 )}
             >
                 <Avatar.Root $color="blue" $size="40">
-                    <Avatar.Image alt={user?.name} src={user?.profile_photo_url ?? undefined} />
+                    <Avatar.Image alt={user?.name} src={user?.profilePhotoUrl ?? undefined} />
                 </Avatar.Root>
 
                 <div className="flex w-[172px] shrink-0 items-center gap-3" data-hide-collapsed>
@@ -97,7 +97,7 @@ export function UserButtonMobile({ className }: { className?: string }) {
                 )}
             >
                 <Avatar.Root $color="blue" $size="48">
-                    <Avatar.Image alt={user?.name} src={user?.profile_photo_url ?? undefined} />
+                    <Avatar.Image alt={user?.name} src={user?.profilePhotoUrl ?? undefined} />
                 </Avatar.Root>
                 <div className="flex-1 space-y-1">
                     <div className="flex items-center gap-0.5 text-label-md">{user?.name}</div>

@@ -87,7 +87,7 @@ export function UpdateProfilePictureForm() {
                                 <Avatar.Root>
                                     <Avatar.Image
                                         alt={user?.name}
-                                        src={(photoPreview || user?.profile_photo_url) ?? undefined}
+                                        src={(photoPreview || user?.profilePhotoUrl) ?? undefined}
                                     />
                                 </Avatar.Root>
 
@@ -111,7 +111,7 @@ export function UpdateProfilePictureForm() {
                                             <span>Change photo</span>
                                         </Dropdown.Item>
 
-                                        {user?.profile_photo_path ? (
+                                        {user?.profilePhotoPath ? (
                                             <Dropdown.Item onClick={deletePhoto}>
                                                 <DeleteBinIcon />
                                                 <span>Remove photo</span>

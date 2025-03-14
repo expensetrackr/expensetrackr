@@ -22,9 +22,9 @@ export function ConnectedAccount({ connectedAccount, provider, children }: Conne
                     <div className="flex flex-1 flex-col gap-1">
                         <h3 className="text-label-md">{provider.name}</h3>
 
-                        {connectedAccount?.created_at ? (
+                        {connectedAccount?.createdAt ? (
                             <p className="text-paragraph-sm text-(--text-sub-600)">
-                                Connected {connectedAccount?.created_at}
+                                Connected {connectedAccount?.createdAt}
                             </p>
                         ) : (
                             <p className="text-paragraph-sm text-(--text-sub-600)">Not connected.</p>

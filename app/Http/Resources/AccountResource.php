@@ -12,13 +12,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
 final class AccountResource extends JsonResource
 {
     /**
-     * The resource that this resource collects.
-     *
-     * @var string
-     */
-    public $collects = Account::class;
-
-    /**
      * Transform the resource collection into an array.
      *
      * @return array<int|string, mixed>
@@ -26,19 +19,15 @@ final class AccountResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
+            'id' => $this->public_id,
             'name' => $this->name,
             'description' => $this->description,
             'currencyCode' => $this->currency_code,
             'initialBalance' => $this->initial_balance,
             'currentBalance' => $this->current_balance,
             'isDefault' => $this->is_default,
-            'publicId' => $this->public_id,
             'externalId' => $this->external_id,
-            'institution' => $this->bankConnection ? [
-                'logoUrl' => $this->bankConnection->institution_logo_url,
-                'status' => $this->bankConnection->is_active ? 'active' : 'inactive',
-            ] : null,
+            'connection' => new BankConnectionResource($this->whenLoaded('bankConnection')),
         ];
     }
 }

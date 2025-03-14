@@ -8,15 +8,15 @@ import { type PageProps } from "#/types/globals.js";
 import { type PaginatedResponse } from "#/types/pagination.ts";
 import { type AccountResourceType } from "#/types/runtype.js";
 import { AccountsList } from "./__components/accounts-lists.tsx";
+import { AccountDetailsDrawer } from "./__components/details-drawer.tsx";
 import { Filters } from "./__components/filters.tsx";
 
 type AccountsPageProps = {
     accounts: PaginatedResponse<AccountResourceType>;
+    account?: AccountResourceType | null;
 };
 
-export default function AccountsPage({ accounts }: AccountsPageProps) {
-    console.info(accounts);
-
+export default function AccountsPage({ accounts, account }: AccountsPageProps) {
     return (
         <>
             <Header
@@ -40,6 +40,8 @@ export default function AccountsPage({ accounts }: AccountsPageProps) {
                 <Filters />
                 <AccountsList accounts={accounts.data} />
             </div>
+
+            <AccountDetailsDrawer account={account} />
         </>
     );
 }

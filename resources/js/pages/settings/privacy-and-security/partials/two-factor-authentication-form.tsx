@@ -23,7 +23,7 @@ export function TwoFactorAuthenticationForm({ requiresConfirmation }: TwoFactorA
         code: "",
     });
     const user = useUser();
-    const twoFactorEnabled = action !== Action.TwoFactorEnable && user?.two_factor_enabled;
+    const twoFactorEnabled = action !== Action.TwoFactorEnable && user?.twoFactorEnabled;
 
     React.useEffect(() => {
         if (action === Action.TwoFactorConfirm && !qrCode) {
