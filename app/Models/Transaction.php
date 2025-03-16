@@ -7,7 +7,6 @@ namespace App\Models;
 use App\Concerns\WorkspaceOwned;
 use App\Enums\TransactionStatus;
 use App\Enums\TransactionType;
-use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -59,26 +58,17 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Transaction whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Transaction whereWorkspaceId($value)
  *
+ * @property int|null $category_id
+ * @property-read Category|null $category
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Transaction whereCategoryId($value)
+ *
  * @mixin \Eloquent
  */
 final class Transaction extends Model
 {
     /** @use HasFactory<\Database\Factories\TransactionFactory> */
-    use HasFactory, HasPrefixedId, HasUlids, WorkspaceOwned;
-
-    /**
-     * Indicates if the IDs are auto-incrementing.
-     *
-     * @var bool
-     */
-    public $incrementing = false;
-
-    /**
-     * The "type" of the primary key ID.
-     *
-     * @var string
-     */
-    protected $keyType = 'string';
+    use HasFactory, HasPrefixedId, WorkspaceOwned;
 
     /**
      * The account that the transaction belongs to.
@@ -88,6 +78,16 @@ final class Transaction extends Model
     public function account(): BelongsTo
     {
         return $this->belongsTo(Account::class);
+    }
+
+    /**
+     * The category that the transaction belongs to.
+     *
+     * @return BelongsTo<Category, covariant $this>
+     */
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class);
     }
 
     /**

@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Models\Category;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,9 +14,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('accounts', function (Blueprint $table): void {
-            $table->decimal('initial_balance', 19, 4)->change();
-            $table->decimal('current_balance', 19, 4)->change();
+        Schema::table('transactions', function (Blueprint $table): void {
+            $table->foreignId('category_id')->nullable()->constrained()->nullOnDelete();
         });
     }
 
@@ -24,9 +24,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('accounts', function (Blueprint $table): void {
-            $table->double('initial_balance')->change();
-            $table->double('current_balance')->change();
+        Schema::table('transactions', function (Blueprint $table): void {
+            $table->dropForeignIdFor(Category::class);
         });
     }
 };

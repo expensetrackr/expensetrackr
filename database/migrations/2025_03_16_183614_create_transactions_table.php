@@ -16,7 +16,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('transactions', function (Blueprint $table): void {
-            $table->ulid('id')->primary();
+            $table->id();
             $table->string('name');
             $table->string('note')->nullable();
             $table->string('status')->default(TransactionStatus::Posted->value);
