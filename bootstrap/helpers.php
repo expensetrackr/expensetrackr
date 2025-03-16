@@ -13,8 +13,8 @@ if (! function_exists('localizedMarkdownPath')) {
         $localName = preg_replace('#(\.md)$#i', '.'.app()->getLocale().'$1', $name);
 
         return Arr::first([
-            resource_path('markdown/'.$localName),
-            resource_path('markdown/'.$name),
+            resource_path("markdown/$localName"),
+            resource_path("markdown/$name"),
         ], fn ($path): bool => file_exists($path));
     }
 }
