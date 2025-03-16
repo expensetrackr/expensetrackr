@@ -1,6 +1,6 @@
 ---
 description: Best practices and guidelines for Inertia.js
-globs: resources/js/**/*.{ts,tsx,js,jsx}
+globs: resources/js/**/*.ts,resources/js/**/*.tsx
 alwaysApply: false
 ---
 # Inertia.js Best Practices for ExpenseTrackr

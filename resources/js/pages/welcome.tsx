@@ -245,11 +245,11 @@ function ImageAndTextSection() {
 
                         {Array.from({ length: 5 }).map((_, index) => (
                             <div className="relative" key={index}>
-                                <div className="absolute -left-10.5 flex size-5 items-center justify-center rounded-full border bg-(--bg-white-0) font-display text-[10px]/[16px] font-medium">
+                                <div className="absolute -left-10.5 flex size-5 items-center justify-center rounded-full border bg-(--bg-white-0) text-[10px]/[16px] font-medium">
                                     {index + 1}
                                 </div>
                                 <div className="flex flex-col">
-                                    <h3 className="font-display text-label-lg">
+                                    <h3 className="text-label-lg">
                                         {t(`home.sections.image_and_text.steps.${index + 1}.title`)}
                                     </h3>
                                     <p className="text-paragraph-md text-(--text-sub-600)">

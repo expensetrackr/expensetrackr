@@ -52,8 +52,9 @@
         <meta content="light" name="color-scheme" />
 
         <!-- Fonts -->
-        <link rel="preconnect" href="https://rsms.me/" />
-        <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet" />
 
         <!-- Scripts -->
         @routes
@@ -72,22 +73,14 @@
                 PUBLIC_ASSETS_URL: '{{ config('services.public_assets.url') }}',
                 TELLER_APP_ID: '{{ config('teller.APP_ID') }}',
                 TELLER_ENVIRONMENT: '{{ config('teller.ENVIRONMENT') }}',
-                OPENPANEL_CLIENT_ID: '{{ config('openpanel.client_id') }}',
             };
         </script>
-        <script>
-            window.op =
-                window.op ||
-                function (...args) {
-                    (window.op.q = window.op.q || []).push(args);
-                };
-            window.op('init', {
-                clientId: '{{ config('openpanel.client_id') }}',
-                trackScreenViews: true,
-                trackOutgoingLinks: true,
-                trackAttributes: true,
-            });
-        </script>
-        <script src="https://openpanel.dev/op1.js" defer async></script>
+        <script
+            defer
+            src="https://events.danestves.com/script.js"
+            data-website-id="cede84d1-d5d3-4195-be43-8041e8eb0547"
+            data-exclude-search="true"
+            data-do-not-track="true"
+        ></script>
     </body>
 </html>

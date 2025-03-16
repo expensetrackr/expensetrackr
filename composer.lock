@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7012ec87f93cfd5124c0f577c5b50a03",
+    "content-hash": "f37bdecd4f0ea01b84a527eb2c74194a",
     "packages": [
         {
             "name": "akaunting/laravel-money",
@@ -1302,67 +1302,6 @@
                 }
             ],
             "time": "2025-02-13T20:35:06+00:00"
-        },
-        {
-            "name": "bleckert/openpanel-laravel",
-            "version": "v2.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/tbleckert/openpanel-laravel.git",
-                "reference": "d891e38e76d53d151391c66ba432fb4b5683f4fb"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/tbleckert/openpanel-laravel/zipball/d891e38e76d53d151391c66ba432fb4b5683f4fb",
-                "reference": "d891e38e76d53d151391c66ba432fb4b5683f4fb",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/support": "^10.0|^11.0",
-                "php": "^8.2"
-            },
-            "require-dev": {
-                "laravel/pint": "^1.13",
-                "phpunit/phpunit": "^9.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Bleckert\\OpenpanelLaravel\\OpenpanelLaravelServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Bleckert\\OpenpanelLaravel\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Tobias Bleckert",
-                    "email": "hola@tobiasbleckert.se",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Laravel provider for Openpanel",
-            "homepage": "https://github.com/tbleckert/openpanel-laravel",
-            "keywords": [
-                "analytics",
-                "events",
-                "laravel",
-                "openpanel",
-                "tracking"
-            ],
-            "support": {
-                "issues": "https://github.com/tbleckert/openpanel-laravel/issues",
-                "source": "https://github.com/tbleckert/openpanel-laravel/tree/v2.0.0"
-            },
-            "time": "2024-10-25T13:17:22+00:00"
         },
         {
             "name": "brick/math",

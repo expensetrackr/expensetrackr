@@ -21,7 +21,7 @@ import {
     type CreateAccountSchema,
     CreateManualAccountStepper,
     type DetailsSchema,
-} from "#/utils/steppers/create-account.step";
+} from "#/utils/steppers/create-account.step.ts";
 
 type CreateAccountPageProps = {
     currencies: Array<string>;
@@ -65,7 +65,11 @@ export default function CreateManualAccountPage({ currencies }: CreateAccountPag
                         }),
                     }));
 
-                    post(route("accounts.store"));
+                    post(route("accounts.store"), {
+                        onSuccess() {
+                            setAccount(null);
+                        },
+                    });
                 } else {
                     stepper.next();
                 }

@@ -1,12 +1,6 @@
 :root,
 html {
-    --font-family: Inter;
-}
-
-@supports (font-variation-settings: normal) {
-    :root {
-        --font-family: InterVariable;
-    }
+    --font-family: "Geist";
 }
 
 :root,
@@ -128,15 +122,6 @@ h4,
 p {
     /* Prevent text orphans (single words on last line). */
     @apply text-pretty;
-}
-
-.text-h1,
-.text-h2,
-.text-h3,
-.text-h4,
-.text-h5,
-.text-h6 {
-    font-family: var(--font-display);
 }
 
 .dark #filter {
