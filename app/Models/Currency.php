@@ -8,12 +8,7 @@ use App\Casts\CurrencyRateCast;
 use App\Concerns\WorkspaceOwned;
 use App\Services\CurrencyService;
 use App\Utilities\Currency\CurrencyAccessor;
-use Carbon\CarbonImmutable;
-use Database\Factories\CurrencyFactory;
-use Eloquent;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Database\Eloquent\Factories\Factory as TFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -31,36 +26,35 @@ use Illuminate\Database\Eloquent\Model;
  * @property bool $enabled
  * @property int|null $created_by
  * @property int|null $updated_by
- * @property CarbonImmutable|null $created_at
- * @property CarbonImmutable|null $updated_at
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
  * @property-read Workspace $workspace
- * @property-read TFactory<Currency>|null $use_factory
  *
- * @method static CurrencyFactory factory($count = null, $state = [])
- * @method static Builder<static>|Currency newModelQuery()
- * @method static Builder<static>|Currency newQuery()
- * @method static Builder<static>|Currency query()
- * @method static Builder<static>|Currency whereCode($value)
- * @method static Builder<static>|Currency whereCreatedAt($value)
- * @method static Builder<static>|Currency whereCreatedBy($value)
- * @method static Builder<static>|Currency whereDecimalMark($value)
- * @method static Builder<static>|Currency whereEnabled($value)
- * @method static Builder<static>|Currency whereId($value)
- * @method static Builder<static>|Currency whereName($value)
- * @method static Builder<static>|Currency wherePrecision($value)
- * @method static Builder<static>|Currency whereRate($value)
- * @method static Builder<static>|Currency whereSymbol($value)
- * @method static Builder<static>|Currency whereSymbolFirst($value)
- * @method static Builder<static>|Currency whereThousandsSeparator($value)
- * @method static Builder<static>|Currency whereUpdatedAt($value)
- * @method static Builder<static>|Currency whereUpdatedBy($value)
- * @method static Builder<static>|Currency whereWorkspaceId($value)
+ * @method static \Database\Factories\CurrencyFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Currency newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Currency newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Currency query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Currency whereCode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Currency whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Currency whereCreatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Currency whereDecimalMark($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Currency whereEnabled($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Currency whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Currency whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Currency wherePrecision($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Currency whereRate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Currency whereSymbol($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Currency whereSymbolFirst($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Currency whereThousandsSeparator($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Currency whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Currency whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Currency whereWorkspaceId($value)
  *
- * @mixin Eloquent
+ * @mixin \Eloquent
  */
 final class Currency extends Model
 {
-    /** @use HasFactory<CurrencyFactory> */
+    /** @use HasFactory<\Database\Factories\CurrencyFactory> */
     use HasFactory, WorkspaceOwned;
 
     /**

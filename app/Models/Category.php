@@ -15,7 +15,6 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @property string $name
  * @property string $slug
  * @property string $color
- * @property string|null $icon
  * @property string|null $description
  * @property bool $is_system
  * @property bool $is_active
@@ -39,7 +38,6 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Category whereColor($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Category whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Category whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Category whereIcon($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Category whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Category whereIsActive($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Category whereIsSystem($value)

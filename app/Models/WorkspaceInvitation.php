@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use Carbon\CarbonImmutable;
-use Eloquent;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -15,21 +12,21 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $workspace_id
  * @property string $email
  * @property string $role
- * @property CarbonImmutable|null $created_at
- * @property CarbonImmutable|null $updated_at
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
  * @property-read Workspace $workspace
  *
- * @method static Builder<static>|WorkspaceInvitation newModelQuery()
- * @method static Builder<static>|WorkspaceInvitation newQuery()
- * @method static Builder<static>|WorkspaceInvitation query()
- * @method static Builder<static>|WorkspaceInvitation whereCreatedAt($value)
- * @method static Builder<static>|WorkspaceInvitation whereEmail($value)
- * @method static Builder<static>|WorkspaceInvitation whereId($value)
- * @method static Builder<static>|WorkspaceInvitation whereRole($value)
- * @method static Builder<static>|WorkspaceInvitation whereUpdatedAt($value)
- * @method static Builder<static>|WorkspaceInvitation whereWorkspaceId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkspaceInvitation newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkspaceInvitation newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkspaceInvitation query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkspaceInvitation whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkspaceInvitation whereEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkspaceInvitation whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkspaceInvitation whereRole($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkspaceInvitation whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkspaceInvitation whereWorkspaceId($value)
  *
- * @mixin Eloquent
+ * @mixin \Eloquent
  */
 final class WorkspaceInvitation extends Model
 {

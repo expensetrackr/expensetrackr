@@ -21,6 +21,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
+#[ObservedBy([UserObserver::class])]
 /**
  * @property int $id
  * @property string $name
@@ -39,7 +40,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read int|null $accounts_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \JoelButcher\Socialstream\ConnectedAccount> $connectedAccounts
  * @property-read int|null $connected_accounts_count
- * @property-read Workspace $currentWorkspace
+ * @property-read Workspace|null $currentWorkspace
  * @property-read \Danestves\LaravelPolar\Customer|null $customer
  * @property-read string|null $get_photo_url
  * @property-read string|null $profile_photo_url
@@ -85,7 +86,6 @@ use Spatie\Permission\Traits\HasRoles;
  *
  * @mixin \Eloquent
  */
-#[ObservedBy([UserObserver::class])]
 final class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */

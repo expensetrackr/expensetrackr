@@ -7,12 +7,7 @@ namespace App\Models;
 use App\Events\WorkspaceCreated;
 use App\Events\WorkspaceDeleted;
 use App\Events\WorkspaceUpdated;
-use Carbon\CarbonImmutable;
-use Database\Factories\WorkspaceFactory;
-use Eloquent;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Factories\Factory as TFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -24,32 +19,31 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property int $user_id
  * @property string $name
  * @property bool $personal_workspace
- * @property CarbonImmutable|null $created_at
- * @property CarbonImmutable|null $updated_at
- * @property-read User|null $owner
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
+ * @property-read Collection<int, WorkspaceInvitation> $invitations
+ * @property-read int|null $invitations_count
  * @property-read Membership|null $membership
  * @property-read Collection<int, User> $members
  * @property-read int|null $members_count
- * @property-read Collection<int, WorkspaceInvitation> $invitations
- * @property-read int|null $invitations_count
- * @property-read TFactory<Workspace>|null $use_factory
+ * @property-read User|null $owner
  *
- * @method static WorkspaceFactory factory($count = null, $state = [])
- * @method static Builder<static>|Workspace newModelQuery()
- * @method static Builder<static>|Workspace newQuery()
- * @method static Builder<static>|Workspace query()
- * @method static Builder<static>|Workspace whereCreatedAt($value)
- * @method static Builder<static>|Workspace whereId($value)
- * @method static Builder<static>|Workspace whereName($value)
- * @method static Builder<static>|Workspace wherePersonalWorkspace($value)
- * @method static Builder<static>|Workspace whereUpdatedAt($value)
- * @method static Builder<static>|Workspace whereUserId($value)
+ * @method static \Database\Factories\WorkspaceFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Workspace newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Workspace newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Workspace query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Workspace whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Workspace whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Workspace whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Workspace wherePersonalWorkspace($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Workspace whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Workspace whereUserId($value)
  *
- * @mixin Eloquent
+ * @mixin \Eloquent
  */
 final class Workspace extends Model
 {
-    /** @use HasFactory<WorkspaceFactory> */
+    /** @use HasFactory<\Database\Factories\WorkspaceFactory> */
     use HasFactory;
 
     /**

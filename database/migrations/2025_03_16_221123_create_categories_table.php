@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('name');
             $table->string('slug')->index();
             $table->string('color', 7); // Hex color code (#FFFFFF)
-            $table->string('icon')->nullable(); // Icon identifier
             $table->text('description')->nullable();
             $table->boolean('is_system')->default(false);
             $table->boolean('is_active')->default(true);

@@ -17,8 +17,11 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
 
 /**
  * @property int $id
+ * @property string $accountable_type
+ * @property int $accountable_id
  * @property string $name
  * @property string|null $description
+ * @property AccountSubtype|null $subtype
  * @property string $currency_code
  * @property string $initial_balance
  * @property string $current_balance
@@ -30,9 +33,6 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @property int|null $updated_by
  * @property \Carbon\CarbonImmutable|null $created_at
  * @property \Carbon\CarbonImmutable|null $updated_at
- * @property string $accountable_type
- * @property int $accountable_id
- * @property AccountSubtype|null $subtype
  * @property int|null $bank_connection_id
  * @property-read Model $accountable
  * @property-read BankConnection|null $bankConnection
@@ -53,6 +53,7 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereCurrencyCode($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereCurrentBalance($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereExternalId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereInitialBalance($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereIsDefault($value)
@@ -62,7 +63,6 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereUpdatedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereWorkspaceId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereExternalId($value)
  *
  * @mixin \Eloquent
  */

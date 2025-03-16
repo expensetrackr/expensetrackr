@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
 
 /**
- * @property string $id
+ * @property int $id
  * @property string $name
  * @property string|null $note
  * @property TransactionStatus $status
@@ -31,7 +31,9 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @property string $public_id
  * @property \Carbon\CarbonImmutable|null $created_at
  * @property \Carbon\CarbonImmutable|null $updated_at
+ * @property int|null $category_id
  * @property-read Account|null $account
+ * @property-read Category|null $category
  * @property-read string|null $prefixed_id
  * @property-read Workspace $workspace
  *
@@ -42,6 +44,7 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Transaction whereAmount($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Transaction whereBaseAmount($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Transaction whereBaseCurrency($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Transaction whereCategoryId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Transaction whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Transaction whereCurrency($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Transaction whereCurrencyRate($value)
@@ -57,11 +60,6 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Transaction whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Transaction whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Transaction whereWorkspaceId($value)
- *
- * @property int|null $category_id
- * @property-read Category|null $category
- *
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Transaction whereCategoryId($value)
  *
  * @mixin \Eloquent
  */
