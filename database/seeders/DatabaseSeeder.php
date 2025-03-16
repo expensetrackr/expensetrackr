@@ -19,6 +19,7 @@ final class DatabaseSeeder extends Seeder
         $this->call([
             AdminRoleSeeder::class,
             MemberRoleSeeder::class,
+            SystemCategoriesSeeder::class,
         ]);
 
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
