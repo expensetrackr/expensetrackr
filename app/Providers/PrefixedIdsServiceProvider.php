@@ -6,6 +6,7 @@ namespace App\Providers;
 
 use App\Models\Account;
 use App\Models\BankConnection;
+use App\Models\Transaction;
 use Illuminate\Support\ServiceProvider;
 use Spatie\PrefixedIds\PrefixedIds;
 
@@ -19,6 +20,7 @@ final class PrefixedIdsServiceProvider extends ServiceProvider
         PrefixedIds::registerModels([
             'acc_' => Account::class,
             'bconn_' => BankConnection::class,
+            'trx_' => Transaction::class,
         ]);
     }
 }

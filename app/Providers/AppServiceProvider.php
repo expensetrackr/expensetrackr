@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
@@ -30,11 +31,7 @@ final class AppServiceProvider extends ServiceProvider
         $this->configurePasswordValidation();
         $this->configureDates();
         $this->configureVite();
-        $this->configurePermissions();
-
-        if (config('app.env') !== 'local') {
-            $url->forceScheme('https');
-        }
+        $this->configureUrl();
     }
 
     /**
@@ -77,23 +74,14 @@ final class AppServiceProvider extends ServiceProvider
      */
     private function configureVite(): void
     {
-        Vite::prefetch(concurrency: 3);
+        Vite::useAggressivePrefetching();
     }
 
     /**
-     * Configure the Workspaces middleware to run before SubstituteBindings.
-     *
-     * The Workspaces middleware needs to run before SubstituteBindings because it
-     * SubstituteBindings to resolve the route bindings.
+     * Configure the URL for the application.
      */
-    private function configurePermissions(): void
+    private function configureUrl(): void
     {
-        //        /** @var Kernel $kernel */
-        //        $kernel = app()->make(Kernel::class);
-
-        //        $kernel->addToMiddlewarePriorityBefore(
-        //            SubstituteBindings::class,
-        //            WorkspacesPermission::class,
-        //        );
+        URL::forceHttps(app()->isProduction());
     }
 }

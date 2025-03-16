@@ -31,6 +31,7 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @property \Carbon\CarbonImmutable|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Account> $accounts
  * @property-read int|null $accounts_count
+ * @property-read string|null $prefixed_id
  * @property-read Workspace $workspace
  *
  * @method static Builder<static>|BankConnection mx()

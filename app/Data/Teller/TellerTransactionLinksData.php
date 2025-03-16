@@ -1,0 +1,15 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Data\Teller;
+
+final class TellerTransactionLinksData extends TellerLinksData
+{
+    public function __construct(
+        /**
+         * A link to the account that the transaction belongs to.
+         */
+        public readonly string $account,
+    ) {}
+}
