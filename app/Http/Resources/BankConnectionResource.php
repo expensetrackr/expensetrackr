@@ -23,7 +23,7 @@ final class BankConnectionResource extends JsonResource
             'institutionName' => $this->institution_name,
             'institutionLogoUrl' => $this->institution_logo_url,
             'providerType' => $this->provider_type,
-            'isActive' => $this->is_active,
+            'status' => $this->status,
         ];
     }
 }

@@ -8,10 +8,12 @@ use App\Casts\MoneyCast;
 use App\Concerns\Blamable;
 use App\Concerns\WorkspaceOwned;
 use App\Enums\AccountSubtype;
+use App\Enums\AccountType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use InvalidArgumentException;
 use Laravel\Scout\Searchable;
 use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
 
@@ -72,6 +74,15 @@ final class Account extends Model
     use Blamable, HasFactory, HasPrefixedId, Searchable, WorkspaceOwned;
 
     /**
+     * The accessors to append to the model's array form.
+     *
+     * @var list<string>
+     */
+    protected $appends = [
+        'type',
+    ];
+
+    /**
      * The accountable model.
      *
      * @return MorphTo<Model, covariant $this>
@@ -89,6 +100,23 @@ final class Account extends Model
     public function bankConnection(): BelongsTo
     {
         return $this->belongsTo(BankConnection::class);
+    }
+
+    /**
+     * Get the account type based on the accountable relationship.
+     */
+    public function getTypeAttribute(): AccountType
+    {
+        return match ($this->accountable_type) {
+            'App\Models\Depository' => AccountType::Depository,
+            'App\Models\Investment' => AccountType::Investment,
+            'App\Models\Crypto' => AccountType::Crypto,
+            'App\Models\OtherAsset' => AccountType::OtherAsset,
+            'App\Models\CreditCard' => AccountType::CreditCard,
+            'App\Models\Loan' => AccountType::Loan,
+            'App\Models\OtherLiability' => AccountType::OtherLiability,
+            default => throw new InvalidArgumentException("Unknown accountable type: {$this->accountable_type}"),
+        };
     }
 
     /**

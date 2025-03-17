@@ -50,9 +50,14 @@ final class SystemCategoriesSeeder extends Seeder
                 'description' => 'Costs related to transportation including car payments, fuel, public transit, maintenance, parking, and ride-sharing services.',
             ],
             [
-                'name' => 'Food',
+                'name' => 'Groceries',
                 'color' => '#FFA726',
-                'description' => 'All food-related expenses including groceries, restaurants, takeout, and food delivery services.',
+                'description' => 'Essential food and household items purchased from supermarkets and grocery stores.',
+            ],
+            [
+                'name' => 'Dining',
+                'color' => '#FF9800',
+                'description' => 'Expenses at restaurants, cafes, bars, and food delivery services.',
             ],
             [
                 'name' => 'Utilities',
@@ -78,6 +83,21 @@ final class SystemCategoriesSeeder extends Seeder
                 'name' => 'Education',
                 'color' => '#3F51B5',
                 'description' => 'Educational expenses including tuition, books, courses, training programs, and professional development.',
+            ],
+            [
+                'name' => 'Technology',
+                'color' => '#00BCD4',
+                'description' => 'Technology-related expenses including electronics, software, apps, and digital services.',
+            ],
+            [
+                'name' => 'Services',
+                'color' => '#8D6E63',
+                'description' => 'Professional and personal services including maintenance, repairs, consulting, and other service-based expenses.',
+            ],
+            [
+                'name' => 'Loans',
+                'color' => '#F44336',
+                'description' => 'Loan payments, credit card payments, and other debt-related expenses.',
             ],
 
             // Transfer category

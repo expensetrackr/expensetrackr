@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Concerns\WorkspaceOwned;
+use App\Enums\ConnectionStatus;
 use App\Enums\ProviderType;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -21,7 +22,7 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @property string $access_token
  * @property string|null $refresh_token
  * @property \Carbon\CarbonImmutable|null $token_expires_at
- * @property bool $is_active
+ * @property ConnectionStatus $status
  * @property \Carbon\CarbonImmutable|null $last_sync_at
  * @property string|null $error_message
  * @property array<array-key, mixed>|null $provider_metadata
@@ -46,13 +47,13 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @method static Builder<static>|BankConnection whereInstitutionId($value)
  * @method static Builder<static>|BankConnection whereInstitutionLogoUrl($value)
  * @method static Builder<static>|BankConnection whereInstitutionName($value)
- * @method static Builder<static>|BankConnection whereIsActive($value)
  * @method static Builder<static>|BankConnection whereLastSyncAt($value)
  * @method static Builder<static>|BankConnection whereProviderConnectionId($value)
  * @method static Builder<static>|BankConnection whereProviderMetadata($value)
  * @method static Builder<static>|BankConnection whereProviderType($value)
  * @method static Builder<static>|BankConnection wherePublicId($value)
  * @method static Builder<static>|BankConnection whereRefreshToken($value)
+ * @method static Builder<static>|BankConnection whereStatus($value)
  * @method static Builder<static>|BankConnection whereTokenExpiresAt($value)
  * @method static Builder<static>|BankConnection whereUpdatedAt($value)
  * @method static Builder<static>|BankConnection whereWorkspaceId($value)
@@ -146,6 +147,7 @@ final class BankConnection extends Model
         return [
             'provider_type' => ProviderType::class,
             'token_expires_at' => 'datetime',
+            'status' => ConnectionStatus::class,
             'last_sync_at' => 'datetime',
             'provider_metadata' => 'json',
         ];

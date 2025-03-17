@@ -93,7 +93,7 @@ export function AccountBox({ account, className, ...rest }: CreditCardProps) {
             <div className="relative z-10 mt-auto flex flex-col gap-1">
                 <div className="text-paragraph-sm text-(--text-sub-600)">{account.name}</div>
                 <div className="line-clamp-1 space-x-1 text-h4">
-                    <NumberFlow format={format} value={new Decimal(account.currentBalance).toNumber() / 100} />
+                    <NumberFlow format={format} value={new Decimal(account.currentBalance).toNumber()} />
                     <span className="text-paragraph-sm text-(--text-soft-400)">{account.currencyCode}</span>
                 </div>
             </div>

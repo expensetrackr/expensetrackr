@@ -48,7 +48,7 @@ final class TellerTransactionData extends Data
          * The running balance of the account that the transaction belongs to. Running balance is only present on transactions with a `posted` status.
          */
         #[MapName('running_balance')]
-        public readonly string $runningBalance,
+        public readonly ?string $runningBalance,
         /**
          * The type code transaction, e.g. `card_payment`.
          */

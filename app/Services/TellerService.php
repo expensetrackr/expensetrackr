@@ -4,26 +4,28 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Data\Banking\Account\BalanceData;
-use App\Data\Banking\Account\BankAccountData;
-use App\Data\Banking\Institution\InstitutionData;
+use App\Contracts\ProviderHandler;
+use App\Data\FinanceCore\AccountData;
+use App\Data\FinanceCore\BalanceData;
+use App\Data\FinanceCore\TransactionData;
 use App\Data\Teller\TellerAccountBalanceData;
 use App\Data\Teller\TellerAccountData;
 use App\Data\Teller\TellerTransactionData;
-use App\Enums\AccountSubtype;
-use App\Enums\AccountType;
-use App\Enums\ProviderType;
 use App\Enums\Teller\EnvironmentType;
+use App\Enums\TransactionStatus;
 use App\Exceptions\MissingTellerCertException;
 use App\Exceptions\MissingTellerConfigurationException;
 use App\Exceptions\MissingTellerKeyException;
+use App\Exceptions\ProviderErrorException;
 use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use JsonException;
+use Throwable;
 
-final class TellerService
+final class TellerService implements ProviderHandler
 {
     private string $BASE_URL = 'https://api.teller.io';
 
@@ -41,44 +43,37 @@ final class TellerService
     /**
      * List all accounts for the authenticated user.
      *
-     * @return Collection<int, BankAccountData>
+     * @return Collection<int, AccountData>
      */
-    public function listAccounts(): Collection
+    public function getAccounts(): Collection
     {
         $accounts = collect(TellerAccountData::collect((array) $this->get('/accounts')));
 
-        return $accounts->map(function (TellerAccountData $account): BankAccountData {
+        return $accounts->map(function (TellerAccountData $account) {
             $balance = $this->getAccountBalances($account->id);
 
-            return BankAccountData::from([
-                'id' => $account->id,
-                'name' => $account->name,
-                'currency' => $account->currency,
-                'type' => AccountType::fromExternal($account->type->value),
-                'subtype' => AccountSubtype::fromExternal($account->subtype->value),
-                'institution' => new InstitutionData(
-                    id: $account->institution->id,
-                    name: $account->institution->name,
-                    logo: null,
-                    provider: ProviderType::Teller,
-                ),
-                'balance' => new BalanceData(
-                    currency: 'USD',
-                    amount: (int) $balance->available,
-                ),
-                'enrollment_id' => $account->enrollmentId,
-                'institution_code' => null,
-                'expires_at' => null,
-            ]);
+            return AccountData::fromTeller($account, $balance);
         });
+    }
+
+    /**
+     * Get a single account by ID
+     */
+    public function getAccount(string $accountId): AccountData
+    {
+        $account = TellerAccountData::from($this->get("/accounts/{$accountId}"));
+
+        return AccountData::fromTeller($account, $this->getAccountBalances($accountId));
     }
 
     /**
      * Get the balances for an account
      */
-    public function getAccountBalances(string $accountId): TellerAccountBalanceData
+    public function getAccountBalances(string $accountId): BalanceData
     {
-        return TellerAccountBalanceData::from($this->get("/accounts/{$accountId}/balances"));
+        $balance = TellerAccountBalanceData::from($this->get("/accounts/{$accountId}/balances"));
+
+        return BalanceData::fromTeller($balance);
     }
 
     /**
@@ -87,16 +82,69 @@ final class TellerService
      * @param  string  $accountId  The account ID
      * @param  bool|null  $latest  Whether to get only the latest transactions
      * @param  int|null  $count  The number of transactions to get
-     * @return Collection<int, TellerTransactionData>
+     * @return Collection<int, TransactionData>
      */
     public function getTransactions(string $accountId, ?bool $latest = false, ?int $count = 0): Collection
     {
         $transactions = $this->get("/accounts/{$accountId}/transactions", [
             'count' => $latest === true ? 100 : $count,
         ]);
+        $transactions = TellerTransactionData::collect($transactions);
 
         // NOTE: Remove pending transactions until upsert issue is fixed
-        return TellerTransactionData::collect($transactions)->filter(fn (TellerTransactionData $transaction): bool => $transaction->status !== 'pending');
+        return TransactionData::collectFromTeller($transactions)->filter(fn ($transaction): bool => $transaction->status !== TransactionStatus::Pending);
+    }
+
+    /**
+     * Get the connection status of the account
+     *
+     * @return array<string, string>
+     */
+    public function getConnectionStatus(): array
+    {
+        try {
+            $accounts = $this->getAccounts();
+
+            if ($accounts->isEmpty()) {
+                return [
+                    'status' => 'disconnected',
+                ];
+            }
+
+            // Check all accounts in parallel
+            $results = $accounts->map(function (TellerAccountData $account) {
+                $this->getAccount($account->id);
+            });
+
+            // If any account request succeeded, connection is valid
+            if ($results->every(fn ($result): bool => $result !== null)) {
+                return [
+                    'status' => 'connected',
+                ];
+            }
+
+            // If we couldn't verify any accounts, assume disconnected
+            return [
+                'status' => 'disconnected',
+            ];
+        } catch (Throwable $th) {
+            $response = ProviderErrorException::createErrorResponse(
+                requestId: (string) Str::uuid(),
+                error: $th,
+            );
+
+            if ($response['code'] === 'disconnected') {
+                return [
+                    'status' => 'disconnected',
+                ];
+            }
+        }
+
+        // If we get here, the account is not disconnected
+        // But it could be a connection issue between Teller and the institution
+        return [
+            'status' => 'connected',
+        ];
     }
 
     /**

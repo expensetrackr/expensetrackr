@@ -103,7 +103,7 @@ final class AccountController
 
             if (isset($validated['enrollment_id']) && isset($validated['provider']) && isset($validated['token'])) {
                 $teller = new TellerService($validated['token']);
-                $data['bankAccounts'] = $teller->listAccounts();
+                $data['bankAccounts'] = $teller->getAccounts();
             }
         }
 

@@ -30,7 +30,7 @@ return new class extends Migration
             $table->boolean('is_manual')->default(false);
             $table->timestamp('dated_at');
 
-            $table->string('external_id')->index()->nullable();
+            $table->string('external_id')->unique()->nullable();
 
             $table->foreignId('workspace_id')->constrained()->cascadeOnDelete();
             $table->string('public_id')->unique();

@@ -4,14 +4,24 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
+use App\Data\FinanceCore\TransactionData;
+use App\Enums\ConnectionStatus;
+use App\Models\Account;
 use App\Models\BankConnection;
-use App\Models\Workspace;
+use App\Models\Category;
+use App\Models\Transaction;
+use App\Services\FinanceCoreService;
+use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
+use Log;
+use Throwable;
 
 final class SyncBankAccounts implements ShouldBeUnique, ShouldQueue
 {
@@ -55,15 +65,211 @@ final class SyncBankAccounts implements ShouldBeUnique, ShouldQueue
      */
     public function handle(): void
     {
-        Workspace::findOrFail($this->workspaceId);
-        BankConnection::findOrFail($this->bankConnectionId);
+        $bankConnection = BankConnection::find($this->bankConnectionId);
 
-        // Add your account synchronization logic here
-        // This could involve making API calls to the banking provider,
-        // updating transaction records, refreshing balances, etc.
+        if (! $bankConnection) {
+            Log::error('Bank connection not found', [
+                'bank_connection_id' => $this->bankConnectionId,
+                'workspace_id' => $this->workspaceId,
+            ]);
 
-        // Example placeholder for actual implementation:
-        // $syncService = app(BankSyncService::class);
-        // $syncService->syncAccounts($bankConnection, $workspace);
+            throw new Exception('Bank connection not found');
+        }
+
+        $financeCore = new FinanceCoreService(
+            providerConnectionId: $bankConnection->provider_connection_id,
+            providerType: $bankConnection->provider_type,
+            accessToken: $bankConnection->access_token,
+        );
+
+        $connectionStatus = $financeCore->getConnectionStatus();
+
+        Log::info('Bank connection status', [
+            'bank_connection_id' => $this->bankConnectionId,
+            'workspace_id' => $this->workspaceId,
+            'status' => $connectionStatus,
+        ]);
+
+        if ($connectionStatus['status'] === 'connected') {
+            // Update the bank connection status to connected
+            BankConnection::whereId($this->bankConnectionId)->update([
+                'status' => ConnectionStatus::Connected,
+                'last_sync_at' => now(),
+            ]);
+
+            $accounts = Account::whereHas('bankConnection', function ($query) {
+                $query->whereId($this->bankConnectionId);
+            })
+                ->select('id', 'bank_connection_id', 'external_id')
+                ->with(['bankConnection' => function ($query) {
+                    $query->select('id', 'provider_connection_id', 'provider_type', 'access_token', 'status');
+                }])
+                ->get();
+
+            if (! $accounts->count() > 0) {
+                Log::info('No accounts found for bank connection', [
+                    'bank_connection_id' => $this->bankConnectionId,
+                    'workspace_id' => $this->workspaceId,
+                ]);
+
+                return;
+            }
+
+            foreach ($accounts as $account) {
+                dump($account);
+                $this->syncAccount($account);
+            }
+
+            Log::info('Bank accounts synced', [
+                'bank_connection_id' => $this->bankConnectionId,
+                'workspace_id' => $this->workspaceId,
+            ]);
+        }
+
+        if ($connectionStatus['status'] === 'disconnected') {
+            Log::info('Bank connection disconnected', [
+                'bank_connection_id' => $this->bankConnectionId,
+                'workspace_id' => $this->workspaceId,
+            ]);
+
+            BankConnection::whereId($this->bankConnectionId)->update([
+                'status' => ConnectionStatus::Disconnected,
+            ]);
+        }
+    }
+
+    /**
+     * Sync the account balance and transactions
+     */
+    private function syncAccount(Account $account): void
+    {
+        $financeCore = new FinanceCoreService(
+            providerConnectionId: $account->bankConnection->provider_connection_id,
+            providerType: $account->bankConnection->provider_type,
+            accessToken: $account->bankConnection->access_token,
+        );
+
+        // First update the balance
+        try {
+            $balance = $financeCore->getAccountBalances($account->external_id);
+
+            $amount = $balance->amount || 0;
+
+            Log::info('Account balance', [
+                'bank_connection_id' => $this->bankConnectionId,
+                'workspace_id' => $this->workspaceId,
+                'account_id' => $account->id,
+                'amount' => $amount,
+            ]);
+
+            if ($amount > 0) {
+                $account->update([
+                    'current_balance' => $amount,
+                ]);
+            }
+
+            $account->bankConnection()->update([
+                'error_message' => null,
+            ]);
+        } catch (Throwable $th) {
+            Log::error('Error syncing account balance', [
+                'bank_connection_id' => $this->bankConnectionId,
+                'workspace_id' => $this->workspaceId,
+                'account_id' => $account->id,
+                'error' => $th->getMessage(),
+            ]);
+
+            $account->bankConnection()->update([
+                'error_message' => $th->getMessage(),
+            ]);
+
+            throw $th;
+        }
+
+        // Then update the transactions
+        try {
+            $transactions = $financeCore->getTransactions($account->external_id);
+
+            // Reset error details and retries if we successfully got the transactions
+            $account->bankConnection()->update([
+                'error_message' => null,
+            ]);
+
+            if (! $transactions->count() > 0) {
+                Log::info('No transactions found for account', [
+                    'bank_connection_id' => $this->bankConnectionId,
+                    'workspace_id' => $this->workspaceId,
+                    'account_id' => $account->id,
+                ]);
+
+                return;
+            }
+
+            // Upsert transactions in batches of 500
+            $transactionsChunks = $transactions->chunk(500);
+
+            foreach ($transactionsChunks as $transactionsBatch) {
+                $this->upsertTransactions($transactionsBatch);
+            }
+        } catch (Throwable $th) {
+            Log::error('Error syncing transactions', [
+                'bank_connection_id' => $this->bankConnectionId,
+                'workspace_id' => $this->workspaceId,
+                'account_id' => $account->id,
+                'error' => $th->getMessage(),
+            ]);
+
+            throw $th;
+        }
+    }
+
+    /**
+     * Upsert transactions in batches of 500
+     *
+     * @param  Collection<int, TransactionData>  $transactions
+     */
+    private function upsertTransactions(Collection $transactions): void
+    {
+        try {
+            // Cache system categories for the duration of this job
+            $systemCategories = Cache::remember('system_categories', 3600, function () {
+                return Category::whereIsSystem(true)
+                    ->get(['id', 'slug'])
+                    ->keyBy('slug');
+            });
+
+            // Get default 'other' category ID once
+            $defaultCategoryId = $systemCategories->get('other')?->id;
+
+            if (! $defaultCategoryId) {
+                throw new Exception("Default 'other' category not found");
+            }
+
+            Transaction::upsert(
+                $transactions->map(fn (TransactionData $transaction) => [
+                    'name' => $transaction->name,
+                    'note' => $transaction->note,
+                    'status' => $transaction->status,
+                    'dated_at' => $transaction->datedAt,
+                    'amount' => (int) $transaction->amount,
+                    'currency' => $transaction->currency,
+                    'is_recurring' => false,
+                    'is_manual' => false,
+                    'external_id' => $transaction->id,
+                    'workspace_id' => $this->workspaceId,
+                    'category_id' => $systemCategories->get($transaction->categorySlug)?->id ?? $defaultCategoryId,
+                    'public_id' => Transaction::generatePrefixedId(),
+                ])->toArray(),
+                ['external_id'],
+            );
+        } catch (Throwable $th) {
+            Log::error('Error upserting transactions', [
+                'bank_connection_id' => $this->bankConnectionId,
+                'workspace_id' => $this->workspaceId,
+                'error' => $th->getMessage(),
+            ]);
+
+            throw $th;
+        }
     }
 }

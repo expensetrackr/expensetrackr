@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Enums\ConnectionStatus;
 use App\Enums\ProviderType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -32,7 +33,7 @@ return new class extends Migration
             $table->timestamp('token_expires_at')->nullable();
 
             // Connection status
-            $table->boolean('is_active')->default(true);
+            $table->enum('status', ConnectionStatus::values())->default(ConnectionStatus::Connected);
             $table->timestamp('last_sync_at')->nullable();
             $table->text('error_message')->nullable();
 
