@@ -23,7 +23,7 @@ function DropdownMenuContent({
         <DropdownMenuPrimitive.Portal>
             <DropdownMenuPrimitive.Content
                 className={cnMerge(
-                    "z-50 w-[300px] overflow-hidden rounded-16 bg-(--bg-white-0) p-2 ring-1 shadow-md ring-(--stroke-soft-200) ring-inset",
+                    "z-50 w-[300px] overflow-hidden rounded-16 bg-(--bg-white-0) p-2 shadow-md ring-1 ring-(--stroke-soft-200) ring-inset",
                     "flex flex-col gap-1",
                     // origin
                     "data-[side=bottom]:origin-top data-[side=left]:origin-right data-[side=right]:origin-left data-[side=top]:origin-bottom",
@@ -56,7 +56,7 @@ function DropdownMenuItem({
                 "flex items-center gap-2",
                 "transition duration-200 ease-out",
                 // hover
-                "data-[highlighted]:bg-(--bg-weak-50)",
+                "hover:bg-(--bg-weak-50) data-[highlighted]:bg-(--bg-weak-50)",
                 // focus
                 "focus:outline-none",
                 // disabled
@@ -143,7 +143,7 @@ function DropdownMenuSubContent({
     return (
         <DropdownMenuPrimitive.SubContent
             className={cnMerge(
-                "z-50 w-max overflow-hidden rounded-16 bg-(--bg-white-0) p-2 ring-1 shadow-md ring-(--stroke-soft-200) ring-inset",
+                "z-50 w-max overflow-hidden rounded-16 bg-(--bg-white-0) p-2 shadow-md ring-1 ring-(--stroke-soft-200) ring-inset",
                 "flex flex-col gap-1",
                 // animation
                 "data-[state=open]:animate-in data-[state=open]:fade-in-0",

@@ -1,11 +1,12 @@
 import { router, useForm } from "@inertiajs/react";
 import * as React from "react";
-import DeleteBinIcon from "virtual:icons/ri/delete-bin-line";
-import ImageEditIcon from "virtual:icons/ri/image-edit-line";
-import PencilIcon from "virtual:icons/ri/pencil-line";
+import ImageCounterClockwiseIcon from "virtual:icons/hugeicons/image-counter-clockwise";
+import ImageDelete02Icon from "virtual:icons/hugeicons/image-delete-02";
+import PencilEdit02Icon from "virtual:icons/hugeicons/pencil-edit-02";
 
 import { FormSection } from "#/components/form-section.tsx";
 import * as Avatar from "#/components/ui/avatar.tsx";
+import * as Button from "#/components/ui/button.tsx";
 import * as Dropdown from "#/components/ui/dropdown.tsx";
 import * as Hint from "#/components/ui/hint.tsx";
 import * as Label from "#/components/ui/label.tsx";
@@ -20,6 +21,8 @@ export function UpdateProfilePictureForm() {
         _method: "PUT",
         photo: null as File | null,
     });
+
+    console.info(user);
 
     function clearPhotoFileInput() {
         if (photoRef.current?.value) {
@@ -67,6 +70,7 @@ export function UpdateProfilePictureForm() {
         >
             <form
                 className="flex w-full flex-col items-center gap-4 sm:flex-row"
+                encType="multipart/form-data"
                 onSubmit={updateProfilePhoto}
                 ref={formRef}
             >
@@ -83,7 +87,7 @@ export function UpdateProfilePictureForm() {
 
                     <div className="flex flex-col gap-5">
                         <div className="flex items-center gap-5">
-                            <div className="relative size-40">
+                            <div className="relative size-24">
                                 <Avatar.Root>
                                     <Avatar.Image
                                         alt={user?.name}
@@ -92,28 +96,25 @@ export function UpdateProfilePictureForm() {
                                 </Avatar.Root>
 
                                 <Dropdown.Root>
-                                    <Dropdown.Trigger
-                                        // $size="xs"
-                                        // $style="stroke"
-                                        // $type="neutral"
-                                        className="absolute bottom-2 left-2 px-2 py-1"
-                                    >
-                                        <PencilIcon />
-                                        <span>Edit</span>
+                                    <Dropdown.Trigger asChild className="absolute right-px bottom-px">
+                                        <Button.Root $size="xs" $style="stroke" $type="neutral">
+                                            <Button.Icon as={PencilEdit02Icon} className="size-4" />
+                                            <span>Edit</span>
+                                        </Button.Root>
                                     </Dropdown.Trigger>
 
-                                    <Dropdown.Content className="min-w-32">
+                                    <Dropdown.Content className="w-full min-w-48">
                                         <Dropdown.Item
                                             onClick={() => photoRef.current?.click()}
-                                            onFocus={() => photoRef.current?.focus()}
+                                            //onFocus={() => photoRef.current?.focus()}
                                         >
-                                            <ImageEditIcon />
+                                            <ImageCounterClockwiseIcon />
                                             <span>Change photo</span>
                                         </Dropdown.Item>
 
                                         {user?.profilePhotoPath ? (
                                             <Dropdown.Item onClick={deletePhoto}>
-                                                <DeleteBinIcon />
+                                                <ImageDelete02Icon />
                                                 <span>Remove photo</span>
                                             </Dropdown.Item>
                                         ) : null}

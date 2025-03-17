@@ -1,7 +1,7 @@
 import { router } from "@inertiajs/react";
+import UnfoldMoreIcon from "virtual:icons/hugeicons/unfold-more";
 import AddIcon from "virtual:icons/ri/add-line";
 import CheckIcon from "virtual:icons/ri/check-line";
-import ExpandUpDownIcon from "virtual:icons/ri/expand-up-down-line";
 import Settings2Icon from "virtual:icons/ri/settings-2-line";
 
 import { useCurrentWorkspace } from "#/hooks/use-current-workspace.ts";
@@ -80,7 +80,7 @@ export function WorkspaceSwitch({ className }: { className?: string }) {
                         <div className="text-label-sm">{currentWorkspace?.name}</div>
                     </div>
                     <div className="flex size-6 items-center justify-center rounded-6 border border-(--stroke-soft-200) bg-(--bg-white-0) shadow-xs">
-                        <ExpandUpDownIcon className="size-5 text-(--text-sub-600)" />
+                        <UnfoldMoreIcon className="size-5 text-(--text-sub-600)" />
                     </div>
                 </div>
             </Dropdown.Trigger>

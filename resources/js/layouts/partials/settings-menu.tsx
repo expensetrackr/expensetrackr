@@ -1,9 +1,9 @@
 import { router } from "@inertiajs/react";
-import ArrowRightSIcon from "virtual:icons/ri/arrow-right-s-line";
-import EqualizerIcon from "virtual:icons/ri/equalizer-line";
-import PlanetIcon from "virtual:icons/ri/planet-line";
-import ShieldUserIcon from "virtual:icons/ri/shield-user-line";
-import UserSettingsIcon from "virtual:icons/ri/user-settings-line";
+import ArrowRight01Icon from "virtual:icons/hugeicons/arrow-right-01";
+import BlockedIcon from "virtual:icons/hugeicons/blocked";
+import Link04Icon from "virtual:icons/hugeicons/link-04";
+import UserCircle02Icon from "virtual:icons/hugeicons/user-circle-02";
+import UserMultiple02Icon from "virtual:icons/hugeicons/user-multiple-02";
 
 import { Link } from "#/components/link.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
@@ -19,22 +19,22 @@ export function SettingsVerticalMenu() {
     const links = [
         {
             label: "Profile",
-            icon: UserSettingsIcon,
+            icon: UserCircle02Icon,
             href: "/settings",
         },
         {
             label: "Workspace",
-            icon: PlanetIcon,
+            icon: UserMultiple02Icon,
             href: `/workspaces/${currentWorkspace.id}`,
         },
         {
             label: "Privacy & Security",
-            icon: ShieldUserIcon,
+            icon: BlockedIcon,
             href: "/settings/privacy-and-security",
         },
         {
             label: "Connected Accounts",
-            icon: EqualizerIcon,
+            icon: Link04Icon,
             href: "/settings/connected-accounts",
         },
     ];
@@ -86,7 +86,7 @@ export function SettingsVerticalMenu() {
                                 <Link href={href}>
                                     <TabMenuVertical.Icon as={Icon} />
                                     {label}
-                                    <TabMenuVertical.ArrowIcon as={ArrowRightSIcon} />
+                                    <TabMenuVertical.ArrowIcon as={ArrowRight01Icon} />
                                 </Link>
                             </TabMenuVertical.Trigger>
                         ))}

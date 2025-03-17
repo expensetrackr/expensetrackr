@@ -1,10 +1,11 @@
 import { usePage } from "@inertiajs/react";
 import * as React from "react";
 import { useHotkeys } from "react-hotkeys-hook";
+import Analytics02Icon from "virtual:icons/hugeicons/analytics-02";
+import CustomerSupportIcon from "virtual:icons/hugeicons/customer-support";
+import Setting07Icon from "virtual:icons/hugeicons/setting-07";
+import Wallet01Icon from "virtual:icons/hugeicons/wallet-01";
 import ArrowRightSIcon from "virtual:icons/ri/arrow-right-s-line";
-import HeadphoneIcon from "virtual:icons/ri/headphone-line";
-import LayoutGridIcon from "virtual:icons/ri/layout-grid-line";
-import Settings2Icon from "virtual:icons/ri/settings-2-line";
 
 import { cn } from "#/utils/cn.ts";
 import { Link } from "./link.tsx";
@@ -20,7 +21,8 @@ type NavigationLink = {
 };
 
 export const navigationLinks: Array<NavigationLink> = [
-    { icon: LayoutGridIcon, label: "Dashboard", href: route("dashboard") },
+    { icon: Analytics02Icon, label: "Dashboard", href: route("dashboard") },
+    { icon: Wallet01Icon, label: "Accounts", href: route("accounts.index") },
 ];
 
 function useCollapsedState({ defaultCollapsed = false }: { defaultCollapsed?: boolean }): {
@@ -149,12 +151,12 @@ function SettingsAndSupport({ collapsed }: { collapsed: boolean }) {
     const links = [
         {
             href: "/settings",
-            icon: Settings2Icon,
+            icon: Setting07Icon,
             label: "Settings",
         },
         {
             href: "/support",
-            icon: HeadphoneIcon,
+            icon: CustomerSupportIcon,
             label: "Support",
             disabled: true,
         },

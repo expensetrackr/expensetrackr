@@ -52,6 +52,7 @@
       "devDependencies": {
         "@epic-web/config": "1.17.2",
         "@iconify-json/flat-color-icons": "1.2.1",
+        "@iconify-json/hugeicons": "^1.2.4",
         "@iconify-json/logos": "1.2.4",
         "@iconify-json/lucide": "1.2.30",
         "@iconify-json/material-symbols": "1.2.16",
@@ -242,6 +243,8 @@
     "@humanwhocodes/retry": ["@humanwhocodes/retry@0.4.2", "", {}, "sha512-xeO57FpIu4p1Ri3Jq/EXq4ClRm86dVF2z/+kvFnyqVYRavTZmaFaUBbWCOuuTh0o/g7DSsk6kc2vrS4Vl5oPOQ=="],
 
     "@iconify-json/flat-color-icons": ["@iconify-json/flat-color-icons@1.2.1", "", { "dependencies": { "@iconify/types": "*" } }, "sha512-iv1NQai4ThVJf5RGB2UBY/EYG4P5KpdnRTUM1hqLweD6OmWxZUyNJkqLzwns6/t+VBYM0H5gS/ckSWyxxEIYmQ=="],
+
+    "@iconify-json/hugeicons": ["@iconify-json/hugeicons@1.2.4", "", { "dependencies": { "@iconify/types": "*" } }, "sha512-Rx1I42/wwqNiWx7rdQxtFWWOF1/DT1IMPrNReBVJiZe7NIdGT6Zv6Jw5gayqUtv7lDmE8eRmgd6MYRoVJrbuoA=="],
 
     "@iconify-json/logos": ["@iconify-json/logos@1.2.4", "", { "dependencies": { "@iconify/types": "*" } }, "sha512-XC4If5D/hbaZvUkTV8iaZuGlQCyG6CNOlaAaJaGa13V5QMYwYjgtKk3vPP8wz3wtTVNVEVk3LRx1fOJz+YnSMw=="],
 

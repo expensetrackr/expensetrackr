@@ -34,7 +34,7 @@ trait HasProfilePhoto
      */
     public function deleteProfilePhoto(): void
     {
-        if (is_null($this->profile_photo_path)) {
+        if ($this->profile_photo_path === null) {
             return;
         }
 

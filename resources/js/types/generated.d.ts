@@ -232,6 +232,8 @@ declare namespace App.Enums {
     export type ProviderType = "teller" | "mx";
     export type RateType = "fixed" | "variable" | "adjustable";
     export type ToastType = "error" | "warning" | "success" | "info";
+    export type TransactionStatus = "posted" | "pending" | "excluded" | "completed";
+    export type TransactionType = "income" | "expense" | "transfer";
 }
 declare namespace App.Enums.Socialstream {
     export type Provider = "google";
@@ -248,4 +250,5 @@ declare namespace App.Enums.Teller {
         | "credit_card";
     export type AccountType = "depository" | "credit";
     export type EnvironmentType = "sandbox" | "development" | "production";
+    export type TransactionStatus = "posted" | "pending";
 }

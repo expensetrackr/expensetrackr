@@ -1,5 +1,5 @@
 import { Head } from "@inertiajs/react";
-import ShieldUserIcon from "virtual:icons/ri/shield-user-line";
+import BlockedIcon from "virtual:icons/hugeicons/blocked";
 
 import { Header } from "#/components/header.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
@@ -67,7 +67,7 @@ PrivacyAndSecurityShow.layout = (page: React.ReactNode & { props: PageProps<Priv
             description="Personalize your privacy settings and enhance the security of your account."
             icon={
                 <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-(--bg-white-0) shadow-xs ring-1 ring-(--stroke-soft-200) ring-inset">
-                    <ShieldUserIcon className="size-6 text-(--text-sub-600)" />
+                    <BlockedIcon className="size-6 text-(--text-sub-600)" />
                 </div>
             }
             title="Privacy & Security"

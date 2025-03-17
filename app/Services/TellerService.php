@@ -9,6 +9,7 @@ use App\Data\Banking\Account\BankAccountData;
 use App\Data\Banking\Institution\InstitutionData;
 use App\Data\Teller\TellerAccountBalanceData;
 use App\Data\Teller\TellerAccountData;
+use App\Data\Teller\TellerTransactionData;
 use App\Enums\AccountSubtype;
 use App\Enums\AccountType;
 use App\Enums\ProviderType;
@@ -86,16 +87,16 @@ final class TellerService
      * @param  string  $accountId  The account ID
      * @param  bool|null  $latest  Whether to get only the latest transactions
      * @param  int|null  $count  The number of transactions to get
-     * @return array<int, mixed>|null
+     * @return Collection<int, TellerTransactionData>
      */
-    public function listAccountTransactions(string $accountId, ?bool $latest = false, ?int $count = 0): ?array
+    public function getTransactions(string $accountId, ?bool $latest = false, ?int $count = 0): Collection
     {
         $transactions = $this->get("/accounts/{$accountId}/transactions", [
             'count' => $latest === true ? 100 : $count,
         ]);
 
         // NOTE: Remove pending transactions until upsert issue is fixed
-        return array_filter($transactions, fn ($transaction): bool => $transaction['status'] !== 'pending');
+        return TellerTransactionData::collect($transactions)->filter(fn (TellerTransactionData $transaction): bool => $transaction->status !== 'pending');
     }
 
     /**

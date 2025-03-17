@@ -1,5 +1,5 @@
 import { Head } from "@inertiajs/react";
-import PlanetIcon from "virtual:icons/ri/planet-line";
+import UserMultiple02Icon from "virtual:icons/hugeicons/user-multiple-02";
 
 import { Header } from "#/components/header.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
@@ -58,7 +58,7 @@ WorkspacesShow.layout = (page: React.ReactNode & { props: App.Data.Shared.Shared
             description="Customize and edit essential workspace details."
             icon={
                 <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-(--bg-white-0) shadow-xs ring-1 ring-(--stroke-soft-200) ring-inset">
-                    <PlanetIcon className="size-6 text-(--text-sub-600)" />
+                    <UserMultiple02Icon className="size-6 text-(--text-sub-600)" />
                 </div>
             }
             title="Workspace settings"

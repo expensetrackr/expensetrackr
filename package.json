@@ -69,6 +69,7 @@
     "devDependencies": {
         "@epic-web/config": "1.17.2",
         "@iconify-json/flat-color-icons": "1.2.1",
+        "@iconify-json/hugeicons": "^1.2.4",
         "@iconify-json/logos": "1.2.4",
         "@iconify-json/lucide": "1.2.30",
         "@iconify-json/material-symbols": "1.2.16",

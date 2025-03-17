@@ -10,7 +10,6 @@ use App\Observers\UserObserver;
 use Danestves\LaravelPolar\Billable;
 use Illuminate\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -115,18 +114,6 @@ final class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
-
-    /**
-     * Get the URL to the user's profile photo.
-     *
-     * @return Attribute<string|null, never>
-     */
-    public function getProfilePhotoUrlAttribute(): Attribute
-    {
-        return filter_var($this->profile_photo_path, FILTER_VALIDATE_URL)
-            ? Attribute::get(fn () => $this->profile_photo_path)
-            : $this->getPhotoUrl();
-    }
 
     /**
      * Get the accounts created by the user.

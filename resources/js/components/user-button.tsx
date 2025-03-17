@@ -1,11 +1,11 @@
 import { Link } from "@inertiajs/react";
-import ArrowDownSIcon from "virtual:icons/ri/arrow-down-s-line";
-import ArrowRightSIcon from "virtual:icons/ri/arrow-right-s-line";
-import LightbulbIcon from "virtual:icons/ri/lightbulb-fill";
-import LogoutBoxRIcon from "virtual:icons/ri/logout-box-r-line";
-import Settings2Icon from "virtual:icons/ri/settings-2-line";
-import ShieldCheckIcon from "virtual:icons/ri/shield-check-fill";
-import UserSettingsIcon from "virtual:icons/ri/user-settings-line";
+import ArrowDown01Icon from "virtual:icons/hugeicons/arrow-down-01";
+import ArrowRight01Icon from "virtual:icons/hugeicons/arrow-right-01";
+import IdeaIcon from "virtual:icons/hugeicons/idea";
+import Logout04Icon from "virtual:icons/hugeicons/logout-04";
+import SecurityCheckIcon from "virtual:icons/hugeicons/security-check";
+import Setting07Icon from "virtual:icons/hugeicons/setting-07";
+import UserCircle02Icon from "virtual:icons/hugeicons/user-circle-02";
 
 import { useUser } from "#/hooks/use-user.ts";
 import { cn, cnMerge } from "#/utils/cn.ts";
@@ -35,7 +35,7 @@ export function UserButton({ className }: { className?: string }) {
                     </div>
 
                     <div className="flex size-6 items-center justify-center rounded-6">
-                        <ArrowRightSIcon className="size-5 text-(--text-sub-600)" />
+                        <ArrowRight01Icon className="size-5 text-(--text-sub-600)" />
                     </div>
                 </div>
             </Dropdown.Trigger>
@@ -46,25 +46,25 @@ export function UserButton({ className }: { className?: string }) {
                 <Dropdown.Group>
                     <Dropdown.Item asChild>
                         <Link href={route("settings.show")}>
-                            <Dropdown.ItemIcon as={UserSettingsIcon} />
+                            <Dropdown.ItemIcon as={UserCircle02Icon} />
                             My profile
                         </Link>
                     </Dropdown.Item>
                     <Dropdown.Item asChild>
                         <Link href={route("settings.show")}>
-                            <Dropdown.ItemIcon as={Settings2Icon} />
+                            <Dropdown.ItemIcon as={Setting07Icon} />
                             Settings
                         </Link>
                     </Dropdown.Item>
                     <Dropdown.Item asChild>
                         <Link href={route("policy.show")}>
-                            <Dropdown.ItemIcon as={ShieldCheckIcon} />
+                            <Dropdown.ItemIcon as={SecurityCheckIcon} />
                             Privacy policy
                         </Link>
                     </Dropdown.Item>
                     <Dropdown.Item asChild>
                         <Link href="/share-feedback">
-                            <Dropdown.ItemIcon as={LightbulbIcon} />
+                            <Dropdown.ItemIcon as={IdeaIcon} />
                             Share feedback
                         </Link>
                     </Dropdown.Item>
@@ -75,7 +75,7 @@ export function UserButton({ className }: { className?: string }) {
                 <Dropdown.Group>
                     <Dropdown.Item asChild>
                         <Link as="button" href={route("logout")} method="post">
-                            <Dropdown.ItemIcon as={LogoutBoxRIcon} />
+                            <Dropdown.ItemIcon as={Logout04Icon} />
                             Logout
                         </Link>
                     </Dropdown.Item>
@@ -110,7 +110,7 @@ export function UserButtonMobile({ className }: { className?: string }) {
                         "group-data-[state=open]:bg-(--bg-strong-950) group-data-[state=open]:text-(--text-white-0) group-data-[state=open]:shadow-none",
                     )}
                 >
-                    <ArrowDownSIcon className="size-5 group-data-[state=open]:-rotate-180" />
+                    <ArrowDown01Icon className="size-5 group-data-[state=open]:-rotate-180" />
                 </div>
             </Dropdown.Trigger>
 
@@ -120,25 +120,25 @@ export function UserButtonMobile({ className }: { className?: string }) {
                 <Dropdown.Group>
                     <Dropdown.Item asChild>
                         <Link href={route("settings.show")}>
-                            <Dropdown.ItemIcon as={UserSettingsIcon} />
+                            <Dropdown.ItemIcon as={UserCircle02Icon} />
                             My profile
                         </Link>
                     </Dropdown.Item>
                     <Dropdown.Item asChild>
                         <Link href={route("settings.show")}>
-                            <Dropdown.ItemIcon as={Settings2Icon} />
+                            <Dropdown.ItemIcon as={Setting07Icon} />
                             Settings
                         </Link>
                     </Dropdown.Item>
                     <Dropdown.Item asChild>
                         <Link href={route("policy.show")}>
-                            <Dropdown.ItemIcon as={ShieldCheckIcon} />
+                            <Dropdown.ItemIcon as={SecurityCheckIcon} />
                             Privacy policy
                         </Link>
                     </Dropdown.Item>
                     <Dropdown.Item asChild>
                         <Link href="/share-feedback">
-                            <Dropdown.ItemIcon as={LightbulbIcon} />
+                            <Dropdown.ItemIcon as={IdeaIcon} />
                             Share feedback
                         </Link>
                     </Dropdown.Item>
@@ -149,7 +149,7 @@ export function UserButtonMobile({ className }: { className?: string }) {
                 <Dropdown.Group>
                     <Dropdown.Item asChild>
                         <Link as="button" href={route("logout")} method="post">
-                            <Dropdown.ItemIcon as={LogoutBoxRIcon} />
+                            <Dropdown.ItemIcon as={Logout04Icon} />
                             Logout
                         </Link>
                     </Dropdown.Item>

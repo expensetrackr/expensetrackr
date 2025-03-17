@@ -17,11 +17,11 @@ final class UserData extends Data
         public readonly int $id,
         public readonly string $name,
         public readonly string $email,
-        #[MapName('profile_photo_path')]
+        #[MapName('profile_photo_path', 'profilePhotoPath')]
         public readonly ?string $profilePhotoPath,
-        #[MapName('profile_photo_url')]
+        #[MapName('profile_photo_url', 'profilePhotoUrl')]
         public readonly ?string $profilePhotoUrl,
-        #[MapName('two_factor_enabled')]
+        #[MapName('two_factor_enabled', 'twoFactorEnabled')]
         public readonly bool $twoFactorEnabled,
     ) {}
 
@@ -32,7 +32,7 @@ final class UserData extends Data
             'name' => $user->name,
             'email' => $user->email,
             'profilePhotoPath' => $user->profile_photo_path,
-            'profilePhotoUrl' => $user->getAttributeValue('profile_photo_path'),
+            'profilePhotoUrl' => $user->profile_photo_url,
             'twoFactorEnabled' => Features::enabled(Features::twoFactorAuthentication())
                 && $user->two_factor_secret !== null,
         ]);

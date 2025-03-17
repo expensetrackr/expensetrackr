@@ -1,5 +1,5 @@
 import { Head } from "@inertiajs/react";
-import UserSettingsIcon from "virtual:icons/ri/user-settings-line";
+import UserEdit01Icon from "virtual:icons/hugeicons/user-edit-01";
 
 import { Header } from "#/components/header.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
@@ -39,7 +39,7 @@ SettingsShow.layout = (page: React.ReactNode & { props: PageProps }) => (
             description="Customize and edit essential profile details."
             icon={
                 <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-(--bg-white-0) shadow-xs ring-1 ring-(--stroke-soft-200) ring-inset">
-                    <UserSettingsIcon className="size-6 text-(--text-sub-600)" />
+                    <UserEdit01Icon className="size-6 text-(--text-sub-600)" />
                 </div>
             }
             title="Profile Settings"

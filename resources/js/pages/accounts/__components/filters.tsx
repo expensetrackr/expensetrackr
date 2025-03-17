@@ -1,7 +1,7 @@
-import KeyCmd16Icon from "virtual:icons/qlementine-icons/key-cmd-16";
-import Filter3FillIcon from "virtual:icons/ri/filter-3-fill";
-import Search2Icon from "virtual:icons/ri/search-2-line";
-import SortDescIcon from "virtual:icons/ri/sort-desc";
+import CommandIcon from "virtual:icons/hugeicons/command";
+import FilterIcon from "virtual:icons/hugeicons/filter";
+import Search01Icon from "virtual:icons/hugeicons/search-01";
+import Sorting01Icon from "virtual:icons/hugeicons/sorting-01";
 
 import { Select } from "#/components/form/select.tsx";
 import { TextField } from "#/components/form/text-field.tsx";
@@ -21,10 +21,10 @@ export function Filters() {
             <TextField
                 inlineTrailingNode={
                     <button type="button">
-                        <Filter3FillIcon className="size-5 text-(--text-soft-400)" />
+                        <Sorting01Icon className="size-5 text-(--text-soft-400)" />
                     </button>
                 }
-                leadingIcon={Search2Icon}
+                leadingIcon={Search01Icon}
                 onChange={handleSearch}
                 placeholder="Search..."
                 value={params["filter[name]"] ?? ""}
@@ -37,17 +37,17 @@ export function Filters() {
                     className="w-[300px]"
                     inlineTrailingNode={
                         <Kbd.Root>
-                            <KeyCmd16Icon className="size-2.5" />1
+                            <CommandIcon className="size-2.5" />1
                         </Kbd.Root>
                     }
-                    leadingIcon={Search2Icon}
+                    leadingIcon={Search01Icon}
                     onChange={handleSearch}
                     placeholder="Search..."
                     value={params["filter[name]"] ?? ""}
                 />
 
                 <Button.Root $size="sm" $style="stroke" $type="neutral" className="flex-1 min-[560px]:flex-none">
-                    <Button.Icon as={Filter3FillIcon} />
+                    <Button.Icon as={FilterIcon} />
                     Filter
                 </Button.Root>
 
@@ -65,7 +65,7 @@ export function Filters() {
                         },
                     ]}
                     placeholder="Sort by"
-                    triggerIcon={SortDescIcon}
+                    triggerIcon={Sorting01Icon}
                     value={params.sort || undefined}
                     wrapperClassName="w-auto flex-1 min-[560px]:flex-none"
                 />

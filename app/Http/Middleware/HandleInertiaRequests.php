@@ -126,7 +126,7 @@ final class HandleInertiaRequests extends Middleware
 
             return [
                 'auth' => [
-                    'user' => UserData::from($user),
+                    'user' => UserData::fromModel($user),
                     'currentWorkspace' => WorkspaceData::optional($user->currentWorkspace),
                     'workspaces' => WorkspaceData::collect($user->workspaces),
                 ],
