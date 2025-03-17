@@ -21,7 +21,7 @@ final class PrefixedIdsServiceProvider extends ServiceProvider
         PrefixedIds::registerModels([
             'acc_' => Account::class,
             'bconn_' => BankConnection::class,
-            'trx_' => Transaction::class,
+            'txn_' => Transaction::class,
             'cat_' => Category::class,
         ]);
     }

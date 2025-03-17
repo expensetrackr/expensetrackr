@@ -65,7 +65,7 @@ return new class extends Migration
 
         Schema::create('loans', function (Blueprint $table): void {
             $table->id();
-            $table->decimal('interest_rate', 10);
+            $table->decimal('interest_rate', 10, 4)->default(0);
             $table->enum('rate_type', array_column(RateType::cases(), 'value'))->default(RateType::Fixed->value);
             $table->integer('term_months');
             $table->timestamps();

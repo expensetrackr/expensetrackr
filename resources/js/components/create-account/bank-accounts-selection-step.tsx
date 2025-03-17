@@ -54,7 +54,7 @@ export function BankAccountsSelectionStep({ bankAccounts }: BankAccountsSelectio
             provider_connection_id: enrollmentId,
             provider_type: provider,
             access_token: token,
-            accounts: bankAccounts.map((account) => ({
+            accounts: bankAccounts?.map((account) => ({
                 institution_id: account.institution.id,
                 institution_logo_url: account.institution.logo,
                 institution_name: account.name,
@@ -90,7 +90,7 @@ export function BankAccountsSelectionStep({ bankAccounts }: BankAccountsSelectio
             <input {...getInputProps(fields.provider_type, { type: "hidden" })} />
             <input {...getInputProps(fields.access_token, { type: "hidden" })} />
 
-            {accounts.map((account, index) => {
+            {accounts?.map((account, index) => {
                 const fields = account.getFieldset();
 
                 return (

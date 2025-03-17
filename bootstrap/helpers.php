@@ -18,3 +18,15 @@ if (! function_exists('localizedMarkdownPath')) {
         ], fn ($path): bool => file_exists($path));
     }
 }
+
+if (! function_exists('toCents')) {
+    /**
+     * Convert an amount to cents.
+     *
+     * @param  string  $amount  The amount to convert
+     */
+    function toCents(string $amount): int
+    {
+        return (int) str_replace('.', '', $amount);
+    }
+}

@@ -91,6 +91,30 @@ declare namespace App.Data.Banking.Institution {
         provider: App.Enums.ProviderType;
     };
 }
+declare namespace App.Data.FinanceCore {
+    export type AccountData = {
+        id: string;
+        name: string;
+        currency: string;
+        type: App.Enums.AccountType;
+        subtype: App.Enums.AccountSubtype;
+        institution: App.Data.FinanceCore.InstitutionData;
+        balance: App.Data.FinanceCore.BalanceData;
+        enrollmentId: string | null;
+        institutionCode: string | null;
+        expiresAt: string | null;
+    };
+    export type BalanceData = {
+        currency: string;
+        amount: number;
+    };
+    export type InstitutionData = {
+        id: string;
+        name: string;
+        logo: string | null;
+        provider: App.Enums.ProviderType;
+    };
+}
 declare namespace App.Data.Shared {
     export type LanguageData = {
         code: string;
@@ -227,6 +251,7 @@ declare namespace App.Enums {
         | "credit_card"
         | "loan"
         | "other_liability";
+    export type ConnectionStatus = "connected" | "disconnected" | "unknown";
     export type Language = "en" | "es";
     export type MediaService = "product_media";
     export type ProviderType = "teller" | "mx";

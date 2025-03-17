@@ -13,14 +13,14 @@ final class BalanceData extends Data
 {
     public function __construct(
         public readonly string $currency,
-        public readonly int $amount,
+        public readonly float $amount,
     ) {}
 
     public static function fromTeller(TellerAccountBalanceData $balance): self
     {
         return new self(
             currency: 'USD',
-            amount: (int) $balance->available,
+            amount: (float) $balance->available,
         );
     }
 }

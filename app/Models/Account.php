@@ -25,8 +25,8 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @property string|null $description
  * @property AccountSubtype|null $subtype
  * @property string $currency_code
- * @property string $initial_balance
- * @property string $current_balance
+ * @property int $initial_balance
+ * @property int $current_balance
  * @property bool $is_default
  * @property string $public_id
  * @property int $workspace_id
@@ -40,6 +40,7 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @property-read BankConnection|null $bankConnection
  * @property-read User|null $createdBy
  * @property-read string|null $prefixed_id
+ * @property-read AccountType $type
  * @property-read User|null $updatedBy
  * @property-read Workspace $workspace
  *

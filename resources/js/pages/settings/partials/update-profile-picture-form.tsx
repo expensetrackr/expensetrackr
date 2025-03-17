@@ -22,8 +22,6 @@ export function UpdateProfilePictureForm() {
         photo: null as File | null,
     });
 
-    console.info(user);
-
     function clearPhotoFileInput() {
         if (photoRef.current?.value) {
             photoRef.current.value = "";

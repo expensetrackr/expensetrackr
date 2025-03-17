@@ -21,10 +21,10 @@ return new class extends Migration
             $table->string('note')->nullable();
             $table->string('status')->default(TransactionStatus::Posted->value);
             $table->string('type')->default(TransactionType::Expense->value);
-            $table->unsignedBigInteger('base_amount')->nullable();
+            $table->decimal('base_amount', 19, 4)->nullable();
             $table->char('base_currency', 3)->nullable();
             $table->decimal('currency_rate', 19, 6)->nullable();
-            $table->unsignedBigInteger('amount');
+            $table->decimal('amount', 19, 4);
             $table->char('currency', 3);
             $table->boolean('is_recurring')->default(false);
             $table->boolean('is_manual')->default(false);

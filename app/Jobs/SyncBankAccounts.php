@@ -6,6 +6,7 @@ namespace App\Jobs;
 
 use App\Data\FinanceCore\TransactionData;
 use App\Enums\ConnectionStatus;
+use App\Enums\TransactionType;
 use App\Models\Account;
 use App\Models\BankConnection;
 use App\Models\Category;
@@ -153,7 +154,7 @@ final class SyncBankAccounts implements ShouldBeUnique, ShouldQueue
         try {
             $balance = $financeCore->getAccountBalances($account->external_id);
 
-            $amount = $balance->amount || 0;
+            $amount = $balance->amount ?? 0;
 
             Log::info('Account balance', [
                 'bank_connection_id' => $this->bankConnectionId,
@@ -164,7 +165,7 @@ final class SyncBankAccounts implements ShouldBeUnique, ShouldQueue
 
             if ($amount > 0) {
                 $account->update([
-                    'current_balance' => $amount,
+                    'current_balance' => $balance->amount,
                 ]);
             }
 
@@ -250,8 +251,9 @@ final class SyncBankAccounts implements ShouldBeUnique, ShouldQueue
                     'name' => $transaction->name,
                     'note' => $transaction->note,
                     'status' => $transaction->status,
+                    'type' => (float) $transaction->amount < 0 ? TransactionType::Expense : TransactionType::Income,
                     'dated_at' => $transaction->datedAt,
-                    'amount' => (int) $transaction->amount,
+                    'amount' => (float) $transaction->amount,
                     'currency' => $transaction->currency,
                     'is_recurring' => false,
                     'is_manual' => false,

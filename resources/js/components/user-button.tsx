@@ -25,7 +25,11 @@ export function UserButton({ className }: { className?: string }) {
                 )}
             >
                 <Avatar.Root $color="blue" $size="40">
-                    <Avatar.Image alt={user?.name} src={user?.profilePhotoUrl ?? undefined} />
+                    {user.profilePhotoUrl ? (
+                        <Avatar.Image alt={user?.name} src={user?.profilePhotoUrl ?? undefined} />
+                    ) : (
+                        user?.name?.slice(0, 2)
+                    )}
                 </Avatar.Root>
 
                 <div className="flex w-[172px] shrink-0 items-center gap-3" data-hide-collapsed>
