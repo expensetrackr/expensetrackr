@@ -57,4 +57,7 @@ return [
         'cert_base64' => env('TELLER_CERT_BASE64'),
     ],
 
+    'synth' => [
+        'access_token' => env('SYNTH_ACCESS_TOKEN'),
+    ],
 ];

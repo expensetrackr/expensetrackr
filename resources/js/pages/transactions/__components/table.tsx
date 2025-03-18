@@ -8,10 +8,12 @@ import {
     type ColumnDef,
     flexRender,
 } from "@tanstack/react-table";
+import { Image } from "@unpic/react";
 import Decimal from "decimal.js";
 import * as React from "react";
 
 import { CategoryIcon } from "#/components/category-icon.tsx";
+import * as Avatar from "#/components/ui/avatar.tsx";
 import * as Badge from "#/components/ui/badge.tsx";
 import * as Table from "#/components/ui/table.tsx";
 import { usePaginationParams } from "#/hooks/use-pagination-params.ts";
@@ -38,14 +40,41 @@ export function TransactionsTable({ data: initialData, total }: TransactionsTabl
                 cell({ row }) {
                     return (
                         <div className="flex items-center gap-3">
-                            {row.original.category && (
-                                <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-(--bg-white-0) shadow-xs ring-1 ring-(--stroke-soft-200) ring-inset">
+                            {row.original.enrichment?.icon ? (
+                                <Avatar.Root $size="40">
+                                    <Avatar.Image
+                                        alt={row.original.enrichment.merchantName}
+                                        asChild
+                                        src={row.original.enrichment.icon}
+                                    >
+                                        <Image
+                                            alt={row.original.enrichment.merchantName}
+                                            height={40}
+                                            src={row.original.enrichment.icon}
+                                            width={40}
+                                        />
+                                    </Avatar.Image>
+                                </Avatar.Root>
+                            ) : row.original.category ? (
+                                <div
+                                    className="ring-stroke-soft-200 flex size-10 shrink-0 items-center justify-center rounded-full bg-(--color-category-color)/10 shadow-xs"
+                                    style={
+                                        {
+                                            "--color-category-color": row.original.category.color,
+                                        } as React.CSSProperties
+                                    }
+                                >
                                     <CategoryIcon
-                                        category={row.original.category?.slug}
-                                        className="size-5 text-(--text-sub-600)"
+                                        category={row.original.category.slug}
+                                        className="size-5 text-(--color-category-color)"
+                                        style={
+                                            {
+                                                "--color-category-color": row.original.category.color,
+                                            } as React.CSSProperties
+                                        }
                                     />
                                 </div>
-                            )}
+                            ) : null}
                             <div>
                                 <div className="text-label-sm">{row.original.name}</div>
                                 {row.original.note && (
@@ -65,8 +94,7 @@ export function TransactionsTable({ data: initialData, total }: TransactionsTabl
                     const decimalValue = new Decimal(row.original.amount)
                         .toDecimalPlaces(formatter?.minimumFractionDigits)
                         .toNumber();
-                    // TODO: revisit this later
-                    //const isPositive = decimalValue > 0;
+                    const isPositive = decimalValue > 0;
                     const format: Format = {
                         style: "currency",
                         currency: row.original.currency,
@@ -78,7 +106,7 @@ export function TransactionsTable({ data: initialData, total }: TransactionsTabl
                         <div
                             className={cn(
                                 "text-paragraph-sm",
-                                //isPositive ? "text-state-success-base" : "text-state-error-base",
+                                isPositive ? "text-state-success-base" : "text-state-error-base",
                             )}
                         >
                             <NumberFlow format={format} value={decimalValue} />
@@ -107,18 +135,16 @@ export function TransactionsTable({ data: initialData, total }: TransactionsTabl
                 header: "Category",
                 cell({ row }) {
                     return (
-                        <div className="text-paragraph-sm text-(--text-sub-600)">
+                        <div className="inline-flex items-center gap-1.5 text-paragraph-sm text-(--text-sub-600)">
                             <Badge.Root
-                                className="bg-(--color-category-color)/20 text-(--color-category-color)"
-                                color={row.original.category?.color}
+                                className="size-2.5 bg-(--color-category-color) p-0"
                                 style={
                                     {
                                         "--color-category-color": row.original.category?.color,
                                     } as React.CSSProperties
                                 }
-                            >
-                                {row.original.category?.name}
-                            </Badge.Root>
+                            ></Badge.Root>
+                            <span>{row.original.category?.name}</span>
                         </div>
                     );
                 },

@@ -32,14 +32,16 @@ final class TransactionResource extends JsonResource
             'isRecurring' => $this->is_recurring,
             'isManual' => $this->is_manual,
             'datedAt' => $this->dated_at,
-            'category' => $this->whenLoaded('category', function () {
-                return [
-                    'id' => $this->category->public_id,
-                    'name' => $this->category->name,
-                    'slug' => $this->category->slug,
-                    'color' => $this->category->color,
-                ];
-            }),
+            'category' => $this->whenLoaded('category', fn () => [
+                'id' => $this->category->public_id,
+                'name' => $this->category->name,
+                'slug' => $this->category->slug,
+                'color' => $this->category->color,
+            ]),
+            'enrichment' => $this->whenLoaded('enrichment', fn () => [
+                'merchantName' => $this->enrichment->merchant_name,
+                'icon' => $this->enrichment->icon,
+            ]),
         ];
     }
 }

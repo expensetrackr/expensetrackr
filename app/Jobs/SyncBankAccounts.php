@@ -12,6 +12,7 @@ use App\Models\BankConnection;
 use App\Models\Category;
 use App\Models\Transaction;
 use App\Services\FinanceCoreService;
+use App\Services\SynthService;
 use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -19,7 +20,6 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Log;
 use Throwable;
@@ -206,32 +206,6 @@ final class SyncBankAccounts implements ShouldBeUnique, ShouldQueue
                 return;
             }
 
-            // Upsert transactions in batches of 500
-            $transactionsChunks = $transactions->chunk(500);
-
-            foreach ($transactionsChunks as $transactionsBatch) {
-                $this->upsertTransactions($transactionsBatch, $account);
-            }
-        } catch (Throwable $th) {
-            Log::error('Error syncing transactions', [
-                'bank_connection_id' => $this->bankConnectionId,
-                'workspace_id' => $this->workspaceId,
-                'account_id' => $account->id,
-                'error' => $th->getMessage(),
-            ]);
-
-            throw $th;
-        }
-    }
-
-    /**
-     * Upsert transactions in batches of 500
-     *
-     * @param  Collection<int, TransactionData>  $transactions
-     */
-    private function upsertTransactions(Collection $transactions, Account $account): void
-    {
-        try {
             // Cache system categories for the duration of this job
             $systemCategories = Cache::remember('system_categories', 3600, fn () => Category::whereIsSystem(true)
                 ->get(['id', 'slug'])
@@ -244,33 +218,38 @@ final class SyncBankAccounts implements ShouldBeUnique, ShouldQueue
                 throw new Exception("Default 'other' category not found");
             }
 
-            Transaction::upsert(
-                $transactions->map(fn (TransactionData $transaction) => [
-                    'name' => $transaction->name,
-                    'note' => $transaction->note,
-                    'status' => $transaction->status,
-                    'type' => (float) $transaction->amount < 0 ? TransactionType::Expense : TransactionType::Income,
-                    'dated_at' => $transaction->datedAt,
-                    'amount' => (float) $transaction->amount,
-                    'currency' => $transaction->currency,
-                    'is_recurring' => false,
-                    'is_manual' => false,
-                    'external_id' => $transaction->id,
-                    'account_id' => $account->id,
-                    'workspace_id' => $this->workspaceId,
-                    'category_id' => $systemCategories->get($transaction->categorySlug)?->id ?? $defaultCategoryId,
-                    'public_id' => Transaction::generatePrefixedId(),
-                ])->toArray(),
-                ['external_id'],
-            );
+            $transactionsData = $transactions->map(fn (TransactionData $transaction) => [
+                'name' => $transaction->name,
+                'note' => $transaction->note,
+                'status' => $transaction->status,
+                'type' => (float) $transaction->amount < 0 ? TransactionType::Expense : TransactionType::Income,
+                'dated_at' => $transaction->datedAt,
+                'amount' => (float) $transaction->amount,
+                'currency' => $transaction->currency,
+                'is_recurring' => false,
+                'is_manual' => false,
+                'external_id' => $transaction->id,
+                'account_id' => $account->id,
+                'workspace_id' => $this->workspaceId,
+                'category_id' => $systemCategories->get($transaction->categorySlug)?->id ?? $defaultCategoryId,
+                'public_id' => Transaction::generatePrefixedId(),
+            ])->toArray();
+
+            Transaction::upsert($transactionsData, ['external_id']);
         } catch (Throwable $th) {
-            Log::error('Error upserting transactions', [
+            Log::error('Error syncing transactions', [
                 'bank_connection_id' => $this->bankConnectionId,
                 'workspace_id' => $this->workspaceId,
+                'account_id' => $account->id,
                 'error' => $th->getMessage(),
             ]);
 
             throw $th;
         }
+    }
+
+    private function enrichTransaction(TransactionData $transaction, SynthService $synth): void
+    {
+        $synth->enrichTransaction("$transaction->name - $transaction->note");
     }
 }

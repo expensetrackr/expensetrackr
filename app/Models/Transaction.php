@@ -7,6 +7,8 @@ namespace App\Models;
 use App\Concerns\WorkspaceOwned;
 use App\Enums\TransactionStatus;
 use App\Enums\TransactionType;
+use App\Observers\TransactionObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -33,8 +35,10 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @property \Carbon\CarbonImmutable|null $created_at
  * @property \Carbon\CarbonImmutable|null $updated_at
  * @property int|null $category_id
+ * @property int|null $enrichment_id
  * @property-read Account $account
  * @property-read Category|null $category
+ * @property-read TransactionEnrichment|null $enrichment
  * @property-read string|null $prefixed_id
  * @property-read Workspace $workspace
  *
@@ -51,6 +55,7 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Transaction whereCurrency($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Transaction whereCurrencyRate($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Transaction whereDatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Transaction whereEnrichmentId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Transaction whereExternalId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Transaction whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Transaction whereIsManual($value)
@@ -65,6 +70,7 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  *
  * @mixin \Eloquent
  */
+#[ObservedBy(TransactionObserver::class)]
 final class Transaction extends Model
 {
     /** @use HasFactory<\Database\Factories\TransactionFactory> */
@@ -88,6 +94,16 @@ final class Transaction extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
+    }
+
+    /**
+     * The enrichment that the transaction belongs to.
+     *
+     * @return BelongsTo<TransactionEnrichment, covariant $this>
+     */
+    public function enrichment(): BelongsTo
+    {
+        return $this->belongsTo(TransactionEnrichment::class);
     }
 
     /**

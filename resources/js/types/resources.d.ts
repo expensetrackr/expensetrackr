@@ -40,5 +40,9 @@ declare namespace Resources {
             slug: string;
             color: string;
         };
+        enrichment?: {
+            merchantName: string;
+            icon: string;
+        };
     };
 }
