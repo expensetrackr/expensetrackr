@@ -4,6 +4,7 @@ import { useHotkeys } from "react-hotkeys-hook";
 import Analytics02Icon from "virtual:icons/hugeicons/analytics-02";
 import CustomerSupportIcon from "virtual:icons/hugeicons/customer-support";
 import Setting07Icon from "virtual:icons/hugeicons/setting-07";
+import TransactionIcon from "virtual:icons/hugeicons/transaction";
 import Wallet01Icon from "virtual:icons/hugeicons/wallet-01";
 import ArrowRightSIcon from "virtual:icons/ri/arrow-right-s-line";
 
@@ -23,6 +24,7 @@ type NavigationLink = {
 export const navigationLinks: Array<NavigationLink> = [
     { icon: Analytics02Icon, label: "Dashboard", href: route("dashboard") },
     { icon: Wallet01Icon, label: "Accounts", href: route("accounts.index") },
+    { icon: TransactionIcon, label: "Transactions", href: route("transactions.index") },
 ];
 
 function useCollapsedState({ defaultCollapsed = false }: { defaultCollapsed?: boolean }): {

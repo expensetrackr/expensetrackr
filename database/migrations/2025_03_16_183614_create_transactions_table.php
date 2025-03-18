@@ -32,6 +32,7 @@ return new class extends Migration
 
             $table->string('external_id')->unique()->nullable();
 
+            $table->foreignId('account_id')->constrained()->cascadeOnDelete();
             $table->foreignId('workspace_id')->constrained()->cascadeOnDelete();
             $table->string('public_id')->unique();
 

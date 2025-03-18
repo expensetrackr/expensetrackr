@@ -18,21 +18,22 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @property string|null $note
  * @property TransactionStatus $status
  * @property TransactionType $type
- * @property int|null $base_amount
+ * @property string|null $base_amount
  * @property string|null $base_currency
  * @property string|null $currency_rate
- * @property int $amount
+ * @property string $amount
  * @property string $currency
  * @property bool $is_recurring
  * @property bool $is_manual
  * @property \Carbon\CarbonImmutable $dated_at
  * @property string|null $external_id
+ * @property int $account_id
  * @property int $workspace_id
  * @property string $public_id
  * @property \Carbon\CarbonImmutable|null $created_at
  * @property \Carbon\CarbonImmutable|null $updated_at
  * @property int|null $category_id
- * @property-read Account|null $account
+ * @property-read Account $account
  * @property-read Category|null $category
  * @property-read string|null $prefixed_id
  * @property-read Workspace $workspace
@@ -41,6 +42,7 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Transaction newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Transaction newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Transaction query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Transaction whereAccountId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Transaction whereAmount($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Transaction whereBaseAmount($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Transaction whereBaseCurrency($value)

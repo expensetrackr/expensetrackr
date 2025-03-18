@@ -5,5 +5,5 @@ export function Link({ ...props }: React.ComponentPropsWithRef<typeof InertiaLin
 
     const pathname = props.href.startsWith("/") ? props.href : new URL(props.href).pathname;
 
-    return <InertiaLink aria-current={url === pathname ? "page" : undefined} {...props} />;
+    return <InertiaLink aria-current={url.split("?")[0] === pathname ? "page" : undefined} {...props} />;
 }

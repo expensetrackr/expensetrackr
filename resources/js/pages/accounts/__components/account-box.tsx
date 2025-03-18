@@ -8,7 +8,6 @@ import LoopRightIcon from "virtual:icons/ri/loop-right-line";
 
 import * as StatusBadge from "#/components/ui/status-badge.tsx";
 import { useTranslation } from "#/hooks/use-translation.ts";
-import { type AccountResourceType } from "#/types/runtype.js";
 import { cnMerge } from "#/utils/cn.ts";
 
 function SVGCardBg(props: React.SVGProps<SVGSVGElement>) {
@@ -27,7 +26,7 @@ function SVGCardBg(props: React.SVGProps<SVGSVGElement>) {
 }
 
 type CreditCardProps = {
-    account: AccountResourceType;
+    account: Resources.Account;
 } & React.HTMLAttributes<HTMLDivElement>;
 
 export function AccountBox({ account, className, ...rest }: CreditCardProps) {
@@ -54,7 +53,9 @@ export function AccountBox({ account, className, ...rest }: CreditCardProps) {
             )}
             {...rest}
         >
-            <div className="flex items-center justify-between">
+            <SVGCardBg className="absolute top-0 right-0 text-(--stroke-soft-200) transition duration-700 group-hover/account-link:text-primary/50 group-focus-visible/account-link:text-primary/50" />
+
+            <div className="relative flex items-center justify-between">
                 <div className="flex items-center gap-4">
                     <div className="flex items-center gap-2">
                         {account.connection?.institutionLogoUrl ? (
@@ -74,31 +75,29 @@ export function AccountBox({ account, className, ...rest }: CreditCardProps) {
                                 width={32}
                             />
                         )}
-                        {account.connection?.isActive && (
+                        {account.connection?.status === "connected" && (
                             <LoopRightIcon className="size-5 rotate-90 text-(--text-sub-600)" />
                         )}
                     </div>
-                    {account.connection?.isActive && (
+                    {account.connection?.status === "connected" && (
                         <StatusBadge.Root
-                            status={account.connection.isActive ? "completed" : "disabled"}
+                            status={account.connection.status === "connected" ? "completed" : "disabled"}
                             variant="stroke"
                         >
                             <StatusBadge.Icon as={CheckboxCircleFillIcon} />
-                            {t(`common.${account.connection.isActive ? "active" : "disabled"}`)}
+                            {t(`common.${account.connection.status === "connected" ? "active" : "disabled"}`)}
                         </StatusBadge.Root>
                     )}
                 </div>
             </div>
 
-            <div className="relative z-10 mt-auto flex flex-col gap-1">
+            <div className="relative mt-auto flex flex-col gap-1">
                 <div className="text-paragraph-sm text-(--text-sub-600)">{account.name}</div>
                 <div className="line-clamp-1 space-x-1 text-h4">
                     <NumberFlow format={format} value={new Decimal(account.currentBalance).toNumber()} />
                     <span className="text-paragraph-sm text-(--text-soft-400)">{account.currencyCode}</span>
                 </div>
             </div>
-
-            <SVGCardBg className="absolute top-0 right-0 text-(--stroke-soft-200) transition duration-700 group-hover/account-link:text-primary/50 group-focus-visible/account-link:text-primary/50" />
         </div>
     );
 }

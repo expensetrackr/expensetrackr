@@ -58,7 +58,7 @@ return [
      * resource generator can detect them.
      */
     'modifiers' => [
-        // 'App\Models\MyModel' => 'App\Modifiers\MyModelModifier',
+        //
     ],
 
     /*

@@ -210,7 +210,7 @@ final class SyncBankAccounts implements ShouldBeUnique, ShouldQueue
             $transactionsChunks = $transactions->chunk(500);
 
             foreach ($transactionsChunks as $transactionsBatch) {
-                $this->upsertTransactions($transactionsBatch);
+                $this->upsertTransactions($transactionsBatch, $account);
             }
         } catch (Throwable $th) {
             Log::error('Error syncing transactions', [
@@ -229,15 +229,13 @@ final class SyncBankAccounts implements ShouldBeUnique, ShouldQueue
      *
      * @param  Collection<int, TransactionData>  $transactions
      */
-    private function upsertTransactions(Collection $transactions): void
+    private function upsertTransactions(Collection $transactions, Account $account): void
     {
         try {
             // Cache system categories for the duration of this job
-            $systemCategories = Cache::remember('system_categories', 3600, function () {
-                return Category::whereIsSystem(true)
-                    ->get(['id', 'slug'])
-                    ->keyBy('slug');
-            });
+            $systemCategories = Cache::remember('system_categories', 3600, fn () => Category::whereIsSystem(true)
+                ->get(['id', 'slug'])
+                ->keyBy('slug'));
 
             // Get default 'other' category ID once
             $defaultCategoryId = $systemCategories->get('other')?->id;
@@ -258,6 +256,7 @@ final class SyncBankAccounts implements ShouldBeUnique, ShouldQueue
                     'is_recurring' => false,
                     'is_manual' => false,
                     'external_id' => $transaction->id,
+                    'account_id' => $account->id,
                     'workspace_id' => $this->workspaceId,
                     'category_id' => $systemCategories->get($transaction->categorySlug)?->id ?? $defaultCategoryId,
                     'public_id' => Transaction::generatePrefixedId(),

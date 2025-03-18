@@ -1,11 +1,10 @@
 import * as Divider from "#/components/ui/divider.tsx";
 import * as Drawer from "#/components/ui/drawer.tsx";
 import { useAccountParams } from "#/hooks/use-account-params.ts";
-import { type AccountResourceType } from "#/types/runtype.js";
 import { AccountBox } from "./account-box.tsx";
 
 type AccountDetailsDrawerProps = {
-    account?: AccountResourceType | null;
+    account?: Resources.Account | null;
 };
 
 export function AccountDetailsDrawer({ account }: AccountDetailsDrawerProps) {

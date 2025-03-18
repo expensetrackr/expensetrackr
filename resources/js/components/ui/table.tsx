@@ -1,4 +1,4 @@
-import { cn } from "#/utils/cn.ts";
+import { cn, cnMerge } from "#/utils/cn.ts";
 import * as Divider from "./divider.tsx";
 
 function Table({ className, ...rest }: React.ComponentPropsWithRef<"table">) {
@@ -71,7 +71,7 @@ TableRowDivider.displayName = "TableRowDivider";
 function TableCell({ className, ...rest }: React.ComponentPropsWithRef<"td">) {
     return (
         <td
-            className={cn(
+            className={cnMerge(
                 "h-16 px-3 transition duration-200 ease-out group-hover/row:bg-(--bg-weak-50) first:rounded-l-12 last:rounded-r-12",
                 className,
             )}

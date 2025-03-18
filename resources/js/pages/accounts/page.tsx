@@ -8,15 +8,13 @@ import * as Button from "#/components/ui/button.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
 import { AppLayout } from "#/layouts/app-layout.tsx";
 import { type PageProps } from "#/types/globals.js";
-import { type PaginatedResponse } from "#/types/pagination.ts";
-import { type AccountResourceType } from "#/types/runtype.js";
 import { AccountsList } from "./__components/accounts-lists.tsx";
 import { AccountDetailsDrawer } from "./__components/details-drawer.tsx";
 import { Filters } from "./__components/filters.tsx";
 
 type AccountsPageProps = {
-    accounts: PaginatedResponse<AccountResourceType>;
-    account?: AccountResourceType | null;
+    accounts: Laravel.PaginatedResponse<Resources.Account>;
+    account?: Resources.Account | null;
 };
 
 export default function AccountsPage({ accounts, account }: AccountsPageProps) {

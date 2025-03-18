@@ -1,0 +1,60 @@
+import { Head } from "@inertiajs/react";
+import TransactionIcon from "virtual:icons/hugeicons/transaction";
+
+import { Header } from "#/components/header.tsx";
+import * as Divider from "#/components/ui/divider.tsx";
+import { AppLayout } from "#/layouts/app-layout.tsx";
+import { type PageProps } from "#/types/globals.ts";
+import { Filters } from "./__components/filters.tsx";
+import { TransactionsTable } from "./__components/table.tsx";
+
+type TransactionsPageProps = {
+    transactions: Laravel.PaginatedResponse<Resources.Transaction>;
+    requestId: string;
+};
+
+export default function TransactionsPage({ transactions, requestId }: TransactionsPageProps) {
+    return (
+        <>
+            <Header
+                contentClassName="hidden lg:flex"
+                description="Manage your transactions and add new ones."
+                icon={
+                    <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-(--bg-white-0) shadow-xs ring-1 ring-(--stroke-soft-200) ring-inset">
+                        <TransactionIcon className="size-6 text-(--text-sub-600)" />
+                    </div>
+                }
+                title="Transactions"
+            >
+                {/* <Button.Root asChild className="w-full md:w-auto">
+                    <Link href={route("accounts.create")}>
+                        <Button.Icon as={WalletAdd01} />
+                        Add account
+                    </Link>
+                </Button.Root> */}
+            </Header>
+
+            <div className="lg:px-8">
+                <Divider.Root />
+            </div>
+
+            <div className="flex flex-1 flex-col gap-4 px-4 py-6 lg:px-8">
+                <Filters />
+                <TransactionsTable
+                    // use a key to compare the data so the table is not re-rendered when the params change
+                    data={transactions.data ?? []}
+                    key={requestId}
+                    total={transactions.meta.total}
+                />
+            </div>
+        </>
+    );
+}
+
+TransactionsPage.layout = (page: React.ReactNode & { props: PageProps }) => (
+    <AppLayout {...page.props}>
+        <Head title="Transactions" />
+
+        {page}
+    </AppLayout>
+);

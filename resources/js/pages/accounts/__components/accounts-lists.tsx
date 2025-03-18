@@ -1,12 +1,11 @@
 import { Link } from "@inertiajs/react";
 import { AnimatePresence, motion } from "motion/react";
 
-import { type AccountResourceType } from "#/types/runtype.js";
 import { AccountBox } from "./account-box.tsx";
 
 const MotionLink = motion.create(Link);
 
-export function AccountsList({ accounts }: { accounts: AccountResourceType[] }) {
+export function AccountsList({ accounts }: { accounts: Array<Resources.Account> }) {
     return (
         <div className="-mx-3 md:mx-0">
             <div className="mx-auto grid w-full max-w-[352px] items-start gap-6 md:mx-0 md:max-w-full md:grid-cols-2 lg:grid-cols-4">

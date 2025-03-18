@@ -5,7 +5,7 @@ export type BankConnectionResourceType = {
     institutionName: string;
     institutionLogoUrl: string;
     providerType: { name: string; value: string };
-    isActive: boolean;
+    status: { name: string; value: string };
 };
 // App\Http\Resources\LanguageResource
 export type LanguageResourceType = any;
@@ -20,4 +20,18 @@ export type AccountResourceType = {
     isDefault: boolean;
     externalId: string;
     connection: BankConnectionResourceType;
+};
+// App\Http\Resources\TransactionResource
+export type TransactionResourceType = {
+    id: string;
+    name: string;
+    type: string;
+    baseAmount: unknown;
+    baseCurrency: unknown;
+    currencyRate: unknown;
+    amount: string;
+    currency: string;
+    isRecurring: boolean;
+    isManual: boolean;
+    datedAt: string;
 };

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\TransactionController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -33,6 +34,8 @@ Route::middleware([
     Route::get('/accounts/create/{connectionType}', [AccountController::class, 'createAccountByType'])
         ->where('connectionType', 'manual|connect')
         ->name('accounts.create.connection-type');
+
+    Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
 
     Route::prefix('settings')->group(function () {
         Route::get('/', function () {
