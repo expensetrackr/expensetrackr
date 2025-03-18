@@ -46,7 +46,7 @@ export function TablePagination({
                         <span>Previous</span>
                     )}
                 </Button.Root>
-                <span className="text-text-sub-600 text-center text-paragraph-sm whitespace-nowrap">
+                <span className="text-center text-paragraph-sm whitespace-nowrap text-(--text-sub-600)">
                     Page {meta.current_page} of {meta.last_page}
                 </span>
                 <Button.Root
@@ -67,7 +67,7 @@ export function TablePagination({
                 </Button.Root>
             </div>
             <div className="mt-10 hidden items-center gap-3 lg:flex">
-                <span className="text-text-sub-600 flex-1 text-paragraph-sm whitespace-nowrap">
+                <span className="flex-1 text-paragraph-sm whitespace-nowrap text-(--text-sub-600)">
                     Page {meta.current_page} of {meta.last_page}
                 </span>
 

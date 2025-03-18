@@ -46,7 +46,7 @@
         "sonner": "2.0.1",
         "tailwind-merge": "3.0.2",
         "tailwind-variants": "1.0.0",
-        "teller-connect-react": "0.2.0",
+        "teller-connect-react": "0.2.1",
         "valibot": "1.0.0-rc.4",
         "zustand": "5.0.3",
       },
@@ -1283,7 +1283,7 @@
 
     "tapable": ["tapable@2.2.1", "", {}, "sha512-GNzQvQTOIP6RyTfE2Qxb8ZVlNmw0n88vp1szwWRimP02mnTsx3Wtn5qRdqY9w2XduFNUgvOwhNnQsjwCp+kqaQ=="],
 
-    "teller-connect-react": ["teller-connect-react@0.2.0", "", { "dependencies": { "react-script-hook": "^1.7.2" }, "peerDependencies": { "react": "^16.8.6 || 17 - 18", "react-dom": "^16.8.6 || 17 - 18" } }, "sha512-AOye5G+YfvoPzd3LmnoKO4PssGwUQiiyQlzUT1g0rlx8Mw4mptHyu69D3TKFBuoe8PmdzOk8wEzTg9tM2eWYNg=="],
+    "teller-connect-react": ["teller-connect-react@0.2.1", "", { "dependencies": { "react-script-hook": "^1.7.2" }, "peerDependencies": { "react": "^16.8.6 || 17 - 18", "react-dom": "^16.8.6 || 17 - 18" } }, "sha512-3KeYtNmJFl2G4ZpAJ3wwBhzGyBUKev4qvBv1I7ZrDtkY2y4+Rkr89XER3MenUhnq0cIwdxXZ+Re7EyB5MU/9eQ=="],
 
     "tiny-invariant": ["tiny-invariant@1.3.3", "", {}, "sha512-+FbBPE1o9QAYvviau/qC5SE3caw21q3xkvWKBtja5vgqOWIHHJ3ioaq1VPfn/Szqctz2bU/oYeKd9/z5BL+PVg=="],
 

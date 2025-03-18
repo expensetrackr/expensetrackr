@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f37bdecd4f0ea01b84a527eb2c74194a",
+    "content-hash": "7709a894661561fbaf0bfa47941bd0f7",
     "packages": [
         {
             "name": "akaunting/laravel-money",
@@ -157,16 +157,16 @@
         },
         {
             "name": "amphp/byte-stream",
-            "version": "v2.1.1",
+            "version": "v2.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/amphp/byte-stream.git",
-                "reference": "daa00f2efdbd71565bf64ffefa89e37542addf93"
+                "reference": "55a6bd071aec26fa2a3e002618c20c35e3df1b46"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/amphp/byte-stream/zipball/daa00f2efdbd71565bf64ffefa89e37542addf93",
-                "reference": "daa00f2efdbd71565bf64ffefa89e37542addf93",
+                "url": "https://api.github.com/repos/amphp/byte-stream/zipball/55a6bd071aec26fa2a3e002618c20c35e3df1b46",
+                "reference": "55a6bd071aec26fa2a3e002618c20c35e3df1b46",
                 "shasum": ""
             },
             "require": {
@@ -220,7 +220,7 @@
             ],
             "support": {
                 "issues": "https://github.com/amphp/byte-stream/issues",
-                "source": "https://github.com/amphp/byte-stream/tree/v2.1.1"
+                "source": "https://github.com/amphp/byte-stream/tree/v2.1.2"
             },
             "funding": [
                 {
@@ -228,7 +228,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-02-17T04:49:38+00:00"
+            "time": "2025-03-16T17:10:27+00:00"
         },
         {
             "name": "amphp/cache",
@@ -532,16 +532,16 @@
         },
         {
             "name": "amphp/pipeline",
-            "version": "v1.2.2",
+            "version": "v1.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/amphp/pipeline.git",
-                "reference": "97cbf289f4d8877acfe58dd90ed5a4370a43caa4"
+                "reference": "7b52598c2e9105ebcddf247fc523161581930367"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/amphp/pipeline/zipball/97cbf289f4d8877acfe58dd90ed5a4370a43caa4",
-                "reference": "97cbf289f4d8877acfe58dd90ed5a4370a43caa4",
+                "url": "https://api.github.com/repos/amphp/pipeline/zipball/7b52598c2e9105ebcddf247fc523161581930367",
+                "reference": "7b52598c2e9105ebcddf247fc523161581930367",
                 "shasum": ""
             },
             "require": {
@@ -587,7 +587,7 @@
             ],
             "support": {
                 "issues": "https://github.com/amphp/pipeline/issues",
-                "source": "https://github.com/amphp/pipeline/tree/v1.2.2"
+                "source": "https://github.com/amphp/pipeline/tree/v1.2.3"
             },
             "funding": [
                 {
@@ -595,7 +595,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-01-19T15:42:46+00:00"
+            "time": "2025-03-16T16:33:53+00:00"
         },
         {
             "name": "amphp/process",
@@ -1004,16 +1004,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.342.6",
+            "version": "3.342.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "2ad93ef447289da27892707efa683c1ae7ced85f"
+                "reference": "4d42e384dac1e71107226ed72ed5e8e4d4ee3358"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/2ad93ef447289da27892707efa683c1ae7ced85f",
-                "reference": "2ad93ef447289da27892707efa683c1ae7ced85f",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/4d42e384dac1e71107226ed72ed5e8e4d4ee3358",
+                "reference": "4d42e384dac1e71107226ed72ed5e8e4d4ee3358",
                 "shasum": ""
             },
             "require": {
@@ -1095,9 +1095,9 @@
             "support": {
                 "forum": "https://github.com/aws/aws-sdk-php/discussions",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.342.6"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.342.7"
             },
-            "time": "2025-03-14T18:01:18+00:00"
+            "time": "2025-03-17T18:18:04+00:00"
         },
         {
             "name": "bacon/bacon-qr-code",
@@ -1503,37 +1503,35 @@
         },
         {
             "name": "cloudinary-labs/cloudinary-laravel",
-            "version": "2.3.0",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cloudinary-community/cloudinary-laravel.git",
-                "reference": "ed74eec3b2453ae307e2dda7e8c5cf9556f4daa3"
+                "reference": "a803d0c115baba68851a667305f0834cafa7e35a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cloudinary-community/cloudinary-laravel/zipball/ed74eec3b2453ae307e2dda7e8c5cf9556f4daa3",
-                "reference": "ed74eec3b2453ae307e2dda7e8c5cf9556f4daa3",
+                "url": "https://api.github.com/repos/cloudinary-community/cloudinary-laravel/zipball/a803d0c115baba68851a667305f0834cafa7e35a",
+                "reference": "a803d0c115baba68851a667305f0834cafa7e35a",
                 "shasum": ""
             },
             "require": {
-                "cloudinary/cloudinary_php": "^2.0",
+                "cloudinary/cloudinary_php": "^3.0",
                 "ext-json": "*",
-                "illuminate/support": "^10.0|^11.0|^12.0",
-                "php": "^8.1"
+                "illuminate/support": "^11.0|^12.0",
+                "php": "^8.2"
             },
             "require-dev": {
                 "laravel/pint": "^1.20",
-                "mockery/mockery": "^1.1",
+                "mockery/mockery": "^1.6",
                 "orchestra/testbench": "^8.0|^9.0|^10.0",
                 "pestphp/pest": "^2.35|^3.0",
-                "sempro/phpunit-pretty-print": "^1.0"
+                "phpspec/prophecy-phpunit": "^2.3",
+                "sempro/phpunit-pretty-print": "^1.2"
             },
             "type": "library",
             "extra": {
                 "laravel": {
-                    "aliases": {
-                        "Cloudinary": "CloudinaryLabs\\CloudinaryLaravel\\Facades\\Cloudinary"
-                    },
                     "providers": [
                         "CloudinaryLabs\\CloudinaryLaravel\\CloudinaryServiceProvider"
                     ]
@@ -1541,7 +1539,7 @@
             },
             "autoload": {
                 "files": [
-                    "src/Support/helpers.php"
+                    "src/helpers.php"
                 ],
                 "psr-4": {
                     "CloudinaryLabs\\CloudinaryLaravel\\": "src/"
@@ -1553,9 +1551,8 @@
             ],
             "authors": [
                 {
-                    "name": "Prosper Otemuyiwa",
-                    "email": "prosperotemuyiwa@gmail.com",
-                    "homepage": "https://github.com/unicodeveloper"
+                    "name": "Josh Manders",
+                    "homepage": "https://github.com/joshmanders"
                 }
             ],
             "description": "A Laravel Cloudinary Package",
@@ -1570,43 +1567,42 @@
             ],
             "support": {
                 "issues": "https://github.com/cloudinary-community/cloudinary-laravel/issues",
-                "source": "https://github.com/cloudinary-community/cloudinary-laravel/tree/2.3.0"
+                "source": "https://github.com/cloudinary-community/cloudinary-laravel/tree/3.0.0"
             },
-            "time": "2025-03-06T20:51:20+00:00"
+            "time": "2025-03-16T19:19:14+00:00"
         },
         {
             "name": "cloudinary/cloudinary_php",
-            "version": "2.14.0",
+            "version": "3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cloudinary/cloudinary_php.git",
-                "reference": "5967558bbf5d88e851ebd554559e850ac45b9236"
+                "reference": "f87f0635aa6fc950b1cd99257ac04342914cec6c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cloudinary/cloudinary_php/zipball/5967558bbf5d88e851ebd554559e850ac45b9236",
-                "reference": "5967558bbf5d88e851ebd554559e850ac45b9236",
+                "url": "https://api.github.com/repos/cloudinary/cloudinary_php/zipball/f87f0635aa6fc950b1cd99257ac04342914cec6c",
+                "reference": "f87f0635aa6fc950b1cd99257ac04342914cec6c",
                 "shasum": ""
             },
             "require": {
-                "cloudinary/transformation-builder-sdk": "^1",
+                "cloudinary/transformation-builder-sdk": "^2",
                 "ext-json": "*",
-                "guzzlehttp/guzzle": "^6.5.8|^7.4.5",
+                "guzzlehttp/guzzle": "^7.4.5",
                 "guzzlehttp/promises": "^1.5.3|^2.0",
-                "guzzlehttp/psr7": "^1.9.1|^2.5",
-                "monolog/monolog": "^1|^2|^3",
-                "php": ">=5.6.0",
-                "psr/log": "^1|^2|^3"
+                "guzzlehttp/psr7": "^2.7",
+                "monolog/monolog": "^2|^3",
+                "php": ">=8.0.0",
+                "psr/log": "^2|^3"
             },
             "require-dev": {
-                "consolidation/robo": "~1",
                 "ext-dom": "*",
                 "ext-libxml": "*",
                 "ext-zip": "*",
                 "friendsofphp/php-cs-fixer": "*",
                 "phpmd/phpmd": "*",
-                "squizlabs/php_codesniffer": "3.*",
-                "symfony/phpunit-bridge": "^5.2"
+                "squizlabs/php_codesniffer": "*",
+                "symfony/phpunit-bridge": "^7.2"
             },
             "type": "library",
             "autoload": {
@@ -1636,37 +1632,36 @@
             "support": {
                 "email": "info@cloudinary.com",
                 "issues": "https://github.com/cloudinary/cloudinary_php/issues",
-                "source": "https://github.com/cloudinary/cloudinary_php/tree/2.14.0"
+                "source": "https://github.com/cloudinary/cloudinary_php/tree/3.1.0"
             },
-            "time": "2024-05-07T15:14:12+00:00"
+            "time": "2025-01-14T23:17:05+00:00"
         },
         {
             "name": "cloudinary/transformation-builder-sdk",
-            "version": "1.5.0",
+            "version": "2.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cloudinary/php-transformation-builder-sdk.git",
-                "reference": "8c225472e96291a7af23ddf8947bdf31baac403e"
+                "reference": "6ff4a84f14dbc5197563db63b6abbbe77a68d7e7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cloudinary/php-transformation-builder-sdk/zipball/8c225472e96291a7af23ddf8947bdf31baac403e",
-                "reference": "8c225472e96291a7af23ddf8947bdf31baac403e",
+                "url": "https://api.github.com/repos/cloudinary/php-transformation-builder-sdk/zipball/6ff4a84f14dbc5197563db63b6abbbe77a68d7e7",
+                "reference": "6ff4a84f14dbc5197563db63b6abbbe77a68d7e7",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "php": ">=5.6.0"
+                "php": ">=8.0.0"
             },
             "require-dev": {
-                "consolidation/robo": "~1",
                 "ext-dom": "*",
                 "ext-libxml": "*",
                 "ext-zip": "*",
                 "friendsofphp/php-cs-fixer": "*",
                 "phpmd/phpmd": "*",
-                "squizlabs/php_codesniffer": "3.*",
-                "symfony/phpunit-bridge": "^5.2"
+                "squizlabs/php_codesniffer": "*",
+                "symfony/phpunit-bridge": "^7.2"
             },
             "type": "library",
             "autoload": {
@@ -1696,9 +1691,9 @@
             "support": {
                 "email": "info@cloudinary.com",
                 "issues": "https://github.com/cloudinary/php-transformation-builder-sdk/issues",
-                "source": "https://github.com/cloudinary/php-transformation-builder-sdk/tree/1.5.0"
+                "source": "https://github.com/cloudinary/php-transformation-builder-sdk/tree/2.1.2"
             },
-            "time": "2024-05-27T12:26:00+00:00"
+            "time": "2025-02-03T11:14:03+00:00"
         },
         {
             "name": "composer/ca-bundle",
@@ -9798,16 +9793,16 @@
         },
         {
             "name": "spatie/laravel-data",
-            "version": "4.14.0",
+            "version": "4.14.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-data.git",
-                "reference": "3e1240353569e8fb64b5859eed01652d5df3358b"
+                "reference": "edd61b4dca5acdcfd1e3b7f2c19b75e83730f87c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-data/zipball/3e1240353569e8fb64b5859eed01652d5df3358b",
-                "reference": "3e1240353569e8fb64b5859eed01652d5df3358b",
+                "url": "https://api.github.com/repos/spatie/laravel-data/zipball/edd61b4dca5acdcfd1e3b7f2c19b75e83730f87c",
+                "reference": "edd61b4dca5acdcfd1e3b7f2c19b75e83730f87c",
                 "shasum": ""
             },
             "require": {
@@ -9868,7 +9863,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-data/issues",
-                "source": "https://github.com/spatie/laravel-data/tree/4.14.0"
+                "source": "https://github.com/spatie/laravel-data/tree/4.14.1"
             },
             "funding": [
                 {
@@ -9876,7 +9871,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-03-14T14:26:23+00:00"
+            "time": "2025-03-17T13:54:28+00:00"
         },
         {
             "name": "spatie/laravel-package-tools",
