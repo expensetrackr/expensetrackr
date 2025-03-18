@@ -10,8 +10,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
 /** @mixin \App\Models\Transaction */
 final class TransactionResource extends JsonResource
 {
-    public bool $showOptionalFields = true;
-
     /**
      * Transform the resource collection into an array.
      *

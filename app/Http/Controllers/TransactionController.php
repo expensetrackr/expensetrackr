@@ -35,7 +35,8 @@ final class TransactionController
                     ->allowedFilters(['name', 'type'])
                     ->allowedSorts(sorts: 'dated_at')
                     ->defaultSort(sorts: '-dated_at')
-                    ->paginate($perPage)
+                    ->paginate(perPage: $perPage)
+                    ->onEachSide(1)
                     ->appends($request->query())
             ),
             // Handy for updating the table when anything from server side changes

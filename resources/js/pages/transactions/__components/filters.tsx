@@ -20,7 +20,6 @@ export function Filters() {
     return (
         <div className="flex flex-col justify-between gap-4 lg:flex-row lg:flex-wrap lg:items-center lg:gap-3">
             <TextField
-                autoFocus
                 inlineTrailingNode={
                     <button type="button">
                         <Sorting01Icon className="size-5 text-(--text-soft-400)" />

@@ -11,10 +11,12 @@ import {
 import { Image } from "@unpic/react";
 import Decimal from "decimal.js";
 import * as React from "react";
+import MoreVerticalIcon from "virtual:icons/hugeicons/more-vertical";
 
 import { CategoryIcon } from "#/components/category-icon.tsx";
 import * as Avatar from "#/components/ui/avatar.tsx";
 import * as Badge from "#/components/ui/badge.tsx";
+import * as Button from "#/components/ui/button.tsx";
 import * as Table from "#/components/ui/table.tsx";
 import { usePaginationParams } from "#/hooks/use-pagination-params.ts";
 import { useTranslation } from "#/hooks/use-translation.ts";
@@ -147,6 +149,20 @@ export function TransactionsTable({ data: initialData, total }: TransactionsTabl
                             <span>{row.original.category?.name}</span>
                         </div>
                     );
+                },
+            },
+            {
+                id: "actions",
+                enableHiding: false,
+                cell() {
+                    return (
+                        <Button.Root $size="xs" $style="ghost" $type="neutral">
+                            <Button.Icon as={MoreVerticalIcon} className="size-6" />
+                        </Button.Root>
+                    );
+                },
+                meta: {
+                    className: "px-5 w-0",
                 },
             },
         ],

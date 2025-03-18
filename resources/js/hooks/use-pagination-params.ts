@@ -7,7 +7,7 @@ const paginationParsers = {
 
 const paginationUrlKeys = {
     pageIndex: "page",
-    pageSize: "perPage",
+    pageSize: "per_page",
 };
 
 export function usePaginationParams() {

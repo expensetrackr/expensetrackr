@@ -2,7 +2,9 @@ import { Head } from "@inertiajs/react";
 import TransactionIcon from "virtual:icons/hugeicons/transaction";
 
 import { Header } from "#/components/header.tsx";
+import { TablePagination } from "#/components/table-pagination.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
+import { usePaginationParams } from "#/hooks/use-pagination-params.ts";
 import { AppLayout } from "#/layouts/app-layout.tsx";
 import { type PageProps } from "#/types/globals.ts";
 import { Filters } from "./__components/filters.tsx";
@@ -14,6 +16,8 @@ type TransactionsPageProps = {
 };
 
 export default function TransactionsPage({ transactions, requestId }: TransactionsPageProps) {
+    const [, setPagination] = usePaginationParams();
+
     return (
         <>
             <Header
@@ -46,6 +50,13 @@ export default function TransactionsPage({ transactions, requestId }: Transactio
                     key={requestId}
                     total={transactions.meta.total}
                 />
+                <div className="mt-auto">
+                    <TablePagination
+                        links={transactions.links}
+                        meta={transactions.meta}
+                        onPerPageChange={(perPage) => setPagination({ pageSize: perPage })}
+                    />
+                </div>
             </div>
         </>
     );
