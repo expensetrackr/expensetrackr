@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7709a894661561fbaf0bfa47941bd0f7",
+    "content-hash": "b3ebd74a9eef43391fbc6de82c5e6fcd",
     "packages": [
         {
             "name": "akaunting/laravel-money",
@@ -1004,16 +1004,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.342.7",
+            "version": "3.342.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "4d42e384dac1e71107226ed72ed5e8e4d4ee3358"
+                "reference": "d8279a481cf87482a1fb74784f76e4160efcce90"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/4d42e384dac1e71107226ed72ed5e8e4d4ee3358",
-                "reference": "4d42e384dac1e71107226ed72ed5e8e4d4ee3358",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/d8279a481cf87482a1fb74784f76e4160efcce90",
+                "reference": "d8279a481cf87482a1fb74784f76e4160efcce90",
                 "shasum": ""
             },
             "require": {
@@ -1095,9 +1095,9 @@
             "support": {
                 "forum": "https://github.com/aws/aws-sdk-php/discussions",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.342.7"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.342.8"
             },
-            "time": "2025-03-17T18:18:04+00:00"
+            "time": "2025-03-18T18:15:40+00:00"
         },
         {
             "name": "bacon/bacon-qr-code",
@@ -5125,16 +5125,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v11.44.1",
+            "version": "v11.44.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "0883d4175f4e2b5c299e7087ad3c74f2ce195c6d"
+                "reference": "f85216c82cbd38b66d67ebd20ea762cb3751a4b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/0883d4175f4e2b5c299e7087ad3c74f2ce195c6d",
-                "reference": "0883d4175f4e2b5c299e7087ad3c74f2ce195c6d",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/f85216c82cbd38b66d67ebd20ea762cb3751a4b4",
+                "reference": "f85216c82cbd38b66d67ebd20ea762cb3751a4b4",
                 "shasum": ""
             },
             "require": {
@@ -5336,7 +5336,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2025-03-05T15:34:10+00:00"
+            "time": "2025-03-12T14:34:30+00:00"
         },
         {
             "name": "laravel/octane",
@@ -5553,16 +5553,16 @@
         },
         {
             "name": "laravel/scout",
-            "version": "v10.13.1",
+            "version": "v10.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/scout.git",
-                "reference": "577535cd93474e4c915e7469cbfa597c41aef8e2"
+                "reference": "840d18e3d68b17c59663fc687497c49c0ff0d295"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/scout/zipball/577535cd93474e4c915e7469cbfa597c41aef8e2",
-                "reference": "577535cd93474e4c915e7469cbfa597c41aef8e2",
+                "url": "https://api.github.com/repos/laravel/scout/zipball/840d18e3d68b17c59663fc687497c49c0ff0d295",
+                "reference": "840d18e3d68b17c59663fc687497c49c0ff0d295",
                 "shasum": ""
             },
             "require": {
@@ -5630,7 +5630,7 @@
                 "issues": "https://github.com/laravel/scout/issues",
                 "source": "https://github.com/laravel/scout"
             },
-            "time": "2025-02-18T18:39:33+00:00"
+            "time": "2025-03-18T14:00:31+00:00"
         },
         {
             "name": "laravel/serializable-closure",
@@ -6603,123 +6603,6 @@
                 }
             ],
             "time": "2024-12-08T08:18:47+00:00"
-        },
-        {
-            "name": "levizoesch/laravel-set-environment",
-            "version": "1.0.5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/levizoesch/laravel-set-environment.git",
-                "reference": "ca1ba65683ccb36b9f2832afd5162152f01d1922"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/levizoesch/laravel-set-environment/zipball/ca1ba65683ccb36b9f2832afd5162152f01d1922",
-                "reference": "ca1ba65683ccb36b9f2832afd5162152f01d1922",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.0|^8.0"
-            },
-            "type": "project",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "levizoesch\\laravelsetenvironment\\SetEnvironmentVariableServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "levizoesch\\laravelsetenvironment\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "A simple command to set environment variables via command line. I wrote this to assist in pipeline builds.",
-            "keywords": [
-                "Laravel Helpers",
-                "Laravel Set Environment",
-                "Levi Zoesch",
-                "laravel",
-                "laravel commands"
-            ],
-            "support": {
-                "issues": "https://github.com/levizoesch/laravel-set-environment/issues",
-                "source": "https://github.com/levizoesch/laravel-set-environment/tree/1.0.5"
-            },
-            "time": "2024-08-29T04:06:11+00:00"
-        },
-        {
-            "name": "levizoesch/teller-sdk",
-            "version": "2.0.17",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/levizoesch/teller-sdk.git",
-                "reference": "83570df49bffb3aaa9efabcd2469b3c11351e6d3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/levizoesch/teller-sdk/zipball/83570df49bffb3aaa9efabcd2469b3c11351e6d3",
-                "reference": "83570df49bffb3aaa9efabcd2469b3c11351e6d3",
-                "shasum": ""
-            },
-            "require": {
-                "ext-curl": "*",
-                "illuminate/contracts": "^8.0|^9.0|^10.0|^11.0",
-                "levizoesch/laravel-set-environment": "^1.0",
-                "php": "^7.4|^8.0|^8.1|^8.2",
-                "spatie/laravel-package-tools": "^1.0 | ^1.16.2"
-            },
-            "require-dev": {
-                "brianium/paratest": "^1.0|^2.0|^3.0|^4.0|^5.0|^6.0|^7.0",
-                "nunomaduro/collision": "^1.0|^2.0|^3.0|^4.0|^5.0|^6.0|^7.0|^8.0",
-                "orchestra/testbench": "^1.0|^2.0|^3.0|^4.0|^5.0|^6.0|^7.0|^8.0|^9.0",
-                "pestphp/pest": "^1.0|^2.0|^3.0",
-                "pestphp/pest-plugin-laravel": "^1.0|^2.0|^3.0",
-                "phpunit/phpunit": "^1.0|^2.0|^3.0|^4.0|^5.0|^6.0|^7.0|^8.0|^9.0|^10.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "TellerSDK\\TellerSDKServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "TellerSDK\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Levi Zoesch",
-                    "role": "Developer"
-                }
-            ],
-            "description": "A simple SDK to consume Teller.io for Laravel.",
-            "homepage": "https://github.com/levizoesch/teller-sdk",
-            "keywords": [
-                "api",
-                "laravel",
-                "levizoesch",
-                "open source",
-                "sdk",
-                "teller",
-                "teller.io"
-            ],
-            "support": {
-                "issues": "https://github.com/levizoesch/teller-sdk/issues",
-                "source": "https://github.com/levizoesch/teller-sdk/tree/2.0.17"
-            },
-            "time": "2024-09-20T02:10:15+00:00"
         },
         {
             "name": "livewire/livewire",
@@ -17004,16 +16887,16 @@
         },
         {
             "name": "sebastian/type",
-            "version": "5.1.0",
+            "version": "5.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/type.git",
-                "reference": "461b9c5da241511a2a0e8f240814fb23ce5c0aac"
+                "reference": "a8a7e30534b0eb0c77cd9d07e82de1a114389f5e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/type/zipball/461b9c5da241511a2a0e8f240814fb23ce5c0aac",
-                "reference": "461b9c5da241511a2a0e8f240814fb23ce5c0aac",
+                "url": "https://api.github.com/repos/sebastianbergmann/type/zipball/a8a7e30534b0eb0c77cd9d07e82de1a114389f5e",
+                "reference": "a8a7e30534b0eb0c77cd9d07e82de1a114389f5e",
                 "shasum": ""
             },
             "require": {
@@ -17049,7 +16932,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/type/issues",
                 "security": "https://github.com/sebastianbergmann/type/security/policy",
-                "source": "https://github.com/sebastianbergmann/type/tree/5.1.0"
+                "source": "https://github.com/sebastianbergmann/type/tree/5.1.2"
             },
             "funding": [
                 {
@@ -17057,7 +16940,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-09-17T13:12:04+00:00"
+            "time": "2025-03-18T13:35:50+00:00"
         },
         {
             "name": "sebastian/version",
