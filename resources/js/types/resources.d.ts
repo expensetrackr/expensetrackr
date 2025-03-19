@@ -19,20 +19,21 @@ declare namespace Resources {
         isDefault: boolean;
         externalId: string;
         connection: BankConnection;
+        transactions?: Array<Transaction>;
     };
     // App\Http\Resources\TransactionResource
     export type Transaction = {
         id: string;
         name: string;
         note?: string;
-        type: string;
+        type?: string;
         baseAmount?: string;
         baseCurrency?: string;
         currencyRate?: string;
         amount: string;
         currency: string;
-        isRecurring: boolean;
-        isManual: boolean;
+        isRecurring?: boolean;
+        isManual?: boolean;
         datedAt: string;
         category?: {
             id: string;

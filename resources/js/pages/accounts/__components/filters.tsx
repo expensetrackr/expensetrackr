@@ -5,10 +5,10 @@ import Sorting01Icon from "virtual:icons/hugeicons/sorting-01";
 import { Select } from "#/components/form/select.tsx";
 import { TextField } from "#/components/form/text-field.tsx";
 import * as Kbd from "#/components/ui/kbd.tsx";
-import { useAccountParams } from "#/hooks/use-account-params.ts";
+import { useAccountsParams } from "#/hooks/use-accounts-params.ts";
 
 export function Filters() {
-    const { setParams, ...params } = useAccountParams();
+    const { setParams, ...params } = useAccountsParams();
 
     const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
         await setParams({ "filter[name]": e.target.value });

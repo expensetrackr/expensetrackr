@@ -111,7 +111,7 @@ export function TransactionsTable({ data: initialData, total }: TransactionsTabl
                                 isPositive ? "text-state-success-base" : "text-state-error-base",
                             )}
                         >
-                            <NumberFlow format={format} value={decimalValue} />
+                            <NumberFlow animated={false} format={format} value={decimalValue} />
                             <span className="ml-1 text-subheading-2xs text-(--text-sub-600)">
                                 {row.original.currency}
                             </span>

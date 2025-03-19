@@ -12,6 +12,7 @@ use App\Enums\AccountType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use InvalidArgumentException;
 use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
@@ -100,6 +101,16 @@ final class Account extends Model
     public function bankConnection(): BelongsTo
     {
         return $this->belongsTo(BankConnection::class);
+    }
+
+    /**
+     * The transactions that the account has.
+     *
+     * @return HasMany<Transaction, covariant $this>
+     */
+    public function transactions(): HasMany
+    {
+        return $this->hasMany(Transaction::class);
     }
 
     /**

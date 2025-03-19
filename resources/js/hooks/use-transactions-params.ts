@@ -3,7 +3,8 @@ import { parseAsString, parseAsStringEnum, useQueryStates } from "nuqs";
 export function useTransactionsParams() {
     const [params, setParams] = useQueryStates(
         {
-            account_id: parseAsString,
+            accountId: parseAsString,
+            transactionId: parseAsString,
             "filter[name]": parseAsString.withDefault("").withOptions({
                 throttleMs: 1000,
             }),
@@ -15,6 +16,10 @@ export function useTransactionsParams() {
         {
             shallow: true,
             clearOnDefault: true,
+            urlKeys: {
+                accountId: "account_id",
+                transactionId: "transaction_id",
+            },
         },
     );
 

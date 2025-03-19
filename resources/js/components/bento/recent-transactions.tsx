@@ -1,51 +1,67 @@
-import BankIcon from "virtual:icons/ri/bank-line";
-import HomeSmileFillIcon from "virtual:icons/ri/home-smile-fill";
-import LineChartIcon from "virtual:icons/ri/line-chart-line";
 import Refund2Icon from "virtual:icons/ri/refund-2-line";
 
-import { type Transaction } from "#/lib/cards-data.ts";
 import { cnMerge } from "#/utils/cn.ts";
 import { TransactionItem } from "../transaction-item.tsx";
 import * as Button from "../ui/button.tsx";
 import * as SegmentedControl from "../ui/segmented-control.tsx";
 import * as WidgetBox from "../widget-box.tsx";
 
-const transactions: Transaction[] = [
+const transactions: Resources.Transaction[] = [
     {
         id: "2441s347",
-        type: "other",
         name: "Salary Deposit",
-        description: "Monthly salary from Apex Finance",
-        transaction: 3500,
-        date: new Date("09/18/2024"),
-        icon: BankIcon,
+        note: "Monthly salary from Apex Finance",
+        amount: "3500",
+        currency: "USD",
+        datedAt: "09/18/2024",
+        category: {
+            id: "salary",
+            name: "Salary",
+            slug: "salary",
+            color: "#00A86B",
+        },
     },
     {
         id: "2421c347",
-        type: "other",
         name: "Stock Dividend",
-        description: "Payment from stock investments.",
-        transaction: 846.14,
-        date: new Date("09/17/2024"),
-        icon: LineChartIcon,
+        note: "Payment from stock investments.",
+        amount: "846.14",
+        currency: "USD",
+        datedAt: "09/17/2024",
+        category: {
+            id: "investments",
+            name: "Investments",
+            slug: "investments",
+            color: "#50C878",
+        },
     },
     {
         id: "ab193fd6",
         type: "rent",
         name: "Rental Income",
-        description: "Rental payment from Mr. Dudley.",
-        transaction: 100,
-        date: new Date("09/15/2024"),
-        icon: HomeSmileFillIcon,
+        note: "Rental payment from Mr. Dudley.",
+        amount: "100",
+        currency: "USD",
+        datedAt: "09/15/2024",
+        category: {
+            id: "housing",
+            name: "Housing",
+            slug: "housing",
+            color: "#FF6B6B",
+        },
     },
     {
         id: "7a2dc594",
         type: "other",
         name: "Refund from Amazon",
-        description: "Refund of Order No #124235",
-        transaction: 36.24,
-        date: new Date("09/12/2024"),
-        icon: `${ENV.PUBLIC_ASSETS_URL}/major-brands/amazon.svg`,
+        note: "Refund of Order No #124235",
+        amount: "36.24",
+        currency: "USD",
+        datedAt: "09/12/2024",
+        enrichment: {
+            merchantName: "Amazon",
+            icon: `${ENV.PUBLIC_ASSETS_URL}/major-brands/amazon.svg`,
+        },
     },
 ];
 
@@ -74,13 +90,14 @@ export function BentoRecentTransactions({
             <div className="mt-3 flex flex-col gap-2">
                 {transactions.map((trx) => (
                     <TransactionItem
-                        date={trx.date}
-                        description={trx.description}
-                        icon={trx.icon}
+                        amount={trx.amount}
+                        category={trx.category}
+                        currency={trx.currency}
+                        date={trx.datedAt}
+                        description={trx.note}
+                        enrichment={trx.enrichment}
                         key={trx.id}
                         name={trx.name}
-                        transaction={trx.transaction}
-                        type={trx.type}
                     />
                 ))}
             </div>

@@ -1,9 +1,9 @@
 import { parseAsString, parseAsStringEnum, useQueryStates } from "nuqs";
 
-export function useAccountParams() {
+export function useAccountsParams() {
     const [params, setParams] = useQueryStates(
         {
-            account_id: parseAsString,
+            accountId: parseAsString,
             "filter[name]": parseAsString.withDefault("").withOptions({
                 throttleMs: 500,
             }),
@@ -11,6 +11,9 @@ export function useAccountParams() {
         },
         {
             clearOnDefault: true,
+            urlKeys: {
+                accountId: "account_id",
+            },
         },
     );
 

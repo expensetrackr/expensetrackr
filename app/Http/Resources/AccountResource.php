@@ -28,6 +28,7 @@ final class AccountResource extends JsonResource
             'isDefault' => $this->is_default,
             'externalId' => $this->external_id,
             'connection' => new BankConnectionResource($this->whenLoaded('bankConnection')),
+            'transactions' => TransactionResource::collection($this->whenLoaded('transactions')),
         ];
     }
 }

@@ -1,19 +1,38 @@
+import { AnimatePresence, motion } from "motion/react";
+import Clock04Icon from "virtual:icons/hugeicons/clock-04";
+
+import { Link } from "#/components/link.tsx";
+import { TransactionItem } from "#/components/transaction-item.tsx";
+import * as Button from "#/components/ui/button.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
 import * as Drawer from "#/components/ui/drawer.tsx";
-import { useAccountParams } from "#/hooks/use-account-params.ts";
+import { useAccountsParams } from "#/hooks/use-accounts-params.ts";
 import { AccountBox } from "./account-box.tsx";
+
+const MLink = motion.create(Link);
+
+const recentTransactionItemVariants = (i: number) => ({
+    initial: {
+        opacity: 0,
+        translateY: 8,
+        transition: { duration: 0.3, ease: "easeOut", delay: 0.08 * i + 0.1 },
+    },
+    animate: {
+        opacity: 1,
+        translateY: 0,
+        transition: { duration: 0.3, ease: "easeOut", delay: 0.08 * i + 0.1 },
+    },
+});
 
 type AccountDetailsDrawerProps = {
     account?: Resources.Account | null;
 };
 
 export function AccountDetailsDrawer({ account }: AccountDetailsDrawerProps) {
-    const { setParams } = useAccountParams();
-
-    console.info(account);
+    const { setParams } = useAccountsParams();
 
     return (
-        <Drawer.Root onOpenChange={() => setParams({ account_id: null })} open={!!account}>
+        <Drawer.Root onOpenChange={() => setParams({ accountId: null })} open={!!account}>
             <Drawer.Content>
                 <Drawer.Header>
                     <Drawer.Title>Account Details</Drawer.Title>
@@ -23,7 +42,43 @@ export function AccountDetailsDrawer({ account }: AccountDetailsDrawerProps) {
                     <Divider.Root />
 
                     <div className="flex flex-col gap-4 p-5">{account ? <AccountBox account={account} /> : null}</div>
+
+                    <Divider.Root $type="solid-text">Recent Transactions</Divider.Root>
+
+                    <div className="flex flex-col gap-2 px-5 py-3">
+                        <AnimatePresence mode="wait">
+                            {account?.transactions?.map((trx, i) => (
+                                <MLink
+                                    animate="animate"
+                                    className="rounded-12 transition duration-200 focus:shadow-button-important-focus focus:outline-none"
+                                    href={route("transactions.index", { transaction_id: trx.id })}
+                                    initial="initial"
+                                    key={trx.id}
+                                    variants={recentTransactionItemVariants(i)}
+                                >
+                                    <TransactionItem
+                                        amount={trx.amount}
+                                        category={trx.category}
+                                        currency={trx.currency}
+                                        date={trx.datedAt}
+                                        description={trx.note}
+                                        enrichment={trx.enrichment}
+                                        name={trx.name}
+                                    />
+                                </MLink>
+                            ))}
+                        </AnimatePresence>
+                    </div>
                 </Drawer.Body>
+
+                <Drawer.Footer>
+                    <Button.Root $size="md" $style="stroke" $type="neutral" asChild className="w-full">
+                        <Link href={route("transactions.index", { account_id: account?.id })}>
+                            <Button.Icon as={Clock04Icon} />
+                            See All Transactions
+                        </Link>
+                    </Button.Root>
+                </Drawer.Footer>
             </Drawer.Content>
         </Drawer.Root>
     );
