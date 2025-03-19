@@ -5,13 +5,9 @@
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
         if (localStorage.theme === 'system') {
             if (e.matches) {
-                document.documentElement.classList.add('dark');
-                document.documentElement.setAttribute('data-theme', 'dark');
                 alternateIcon.href = '/img/isotype-dark.png';
                 iconSvg.href = '/img/isotype-dark.svg';
             } else {
-                document.documentElement.classList.remove('dark');
-                document.documentElement.setAttribute('data-theme', 'light');
                 alternateIcon.href = '/img/isotype-light.png';
                 iconSvg.href = '/img/isotype-light.svg';
             }
@@ -28,30 +24,20 @@
         switch (localStorage.theme) {
             case 'system':
                 if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                    document.documentElement.classList.add('dark');
-                    document.documentElement.setAttribute('data-theme', 'dark');
                     alternateIcon.href = '/img/isotype-dark.png';
                     iconSvg.href = '/img/isotype-dark.svg';
                 } else {
-                    document.documentElement.classList.remove('dark');
-                    document.documentElement.setAttribute('data-theme', 'light');
                     alternateIcon.href = '/img/isotype-light.png';
                     iconSvg.href = '/img/isotype-light.svg';
                 }
-
-                document.documentElement.setAttribute('color-scheme', 'system');
                 break;
 
             case 'dark':
-                document.documentElement.classList.add('dark');
-                document.documentElement.setAttribute('data-theme', 'dark');
                 alternateIcon.href = '/img/isotype-dark.png';
                 iconSvg.href = '/img/isotype-dark.svg';
                 break;
 
             case 'light':
-                document.documentElement.classList.remove('dark');
-                document.documentElement.setAttribute('data-theme', 'light');
                 alternateIcon.href = '/img/isotype-light.png';
                 iconSvg.href = '/img/isotype-light.svg';
                 break;
