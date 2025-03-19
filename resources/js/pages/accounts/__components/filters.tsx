@@ -1,11 +1,9 @@
 import CommandIcon from "virtual:icons/hugeicons/command";
-import FilterIcon from "virtual:icons/hugeicons/filter";
 import Search01Icon from "virtual:icons/hugeicons/search-01";
 import Sorting01Icon from "virtual:icons/hugeicons/sorting-01";
 
 import { Select } from "#/components/form/select.tsx";
 import { TextField } from "#/components/form/text-field.tsx";
-import * as Button from "#/components/ui/button.tsx";
 import * as Kbd from "#/components/ui/kbd.tsx";
 import { useAccountParams } from "#/hooks/use-account-params.ts";
 
@@ -19,11 +17,6 @@ export function Filters() {
     return (
         <div className="flex flex-col justify-end gap-4 lg:flex-row lg:flex-wrap lg:items-center lg:gap-3">
             <TextField
-                inlineTrailingNode={
-                    <button type="button">
-                        <Sorting01Icon className="size-5 text-(--text-soft-400)" />
-                    </button>
-                }
                 leadingIcon={Search01Icon}
                 onChange={handleSearch}
                 placeholder="Search..."
@@ -45,11 +38,6 @@ export function Filters() {
                     placeholder="Search..."
                     value={params["filter[name]"] ?? ""}
                 />
-
-                <Button.Root $size="sm" $style="stroke" $type="neutral" className="flex-1 min-[560px]:flex-none">
-                    <Button.Icon as={FilterIcon} />
-                    Filter
-                </Button.Root>
 
                 <Select
                     $size="sm"
