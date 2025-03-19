@@ -25,12 +25,8 @@ void createInertiaApp({
     title: (title) => (title ? `${title} - ${appName}` : `${appName} - Manage your expenses effortlessly`),
     resolve: (name) => resolvePageComponent(`./pages/${name}.tsx`, import.meta.glob("./pages/**/*.tsx")),
     setup({ el, App, props }) {
-        if (import.meta.env.DEV) {
-            createRoot(el, {
-                onCaughtError: (error, errorInfo) => {
-                    console.error("Caught error", error, errorInfo.componentStack);
-                },
-            }).render(
+        const AppWithProviders = () => {
+            return (
                 <NuqsAdapter>
                     <TooltipProvider>
                         <ThemeProvider
@@ -42,26 +38,20 @@ void createInertiaApp({
                             <App {...props} />
                         </ThemeProvider>
                     </TooltipProvider>
-                </NuqsAdapter>,
+                </NuqsAdapter>
             );
+        };
+
+        if (import.meta.env.DEV) {
+            createRoot(el, {
+                onCaughtError: (error, errorInfo) => {
+                    console.error("Caught error", error, errorInfo.componentStack);
+                },
+            }).render(<AppWithProviders />);
             return;
         }
 
-        hydrateRoot(
-            el,
-            <NuqsAdapter>
-                <TooltipProvider>
-                    <ThemeProvider
-                        attribute={["class", "data-theme"]}
-                        defaultTheme="system"
-                        disableTransitionOnChange
-                        enableSystem
-                    >
-                        <App {...props} />
-                    </ThemeProvider>
-                </TooltipProvider>
-            </NuqsAdapter>,
-        );
+        hydrateRoot(el, <AppWithProviders />);
     },
     progress: {
         color: "#335CFF",
