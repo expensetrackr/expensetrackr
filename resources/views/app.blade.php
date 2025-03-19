@@ -57,7 +57,6 @@
         <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet" />
 
         <!-- Scripts -->
-        <script src="https://unpkg.com/react-scan/dist/auto.global.js"></script>
         @routes
         @viteReactRefresh
         @vite(['resources/js/app.tsx', "resources/js/pages/{$page['component']}.tsx"])
