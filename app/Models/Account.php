@@ -14,7 +14,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use InvalidArgumentException;
-use Laravel\Scout\Searchable;
 use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
 
 /**
@@ -72,7 +71,7 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
 final class Account extends Model
 {
     /** @use HasFactory<\Database\Factories\AccountFactory> */
-    use Blamable, HasFactory, HasPrefixedId, Searchable, WorkspaceOwned;
+    use Blamable, HasFactory, HasPrefixedId, WorkspaceOwned;
 
     /**
      * The accessors to append to the model's array form.

@@ -9,6 +9,7 @@ use App\Models\BankConnection;
 use Exception;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 final class BankSyncServiceProvider extends ServiceProvider
@@ -30,6 +31,13 @@ final class BankSyncServiceProvider extends ServiceProvider
             $schedule = $this->app->make(Schedule::class);
 
             try {
+                // First verify that BankConnection table exists
+                if (! Schema::hasTable('bank_connections')) {
+                    Log::error('BankConnection table does not exist');
+
+                    return;
+                }
+
                 // Get all bank connections and schedule their sync jobs
                 BankConnection::chunk(100, function ($connections) use ($schedule): void {
                     foreach ($connections as $connection) {
