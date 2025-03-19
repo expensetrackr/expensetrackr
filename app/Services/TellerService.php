@@ -49,7 +49,7 @@ final class TellerService implements ProviderHandler
     {
         $accounts = collect(TellerAccountData::collect((array) $this->get('/accounts')));
 
-        return $accounts->map(function (TellerAccountData $account) {
+        return $accounts->map(function (TellerAccountData $account): AccountData {
             $balance = $this->getAccountBalances($account->id);
 
             return AccountData::fromTeller($account, $balance);
@@ -112,7 +112,7 @@ final class TellerService implements ProviderHandler
             }
 
             // Check all accounts in parallel
-            $results = $accounts->map(function (TellerAccountData $account) {
+            $results = $accounts->map(function (TellerAccountData $account): void {
                 $this->getAccount($account->id);
             });
 

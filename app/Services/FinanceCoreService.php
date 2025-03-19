@@ -11,12 +11,11 @@ use App\Data\FinanceCore\TransactionData;
 use App\Enums\ProviderType;
 use Illuminate\Support\Collection;
 
-final class FinanceCoreService implements ProviderHandler
+final readonly class FinanceCoreService implements ProviderHandler
 {
     public function __construct(
-        private readonly string $providerConnectionId,
-        private readonly ProviderType $providerType,
-        private readonly string $accessToken,
+        private ProviderType $providerType,
+        private string $accessToken,
     ) {}
 
     /**

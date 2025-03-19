@@ -9,7 +9,7 @@ use Throwable;
 
 final class ProviderErrorException extends Exception
 {
-    private string $customCode;
+    private readonly string $customCode;
 
     public function __construct(string $message, string $code)
     {

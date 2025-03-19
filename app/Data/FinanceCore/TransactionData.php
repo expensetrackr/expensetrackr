@@ -36,7 +36,7 @@ final class TransactionData extends Data
         return new self(
             id: $transaction->id,
             name: $transaction->description,
-            note: ucwords($transaction->details->counterparty->name),
+            note: ucwords((string) $transaction->details->counterparty->name),
             status: TransactionStatus::from($transaction->status->value),
             categorySlug: self::transformCategory($transaction->details->category),
             baseAmount: null,
@@ -56,7 +56,7 @@ final class TransactionData extends Data
      */
     public static function collectFromTeller(array $transactions): Collection
     {
-        return collect($transactions)->map(fn (TellerTransactionData $transaction) => self::fromTeller($transaction));
+        return collect($transactions)->map(fn (TellerTransactionData $transaction): TransactionData => self::fromTeller($transaction));
     }
 
     /**

@@ -109,13 +109,13 @@ final class Account extends Model
     public function getTypeAttribute(): AccountType
     {
         return match ($this->accountable_type) {
-            'App\Models\Depository' => AccountType::Depository,
-            'App\Models\Investment' => AccountType::Investment,
-            'App\Models\Crypto' => AccountType::Crypto,
-            'App\Models\OtherAsset' => AccountType::OtherAsset,
-            'App\Models\CreditCard' => AccountType::CreditCard,
-            'App\Models\Loan' => AccountType::Loan,
-            'App\Models\OtherLiability' => AccountType::OtherLiability,
+            Depository::class => AccountType::Depository,
+            Investment::class => AccountType::Investment,
+            Crypto::class => AccountType::Crypto,
+            OtherAsset::class => AccountType::OtherAsset,
+            CreditCard::class => AccountType::CreditCard,
+            Loan::class => AccountType::Loan,
+            OtherLiability::class => AccountType::OtherLiability,
             default => throw new InvalidArgumentException("Unknown accountable type: {$this->accountable_type}"),
         };
     }

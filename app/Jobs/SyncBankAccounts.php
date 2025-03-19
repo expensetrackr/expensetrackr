@@ -12,7 +12,6 @@ use App\Models\BankConnection;
 use App\Models\Category;
 use App\Models\Transaction;
 use App\Services\FinanceCoreService;
-use App\Services\SynthService;
 use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -98,11 +97,11 @@ final class SyncBankAccounts implements ShouldBeUnique, ShouldQueue
                 'last_sync_at' => now(),
             ]);
 
-            $accounts = Account::whereHas('bankConnection', function ($query) {
+            $accounts = Account::whereHas('bankConnection', function ($query): void {
                 $query->whereId($this->bankConnectionId);
             })
                 ->select('id', 'bank_connection_id', 'external_id')
-                ->with(['bankConnection' => function ($query) {
+                ->with(['bankConnection' => function ($query): void {
                     $query->select('id', 'provider_connection_id', 'provider_type', 'access_token', 'status');
                 }])
                 ->get();
@@ -196,7 +195,7 @@ final class SyncBankAccounts implements ShouldBeUnique, ShouldQueue
                 'error_message' => null,
             ]);
 
-            if (! $transactions->count() > 0) {
+            if (($transactions->count() === 0) > 0) {
                 Log::info('No transactions found for account', [
                     'bank_connection_id' => $this->bankConnectionId,
                     'workspace_id' => $this->workspaceId,
@@ -218,7 +217,7 @@ final class SyncBankAccounts implements ShouldBeUnique, ShouldQueue
                 throw new Exception("Default 'other' category not found");
             }
 
-            $transactionsData = $transactions->map(fn (TransactionData $transaction) => [
+            $transactionsData = $transactions->map(fn (TransactionData $transaction): array => [
                 'name' => $transaction->name,
                 'note' => $transaction->note,
                 'status' => $transaction->status,
@@ -246,10 +245,5 @@ final class SyncBankAccounts implements ShouldBeUnique, ShouldQueue
 
             throw $th;
         }
-    }
-
-    private function enrichTransaction(TransactionData $transaction, SynthService $synth): void
-    {
-        $synth->enrichTransaction("$transaction->name - $transaction->note");
     }
 }

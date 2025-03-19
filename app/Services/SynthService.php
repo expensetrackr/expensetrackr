@@ -18,7 +18,7 @@ final class SynthService
         $this->accessToken = config('services.synth.access_token');
     }
 
-    public function enrichTransaction(string $description, ?string $categoryHint = '')
+    public function enrichTransaction(string $description, ?string $categoryHint = ''): ?SynthEnrichData
     {
         $response = $this->request('GET', "/enrich?description=$description&category_hint=$categoryHint");
 

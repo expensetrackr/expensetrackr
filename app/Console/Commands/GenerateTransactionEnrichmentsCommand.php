@@ -27,7 +27,7 @@ final class GenerateTransactionEnrichmentsCommand extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): void
     {
         $transactions = Transaction::query()->get();
 

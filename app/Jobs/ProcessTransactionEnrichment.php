@@ -27,19 +27,19 @@ final class ProcessTransactionEnrichment implements ShouldQueue
 
         // Clean and prepare search terms
         $searchTerms = collect(explode(' ', $description))
-            ->map(fn ($term) => trim($term, '- .,!?()[]{}:;'))
-            ->filter(fn ($term) => mb_strlen($term) > 2)
-            ->map(fn ($term) => str_replace(['&', '|', '!'], '', $term))
+            ->map(fn ($term): string => trim((string) $term, '- .,!?()[]{}:;'))
+            ->filter(fn ($term): bool => mb_strlen((string) $term) > 2)
+            ->map(fn ($term): string => str_replace(['&', '|', '!'], '', $term))
             ->filter();
 
         $existingEnrichment = TransactionEnrichment::query()
             ->select('*')
-            ->where(function ($query) use ($searchTerms) {
+            ->where(function ($query) use ($searchTerms): void {
                 // First try exact match on transaction name
                 $query->where('merchant_name', 'ilike', "%{$this->transaction->name}%");
 
                 // Then try individual terms
-                $searchTerms->each(function ($term) use ($query) {
+                $searchTerms->each(function ($term) use ($query): void {
                     $query->orWhere('merchant_name', 'ilike', "%{$term}%");
                 });
             })
@@ -57,7 +57,7 @@ final class ProcessTransactionEnrichment implements ShouldQueue
         // If no existing enrichment found, fetch from SynthService
         $enrichmentData = $synth->enrichTransaction($description, $this->transaction->category->name ?? '');
 
-        if (! $enrichmentData) {
+        if (! $enrichmentData instanceof \App\Data\Synth\SynthEnrichData) {
             return;
         }
 

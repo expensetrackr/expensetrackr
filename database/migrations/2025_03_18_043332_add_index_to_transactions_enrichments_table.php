@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('transaction_enrichments', function (Blueprint $table) {
+        Schema::table('transaction_enrichments', function (Blueprint $table): void {
             $table->index('merchant_name');
         });
     }
@@ -23,7 +23,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('transaction_enrichments', function (Blueprint $table) {
+        Schema::table('transaction_enrichments', function (Blueprint $table): void {
             $table->dropIndex('merchant_name');
         });
     }

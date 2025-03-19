@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('transaction_enrichments', function (Blueprint $table) {
+        Schema::create('transaction_enrichments', function (Blueprint $table): void {
             $table->id();
             $table->string('merchant_name');
             $table->string('merchant_id')->unique();
