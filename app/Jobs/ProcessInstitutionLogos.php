@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Jobs;
 
 use App\Services\MeilisearchService;
+use Cloudinary\Api\Upload\UploadApi;
 use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -175,14 +176,15 @@ final class ProcessInstitutionLogos implements ShouldQueue
             $contentType = $response->header('Content-Type');
             if ($response->successful() && $contentType && str_contains($contentType, 'image')) {
                 // Upload to Cloudinary
-                $uploadResult = cloudinary()->upload($imageUrl, [
+                $uploadResult = (new UploadApi())->upload($imageUrl, [
                     'public_id' => $id,
                     'folder' => $folder,
                 ]);
+                $uploadResult = $uploadResult->getArrayCopy();
 
                 Log::info("Uploaded new logo for {$id} to Cloudinary");
 
-                $url = $uploadResult->getUrl('');
+                $url = $uploadResult['url'];
 
                 return $url ?: '';
             }

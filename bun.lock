@@ -46,7 +46,7 @@
         "sonner": "2.0.1",
         "tailwind-merge": "3.0.2",
         "tailwind-variants": "1.0.0",
-        "teller-connect-react": "0.2.1",
+        "teller-connect-react": "0.2.3",
         "valibot": "1.0.0-rc.4",
         "zustand": "5.0.3",
       },
@@ -55,7 +55,7 @@
         "@iconify-json/flat-color-icons": "1.2.1",
         "@iconify-json/hugeicons": "^1.2.4",
         "@iconify-json/logos": "1.2.4",
-        "@iconify-json/lucide": "1.2.30",
+        "@iconify-json/lucide": "1.2.31",
         "@iconify-json/material-symbols": "1.2.16",
         "@iconify-json/mdi": "1.2.3",
         "@iconify-json/ph": "1.2.2",
@@ -249,7 +249,7 @@
 
     "@iconify-json/logos": ["@iconify-json/logos@1.2.4", "", { "dependencies": { "@iconify/types": "*" } }, "sha512-XC4If5D/hbaZvUkTV8iaZuGlQCyG6CNOlaAaJaGa13V5QMYwYjgtKk3vPP8wz3wtTVNVEVk3LRx1fOJz+YnSMw=="],
 
-    "@iconify-json/lucide": ["@iconify-json/lucide@1.2.30", "", { "dependencies": { "@iconify/types": "*" } }, "sha512-0EaiofYbUwnp15sNC3cOJi0oD5DbbfDKbnIEA6jJ+WGHigyePgBVmx/5/S97XQmvl+Ix/Md3oGLKxkI5szL0rg=="],
+    "@iconify-json/lucide": ["@iconify-json/lucide@1.2.31", "", { "dependencies": { "@iconify/types": "*" } }, "sha512-Z9lkm4FmeydsNVqRK5DPjttjGpBOeSKaTpH0+sYzsWPv3RYGHUTJlQOb8PGe/AW+Sw7Fv3kWBrXaevFAeoDa+w=="],
 
     "@iconify-json/material-symbols": ["@iconify-json/material-symbols@1.2.16", "", { "dependencies": { "@iconify/types": "*" } }, "sha512-hCUbIYLWPX9YMChvqEScG5tvFLZ2arXl+bnsvUQDrtsGq00wu4S4qIofH3uZgClYxXhvApkDKtJDlXhoygzmMQ=="],
 
@@ -1283,7 +1283,7 @@
 
     "tapable": ["tapable@2.2.1", "", {}, "sha512-GNzQvQTOIP6RyTfE2Qxb8ZVlNmw0n88vp1szwWRimP02mnTsx3Wtn5qRdqY9w2XduFNUgvOwhNnQsjwCp+kqaQ=="],
 
-    "teller-connect-react": ["teller-connect-react@0.2.1", "", { "dependencies": { "react-script-hook": "^1.7.2" }, "peerDependencies": { "react": "^16.8.6 || 17 - 18", "react-dom": "^16.8.6 || 17 - 18" } }, "sha512-3KeYtNmJFl2G4ZpAJ3wwBhzGyBUKev4qvBv1I7ZrDtkY2y4+Rkr89XER3MenUhnq0cIwdxXZ+Re7EyB5MU/9eQ=="],
+    "teller-connect-react": ["teller-connect-react@0.2.3", "", { "dependencies": { "react-script-hook": "^1.7.2" }, "peerDependencies": { "react": "^16.8.6 || 17 - 19", "react-dom": "^16.8.6 || 17 - 19" } }, "sha512-fH/BnTqbOjwJGNZAEbAcM1o21ZQO0fAt83PT6xuAVultSvklkUTyFJLg/iNvSHoCKyiCgy7G47E/ppAtYUCnyA=="],
 
     "tiny-invariant": ["tiny-invariant@1.3.3", "", {}, "sha512-+FbBPE1o9QAYvviau/qC5SE3caw21q3xkvWKBtja5vgqOWIHHJ3ioaq1VPfn/Szqctz2bU/oYeKd9/z5BL+PVg=="],
 

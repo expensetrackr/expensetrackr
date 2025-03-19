@@ -63,7 +63,7 @@
         "sonner": "2.0.1",
         "tailwind-merge": "3.0.2",
         "tailwind-variants": "1.0.0",
-        "teller-connect-react": "0.2.1",
+        "teller-connect-react": "0.2.3",
         "valibot": "1.0.0-rc.4",
         "zustand": "5.0.3"
     },
@@ -72,7 +72,7 @@
         "@iconify-json/flat-color-icons": "1.2.1",
         "@iconify-json/hugeicons": "^1.2.4",
         "@iconify-json/logos": "1.2.4",
-        "@iconify-json/lucide": "1.2.30",
+        "@iconify-json/lucide": "1.2.31",
         "@iconify-json/material-symbols": "1.2.16",
         "@iconify-json/mdi": "1.2.3",
         "@iconify-json/ph": "1.2.2",
