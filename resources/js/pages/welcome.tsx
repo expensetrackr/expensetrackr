@@ -391,9 +391,6 @@ function PricingSection() {
                             <div className="grid grid-cols-12 items-center">
                                 {plans.map((plan) => {
                                     const features = t(`home.sections.pricing.plans.${plan.code}.features`)?.split(",");
-                                    const comingSoon = t(`home.sections.pricing.plans.${plan.code}.coming_soon`)?.split(
-                                        ",",
-                                    );
 
                                     return (
                                         <Glow.Root
@@ -483,24 +480,6 @@ function PricingSection() {
                                                         </li>
                                                     ))}
                                                 </ul>
-
-                                                {comingSoon?.length && (
-                                                    <div className="flex flex-col gap-2">
-                                                        <p className="text-paragraph-sm text-(--text-soft-400)">
-                                                            {t("home.sections.pricing.coming_soon")}
-                                                        </p>
-
-                                                        {comingSoon.map((feature, idx) => (
-                                                            <li
-                                                                className="inline-flex items-center gap-1 text-paragraph-sm"
-                                                                key={idx}
-                                                            >
-                                                                <CheckboxCircleFillIcon className="size-6" />
-                                                                <span dangerouslySetInnerHTML={{ __html: feature }} />
-                                                            </li>
-                                                        ))}
-                                                    </div>
-                                                )}
 
                                                 <Button.Root $style="filled" $type="neutral">
                                                     {t(`home.sections.pricing.plans.${plan.code}.button_label`)}

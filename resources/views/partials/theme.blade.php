@@ -39,12 +39,11 @@
                     iconSvg.href = '/img/isotype-light.svg';
                 }
 
-                document.documentElement.setAttribute('color-theme', 'system');
+                document.documentElement.setAttribute('color-scheme', 'system');
                 break;
 
             case 'dark':
                 document.documentElement.classList.add('dark');
-                document.documentElement.setAttribute('color-theme', 'dark');
                 document.documentElement.setAttribute('data-theme', 'dark');
                 alternateIcon.href = '/img/isotype-dark.png';
                 iconSvg.href = '/img/isotype-dark.svg';
@@ -52,7 +51,6 @@
 
             case 'light':
                 document.documentElement.classList.remove('dark');
-                document.documentElement.setAttribute('color-theme', 'light');
                 document.documentElement.setAttribute('data-theme', 'light');
                 alternateIcon.href = '/img/isotype-light.png';
                 iconSvg.href = '/img/isotype-light.svg';

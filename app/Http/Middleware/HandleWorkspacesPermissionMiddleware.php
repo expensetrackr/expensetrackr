@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-final class WorkspacesPermission
+final class HandleWorkspacesPermissionMiddleware
 {
     /**
      * Handle an incoming request.

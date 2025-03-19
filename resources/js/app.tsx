@@ -4,6 +4,7 @@ import "../css/app.css";
 import { createInertiaApp } from "@inertiajs/react";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
+import { ThemeProvider } from "next-themes";
 import { createRoot, hydrateRoot } from "react-dom/client";
 import { type route as routeFn } from "ziggy-js";
 
@@ -32,7 +33,14 @@ void createInertiaApp({
             }).render(
                 <NuqsAdapter>
                     <TooltipProvider>
-                        <App {...props} />
+                        <ThemeProvider
+                            attribute={["class", "data-theme"]}
+                            defaultTheme="system"
+                            disableTransitionOnChange
+                            enableSystem
+                        >
+                            <App {...props} />
+                        </ThemeProvider>
                     </TooltipProvider>
                 </NuqsAdapter>,
             );
@@ -43,7 +51,14 @@ void createInertiaApp({
             el,
             <NuqsAdapter>
                 <TooltipProvider>
-                    <App {...props} />
+                    <ThemeProvider
+                        attribute={["class", "data-theme"]}
+                        defaultTheme="system"
+                        disableTransitionOnChange
+                        enableSystem
+                    >
+                        <App {...props} />
+                    </ThemeProvider>
                 </TooltipProvider>
             </NuqsAdapter>,
         );

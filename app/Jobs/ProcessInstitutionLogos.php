@@ -98,12 +98,7 @@ final class ProcessInstitutionLogos implements ShouldQueue
                     $readyToIndex[] = $institution;
                 }
             } catch (Exception $e) {
-                $institutionId = '';
-                if (isset($institution['id'])) {
-                    $institutionId = is_scalar($institution['id']) ? (string) $institution['id'] : 'unknown';
-                } else {
-                    $institutionId = 'unknown';
-                }
+                $institutionId = isset($institution['id']) ? is_scalar($institution['id']) ? (string) $institution['id'] : 'unknown' : 'unknown';
 
                 Log::error("Error processing institution: {$institutionId}", [
                     'error' => $e->getMessage(),

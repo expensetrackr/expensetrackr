@@ -1,8 +1,11 @@
 import { Head } from "@inertiajs/react";
+import PlusSignIcon from "virtual:icons/hugeicons/plus-sign";
+import Share03Icon from "virtual:icons/hugeicons/share-03";
 import TransactionIcon from "virtual:icons/hugeicons/transaction";
 
 import { Header } from "#/components/header.tsx";
 import { TablePagination } from "#/components/table-pagination.tsx";
+import * as Button from "#/components/ui/button.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
 import { usePaginationParams } from "#/hooks/use-pagination-params.ts";
 import { AppLayout } from "#/layouts/app-layout.tsx";
@@ -30,6 +33,14 @@ export default function TransactionsPage({ transactions, requestId }: Transactio
                 }
                 title="Transactions"
             >
+                <Button.Root $style="stroke" $type="neutral" className="w-full md:w-auto">
+                    <Button.Icon as={Share03Icon} />
+                    Export
+                </Button.Root>
+                <Button.Root>
+                    <Button.Icon as={PlusSignIcon} />
+                    Add Transaction
+                </Button.Root>
                 {/* <Button.Root asChild className="w-full md:w-auto">
                     <Link href={route("accounts.create")}>
                         <Button.Icon as={WalletAdd01} />

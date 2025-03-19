@@ -1,6 +1,7 @@
 import { createInertiaApp } from "@inertiajs/react";
 import createServer from "@inertiajs/react/server";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
+import { ThemeProvider } from "next-themes";
 import ReactDOMServer from "react-dom/server";
 import { type RouteName, route } from "ziggy-js";
 
@@ -25,7 +26,14 @@ createServer((page) =>
 
             return (
                 <NuqsAdapter>
-                    <App {...props} />
+                    <ThemeProvider
+                        attribute={["class", "data-theme"]}
+                        defaultTheme="system"
+                        disableTransitionOnChange
+                        enableSystem
+                    >
+                        <App {...props} />
+                    </ThemeProvider>
                 </NuqsAdapter>
             );
         },

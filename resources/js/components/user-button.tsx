@@ -1,12 +1,15 @@
 import { Link } from "@inertiajs/react";
+import { useTheme } from "next-themes";
 import ArrowDown01Icon from "virtual:icons/hugeicons/arrow-down-01";
 import ArrowRight01Icon from "virtual:icons/hugeicons/arrow-right-01";
 import IdeaIcon from "virtual:icons/hugeicons/idea";
 import Logout04Icon from "virtual:icons/hugeicons/logout-04";
+import Moon02Icon from "virtual:icons/hugeicons/moon-02";
 import SecurityCheckIcon from "virtual:icons/hugeicons/security-check";
 import Setting07Icon from "virtual:icons/hugeicons/setting-07";
 import UserCircle02Icon from "virtual:icons/hugeicons/user-circle-02";
 
+import * as Switch from "#/components/ui/switch.tsx";
 import { useUser } from "#/hooks/use-user.ts";
 import { cn, cnMerge } from "#/utils/cn.ts";
 import * as Avatar from "./ui/avatar.tsx";
@@ -15,6 +18,7 @@ import * as Dropdown from "./ui/dropdown.tsx";
 
 export function UserButton({ className }: { className?: string }) {
     const user = useUser();
+    const { theme, setTheme } = useTheme();
 
     return (
         <Dropdown.Root>
@@ -45,6 +49,18 @@ export function UserButton({ className }: { className?: string }) {
             </Dropdown.Trigger>
 
             <Dropdown.Content align="end" side="right" sideOffset={24}>
+                <Dropdown.Item
+                    onSelect={(e) => {
+                        e.preventDefault();
+                        setTheme(theme === "dark" ? "light" : "dark");
+                    }}
+                >
+                    <Dropdown.ItemIcon as={Moon02Icon} />
+                    Dark Mode
+                    <span className="flex-1" />
+                    <Switch.Root checked={theme === "dark"} />
+                </Dropdown.Item>
+
                 <Divider.Root $type="line-spacing" />
 
                 <Dropdown.Group>
@@ -60,18 +76,6 @@ export function UserButton({ className }: { className?: string }) {
                             Settings
                         </Link>
                     </Dropdown.Item>
-                    <Dropdown.Item asChild>
-                        <Link href={route("policy.show")}>
-                            <Dropdown.ItemIcon as={SecurityCheckIcon} />
-                            Privacy policy
-                        </Link>
-                    </Dropdown.Item>
-                    <Dropdown.Item asChild>
-                        <Link href="/share-feedback">
-                            <Dropdown.ItemIcon as={IdeaIcon} />
-                            Share feedback
-                        </Link>
-                    </Dropdown.Item>
                 </Dropdown.Group>
 
                 <Divider.Root $type="line-spacing" />
@@ -84,6 +88,11 @@ export function UserButton({ className }: { className?: string }) {
                         </Link>
                     </Dropdown.Item>
                 </Dropdown.Group>
+
+                <div className="p-2 text-paragraph-sm text-(--text-soft-400)">
+                    <span>v1.0.0 · </span>
+                    <Link href={route("terms.show")}>Terms & Conditions</Link>
+                </div>
             </Dropdown.Content>
         </Dropdown.Root>
     );

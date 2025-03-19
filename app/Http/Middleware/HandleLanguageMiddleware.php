@@ -9,7 +9,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-final class SetLanguage
+final class HandleLanguageMiddleware
 {
     /**
      * Handle an incoming request.

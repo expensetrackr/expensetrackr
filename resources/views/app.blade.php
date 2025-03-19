@@ -42,12 +42,12 @@
         <link href="/favicons/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180" />
         <link href="/favicons/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png" />
         <link href="/favicons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png" />
-        <link href="/favicons/site.webmanifest" rel="manifest" />
+        <link href="/site.webmanifest" rel="manifest" />
         <link color="#ff2d20" href="/favicons/safari-pinned-tab.svg" rel="mask-icon" />
         <link class="js-site-favicon" href="/img/favicon-light.png" rel="alternate icon" type="image/png" />
         <link class="js-site-favicon" href="/img/favicon-light.svg" rel="icon" type="image/svg+xml" />
         <meta content="#335CFF" name="msapplication-TileColor" />
-        <meta content="/favicons/browserconfig.xml" name="msapplication-config" />
+        <meta content="/browserconfig.xml" name="msapplication-config" />
         <meta content="#ffffff" name="theme-color" />
         <meta content="light" name="color-scheme" />
 
@@ -57,12 +57,12 @@
         <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet" />
 
         <!-- Scripts -->
+        <script src="https://unpkg.com/react-scan/dist/auto.global.js"></script>
         @routes
         @viteReactRefresh
         @vite(['resources/js/app.tsx', "resources/js/pages/{$page['component']}.tsx"])
         @inertiaHead
         @include('partials.theme')
-        @polarEmbedScript
     </head>
 
     <body class="h-full bg-(--bg-white-0) text-(--text-strong-950)">

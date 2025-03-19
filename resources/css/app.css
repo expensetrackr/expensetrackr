@@ -5,7 +5,7 @@ html {
 
 :root,
 .light,
-html[data-theme="light"] {
+[data-theme="light"] {
     color-scheme: light;
     --light: initial;
     --dark: ;
