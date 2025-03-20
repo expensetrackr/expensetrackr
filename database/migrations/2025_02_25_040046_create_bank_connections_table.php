@@ -43,6 +43,9 @@ return new class extends Migration
             $table->foreignId('workspace_id')->constrained()->cascadeOnDelete();
             $table->string('public_id')->unique();
             $table->timestamps();
+
+            $table->index(['status', 'workspace_id']);
+            $table->index('workspace_id');
         });
     }
 

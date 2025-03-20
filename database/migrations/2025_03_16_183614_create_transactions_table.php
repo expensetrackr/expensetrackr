@@ -29,16 +29,20 @@ return new class extends Migration
             $table->boolean('is_recurring')->default(false);
             $table->boolean('is_manual')->default(false);
             $table->timestamp('dated_at');
-
+            $table->timestamp('enriched_at')->nullable();
             $table->string('external_id')->unique()->nullable();
+            $table->string('public_id')->unique();
 
             $table->foreignId('account_id')->constrained()->cascadeOnDelete();
             $table->foreignId('workspace_id')->constrained()->cascadeOnDelete();
-            $table->string('public_id')->unique();
+            $table->foreignId('enrichment_id')->nullable()->constrained('transaction_enrichments');
 
             $table->timestamps();
 
             $table->index(['base_currency', 'currency', 'workspace_id', 'dated_at']);
+            $table->index('enrichment_id');
+            $table->index('account_id');
+            $table->index('workspace_id');
         });
     }
 

@@ -31,6 +31,9 @@ return new class extends Migration
             $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
             $table->foreignId('updated_by')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();
+
+            $table->index(['workspace_id', 'subtype']);
+            $table->index('accountable_id');
         });
 
         Schema::create('depositories', function (Blueprint $table): void {

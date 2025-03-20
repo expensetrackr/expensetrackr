@@ -15,12 +15,11 @@ return new class extends Migration
     {
         Schema::create('transaction_enrichments', function (Blueprint $table): void {
             $table->id();
-            $table->string('merchant_name');
-            $table->string('merchant_id')->unique();
-            $table->string('category');
+            $table->string('merchant_name')->index();
             $table->string('website')->nullable();
             $table->string('icon')->nullable();
             $table->json('address')->nullable();
+            $table->string('public_id')->unique();
             $table->timestamps();
         });
     }

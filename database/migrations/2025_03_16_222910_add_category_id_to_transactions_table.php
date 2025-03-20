@@ -16,6 +16,8 @@ return new class extends Migration
     {
         Schema::table('transactions', function (Blueprint $table): void {
             $table->foreignId('category_id')->nullable()->constrained()->nullOnDelete();
+
+            $table->index('category_id');
         });
     }
 
@@ -26,6 +28,8 @@ return new class extends Migration
     {
         Schema::table('transactions', function (Blueprint $table): void {
             $table->dropForeignIdFor(Category::class);
+
+            $table->dropIndex('category_id');
         });
     }
 };

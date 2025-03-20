@@ -21,6 +21,9 @@ return new class extends Migration
             $table->timestamps();
 
             $table->unique(['workspace_id', 'email']);
+
+            $table->index(['email', 'workspace_id']);
+            $table->index('token');
         });
     }
 

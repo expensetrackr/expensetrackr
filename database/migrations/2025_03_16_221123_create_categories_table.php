@@ -26,8 +26,8 @@ return new class extends Migration
             $table->string('public_id')->unique();
             $table->timestamps();
 
-            // Only enforce unique slugs within the same workspace and system categories separately
             $table->unique(['workspace_id', 'slug', 'is_system']);
+            $table->index('workspace_id');
         });
     }
 
