@@ -9,8 +9,7 @@ type WorkspaceSettingsFormProps = {
 };
 
 export function WorkspaceSettingsForm({ workspaceId, defaultValues }: WorkspaceSettingsFormProps) {
-    const form = useForm<App.Data.Workspace.WorkspaceSettingsData>(defaultValues);
-    console.info(defaultValues);
+    const form = useForm(defaultValues);
 
     const onSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -27,8 +26,6 @@ export function WorkspaceSettingsForm({ workspaceId, defaultValues }: WorkspaceS
             },
         });
     };
-
-    console.info(form.errors);
 
     return (
         <div className="grid gap-6 md:grid-cols-[minmax(0,26fr)_minmax(0,37fr)]">

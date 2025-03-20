@@ -16,7 +16,7 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 final class WorkspaceData extends Data
 {
     public function __construct(
-        public readonly int $id,
+        public readonly string $id,
         public readonly string $name,
         #[MapName('personal_workspace', 'personalWorkspace')]
         public readonly bool $personalWorkspace,
@@ -31,7 +31,7 @@ final class WorkspaceData extends Data
     public static function fromModel(Workspace $workspace): self
     {
         return self::from([
-            'id' => $workspace->id,
+            'id' => $workspace->public_id,
             'name' => $workspace->name,
             'personalWorkspace' => $workspace->personal_workspace,
             'owner' => UserData::fromModel($workspace->owner),

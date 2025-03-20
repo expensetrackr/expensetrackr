@@ -66,6 +66,16 @@ final class Workspace extends Model
     ];
 
     /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'public_id';
+    }
+
+    /**
      * Determine if the given user belongs to the workspace.
      */
     public function hasUser(User $user): bool

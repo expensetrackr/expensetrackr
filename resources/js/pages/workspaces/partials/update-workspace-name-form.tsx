@@ -7,23 +7,19 @@ import { TextField } from "#/components/form/text-field.tsx";
 import { FormSection } from "#/components/form-section.tsx";
 
 interface UpdateWorkspaceNameFormProps {
-    workspace: App.Data.Workspace.WorkspaceData & {
-        owner: App.Data.Auth.UserData;
-    };
+    defaultValues: Pick<App.Data.Workspace.WorkspaceData, "id" | "name">;
     permissions: App.Data.Workspace.WorkspacePermissionsData;
 }
 
-export function UpdateWorkspaceNameForm({ workspace, permissions }: UpdateWorkspaceNameFormProps) {
-    const form = useForm({
-        name: workspace.name,
-    });
+export function UpdateWorkspaceNameForm({ defaultValues, permissions }: UpdateWorkspaceNameFormProps) {
+    const form = useForm(defaultValues);
 
     const onSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
         if (!permissions.canUpdateWorkspace) return;
 
-        form.put(route("workspaces.update", [workspace.id]), {
+        form.put(route("workspaces.update", [defaultValues.id]), {
             errorBag: "updateWorkspace",
             preserveScroll: true,
             onSuccess: () => {
@@ -38,7 +34,7 @@ export function UpdateWorkspaceNameForm({ workspace, permissions }: UpdateWorksp
     return (
         <FormSection description="Your workspace name is how others will recognize you on the platform." title="Name">
             <form
-                action={route("workspaces.update", [workspace.id])}
+                action={route("workspaces.update", [defaultValues.id])}
                 className="w-full"
                 id="update-workspace-name-form"
                 method="POST"

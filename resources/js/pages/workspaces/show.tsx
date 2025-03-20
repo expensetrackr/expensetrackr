@@ -23,7 +23,13 @@ export default function WorkspacesShow({ workspace, availableRoles, permissions 
             </div>
 
             <div className="flex w-full flex-col gap-5 px-4 py-6 lg:px-8">
-                <UpdateWorkspaceNameForm permissions={permissions} workspace={workspace} />
+                <UpdateWorkspaceNameForm
+                    defaultValues={{
+                        id: workspace.id,
+                        name: workspace.name,
+                    }}
+                    permissions={permissions}
+                />
 
                 <Divider.Root $type="line-spacing" />
 
