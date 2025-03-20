@@ -14,9 +14,13 @@ use Illuminate\Support\Collection;
 final readonly class FinanceCoreService implements ProviderHandler
 {
     public function __construct(
+        private string $providerConnectionId,
         private ProviderType $providerType,
         private string $accessToken,
-    ) {}
+    ) {
+        // TODO: remove this later
+        dump($this->providerConnectionId, $this->providerType, $this->accessToken);
+    }
 
     /**
      * Get the provider instance
