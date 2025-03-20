@@ -56,15 +56,7 @@ export function AccountDetailsDrawer({ account }: AccountDetailsDrawerProps) {
                                     key={trx.id}
                                     variants={recentTransactionItemVariants(i)}
                                 >
-                                    <TransactionItem
-                                        amount={trx.amount}
-                                        category={trx.category}
-                                        currency={trx.currency}
-                                        date={trx.datedAt}
-                                        description={trx.note}
-                                        enrichment={trx.enrichment}
-                                        name={trx.name}
-                                    />
+                                    <TransactionItem transaction={trx} />
                                 </MLink>
                             ))}
                         </AnimatePresence>

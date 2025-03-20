@@ -29,9 +29,9 @@ final class TransactionController
         return Inertia::render('transactions/page', [
             'transactions' => TransactionResource::collection(
                 QueryBuilder::for(Transaction::class)
-                    ->with('category', 'enrichment')
-                    ->allowedFields(['name', 'note', 'type', 'base_amount', 'base_currency', 'currency_rate', 'amount', 'currency', 'is_recurring', 'is_manual', 'dated_at', 'public_id', 'category.public_id', 'category.name', 'category.slug', 'category.color', 'enrichment.merchant_name', 'enrichment.icon'])
-                    ->allowedIncludes(includes: ['category', 'enrichment'])
+                    ->with('category', 'merchant')
+                    ->allowedFields(['name', 'note', 'type', 'base_amount', 'base_currency', 'currency_rate', 'amount', 'currency', 'is_recurring', 'is_manual', 'dated_at', 'public_id', 'category.public_id', 'category.name', 'category.slug', 'category.color', 'merchant.name', 'merchant.icon'])
+                    ->allowedIncludes(includes: ['category', 'merchant'])
                     ->allowedFilters(['name', 'type'])
                     ->allowedSorts(sorts: 'dated_at')
                     ->defaultSort(sorts: '-dated_at')

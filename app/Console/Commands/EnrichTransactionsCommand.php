@@ -4,25 +4,25 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
-use App\Jobs\ProcessTransactionEnrichment;
+use App\Jobs\EnrichTransactionJob;
 use App\Models\Transaction;
 use Illuminate\Console\Command;
 
-final class GenerateTransactionEnrichmentsCommand extends Command
+final class EnrichTransactionsCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'enrichments:generate';
+    protected $signature = 'transactions:enrich';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Generate transaction enrichments';
+    protected $description = 'Enrich transactions';
 
     /**
      * Execute the console command.
@@ -32,7 +32,7 @@ final class GenerateTransactionEnrichmentsCommand extends Command
         $transactions = Transaction::query()->get();
 
         foreach ($transactions as $transaction) {
-            ProcessTransactionEnrichment::dispatch($transaction);
+            EnrichTransactionJob::dispatch($transaction);
 
             $this->info("Processed transaction {$transaction->id}");
         }

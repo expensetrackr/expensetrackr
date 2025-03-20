@@ -1,15 +1,13 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\TransactionEnrichment>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Merchant>
  */
-final class TransactionEnrichmentFactory extends Factory
+class MerchantFactory extends Factory
 {
     /**
      * Define the model's default state.

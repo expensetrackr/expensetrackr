@@ -58,8 +58,9 @@ const transactions: Resources.Transaction[] = [
         amount: "36.24",
         currency: "USD",
         datedAt: "09/12/2024",
-        enrichment: {
-            merchantName: "Amazon",
+        merchant: {
+            id: "amazon",
+            name: "Amazon",
             icon: `${ENV.PUBLIC_ASSETS_URL}/major-brands/amazon.svg`,
         },
     },
@@ -89,16 +90,7 @@ export function BentoRecentTransactions({
 
             <div className="mt-3 flex flex-col gap-2">
                 {transactions.map((trx) => (
-                    <TransactionItem
-                        amount={trx.amount}
-                        category={trx.category}
-                        currency={trx.currency}
-                        date={trx.datedAt}
-                        description={trx.note}
-                        enrichment={trx.enrichment}
-                        key={trx.id}
-                        name={trx.name}
-                    />
+                    <TransactionItem key={trx.id} transaction={trx} />
                 ))}
             </div>
         </WidgetBox.Root>

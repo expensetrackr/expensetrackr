@@ -1,13 +1,4 @@
 declare namespace Resources {
-    export type BankConnection = {
-        id: string;
-        institutionName: string;
-        institutionLogoUrl: string;
-        providerType: string;
-        status: string;
-    };
-    // App\Http\Resources\LanguageResource
-    export type Language = any;
     // App\Http\Resources\AccountResource
     export type Account = {
         id: string;
@@ -20,6 +11,29 @@ declare namespace Resources {
         externalId: string;
         connection: BankConnection;
         transactions?: Array<Transaction>;
+    };
+    export type BankConnection = {
+        id: string;
+        institutionName: string;
+        institutionLogoUrl: string;
+        providerType: string;
+        status: string;
+    };
+    // App\Http\Resources\LanguageResource
+    export type Language = any;
+    // App\Http\Resources\MerchantResource
+    export type Merchant = {
+        id: string;
+        name: string;
+        website?: string;
+        icon?: string;
+        address?: {
+            line1?: string;
+            city?: string;
+            state?: string;
+            postalCode?: string;
+            country?: string;
+        };
     };
     // App\Http\Resources\TransactionResource
     export type Transaction = {
@@ -41,9 +55,6 @@ declare namespace Resources {
             slug: string;
             color: string;
         };
-        enrichment?: {
-            merchantName: string;
-            icon: string;
-        };
+        merchant?: Merchant;
     };
 }

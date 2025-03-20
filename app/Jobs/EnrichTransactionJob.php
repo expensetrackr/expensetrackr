@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
+use App\Models\Merchant;
 use App\Models\Transaction;
-use App\Models\TransactionEnrichment;
 use App\Services\SynthService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -13,7 +13,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-final class ProcessTransactionEnrichment implements ShouldQueue
+final class EnrichTransactionJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -32,23 +32,26 @@ final class ProcessTransactionEnrichment implements ShouldQueue
             ->map(fn ($term): string => str_replace(['&', '|', '!'], '', $term))
             ->filter();
 
-        $existingEnrichment = TransactionEnrichment::query()
+        $existingMerchant = Merchant::query()
             ->select('*')
             ->where(function ($query) use ($searchTerms): void {
                 // First try exact match on transaction name
-                $query->where('merchant_name', 'ilike', "%{$this->transaction->name}%");
+                $query->where('name', 'ilike', "%{$this->transaction->name}%");
 
                 // Then try individual terms
                 $searchTerms->each(function ($term) use ($query): void {
-                    $query->orWhere('merchant_name', 'ilike', "%{$term}%");
+                    $query->orWhere('name', 'ilike', "%{$term}%");
                 });
             })
             ->orderByRaw('length(merchant_name) ASC') // Prefer shorter merchant names (usually more precise)
             ->first();
 
-        if ($existingEnrichment) {
+        if ($existingMerchant) {
             // Attach existing enrichment to transaction
-            $this->transaction->update(['enrichment_id' => $existingEnrichment->id]);
+            $this->transaction->update([
+                'merchant_id' => $existingMerchant->id,
+                'enriched_at' => now(),
+            ]);
             $this->transaction->refresh();
 
             return;
@@ -62,9 +65,8 @@ final class ProcessTransactionEnrichment implements ShouldQueue
         }
 
         // Save new enrichment to database
-        $enrichmentId = TransactionEnrichment::upsert([
-            'merchant_name' => $enrichmentData->merchant,
-            'merchant_id' => $enrichmentData->merchantId,
+        $merchantId = Merchant::upsert([
+            'name' => $enrichmentData->merchant,
             'category' => $enrichmentData->category ?? '',
             'website' => $enrichmentData->website ?? '',
             'icon' => $enrichmentData->icon ?? '',
@@ -72,6 +74,9 @@ final class ProcessTransactionEnrichment implements ShouldQueue
         ], ['merchant_id']);
 
         // Attach new enrichment to transaction
-        $this->transaction->update(['enrichment_id' => $enrichmentId]);
+        $this->transaction->update([
+            'merchant_id' => $merchantId,
+            'enriched_at' => now(),
+        ]);
     }
 }

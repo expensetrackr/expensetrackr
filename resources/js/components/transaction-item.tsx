@@ -12,41 +12,21 @@ import { CategoryIcon } from "./category-icon.tsx";
 import * as Avatar from "./ui/avatar.tsx";
 
 type TransactionItemProps = {
-    name: string;
-    description?: string;
-    amount: string;
-    currency: string;
-    date: Date | string;
-    category?: {
-        id: string;
-        name: string;
-        slug: string;
-        color: string;
-    };
-    enrichment?: {
-        icon: string;
-        merchantName: string;
-    };
+    transaction: Resources.Transaction;
 };
 
 export function TransactionItem({
-    name,
-    description = "",
-    amount,
-    currency,
-    date,
-    category,
-    enrichment,
+    transaction,
     className,
     ...props
 }: Omit<React.ComponentPropsWithRef<"div">, "type"> & TransactionItemProps) {
     const { language } = useTranslation();
-    const formatter = resolveCurrencyFormat(language, currency);
-    const decimalValue = new Decimal(amount).toDecimalPlaces(formatter?.minimumFractionDigits).toNumber();
+    const formatter = resolveCurrencyFormat(language, transaction.currency);
+    const decimalValue = new Decimal(transaction.amount).toDecimalPlaces(formatter?.minimumFractionDigits).toNumber();
     const isPositive = decimalValue > 0;
     const format: Format = {
         style: "currency",
-        currency,
+        currency: transaction.currency,
         minimumFractionDigits: formatter?.minimumFractionDigits,
         maximumFractionDigits: formatter?.maximumFractionDigits,
     };
@@ -59,44 +39,44 @@ export function TransactionItem({
             )}
             {...props}
         >
-            {enrichment?.icon ? (
+            {transaction.merchant?.icon ? (
                 <Avatar.Root $color="blue" $size="40" className="shrink-0">
-                    <Avatar.Image alt={enrichment.merchantName} asChild src={enrichment.icon}>
-                        <Image alt={enrichment.merchantName} height={24} src={enrichment.icon} width={24} />
+                    <Avatar.Image alt={transaction.merchant.name} asChild src={transaction.merchant.icon}>
+                        <Image alt={transaction.merchant.name} height={24} src={transaction.merchant.icon} width={24} />
                     </Avatar.Image>
                 </Avatar.Root>
-            ) : category ? (
+            ) : transaction.category ? (
                 <div
                     className="ring-stroke-soft-200 flex size-10 shrink-0 items-center justify-center rounded-full bg-(--color-category-color)/10 shadow-xs"
                     style={
                         {
-                            "--color-category-color": category?.color,
+                            "--color-category-color": transaction.category?.color,
                         } as React.CSSProperties
                     }
                 >
                     <CategoryIcon
-                        category={category.slug}
+                        category={transaction.category.slug}
                         className="size-5 text-(--color-category-color)"
                         style={
                             {
-                                "--color-category-color": category.color,
+                                "--color-category-color": transaction.category.color,
                             } as React.CSSProperties
                         }
                     />
                 </div>
             ) : null}
             <div className="min-w-0 flex-1 space-y-1">
-                <div className="truncate text-label-sm">{name}</div>
-                {description ? (
-                    <div className="truncate text-paragraph-xs text-(--text-sub-600)">{description}</div>
+                <div className="truncate text-label-sm">{transaction.name}</div>
+                {transaction.note ? (
+                    <div className="truncate text-paragraph-xs text-(--text-sub-600)">{transaction.note}</div>
                 ) : null}
             </div>
             <div className="space-y-1 text-right">
                 <div className={cn("text-label-sm", isPositive ? "text-state-success-base" : "text-state-error-base")}>
                     <NumberFlow animated={false} format={format} value={decimalValue} />
-                    <span className="ml-1 text-subheading-2xs text-(--text-sub-600)">{currency}</span>
+                    <span className="ml-1 text-subheading-2xs text-(--text-sub-600)">{transaction.currency}</span>
                 </div>
-                <div className="text-paragraph-xs text-(--text-sub-600)">{formatDate(date)}</div>
+                <div className="text-paragraph-xs text-(--text-sub-600)">{formatDate(transaction.datedAt)}</div>
             </div>
             <CompactButton.Root $size="md" $style="ghost" asChild>
                 <div>

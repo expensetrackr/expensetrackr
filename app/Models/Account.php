@@ -67,6 +67,9 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereUpdatedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereWorkspaceId($value)
  *
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Transaction> $transactions
+ * @property-read int|null $transactions_count
+ *
  * @mixin \Eloquent
  */
 final class Account extends Model

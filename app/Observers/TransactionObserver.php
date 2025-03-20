@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Observers;
 
-use App\Jobs\ProcessTransactionEnrichment;
+use App\Jobs\EnrichTransactionJob;
 use App\Models\Transaction;
 
 final class TransactionObserver
@@ -14,6 +14,6 @@ final class TransactionObserver
      */
     public function created(Transaction $transaction): void
     {
-        ProcessTransactionEnrichment::dispatch($transaction);
+        EnrichTransactionJob::dispatch($transaction);
     }
 }

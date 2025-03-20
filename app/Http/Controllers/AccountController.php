@@ -60,13 +60,13 @@ final class AccountController
                     'transactions' => function (Builder $query) {
                         $query
                             ->orderBy('dated_at', 'desc')
-                            ->select('name', 'note', 'base_amount', 'base_currency', 'currency_rate', 'amount', 'currency', 'dated_at', 'account_id', 'category_id', 'enrichment_id', 'public_id')
+                            ->select('name', 'note', 'base_amount', 'base_currency', 'currency_rate', 'amount', 'currency', 'dated_at', 'account_id', 'category_id', 'merchant_id', 'public_id')
                             ->with([
                                 'category' => function (Builder $query) {
                                     $query->select('id', 'name', 'slug', 'color', 'public_id');
                                 },
-                                'enrichment' => function (Builder $query) {
-                                    $query->select('id', 'merchant_name', 'icon');
+                                'merchant' => function (Builder $query) {
+                                    $query->select('id', 'name', 'icon');
                                 },
                             ])
                             ->limit(3);

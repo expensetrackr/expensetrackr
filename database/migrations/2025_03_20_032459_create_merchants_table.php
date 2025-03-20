@@ -13,12 +13,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('transaction_enrichments', function (Blueprint $table): void {
+        Schema::create('merchants', function (Blueprint $table) {
             $table->id();
-            $table->string('merchant_name')->index();
+            $table->string('name')->index();
             $table->string('website')->nullable();
             $table->string('icon')->nullable();
             $table->json('address')->nullable();
+            $table->string('external_id')->unique();
             $table->string('public_id')->unique();
             $table->timestamps();
         });
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('transaction_enrichments');
+        Schema::dropIfExists('merchants');
     }
 };

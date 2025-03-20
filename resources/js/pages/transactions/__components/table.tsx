@@ -1,13 +1,7 @@
+import { Link } from "@inertiajs/react";
 import NumberFlow, { type Format } from "@number-flow/react";
 import { resolveCurrencyFormat } from "@sumup/intl";
-import {
-    getCoreRowModel,
-    getSortedRowModel,
-    type SortingState,
-    useReactTable,
-    type ColumnDef,
-    flexRender,
-} from "@tanstack/react-table";
+import { getCoreRowModel, getSortedRowModel, useReactTable, type ColumnDef, flexRender } from "@tanstack/react-table";
 import { Image } from "@unpic/react";
 import Decimal from "decimal.js";
 import * as React from "react";
@@ -30,7 +24,6 @@ type TransactionsTableProps = {
 
 export function TransactionsTable({ data: initialData, total }: TransactionsTableProps) {
     const [pagination, setPagination] = usePaginationParams();
-    const [sorting, setSorting] = React.useState<SortingState>([]);
     const { language } = useTranslation();
 
     const columns: ColumnDef<Resources.Transaction>[] = React.useMemo(
@@ -42,17 +35,17 @@ export function TransactionsTable({ data: initialData, total }: TransactionsTabl
                 cell({ row }) {
                     return (
                         <div className="flex items-center gap-3">
-                            {row.original.enrichment?.icon ? (
+                            {row.original.merchant?.icon ? (
                                 <Avatar.Root $size="40">
                                     <Avatar.Image
-                                        alt={row.original.enrichment.merchantName}
+                                        alt={row.original.merchant.name}
                                         asChild
-                                        src={row.original.enrichment.icon}
+                                        src={row.original.merchant.icon}
                                     >
                                         <Image
-                                            alt={row.original.enrichment.merchantName}
+                                            alt={row.original.merchant.name}
                                             height={40}
-                                            src={row.original.enrichment.icon}
+                                            src={row.original.merchant.icon}
                                             width={40}
                                         />
                                     </Avatar.Image>
@@ -154,10 +147,16 @@ export function TransactionsTable({ data: initialData, total }: TransactionsTabl
             {
                 id: "actions",
                 enableHiding: false,
-                cell() {
+                cell({ row }) {
                     return (
-                        <Button.Root $size="xs" $style="ghost" $type="neutral">
-                            <Button.Icon as={MoreVerticalIcon} className="size-6" />
+                        <Button.Root $size="xs" $style="ghost" $type="neutral" asChild>
+                            <Link
+                                href={route("transactions.index", {
+                                    transaction_id: row.original.id,
+                                })}
+                            >
+                                <Button.Icon as={MoreVerticalIcon} className="size-6" />
+                            </Link>
                         </Button.Root>
                     );
                 },
@@ -172,14 +171,12 @@ export function TransactionsTable({ data: initialData, total }: TransactionsTabl
     const table = useReactTable({
         data: initialData,
         columns,
-        onSortingChange: setSorting,
         getCoreRowModel: getCoreRowModel(),
         rowCount: total,
         getSortedRowModel: getSortedRowModel(),
         manualPagination: true,
         onPaginationChange: setPagination,
         state: {
-            sorting,
             pagination,
         },
         initialState: {
