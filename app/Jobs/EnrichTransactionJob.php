@@ -27,8 +27,8 @@ final class EnrichTransactionJob implements ShouldQueue
 
         // Clean and prepare search terms
         $searchTerms = collect(explode(' ', $description))
-            ->map(fn ($term): string => trim((string) $term, '- .,!?()[]{}:;'))
-            ->filter(fn ($term): bool => mb_strlen((string) $term) > 2)
+            ->map(fn ($term): string => trim($term, '- .,!?()[]{}:;'))
+            ->filter(fn ($term): bool => mb_strlen($term) > 2)
             ->map(fn ($term): string => str_replace(['&', '|', '!'], '', $term))
             ->filter();
 

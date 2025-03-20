@@ -14,6 +14,8 @@ final class TransactionObserver
      */
     public function created(Transaction $transaction): void
     {
-        EnrichTransactionJob::dispatch($transaction);
+        if ($transaction->workspace->settings->is_data_enrichment_enabled) {
+            EnrichTransactionJob::dispatch($transaction);
+        }
     }
 }

@@ -57,15 +57,15 @@ final class AccountController
             $account = Account::with(
                 [
                     'bankConnection',
-                    'transactions' => function (Builder $query) {
+                    'transactions' => function (Builder $query): void {
                         $query
                             ->orderBy('dated_at', 'desc')
                             ->select('name', 'note', 'base_amount', 'base_currency', 'currency_rate', 'amount', 'currency', 'dated_at', 'account_id', 'category_id', 'merchant_id', 'public_id')
                             ->with([
-                                'category' => function (Builder $query) {
+                                'category' => function (Builder $query): void {
                                     $query->select('id', 'name', 'slug', 'color', 'public_id');
                                 },
-                                'merchant' => function (Builder $query) {
+                                'merchant' => function (Builder $query): void {
                                     $query->select('id', 'name', 'icon');
                                 },
                             ])

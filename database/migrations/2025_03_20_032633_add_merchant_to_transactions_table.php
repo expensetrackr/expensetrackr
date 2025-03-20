@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('transactions', function (Blueprint $table) {
+        Schema::table('transactions', function (Blueprint $table): void {
             $table->timestamp('enriched_at')->nullable();
 
             $table->foreignId('merchant_id')->nullable()->constrained();
@@ -27,7 +27,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('transactions', function (Blueprint $table) {
+        Schema::table('transactions', function (Blueprint $table): void {
             $table->dropForeign(['merchant_id']);
             $table->dropIndex('merchant_id');
             $table->dropColumn('enriched_at');

@@ -33,10 +33,8 @@ final class UpdateWorkspaceSettingRequest extends FormRequest
 
     /**
      * Prepare the data for validation.
-     *
-     * @return void
      */
-    protected function prepareForValidation()
+    protected function prepareForValidation(): void
     {
         $input = $this->all();
         $snakeCaseInput = [];

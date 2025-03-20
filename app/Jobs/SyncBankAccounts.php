@@ -11,6 +11,7 @@ use App\Models\Account;
 use App\Models\BankConnection;
 use App\Models\Category;
 use App\Models\Transaction;
+use App\Models\Workspace;
 use App\Services\FinanceCoreService;
 use Exception;
 use Illuminate\Bus\Queueable;
@@ -19,6 +20,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Log;
 use Throwable;
@@ -43,6 +45,11 @@ final class SyncBankAccounts implements ShouldBeUnique, ShouldQueue
     public int $uniqueFor = 3600; // 1 hour
 
     /**
+     * The workspace instance.
+     */
+    private Workspace $workspace;
+
+    /**
      * Create a new job instance.
      */
     public function __construct(
@@ -50,6 +57,7 @@ final class SyncBankAccounts implements ShouldBeUnique, ShouldQueue
         public readonly int $bankConnectionId,
     ) {
         $this->onQueue('bank-sync');
+        $this->workspace = Workspace::findOrFail($this->workspaceId);
     }
 
     /**
@@ -235,6 +243,14 @@ final class SyncBankAccounts implements ShouldBeUnique, ShouldQueue
             ])->toArray();
 
             Transaction::upsert($transactionsData, ['external_id']);
+
+            if ($this->workspace->settings->is_data_enrichment_enabled) {
+                // Get the transactions that were just upserted
+                $transactions = Transaction::whereIn('external_id', array_column($transactionsData, 'external_id'))->get();
+
+                // Trigger enrichment jobs for each transaction
+                $this->enrichTransactions($transactions);
+            }
         } catch (Throwable $th) {
             Log::error('Error syncing transactions', [
                 'bank_connection_id' => $this->bankConnectionId,
@@ -244,6 +260,18 @@ final class SyncBankAccounts implements ShouldBeUnique, ShouldQueue
             ]);
 
             throw $th;
+        }
+    }
+
+    /**
+     * Enrich the transactions
+     *
+     * @param  Collection<int, Transaction>  $transactions
+     */
+    private function enrichTransactions(array $transactions): void
+    {
+        foreach ($transactions as $transaction) {
+            EnrichTransactionJob::dispatch($transaction);
         }
     }
 }

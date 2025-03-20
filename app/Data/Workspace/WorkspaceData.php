@@ -35,8 +35,8 @@ final class WorkspaceData extends Data
             'name' => $workspace->name,
             'personalWorkspace' => $workspace->personal_workspace,
             'owner' => UserData::fromModel($workspace->owner),
-            'invitations' => $workspace->invitations->map(fn (WorkspaceInvitation $invitation) => WorkspaceInvitationData::fromModel($invitation)),
-            'members' => $workspace->members->map(fn (User $member) => WorkspaceMembershipData::from($member)),
+            'invitations' => $workspace->invitations->map(fn (WorkspaceInvitation $invitation): WorkspaceInvitationData => WorkspaceInvitationData::fromModel($invitation)),
+            'members' => $workspace->members->map(fn (User $member): WorkspaceMembershipData => WorkspaceMembershipData::from($member)),
             'settings' => WorkspaceSettingsData::from([
                 'id' => $workspace->settings->public_id,
                 'isDataEnrichmentEnabled' => $workspace->settings->is_data_enrichment_enabled,
