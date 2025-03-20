@@ -9,6 +9,8 @@ use App\Models\BankConnection;
 use App\Models\Category;
 use App\Models\Merchant;
 use App\Models\Transaction;
+use App\Models\Workspace;
+use App\Models\WorkspaceSetting;
 use Illuminate\Support\ServiceProvider;
 use Spatie\PrefixedIds\PrefixedIds;
 
@@ -22,9 +24,11 @@ final class PrefixedIdsServiceProvider extends ServiceProvider
         PrefixedIds::registerModels([
             'acct_' => Account::class,
             'bnc_' => BankConnection::class,
-            'txn_' => Transaction::class,
             'cat_' => Category::class,
             'mch_' => Merchant::class,
+            'txn_' => Transaction::class,
+            'ws_' => Workspace::class,
+            'wss_' => WorkspaceSetting::class,
         ]);
     }
 }

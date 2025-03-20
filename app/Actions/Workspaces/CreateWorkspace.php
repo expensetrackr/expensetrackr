@@ -20,11 +20,15 @@ final class CreateWorkspace implements CreatesWorkspaces
     public function handle(User $user, array $input): Workspace|Model
     {
         AddingWorkspace::dispatch($user);
-
-        $user->switchWorkspace($workspace = $user->ownedWorkspaces()->create([
+        $workspace = $user->ownedWorkspaces()->create([
             'name' => $input['name'],
             'personal_workspace' => false,
-        ]));
+        ]);
+        $workspace->settings()->create([
+            'workspace_id' => $workspace->id,
+        ]);
+
+        $user->switchWorkspace($workspace);
 
         return $workspace;
     }

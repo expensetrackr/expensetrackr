@@ -3,6 +3,7 @@ import { toast } from "sonner";
 
 import { HeaderMobile } from "#/components/header-mobile.tsx";
 import { Sidebar } from "#/components/sidebar.tsx";
+import { Toaster } from "#/components/toaster.tsx";
 import { type PageProps } from "#/types/globals.js";
 import { SettingsVerticalMenu } from "./partials/settings-menu.tsx";
 
@@ -16,19 +17,24 @@ export function SettingsLayout({
         if (props.toast?.type) {
             toast[props.toast.type](props.toast.title, {
                 description: props.toast.description,
+                duration: props.toast.duration ?? 5000,
             });
         }
     }, [props.toast]);
 
     return (
-        <div className="flex min-h-screen flex-col items-start lg:grid lg:grid-cols-[auto_minmax(0,1fr)]">
-            <Sidebar defaultCollapsed />
-            <HeaderMobile />
+        <>
+            <div className="flex min-h-screen flex-col items-start lg:grid lg:grid-cols-[auto_minmax(0,1fr)]">
+                <Sidebar defaultCollapsed />
+                <HeaderMobile />
 
-            <div className="w-full flex-1 self-stretch lg:grid lg:grid-cols-[auto_minmax(0,1fr)]">
-                <SettingsVerticalMenu />
-                <div className="mx-auto flex w-full max-w-[1360px] flex-col">{children}</div>
+                <div className="w-full flex-1 self-stretch lg:grid lg:grid-cols-[auto_minmax(0,1fr)]">
+                    <SettingsVerticalMenu />
+                    <div className="mx-auto flex w-full max-w-[1360px] flex-col">{children}</div>
+                </div>
             </div>
-        </div>
+
+            <Toaster position="top-center" />
+        </>
     );
 }

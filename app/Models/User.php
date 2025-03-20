@@ -20,7 +20,6 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
-#[ObservedBy([UserObserver::class])]
 /**
  * @property int $id
  * @property string $name
@@ -42,7 +41,6 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read Workspace|null $currentWorkspace
  * @property-read \Danestves\LaravelPolar\Customer|null $customer
  * @property-read string|null $get_photo_url
- * @property-read string|null $profile_photo_url
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Danestves\LaravelPolar\Order> $orders
@@ -51,6 +49,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read int|null $owned_workspaces_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Permission> $permissions
  * @property-read int|null $permissions_count
+ * @property-read string|null $profile_photo_url
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Role> $roles
  * @property-read int|null $roles_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Danestves\LaravelPolar\Subscription> $subscriptions
@@ -85,6 +84,7 @@ use Spatie\Permission\Traits\HasRoles;
  *
  * @mixin \Eloquent
  */
+#[ObservedBy([UserObserver::class])]
 final class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */

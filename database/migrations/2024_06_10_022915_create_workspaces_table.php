@@ -17,7 +17,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->index();
             $table->string('name');
-            $table->boolean('personal_workspace');
+            $table->boolean('personal_workspace')->default(false);
+
+            $table->string('public_id')->unique();
+
             $table->timestamps();
         });
     }

@@ -13,16 +13,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('merchants', function (Blueprint $table) {
+        Schema::create('workspace_settings', function (Blueprint $table): void {
             $table->id();
-            $table->string('name')->index();
-            $table->string('website')->nullable();
-            $table->string('icon')->nullable();
-            $table->json('address')->nullable();
-            $table->boolean('is_system')->default(false);
-            $table->string('external_id')->unique();
+            $table->foreignId('workspace_id')->constrained()->cascadeOnDelete();
+            $table->boolean('is_data_enrichment_enabled')->default(false);
             $table->string('public_id')->unique();
             $table->timestamps();
+
+            $table->unique('workspace_id');
         });
     }
 
@@ -31,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('merchants');
+        Schema::dropIfExists('workspace_settings');
     }
 };

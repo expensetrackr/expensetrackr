@@ -71,6 +71,7 @@ final class EnrichTransactionJob implements ShouldQueue
             'website' => $enrichmentData->website ?? '',
             'icon' => $enrichmentData->icon ?? '',
             'address' => $enrichmentData->address?->toJson(),
+            'is_system' => true,
         ], ['merchant_id']);
 
         // Attach new enrichment to transaction

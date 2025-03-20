@@ -23,9 +23,7 @@ Route::middleware([
     config('workspaces.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', fn () => Inertia::render('dashboard'))->name('dashboard');
 
     Route::post('/accounts', [AccountController::class, 'store'])->name('accounts.store');
     Route::post('/accounts/bank-connections', [AccountController::class, 'storeBankConnections'])->name('accounts.bank-connections.store');
@@ -38,13 +36,9 @@ Route::middleware([
     Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
 
     Route::prefix('settings')->group(function () {
-        Route::get('/', function () {
-            return Inertia::render('settings/show');
-        })->name('settings.show');
+        Route::get('/', fn () => Inertia::render('settings/show'))->name('settings.show');
 
-        Route::get('/connected-accounts', function () {
-            return Inertia::render('settings/connected-accounts/show');
-        })->name('settings.connected-accounts.show');
+        Route::get('/connected-accounts', fn () => Inertia::render('settings/connected-accounts/show'))->name('settings.connected-accounts.show');
     });
 });
 

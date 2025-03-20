@@ -13,20 +13,26 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
 
 /**
  * @property int $id
  * @property int $user_id
  * @property string $name
  * @property bool $personal_workspace
+ * @property string $public_id
  * @property \Carbon\CarbonImmutable|null $created_at
  * @property \Carbon\CarbonImmutable|null $updated_at
+ * @property int|null $workspace_settings_id
+ * @property-read string|null $prefixed_id
  * @property-read Collection<int, WorkspaceInvitation> $invitations
  * @property-read int|null $invitations_count
  * @property-read Membership|null $membership
  * @property-read Collection<int, User> $members
  * @property-read int|null $members_count
  * @property-read User|null $owner
+ * @property-read WorkspaceSetting|null $settings
  *
  * @method static \Database\Factories\WorkspaceFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Workspace newModelQuery()
@@ -36,15 +42,17 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Workspace whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Workspace whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Workspace wherePersonalWorkspace($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Workspace wherePublicId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Workspace whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Workspace whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Workspace whereWorkspaceSettingId($value)
  *
  * @mixin \Eloquent
  */
 final class Workspace extends Model
 {
     /** @use HasFactory<\Database\Factories\WorkspaceFactory> */
-    use HasFactory;
+    use HasFactory, HasPrefixedId;
 
     /**
      * The event map for the model.
@@ -147,6 +155,16 @@ final class Workspace extends Model
     public function owner(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    /**
+     * Get the workspace setting for the workspace.
+     *
+     * @return HasOne<WorkspaceSetting, covariant $this>
+     */
+    public function settings(): HasOne
+    {
+        return $this->hasOne(WorkspaceSetting::class, 'workspace_id');
     }
 
     /**

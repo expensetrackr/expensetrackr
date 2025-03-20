@@ -26,11 +26,7 @@ interface UserMembership extends App.Data.Auth.UserData {
 }
 
 interface WorkspaceMemberManagerProps {
-    workspace: App.Data.Workspace.WorkspaceData & {
-        owner: App.Data.Auth.UserData;
-        invitations: App.Data.Workspace.WorkspaceInvitationData[];
-        members: UserMembership[];
-    };
+    workspace: App.Data.Workspace.WorkspaceData;
     availableRoles: Array<{ name: string }>;
     permissions: App.Data.Workspace.WorkspacePermissionsData;
 }

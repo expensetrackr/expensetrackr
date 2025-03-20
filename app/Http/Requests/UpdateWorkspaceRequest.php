@@ -8,7 +8,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 final class UpdateWorkspaceRequest extends FormRequest
 {
-    protected $errorBag = 'updateWorkspaceName';
+    protected $errorBag = 'updateWorkspace';
 
     /**
      * Get the validation rules that apply to the request.

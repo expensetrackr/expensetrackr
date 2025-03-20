@@ -12,13 +12,17 @@ final class UserObserver
     public function created(User $user): void
     {
         if (WorkspaceFeatures::hasWorkspaceFeatures()) {
-            $user->ownedWorkspaces()->forceCreate([
+            $workspace = $user->ownedWorkspaces()->forceCreate([
                 'user_id' => $user->id,
                 'name' => explode(' ', $user->name, 2)[0]."'s Workspace",
                 'personal_workspace' => true,
             ]);
 
-            setPermissionsTeamId($user->currentWorkspace->id);
+            setPermissionsTeamId($workspace->id);
+
+            $workspace->settings()->create([
+                'workspace_id' => $workspace->id,
+            ]);
 
             $user->assignRole('workspace admin');
         }

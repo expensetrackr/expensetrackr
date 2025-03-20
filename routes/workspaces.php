@@ -13,6 +13,7 @@ use App\Http\Controllers\TermsOfServiceController;
 use App\Http\Controllers\WorkspaceController;
 use App\Http\Controllers\WorkspaceInvitationController;
 use App\Http\Controllers\WorkspaceMemberController;
+use App\Http\Controllers\WorkspaceSettingController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => config('workspaces.middleware', ['web'])], function () {
@@ -56,6 +57,7 @@ Route::group(['middleware' => config('workspaces.middleware', ['web'])], functio
             Route::post('/workspaces/{workspace}/members', [WorkspaceMemberController::class, 'store'])->name('workspace-members.store');
             Route::put('/workspaces/{workspace}/members/{user}', [WorkspaceMemberController::class, 'update'])->name('workspace-members.update');
             Route::delete('/workspaces/{workspace}/members/{user}', [WorkspaceMemberController::class, 'destroy'])->name('workspace-members.destroy');
+            Route::put('/workspaces/{workspace}/settings/{settings}', [WorkspaceSettingController::class, 'update'])->name('workspaces.update-settings');
 
             Route::get('/workspace-invitations/{invitation}', [WorkspaceInvitationController::class, 'accept'])
                 ->middleware(['signed'])

@@ -1,11 +1,25 @@
+import * as React from "react";
+import { toast } from "sonner";
+
+import { type PageProps } from "#/types/globals.js";
 import { AuthFooter } from "./partials/auth-footer.tsx";
 import { AuthHeader } from "./partials/auth-header.tsx";
 
 export function AuthLayout({
     children,
-}: Readonly<{
+    ...props
+}: PageProps<{
     children: React.ReactNode;
 }>) {
+    React.useEffect(() => {
+        if (props.toast?.type) {
+            toast[props.toast.type](props.toast.title, {
+                description: props.toast.description,
+                duration: props.toast.duration ?? 5000,
+            });
+        }
+    }, [props.toast]);
+
     return (
         <div className="items-cente flex min-h-screen flex-col">
             <AuthHeader />

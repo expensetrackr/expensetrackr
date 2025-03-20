@@ -5,21 +5,12 @@ import { Header } from "#/components/header.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
 import { SettingsLayout } from "#/layouts/settings-layout.tsx";
 import { WorkspaceMemberInvitations } from "#/pages/workspaces/partials/workspace-member-invitations.tsx";
+import { WorkspaceSettingsForm } from "./__components/workspace-settings-form.tsx";
 import { UpdateWorkspaceNameForm } from "./partials/update-workspace-name-form.tsx";
 import { WorkspaceMemberManager } from "./partials/workspace-member-manager.tsx";
 
-interface UserMembership extends App.Data.Auth.UserData {
-    membership: {
-        role: string;
-    };
-}
-
 type WorkspacesShowProps = {
-    workspace: App.Data.Workspace.WorkspaceData & {
-        owner: App.Data.Auth.UserData;
-        invitations: App.Data.Workspace.WorkspaceInvitationData[];
-        members: UserMembership[];
-    };
+    workspace: App.Data.Workspace.WorkspaceData;
     availableRoles: Array<{ name: string }>;
     permissions: App.Data.Workspace.WorkspacePermissionsData;
 };
@@ -33,6 +24,10 @@ export default function WorkspacesShow({ workspace, availableRoles, permissions 
 
             <div className="flex w-full flex-col gap-5 px-4 py-6 lg:px-8">
                 <UpdateWorkspaceNameForm permissions={permissions} workspace={workspace} />
+
+                <Divider.Root $type="line-spacing" />
+
+                <WorkspaceSettingsForm defaultValues={workspace.settings} workspaceId={workspace.id} />
 
                 <Divider.Root $type="line-spacing" />
 

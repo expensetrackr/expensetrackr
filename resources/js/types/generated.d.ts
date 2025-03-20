@@ -184,11 +184,27 @@ declare namespace App.Data.Workspace {
         id: number;
         name: string;
         personalWorkspace: boolean;
+        owner: App.Data.Auth.UserData;
+        invitations: Array<App.Data.Workspace.WorkspaceInvitationData>;
+        members: Array<App.Data.Workspace.WorkspaceMemberData>;
+        settings: App.Data.Workspace.WorkspaceSettingsData;
     };
     export type WorkspaceInvitationData = {
         id: number;
         workspaceId: number;
         email: string;
+        role: string;
+    };
+    export type WorkspaceMemberData = {
+        membership: App.Data.Workspace.WorkspaceMembershipData;
+        id: number;
+        name: string;
+        email: string;
+        profilePhotoPath: string | null;
+        profilePhotoUrl: string | null;
+        twoFactorEnabled: boolean;
+    };
+    export type WorkspaceMembershipData = {
         role: string;
     };
     export type WorkspacePermissionsData = {
@@ -197,6 +213,10 @@ declare namespace App.Data.Workspace {
         canRemoveWorkspaceMembers: boolean;
         canUpdateWorkspace: boolean;
         canUpdateWorkspaceMembers: boolean;
+    };
+    export type WorkspaceSettingsData = {
+        id: string;
+        isDataEnrichmentEnabled: boolean;
     };
     export type WorkspacesPermissionsData = {
         canCreateWorkspaces: boolean;

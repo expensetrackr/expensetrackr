@@ -10,18 +10,8 @@ import * as Button from "#/components/ui/button.tsx";
 import * as Modal from "#/components/ui/modal.tsx";
 import { Action, getAction } from "#/utils/action.ts";
 
-interface UserMembership extends App.Data.Auth.UserData {
-    membership: {
-        role: string;
-    };
-}
-
 interface WorkspaceMemberInvitationsProps {
-    workspace: App.Data.Workspace.WorkspaceData & {
-        owner: App.Data.Auth.UserData;
-        invitations: App.Data.Workspace.WorkspaceInvitationData[];
-        members: UserMembership[];
-    };
+    workspace: App.Data.Workspace.WorkspaceData;
     permissions: App.Data.Workspace.WorkspacePermissionsData;
 }
 

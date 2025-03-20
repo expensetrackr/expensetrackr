@@ -14,7 +14,7 @@ final class WorkspaceInvitationData extends Data
 {
     public function __construct(
         public readonly int $id,
-        #[MapName('workspace_id')]
+        #[MapName('workspace_id', 'workspaceId')]
         public readonly int $workspaceId,
         public readonly string $email,
         public readonly string $role,

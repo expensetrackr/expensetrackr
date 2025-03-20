@@ -10,8 +10,9 @@ use Spatie\LaravelData\Attributes\MapName;
 use Spatie\LaravelData\Data;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
+/** @final */
 #[TypeScript]
-final class UserData extends Data
+class UserData extends Data
 {
     public function __construct(
         public readonly int $id,
@@ -25,7 +26,7 @@ final class UserData extends Data
         public readonly bool $twoFactorEnabled,
     ) {}
 
-    public static function fromModel(User $user): self
+    final public static function fromModel(User $user): self
     {
         return self::from([
             'id' => $user->id,

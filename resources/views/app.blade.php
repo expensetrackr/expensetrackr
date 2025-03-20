@@ -62,6 +62,7 @@
         @vite(['resources/js/app.tsx', "resources/js/pages/{$page['component']}.tsx"])
         @inertiaHead
         @include('partials.theme')
+        @include('partials.auto-submit-form')
     </head>
 
     <body class="h-full bg-(--bg-white-0) text-(--text-strong-950)">

@@ -25,8 +25,8 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @property string|null $description
  * @property AccountSubtype|null $subtype
  * @property string $currency_code
- * @property int $initial_balance
- * @property int $current_balance
+ * @property string $initial_balance
+ * @property string $current_balance
  * @property bool $is_default
  * @property string $public_id
  * @property int $workspace_id
@@ -41,6 +41,8 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @property-read User|null $createdBy
  * @property-read string|null $prefixed_id
  * @property-read AccountType $type
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Transaction> $transactions
+ * @property-read int|null $transactions_count
  * @property-read User|null $updatedBy
  * @property-read Workspace $workspace
  *
@@ -66,9 +68,6 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereUpdatedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereWorkspaceId($value)
- *
- * @property-read \Illuminate\Database\Eloquent\Collection<int, Transaction> $transactions
- * @property-read int|null $transactions_count
  *
  * @mixin \Eloquent
  */

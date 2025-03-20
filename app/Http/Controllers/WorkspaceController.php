@@ -9,10 +9,12 @@ use App\Actions\Workspaces\DeleteWorkspace;
 use App\Actions\Workspaces\UpdateWorkspace;
 use App\Actions\Workspaces\ValidateWorkspaceDeletion;
 use App\Concerns\RedirectsActions;
+use App\Data\Workspace\WorkspaceData;
 use App\Http\Requests\CreateWorkspaceRequest;
 use App\Http\Requests\UpdateWorkspaceRequest;
 use App\Models\User;
 use App\Models\Workspace;
+use Illuminate\Container\Attributes\CurrentUser;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
@@ -35,7 +37,7 @@ final class WorkspaceController
         $this->authorize('view', $workspace);
 
         return Inertia::render('workspaces/show', [
-            'workspace' => $workspace->load('owner', 'members', 'invitations'),
+            'workspace' => WorkspaceData::fromModel($workspace),
             'availableRoles' => Role::get(),
             'permissions' => [
                 'canAddWorkspaceMembers' => Gate::check('addWorkspaceMember', $workspace),
@@ -72,9 +74,9 @@ final class WorkspaceController
     /**
      * Update the given workspaces name.
      */
-    public function update(UpdateWorkspaceRequest $request, Workspace $workspace, UpdateWorkspace $action): RedirectResponse
+    public function update(UpdateWorkspaceRequest $request, Workspace $workspace, #[CurrentUser] User $user, UpdateWorkspace $action): RedirectResponse
     {
-        $action->handle(type($request->user())->as(User::class), $workspace, $request->validated());
+        $action->handle($user, $workspace, $request->validated());
 
         return back(303);
     }

@@ -1,5 +1,4 @@
 import { useForm } from "@inertiajs/react";
-import { useDebounce } from "@uidotdev/usehooks";
 import * as React from "react";
 import { toast } from "sonner";
 
@@ -14,26 +13,15 @@ export function UpdateEmailForm() {
         name: user?.name,
         email: user?.email,
     });
-    const debouncedEmail = useDebounce(data.email, 1000);
-
-    const sendRequest = React.useCallback(() => {
-        form.post(route("user-profile-information.update"), {
-            errorBag: "updateProfileInformation",
-            preserveScroll: true,
-            onSuccess: () => toast("Email updated."),
-        });
-    }, [form]);
-
-    React.useEffect(() => {
-        if (user?.email === debouncedEmail) return;
-
-        sendRequest();
-    }, [debouncedEmail, form, sendRequest, user?.email]);
 
     function onSubmit(e: React.FormEvent) {
         e.preventDefault();
 
-        sendRequest();
+        form.post(route("user-profile-information.update"), {
+            errorBag: "updateProfileInformation",
+            preserveScroll: true,
+            onSuccess: () => toast.success("Email updated."),
+        });
     }
 
     return (
@@ -46,6 +34,7 @@ export function UpdateEmailForm() {
                     $error={!!errors.email}
                     autoComplete="username"
                     autoFocus
+                    data-auto-submit
                     disabled={form.processing}
                     hint={errors.email}
                     label="Email"
