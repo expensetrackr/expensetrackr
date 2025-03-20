@@ -22,7 +22,7 @@
     "dependencies": {
         "@conform-to/react": "1.2.2",
         "@inertiajs/react": "2.0.5",
-        "@number-flow/react": "0.5.7",
+        "@number-flow/react": "0.5.8",
         "@radix-ui/react-checkbox": "1.1.4",
         "@radix-ui/react-compose-refs": "1.1.1",
         "@radix-ui/react-dialog": "1.1.6",
@@ -65,7 +65,7 @@
         "tailwind-merge": "3.0.2",
         "tailwind-variants": "1.0.0",
         "teller-connect-react": "0.2.3",
-        "valibot": "1.0.0-rc.4",
+        "valibot": "1.0.0",
         "zustand": "5.0.3"
     },
     "devDependencies": {
@@ -91,7 +91,7 @@
         "@types/react-dom": "npm:types-react-dom@rc",
         "@vitejs/plugin-react": "4.3.4",
         "autoprefixer": "10.4.21",
-        "axios": "1.8.3",
+        "axios": "1.8.4",
         "babel-plugin-react-compiler": "19.0.0-beta-e552027-20250112",
         "eslint": "9.22.0",
         "eslint-plugin-react-compiler": "19.0.0-beta-e552027-20250112",
