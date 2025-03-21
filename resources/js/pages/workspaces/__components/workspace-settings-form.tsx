@@ -1,7 +1,9 @@
 import { useForm } from "@inertiajs/react";
 import * as LabelPrimitives from "@radix-ui/react-label";
 import { toast } from "sonner";
+
 import * as Switch from "#/components/ui/switch.tsx";
+import { useUser } from "#/hooks/use-user.ts";
 
 type WorkspaceSettingsFormProps = {
     workspaceId: number;
@@ -10,6 +12,7 @@ type WorkspaceSettingsFormProps = {
 
 export function WorkspaceSettingsForm({ workspaceId, defaultValues }: WorkspaceSettingsFormProps) {
     const form = useForm(defaultValues);
+    const user = useUser();
 
     const onSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -46,6 +49,7 @@ export function WorkspaceSettingsForm({ workspaceId, defaultValues }: WorkspaceS
                     <Switch.Root
                         checked={form.data.isDataEnrichmentEnabled}
                         data-auto-submit
+                        disabled={!user.isSubscribed || form.processing}
                         id="transaction-enrichment"
                         onCheckedChange={(checked) => form.setData("isDataEnrichmentEnabled", checked)}
                     />

@@ -24,6 +24,7 @@ class UserData extends Data
         public readonly ?string $profilePhotoUrl,
         #[MapName('two_factor_enabled', 'twoFactorEnabled')]
         public readonly bool $twoFactorEnabled,
+        public readonly ?bool $isSubscribed,
     ) {}
 
     final public static function fromModel(User $user): self
@@ -36,6 +37,7 @@ class UserData extends Data
             'profilePhotoUrl' => $user->profile_photo_url,
             'twoFactorEnabled' => Features::enabled(Features::twoFactorAuthentication())
                 && $user->two_factor_secret !== null,
+            'isSubscribed' => $user->subscribed(),
         ]);
     }
 }

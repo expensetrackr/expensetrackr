@@ -189,8 +189,6 @@ export function TransactionsTable({ data: initialData, total }: TransactionsTabl
         },
     });
 
-    console.log(initialData);
-
     return (
         <>
             <Table.Root className="relative left-1/2 w-screen -translate-x-1/2 px-4 lg:mx-0 lg:w-full lg:px-0 [&>table]:min-w-[860px]">

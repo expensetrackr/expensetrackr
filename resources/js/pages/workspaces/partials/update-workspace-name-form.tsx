@@ -41,6 +41,7 @@ export function UpdateWorkspaceNameForm({ defaultValues, permissions }: UpdateWo
                 onSubmit={onSubmit}
             >
                 <input name="_method" type="hidden" value="PUT" />
+
                 <TextField
                     $error={!!form.errors.name}
                     autoComplete="off"

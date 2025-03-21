@@ -18,20 +18,17 @@
     });
 
     function setupAutoSubmit(element) {
-        // Skip if already initialized
         if (element.dataset.autoSubmitInitialized) return;
 
         const form = element.closest('form');
         if (!form) return;
 
-        // Determine the appropriate trigger event based on element type
         const triggerEvent = getTriggerEvent(element);
 
         let timeout;
         let isSubmitting = false;
 
         const handleInput = (event) => {
-            // Prevent handling if this was triggered by our own submission
             if (isSubmitting) return;
 
             clearTimeout(timeout);
@@ -42,15 +39,43 @@
                 const eventType =
                     element.type === 'checkbox' || element.getAttribute('role') === 'switch' ? 'change' : 'input';
 
-                const nativeEvent = new Event(eventType, { bubbles: true });
-                element.dispatchEvent(nativeEvent);
+                try {
+                    const inputEvent = new InputEvent(eventType, {
+                        bubbles: true,
+                        cancelable: true,
+                    });
+                    element.dispatchEvent(inputEvent);
+                } catch (e) {
+                    const fallbackEvent = new Event(eventType, {
+                        bubbles: true,
+                        cancelable: true,
+                    });
+                    element.dispatchEvent(fallbackEvent);
+                }
 
                 setTimeout(() => {
-                    const submitEvent = new Event('submit', { bubbles: true });
-                    form.dispatchEvent(submitEvent);
+                    // Cross-browser form submission
+                    if (typeof form.requestSubmit === 'function') {
+                        // Modern browsers
+                        form.requestSubmit();
+                    } else {
+                        // Fallback for Firefox and older browsers
+                        const submitButton =
+                            form.querySelector('button[type="submit"]') || form.querySelector('input[type="submit"]');
+
+                        if (submitButton) {
+                            submitButton.click();
+                        } else {
+                            // Last resort: create and trigger submit event
+                            const submitEvent = new Event('submit', {
+                                bubbles: true,
+                                cancelable: true,
+                            });
+                            form.dispatchEvent(submitEvent);
+                        }
+                    }
 
                     setTimeout(() => {
-                        // Only focus text inputs and textareas
                         if (shouldRestoreFocus(element)) {
                             element.focus();
                             if (typeof element.setSelectionRange === 'function') {
@@ -67,7 +92,6 @@
         element.addEventListener(triggerEvent, handleInput);
         element.dataset.autoSubmitInitialized = 'true';
 
-        // Store cleanup function
         element._autoSubmitCleanup = () => {
             element.removeEventListener(triggerEvent, handleInput);
             clearTimeout(timeout);
@@ -95,7 +119,6 @@
     function shouldRestoreFocus(element) {
         const tagName = element.tagName.toLowerCase();
         const type = element.type || '';
-        const role = element.getAttribute('role');
 
         // Only restore focus for text input elements
         return (

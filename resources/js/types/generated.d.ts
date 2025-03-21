@@ -24,6 +24,7 @@ declare namespace App.Data.Auth {
         profilePhotoPath: string | null;
         profilePhotoUrl: string | null;
         twoFactorEnabled: boolean;
+        isSubscribed: boolean | null;
     };
 }
 declare namespace App.Data.Banking.Account {
@@ -181,7 +182,7 @@ declare namespace App.Data.Teller {
 }
 declare namespace App.Data.Workspace {
     export type WorkspaceData = {
-        id: number;
+        id: string;
         name: string;
         personalWorkspace: boolean;
         owner: App.Data.Auth.UserData;
@@ -203,6 +204,7 @@ declare namespace App.Data.Workspace {
         profilePhotoPath: string | null;
         profilePhotoUrl: string | null;
         twoFactorEnabled: boolean;
+        isSubscribed: boolean | null;
     };
     export type WorkspaceMembershipData = {
         role: string;

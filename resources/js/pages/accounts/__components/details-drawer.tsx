@@ -65,7 +65,7 @@ export function AccountDetailsDrawer({ account }: AccountDetailsDrawerProps) {
 
                 <Drawer.Footer>
                     <Button.Root $size="md" $style="stroke" $type="neutral" asChild className="w-full">
-                        <Link href={route("transactions.index", { account_id: account?.id })}>
+                        <Link href={route("transactions.index", { "filter[account_id]": account?.id })}>
                             <Button.Icon as={Clock04Icon} />
                             See All Transactions
                         </Link>

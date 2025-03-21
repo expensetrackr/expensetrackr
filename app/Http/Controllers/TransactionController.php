@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Filters\FiltersTransactionsByAccount;
 use App\Http\Resources\TransactionResource;
 use App\Models\Transaction;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -11,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
+use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
 final class TransactionController
@@ -32,7 +34,7 @@ final class TransactionController
                     ->with('category', 'merchant')
                     ->allowedFields(['name', 'note', 'type', 'base_amount', 'base_currency', 'currency_rate', 'amount', 'currency', 'is_recurring', 'is_manual', 'dated_at', 'public_id', 'category.public_id', 'category.name', 'category.slug', 'category.color', 'merchant.name', 'merchant.icon'])
                     ->allowedIncludes(includes: ['category', 'merchant'])
-                    ->allowedFilters(['name', 'type'])
+                    ->allowedFilters(['name', 'type', AllowedFilter::custom('account_id', new FiltersTransactionsByAccount)])
                     ->allowedSorts(sorts: 'dated_at')
                     ->defaultSort(sorts: '-dated_at')
                     ->paginate(perPage: $perPage)
