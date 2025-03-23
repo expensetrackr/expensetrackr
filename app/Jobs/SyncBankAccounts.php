@@ -124,7 +124,6 @@ final class SyncBankAccounts implements ShouldBeUnique, ShouldQueue
             }
 
             foreach ($accounts as $account) {
-                dump($account);
                 $this->syncAccount($account);
             }
 
