@@ -34,6 +34,7 @@ Route::middleware([
         ->name('accounts.create.connection-type');
 
     Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
+    Route::put('/transactions/{transaction}', [TransactionController::class, 'update'])->name('transactions.update');
 
     Route::prefix('settings')->group(function () {
         Route::get('/', fn () => Inertia::render('settings/show'))->name('settings.show');

@@ -10,6 +10,7 @@ use App\Data\FinanceCore\BalanceData;
 use App\Data\FinanceCore\TransactionData;
 use App\Enums\ProviderType;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 
 final readonly class FinanceCoreService implements ProviderHandler
 {
@@ -18,8 +19,7 @@ final readonly class FinanceCoreService implements ProviderHandler
         private ProviderType $providerType,
         private string $accessToken,
     ) {
-        // TODO: remove this later
-        dump($this->providerConnectionId, $this->providerType, $this->accessToken);
+        Log::info("{$this->providerConnectionId} {$this->providerType->value} {$this->accessToken}");
     }
 
     /**

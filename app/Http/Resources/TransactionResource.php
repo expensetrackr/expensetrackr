@@ -31,12 +31,7 @@ final class TransactionResource extends JsonResource
             'isManual' => $this->is_manual ?? null,
             'datedAt' => $this->dated_at,
             'account' => $this->whenLoaded('account', fn (): AccountResource => new AccountResource($this->account)),
-            'category' => $this->whenLoaded('category', fn (): array => [
-                'id' => $this->category->public_id,
-                'name' => $this->category->name,
-                'slug' => $this->category->slug,
-                'color' => $this->category->color,
-            ]),
+            'category' => $this->whenLoaded('category', fn (): CategoryResource => new CategoryResource($this->category)),
             'merchant' => $this->whenLoaded('merchant', fn (): MerchantResource => new MerchantResource($this->merchant)),
         ];
     }

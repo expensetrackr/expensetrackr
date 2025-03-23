@@ -7,8 +7,8 @@ import * as SelectPrimitives from "../ui/select.tsx";
 
 type SelectProps = Omit<React.CustomComponentPropsWithRef<typeof SelectPrimitives.Root>, "$error"> & {
     wrapperClassName?: string;
-    error?: string | Array<string>;
     label?: string;
+    labelClassName?: string;
     id?: string;
     position?: "item-aligned" | "popper";
     triggerIcon?: React.ForwardRefExoticComponent<React.SVGProps<SVGSVGElement>>;
@@ -20,6 +20,7 @@ type SelectProps = Omit<React.CustomComponentPropsWithRef<typeof SelectPrimitive
         disabled?: boolean;
     }>;
     hint?: string | Array<string>;
+    error?: string | Array<string>;
 };
 
 export function Select({
@@ -28,6 +29,7 @@ export function Select({
     $variant,
     error,
     label,
+    labelClassName,
     id: idProp,
     triggerIcon,
     placeholder,
@@ -42,7 +44,7 @@ export function Select({
     return (
         <div className={cnMerge("flex flex-col gap-1", wrapperClassName)}>
             {label ? (
-                <Label.Root disabled={rest.disabled} htmlFor={id}>
+                <Label.Root className={labelClassName} disabled={rest.disabled} htmlFor={id}>
                     {label}
                 </Label.Root>
             ) : null}

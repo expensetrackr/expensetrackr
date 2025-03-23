@@ -79,6 +79,16 @@ final class Transaction extends Model
     use HasFactory, HasPrefixedId, WorkspaceOwned;
 
     /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'public_id';
+    }
+
+    /**
      * The account that the transaction belongs to.
      *
      * @return BelongsTo<Account, covariant $this>

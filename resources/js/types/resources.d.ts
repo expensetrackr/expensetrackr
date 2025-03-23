@@ -9,7 +9,7 @@ declare namespace Resources {
         currentBalance: string;
         isDefault: boolean;
         externalId: string;
-        connection: BankConnection;
+        connection?: BankConnection;
         transactions?: Array<Transaction>;
     };
     export type BankConnection = {
@@ -19,12 +19,20 @@ declare namespace Resources {
         providerType: string;
         status: string;
     };
+    // App\Http\Resources\CategoryResource
+    export type Category = {
+        id: string;
+        name: string;
+        slug: string;
+        color: string;
+    };
     // App\Http\Resources\LanguageResource
     export type Language = any;
     // App\Http\Resources\MerchantResource
     export type Merchant = {
         id: string;
         name: string;
+        category?: string;
         website?: string;
         icon?: string;
         address?: {
@@ -55,6 +63,7 @@ declare namespace Resources {
             slug: string;
             color: string;
         };
+        account?: Account;
         merchant?: Merchant;
     };
 }

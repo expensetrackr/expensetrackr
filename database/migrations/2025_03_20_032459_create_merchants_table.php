@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('merchants', function (Blueprint $table): void {
             $table->id();
             $table->string('name')->index();
+            $table->string('category')->nullable();
             $table->string('website')->nullable();
             $table->string('icon')->nullable();
             $table->json('address')->nullable();
@@ -23,6 +24,8 @@ return new class extends Migration
             $table->string('external_id')->unique();
             $table->string('public_id')->unique();
             $table->timestamps();
+
+            $table->index('category');
         });
     }
 

@@ -3,6 +3,6 @@
 declare(strict_types=1);
 
 return [
-    'previous' => '&laquo; Anterior',
-    'next' => 'Siguiente &raquo;',
+    'previous' => 'paginación.anterior',
+    'next' => 'paginación.siguiente'
 ];

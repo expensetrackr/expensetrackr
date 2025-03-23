@@ -28,6 +28,25 @@
         let timeout;
         let isSubmitting = false;
 
+        // Setup value change observer for hidden inputs
+        if (element.type === 'hidden') {
+            const valueObserver = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    if (mutation.type === 'attributes' && mutation.attributeName === 'value') {
+                        handleInput();
+                    }
+                });
+            });
+
+            valueObserver.observe(element, {
+                attributes: true,
+                attributeFilter: ['value'],
+            });
+
+            // Store the observer for cleanup
+            element._valueObserver = valueObserver;
+        }
+
         const handleInput = (event) => {
             if (isSubmitting) return;
 
@@ -94,6 +113,9 @@
 
         element._autoSubmitCleanup = () => {
             element.removeEventListener(triggerEvent, handleInput);
+            if (element._valueObserver) {
+                element._valueObserver.disconnect();
+            }
             clearTimeout(timeout);
         };
     }

@@ -12,6 +12,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Spatie\PrefixedIds\PrefixedIds;
 
 final class EnrichTransactionJob implements ShouldQueue
 {
@@ -43,7 +44,7 @@ final class EnrichTransactionJob implements ShouldQueue
                     $query->orWhere('name', 'ilike', "%{$term}%");
                 });
             })
-            ->orderByRaw('length(merchant_name) ASC') // Prefer shorter merchant names (usually more precise)
+            ->orderByRaw('length(name) ASC') // Prefer shorter merchant names (usually more precise)
             ->first();
 
         if ($existingMerchant) {
@@ -64,20 +65,28 @@ final class EnrichTransactionJob implements ShouldQueue
             return;
         }
 
+        dump($enrichmentData->merchantId);
+        dump(Merchant::generatePrefixedId());
+
         // Save new enrichment to database
-        $merchantId = Merchant::upsert([
+        $merchant = Merchant::updateOrCreate([
+            'external_id' => $enrichmentData->merchantId ?? 'mer_'.PrefixedIds::getUniqueId(),
+        ], [
             'name' => $enrichmentData->merchant,
             'category' => $enrichmentData->category ?? '',
             'website' => $enrichmentData->website ?? '',
             'icon' => $enrichmentData->icon ?? '',
             'address' => $enrichmentData->address?->toJson(),
             'is_system' => true,
-        ], ['merchant_id']);
+            'external_id' => $enrichmentData->merchantId ?? 'mer_'.PrefixedIds::getUniqueId(),
+            'public_id' => Merchant::generatePrefixedId(),
+        ]);
 
         // Attach new enrichment to transaction
         $this->transaction->update([
-            'merchant_id' => $merchantId,
+            'merchant_id' => $merchant->id,
             'enriched_at' => now(),
         ]);
+        $this->transaction->refresh();
     }
 }

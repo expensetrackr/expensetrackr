@@ -56,6 +56,16 @@ final class Category extends Model
     use HasFactory, HasPrefixedId;
 
     /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'public_id';
+    }
+
+    /**
      * Get the transactions for the category.
      *
      * @return HasMany<Transaction, covariant $this>

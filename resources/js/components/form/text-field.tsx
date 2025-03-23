@@ -9,6 +9,7 @@ type TextFieldProps = Omit<InputProps, "error"> & {
     wrapperClassName?: string;
     label?: string;
     hiddenLabel?: boolean;
+    labelClassName?: string;
     hint?: string | Array<string> | Array<undefined>;
     error?: string | Array<string>;
 };
@@ -20,6 +21,7 @@ export function TextField({
     error,
     label,
     hiddenLabel,
+    labelClassName,
     leadingIcon: LeadingIcon,
     trailingIcon: TrailingIcon,
     leadingNode,
@@ -35,7 +37,11 @@ export function TextField({
     return (
         <div className={cnMerge("flex flex-col gap-1", wrapperClassName)}>
             {label ? (
-                <Label.Root className={cn({ "sr-only": hiddenLabel })} disabled={rest.disabled} htmlFor={id}>
+                <Label.Root
+                    className={cn({ "sr-only": hiddenLabel }, labelClassName)}
+                    disabled={rest.disabled}
+                    htmlFor={id}
+                >
                     {label}
                 </Label.Root>
             ) : null}

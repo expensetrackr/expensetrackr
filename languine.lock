@@ -43,6 +43,8 @@ files:
     cancel: ea4788705e6873b424c65e91c2846b19
     apply: 9639e32cab248434a17ab32237cb3b71
     or: e81c4e4f2b7b93b481e13a8553c2ae1b
+    active: 4d3d769b812b6faa6b76e1a8abaece2d
+    inactive: 3cab03c00dbd11bc3569afa0748013f0
   lang/en/home.php:
     sections.hero.title: 851e524ab6702d2603c94c5103e99439
     sections.hero.description: 5e7be62ffc7a261f2211dd534e41406d
@@ -69,24 +71,21 @@ files:
     sections.pricing.plans.free.title: b24ce0cd392a5b0b8dedc66c25213594
     sections.pricing.plans.free.description: de6b11f3c495e01af66ad72818f8ee68
     sections.pricing.plans.free.features: 1ab7e3999f43a8ff2f88e2dd6b1436f2
-    sections.pricing.plans.free.coming_soon: 7215ee9c7d9dc229d2921a40e899ec5f
     sections.pricing.plans.free.button_label: 54f742623dc735530ef5c2d581f34130
     sections.pricing.plans.analyst.title: 66e64a1b4ca1259a31ebc747770c446d
     sections.pricing.plans.analyst.description: 54f4e96d43097bbdfb4189522175315e
-    sections.pricing.plans.analyst.features: 1772a6857c0272a2bed82da29236d8cc
-    sections.pricing.plans.analyst.coming_soon: 11830a4c0af5c9f60792b7307951e599
+    sections.pricing.plans.analyst.features: 81ce4193277bf2926985151adc0642be
     sections.pricing.plans.analyst.button_label: dfa592421ec2584a960f077610eb19bd
     sections.pricing.plans.lifetime.title: 1a10be3692cec335c74387f33221a6fa
     sections.pricing.plans.lifetime.description: 231310d537335eaa2862015d5ae3119d
     sections.pricing.plans.lifetime.features: ba0d964f096a2b4a8b7373540735d76d
-    sections.pricing.plans.lifetime.coming_soon: 7215ee9c7d9dc229d2921a40e899ec5f
     sections.pricing.plans.lifetime.button_label: 8a4a8a2660620fd6c1b7b5a85bfbca34
     sections.call_to_action.title: 3744153c0f7a426bb0d9326a5c03684f
     sections.call_to_action.description: f09cfc77cd870d6cf44702a192ee48de
     sections.call_to_action.button_label: 256b3a00717defddea38d6c92c9af9d2
   lang/en/pagination.php:
-    previous: 8bd433e5954b8223fb89dd22fe327696
-    next: f7d387020520aa6845529615215c7217
+    previous: 33bf3743bc6c91630f96c31e472c558b
+    next: 11b663a34cbd5959d6d143ac11ae7062
   lang/en/passwords.php:
     reset: 38dca74635b7fd02e312b874b86e8bad
     sent: 88919c9de7d0b01b27cb2f7e448f8fd8
@@ -253,6 +252,8 @@ files:
     fields.apr.placeholder: d3d9446802a44259755d38e6d163e820
     fields.expires_at.label: 8d7f12bd0dc53389421144669ff4ee63
     fields.expires_at.placeholder: 64de260a0ad2c3d96dece47bb581b78e
+    fields.annual_fee.label: 0d7d715d6bbc03a995a45d105a1797f6
+    fields.annual_fee.placeholder: 4571457f2443b28ab9d2cea5c0d4bdf4
     fields.interest_rate.label: 7dfa44aee8e21e5967e2fde5a6b0cfa8
     fields.interest_rate.placeholder: 4571457f2443b28ab9d2cea5c0d4bdf4
     fields.interest_rate_type.label: c4f728963b6642da147d9753843ba035
@@ -271,3 +272,7 @@ files:
     terms.and: c19f6440f9045503d42ee3622933e005
     terms.link2.label: fa2ead697d9998cbc65c81384e6533d5
     actions.submit.label: be11c74c1dd7f307bb80183a90dc2067
+  lang/en/enum.php:
+    transaction.type.income: 1f08d08fd864b99cbeebd88b9a0784a7
+    transaction.type.expense: 7bf48cb939975c27a0d9cfa99c6f3461
+    transaction.type.transfer: 6950810f0d2bba97a6f710c7b965b84e

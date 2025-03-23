@@ -10,15 +10,18 @@ import * as Divider from "#/components/ui/divider.tsx";
 import { usePaginationParams } from "#/hooks/use-pagination-params.ts";
 import { AppLayout } from "#/layouts/app-layout.tsx";
 import { type PageProps } from "#/types/globals.ts";
+import { TransactionDetailsDrawer } from "./__components/details-drawer.tsx";
 import { Filters } from "./__components/filters.tsx";
 import { TransactionsTable } from "./__components/table.tsx";
 
 type TransactionsPageProps = {
     transactions: Laravel.PaginatedResponse<Resources.Transaction>;
+    transaction?: Resources.Transaction | null;
+    categories: Array<Resources.Category>;
     requestId: string;
 };
 
-export default function TransactionsPage({ transactions, requestId }: TransactionsPageProps) {
+export default function TransactionsPage({ transactions, transaction, categories, requestId }: TransactionsPageProps) {
     const [, setPagination] = usePaginationParams();
 
     return (
@@ -41,12 +44,6 @@ export default function TransactionsPage({ transactions, requestId }: Transactio
                     <Button.Icon as={PlusSignIcon} />
                     Add Transaction
                 </Button.Root>
-                {/* <Button.Root asChild className="w-full md:w-auto">
-                    <Link href={route("accounts.create")}>
-                        <Button.Icon as={WalletAdd01} />
-                        Add account
-                    </Link>
-                </Button.Root> */}
             </Header>
 
             <div className="lg:px-8">
@@ -69,6 +66,8 @@ export default function TransactionsPage({ transactions, requestId }: Transactio
                     />
                 </div>
             </div>
+
+            <TransactionDetailsDrawer categories={categories} transaction={transaction} />
         </>
     );
 }

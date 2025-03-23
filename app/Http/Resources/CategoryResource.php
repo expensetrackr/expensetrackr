@@ -7,8 +7,8 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-/** @mixin \App\Models\Merchant */
-final class MerchantResource extends JsonResource
+/** @mixin \App\Models\Category */
+final class CategoryResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -20,10 +20,8 @@ final class MerchantResource extends JsonResource
         return [
             'id' => $this->public_id,
             'name' => $this->name,
-            'category' => $this->category,
-            'website' => $this->website,
-            'icon' => $this->icon,
-            'address' => $this->address,
+            'slug' => $this->slug,
+            'color' => $this->color,
         ];
     }
 }
