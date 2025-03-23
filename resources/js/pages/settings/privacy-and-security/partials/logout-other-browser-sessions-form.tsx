@@ -1,4 +1,5 @@
 import { useForm } from "@inertiajs/react";
+import { flexRender, getCoreRowModel, useReactTable, type ColumnDef } from "@tanstack/react-table";
 import { parseAsStringEnum, useQueryState } from "nuqs";
 import * as React from "react";
 import ChromeIcon from "virtual:icons/ri/chrome-line";
@@ -7,11 +8,54 @@ import LogoutCircleRIcon from "virtual:icons/ri/logout-circle-r-line";
 
 import { ActionSection } from "#/components/action-section.tsx";
 import { TextField } from "#/components/form/text-field.tsx";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "#/components/table.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import * as Modal from "#/components/ui/modal.tsx";
+import * as Table from "#/components/ui/table.tsx";
 import { Action } from "#/utils/action.ts";
+import { cn } from "#/utils/cn.ts";
 
+const columns: ColumnDef<App.Data.Auth.SessionData>[] = [
+    {
+        id: "browser",
+        header: "Browser",
+        accessorFn: (row) => row.device.browser,
+        cell({ cell }) {
+            return (
+                <p className="inline-flex items-center gap-3">
+                    <span className="inline-flex rounded-full bg-(--state-faded-lighter) p-1.5">
+                        {cell.row.original.device.browser === "Firefox" ? (
+                            <FirefoxIcon className="size-5 text-(--text-sub-600)" />
+                        ) : null}
+                        {cell.row.original.device.browser === "Chrome" ? (
+                            <ChromeIcon className="size-5 text-(--text-sub-600)" />
+                        ) : null}
+                    </span>
+                    <span className="text-paragraph-sm">{cell.row.original.device.browser}</span>
+                </p>
+            );
+        },
+    },
+    {
+        id: "lastActive",
+        header: "Most recent activity",
+        accessorKey: "lastActive",
+        cell({ cell }) {
+            return (
+                <div className="text-paragraph-sm text-(--text-sub-600)">
+                    {cell.row.original.isCurrentDevice ? "current.session" : cell.row.original.lastActive}
+                </div>
+            );
+        },
+    },
+    {
+        id: "ipAddress",
+        header: "IP Address",
+        accessorKey: "ipAddress",
+        cell({ cell }) {
+            return <div className="text-paragraph-sm text-(--text-sub-600)">{cell.row.original.ipAddress}</div>;
+        },
+    },
+];
 interface LogoutOtherBrowserSessionsFormProps {
     sessions: App.Data.Auth.SessionData[];
 }
@@ -39,6 +83,12 @@ export function LogoutOtherBrowserSessionsForm({ sessions }: LogoutOtherBrowserS
 
         form.reset();
     }
+
+    const table = useReactTable({
+        data: sessions,
+        columns,
+        getCoreRowModel: getCoreRowModel(),
+    });
 
     return (
         <ActionSection
@@ -117,38 +167,46 @@ export function LogoutOtherBrowserSessionsForm({ sessions }: LogoutOtherBrowserS
             title="Browser sessions"
         >
             {sessions.length ? (
-                <Table bleed>
-                    <TableHead>
-                        <TableRow>
-                            <TableHeader>Browser</TableHeader>
-                            <TableHeader>Most recent activity</TableHeader>
-                            <TableHeader>IP Address</TableHeader>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {sessions.map((session, index) => (
-                            <TableRow key={`${session.device.browser}-${index}`}>
-                                <TableCell>
-                                    <p className="inline-flex items-center gap-3">
-                                        <span className="inline-flex rounded-full bg-(--state-faded-lighter) p-1.5">
-                                            {session.device.browser === "Firefox" ? (
-                                                <FirefoxIcon className="size-5" />
-                                            ) : null}
-                                            {session.device.browser === "Chrome" ? (
-                                                <ChromeIcon className="size-5" />
-                                            ) : null}
-                                        </span>
-                                        <span>{session.device.browser}</span>
-                                    </p>
-                                </TableCell>
-                                <TableCell>
-                                    {session.isCurrentDevice ? "Current Session" : session.lastActive}
-                                </TableCell>
-                                <TableCell>{session.ipAddress}</TableCell>
-                            </TableRow>
+                <Table.Root className="-mx-4 w-auto px-4 lg:mx-0 lg:w-full lg:px-0 [&>table]:min-w-[860px]">
+                    <Table.Header className="whitespace-nowrap">
+                        {table.getHeaderGroups().map((headerGroup) => (
+                            <Table.Row key={headerGroup.id}>
+                                {headerGroup.headers.map((header) => {
+                                    return (
+                                        <Table.Head
+                                            // @ts-expect-error - className is a custom optional property from meta
+                                            className={header.column.columnDef.meta?.className}
+                                            key={header.id}
+                                        >
+                                            {header.isPlaceholder
+                                                ? null
+                                                : flexRender(header.column.columnDef.header, header.getContext())}
+                                        </Table.Head>
+                                    );
+                                })}
+                            </Table.Row>
                         ))}
-                    </TableBody>
-                </Table>
+                    </Table.Header>
+                    <Table.Body>
+                        {table.getRowModel().rows?.length > 0 &&
+                            table.getRowModel().rows.map((row, i, arr) => (
+                                <React.Fragment key={row.id}>
+                                    <Table.Row data-state={row.getIsSelected() && "selected"}>
+                                        {row.getVisibleCells().map((cell) => (
+                                            <Table.Cell
+                                                // @ts-expect-error - className is a custom optional property from meta
+                                                className={cn("h-12", cell.column.columnDef.meta?.className)}
+                                                key={cell.id}
+                                            >
+                                                {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                            </Table.Cell>
+                                        ))}
+                                    </Table.Row>
+                                    {i < arr.length - 1 && <Table.RowDivider />}
+                                </React.Fragment>
+                            ))}
+                    </Table.Body>
+                </Table.Root>
             ) : null}
         </ActionSection>
     );

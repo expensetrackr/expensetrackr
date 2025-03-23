@@ -1,7 +1,7 @@
 import * as SwitchPrimitives from "@radix-ui/react-switch";
 import * as React from "react";
 
-import { cn } from "#/utils/cn.ts";
+import { cn, cnMerge } from "#/utils/cn.ts";
 
 function Switch({ className, disabled, ...rest }: React.CustomComponentPropsWithRef<typeof SwitchPrimitives.Root>) {
     return (
@@ -36,7 +36,7 @@ function Switch({ className, disabled, ...rest }: React.CustomComponentPropsWith
                 )}
             >
                 <SwitchPrimitives.Thumb
-                    className={cn(
+                    className={cnMerge(
                         // base
                         "pointer-events-none relative block size-3",
                         "transition-transform duration-200 ease-out",

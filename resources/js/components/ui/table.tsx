@@ -19,7 +19,7 @@ function TableHead({ className, ...rest }: React.ComponentPropsWithRef<"th">) {
     return (
         <th
             className={cn(
-                "bg-(--bg-weak-50) px-3 py-2 text-left text-paragraph-sm text-(--text-sub-600) first:rounded-l-8 last:rounded-r-8",
+                "bg-(--bg-weak-50) px-3 py-2 text-left text-paragraph-sm font-medium text-(--text-sub-600) first:rounded-l-8 last:rounded-r-8",
                 className,
             )}
             {...rest}

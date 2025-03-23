@@ -12,12 +12,12 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 final class SessionData extends Data
 {
     public function __construct(
-        #[MapName('ip_address')]
+        #[MapName('ip_address', 'ipAddress')]
         public readonly string $ipAddress,
-        #[MapName('is_current_device')]
+        #[MapName('is_current_device', 'isCurrentDevice')]
         public readonly bool $isCurrentDevice,
         public readonly UserAgentData $device,
-        #[MapName('last_active')]
+        #[MapName('last_active', 'lastActive')]
         public readonly string $lastActive,
     ) {}
 }
