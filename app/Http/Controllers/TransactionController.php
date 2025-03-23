@@ -43,12 +43,12 @@ final class TransactionController
             : null;
         $categories = collect();
 
-        if ($transaction) {
+        if ($transaction instanceof TransactionResource) {
             $categories = CategoryResource::collection(
                 Category::query()
-                    ->where(function ($query) use ($request) {
+                    ->where(function ($query) use ($request): void {
                         $query->where('is_system', true)
-                            ->orWhere(function ($query) use ($request) {
+                            ->orWhere(function ($query) use ($request): void {
                                 $query->where('workspace_id', $request->user()->current_workspace_id)
                                     ->where('is_system', false);
                             });

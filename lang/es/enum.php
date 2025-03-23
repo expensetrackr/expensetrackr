@@ -7,7 +7,7 @@ return [
         'type' => [
             'income' => 'Ingresos',
             'expense' => 'Gastos',
-            'transfer' => 'Transferencia'
-        ]
-    ]
+            'transfer' => 'Transferencia',
+        ],
+    ],
 ];
