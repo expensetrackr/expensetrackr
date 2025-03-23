@@ -75,7 +75,6 @@ final class EnrichTransactionJob implements ShouldQueue
             'icon' => $enrichmentData->icon ?? '',
             'address' => $enrichmentData->address?->toJson(),
             'is_system' => true,
-            'external_id' => $enrichmentData->merchantId ?? 'mer_'.PrefixedIds::getUniqueId(),
             'public_id' => Merchant::generatePrefixedId(),
         ]);
 
