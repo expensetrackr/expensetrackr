@@ -196,6 +196,7 @@ export function TransactionDetailsDrawer({ transaction, categories }: Transactio
 
                         <Textarea
                             data-auto-submit
+                            data-autosubmit-debounce-timeout="1000"
                             disabled={form.processing}
                             error={form.errors.note}
                             id="note"
