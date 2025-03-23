@@ -5,7 +5,7 @@ function WidgetBox({ className, ...rest }: React.HTMLAttributes<HTMLDivElement>)
     return (
         <div
             className={cnMerge(
-                "w-full min-w-0 rounded-16 bg-(--bg-white-0) p-4 ring-1 shadow-xs ring-(--stroke-soft-200) ring-inset",
+                "w-full min-w-0 rounded-16 bg-(--bg-white-0) p-4 shadow-xs ring-1 ring-(--stroke-soft-200) ring-inset",
                 className,
             )}
             {...rest}

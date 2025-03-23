@@ -11,7 +11,7 @@ type AuthCardProps = {
 export function AuthCard({ children, cardIcon: CardIcon, title, description }: AuthCardProps) {
     return (
         <div className="w-full max-w-[472px] px-4">
-            <div className="flex w-full flex-col gap-6 rounded-20 bg-(--bg-white-0) p-5 ring-1 shadow-xs ring-(--stroke-soft-200) ring-inset md:p-8">
+            <div className="flex w-full flex-col gap-6 rounded-20 bg-(--bg-white-0) p-5 shadow-xs ring-1 ring-(--stroke-soft-200) ring-inset md:p-8">
                 {CardIcon || title || description ? (
                     <div className="flex flex-col items-center gap-2">
                         {/* icon */}
@@ -24,7 +24,7 @@ export function AuthCard({ children, cardIcon: CardIcon, title, description }: A
                                     "before:bg-gradient-to-b before:from-neutral-500 before:to-transparent before:opacity-10",
                                 )}
                             >
-                                <div className="relative z-10 flex size-12 items-center justify-center rounded-full bg-(--bg-white-0) ring-1 shadow-xs ring-(--stroke-soft-200) ring-inset lg:size-16">
+                                <div className="relative z-10 flex size-12 items-center justify-center rounded-full bg-(--bg-white-0) shadow-xs ring-1 ring-(--stroke-soft-200) ring-inset lg:size-16">
                                     <CardIcon className="size-6 text-(--text-sub-600) lg:size-8" />
                                 </div>
                             </div>

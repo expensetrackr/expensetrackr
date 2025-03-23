@@ -9,9 +9,9 @@ use Spatie\QueryBuilder\Filters\Filter;
 
 final class FiltersTransactionsByAccount implements Filter
 {
-    public function __invoke(Builder $query, $value, string $property)
+    public function __invoke(Builder $query, $value, string $property): void
     {
-        $query->whereHas('account', function (Builder $query) use ($value) {
+        $query->whereHas('account', function (Builder $query) use ($value): void {
             $query->where('public_id', $value);
         });
     }

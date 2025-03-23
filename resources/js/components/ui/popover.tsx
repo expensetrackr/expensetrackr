@@ -30,7 +30,7 @@ function PopoverContent({
                     // base
                     [
                         !unstyled &&
-                            "w-max rounded-16 bg-(--bg-white-0) p-5 ring-1 shadow-md ring-(--stroke-soft-200) ring-inset",
+                            "w-max rounded-16 bg-(--bg-white-0) p-5 shadow-md ring-1 ring-(--stroke-soft-200) ring-inset",
                     ],
                     "z-50",
                     // animation
