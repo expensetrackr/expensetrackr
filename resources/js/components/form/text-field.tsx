@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { cx } from "#/utils/cva.ts";
+import { cn, cnMerge } from "#/utils/cn.ts";
 import { Input, type InputProps } from "../composables/input.tsx";
 import * as Hint from "../ui/hint.tsx";
 import * as Label from "../ui/label.tsx";
@@ -33,9 +33,9 @@ export function TextField({
     const id = rest.id || generatedId;
 
     return (
-        <div className={cx("flex flex-col gap-1", wrapperClassName)}>
+        <div className={cnMerge("flex flex-col gap-1", wrapperClassName)}>
             {label ? (
-                <Label.Root className={cx({ "sr-only": hiddenLabel })} disabled={rest.disabled} htmlFor={id}>
+                <Label.Root className={cn({ "sr-only": hiddenLabel })} disabled={rest.disabled} htmlFor={id}>
                     {label}
                 </Label.Root>
             ) : null}

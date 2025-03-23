@@ -1,6 +1,6 @@
-import { useScript } from "@uidotdev/usehooks";
 import * as React from "react";
 import { toast } from "sonner";
+import { useScript } from "usehooks-ts";
 
 import { useConnectParams } from "#/hooks/use-connect-params.ts";
 import { ConnectAccountStepper } from "#/utils/steppers/create-account.step.ts";
@@ -15,7 +15,9 @@ export function TellerConnect({ id, onSelect }: TellerConnectProps) {
     const [institution, setInstitution] = React.useState<string | undefined>();
     const { setParams } = useConnectParams();
     const stepper = ConnectAccountStepper.useStepper();
-    useScript("https://cdn.teller.io/connect/connect.js");
+    useScript("https://cdn.teller.io/connect/connect.js", {
+        id: "teller-connect",
+    });
 
     React.useEffect(() => {
         if (institution) {

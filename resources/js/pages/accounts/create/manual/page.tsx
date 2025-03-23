@@ -1,7 +1,7 @@
 import { FormProvider, FormStateInput, getFormProps, useForm } from "@conform-to/react";
 import { Head, Link, useForm as useInertiaForm } from "@inertiajs/react";
-import { useLocalStorage } from "@uidotdev/usehooks";
 import { parseWithValibot, getValibotConstraint } from "conform-to-valibot";
+import { useLocalStorage } from "usehooks-ts";
 import type * as v from "valibot";
 import TextboxDuotone from "virtual:icons/ph/textbox-duotone";
 import CloseIcon from "virtual:icons/ri/close-line";
@@ -30,7 +30,7 @@ type CreateAccountPageProps = {
 export default function CreateManualAccountPage({ currencies }: CreateAccountPageProps) {
     const stepper = CreateManualAccountStepper.useStepper();
     const { type } = useCreateAccountParams();
-    const [account, setAccount] = useLocalStorage<Record<string, unknown> | null>("account", null);
+    const [account, setAccount, removeAccount] = useLocalStorage<Record<string, unknown> | null>("account", null);
     const { transform, post } = useInertiaForm();
     const [form, fields] = useForm({
         id: `create-account-${stepper.current.id}-form`,
@@ -49,7 +49,6 @@ export default function CreateManualAccountPage({ currencies }: CreateAccountPag
         onSubmit(event, { submission }) {
             event.preventDefault();
 
-            // check if value key is present on submission object
             if (submission && "value" in submission) {
                 setAccount({
                     ...account,
@@ -67,7 +66,7 @@ export default function CreateManualAccountPage({ currencies }: CreateAccountPag
 
                     post(route("accounts.store"), {
                         onSuccess() {
-                            setAccount(null);
+                            removeAccount();
                         },
                     });
                 } else {

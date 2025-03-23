@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { cx } from "#/utils/cva.ts";
+import { cn } from "#/utils/cn.ts";
 import { Link } from "./link.tsx";
 
 const TableContext = React.createContext<{
@@ -32,8 +32,8 @@ export function Table({
     return (
         <TableContext.Provider value={{ bleed, dense, grid, striped } as React.ContextType<typeof TableContext>}>
             <div className="flow-root">
-                <div {...props} className={cx(className, "-mx-(--gutter) overflow-x-auto whitespace-nowrap")}>
-                    <div className={cx("inline-block !min-w-full align-middle", !bleed && "sm:px-(--gutter)")}>
+                <div {...props} className={cn(className, "-mx-(--gutter) overflow-x-auto whitespace-nowrap")}>
+                    <div className={cn("inline-block !min-w-full align-middle", !bleed && "sm:px-(--gutter)")}>
                         <table className="text-sm/6 !min-w-full text-left">{children}</table>
                     </div>
                 </div>
@@ -43,7 +43,7 @@ export function Table({
 }
 
 export function TableHead({ className, ...props }: React.ComponentPropsWithoutRef<"thead">) {
-    return <thead {...props} className={cx(className, "text-paragraph-sm text-(--text-sub-600)")} />;
+    return <thead {...props} className={cn(className, "text-paragraph-sm text-(--text-sub-600)")} />;
 }
 
 export function TableBody(props: React.ComponentPropsWithoutRef<"tbody">) {
@@ -77,7 +77,7 @@ export function TableRow({
         <TableRowContext.Provider value={{ href, target, title } as React.ContextType<typeof TableRowContext>}>
             <tr
                 {...props}
-                className={cx(
+                className={cn(
                     className,
                     href &&
                         "has-[[data-row-link][data-focus]]:outline-2 has-[[data-row-link][data-focus]]:-outline-offset-2 has-[[data-row-link][data-focus]]:outline-blue-500 dark:focus-within:bg-white/[2.5%]",
@@ -96,7 +96,7 @@ export function TableHeader({ className, ...props }: React.ComponentPropsWithout
     return (
         <th
             {...props}
-            className={cx(
+            className={cn(
                 className,
                 "bg-(--bg-weak-50) px-3 py-2 font-medium first:rounded-l-8 last:rounded-r-8",
                 grid && "border-l-zinc-950/5 border-l first:border-l-0 dark:border-l-white/5",
@@ -115,7 +115,7 @@ export function TableCell({ className, children, ...props }: React.ComponentProp
         <td
             ref={href ? setCellRef : undefined}
             {...props}
-            className={cx(
+            className={cn(
                 className,
                 "relative px-3 py-3.5 text-paragraph-sm text-(--text-sub-600)",
                 grid && "border-l-zinc-950/5 border-l first:border-l-0 dark:border-l-white/5",

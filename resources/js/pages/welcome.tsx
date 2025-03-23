@@ -25,7 +25,7 @@ import * as Button from "#/components/ui/button.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
 import * as SegmentedControl from "#/components/ui/segmented-control.tsx";
 import { useTranslation } from "#/hooks/use-translation.ts";
-import { cx } from "#/utils/cva.ts";
+import { cn } from "#/utils/cn.ts";
 import { plans } from "#/utils/plans.ts";
 import { BalanceSchema } from "#/utils/steppers/create-account.step.ts";
 import { Card } from "../components/create-account/card.tsx";
@@ -399,7 +399,7 @@ function PricingSection() {
                                             key={plan.code}
                                         >
                                             <div
-                                                className={cx(
+                                                className={cn(
                                                     "flex flex-col gap-6 px-5 py-12",
                                                     plan.featured
                                                         ? "relative z-10 rounded-20 border bg-linear-41 from-(--bg-white-0) from-1% to-(--bg-weak-50) to-178% shadow-(color:--bg-weak-50)"
@@ -426,7 +426,7 @@ function PricingSection() {
                                                         </div>
 
                                                         <div
-                                                            className={cx(
+                                                            className={cn(
                                                                 "flex size-10 items-center justify-center rounded-full",
                                                                 plan.iconBg,
                                                             )}

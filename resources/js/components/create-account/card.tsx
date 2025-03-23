@@ -2,7 +2,7 @@ import { type Step, type Stepper } from "@stepperize/react";
 
 import { Text } from "#/components/text.tsx";
 import * as Button from "#/components/ui/button.tsx";
-import { cx } from "#/utils/cva.ts";
+import { cn } from "#/utils/cn.ts";
 
 interface CardFormProps<Steps extends Step[]> extends React.ComponentProps<"div"> {
     title?: string;
@@ -26,7 +26,7 @@ export function Card<Steps extends Step[]>({
 
     return (
         <div
-            className={cx(
+            className={cn(
                 "w-full duration-500 ease-out animate-in outline-none fade-in-0 slide-in-from-bottom-3 focus:outline-none min-[390px]:w-max",
                 props.className,
             )}
@@ -37,7 +37,7 @@ export function Card<Steps extends Step[]>({
                     <div className="flex w-full flex-col items-center gap-2">
                         {Icon ? (
                             <div
-                                className={cx(
+                                className={cn(
                                     "relative flex size-[68px] shrink-0 items-center justify-center rounded-full backdrop-blur-xl lg:size-24",
                                     // bg
                                     "before:absolute before:inset-0 before:rounded-full",
