@@ -65,9 +65,6 @@ final class EnrichTransactionJob implements ShouldQueue
             return;
         }
 
-        dump($enrichmentData->merchantId);
-        dump(Merchant::generatePrefixedId());
-
         // Save new enrichment to database
         $merchant = Merchant::updateOrCreate([
             'external_id' => $enrichmentData->merchantId ?? 'mer_'.PrefixedIds::getUniqueId(),
