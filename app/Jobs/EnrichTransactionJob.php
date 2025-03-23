@@ -24,6 +24,10 @@ final class EnrichTransactionJob implements ShouldQueue
 
     public function handle(SynthService $synth): void
     {
+        if (! $this->transaction->workspace->settings->is_data_enrichment_enabled) {
+            return;
+        }
+
         $description = "{$this->transaction->name} - {$this->transaction->note}";
 
         // Clean and prepare search terms
