@@ -3,20 +3,19 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\TransactionController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-})->name('home');
+Route::get('/', fn () => Inertia::render('welcome', [
+    'canLogin' => Route::has('login'),
+    'canRegister' => Route::has('register'),
+    'laravelVersion' => Application::VERSION,
+    'phpVersion' => PHP_VERSION,
+]))->name('home');
 
 Route::middleware([
     'auth:sanctum',
@@ -35,6 +34,8 @@ Route::middleware([
 
     Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
     Route::put('/transactions/{transaction}', [TransactionController::class, 'update'])->name('transactions.update');
+
+    Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
 
     Route::prefix('settings')->group(function () {
         Route::get('/', fn () => Inertia::render('settings/show'))->name('settings.show');
