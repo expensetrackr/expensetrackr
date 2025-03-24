@@ -4,7 +4,7 @@ import { resolveCurrencyFormat } from "@sumup/intl";
 import { Image, Source } from "@unpic/react";
 import { getValibotConstraint, parseWithValibot } from "conform-to-valibot";
 import * as React from "react";
-import MailIcon from "virtual:icons/material-symbols/mail";
+import Mail01Icon from "virtual:icons/hugeicons/mail-01";
 import GithubIcon from "virtual:icons/mdi/github";
 import CheckboxCircleFillIcon from "virtual:icons/ri/checkbox-circle-fill";
 import MoneyDollarCircleFillIcon from "virtual:icons/ri/money-dollar-circle-fill";
@@ -564,7 +564,7 @@ function Footer() {
                         </li>
                         <li>
                             <a href="mailto:hi@expensetrackr.app" rel="noopener noreferrer" target="_blank">
-                                <MailIcon className="size-6" />
+                                <Mail01Icon className="size-6" />
                             </a>
                         </li>
                     </ul>

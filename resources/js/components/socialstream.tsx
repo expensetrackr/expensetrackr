@@ -1,5 +1,5 @@
 import { Link } from "@inertiajs/react";
-import GoogleIcon from "virtual:icons/flat-color-icons/google";
+import GoogleIcon from "virtual:icons/logos/google-icon";
 
 import * as Divider from "#/components/ui/divider.tsx";
 import * as SocialButton from "#/components/ui/social-button.tsx";

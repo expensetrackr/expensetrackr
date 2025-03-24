@@ -1,6 +1,6 @@
 import * as ScrollAreaPrimitives from "@radix-ui/react-scroll-area";
 import { Image } from "@unpic/react";
-import KeyCmd16Icon from "virtual:icons/qlementine-icons/key-cmd-16";
+import CommandIcon from "virtual:icons/hugeicons/command";
 import Search2Icon from "virtual:icons/ri/search-2-line";
 
 import { useConnectParams } from "#/hooks/use-connect-params.ts";
@@ -36,7 +36,7 @@ export function InstitutionSelection({ institutions }: InstitutionSelectionProps
                             value={query}
                         />
                         <Kbd.Root>
-                            <KeyCmd16Icon className="size-4" />1
+                            <CommandIcon className="size-4" />1
                         </Kbd.Root>
                     </Input.Wrapper>
                 </Input.Root>

@@ -50,17 +50,12 @@
       },
       "devDependencies": {
         "@epic-web/config": "1.18.2",
-        "@iconify-json/flat-color-icons": "1.2.1",
         "@iconify-json/hugeicons": "^1.2.4",
         "@iconify-json/logos": "1.2.4",
         "@iconify-json/lucide": "1.2.32",
-        "@iconify-json/material-symbols": "1.2.17",
         "@iconify-json/mdi": "1.2.3",
         "@iconify-json/ph": "1.2.2",
-        "@iconify-json/qlementine-icons": "1.2.4",
         "@iconify-json/ri": "1.2.5",
-        "@iconify-json/solar": "1.2.2",
-        "@iconify-json/tabler": "1.2.17",
         "@svgr/core": "8.1.0",
         "@svgr/plugin-jsx": "8.1.0",
         "@tailwindcss/vite": "4.0.15",
@@ -237,27 +232,17 @@
 
     "@humanwhocodes/retry": ["@humanwhocodes/retry@0.4.2", "", {}, "sha512-xeO57FpIu4p1Ri3Jq/EXq4ClRm86dVF2z/+kvFnyqVYRavTZmaFaUBbWCOuuTh0o/g7DSsk6kc2vrS4Vl5oPOQ=="],
 
-    "@iconify-json/flat-color-icons": ["@iconify-json/flat-color-icons@1.2.1", "", { "dependencies": { "@iconify/types": "*" } }, "sha512-iv1NQai4ThVJf5RGB2UBY/EYG4P5KpdnRTUM1hqLweD6OmWxZUyNJkqLzwns6/t+VBYM0H5gS/ckSWyxxEIYmQ=="],
-
     "@iconify-json/hugeicons": ["@iconify-json/hugeicons@1.2.4", "", { "dependencies": { "@iconify/types": "*" } }, "sha512-Rx1I42/wwqNiWx7rdQxtFWWOF1/DT1IMPrNReBVJiZe7NIdGT6Zv6Jw5gayqUtv7lDmE8eRmgd6MYRoVJrbuoA=="],
 
     "@iconify-json/logos": ["@iconify-json/logos@1.2.4", "", { "dependencies": { "@iconify/types": "*" } }, "sha512-XC4If5D/hbaZvUkTV8iaZuGlQCyG6CNOlaAaJaGa13V5QMYwYjgtKk3vPP8wz3wtTVNVEVk3LRx1fOJz+YnSMw=="],
 
     "@iconify-json/lucide": ["@iconify-json/lucide@1.2.32", "", { "dependencies": { "@iconify/types": "*" } }, "sha512-M5efeHQJhlT8FkAXjW+xGu5/lHUt5VBSjd/u9XxmQy6RGXLRCRi0PcUBosAuKALRT15j+U8dN4eWiDhDZjTbSw=="],
 
-    "@iconify-json/material-symbols": ["@iconify-json/material-symbols@1.2.17", "", { "dependencies": { "@iconify/types": "*" } }, "sha512-hKb+Ii5cqLXXefYMxUB2jIc8BNqxixQogud4KU/fn0F4puM1iCdCF2lFV+0U8wnJ6dZIx6E+w8Ree4bIT7To+A=="],
-
     "@iconify-json/mdi": ["@iconify-json/mdi@1.2.3", "", { "dependencies": { "@iconify/types": "*" } }, "sha512-O3cLwbDOK7NNDf2ihaQOH5F9JglnulNDFV7WprU2dSoZu3h3cWH//h74uQAB87brHmvFVxIOkuBX2sZSzYhScg=="],
 
     "@iconify-json/ph": ["@iconify-json/ph@1.2.2", "", { "dependencies": { "@iconify/types": "*" } }, "sha512-PgkEZNtqa8hBGjHXQa4pMwZa93hmfu8FUSjs/nv4oUU6yLsgv+gh9nu28Kqi8Fz9CCVu4hj1MZs9/60J57IzFw=="],
 
-    "@iconify-json/qlementine-icons": ["@iconify-json/qlementine-icons@1.2.4", "", { "dependencies": { "@iconify/types": "*" } }, "sha512-wXiApcabvB/hTkJKf2zC5mqsOoabwBhb+SO3FUBZJBJfTVPoG9S+ucAck3nJ+AEChNmbS3VvwhGmSKP/5VbPzw=="],
-
     "@iconify-json/ri": ["@iconify-json/ri@1.2.5", "", { "dependencies": { "@iconify/types": "*" } }, "sha512-kWGimOXMZrlYusjBKKXYOWcKhbOHusFsmrmRGmjS7rH0BpML5A9/fy8KHZqFOwZfC4M6amObQYbh8BqO5cMC3w=="],
-
-    "@iconify-json/solar": ["@iconify-json/solar@1.2.2", "", { "dependencies": { "@iconify/types": "*" } }, "sha512-lcTb6DWL4HZObiY1W3fHfuxxuQHUc6CFHFeywKEx7Ry0k+dU6POZCMC7oVLr0F8vuf+KgaQ3oOoGO/yFzOwrNg=="],
-
-    "@iconify-json/tabler": ["@iconify-json/tabler@1.2.17", "", { "dependencies": { "@iconify/types": "*" } }, "sha512-Jfk20IC/n7UOQQSXM600BUhAwEfg8KU1dNUF+kg4eRhbET5w1Ktyax7CDx8Z8y0H6+J/8//AXpJOEgG8YoP8rw=="],
 
     "@iconify/types": ["@iconify/types@2.0.0", "", {}, "sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg=="],
 

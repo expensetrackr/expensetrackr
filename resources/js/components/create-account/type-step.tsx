@@ -1,12 +1,12 @@
 import * as LabelPrimivites from "@radix-ui/react-label";
 import type * as v from "valibot";
-import BoxesDuotone from "virtual:icons/lucide/package-search";
-import ChartLineIcon from "virtual:icons/mdi/finance";
-import BankDuotoneIcon from "virtual:icons/ph/bank-duotone";
-import BankCardDuotoneIcon from "virtual:icons/ph/credit-card-duotone";
-import HandCoinsDuotone from "virtual:icons/ph/hand-coins-duotone";
-import CryptoDuotone from "virtual:icons/tabler/currency-bitcoin";
-import ReceiptDuotone from "virtual:icons/tabler/receipt-2";
+import BankIcon from "virtual:icons/hugeicons/bank";
+import BitcoinWalletIcon from "virtual:icons/hugeicons/bitcoin-wallet";
+import ChartUpIcon from "virtual:icons/hugeicons/chart-up";
+import CreditCardIcon from "virtual:icons/hugeicons/credit-card";
+import PackageSearchIcon from "virtual:icons/hugeicons/package-search";
+import ReceiptDollarIcon from "virtual:icons/hugeicons/receipt-dollar";
+import TipsIcon from "virtual:icons/hugeicons/tips";
 
 import { useCreateAccountParams } from "#/hooks/use-create-account-params.ts";
 import { AccountTypeEnum, ConnectionTypeEnum } from "#/schemas/account.ts";
@@ -15,43 +15,43 @@ import * as Radio from "../ui/radio.tsx";
 
 const accountTypes = {
     [AccountTypeEnum.enum.Depository]: {
-        icon: BankDuotoneIcon,
+        icon: BankIcon,
         title: "Depository",
         description: "Checking, savings, or money market accounts",
         color: "bg-blue-50 text-blue-500 dark:bg-blue-400/20 dark:text-blue-400",
     },
     [AccountTypeEnum.enum.Investment]: {
-        icon: ChartLineIcon,
+        icon: ChartUpIcon,
         title: "Investment",
         description: "Stocks, bonds, mutual funds, and other investment accounts",
         color: "bg-teal-50 text-teal-500 dark:bg-teal-400/20 dark:text-teal-400",
     },
     [AccountTypeEnum.enum.Crypto]: {
-        icon: CryptoDuotone,
+        icon: BitcoinWalletIcon,
         title: "Crypto",
         description: "Cryptocurrency and digital asset accounts",
         color: "bg-yellow-50 text-yellow-500 dark:bg-yellow-400/20 dark:text-yellow-400",
     },
     [AccountTypeEnum.enum.CreditCard]: {
-        icon: BankCardDuotoneIcon,
+        icon: CreditCardIcon,
         title: "Credit card",
         description: "Track credit card balances and payments",
         color: "bg-purple-50 text-purple-500 dark:bg-purple-400/20 dark:text-purple-400",
     },
     [AccountTypeEnum.enum.Loan]: {
-        icon: HandCoinsDuotone,
+        icon: TipsIcon,
         title: "Loan",
         description: "Personal, auto, student, or mortgage loans",
         color: "bg-sky-50 text-sky-500 dark:bg-sky-400/20 dark:text-sky-400",
     },
     [AccountTypeEnum.enum.OtherAsset]: {
-        icon: BoxesDuotone,
+        icon: PackageSearchIcon,
         title: "Other asset",
         description: "Vehicles, property, or other valuable assets",
         color: "bg-teal-50 text-teal-500 dark:bg-teal-400/20 dark:text-teal-400",
     },
     [AccountTypeEnum.enum.OtherLiability]: {
-        icon: ReceiptDuotone,
+        icon: ReceiptDollarIcon,
         title: "Other liability",
         description: "Any other debts or financial obligations",
         color: "bg-pink-50 text-pink-500 dark:bg-pink-400/20 dark:text-pink-400",
