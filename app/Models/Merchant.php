@@ -39,6 +39,10 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Merchant whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Merchant whereWebsite($value)
  *
+ * @property string|null $category
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Merchant whereCategory($value)
+ *
  * @mixin \Eloquent
  */
 final class Merchant extends Model

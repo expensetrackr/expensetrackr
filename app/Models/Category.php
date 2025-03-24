@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\CategoryClassification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -18,6 +19,7 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @property string|null $description
  * @property bool $is_system
  * @property bool $is_active
+ * @property CategoryClassification $classification
  * @property int|null $workspace_id
  * @property int|null $parent_id
  * @property string $public_id
@@ -35,6 +37,7 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Category newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Category newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Category query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category whereClassification($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Category whereColor($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Category whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Category whereDescription($value)
@@ -103,5 +106,17 @@ final class Category extends Model
     public function workspace(): BelongsTo
     {
         return $this->belongsTo(Workspace::class);
+    }
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'classification' => CategoryClassification::class,
+        ];
     }
 }
