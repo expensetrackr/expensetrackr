@@ -43,7 +43,11 @@ export function CreateCategoryModal({ categories }: CreateCategoryModalProps) {
     };
 
     return (
-        <Modal.Root onOpenChange={() => setParams({ action: null })} open={params.action === "create"}>
+        <Modal.Root
+            key={params.action}
+            onOpenChange={() => setParams({ action: null })}
+            open={params.action === "create"}
+        >
             <Modal.Content className="max-w-lg">
                 <Modal.Header
                     description="Create a new category to organize your transactions."
@@ -124,7 +128,7 @@ export function CreateCategoryModal({ categories }: CreateCategoryModalProps) {
                                 name="parentId"
                                 onValueChange={(value) => form.setData("parentId", value)}
                                 options={categories[form.data.classification]
-                                    .filter((category) => !category.hasChildren)
+                                    .filter((category) => !category.children?.length)
                                     .map((category) => ({
                                         value: category.id,
                                         label: category.name,

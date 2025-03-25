@@ -7,7 +7,7 @@ export function useCategoriesParams() {
             "filter[name]": parseAsString.withDefault("").withOptions({
                 throttleMs: 500,
             }),
-            action: parseAsStringLiteral(["create", "delete"]),
+            action: parseAsStringLiteral(["create", "update", "delete"]),
         },
         {
             clearOnDefault: true,

@@ -6,7 +6,7 @@ import * as Switch from "#/components/ui/switch.tsx";
 import { useUser } from "#/hooks/use-user.ts";
 
 type WorkspaceSettingsFormProps = {
-    workspaceId: number;
+    workspaceId: string;
     defaultValues: App.Data.Workspace.WorkspaceSettingsData;
 };
 

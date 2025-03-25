@@ -34,13 +34,16 @@ final class UpdateCategoryRequest extends FormRequest
             'classification' => ['required', 'string', Rule::enum(CategoryClassification::class)],
             'parent_id' => [
                 'nullable',
-                'exists:categories,id',
-                'not_in:id',
+                'exists:categories,public_id',
+                'not_in:public_id',
                 function ($attribute, $value, $fail): void {
                     if ($value) {
-                        $parent = Category::find($value);
-                        if ($parent && $parent->children()->exists()) {
-                            $fail('Cannot set a parent category that already has children. Only two levels of nesting are allowed.');
+                        // Get the current category being updated
+                        $category = Category::wherePublicId($this->route('category'))->first();
+
+                        // If this category has children, it cannot be assigned a parent
+                        if ($category && $category->children()->exists()) {
+                            $fail('Cannot assign a parent to this category because it already has children. Only two levels of nesting are allowed.');
                         }
                     }
                 },

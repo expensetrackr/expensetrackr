@@ -18,6 +18,9 @@ final class UpdateCategory
         $category->forceFill([
             'name' => $input['name'],
             'color' => $input['color'],
+            'description' => $input['description'],
+            'classification' => $input['classification'],
+            'parent_id' => $input['parent_id'] ? Category::wherePublicId($input['parent_id'])->first()?->id : null,
         ])->save();
     }
 }

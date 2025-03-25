@@ -11,15 +11,15 @@ import * as Button from "#/components/ui/button.tsx";
 import * as Modal from "#/components/ui/modal.tsx";
 import { useCategoriesParams } from "#/hooks/use-categories-params.ts";
 
-type DetailsModalProps = {
+type UpdateCategoryModalProps = {
     categories: {
         [key in App.Enums.CategoryClassification]: Array<Resources.Category>;
     };
     category: Resources.Category;
 };
 
-export function DetailsModal({ categories, category }: DetailsModalProps) {
-    const { categoryId, setParams } = useCategoriesParams();
+export function UpdateCategoryModal({ categories, category }: UpdateCategoryModalProps) {
+    const { setParams, ...params } = useCategoriesParams();
     const form = useForm({
         name: category.name,
         color: category.color,
@@ -31,11 +31,11 @@ export function DetailsModal({ categories, category }: DetailsModalProps) {
     const onSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
-        form.put(route("categories.update", [category?.id ?? ""]), {
+        form.put(route("categories.update", [category.id]), {
             errorBag: "updateCategory",
             preserveScroll: true,
             async onSuccess() {
-                await setParams({ categoryId: null });
+                await setParams({ action: null, categoryId: null });
             },
             onError() {
                 form.reset();
@@ -44,11 +44,15 @@ export function DetailsModal({ categories, category }: DetailsModalProps) {
     };
 
     return (
-        <Modal.Root onOpenChange={() => setParams({ categoryId: null })} open={!!categoryId}>
-            <Modal.Content className="max-w-[440px]">
+        <Modal.Root
+            key={category.id}
+            onOpenChange={() => setParams({ action: null, categoryId: null })}
+            open={params.action === "update" && category.id === params.categoryId}
+        >
+            <Modal.Content aria-describedby={undefined} className="max-w-[440px]">
                 <Modal.Body className="flex items-start gap-4">
                     <form
-                        action={route("categories.update", [category?.id ?? ""])}
+                        action={route("categories.update", [category.id])}
                         className="flex w-full flex-col gap-3"
                         id="update-category-form"
                         method="POST"
@@ -56,7 +60,7 @@ export function DetailsModal({ categories, category }: DetailsModalProps) {
                     >
                         <input name="_method" type="hidden" value="PUT" />
 
-                        <div className="grid grid-cols-1 gap-3 lg:grid-cols-3">
+                        <div className="grid grid-cols-1 gap-3 lg:grid-cols-5">
                             <TextField
                                 autoComplete="off"
                                 autoFocus
@@ -69,7 +73,7 @@ export function DetailsModal({ categories, category }: DetailsModalProps) {
                                 placeholder="Groceries"
                                 type="text"
                                 value={form.data.name}
-                                wrapperClassName="lg:col-span-2"
+                                wrapperClassName="lg:col-span-3"
                             />
 
                             <ColorField
@@ -78,6 +82,7 @@ export function DetailsModal({ categories, category }: DetailsModalProps) {
                                 label="Color"
                                 name="color"
                                 onColorChange={(value) => form.setData("color", value)}
+                                wrapperClassName="lg:col-span-2"
                             />
                         </div>
 
@@ -101,7 +106,7 @@ export function DetailsModal({ categories, category }: DetailsModalProps) {
                                 name="classification"
                                 onValueChange={(value) => {
                                     form.setData("classification", value as App.Enums.CategoryClassification);
-                                    form.reset("parentId");
+                                    form.setData("parentId", "");
                                 }}
                                 options={["income", "expense", "transfer", "other"].map((classification) => ({
                                     value: classification,
@@ -118,13 +123,13 @@ export function DetailsModal({ categories, category }: DetailsModalProps) {
                                 labelSub="(optional)"
                                 name="parentId"
                                 onValueChange={(value) => form.setData("parentId", value)}
-                                options={categories[form.data.classification]
-                                    .filter((category) => !category.hasChildren)
-                                    .map((category) => ({
+                                options={
+                                    categories[form.data.classification]?.map((category) => ({
                                         value: category.id,
                                         label: category.name,
                                         icon: categoryIcons[category.slug as keyof typeof categoryIcons],
-                                    }))}
+                                    })) ?? []
+                                }
                                 value={form.data.parentId}
                             />
                         </div>

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Actions\Categories\CreateCategory;
+use App\Actions\Categories\DeleteCategory;
 use App\Actions\Categories\UpdateCategory;
 use App\Http\Requests\CreateCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
@@ -21,7 +22,6 @@ final class CategoryController
      */
     public function index(Request $request)
     {
-        $categoryId = $request->string('category_id');
         $categories = Category::query()
             ->where(function ($query) use ($request): void {
                 $query->where('is_system', true)
@@ -30,21 +30,14 @@ final class CategoryController
                             ->where('is_system', false);
                     });
             })
-            ->with('workspace')
+            ->with(['workspace', 'parent', 'children', 'children.workspace', 'children.parent'])
             ->orderBy('name', 'asc')
             ->get()
             ->groupBy('classification')
             ->map(fn ($group) => CategoryResource::collection($group));
 
-        if ($categoryId->isNotEmpty()) {
-            $category = new CategoryResource(Category::query()
-                ->wherePublicId($categoryId->value())
-                ->first());
-        }
-
         return Inertia::render('categories/page', [
             'categories' => $categories,
-            'category' => $category ?? null,
             'permissions' => [
                 'canCreateCategories' => $request->user()->can('create', Category::class),
             ],
@@ -73,6 +66,33 @@ final class CategoryController
 
         return back()->with('toast', [
             'title' => 'Category updated',
+            'type' => 'success',
+        ]);
+    }
+
+    /**
+     * Delete the specified category.
+     */
+    public function destroy(Request $request, Category $category, DeleteCategory $action)
+    {
+        if ($category->is_system) {
+            return back()->with('toast', [
+                'title' => 'Cannot delete system category',
+                'type' => 'error',
+            ]);
+        }
+
+        if ($request->user()->cannot('delete', $category)) {
+            return back()->with('toast', [
+                'title' => 'Cannot delete category',
+                'type' => 'error',
+            ]);
+        }
+
+        $action->handle($category);
+
+        return back()->with('toast', [
+            'title' => 'Category deleted',
             'type' => 'success',
         ]);
     }

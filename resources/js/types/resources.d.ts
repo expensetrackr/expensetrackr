@@ -33,7 +33,8 @@ declare namespace Resources {
             canUpdate: boolean;
             canDelete: boolean;
         };
-        hasChildren?: boolean;
+        hasParent?: boolean;
+        children?: Array<Category>;
     };
     // App\Http\Resources\LanguageResource
     export type Language = any;

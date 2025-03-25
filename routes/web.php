@@ -37,6 +37,7 @@ Route::middleware([
 
     Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
     Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
+    Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
 
     Route::prefix('settings')->group(function () {
         Route::get('/', fn () => Inertia::render('settings/show'))->name('settings.show');
