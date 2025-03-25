@@ -267,7 +267,7 @@ final class SyncBankAccounts implements ShouldBeUnique, ShouldQueue
      *
      * @param  Collection<int, Transaction>  $transactions
      */
-    private function enrichTransactions(array $transactions): void
+    private function enrichTransactions(Collection $transactions): void
     {
         foreach ($transactions as $transaction) {
             EnrichTransactionJob::dispatch($transaction);

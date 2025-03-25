@@ -8,7 +8,6 @@ import * as React from "react";
 import { type NumberFormatValues } from "react-number-format";
 import type * as v from "valibot";
 
-import { useCreateAccountParams } from "#/hooks/use-create-account-params.ts";
 import { useTranslation } from "#/hooks/use-translation.ts";
 import { InterestRateTypeEnum, type BalanceSchema } from "#/utils/steppers/create-account.step.ts";
 import { Select as SelectComponent } from "../form/select.tsx";
@@ -28,7 +27,6 @@ type DetailsStepProps = {
 };
 
 export function BalanceStep({ currencies, fields }: DetailsStepProps) {
-    const { type } = useCreateAccountParams();
     const { language } = useTranslation();
     const currencyCodeControl = useInputControl(fields.currency_code);
     const currencyFormat = resolveCurrencyFormat(language, currencyCodeControl.value || "USD");
@@ -42,7 +40,7 @@ export function BalanceStep({ currencies, fields }: DetailsStepProps) {
 
     return (
         <>
-            <input {...getInputProps(fields.type, { type: "hidden", value: false })} value={type || ""} />
+            <input {...getInputProps(fields.type, { type: "hidden" })} />
             <input {...getInputProps(fields.currency_code, { type: "hidden" })} />
 
             <CurrencyInput
@@ -67,9 +65,9 @@ export function BalanceStep({ currencies, fields }: DetailsStepProps) {
                 withCurrencySymbol={false}
             />
 
-            {(type === "credit_card" || type === "loan") && <Divider.Root />}
+            {(fields.type.value === "credit_card" || fields.type.value === "loan") && <Divider.Root />}
 
-            {type === "credit_card" && (
+            {fields.type.value === "credit_card" && (
                 <CreditCardFields
                     currencyFormat={currencyFormat}
                     fields={fields}
@@ -77,7 +75,7 @@ export function BalanceStep({ currencies, fields }: DetailsStepProps) {
                 />
             )}
 
-            {type === "loan" && <LoanFields fields={fields} />}
+            {fields.type.value === "loan" && <LoanFields fields={fields} />}
         </>
     );
 }

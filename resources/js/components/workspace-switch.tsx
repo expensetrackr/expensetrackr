@@ -77,7 +77,7 @@ export function WorkspaceSwitch({ className }: { className?: string }) {
                 </Avatar.Root>
                 <div className="flex w-[172px] shrink-0 items-center gap-3" data-hide-collapsed>
                     <div className="flex-1 space-y-1">
-                        <div className="text-label-sm">{currentWorkspace?.name}</div>
+                        <div className="truncate text-label-sm">{currentWorkspace?.name}</div>
                     </div>
                     <div className="flex size-6 items-center justify-center rounded-6 border border-(--stroke-soft-200) bg-(--bg-white-0) shadow-xs">
                         <UnfoldMoreIcon className="size-5 text-(--text-sub-600)" />

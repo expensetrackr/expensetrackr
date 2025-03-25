@@ -12,7 +12,7 @@ return [
         ],
         'image_and_text' => [
             'title' => '¡Comienza a dominar tus finanzas en solo unos pocos pasos!',
-            'steps' => [,
+            'steps' => [
                 [
                     'title' => 'Conecta tus cuentas',
                     'description' => 'Todo comienza aquí. Conecta tus cuentas bancarias y comienza a sincronizar tus transacciones al instante.',
