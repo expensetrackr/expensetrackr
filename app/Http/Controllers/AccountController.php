@@ -124,7 +124,7 @@ final class AccountController
 
             if (isset($validated['enrollment_id']) && isset($validated['provider']) && isset($validated['token'])) {
                 $teller = new TellerService($validated['token']);
-                $data['bankAccounts'] = $teller->getAccounts();
+                $data['bankAccounts'] = Inertia::defer(fn (): array => $teller->getAccounts()->toArray());
             }
         }
 

@@ -1,4 +1,4 @@
-import { Head, Link } from "@inertiajs/react";
+import { Deferred, Head, Link } from "@inertiajs/react";
 import CloseIcon from "virtual:icons/ri/close-line";
 import HeadphoneIcon from "virtual:icons/ri/headphone-line";
 import MenuSearchIcon from "virtual:icons/ri/menu-search-line";
@@ -90,7 +90,21 @@ function PageContent({ institutions, bankAccounts }: CreateAccountConnectPagePro
                                 stepper={stepper}
                                 title="Bank accounts selection"
                             >
-                                <BankAccountsSelectionStep bankAccounts={bankAccounts} />
+                                <Deferred
+                                    data="bankAccounts"
+                                    fallback={
+                                        <div className="flex shrink-0 flex-col gap-3">
+                                            {Array.from({ length: 3 }).map((_, index) => (
+                                                <div
+                                                    className="h-18 w-full animate-pulse rounded-12 bg-(--bg-sub-300)"
+                                                    key={index}
+                                                />
+                                            ))}
+                                        </div>
+                                    }
+                                >
+                                    <BankAccountsSelectionStep bankAccounts={bankAccounts} />
+                                </Deferred>
                             </Card>
                         ),
                     })}
