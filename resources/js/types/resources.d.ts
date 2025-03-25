@@ -25,11 +25,15 @@ declare namespace Resources {
         name: string;
         slug: string;
         color: string;
+        description?: string;
         isSystem: boolean;
-        permissions: {
+        classification: App.Enums.CategoryClassification;
+        parentId?: string;
+        permissions?: {
             canUpdate: boolean;
             canDelete: boolean;
         };
+        hasChildren?: boolean;
     };
     // App\Http\Resources\LanguageResource
     export type Language = any;

@@ -35,6 +35,7 @@ Route::middleware([
     Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
     Route::put('/transactions/{transaction}', [TransactionController::class, 'update'])->name('transactions.update');
 
+    Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
     Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
 
     Route::prefix('settings')->group(function () {

@@ -1,9 +1,11 @@
-import { Head } from "@inertiajs/react";
+import { Head, Link } from "@inertiajs/react";
 import * as React from "react";
 import Delete02Icon from "virtual:icons/hugeicons/delete-02";
 import Edit02Icon from "virtual:icons/hugeicons/edit-02";
 import GeometricShapes01Icon from "virtual:icons/hugeicons/geometric-shapes-01";
+import InformationCircleIcon from "virtual:icons/hugeicons/information-circle";
 import MoreVerticalIcon from "virtual:icons/hugeicons/more-vertical";
+import ResourcesAddIcon from "virtual:icons/hugeicons/resources-add";
 
 import { CategoryIcon } from "#/components/category-icon.tsx";
 import { Header } from "#/components/header.tsx";
@@ -11,9 +13,11 @@ import * as Badge from "#/components/ui/badge.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
 import * as Dropdown from "#/components/ui/dropdown.tsx";
+import * as Tooltip from "#/components/ui/tooltip.tsx";
 import { useCategoriesParams } from "#/hooks/use-categories-params.ts";
 import { SettingsLayout } from "#/layouts/settings-layout.tsx";
 import { type PageProps } from "#/types/globals.ts";
+import { CreateCategoryModal } from "./__components/create-category-modal.tsx";
 import { DetailsModal } from "./__components/details-modal.tsx";
 
 type CategoriesPageProps = {
@@ -26,7 +30,7 @@ type CategoriesPageProps = {
     };
 };
 
-export default function CategoriesPage({ categories, category }: CategoriesPageProps) {
+export default function CategoriesPage({ categories, category, permissions }: CategoriesPageProps) {
     const { setParams } = useCategoriesParams();
 
     return (
@@ -61,8 +65,20 @@ export default function CategoriesPage({ categories, category }: CategoriesPageP
                                         />
                                     </div>
                                     <div className="flex-1">
-                                        <div className="truncate text-label-sm">{category.name}</div>
-                                        {/* <div className="mt-1 text-paragraph-xs text-(--text-sub-600)">{category.slug}</div> */}
+                                        <div className="flex items-center gap-1 truncate text-label-sm">
+                                            {category.name}
+
+                                            {category.description ? (
+                                                <Tooltip.Root>
+                                                    <Tooltip.Trigger>
+                                                        <InformationCircleIcon className="size-4 text-(--text-sub-600)" />
+                                                    </Tooltip.Trigger>
+                                                    <Tooltip.Content className="max-w-80">
+                                                        {category.description}
+                                                    </Tooltip.Content>
+                                                </Tooltip.Root>
+                                            ) : null}
+                                        </div>
                                     </div>
 
                                     <div className="flex items-center gap-2">
@@ -80,7 +96,7 @@ export default function CategoriesPage({ categories, category }: CategoriesPageP
                                             </Dropdown.Trigger>
 
                                             <Dropdown.Content align="end" className="w-40">
-                                                {category.permissions.canUpdate ? (
+                                                {category.permissions?.canUpdate ? (
                                                     <Dropdown.Item
                                                         onClick={() => setParams({ categoryId: category.id })}
                                                     >
@@ -88,7 +104,7 @@ export default function CategoriesPage({ categories, category }: CategoriesPageP
                                                         Edit
                                                     </Dropdown.Item>
                                                 ) : null}
-                                                {category.permissions.canDelete ? (
+                                                {category.permissions?.canDelete ? (
                                                     <Dropdown.Item>
                                                         <Dropdown.ItemIcon as={Delete02Icon} />
                                                         Delete
@@ -104,7 +120,8 @@ export default function CategoriesPage({ categories, category }: CategoriesPageP
                 ))}
             </div>
 
-            {category ? <DetailsModal category={category} /> : null}
+            {category && <DetailsModal categories={categories} category={category} />}
+            {permissions.canCreateCategories && <CreateCategoryModal categories={categories} />}
         </div>
     );
 }
@@ -122,7 +139,14 @@ CategoriesPage.layout = (page: React.ReactNode & { props: PageProps }) => (
                 </div>
             }
             title="Categories"
-        />
+        >
+            <Button.Root asChild>
+                <Link href="?action=create">
+                    <Button.Icon as={ResourcesAddIcon} />
+                    Add category
+                </Link>
+            </Button.Root>
+        </Header>
 
         <div className="px-4 lg:px-8">
             <Divider.Root />

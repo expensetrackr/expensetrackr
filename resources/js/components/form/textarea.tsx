@@ -8,6 +8,7 @@ import * as TextareaPrimitive from "../ui/textarea.tsx";
 type TextareaProps = TextareaPrimitive.TextareaRootProps & {
     wrapperClassName?: string;
     label?: React.ReactNode;
+    labelSub?: React.ReactNode;
     hiddenLabel?: boolean;
     labelClassName?: string;
     hint?: string | Array<string>;
@@ -20,6 +21,7 @@ export function Textarea({
     $error,
     wrapperClassName,
     label,
+    labelSub,
     hiddenLabel,
     labelClassName,
     charCounterCurrent,
@@ -40,6 +42,7 @@ export function Textarea({
                     htmlFor={id}
                 >
                     {label}
+                    {labelSub ? <Label.Sub className="ml-1">{labelSub}</Label.Sub> : null}
                 </Label.Root>
             ) : null}
 
@@ -55,7 +58,7 @@ export function Textarea({
                 <Hint.Root
                     $disabled={rest.disabled}
                     $error={!!error}
-                    aria-describedby={[!!error && `${id}-error`, `${id}-description`].filter(Boolean).join(" ")}
+                    id={[!!error && `${id}-error`, `${id}-description`].filter(Boolean).join(" ")}
                 >
                     <Hint.Icon />
                     {hint || error}

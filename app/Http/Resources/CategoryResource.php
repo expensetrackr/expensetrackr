@@ -23,11 +23,15 @@ final class CategoryResource extends JsonResource
             'name' => $this->name,
             'slug' => $this->slug,
             'color' => $this->color,
+            'description' => $this->description,
             'isSystem' => $this->is_system,
-            'permissions' => [
+            'classification' => $this->when($request->route()->named('categories.index'), fn () => $this->classification),
+            'parentId' => $this->when($request->route()->named('categories.index'), fn () => $this->parent_id),
+            'permissions' => $this->when($request->route()->named('categories.index'), fn () => [
                 'canUpdate' => $request->user()->can('update', $this->resource),
                 'canDelete' => $request->user()->can('delete', $this->resource),
-            ],
+            ]),
+            'hasChildren' => $this->when($request->route()->named('categories.index'), fn () => $this->children()->exists()),
         ];
     }
 }

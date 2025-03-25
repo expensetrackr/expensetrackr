@@ -65,7 +65,7 @@ export function TextField({
                 <Hint.Root
                     $disabled={rest.disabled}
                     $error={!!error}
-                    aria-describedby={[$error && `${id}-error`, `${id}-description`].filter(Boolean).join(" ")}
+                    id={[$error && `${id}-error`, `${id}-description`].filter(Boolean).join(" ")}
                 >
                     <Hint.Icon />
                     {error || hint}

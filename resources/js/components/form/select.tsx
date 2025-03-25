@@ -8,6 +8,7 @@ import * as SelectPrimitives from "../ui/select.tsx";
 type SelectProps = Omit<React.CustomComponentPropsWithRef<typeof SelectPrimitives.Root>, "$error"> & {
     wrapperClassName?: string;
     label?: string;
+    labelSub?: string;
     labelClassName?: string;
     id?: string;
     position?: "item-aligned" | "popper";
@@ -16,7 +17,9 @@ type SelectProps = Omit<React.CustomComponentPropsWithRef<typeof SelectPrimitive
     options: Array<{
         value: string;
         label: React.ReactNode;
-        icon?: React.ForwardRefExoticComponent<React.SVGProps<SVGSVGElement>>;
+        icon?:
+            | React.ForwardRefExoticComponent<React.SVGProps<SVGSVGElement>>
+            | React.ComponentType<React.SVGProps<SVGSVGElement>>;
         disabled?: boolean;
     }>;
     hint?: string | Array<string>;
@@ -29,6 +32,7 @@ export function Select({
     $variant,
     error,
     label,
+    labelSub,
     labelClassName,
     id: idProp,
     triggerIcon,
@@ -46,6 +50,7 @@ export function Select({
             {label ? (
                 <Label.Root className={labelClassName} disabled={rest.disabled} htmlFor={id}>
                     {label}
+                    {labelSub ? <Label.Sub className="ml-1">{labelSub}</Label.Sub> : null}
                 </Label.Root>
             ) : null}
 
@@ -68,7 +73,7 @@ export function Select({
                 <Hint.Root
                     $disabled={rest.disabled}
                     $error={!!error}
-                    aria-describedby={[!!error && `${id}-error`, `${id}-description`].filter(Boolean).join(" ")}
+                    id={[!!error && `${id}-error`, `${id}-description`].filter(Boolean).join(" ")}
                 >
                     <Hint.Icon />
                     {error || hint}

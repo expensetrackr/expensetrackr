@@ -18,28 +18,29 @@ import Tv01Icon from "virtual:icons/hugeicons/tv-01";
 import Wallet02Icon from "virtual:icons/hugeicons/wallet-02";
 import Wrench01Icon from "virtual:icons/hugeicons/wrench-01";
 
+export const categoryIcons = {
+    salary: Wallet02Icon,
+    investments: Chart03Icon,
+    freelance: Briefcase01Icon,
+    gifts: GiftIcon,
+    housing: Home09Icon,
+    transportation: Car05Icon,
+    groceries: ShoppingBasket03Icon,
+    dining: KitchenUtensilsIcon,
+    utilities: Plug01Icon,
+    healthcare: Pulse02Icon,
+    entertainment: Tv01Icon,
+    shopping: ShoppingBag02Icon,
+    education: Mortarboard02Icon,
+    technology: LaptopIcon,
+    services: Wrench01Icon,
+    loans: BankIcon,
+    transfer: RepeatIcon,
+    other: MoreHorizontalCircle01Icon,
+};
+
 export function CategoryIcon({ category, ...props }: { category?: string } & React.SVGProps<SVGSVGElement>) {
-    const icons = {
-        salary: Wallet02Icon,
-        investments: Chart03Icon,
-        freelance: Briefcase01Icon,
-        gifts: GiftIcon,
-        housing: Home09Icon,
-        transportation: Car05Icon,
-        groceries: ShoppingBasket03Icon,
-        dining: KitchenUtensilsIcon,
-        utilities: Plug01Icon,
-        healthcare: Pulse02Icon,
-        entertainment: Tv01Icon,
-        shopping: ShoppingBag02Icon,
-        education: Mortarboard02Icon,
-        technology: LaptopIcon,
-        services: Wrench01Icon,
-        loans: BankIcon,
-        transfer: RepeatIcon,
-        other: MoreHorizontalCircle01Icon,
-    };
-    const Component = icons[category as keyof typeof icons] ?? DashboardSquare01Icon;
+    const Component = categoryIcons[category as keyof typeof categoryIcons] ?? DashboardSquare01Icon;
 
     return <Component {...props} />;
 }

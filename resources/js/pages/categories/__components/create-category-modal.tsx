@@ -1,9 +1,9 @@
 import { useForm } from "@inertiajs/react";
-import * as React from "react";
+import GeometricShapes01Icon from "virtual:icons/hugeicons/geometric-shapes-01";
 
 import { classificationIcons } from "#/components/category-classification-icon.tsx";
 import { categoryIcons } from "#/components/category-icon.tsx";
-import { ColorField } from "#/components/form/color.tsx";
+import { ColorField, colorSwatches } from "#/components/form/color.tsx";
 import { Select } from "#/components/form/select.tsx";
 import { TextField } from "#/components/form/text-field.tsx";
 import { Textarea } from "#/components/form/textarea.tsx";
@@ -11,31 +11,30 @@ import * as Button from "#/components/ui/button.tsx";
 import * as Modal from "#/components/ui/modal.tsx";
 import { useCategoriesParams } from "#/hooks/use-categories-params.ts";
 
-type DetailsModalProps = {
+type CreateCategoryModalProps = {
     categories: {
         [key in App.Enums.CategoryClassification]: Array<Resources.Category>;
     };
-    category: Resources.Category;
 };
 
-export function DetailsModal({ categories, category }: DetailsModalProps) {
-    const { categoryId, setParams } = useCategoriesParams();
+export function CreateCategoryModal({ categories }: CreateCategoryModalProps) {
+    const { setParams, ...params } = useCategoriesParams();
     const form = useForm({
-        name: category.name,
-        color: category.color,
-        description: category.description || "",
-        classification: category.classification,
-        parentId: category.parentId,
+        name: "",
+        description: "",
+        color: colorSwatches[Math.floor(Math.random() * colorSwatches.length)],
+        classification: "expense" as App.Enums.CategoryClassification,
+        parentId: "",
     });
 
     const onSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
-        form.put(route("categories.update", [category?.id ?? ""]), {
-            errorBag: "updateCategory",
+        form.post(route("categories.store"), {
+            errorBag: "createCategory",
             preserveScroll: true,
             async onSuccess() {
-                await setParams({ categoryId: null });
+                await setParams({ action: null });
             },
             onError() {
                 form.reset();
@@ -44,17 +43,23 @@ export function DetailsModal({ categories, category }: DetailsModalProps) {
     };
 
     return (
-        <Modal.Root onOpenChange={() => setParams({ categoryId: null })} open={!!categoryId}>
-            <Modal.Content className="max-w-[440px]">
-                <Modal.Body className="flex items-start gap-4">
+        <Modal.Root onOpenChange={() => setParams({ action: null })} open={params.action === "create"}>
+            <Modal.Content className="max-w-lg">
+                <Modal.Header
+                    description="Create a new category to organize your transactions."
+                    icon={GeometricShapes01Icon}
+                    title="Create Category"
+                />
+
+                <Modal.Body>
                     <form
-                        action={route("categories.update", [category?.id ?? ""])}
+                        action={route("categories.store")}
                         className="flex w-full flex-col gap-3"
-                        id="update-category-form"
+                        id="create-category-form"
                         method="POST"
                         onSubmit={onSubmit}
                     >
-                        <input name="_method" type="hidden" value="PUT" />
+                        <input name="_method" type="hidden" value="POST" />
 
                         <div className="grid grid-cols-1 gap-3 lg:grid-cols-3">
                             <TextField
@@ -139,7 +144,7 @@ export function DetailsModal({ categories, category }: DetailsModalProps) {
                             $type="neutral"
                             className="w-full"
                             disabled={form.processing}
-                            onClick={() => setParams({ categoryId: null })}
+                            onClick={() => setParams({ action: null })}
                         >
                             Cancel
                         </Button.Root>
@@ -148,10 +153,10 @@ export function DetailsModal({ categories, category }: DetailsModalProps) {
                         $size="sm"
                         className="w-full"
                         disabled={form.processing}
-                        form="update-category-form"
+                        form="create-category-form"
                         type="submit"
                     >
-                        {form.processing ? "Updating..." : "Update"}
+                        {form.processing ? "Creating..." : "Create"}
                     </Button.Root>
                 </Modal.Footer>
             </Modal.Content>

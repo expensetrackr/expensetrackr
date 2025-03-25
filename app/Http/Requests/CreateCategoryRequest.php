@@ -10,14 +10,16 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
-final class UpdateCategoryRequest extends FormRequest
+final class CreateCategoryRequest extends FormRequest
 {
+    protected $errorBag = 'createCategory';
+
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return $this->user()?->can('update', $this->category) ?? false;
+        return $this->user()->can('create', Category::class) ?? false;
     }
 
     /**
@@ -29,6 +31,7 @@ final class UpdateCategoryRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
+            'slug' => ['required', 'string', 'max:255', 'unique:categories,slug'],
             'color' => ['required', 'hex_color'],
             'description' => ['nullable', 'string', 'max:255'],
             'classification' => ['required', 'string', Rule::enum(CategoryClassification::class)],
@@ -61,5 +64,9 @@ final class UpdateCategoryRequest extends FormRequest
         }
 
         $this->replace($snakeCaseInput);
+
+        $this->merge([
+            'slug' => Str::slug($this->name),
+        ]);
     }
 }

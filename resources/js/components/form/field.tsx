@@ -33,7 +33,7 @@ export function Field({ error, label, hiddenLabel, className, children, hint, ..
                 <Hint.Root
                     $disabled={props.disabled}
                     $error={!!error}
-                    aria-describedby={[!!error && `${id}-error`, `${id}-description`].filter(Boolean).join(" ")}
+                    id={[!!error && `${id}-error`, `${id}-description`].filter(Boolean).join(" ")}
                 >
                     <Hint.Icon />
                     {error || hint}

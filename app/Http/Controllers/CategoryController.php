@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Actions\Categories\CreateCategory;
 use App\Actions\Categories\UpdateCategory;
+use App\Http\Requests\CreateCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -45,6 +48,19 @@ final class CategoryController
             'permissions' => [
                 'canCreateCategories' => $request->user()->can('create', Category::class),
             ],
+        ]);
+    }
+
+    /**
+     * Store a new category.
+     */
+    public function store(CreateCategoryRequest $request, CreateCategory $action)
+    {
+        $action->handle(type($request->user())->as(User::class), $request->validated());
+
+        return back()->with('toast', [
+            'title' => 'Category created',
+            'type' => 'success',
         ]);
     }
 
