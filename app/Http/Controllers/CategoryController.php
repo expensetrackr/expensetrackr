@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Actions\Categories\UpdateCategory;
+use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -11,8 +13,12 @@ use Inertia\Inertia;
 
 final class CategoryController
 {
+    /**
+     * Display all categories.
+     */
     public function index(Request $request)
     {
+        $categoryId = $request->string('category_id');
         $categories = Category::query()
             ->where(function ($query) use ($request): void {
                 $query->where('is_system', true)
@@ -27,11 +33,31 @@ final class CategoryController
             ->groupBy('classification')
             ->map(fn ($group) => CategoryResource::collection($group));
 
+        if ($categoryId->isNotEmpty()) {
+            $category = new CategoryResource(Category::query()
+                ->wherePublicId($categoryId->value())
+                ->first());
+        }
+
         return Inertia::render('categories/page', [
             'categories' => $categories,
+            'category' => $category ?? null,
             'permissions' => [
                 'canCreateCategories' => $request->user()->can('create', Category::class),
             ],
+        ]);
+    }
+
+    /**
+     * Update the specified category.
+     */
+    public function update(UpdateCategoryRequest $request, Category $category, UpdateCategory $action)
+    {
+        $action->handle($category, $request->validated());
+
+        return back()->with('toast', [
+            'title' => 'Category updated',
+            'type' => 'success',
         ]);
     }
 }

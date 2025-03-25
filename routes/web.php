@@ -35,6 +35,8 @@ Route::middleware([
     Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
     Route::put('/transactions/{transaction}', [TransactionController::class, 'update'])->name('transactions.update');
 
+    Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
+
     Route::prefix('settings')->group(function () {
         Route::get('/', fn () => Inertia::render('settings/show'))->name('settings.show');
         Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');

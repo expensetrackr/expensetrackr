@@ -3,7 +3,6 @@ import * as React from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import Analytics02Icon from "virtual:icons/hugeicons/analytics-02";
 import CustomerSupportIcon from "virtual:icons/hugeicons/customer-support";
-import GeometricShapes01Icon from "virtual:icons/hugeicons/geometric-shapes-01";
 import Setting07Icon from "virtual:icons/hugeicons/setting-07";
 import TransactionIcon from "virtual:icons/hugeicons/transaction";
 import Wallet01Icon from "virtual:icons/hugeicons/wallet-01";
@@ -26,7 +25,6 @@ export const navigationLinks: Array<NavigationLink> = [
     { icon: Analytics02Icon, label: "Dashboard", href: route("dashboard") },
     { icon: Wallet01Icon, label: "Accounts", href: route("accounts.index") },
     { icon: TransactionIcon, label: "Transactions", href: route("transactions.index") },
-    { icon: GeometricShapes01Icon, label: "Categories", href: route("categories.index") },
 ];
 
 function useCollapsedState({ defaultCollapsed = false }: { defaultCollapsed?: boolean }): {

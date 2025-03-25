@@ -1,0 +1,23 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Actions\Categories;
+
+use App\Models\Category;
+
+final class UpdateCategory
+{
+    /**
+     * Validate and update the given category.
+     *
+     * @param  array<string, mixed>  $input
+     */
+    public function handle(Category $category, array $input): void
+    {
+        $category->forceFill([
+            'name' => $input['name'],
+            'color' => $input['color'],
+        ])->save();
+    }
+}
