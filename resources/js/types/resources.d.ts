@@ -25,6 +25,11 @@ declare namespace Resources {
         name: string;
         slug: string;
         color: string;
+        isSystem: boolean;
+        permissions: {
+            canUpdate: boolean;
+            canDelete: boolean;
+        };
     };
     // App\Http\Resources\LanguageResource
     export type Language = any;

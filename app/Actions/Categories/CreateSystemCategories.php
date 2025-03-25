@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Database\Seeders;
+namespace App\Actions\Categories;
 
 use App\Enums\CategoryClassification;
 use App\Models\Category;
-use Illuminate\Database\Seeder;
+use App\Models\Workspace;
 use Illuminate\Support\Str;
 
-final class SystemCategoriesSeeder extends Seeder
+final class CreateSystemCategories
 {
     /**
-     * Run the database seeds.
+     * Create system categories for a workspace.
      */
-    public function run(): void
+    public function handle(Workspace $workspace): void
     {
         $categories = [
             // Income categories
@@ -142,7 +142,7 @@ final class SystemCategoriesSeeder extends Seeder
                 'description' => $category['description'],
                 'classification' => $category['classification'],
                 'is_system' => true,
-                'workspace_id' => null, // System categories don't belong to any workspace
+                'workspace_id' => $workspace->id,
             ]);
         }
     }

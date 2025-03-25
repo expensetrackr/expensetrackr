@@ -28,7 +28,7 @@ export function SettingsLayout({
                 <Sidebar defaultCollapsed />
                 <HeaderMobile />
 
-                <div className="w-full flex-1 self-stretch lg:grid lg:grid-cols-[auto_minmax(0,1fr)]">
+                <div className="w-full self-stretch lg:grid lg:grid-cols-[auto_minmax(0,1fr)]">
                     <SettingsVerticalMenu />
                     <div className="mx-auto flex w-full max-w-[1360px] flex-col">{children}</div>
                 </div>

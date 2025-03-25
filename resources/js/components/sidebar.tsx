@@ -26,7 +26,7 @@ export const navigationLinks: Array<NavigationLink> = [
     { icon: Analytics02Icon, label: "Dashboard", href: route("dashboard") },
     { icon: Wallet01Icon, label: "Accounts", href: route("accounts.index") },
     { icon: TransactionIcon, label: "Transactions", href: route("transactions.index") },
-    { icon: GeometricShapes01Icon, label: "Categories", href: route("dashboard") },
+    { icon: GeometricShapes01Icon, label: "Categories", href: route("categories.index") },
 ];
 
 function useCollapsedState({ defaultCollapsed = false }: { defaultCollapsed?: boolean }): {

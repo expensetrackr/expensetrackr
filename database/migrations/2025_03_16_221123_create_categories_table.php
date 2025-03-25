@@ -23,7 +23,7 @@ return new class extends Migration
             $table->boolean('is_system')->default(false);
             $table->boolean('is_active')->default(true);
             $table->enum('classification', CategoryClassification::values())->default(CategoryClassification::Other);
-            $table->foreignId('workspace_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->foreignId('workspace_id')->constrained()->cascadeOnDelete();
             $table->foreignId('parent_id')->nullable()->constrained('categories')->nullOnDelete();
             $table->string('public_id')->unique();
             $table->timestamps();

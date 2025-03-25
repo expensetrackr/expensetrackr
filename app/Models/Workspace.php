@@ -7,6 +7,8 @@ namespace App\Models;
 use App\Events\WorkspaceCreated;
 use App\Events\WorkspaceDeleted;
 use App\Events\WorkspaceUpdated;
+use App\Observers\WorkspaceObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -16,39 +18,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
 
-/**
- * @property int $id
- * @property int $user_id
- * @property string $name
- * @property bool $personal_workspace
- * @property string $public_id
- * @property \Carbon\CarbonImmutable|null $created_at
- * @property \Carbon\CarbonImmutable|null $updated_at
- * @property int|null $workspace_settings_id
- * @property-read string|null $prefixed_id
- * @property-read Collection<int, WorkspaceInvitation> $invitations
- * @property-read int|null $invitations_count
- * @property-read Membership|null $membership
- * @property-read Collection<int, User> $members
- * @property-read int|null $members_count
- * @property-read User|null $owner
- * @property-read WorkspaceSetting|null $settings
- *
- * @method static \Database\Factories\WorkspaceFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Workspace newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Workspace newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Workspace query()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Workspace whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Workspace whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Workspace whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Workspace wherePersonalWorkspace($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Workspace wherePublicId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Workspace whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Workspace whereUserId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Workspace whereWorkspaceSettingId($value)
- *
- * @mixin \Eloquent
- */
+#[ObservedBy(WorkspaceObserver::class)]
 final class Workspace extends Model
 {
     /** @use HasFactory<\Database\Factories\WorkspaceFactory> */
@@ -175,6 +145,16 @@ final class Workspace extends Model
     public function settings(): HasOne
     {
         return $this->hasOne(WorkspaceSetting::class, 'workspace_id');
+    }
+
+    /**
+     * Get all the categories for the workspace.
+     *
+     * @return HasMany<Category, covariant $this>
+     */
+    public function categories(): HasMany
+    {
+        return $this->hasMany(Category::class);
     }
 
     /**

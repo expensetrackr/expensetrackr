@@ -1,6 +1,7 @@
 import { router } from "@inertiajs/react";
 import ArrowRight01Icon from "virtual:icons/hugeicons/arrow-right-01";
 import BlockedIcon from "virtual:icons/hugeicons/blocked";
+import GeometricShapes01Icon from "virtual:icons/hugeicons/geometric-shapes-01";
 import Link04Icon from "virtual:icons/hugeicons/link-04";
 import UserCircle02Icon from "virtual:icons/hugeicons/user-circle-02";
 import UserMultiple02Icon from "virtual:icons/hugeicons/user-multiple-02";
@@ -26,6 +27,11 @@ export function SettingsVerticalMenu() {
             label: "Workspace",
             icon: UserMultiple02Icon,
             href: `/workspaces/${currentWorkspace.id}`,
+        },
+        {
+            label: "Categories",
+            icon: GeometricShapes01Icon,
+            href: "/settings/categories",
         },
         {
             label: "Privacy & Security",

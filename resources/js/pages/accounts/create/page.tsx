@@ -37,9 +37,12 @@ export default function CreateAccountPage() {
                             $size="xs"
                             $style="ghost"
                             $type="neutral"
+                            asChild
                             className="fixed top-6 right-8 hidden lg:flex"
                         >
-                            <Button.Icon as={CloseIcon} />
+                            <Link href={route("accounts.index")}>
+                                <Button.Icon as={CloseIcon} />
+                            </Link>
                         </Button.Root>
 
                         <div className="flex w-full justify-center py-12">

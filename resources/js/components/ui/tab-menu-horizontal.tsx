@@ -53,7 +53,7 @@ function TabMenuHorizontalList({
         >
             <TabsPrimitive.List
                 className={cnMerge(
-                    "group/tab-list relative flex h-12 items-center gap-6 border-y border-(--stroke-soft-200) whitespace-nowrap",
+                    "group/tab-list relative flex h-12 min-w-auto items-center gap-6 border-y border-(--stroke-soft-200) whitespace-nowrap",
                     className,
                 )}
                 ref={composeRefs(rest.ref, listRef)}

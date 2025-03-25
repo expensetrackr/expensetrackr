@@ -6,13 +6,16 @@ namespace App\Policies;
 
 use App\Models\Category;
 use App\Models\User;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
 final class CategoryPolicy
 {
+    use HandlesAuthorization;
+
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): bool
+    public function viewAny(): bool
     {
         // TODO: Only view any if the categories have is_system set to true or the workspace has categories
         return true;
@@ -23,13 +26,13 @@ final class CategoryPolicy
      */
     public function view(User $user, Category $category): bool
     {
-        return $category->is_system || $category->workspace->is($user->currentWorkspace);
+        return $category->workspace->is($user->currentWorkspace);
     }
 
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user): bool
+    public function create(): bool
     {
         return true;
     }
@@ -47,13 +50,13 @@ final class CategoryPolicy
      */
     public function delete(User $user, Category $category): bool
     {
-        return $category->workspace->is($user->currentWorkspace);
+        return ! $category->is_system && $category->workspace->is($user->currentWorkspace);
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Category $category): bool
+    public function restore(): bool
     {
         return false;
     }
@@ -61,7 +64,7 @@ final class CategoryPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Category $category): bool
+    public function forceDelete(): bool
     {
         return false;
     }

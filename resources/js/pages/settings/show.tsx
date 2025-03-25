@@ -11,23 +11,17 @@ import { UpdateProfilePictureForm } from "./partials/update-profile-picture-form
 
 export default function SettingsShow() {
     return (
-        <>
-            <div className="px-4 lg:px-8">
-                <Divider.Root />
-            </div>
+        <div className="flex w-full flex-col gap-5 px-4 py-6 lg:px-8">
+            <UpdateProfilePictureForm />
 
-            <div className="flex w-full flex-col gap-5 px-4 py-6 lg:px-8">
-                <UpdateProfilePictureForm />
+            <Divider.Root $type="line-spacing" />
 
-                <Divider.Root $type="line-spacing" />
+            <UpdateNameForm />
 
-                <UpdateNameForm />
+            <Divider.Root $type="line-spacing" />
 
-                <Divider.Root $type="line-spacing" />
-
-                <UpdateEmailForm />
-            </div>
-        </>
+            <UpdateEmailForm />
+        </div>
     );
 }
 
@@ -44,6 +38,10 @@ SettingsShow.layout = (page: React.ReactNode & { props: PageProps }) => (
             }
             title="Profile Settings"
         />
+
+        <div className="px-4 lg:px-8">
+            <Divider.Root />
+        </div>
 
         {page}
     </SettingsLayout>

@@ -273,6 +273,7 @@ declare namespace App.Enums {
         | "credit_card"
         | "loan"
         | "other_liability";
+    export type CategoryClassification = "income" | "expense" | "transfer" | "other";
     export type ConnectionStatus = "connected" | "disconnected" | "unknown";
     export type Language = "en" | "es";
     export type MediaService = "product_media";

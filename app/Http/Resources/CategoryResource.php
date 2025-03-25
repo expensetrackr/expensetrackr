@@ -17,11 +17,17 @@ final class CategoryResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+
         return [
             'id' => $this->public_id,
             'name' => $this->name,
             'slug' => $this->slug,
             'color' => $this->color,
+            'isSystem' => $this->is_system,
+            'permissions' => [
+                'canUpdate' => $request->user()->can('update', $this->resource),
+                'canDelete' => $request->user()->can('delete', $this->resource),
+            ],
         ];
     }
 }
