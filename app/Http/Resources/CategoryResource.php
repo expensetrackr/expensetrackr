@@ -27,7 +27,7 @@ final class CategoryResource extends JsonResource
             'isSystem' => $this->is_system,
             'classification' => $this->when($request->route()->named('categories.index'), fn () => $this->classification),
             'parentId' => $this->when($request->route()->named('categories.index'), fn () => $this->parent_id),
-            'permissions' => $this->when($request->route()->named('categories.index'), fn () => [
+            'permissions' => $this->when($request->route()->named('categories.index'), fn (): array => [
                 'canUpdate' => $request->user()->can('update', $this->resource),
                 'canDelete' => $request->user()->can('delete', $this->resource),
             ]),

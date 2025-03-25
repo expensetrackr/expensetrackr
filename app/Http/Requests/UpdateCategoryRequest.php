@@ -36,7 +36,7 @@ final class UpdateCategoryRequest extends FormRequest
                 'nullable',
                 'exists:categories,id',
                 'not_in:id',
-                function ($attribute, $value, $fail) {
+                function ($attribute, $value, $fail): void {
                     if ($value) {
                         $parent = Category::find($value);
                         if ($parent && $parent->children()->exists()) {
