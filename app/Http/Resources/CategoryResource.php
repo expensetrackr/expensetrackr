@@ -33,7 +33,7 @@ final class CategoryResource extends JsonResource
                 'canDelete' => $request->user()->can('delete', $this->resource),
             ]),
             'hasParent' => $this->when($request->route()->named('categories.index'), fn () => $this->parent()->exists()),
-            'children' => $this->whenLoaded('children', fn () => $this->children->map(fn (Category $category) => new CategoryResource($category))),
+            'children' => $this->whenLoaded('children', fn () => $this->children->map(fn (Category $category): CategoryResource => new CategoryResource($category))),
         ];
     }
 }

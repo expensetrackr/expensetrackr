@@ -87,26 +87,24 @@ export function WorkspaceSwitch({ className }: { className?: string }) {
 
             <Dropdown.Content align="start" side="right" sideOffset={24}>
                 {user && permissions.hasWorkspaceFeatures ? (
-                    <>
-                        <Dropdown.Group>
-                            <Dropdown.Item asChild>
-                                <Link
-                                    href={route("workspaces.show", {
-                                        workspace: currentWorkspace.id,
-                                    })}
-                                >
-                                    <Dropdown.ItemIcon as={Settings2Icon} />
-                                    Manage workspace
-                                </Link>
-                            </Dropdown.Item>
-                        </Dropdown.Group>
-
-                        <Divider.Root $type="line-spacing" />
-                    </>
+                    <Dropdown.Group>
+                        <Dropdown.Item asChild>
+                            <Link
+                                href={route("workspaces.show", {
+                                    workspace: currentWorkspace.id,
+                                })}
+                            >
+                                <Dropdown.ItemIcon as={Settings2Icon} />
+                                Manage workspace
+                            </Link>
+                        </Dropdown.Item>
+                    </Dropdown.Group>
                 ) : null}
 
                 {workspaces.length > 1 ? (
                     <>
+                        <Divider.Root $type="line-spacing" />
+
                         {workspaces.map((workspace) => (
                             <WorkspaceItem key={workspace.id} workspace={workspace} />
                         ))}

@@ -24,8 +24,8 @@ final class TellerCertificatesServiceProvider extends ServiceProvider
 
         if ($certBase64 && $keyBase64) {
             // Define the paths from your config
-            $certPath = config('teller.CERT_PATH');
-            $keyPath = config('teller.KEY_PATH');
+            $certPath = config('teller.cert_path');
+            $keyPath = config('teller.key_path');
 
             // Create directory if it doesn't exist
             $certPathString = is_string($certPath) ? $certPath : '';

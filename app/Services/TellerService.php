@@ -184,7 +184,7 @@ final class TellerService implements ProviderHandler
             "Authorization: Basic $accessToken",
         ];
 
-        $tellerEnvironment = config('teller.ENVIRONMENT');
+        $tellerEnvironment = config('teller.environment');
 
         if ($tellerEnvironment === null) {
             throw new Exception('Environment is not set');
@@ -214,8 +214,8 @@ final class TellerService implements ProviderHandler
         }
 
         if ($tellerEnvironment === EnvironmentType::Production || $tellerEnvironment === EnvironmentType::Development) {
-            $certPath = config('teller.CERT_PATH');
-            $keyPath = config('teller.KEY_PATH');
+            $certPath = config('teller.cert_path');
+            $keyPath = config('teller.key_path');
 
             if (! file_exists($certPath)) {
                 throw new MissingTellerCertException();
