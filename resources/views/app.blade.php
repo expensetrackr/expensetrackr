@@ -71,8 +71,8 @@
         <script>
             window.ENV = {
                 PUBLIC_ASSETS_URL: '{{ config('services.public_assets.url') }}',
-                TELLER_APP_ID: '{{ config('teller.app_id') }}',
-                TELLER_ENVIRONMENT: '{{ config('teller.environment') }}',
+                TELLER_APP_ID: '{{ config('services.teller.app_id') }}',
+                TELLER_ENVIRONMENT: '{{ config('services.teller.environment') }}',
             };
         </script>
         <script

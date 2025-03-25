@@ -41,7 +41,7 @@ final class ValidateTellerWebhookSignature
             $signedMessage = "$timestamp.$body";
 
             // Calculate the signature
-            $calculatedSignature = hash_hmac('sha256', $signedMessage, type(config('teller.signing_key'))->asString());
+            $calculatedSignature = hash_hmac('sha256', $signedMessage, type(config('services.teller.signing_key'))->asString());
 
             // Compare with provided signatures
             return in_array($calculatedSignature, $signatures, true);

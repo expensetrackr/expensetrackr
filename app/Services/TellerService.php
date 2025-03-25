@@ -170,12 +170,6 @@ final class TellerService implements ProviderHandler
      */
     private function request(string $method, string $path, ?array $data = null): bool|string
     {
-        $configFilePath = config_path('teller.php');
-
-        if (! file_exists($configFilePath)) {
-            throw new MissingTellerConfigurationException();
-        }
-
         $url = "{$this->BASE_URL}$path";
         $accessToken = base64_encode("{$this->access_token}:");
 
@@ -184,7 +178,7 @@ final class TellerService implements ProviderHandler
             "Authorization: Basic $accessToken",
         ];
 
-        $tellerEnvironment = config('teller.environment');
+        $tellerEnvironment = config('services.teller.environment');
 
         if ($tellerEnvironment === null) {
             throw new Exception('Environment is not set');
@@ -214,8 +208,8 @@ final class TellerService implements ProviderHandler
         }
 
         if ($tellerEnvironment === EnvironmentType::Production || $tellerEnvironment === EnvironmentType::Development) {
-            $certPath = config('teller.cert_path');
-            $keyPath = config('teller.key_path');
+            $certPath = config('services.teller.cert_path');
+            $keyPath = config('services.teller.key_path');
 
             if (! file_exists($certPath)) {
                 throw new MissingTellerCertException();
