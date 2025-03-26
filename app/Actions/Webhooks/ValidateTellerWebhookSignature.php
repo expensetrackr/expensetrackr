@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Actions\Webhooks;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use InvalidArgumentException;
 use Throwable;
 
@@ -28,7 +27,6 @@ final class ValidateTellerWebhookSignature
             $parsed = $this->parseTellerSignatureHeader($signatureHeader);
             $timestamp = $parsed['timestamp'];
             $signatures = $parsed['signatures'];
-            Log::info('Parsed signature header', ['parsed' => $parsed]);
 
             // Check if the webhook was sent within the last 3 minutes
             $threeMinutesAgo = time() - 3 * 60;
@@ -36,18 +34,12 @@ final class ValidateTellerWebhookSignature
                 return false;
             }
 
-            // Get the raw request body
             $body = $request->getContent();
 
-            // Create the signed message using timestamp and raw body
             $signedMessage = "$timestamp.$body";
-            Log::info('Signed message', ['signedMessage' => $signedMessage]);
 
-            // Calculate the signature
             $calculatedSignature = hash_hmac('sha256', $signedMessage, type(config('services.teller.signing_key'))->asString());
-            Log::info('Calculated signature', ['calculatedSignature' => $calculatedSignature]);
 
-            // Compare with provided signatures
             return in_array($calculatedSignature, $signatures, true);
         } catch (Throwable) {
             return false;
