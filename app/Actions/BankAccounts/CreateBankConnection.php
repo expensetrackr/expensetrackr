@@ -58,6 +58,6 @@ final readonly class CreateBankConnection
         SyncBankAccounts::dispatch(
             $workspaceId,
             $bankConnection->id
-        )->onQueue('bank-sync');
+        )->onQueue('bank-connection');
     }
 }
