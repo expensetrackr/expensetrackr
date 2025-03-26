@@ -13,6 +13,7 @@ type SelectProps = Omit<React.CustomComponentPropsWithRef<typeof SelectPrimitive
     id?: string;
     position?: "item-aligned" | "popper";
     triggerIcon?: React.ForwardRefExoticComponent<React.SVGProps<SVGSVGElement>>;
+    triggerClassName?: string;
     placeholder?: React.ReactNode;
     options: Array<{
         value: string;
@@ -26,7 +27,7 @@ type SelectProps = Omit<React.CustomComponentPropsWithRef<typeof SelectPrimitive
     error?: string | Array<string>;
 };
 
-export function Select({
+export function SelectField({
     wrapperClassName,
     $size,
     $variant,
@@ -36,6 +37,7 @@ export function Select({
     labelClassName,
     id: idProp,
     triggerIcon,
+    triggerClassName,
     placeholder,
     position = "popper",
     options,
@@ -55,7 +57,7 @@ export function Select({
             ) : null}
 
             <SelectPrimitives.Root $error={!!error} $size={$size} $variant={$variant} {...rest}>
-                <SelectPrimitives.Trigger id={id}>
+                <SelectPrimitives.Trigger className={triggerClassName} id={id}>
                     {triggerIcon ? <SelectPrimitives.TriggerIcon as={triggerIcon} /> : null}
                     <SelectPrimitives.Value placeholder={placeholder} />
                 </SelectPrimitives.Trigger>

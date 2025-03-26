@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import Delete02Icon from "virtual:icons/hugeicons/delete-02";
 
 import { CategoryIcon } from "#/components/category-icon.tsx";
-import { Select } from "#/components/form/select.tsx";
+import { SelectField } from "#/components/form/select-field.tsx";
 import { TextField } from "#/components/form/text-field.tsx";
 import { Textarea } from "#/components/form/textarea.tsx";
 import * as Avatar from "#/components/ui/avatar.tsx";
@@ -165,7 +165,7 @@ export function TransactionDetailsDrawer({ transaction, categories }: Transactio
 
                         <Divider.Root $type="line-spacing" />
 
-                        <Select
+                        <SelectField
                             defaultValue={form.data.categoryId}
                             disabled={form.processing}
                             error={form.errors.categoryId}

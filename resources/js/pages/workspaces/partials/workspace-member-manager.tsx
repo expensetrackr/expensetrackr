@@ -8,10 +8,9 @@ import ShieldUserIcon from "virtual:icons/hugeicons/shield-user";
 import UserRemove02Icon from "virtual:icons/hugeicons/user-remove-02";
 import EraserIcon from "virtual:icons/ri/eraser-line";
 import FolderShield2Icon from "virtual:icons/ri/folder-shield-2-line";
-import { route } from "ziggy-js";
 
 import { ActionSection } from "#/components/action-section.tsx";
-import { Select } from "#/components/form/select.tsx";
+import { SelectField } from "#/components/form/select-field.tsx";
 import * as Avatar from "#/components/ui/avatar.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import * as Dropdown from "#/components/ui/dropdown.tsx";
@@ -406,7 +405,7 @@ function ManageRoleDialog({
                 <Modal.Body>
                     <form id={`update-workspace-members-role-${user.id}-form`} onSubmit={onSubmit}>
                         {availableRoles.length > 0 ? (
-                            <Select
+                            <SelectField
                                 error={form.errors.role}
                                 id="role"
                                 label="Role"

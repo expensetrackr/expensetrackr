@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Enums\TransactionRecurringInterval;
 use App\Enums\TransactionStatus;
 use App\Enums\TransactionType;
 use Illuminate\Database\Migrations\Migration;
@@ -27,6 +28,7 @@ return new class extends Migration
             $table->decimal('amount', 19, 4);
             $table->char('currency', 3);
             $table->boolean('is_recurring')->default(false);
+            $table->enum('recurring_interval', TransactionRecurringInterval::values())->nullable();
             $table->boolean('is_manual')->default(false);
             $table->timestamp('dated_at');
             $table->string('external_id')->unique()->nullable();

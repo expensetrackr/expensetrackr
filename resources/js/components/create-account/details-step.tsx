@@ -4,7 +4,7 @@ import type * as v from "valibot";
 import { useCreateAccountParams } from "#/hooks/use-create-account-params.ts";
 import { SubtypeOptions } from "#/schemas/account.ts";
 import { type DetailsSchema } from "#/utils/steppers/create-account.step.ts";
-import { Select } from "../form/select.tsx";
+import { Select } from "../form/select-field.tsx";
 import { TextField } from "../form/text-field.tsx";
 import { Textarea } from "../form/textarea.tsx";
 import * as Label from "../ui/label.tsx";

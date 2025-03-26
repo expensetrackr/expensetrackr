@@ -7,10 +7,13 @@ namespace App\Http\Controllers;
 use App\Actions\Transactions\UpdateTransaction;
 use App\Filters\FiltersTransactionsByAccount;
 use App\Http\Requests\UpdateTransactionRequest;
+use App\Http\Resources\AccountResource;
 use App\Http\Resources\CategoryResource;
 use App\Http\Resources\TransactionResource;
+use App\Models\Account;
 use App\Models\Category;
 use App\Models\Transaction;
+use App\Services\CurrencyService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -75,6 +78,23 @@ final class TransactionController
             'categories' => $categories,
             // Handy for updating the table when anything from server side changes
             'requestId' => Str::uuid(),
+        ]);
+    }
+
+    /**
+     * Show the form for creating a new transaction.
+     */
+    public function create(Request $request, CurrencyService $currencyService): Response
+    {
+        $this->authorize('create', Transaction::class);
+
+        $accounts = AccountResource::collection(
+            Account::query()->with('bankConnection')->latest()->get()
+        );
+
+        return Inertia::render('transactions/create/page', [
+            'accounts' => $accounts,
+            'currencies' => $currencyService->getSupportedCurrencies(),
         ]);
     }
 

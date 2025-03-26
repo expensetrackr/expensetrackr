@@ -1,9 +1,8 @@
 import { useForm } from "@inertiajs/react";
 import { parseAsStringEnum, useQueryState } from "nuqs";
 import TeamIcon from "virtual:icons/ri/team-line";
-import { route } from "ziggy-js";
 
-import { Select } from "#/components/form/select.tsx";
+import { SelectField } from "#/components/form/select-field.tsx";
 import { TextField } from "#/components/form/text-field.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import * as Modal from "#/components/ui/modal.tsx";
@@ -68,7 +67,7 @@ export function AddWorkspaceMemberForm({ workspace, availableRoles }: AddWorkspa
                         />
 
                         {availableRoles.length > 0 ? (
-                            <Select
+                            <SelectField
                                 error={form.errors.role}
                                 id="role"
                                 label="Role"

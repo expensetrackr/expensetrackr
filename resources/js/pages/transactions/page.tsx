@@ -1,4 +1,4 @@
-import { Head } from "@inertiajs/react";
+import { Head, Link } from "@inertiajs/react";
 import PlusSignIcon from "virtual:icons/hugeicons/plus-sign";
 import Share03Icon from "virtual:icons/hugeicons/share-03";
 import TransactionIcon from "virtual:icons/hugeicons/transaction";
@@ -40,9 +40,11 @@ export default function TransactionsPage({ transactions, transaction, categories
                     <Button.Icon as={Share03Icon} />
                     Export
                 </Button.Root>
-                <Button.Root>
-                    <Button.Icon as={PlusSignIcon} />
-                    Add Transaction
+                <Button.Root asChild>
+                    <Link href={route("transactions.create")}>
+                        <Button.Icon as={PlusSignIcon} />
+                        Add Transaction
+                    </Link>
                 </Button.Root>
             </Header>
 

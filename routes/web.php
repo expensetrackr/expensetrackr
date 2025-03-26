@@ -33,6 +33,7 @@ Route::middleware([
         ->name('accounts.create.connection-type');
 
     Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
+    Route::get('/transactions/create', [TransactionController::class, 'create'])->name('transactions.create');
     Route::put('/transactions/{transaction}', [TransactionController::class, 'update'])->name('transactions.update');
 
     Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');

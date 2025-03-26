@@ -145,10 +145,8 @@ function BentoSection() {
         <section className="relative container py-12" id="bento">
             <div className="flex flex-col gap-24">
                 <div className="flex flex-col gap-2">
-                    <h2 className="text-center text-h4">La mejor experiencia en su clase</h2>
-                    <p className="text-center text-paragraph-md">
-                        Funcionalidades diseñadas para simplificar tu día a día
-                    </p>
+                    <h2 className="text-center text-h4">The best experience in its class</h2>
+                    <p className="text-center text-paragraph-md">Features designed to simplify your day to day</p>
                 </div>
 
                 <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-12">
@@ -156,51 +154,51 @@ function BentoSection() {
                         className="bg-gradient-to-tr lg:col-span-4"
                         eyebrow="multi-currency"
                         graphic={(isHovered) => <MultiCurrency className="mx-auto max-w-40" isHovered={isHovered} />}
-                        title="Tu dinero, en todos los idiomas"
+                        title="Your money, in all languages"
                     />
                     <BentoCard
                         className="bg-gradient-to-bl lg:col-span-5"
-                        eyebrow="suscripciones"
+                        eyebrow="subscriptions"
                         graphic={(isHovered) => (
                             <BentoSubscriptions className="mx-auto max-w-96" isHovered={isHovered} />
                         )}
-                        title="Tus subscripciones, bajo control"
+                        title="Your subscriptions, under control."
                     />
                     <BentoCard
                         className="bg-gradient-to-tl lg:col-span-3"
-                        eyebrow="notificaciones"
+                        eyebrow="notifications"
                         graphic={<BentoNotifications />}
-                        title="No te pierdas ningún gasto"
+                        title="Do not miss any expense."
                     />
                     <BentoCard
                         className="bg-radial lg:col-span-4"
-                        eyebrow="transferencias entre cuentas"
+                        eyebrow="account transfers"
                         graphic={<BentoAccountsTransfers className="mx-auto max-w-96" />}
-                        title="Pasa tu dinero sin dramas"
+                        title="Transfer your money without dramas"
                     />
                     <BentoCard
                         className="bg-gradient-to-bl lg:col-span-4"
-                        eyebrow="categorías"
+                        eyebrow="categories"
                         graphic={<BentoRecentTransactions className="mx-auto max-w-96" />}
-                        title="Descubre a donde se va tu dinero"
+                        title="Discover where your money goes"
                     />
                     <BentoCard
                         className="bg-gradient-to-br lg:col-span-4"
                         eyebrow="workspaces"
                         graphic={<BentoWorkspaces className="mx-auto max-w-96" />}
-                        title="Trabajo en equipo, nivel pro"
+                        title="Work in team, level professional"
                     />
                     <BentoCard
                         className="bg-gradient-to-tr lg:col-span-7"
-                        eyebrow="gráficas"
+                        eyebrow="historical graphics"
                         graphic={<BentoHistoricalGraphics />}
-                        title="Tu pasado financiero en un vistazo"
+                        title="Your financial past in a glance"
                     />
                     <BentoCard
                         className="bg-gradient-to-tr pb-0 lg:col-span-5"
-                        eyebrow="sincronización con tu banco (en desarrollo)"
+                        eyebrow="bank synchronization"
                         graphic={<BentoLogoCluster className="-mx-6 h-80 md:h-full" />}
-                        title="Conecta tu banco, ahorra tiempo"
+                        title="Connect your bank, save time"
                     />
                 </div>
             </div>

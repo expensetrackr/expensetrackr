@@ -45,7 +45,7 @@ function Switch({ className, disabled, ...rest }: React.CustomComponentPropsWith
                         !disabled && [
                             // before
                             "before:absolute before:inset-y-0 before:left-1/2 before:w-3 before:-translate-x-1/2 before:rounded-full before:bg-white",
-                            "before:[mask:--mask]",
+                            "before:[mask:var(--mask)]",
                             // after
                             "after:absolute after:inset-y-0 after:left-1/2 after:w-3 after:-translate-x-1/2 after:rounded-full after:shadow-switch-thumb",
                             // pressed

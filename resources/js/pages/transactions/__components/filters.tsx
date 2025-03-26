@@ -2,7 +2,7 @@ import CommandIcon from "virtual:icons/hugeicons/command";
 import Search01Icon from "virtual:icons/hugeicons/search-01";
 import Sorting01Icon from "virtual:icons/hugeicons/sorting-01";
 
-import { Select } from "#/components/form/select.tsx";
+import { SelectField } from "#/components/form/select-field.tsx";
 import { TextField } from "#/components/form/text-field.tsx";
 import * as Kbd from "#/components/ui/kbd.tsx";
 import * as SegmentedControl from "#/components/ui/segmented-control.tsx";
@@ -52,7 +52,7 @@ export function Filters() {
                     value={params["filter[name]"] ?? ""}
                 />
 
-                <Select
+                <SelectField
                     $size="sm"
                     onValueChange={(value) => setParams({ sort: value })}
                     options={[

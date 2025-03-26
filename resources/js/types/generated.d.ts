@@ -280,6 +280,7 @@ declare namespace App.Enums {
     export type ProviderType = "teller" | "mx";
     export type RateType = "fixed" | "variable" | "adjustable";
     export type ToastType = "error" | "warning" | "success" | "info";
+    export type TransactionRecurringInterval = "daily" | "weekly" | "monthly" | "quarterly" | "yearly";
     export type TransactionStatus = "posted" | "pending" | "excluded" | "completed";
     export type TransactionType = "income" | "expense" | "transfer";
 }

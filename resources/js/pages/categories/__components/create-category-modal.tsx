@@ -4,7 +4,7 @@ import GeometricShapes01Icon from "virtual:icons/hugeicons/geometric-shapes-01";
 import { classificationIcons } from "#/components/category-classification-icon.tsx";
 import { categoryIcons } from "#/components/category-icon.tsx";
 import { ColorField, colorSwatches } from "#/components/form/color.tsx";
-import { Select } from "#/components/form/select.tsx";
+import { SelectField } from "#/components/form/select-field.tsx";
 import { TextField } from "#/components/form/text-field.tsx";
 import { Textarea } from "#/components/form/textarea.tsx";
 import * as Button from "#/components/ui/button.tsx";
@@ -103,7 +103,7 @@ export function CreateCategoryModal({ categories }: CreateCategoryModalProps) {
                         />
 
                         <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
-                            <Select
+                            <SelectField
                                 error={form.errors.classification}
                                 id="classification"
                                 label="Classification"
@@ -120,7 +120,7 @@ export function CreateCategoryModal({ categories }: CreateCategoryModalProps) {
                                 value={form.data.classification}
                             />
 
-                            <Select
+                            <SelectField
                                 error={form.errors.parentId}
                                 id="parentId"
                                 label="Parent category"
