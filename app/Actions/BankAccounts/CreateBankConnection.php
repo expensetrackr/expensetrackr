@@ -57,7 +57,8 @@ final readonly class CreateBankConnection
         $workspaceId = type(Context::get('currentWorkspace'))->asInt();
         SyncBankAccounts::dispatch(
             $workspaceId,
-            $bankConnection->id
+            $bankConnection->id,
+            true
         )->onQueue('bank-connection');
     }
 }

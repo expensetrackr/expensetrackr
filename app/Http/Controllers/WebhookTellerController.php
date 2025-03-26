@@ -63,12 +63,11 @@ final class WebhookTellerController
 
         $bankConnection = BankConnection::whereProviderConnectionId($request->input('payload.enrollment_id'))->firstOrFail(['id', 'created_at']);
 
-        if ($bankConnection->created_at->diffInHours() < 24) {
-            SyncBankAccounts::dispatch(
-                $bankConnection->workspace_id,
-                $bankConnection->id
-            )->onQueue('bank-connection');
-        }
+        SyncBankAccounts::dispatch(
+            $bankConnection->workspace_id,
+            $bankConnection->id,
+            $bankConnection->created_at->diffInHours() < 24,
+        )->onQueue('bank-connection');
 
         return response()->json(['success' => true]);
     }

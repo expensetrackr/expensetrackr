@@ -55,6 +55,7 @@ final class SyncBankAccounts implements ShouldBeUnique, ShouldQueue
     public function __construct(
         public readonly int $workspaceId,
         public readonly int $bankConnectionId,
+        public readonly ?bool $isManualSync = false,
     ) {
         $this->onQueue('bank-connection');
         $this->workspace = Workspace::findOrFail($this->workspaceId);
@@ -124,7 +125,7 @@ final class SyncBankAccounts implements ShouldBeUnique, ShouldQueue
             }
 
             foreach ($accounts as $account) {
-                $this->syncAccount($account);
+                $this->syncAccount($account, $this->isManualSync);
             }
 
             Log::info('Bank accounts synced', [
@@ -148,7 +149,7 @@ final class SyncBankAccounts implements ShouldBeUnique, ShouldQueue
     /**
      * Sync the account balance and transactions
      */
-    private function syncAccount(Account $account): void
+    private function syncAccount(Account $account, ?bool $isManualSync = false): void
     {
         $financeCore = new FinanceCoreService(
             providerConnectionId: $account->bankConnection->provider_connection_id,
@@ -195,7 +196,11 @@ final class SyncBankAccounts implements ShouldBeUnique, ShouldQueue
 
         // Then update the transactions
         try {
-            $transactions = $financeCore->getTransactions($account->external_id);
+            $transactions = $financeCore->getTransactions(
+                $account->external_id,
+                // If the transactions are being synced manually, we want to get all transactions
+                $isManualSync,
+            );
 
             // Reset error details and retries if we successfully got the transactions
             $account->bankConnection()->update([
