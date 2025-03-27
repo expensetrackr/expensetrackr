@@ -13,7 +13,7 @@ final class CurrencyServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        $this->app->bind(CurrencyHandler::class, fn (Application $app) => new CurrencyService());
+        $this->app->bind(CurrencyHandler::class, fn (Application $app): \App\Services\CurrencyService => new CurrencyService());
     }
 
     public function boot(): void

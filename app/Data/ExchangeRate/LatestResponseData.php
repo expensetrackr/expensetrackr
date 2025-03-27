@@ -23,6 +23,6 @@ final class LatestResponseData extends Data
         public readonly string $timeNextUpdateUtc,
         public readonly string $baseCode,
         /** @var array<string, int|float> */
-        public readonly array $conversionRates,
+        public array $conversionRates,
     ) {}
 }

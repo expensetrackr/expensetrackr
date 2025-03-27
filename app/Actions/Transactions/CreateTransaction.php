@@ -65,15 +65,9 @@ final class CreateTransaction
                 'workspace_id' => $input['workspace_id'] ?? auth()->user()->current_workspace_id,
             ]);
         } catch (QueryException $e) {
-            throw new Exception(
-                'Failed to create transaction due to database error',
-                previous: $e
-            );
+            throw new Exception('Failed to create transaction due to database error', $e->getCode(), previous: $e);
         } catch (Exception $e) {
-            throw new Exception(
-                'Failed to create transaction',
-                previous: $e
-            );
+            throw new Exception('Failed to create transaction', $e->getCode(), previous: $e);
         }
     }
 }

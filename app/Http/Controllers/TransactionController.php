@@ -101,7 +101,7 @@ final class TransactionController
             'categories' => CategoryResource::collection(
                 Category::query()
                     ->where('is_system', true)
-                    ->orWhere(function ($query) {
+                    ->orWhere(function ($query): void {
                         $query->where('workspace_id', auth()->user()->current_workspace_id)
                             ->where('is_system', false);
                     })

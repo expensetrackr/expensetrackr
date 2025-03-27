@@ -92,6 +92,32 @@ declare namespace App.Data.Banking.Institution {
         provider: App.Enums.ProviderType;
     };
 }
+declare namespace App.Data.BlackMarketDolar {
+    export type VenezuelaResponseData = {
+        status: number;
+        total: number;
+        result: Array<App.Data.BlackMarketDolar.VenezuelaResponseItemData>;
+    };
+    export type VenezuelaResponseItemData = {
+        id: number;
+        binance: string;
+        dolartoday: string;
+        localbitcoindt: string;
+        yadio: string;
+        airtm: string;
+        akb: string | null;
+        cambiosrya: string;
+        mkambio: string;
+        bcv: string;
+        promediototalmk: string;
+        promediovip: string;
+        fecha: string;
+        hora: string;
+        horaEpv: string;
+        fechaEpv: string;
+        promEpv: string;
+    };
+}
 declare namespace App.Data.ExchangeRate {
     export type CodesResponseData = {
         result: string;

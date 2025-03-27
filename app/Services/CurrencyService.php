@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Contracts\CurrencyHandler;
+use App\Data\BlackMarketDolar\ArgentinaResponseData;
+use App\Data\BlackMarketDolar\VenezuelaResponseData;
 use App\Data\ExchangeRate\CodesResponseData;
 use App\Data\ExchangeRate\LatestResponseData;
 use GuzzleHttp\Exception\GuzzleException;
@@ -86,7 +88,18 @@ final class CurrencyService implements CurrencyHandler
                 $responseData = LatestResponseData::from($response->json());
 
                 if ($responseData->result === 'success' && isset($responseData->conversionRates)) {
-                    Cache::put("currency_rates_{$baseCurrency}", $responseData->conversionRates, now()->addDay());
+                    $venezuelaDolarData = $this->getVenezuelaDolarData();
+                    $argentinaDolarData = $this->getArgentinaDolarData();
+
+                    if ($venezuelaDolarData instanceof VenezuelaResponseData) {
+                        $responseData->conversionRates['VES'] = $venezuelaDolarData->result[0]->promEpv;
+                    }
+
+                    if ($argentinaDolarData instanceof ArgentinaResponseData) {
+                        $responseData->conversionRates['ARS'] = $argentinaDolarData->blue->valueAvg;
+                    }
+
+                    Cache::put("currency_rates_{$baseCurrency}", $responseData->conversionRates, now()->addHours(12));
 
                     return $responseData->conversionRates;
                 }
@@ -137,5 +150,36 @@ final class CurrencyService implements CurrencyHandler
 
             return null;
         });
+    }
+
+    /**
+     * Get the Venezuela dolar data from the external API.
+     * This is an special case because Venezuela have a lot of different dolar prices.
+     * So, for better rates for the user we use the black market dolar data.
+     *
+     * This is safe to delete it if you don't want to support black market dolar data.
+     */
+    private function getVenezuelaDolarData(): ?VenezuelaResponseData
+    {
+        $response = Http::withHeader('Origin', 'https://monitordolarvenezuela.com')
+            ->get('https://api.monitordolarvenezuela.com/dolarhoy')
+            ->json();
+
+        return Cache::remember('venezuela_dolar_data', now()->addHours(6), fn (): VenezuelaResponseData => VenezuelaResponseData::from($response));
+    }
+
+    /**
+     * Get the Argentina dolar data from the external API.
+     * This is an special case because Argentina have a lot of different dolar prices.
+     * So, for better rates for the user we use the black market dolar data.
+     *
+     * This is safe to delete it if you don't want to support black market dolar data.
+     */
+    private function getArgentinaDolarData(): ?ArgentinaResponseData
+    {
+        $response = Http::get('https://api.bluelytics.com.ar/v2/latest')
+            ->json();
+
+        return Cache::remember('argentina_dolar_data', now()->addHours(6), fn (): ArgentinaResponseData => ArgentinaResponseData::from($response));
     }
 }

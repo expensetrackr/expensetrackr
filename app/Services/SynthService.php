@@ -7,11 +7,11 @@ namespace App\Services;
 use App\Data\Synth\SynthEnrichData;
 use GuzzleHttp\Client;
 
-final class SynthService
+final readonly class SynthService
 {
-    private readonly string $baseUrl;
+    private string $baseUrl;
 
-    private readonly string $accessToken;
+    private string $accessToken;
 
     public function __construct()
     {
