@@ -49,8 +49,8 @@ final class BankSyncServiceProvider extends ServiceProvider
                             $connection->workspace_id,
                             $connection->id
                         ))
-                            ->dailyAt($syncTime)
-                            ->withoutOverlapping($connection->id)
+                            ->dailyAt(time: $syncTime)
+                            ->withoutOverlapping()
                             ->name("sync-bank-connection-{$connection->id}")
                             ->onFailure(function () use ($connection): void {
                                 Log::error("Failed to sync bank connection {$connection->id} for workspace {$connection->workspace_id}");
