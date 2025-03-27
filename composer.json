@@ -41,7 +41,8 @@
         "spatie/laravel-prefixed-ids": "1.4.1",
         "spatie/laravel-query-builder": "6.3.1",
         "spatie/laravel-typescript-transformer": "2.5.1",
-        "tightenco/ziggy": "2.5.2"
+        "tightenco/ziggy": "2.5.2",
+        "timothepearce/laravel-time-series": "dev-main"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "3.5.5",

@@ -4,18 +4,20 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Casts\MoneyCast;
 use App\Concerns\Blamable;
 use App\Concerns\WorkspaceOwned;
 use App\Enums\AccountSubtype;
 use App\Enums\AccountType;
+use App\Models\Projections\AccountProjection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Support\Carbon;
 use InvalidArgumentException;
 use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
+use TimothePearce\TimeSeries\Models\Traits\Projectable;
 
 /**
  * @property int $id
@@ -74,7 +76,7 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
 final class Account extends Model
 {
     /** @use HasFactory<\Database\Factories\AccountFactory> */
-    use Blamable, HasFactory, HasPrefixedId, WorkspaceOwned;
+    use Blamable, HasFactory, HasPrefixedId, Projectable, WorkspaceOwned;
 
     /**
      * The accessors to append to the model's array form.
@@ -83,6 +85,10 @@ final class Account extends Model
      */
     protected $appends = [
         'type',
+    ];
+
+    protected array $projections = [
+        AccountProjection::class,
     ];
 
     /**
@@ -140,9 +146,9 @@ final class Account extends Model
     protected function casts(): array
     {
         return [
-            // 'initial_balance' => MoneyCast::class,
-            // 'current_balance' => MoneyCast::class,
             'subtype' => AccountSubtype::class,
+            'created_at' => Carbon::class,
+            'updated_at' => Carbon::class,
         ];
     }
 }
