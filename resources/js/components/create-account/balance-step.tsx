@@ -10,7 +10,7 @@ import type * as v from "valibot";
 
 import { useTranslation } from "#/hooks/use-translation.ts";
 import { InterestRateTypeEnum, type BalanceSchema } from "#/utils/steppers/create-account.step.ts";
-import { Select as SelectComponent } from "../form/select-field.tsx";
+import { SelectField } from "../form/select-field.tsx";
 import { TextField } from "../form/text-field.tsx";
 import * as Button from "../ui/button.tsx";
 import * as DatepickerPrimivites from "../ui/datepicker.tsx";
@@ -278,7 +278,7 @@ function LoanFields({ fields }: LoanFieldsProps) {
                     })}
                 />
 
-                <SelectComponent
+                <SelectField
                     defaultValue={fields.interest_rate_type.initialValue}
                     error={fields.interest_rate_type.errors}
                     id={fields.interest_rate_type.id}

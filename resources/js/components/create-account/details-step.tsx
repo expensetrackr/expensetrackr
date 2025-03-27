@@ -4,7 +4,7 @@ import type * as v from "valibot";
 import { useCreateAccountParams } from "#/hooks/use-create-account-params.ts";
 import { SubtypeOptions } from "#/schemas/account.ts";
 import { type DetailsSchema } from "#/utils/steppers/create-account.step.ts";
-import { Select } from "../form/select-field.tsx";
+import { SelectField } from "../form/select-field.tsx";
 import { TextField } from "../form/text-field.tsx";
 import { Textarea } from "../form/textarea.tsx";
 import * as Label from "../ui/label.tsx";
@@ -22,8 +22,7 @@ export function DetailsStep({ fields }: DetailsStepProps) {
             <input {...getInputProps(fields.type, { type: "hidden", value: false })} value={type || ""} />
 
             <TextField
-                $error={!!fields.name.errors}
-                hint={fields.name.errors}
+                error={fields.name.errors}
                 label="Name"
                 {...getInputProps(fields.name, { type: "text" })}
                 placeholder="e.g. Personal savings"
@@ -31,10 +30,10 @@ export function DetailsStep({ fields }: DetailsStepProps) {
 
             <Textarea
                 {...getTextareaProps(fields.description)}
-                $error={!!fields.description.errors}
                 charCounterCurrent={fields.description.value?.length || 0}
                 charCounterMax={200}
-                hint={fields.description.errors ?? "This will only be visible to you."}
+                error={fields.description.errors}
+                hint={"This will only be visible to you."}
                 label={
                     <>
                         Description <Label.Sub>(Optional)</Label.Sub>
@@ -44,7 +43,7 @@ export function DetailsStep({ fields }: DetailsStepProps) {
             ></Textarea>
 
             {type && SubtypeOptions[type as keyof typeof SubtypeOptions] ? (
-                <Select
+                <SelectField
                     defaultValue={fields.subtype.initialValue}
                     error={fields.subtype.errors}
                     id={fields.subtype.id}
