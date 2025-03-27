@@ -83,9 +83,9 @@ final class TransactionController
     /**
      * Show the form for creating a new transaction.
      */
-    public function create(): RedirectResponse|Response
+    public function create(Request $request): RedirectResponse|Response
     {
-        if (! Gate::authorize('create', Transaction::class)->allowed()) {
+        if (! Gate::forUser($request->user())->check('create', Transaction::class)) {
             return to_route('transactions.index');
         }
 

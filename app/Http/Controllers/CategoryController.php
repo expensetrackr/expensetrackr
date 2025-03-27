@@ -40,9 +40,6 @@ final class CategoryController
 
         return Inertia::render('categories/page', [
             'categories' => $categories,
-            'permissions' => [
-                'canCreateCategories' => $request->user()->can('create', Category::class),
-            ],
         ]);
     }
 
@@ -77,7 +74,7 @@ final class CategoryController
      */
     public function destroy(Request $request, Category $category, DeleteCategory $action): RedirectResponse
     {
-        if (! Gate::authorize('delete', $category)->allowed()) {
+        if (! Gate::forUser($request->user())->check('delete', $category)) {
             return to_route('categories.index');
         }
 

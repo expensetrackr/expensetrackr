@@ -84,9 +84,9 @@ final class AccountController
     /**
      * Create a new account
      */
-    public function create(): RedirectResponse|Response
+    public function create(Request $request): RedirectResponse|Response
     {
-        if (! Gate::authorize('create', Account::class)->allowed()) {
+        if (! Gate::forUser($request->user())->check('create', Account::class)) {
             return to_route('accounts.index');
         }
 
@@ -98,7 +98,7 @@ final class AccountController
      */
     public function createAccountByType(Request $request, MeilisearchService $meilisearchService, string $connectionType): RedirectResponse|Response
     {
-        if (! Gate::authorize('create', Account::class)->allowed()) {
+        if (! Gate::forUser($request->user())->check('create', Account::class)) {
             return to_route('accounts.index');
         }
 

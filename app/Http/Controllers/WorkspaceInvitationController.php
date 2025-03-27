@@ -18,7 +18,7 @@ final class WorkspaceInvitationController
      */
     public function accept(Request $request, WorkspaceInvitation $invitation, ManageWorkspaceMember $action): RedirectResponse
     {
-        if (! Gate::authorize('addWorkspaceMember', $invitation->workspace)->allowed()) {
+        if (! Gate::forUser($request->user())->check('addWorkspaceMember', $invitation->workspace)) {
             return to_route('workspaces.show', $invitation->workspace);
         }
 
@@ -46,7 +46,7 @@ final class WorkspaceInvitationController
      */
     public function destroy(Request $request, WorkspaceInvitation $invitation): RedirectResponse
     {
-        if (! Gate::authorize('removeWorkspaceMember', $invitation->workspace)->allowed()) {
+        if (! Gate::forUser($request->user())->check('removeWorkspaceMember', $invitation->workspace)) {
             return to_route('workspaces.show', $invitation->workspace);
         }
 

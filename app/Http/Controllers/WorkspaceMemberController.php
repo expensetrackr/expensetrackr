@@ -61,7 +61,7 @@ final class WorkspaceMemberController
      */
     public function destroy(Request $request, Workspace $workspace, User $member, RemoveWorkspaceMember $action): RedirectResponse
     {
-        if (! Gate::authorize('removeWorkspaceMember', $workspace)->allowed()) {
+        if (! Gate::forUser($request->user())->check('removeWorkspaceMember', $workspace)) {
             return to_route('workspaces.show', $workspace);
         }
 

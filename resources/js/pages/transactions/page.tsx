@@ -8,6 +8,7 @@ import { TablePagination } from "#/components/table-pagination.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
 import { usePaginationParams } from "#/hooks/use-pagination-params.ts";
+import { usePermissions } from "#/hooks/use-permissions.ts";
 import { AppLayout } from "#/layouts/app-layout.tsx";
 import { type PageProps } from "#/types/globals.ts";
 import { TransactionDetailsDrawer } from "./__components/details-drawer.tsx";
@@ -19,10 +20,15 @@ type TransactionsPageProps = {
     transaction?: Resources.Transaction | null;
     categories: Array<Resources.Category>;
     requestId: string;
+    permissions: {
+        create: boolean;
+        update: boolean;
+    };
 };
 
 export default function TransactionsPage({ transactions, transaction, categories, requestId }: TransactionsPageProps) {
     const [, setPagination] = usePaginationParams();
+    const { canCreateTransactions } = usePermissions();
 
     return (
         <>
@@ -40,12 +46,14 @@ export default function TransactionsPage({ transactions, transaction, categories
                     <Button.Icon as={Share03Icon} />
                     Export
                 </Button.Root>
-                <Button.Root asChild>
-                    <Link href={route("transactions.create")}>
-                        <Button.Icon as={PlusSignIcon} />
-                        Add Transaction
-                    </Link>
-                </Button.Root>
+                {canCreateTransactions && (
+                    <Button.Root asChild>
+                        <Link href={route("transactions.create")}>
+                            <Button.Icon as={PlusSignIcon} />
+                            Add Transaction
+                        </Link>
+                    </Button.Root>
+                )}
             </Header>
 
             <div className="lg:px-8">

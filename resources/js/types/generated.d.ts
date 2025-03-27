@@ -93,6 +93,17 @@ declare namespace App.Data.Banking.Institution {
     };
 }
 declare namespace App.Data.BlackMarketDolar {
+    export type ArgentinaDolarItemData = {
+        valueAvg: number;
+        valueSell: number;
+        valueBuy: number;
+    };
+    export type ArgentinaResponseData = {
+        oficial: App.Data.BlackMarketDolar.ArgentinaDolarItemData;
+        blue: App.Data.BlackMarketDolar.ArgentinaDolarItemData;
+        oficialEuro: App.Data.BlackMarketDolar.ArgentinaDolarItemData;
+        blueEuro: App.Data.BlackMarketDolar.ArgentinaDolarItemData;
+    };
     export type VenezuelaResponseData = {
         status: number;
         total: number;
@@ -166,6 +177,11 @@ declare namespace App.Data.Shared {
         code: string;
         name: string;
     };
+    export type PermissionsData = {
+        canCreateAccounts: boolean;
+        canCreateCategories: boolean;
+        canCreateTransactions: boolean;
+    };
     export type SharedInertiaData = {
         auth: App.Data.Auth.InertiaAuthData | null;
         workspaces: App.Data.Workspace.WorkspacesPermissionsData | null;
@@ -176,6 +192,7 @@ declare namespace App.Data.Shared {
         translations: Record<string, string>;
         socialstream: App.Data.Socialstream.SocialstreamData;
         errors: { [key: string]: string } | null;
+        permissions: App.Data.Shared.PermissionsData;
     };
     export type ToastData = {
         type: App.Enums.ToastType;

@@ -17,7 +17,7 @@ type AccountsPageProps = {
     account?: Resources.Account | null;
 };
 
-export default function AccountsPage({ accounts, account }: AccountsPageProps) {
+export default function AccountsPage({ accounts, account, permissions }: PageProps<AccountsPageProps>) {
     return (
         <>
             <Header
@@ -30,12 +30,14 @@ export default function AccountsPage({ accounts, account }: AccountsPageProps) {
                 }
                 title="Accounts"
             >
-                <Button.Root asChild className="w-full md:w-auto">
-                    <Link href={route("accounts.create")}>
-                        <Button.Icon as={WalletAdd01} />
-                        Add account
-                    </Link>
-                </Button.Root>
+                {permissions.canCreateAccounts && (
+                    <Button.Root asChild className="w-full md:w-auto">
+                        <Link href={route("accounts.create")}>
+                            <Button.Icon as={WalletAdd01} />
+                            Add account
+                        </Link>
+                    </Button.Root>
+                )}
             </Header>
 
             <div className="lg:px-8">

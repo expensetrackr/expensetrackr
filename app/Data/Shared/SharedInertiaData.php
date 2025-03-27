@@ -32,5 +32,6 @@ final class SharedInertiaData extends Data
         public readonly SocialstreamData $socialstream,
         /** @var array<string,string>|null */
         public readonly array|string|AlwaysProp|null $errors = null,
+        public readonly PermissionsData $permissions,
     ) {}
 }

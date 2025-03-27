@@ -16,12 +16,9 @@ type CategoriesPageProps = {
         [key in App.Enums.CategoryClassification]: Array<Resources.Category>;
     };
     category: Resources.Category | null;
-    permissions: {
-        canCreateCategories: boolean;
-    };
 };
 
-export default function CategoriesPage({ permissions, ...pageProps }: CategoriesPageProps) {
+export default function CategoriesPage({ permissions, ...pageProps }: PageProps<CategoriesPageProps>) {
     return (
         <div className="flex flex-col gap-6 px-4 py-6 lg:px-8">
             <div className="flex-1 columns-1 gap-5 space-y-5 sm:columns-2">

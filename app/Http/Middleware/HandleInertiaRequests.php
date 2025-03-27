@@ -11,9 +11,13 @@ use App\Data\Workspace\WorkspaceData;
 use App\Data\Workspace\WorkspacesPermissionsData;
 use App\Enums\Language;
 use App\Http\Resources\LanguageResource;
+use App\Models\Account;
+use App\Models\Category;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Middleware;
 use JoelButcher\Socialstream\ConnectedAccount;
 use JoelButcher\Socialstream\Socialstream;
@@ -93,6 +97,11 @@ final class HandleInertiaRequests extends Middleware
                             });
                         });
                     },
+                    'permissions' => [
+                        'canCreateAccounts' => Gate::forUser($request->user())->check('create', Account::class),
+                        'canCreateCategories' => Gate::forUser($request->user())->check('create', Category::class),
+                        'canCreateTransactions' => Gate::forUser($request->user())->check('create', Transaction::class),
+                    ],
                 ]
             )
         )->toArray();

@@ -31,9 +31,9 @@ final class WorkspaceController
     /**
      * Show the workspace management screen.
      */
-    public function show(Workspace $workspace): RedirectResponse|Response
+    public function show(Request $request, Workspace $workspace): RedirectResponse|Response
     {
-        if (! Gate::authorize('view', $workspace)->allowed()) {
+        if (! Gate::forUser($request->user())->check('view', $workspace)) {
             return to_route('dashboard');
         }
 
@@ -65,9 +65,9 @@ final class WorkspaceController
      *
      * @return Response
      */
-    public function create(): RedirectResponse|Response
+    public function create(Request $request): RedirectResponse|Response
     {
-        if (! Gate::authorize('create', Workspace::class)->allowed()) {
+        if (! Gate::forUser($request->user())->check('create', Workspace::class)) {
             return to_route('dashboard');
         }
 
@@ -89,7 +89,7 @@ final class WorkspaceController
      */
     public function destroy(Request $request, Workspace $workspace, DeleteWorkspace $action): Application|RedirectResponse|\Illuminate\Http\Response|Redirector|Response
     {
-        if (! Gate::authorize('delete', $workspace)->allowed()) {
+        if (! Gate::forUser($request->user())->check('delete', $workspace)) {
             return to_route('workspaces.show', $workspace);
         }
 
