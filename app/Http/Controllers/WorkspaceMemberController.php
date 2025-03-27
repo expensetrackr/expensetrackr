@@ -14,6 +14,7 @@ use App\Models\Workspace;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 final class WorkspaceMemberController
 {
@@ -60,6 +61,10 @@ final class WorkspaceMemberController
      */
     public function destroy(Request $request, Workspace $workspace, User $member, RemoveWorkspaceMember $action): RedirectResponse
     {
+        if (! Gate::authorize('removeWorkspaceMember', $workspace)->allowed()) {
+            return to_route('workspaces.show', $workspace);
+        }
+
         $currentUser = type($request->user())->as(User::class);
 
         $action->handle(

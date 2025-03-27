@@ -7,7 +7,9 @@ namespace App\Http\Requests;
 use App\Enums\AccountSubtype;
 use App\Enums\AccountType;
 use App\Enums\ProviderType;
+use App\Models\BankConnection;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Validation\Rule;
 
 final class BankConnectionRequest extends FormRequest
@@ -17,7 +19,7 @@ final class BankConnectionRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return $this->user()?->can('create', BankConnection::class) ?? false;
     }
 
     /**
@@ -44,5 +46,13 @@ final class BankConnectionRequest extends FormRequest
             'accounts.*.subtype' => ['string', Rule::enum(AccountSubtype::class)],
             'accounts.*.token_expires_at' => ['nullable', 'date'],
         ];
+    }
+
+    /**
+     * Handle a failed authorization attempt.
+     */
+    protected function failedAuthorization(): RedirectResponse
+    {
+        return to_route('accounts.index');
     }
 }

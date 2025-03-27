@@ -16,9 +16,9 @@ use App\Http\Resources\TransactionResource;
 use App\Models\Account;
 use App\Models\Category;
 use App\Models\Transaction;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -27,15 +27,11 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 final class TransactionController
 {
-    use AuthorizesRequests;
-
     /**
      * Display all transactions.
      */
     public function index(Request $request): Response
     {
-        $this->authorize('viewAny', Transaction::class);
-
         $perPage = $request->integer('per_page', default: 12);
         $transactionId = $request->string('transaction_id');
 
@@ -87,9 +83,11 @@ final class TransactionController
     /**
      * Show the form for creating a new transaction.
      */
-    public function create(): Response
+    public function create(): RedirectResponse|Response
     {
-        $this->authorize('create', Transaction::class);
+        if (! Gate::authorize('create', Transaction::class)->allowed()) {
+            return to_route('transactions.index');
+        }
 
         $accounts = AccountResource::collection(
             Account::query()->with('bankConnection')->latest()->get()
@@ -130,8 +128,6 @@ final class TransactionController
      */
     public function update(UpdateTransactionRequest $request, Transaction $transaction, UpdateTransaction $action): RedirectResponse
     {
-        $this->authorize('update', $transaction);
-
         $action->handle($transaction, $request->validated());
 
         return back(303);

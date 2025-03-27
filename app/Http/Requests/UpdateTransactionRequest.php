@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Str;
 
 final class UpdateTransactionRequest extends FormRequest
@@ -47,5 +48,13 @@ final class UpdateTransactionRequest extends FormRequest
         }
 
         $this->replace($snakeCaseInput);
+    }
+
+    /**
+     * Handle a failed authorization attempt.
+     */
+    protected function failedAuthorization(): RedirectResponse
+    {
+        return to_route('transactions.index');
     }
 }

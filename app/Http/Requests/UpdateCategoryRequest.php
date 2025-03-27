@@ -7,6 +7,7 @@ namespace App\Http\Requests;
 use App\Enums\CategoryClassification;
 use App\Models\Category;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
@@ -64,5 +65,13 @@ final class UpdateCategoryRequest extends FormRequest
         }
 
         $this->replace($snakeCaseInput);
+    }
+
+    /**
+     * Handle a failed authorization attempt.
+     */
+    protected function failedAuthorization(): RedirectResponse
+    {
+        return to_route('categories.index');
     }
 }

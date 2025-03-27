@@ -28,7 +28,7 @@ trait HasWorkspaces
      */
     public function currentWorkspace(): BelongsTo
     {
-        if (is_null($this->current_workspace_id) && $this->id) {
+        if (! $this->current_workspace_id && $this->id) {
             $this->switchWorkspace($this->personalWorkspace());
         }
 
@@ -40,7 +40,7 @@ trait HasWorkspaces
      */
     public function switchWorkspace(?Workspace $workspace): bool
     {
-        if (is_null($workspace) || ! $this->belongsToWorkspace($workspace)) {
+        if (! $workspace || ! $this->belongsToWorkspace($workspace)) {
             return false;
         }
 
@@ -58,9 +58,10 @@ trait HasWorkspaces
      */
     public function belongsToWorkspace(?Workspace $workspace): bool
     {
-        if (is_null($workspace)) {
+        if (! $workspace) {
             return false;
         }
+
         if ($this->ownsWorkspace($workspace)) {
             return true;
         }
@@ -73,7 +74,7 @@ trait HasWorkspaces
      */
     public function ownsWorkspace(?Workspace $workspace): bool
     {
-        if (is_null($workspace)) {
+        if (! $workspace) {
             return false;
         }
 

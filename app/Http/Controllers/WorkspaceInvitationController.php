@@ -7,20 +7,20 @@ namespace App\Http\Controllers;
 use App\Actions\Workspaces\ManageWorkspaceMember;
 use App\Models\User;
 use App\Models\WorkspaceInvitation;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 final class WorkspaceInvitationController
 {
-    use AuthorizesRequests;
-
     /**
      * Accept a workspace invitation.
      */
     public function accept(Request $request, WorkspaceInvitation $invitation, ManageWorkspaceMember $action): RedirectResponse
     {
-        $this->authorize('addWorkspaceMember', $invitation->workspace);
+        if (! Gate::authorize('addWorkspaceMember', $invitation->workspace)->allowed()) {
+            return to_route('workspaces.show', $invitation->workspace);
+        }
 
         $currentUser = type($request->user())->as(User::class);
 
@@ -46,7 +46,9 @@ final class WorkspaceInvitationController
      */
     public function destroy(Request $request, WorkspaceInvitation $invitation): RedirectResponse
     {
-        $this->authorize('removeWorkspaceMember', $invitation->workspace);
+        if (! Gate::authorize('removeWorkspaceMember', $invitation->workspace)->allowed()) {
+            return to_route('workspaces.show', $invitation->workspace);
+        }
 
         $invitation->delete();
 

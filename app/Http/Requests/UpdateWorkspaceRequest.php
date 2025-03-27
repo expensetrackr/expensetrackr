@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\RedirectResponse;
 
 final class UpdateWorkspaceRequest extends FormRequest
 {
@@ -25,5 +26,13 @@ final class UpdateWorkspaceRequest extends FormRequest
     public function authorize(): bool
     {
         return $this->user()?->can('update', $this->workspace) ?? false;
+    }
+
+    /**
+     * Handle a failed authorization attempt.
+     */
+    protected function failedAuthorization(): RedirectResponse
+    {
+        return to_route('workspaces.show', $this->workspace);
     }
 }

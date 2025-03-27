@@ -18,9 +18,9 @@ use App\Services\MeilisearchService;
 use App\Services\TellerService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Database\Eloquent\Builder;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -28,15 +28,11 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 final class AccountController
 {
-    use AuthorizesRequests;
-
     /**
      * Display all accounts.
      */
     public function index(Request $request): Response
     {
-        $this->authorize('viewAny', Account::class);
-
         $accountPublicId = $request->query('account_id');
 
         $accounts = AccountResource::collection(QueryBuilder::for(Account::class)
@@ -88,9 +84,11 @@ final class AccountController
     /**
      * Create a new account
      */
-    public function create(): Response
+    public function create(): RedirectResponse|Response
     {
-        $this->authorize('create', Account::class);
+        if (! Gate::authorize('create', Account::class)->allowed()) {
+            return to_route('accounts.index');
+        }
 
         return Inertia::render('accounts/create/page');
     }
@@ -98,9 +96,11 @@ final class AccountController
     /**
      * Create an account of a specific type
      */
-    public function createAccountByType(Request $request, MeilisearchService $meilisearchService, string $connectionType): Response
+    public function createAccountByType(Request $request, MeilisearchService $meilisearchService, string $connectionType): RedirectResponse|Response
     {
-        $this->authorize('create', Account::class);
+        if (! Gate::authorize('create', Account::class)->allowed()) {
+            return to_route('accounts.index');
+        }
 
         $data = [];
 

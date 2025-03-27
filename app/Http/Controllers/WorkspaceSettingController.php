@@ -10,13 +10,10 @@ use App\Models\User;
 use App\Models\Workspace;
 use App\Models\WorkspaceSetting;
 use Illuminate\Container\Attributes\CurrentUser;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
 
 final class WorkspaceSettingController
 {
-    use AuthorizesRequests;
-
     /**
      * Update the given workspaces settings.
      */
@@ -28,8 +25,6 @@ final class WorkspaceSettingController
         User $user,
         UpdateWorkspaceSettings $action,
     ): RedirectResponse {
-        $this->authorize('update', $workspace);
-
         if (! $user->subscribed()) {
             return back(303)
                 ->with('toast',

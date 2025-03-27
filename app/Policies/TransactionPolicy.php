@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
+use App\Models\Transaction;
+use App\Models\User;
+
 final class TransactionPolicy
 {
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(): bool
+    public function viewAny(User $user): bool
     {
         return true;
     }
@@ -17,33 +20,41 @@ final class TransactionPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(): bool
+    public function view(User $user, Transaction $transaction): bool
     {
-        return true;
+        return $transaction->workspace->is($user->currentWorkspace);
     }
 
     /**
      * Determine whether the user can create models.
      */
-    public function create(): bool
+    public function create(User $user): bool
     {
+        if (! $user->subscribed() && $user->currentWorkspace->transactions()
+            ->whereMonth('created_at', now()->month)
+            ->whereYear('created_at', now()->year)
+            ->count() >= 50
+        ) {
+            return false;
+        }
+
         return true;
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(): bool
+    public function update(User $user, Transaction $transaction): bool
     {
-        return true;
+        return $transaction->workspace->is($user->currentWorkspace);
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(): bool
+    public function delete(User $user, Transaction $transaction): bool
     {
-        return true;
+        return $transaction->workspace->is($user->currentWorkspace);
     }
 
     /**
@@ -51,7 +62,7 @@ final class TransactionPolicy
      */
     public function restore(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -59,6 +70,6 @@ final class TransactionPolicy
      */
     public function forceDelete(): bool
     {
-        return true;
+        return false;
     }
 }

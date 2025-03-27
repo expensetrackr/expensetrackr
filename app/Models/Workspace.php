@@ -158,6 +158,16 @@ final class Workspace extends Model
     }
 
     /**
+     * Get all the transactions for the workspace.
+     *
+     * @return HasMany<Transaction, covariant $this>
+     */
+    public function transactions(): HasMany
+    {
+        return $this->hasMany(Transaction::class);
+    }
+
+    /**
      * The attributes that should be cast.
      *
      * @return array<string, string>

@@ -10,6 +10,7 @@ use App\Models\WorkspaceInvitation;
 use App\Utilities\Workspaces\WorkspaceFeatures;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Validator;
 
@@ -84,5 +85,13 @@ final class ManageWorkspaceMemberRequest extends FormRequest
     public function authorize(): bool
     {
         return $this->user()?->can('addWorkspaceMember', $this->workspace) ?? false;
+    }
+
+    /**
+     * Handle a failed authorization attempt.
+     */
+    protected function failedAuthorization(): RedirectResponse
+    {
+        return to_route('workspaces.show', $this->workspace);
     }
 }

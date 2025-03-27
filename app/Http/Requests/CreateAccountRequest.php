@@ -6,7 +6,9 @@ namespace App\Http\Requests;
 
 use App\Enums\AccountSubtype;
 use App\Enums\AccountType;
+use App\Models\Account;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Validation\Rule;
 
 final class CreateAccountRequest extends FormRequest
@@ -16,7 +18,7 @@ final class CreateAccountRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return $this->user()?->can('create', Account::class) ?? false;
     }
 
     /**
@@ -36,5 +38,13 @@ final class CreateAccountRequest extends FormRequest
             'type' => ['required', 'string', Rule::enum(AccountType::class)],
             'subtype' => ['sometimes', 'nullable', 'string', Rule::enum(AccountSubtype::class)],
         ];
+    }
+
+    /**
+     * Handle a failed authorization attempt.
+     */
+    protected function failedAuthorization(): RedirectResponse
+    {
+        return to_route('accounts.index');
     }
 }

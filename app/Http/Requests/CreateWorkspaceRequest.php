@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Requests;
 
+use App\Models\Workspace;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\RedirectResponse;
 
 final class CreateWorkspaceRequest extends FormRequest
 {
@@ -24,6 +26,14 @@ final class CreateWorkspaceRequest extends FormRequest
 
     public function authorize(): bool
     {
-        return $this->user()?->can('create', $this->workspace) ?? false;
+        return $this->user()?->can('create', Workspace::class) ?? false;
+    }
+
+    /**
+     * Handle a failed authorization attempt.
+     */
+    protected function failedAuthorization(): RedirectResponse
+    {
+        return to_route('dashboard');
     }
 }

@@ -12,7 +12,9 @@ use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 
 final class CategoryController
@@ -73,8 +75,12 @@ final class CategoryController
     /**
      * Delete the specified category.
      */
-    public function destroy(Request $request, Category $category, DeleteCategory $action)
+    public function destroy(Request $request, Category $category, DeleteCategory $action): RedirectResponse
     {
+        if (! Gate::authorize('delete', $category)->allowed()) {
+            return to_route('categories.index');
+        }
+
         if ($category->is_system) {
             return back()->with('toast', [
                 'title' => 'Cannot delete system category',
