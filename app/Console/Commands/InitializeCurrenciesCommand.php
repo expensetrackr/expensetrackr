@@ -7,7 +7,6 @@ namespace App\Console\Commands;
 use Akaunting\Money\Currency;
 use App\Facades\Forex;
 use App\Models\CurrencyList;
-use App\Services\CurrencyService;
 use Illuminate\Console\Command;
 
 final class InitializeCurrenciesCommand extends Command
@@ -22,7 +21,7 @@ final class InitializeCurrenciesCommand extends Command
      */
     protected $description = 'Initialize currencies from the API';
 
-    public function __construct(private readonly CurrencyService $currencyService)
+    public function __construct()
     {
         parent::__construct();
     }
@@ -34,7 +33,7 @@ final class InitializeCurrenciesCommand extends Command
     {
         $this->info('Fetching supported currencies from the API...');
 
-        $apiSupportedCurrencies = $this->currencyService->getSupportedCurrencies();
+        $apiSupportedCurrencies = Forex::getSupportedCurrencies();
 
         if (Forex::isDisabled()) {
             $this->error('The Currency Exchange Rate feature is disabled.');

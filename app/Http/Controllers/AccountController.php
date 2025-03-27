@@ -9,11 +9,11 @@ use App\Actions\BankAccounts\CreateBankConnection;
 use App\Data\Banking\Account\CreateAccountData;
 use App\Data\Banking\Connection\CreateBankConnectionData;
 use App\Enums\ProviderType;
+use App\Facades\Forex;
 use App\Http\Requests\BankConnectionRequest;
 use App\Http\Requests\CreateAccountRequest;
 use App\Http\Resources\AccountResource;
 use App\Models\Account;
-use App\Services\CurrencyService;
 use App\Services\MeilisearchService;
 use App\Services\TellerService;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -98,14 +98,14 @@ final class AccountController
     /**
      * Create an account of a specific type
      */
-    public function createAccountByType(Request $request, CurrencyService $currencyService, MeilisearchService $meilisearchService, string $connectionType): Response
+    public function createAccountByType(Request $request, MeilisearchService $meilisearchService, string $connectionType): Response
     {
         $this->authorize('create', Account::class);
 
         $data = [];
 
         if ($connectionType === 'manual') {
-            $data['currencies'] = $currencyService->getSupportedCurrencies();
+            $data['currencies'] = Forex::getSupportedCurrencies();
         }
 
         /** @var array{q: ?string, enrollment_id: ?string, provider: ?ProviderType, token: ?string} $validated */

@@ -6,7 +6,7 @@ namespace App\Models;
 
 use App\Casts\CurrencyRateCast;
 use App\Concerns\WorkspaceOwned;
-use App\Services\CurrencyService;
+use App\Facades\Forex;
 use App\Utilities\Currency\CurrencyAccessor;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -93,8 +93,7 @@ final class Currency extends Model
                 return 1;
             }
 
-            $currencyService = app(CurrencyService::class);
-            $exchangeRate = $currencyService->getCachedExchangeRate($baseCurrency, $targetCurrency);
+            $exchangeRate = Forex::getCachedExchangeRate($baseCurrency, $targetCurrency);
 
             return $exchangeRate ?? null;
         });

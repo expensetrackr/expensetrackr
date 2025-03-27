@@ -92,6 +92,25 @@ declare namespace App.Data.Banking.Institution {
         provider: App.Enums.ProviderType;
     };
 }
+declare namespace App.Data.ExchangeRate {
+    export type CodesResponseData = {
+        result: string;
+        documentation: string;
+        termsOfUse: string;
+        supportedCodes: [string, string][];
+    };
+    export type LatestResponseData = {
+        result: string;
+        documentation: string;
+        termsOfUse: string;
+        timeLastUpdateUnix: number;
+        timeLastUpdateUtc: string;
+        timeNextUpdateUnix: number;
+        timeNextUpdateUtc: string;
+        baseCode: string;
+        conversionRates: { [key: string]: number };
+    };
+}
 declare namespace App.Data.FinanceCore {
     export type AccountData = {
         id: string;

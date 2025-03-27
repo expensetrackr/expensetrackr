@@ -1,5 +1,4 @@
 import { useForm } from "@inertiajs/react";
-import NumberFlow from "@number-flow/react";
 import { Image } from "@unpic/react";
 import { toast } from "sonner";
 import Delete02Icon from "virtual:icons/hugeicons/delete-02";
@@ -15,8 +14,7 @@ import * as Divider from "#/components/ui/divider.tsx";
 import * as Drawer from "#/components/ui/drawer.tsx";
 import { useTransactionsParams } from "#/hooks/use-transactions-params.ts";
 import { useTranslation } from "#/hooks/use-translation.ts";
-import { cn } from "#/utils/cn.ts";
-import { decimalFlowFormatter } from "#/utils/currency-formatter.ts";
+import { currencyFormatter } from "#/utils/number-formatter.ts";
 
 type TransactionDetailsDrawerProps = {
     transaction?: Resources.Transaction | null;
@@ -26,11 +24,6 @@ type TransactionDetailsDrawerProps = {
 export function TransactionDetailsDrawer({ transaction, categories }: TransactionDetailsDrawerProps) {
     const { setParams } = useTransactionsParams();
     const { language, t } = useTranslation();
-    const { value, format } = decimalFlowFormatter({
-        amount: transaction?.amount ?? 0,
-        currency: transaction?.currency,
-        language,
-    });
     const form = useForm({
         name: transaction?.name,
         note: transaction?.note,
@@ -54,6 +47,8 @@ export function TransactionDetailsDrawer({ transaction, categories }: Transactio
         });
     };
 
+    console.info(transaction?.account);
+
     return (
         <Drawer.Root onOpenChange={() => setParams({ transactionId: null })} open={!!transaction}>
             <Drawer.Content>
@@ -65,14 +60,83 @@ export function TransactionDetailsDrawer({ transaction, categories }: Transactio
                     <Divider.Root $type="solid-text">amount & account</Divider.Root>
 
                     <div className="p-5">
-                        <NumberFlow
-                            animated={false}
-                            className={cn("text-h4", value > 0 ? "text-state-success-base" : "text-state-error-base")}
-                            format={format}
-                            value={value}
-                        />
+                        <div className="text-h4">
+                            {transaction?.amount &&
+                                currencyFormatter({
+                                    currency: transaction?.currency,
+                                    locale: language,
+                                    amount: transaction?.amount,
+                                })}
+                        </div>
                         <div className="mt-1 text-paragraph-sm text-(--text-sub-600)">{transaction?.account?.name}</div>
                     </div>
+
+                    {transaction?.baseAmount && (
+                        <>
+                            <Divider.Root $type="solid-text">source amount</Divider.Root>
+
+                            <div className="flex flex-col gap-3 p-5">
+                                <div>
+                                    <div className="text-subheading-xs text-(--text-soft-400) uppercase">
+                                        Base amount
+                                    </div>
+                                    <div className="mt-1 text-label-sm">
+                                        {currencyFormatter({
+                                            currency: transaction?.baseCurrency,
+                                            locale: language,
+                                            amount: transaction?.baseAmount,
+                                        })}
+                                    </div>
+                                </div>
+
+                                {transaction?.baseCurrency && (
+                                    <>
+                                        <Divider.Root $type="line-spacing" />
+
+                                        <div>
+                                            <div className="text-subheading-xs text-(--text-soft-400) uppercase">
+                                                Base currency
+                                            </div>
+                                            <div className="mt-1 text-label-sm">{transaction?.baseCurrency}</div>
+                                        </div>
+                                    </>
+                                )}
+
+                                {transaction?.currencyRate && (
+                                    <>
+                                        <Divider.Root $type="line-spacing" />
+
+                                        <div>
+                                            <div className="text-subheading-xs text-(--text-soft-400) uppercase">
+                                                Currency rate
+                                            </div>
+                                            <div className="mt-1 text-label-sm">
+                                                <span>
+                                                    {currencyFormatter({
+                                                        locale: language,
+                                                        options: {
+                                                            currencyDisplay: "code",
+                                                        },
+                                                        amount: 1,
+                                                    })}
+                                                </span>
+                                                <span className="text-(--text-sub-600)">&nbsp;=&nbsp;</span>
+                                                {currencyFormatter({
+                                                    currency: transaction?.baseCurrency,
+                                                    locale: language,
+                                                    amount: transaction?.currencyRate,
+                                                    options: {
+                                                        maximumFractionDigits: 6,
+                                                        currencyDisplay: "code",
+                                                    },
+                                                })}
+                                            </div>
+                                        </div>
+                                    </>
+                                )}
+                            </div>
+                        </>
+                    )}
 
                     {transaction?.merchant && (
                         <>

@@ -9,13 +9,14 @@ use GuzzleHttp\Client;
 
 final class SynthService
 {
-    private string $BASE_URL = 'https://api.synthfinance.com';
+    private readonly string $baseUrl;
 
     private readonly string $accessToken;
 
     public function __construct()
     {
         $this->accessToken = config('services.synth.access_token');
+        $this->baseUrl = config('services.synth.base_url');
     }
 
     public function enrichTransaction(string $description, ?string $categoryHint = ''): ?SynthEnrichData
@@ -39,7 +40,7 @@ final class SynthService
      */
     private function request(string $method, string $path, ?array $data = null): bool|string
     {
-        $url = "{$this->BASE_URL}$path";
+        $url = "{$this->baseUrl}$path";
         $headers = [
             'Authorization' => "Bearer {$this->accessToken}",
             'Accept' => 'application/json',

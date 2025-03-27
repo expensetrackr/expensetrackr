@@ -74,8 +74,8 @@ export default function RegisterPage({ socialstream }: PageProps) {
                 />
 
                 <TextField
-                    $error={!!errors.password}
                     autoComplete="new-password"
+                    error={errors.password}
                     hint={errors.password ?? t("form.fields.new_password.hint")}
                     label={t("form.fields.password.label")}
                     name="password"
@@ -86,8 +86,8 @@ export default function RegisterPage({ socialstream }: PageProps) {
                 />
 
                 <TextField
-                    $error={!!errors.password_confirmation}
                     autoComplete="new-password"
+                    error={errors.password_confirmation}
                     hint={errors.password_confirmation}
                     label={t("form.fields.confirm_password.label")}
                     name="password_confirmation"

@@ -1,5 +1,4 @@
 import { getInputProps, type useForm } from "@conform-to/react";
-import { resolveCurrencyFormat } from "@sumup/intl";
 import type * as v from "valibot";
 
 import { useTranslation } from "#/hooks/use-translation.ts";
@@ -16,7 +15,6 @@ type AccountSummaryStepProps = {
 
 export function AccountSummaryStep({ fields }: AccountSummaryStepProps) {
     const { language } = useTranslation();
-    const currencyFormat = resolveCurrencyFormat(language, fields.currency_code.value);
 
     return (
         <>
@@ -87,7 +85,11 @@ export function AccountSummaryStep({ fields }: AccountSummaryStepProps) {
                         <div className="flex items-center justify-between gap-3">
                             <div className="text-paragraph-sm text-(--text-sub-600)">Balance</div>
                             <div className="text-right text-label-sm">
-                                {currencyFormatter(currencyFormat).format(+fields.initial_balance.value)}
+                                {currencyFormatter({
+                                    amount: fields.initial_balance.value,
+                                    currency: fields.currency_code.value,
+                                    locale: language,
+                                })}
                             </div>
                         </div>
                     )}
@@ -106,9 +108,11 @@ export function AccountSummaryStep({ fields }: AccountSummaryStepProps) {
                                 <div className="text-paragraph-sm text-(--text-sub-600)">Available balance</div>
                                 <div className="text-right text-label-sm">
                                     {fields.available_balance.value
-                                        ? currencyFormatter(currencyFormat).format(
-                                              +fields.available_balance.value.replace(/,/g, ""),
-                                          )
+                                        ? currencyFormatter({
+                                              amount: fields.available_balance.value.replace(/,/g, ""),
+                                              currency: fields.currency_code.value,
+                                              locale: language,
+                                          })
                                         : "N/A"}
                                 </div>
                             </div>
@@ -116,7 +120,11 @@ export function AccountSummaryStep({ fields }: AccountSummaryStepProps) {
                                 <div className="text-paragraph-sm text-(--text-sub-600)">Minimum payment</div>
                                 <div className="text-right text-label-sm">
                                     {fields.minimum_payment.value
-                                        ? currencyFormatter(currencyFormat).format(+fields.minimum_payment.value)
+                                        ? currencyFormatter({
+                                              amount: fields.minimum_payment.value,
+                                              currency: fields.currency_code.value,
+                                              locale: language,
+                                          })
                                         : "N/A"}
                                 </div>
                             </div>
@@ -130,7 +138,11 @@ export function AccountSummaryStep({ fields }: AccountSummaryStepProps) {
                                 <div className="text-paragraph-sm text-(--text-sub-600)">Annual fee</div>
                                 <div className="text-right text-label-sm">
                                     {fields.annual_fee.value
-                                        ? currencyFormatter(currencyFormat).format(+fields.annual_fee.value)
+                                        ? currencyFormatter({
+                                              amount: fields.annual_fee.value,
+                                              currency: fields.currency_code.value,
+                                              locale: language,
+                                          })
                                         : "N/A"}
                                 </div>
                             </div>
@@ -153,7 +165,11 @@ export function AccountSummaryStep({ fields }: AccountSummaryStepProps) {
                                 <div className="text-paragraph-sm text-(--text-sub-600)">Interest rate</div>
                                 <div className="text-right text-label-sm">
                                     {fields.interest_rate.value
-                                        ? currencyFormatter(currencyFormat).format(+fields.interest_rate.value)
+                                        ? currencyFormatter({
+                                              amount: fields.interest_rate.value,
+                                              currency: fields.currency_code.value,
+                                              locale: language,
+                                          })
                                         : "N/A"}
                                 </div>
                             </div>

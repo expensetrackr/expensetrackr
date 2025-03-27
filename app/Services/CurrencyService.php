@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Contracts\CurrencyHandler;
-use GuzzleHttp\Client;
+use App\Data\ExchangeRate\CodesResponseData;
+use App\Data\ExchangeRate\LatestResponseData;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
 final class CurrencyService implements CurrencyHandler
@@ -16,7 +18,6 @@ final class CurrencyService implements CurrencyHandler
      * Create a new instance of the Currency service.
      */
     public function __construct(
-        private readonly Client $client,
         private ?string $apiKey = null,
         private ?string $baseUrl = null,
     ) {
@@ -78,35 +79,16 @@ final class CurrencyService implements CurrencyHandler
     public function updateCurrencyRatesCache(string $baseCurrency): ?array
     {
         try {
-            $currencies = implode(',', $this->getSupportedCurrencies());
-            $response = $this->client->get("{$this->baseUrl}/rates/live?from={$baseCurrency}&to={$currencies}", [
-                'headers' => [
-                    'Authorization' => "Bearer {$this->apiKey}",
-                ],
-            ]);
+            $response = Http::get("{$this->baseUrl}/{$this->apiKey}/latest/{$baseCurrency}");
 
             if ($response->getStatusCode() === 200) {
-                /**
-                 * @var array{
-                 *     data: array{
-                 *         date: string,
-                 *         time: string,
-                 *         source: string,
-                 *         rates: array<string, float>|null
-                 *     },
-                 *     meta: array{
-                 *         total_records: int,
-                 *         credits_used: int,
-                 *         credits_remaining: int
-                 *     }
-                 * } $responseData
-                 */
-                $responseData = json_decode($response->getBody()->getContents(), true);
+                dump($response->json());
+                $responseData = LatestResponseData::from($response->json());
 
-                if (isset($responseData['data']['rates'])) {
-                    Cache::put("currency_rates_{$baseCurrency}", $responseData['data']['rates'], now()->addDay());
+                if ($responseData->result === 'success' && isset($responseData->conversionRates)) {
+                    Cache::put("currency_rates_{$baseCurrency}", $responseData->conversionRates, now()->addDay());
 
-                    return $responseData['data']['rates'];
+                    return $responseData->conversionRates;
                 }
 
                 Log::error('API response does not contain rates data', [
@@ -137,42 +119,14 @@ final class CurrencyService implements CurrencyHandler
 
         /** @var array<string>|null */
         return Cache::remember('supported_currency_codes', now()->addMonth(), function (): ?array {
-            $response = $this->client->get("{$this->baseUrl}/currencies", [
-                'headers' => [
-                    'Authorization' => "Bearer {$this->apiKey}",
-                ],
-            ]);
+            $response = Http::get("{$this->baseUrl}/{$this->apiKey}/codes");
 
             if ($response->getStatusCode() === 200) {
-                /**
-                 * @var array{data: array<int, array{
-                 *     iso_code: string,
-                 *     iso_numeric: int,
-                 *     name: string,
-                 *     country: string,
-                 *     symbol: string,
-                 *     symbol_alternatives: array<int, string>,
-                 *     disambiguated_symbol: string|null,
-                 *     decimal_character: string,
-                 *     thousands_character: string
-                 * }>, meta: array{
-                 *     total_records: int,
-                 *     credits_used: int,
-                 *     credits_remaining: int
-                 * }} $responseData
-                 */
-                $responseData = json_decode($response->getBody()->getContents(), true);
+                dump($response->json());
+                $responseData = CodesResponseData::from($response->json());
 
-                if (filled($responseData['data'])) {
-                    $excludedCodes = ['MRO', 'SKK', 'SLL', 'STD', 'XAG', 'XAU', 'XDR', 'XPD', 'XPT', 'XTS', 'ZMK'];
-
-                    return array_values(array_map(function (array $currency): string {
-                        if ($currency['iso_code'] === 'veb') {
-                            return 'VES';
-                        }
-
-                        return mb_strtoupper($currency['iso_code']);
-                    }, array_filter($responseData['data'], fn (array $currency): bool => ! in_array(mb_strtoupper($currency['iso_code']), $excludedCodes))));
+                if ($responseData->result === 'success' && filled($responseData->supportedCodes)) {
+                    return array_column($responseData->supportedCodes, 0);
                 }
             }
 

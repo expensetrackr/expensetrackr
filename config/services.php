@@ -45,7 +45,7 @@ return [
 
     'currency_api' => [
         'key' => env('CURRENCY_API_KEY', '34h2234ff...'),
-        'base_url' => 'https://api.synthfinance.com',
+        'base_url' => 'https://v6.exchangerate-api.com/v6',
     ],
 
     'public_assets' => [
@@ -65,5 +65,6 @@ return [
 
     'synth' => [
         'access_token' => env('SYNTH_ACCESS_TOKEN'),
+        'base_url' => 'https://api.synthfinance.com',
     ],
 ];

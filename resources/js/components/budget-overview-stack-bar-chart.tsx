@@ -58,15 +58,15 @@ const TooltipContent = ({ payload }: { payload: any }) => {
         <div className="flex flex-col gap-1">
             <p className="text-state-information-base">
                 <span className="font-bold">Income: </span>
-                <span>{currencyFormatter({ locale: language }).format(payload[0].payload.income)}</span>
+                <span>{currencyFormatter({ locale: language, amount: payload[0].payload.income })}</span>
             </p>
             <p className="text-state-verified-base">
                 <span className="font-bold">Expenses: </span>
-                <span>{currencyFormatter({ locale: language }).format(payload[0].payload.expenses)}</span>
+                <span>{currencyFormatter({ locale: language, amount: payload[0].payload.expenses })}</span>
             </p>
             <p className="text-state-feature-base">
                 <span className="font-bold">Scheduled: </span>
-                <span>{currencyFormatter({ locale: language }).format(payload[0].payload.scheduled)}</span>
+                <span>{currencyFormatter({ locale: language, amount: payload[0].payload.scheduled })}</span>
             </p>
         </div>
     );

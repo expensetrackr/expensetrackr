@@ -4,6 +4,7 @@ import { resolveCurrencyFormat } from "@sumup/intl";
 import { CurrencyInput } from "headless-currency-input";
 import BankIcon from "virtual:icons/hugeicons/bank";
 import Cancel01Icon from "virtual:icons/hugeicons/cancel-01";
+import GeometricShapes01Icon from "virtual:icons/hugeicons/geometric-shapes-01";
 import HeadsetIcon from "virtual:icons/hugeicons/headset";
 import RepeatIcon from "virtual:icons/hugeicons/repeat";
 import TransactionIcon from "virtual:icons/hugeicons/transaction";
@@ -19,35 +20,40 @@ import * as Input from "#/components/ui/input.tsx";
 import * as Label from "#/components/ui/label.tsx";
 import * as Switch from "#/components/ui/switch.tsx";
 import { useTranslation } from "#/hooks/use-translation.ts";
-import { TransactionRecurringInterval } from "#/schemas/enums.ts";
+import { TransactionRecurringInterval, TransactionType } from "#/schemas/enums.ts";
 import { cn } from "#/utils/cn.ts";
 import { decimalFlowFormatter } from "#/utils/currency-formatter.ts";
 import { decimalFormatter } from "#/utils/number-formatter.ts";
 
 type FormData = {
-    accountId: string;
     name: string;
     note?: string | null;
+    type: App.Enums.TransactionType;
     amount: string;
     currency: string;
     isRecurring: boolean;
     recurringInterval?: App.Enums.TransactionRecurringInterval | null;
+    accountId: string;
+    categoryId: string;
 };
 
 type CreateTransactionPageProps = {
     accounts: Array<Resources.Account>;
     currencies: Array<string>;
+    categories: Array<Resources.Category>;
 };
 
-export default function CreateTransactionPage({ accounts, currencies }: CreateTransactionPageProps) {
+export default function CreateTransactionPage({ accounts, currencies, categories }: CreateTransactionPageProps) {
     const form = useForm<FormData>({
         accountId: accounts[0]?.id ?? "",
         name: "",
-        note: "",
+        note: null,
+        type: "expense",
         amount: "0.00",
         currency: accounts[0]?.currencyCode ?? "USD",
         isRecurring: false,
         recurringInterval: null,
+        categoryId: "",
     });
     const { language } = useTranslation();
     const currencyFormat = resolveCurrencyFormat(language, form.data.currency || "USD");
@@ -59,7 +65,11 @@ export default function CreateTransactionPage({ accounts, currencies }: CreateTr
         language,
     });
 
-    console.info(JSON.stringify(form.data, null, 2));
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        form.post(route("transactions.store"));
+    };
 
     return (
         <div className="flex min-h-screen flex-col lg:items-start">
@@ -109,7 +119,13 @@ export default function CreateTransactionPage({ accounts, currencies }: CreateTr
                             </div>
                         </div>
 
-                        <div className="w-full shrink-0 rounded-20 bg-(--bg-white-0) shadow-xs ring-1 ring-(--stroke-soft-200) ring-inset min-[420px]:w-[400px]">
+                        <form
+                            action={route("transactions.store")}
+                            className="w-full shrink-0 rounded-20 bg-(--bg-white-0) shadow-xs ring-1 ring-(--stroke-soft-200) ring-inset min-[420px]:w-[400px]"
+                            id="create-transaction-form"
+                            method="POST"
+                            onSubmit={handleSubmit}
+                        >
                             <div className="p-4">
                                 <SelectField
                                     id="accountId"
@@ -208,6 +224,40 @@ export default function CreateTransactionPage({ accounts, currencies }: CreateTr
                                 />
                             </div>
 
+                            <Divider.Root $type="solid-text">Classification</Divider.Root>
+
+                            <div className="flex flex-col gap-3 p-4">
+                                <SelectField
+                                    error={form.errors.type}
+                                    id="type"
+                                    label="Type"
+                                    name="type"
+                                    onValueChange={(value) => form.setData("type", value as App.Enums.TransactionType)}
+                                    options={TransactionType.options.map((type) => ({
+                                        label: type,
+                                        value: type,
+                                    }))}
+                                    placeholder="Select a type"
+                                    triggerIcon={TransactionIcon}
+                                    value={form.data.type}
+                                />
+
+                                <SelectField
+                                    error={form.errors.categoryId}
+                                    id="categoryId"
+                                    label="Category"
+                                    name="categoryId"
+                                    onValueChange={(value) => form.setData("categoryId", value)}
+                                    options={categories.map((category) => ({
+                                        label: category.name,
+                                        value: category.id,
+                                    }))}
+                                    placeholder="Select a category"
+                                    triggerIcon={GeometricShapes01Icon}
+                                    value={form.data.categoryId}
+                                />
+                            </div>
+
                             <Divider.Root />
 
                             <div className="flex flex-col gap-3 p-4">
@@ -254,14 +304,21 @@ export default function CreateTransactionPage({ accounts, currencies }: CreateTr
                             <Divider.Root />
 
                             <div className="grid grid-cols-2 gap-4 px-5 py-4">
-                                <Button.Root $size="sm" $style="stroke" $type="neutral">
-                                    Back
+                                <Button.Root $size="sm" $style="stroke" $type="neutral" asChild>
+                                    <Link href={route("transactions.index")}>Back</Link>
                                 </Button.Root>
-                                <Button.Root $size="sm" $style="filled" $type="primary">
-                                    Next
+                                <Button.Root
+                                    $size="sm"
+                                    $style="filled"
+                                    $type="primary"
+                                    disabled={form.processing}
+                                    form="create-transaction-form"
+                                    type="submit"
+                                >
+                                    {form.processing ? "Creating..." : "Create"}
                                 </Button.Root>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
 

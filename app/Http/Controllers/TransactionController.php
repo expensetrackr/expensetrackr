@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Actions\Transactions\CreateTransaction;
 use App\Actions\Transactions\UpdateTransaction;
+use App\Facades\Forex;
 use App\Filters\FiltersTransactionsByAccount;
+use App\Http\Requests\CreateTransactionRequest;
 use App\Http\Requests\UpdateTransactionRequest;
 use App\Http\Resources\AccountResource;
 use App\Http\Resources\CategoryResource;
@@ -13,8 +16,8 @@ use App\Http\Resources\TransactionResource;
 use App\Models\Account;
 use App\Models\Category;
 use App\Models\Transaction;
-use App\Services\CurrencyService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
@@ -84,7 +87,7 @@ final class TransactionController
     /**
      * Show the form for creating a new transaction.
      */
-    public function create(Request $request, CurrencyService $currencyService): Response
+    public function create(): Response
     {
         $this->authorize('create', Transaction::class);
 
@@ -94,14 +97,38 @@ final class TransactionController
 
         return Inertia::render('transactions/create/page', [
             'accounts' => $accounts,
-            'currencies' => $currencyService->getSupportedCurrencies(),
+            'currencies' => Forex::getSupportedCurrencies(),
+            'categories' => CategoryResource::collection(
+                Category::query()
+                    ->where('is_system', true)
+                    ->orWhere(function ($query) {
+                        $query->where('workspace_id', auth()->user()->current_workspace_id)
+                            ->where('is_system', false);
+                    })
+                    ->orderBy('name', 'asc')
+                    ->get()
+            ),
         ]);
+    }
+
+    /**
+     * Store a newly created transaction in storage.
+     */
+    public function store(CreateTransactionRequest $request, CreateTransaction $action): RedirectResponse
+    {
+        $action->handle($request->validated(), isManual: true);
+
+        return to_route('transactions.index')
+            ->with('toast', [
+                'title' => 'Transaction created successfully',
+                'type' => 'success',
+            ]);
     }
 
     /**
      * Update the given transaction.
      */
-    public function update(UpdateTransactionRequest $request, Transaction $transaction, UpdateTransaction $action)
+    public function update(UpdateTransactionRequest $request, Transaction $transaction, UpdateTransaction $action): RedirectResponse
     {
         $this->authorize('update', $transaction);
 
