@@ -126,6 +126,7 @@ final class Account extends Model
      */
     public function getTypeAttribute(): AccountType
     {
+
         return match ($this->accountable_type) {
             Depository::class => AccountType::Depository,
             Investment::class => AccountType::Investment,

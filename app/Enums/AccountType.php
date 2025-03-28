@@ -55,6 +55,8 @@ enum AccountType: string
     public static function liabilities(): array
     {
         return [
+            self::CreditCard,
+            self::Loan,
             self::OtherLiability,
         ];
     }

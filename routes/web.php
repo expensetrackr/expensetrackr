@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\TransactionController;
 use Illuminate\Foundation\Application;
@@ -22,7 +23,7 @@ Route::middleware([
     config('workspaces.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', fn () => Inertia::render('dashboard'))->name('dashboard');
+    Route::get('/dashboard', DashboardController::class)->name('dashboard');
 
     Route::post('/accounts', [AccountController::class, 'store'])->name('accounts.store');
     Route::post('/accounts/bank-connections', [AccountController::class, 'storeBankConnections'])->name('accounts.bank-connections.store');

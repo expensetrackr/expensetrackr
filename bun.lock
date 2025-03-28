@@ -25,6 +25,8 @@
         "@unpic/react": "1.0.1",
         "clsx": "2.1.1",
         "conform-to-valibot": "1.14.3",
+        "d3-curve-circlecorners": "0.1.6",
+        "d3-shape": "3.2.0",
         "date-fns": "4.1.0",
         "decimal.js": "10.5.0",
         "embla-carousel-react": "8.5.2",
@@ -844,6 +846,8 @@
     "d3-array": ["d3-array@3.2.4", "", { "dependencies": { "internmap": "1 - 2" } }, "sha512-tdQAmyA18i4J7wprpYq8ClcxZy3SC31QMeByyCFyRt7BVHdREQZ5lpzoe5mFEYZUWe+oq8HBvk9JjpibyEV4Jg=="],
 
     "d3-color": ["d3-color@3.1.0", "", {}, "sha512-zg/chbXyeBtMQ1LbD/WSoW2DpC3I0mpmPdW+ynRTj/x2DAWYrIY7qeZIHidozwV24m4iavr15lNwIwLxRmOxhA=="],
+
+    "d3-curve-circlecorners": ["d3-curve-circlecorners@0.1.6", "", {}, "sha512-FPOhAYPuEMcIuj3GZ/lp+GzJ82EpcuMjnwBXJZjCRk1NNuQail6DgCz+VjEhdMeef/VBoh1k8A8fn6XJWUlEjw=="],
 
     "d3-ease": ["d3-ease@3.0.1", "", {}, "sha512-wR/XK3D3XcLIZwpbvQwQ5fK+8Ykds1ip7A2Txe0yxncXSdq1L9skcG7blcedkOX+ZcgxGAmLX1FrRGbADwzi0w=="],
 
