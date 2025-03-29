@@ -86,7 +86,11 @@ final class TransactionController
     public function create(Request $request): RedirectResponse|Response
     {
         if (! Gate::forUser($request->user())->check('create', Transaction::class)) {
-            return to_route('transactions.index');
+            return to_route('transactions.index')
+                ->with('toast', [
+                    'title' => 'You are not allowed to create a transaction',
+                    'type' => 'error',
+                ]);
         }
 
         $accounts = AccountResource::collection(
@@ -131,5 +135,24 @@ final class TransactionController
         $action->handle($transaction, $request->validated());
 
         return back(303);
+    }
+
+    public function destroy(Request $request, Transaction $transaction): RedirectResponse
+    {
+        if (! Gate::forUser($request->user())->check('delete', $transaction)) {
+            return back()
+                ->with('toast', [
+                    'title' => 'You are not allowed to delete this transaction',
+                    'type' => 'error',
+                ]);
+        }
+
+        $transaction->delete();
+
+        return to_route('transactions.index')
+            ->with('toast', [
+                'title' => 'Transaction deleted successfully',
+                'type' => 'success',
+            ]);
     }
 }
