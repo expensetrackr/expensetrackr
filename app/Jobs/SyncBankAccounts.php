@@ -115,7 +115,7 @@ final class SyncBankAccounts implements ShouldBeUnique, ShouldQueue
                 }])
                 ->get();
 
-            if (! $accounts->count() > 0) {
+            if (! $accounts->containsOneItem()) {
                 Log::info('No accounts found for bank connection', [
                     'bank_connection_id' => $this->bankConnectionId,
                     'workspace_id' => $this->workspaceId,
@@ -207,7 +207,7 @@ final class SyncBankAccounts implements ShouldBeUnique, ShouldQueue
                 'error_message' => null,
             ]);
 
-            if (($transactions->count() === 0) > 0) {
+            if (! $transactions->containsOneItem()) {
                 Log::info('No transactions found for account', [
                     'bank_connection_id' => $this->bankConnectionId,
                     'workspace_id' => $this->workspaceId,
