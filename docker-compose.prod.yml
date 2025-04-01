@@ -56,7 +56,25 @@ services:
             - GOOGLE_CLIENT_SECRET
             - GOOGLE_CALLBACK_URL
             - CURRENCY_API_KEY
+            - SYNTH_ACCESS_TOKEN
             - WORKSPACES_PROFILE_PHOTO_DISK
+            - PUBLIC_ASSETS_URL
+            - POLAR_ORGANIZATION_ID
+            - POLAR_ACCESS_TOKEN
+            - POLAR_WEBHOOK_SECRET
+            - TELLER_KEY_BASE64
+            - TELLER_SECRET_BASE64
+            - TELLER_ENVIRONMENT
+            - TELLER_APP_ID
+            - TELLER_SIGNING_KEY
+            - TELLER_PUBLIC_KEY
+            - SCOUT_DRIVER=meilisearch
+            - SCOUT_QUEUE=true
+            - MEILISEARCH_HOST
+            - MEILISEARCH_KEY
+            - CLOUDINARY_URL
+            - CLOUDINARY_UPLOAD_PRESET=ml_default
+            - CLOUDINARY_NOTIFICATION_URL
             - SSR_URL=http://ssr:13714
         networks:
             - app_network
