@@ -21,7 +21,7 @@ createServer((page) =>
                     // @ts-expect-error
                     ...page.props.ziggy,
                     // @ts-expect-error
-                    location: new URL(page.props.ziggy.location),
+                    location: page.props.ziggy.location ? new URL(page.props.ziggy.location) : undefined,
                 });
 
             return (
