@@ -30,8 +30,8 @@ final class SharedInertiaData extends Data
         #[LiteralTypeScriptType('Record<string, string>')]
         public readonly array|Closure $translations,
         public readonly SocialstreamData $socialstream,
+        public readonly PermissionsData $permissions,
         /** @var array<string,string>|null */
         public readonly array|string|AlwaysProp|null $errors = null,
-        public readonly PermissionsData $permissions,
     ) {}
 }

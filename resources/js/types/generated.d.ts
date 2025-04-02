@@ -191,8 +191,8 @@ declare namespace App.Data.Shared {
         languages: Array<App.Data.Shared.LanguageData> | null;
         translations: Record<string, string>;
         socialstream: App.Data.Socialstream.SocialstreamData;
-        errors: { [key: string]: string } | null;
         permissions: App.Data.Shared.PermissionsData;
+        errors: { [key: string]: string } | null;
     };
     export type ToastData = {
         type: App.Enums.ToastType;
