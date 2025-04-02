@@ -1,4 +1,3 @@
-import { Image } from "@unpic/react";
 import useEmblaCarousel from "embla-carousel-react";
 import { CurrencyInput } from "headless-currency-input";
 import { AnimatePresence, motion } from "motion/react";
@@ -16,6 +15,7 @@ import * as CompactButton from "#/components/ui/compact-button.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
 import * as WidgetBox from "#/components/widget-box.tsx";
 import { cnMerge } from "#/utils/cn.ts";
+import { Image } from "../image.tsx";
 
 type Account = {
     id: string;
@@ -196,7 +196,7 @@ export function BentoAccountsTransfers(props: React.CustomComponentPropsWithRef<
                                 alt="MasterCard"
                                 className="size-5 shrink-0"
                                 height={20}
-                                src={`${ENV.PUBLIC_ASSETS_URL}/major-brands/mastercard.svg`}
+                                src="/major-brands/mastercard.svg"
                                 width={20}
                             />
                             <div className="text-paragraph-sm text-(--text-sub-600)">Fast Pay</div>

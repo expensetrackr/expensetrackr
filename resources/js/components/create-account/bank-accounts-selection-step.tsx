@@ -3,7 +3,6 @@ import { useForm as useInertiaForm } from "@inertiajs/react";
 import NumberFlow, { type Format } from "@number-flow/react";
 import * as LabelPrimitives from "@radix-ui/react-label";
 import { resolveCurrencyFormat } from "@sumup/intl";
-import { Image } from "@unpic/react";
 import { getValibotConstraint, parseWithValibot } from "conform-to-valibot";
 import * as React from "react";
 import * as v from "valibot";
@@ -13,6 +12,7 @@ import { useTranslation } from "#/hooks/use-translation.ts";
 import { AccountSubtypeEnum, AccountTypeEnum } from "#/schemas/account.ts";
 import { BankConnectionProviderSchema } from "#/schemas/bank-connection.ts";
 import { decimalFormatter } from "#/utils/number-formatter.ts";
+import { Image } from "../image.tsx";
 import * as Avatar from "../ui/avatar.tsx";
 import * as Switch from "../ui/switch.tsx";
 
@@ -149,12 +149,7 @@ function BankAccount({ account, fields, children }: BankAccountProps) {
             <LabelPrimitives.Root className="flex cursor-pointer items-center gap-3.5 rounded-12 bg-(--bg-white-0) px-4 py-2.5 shadow-xs ring-1 ring-(--stroke-soft-200) ring-inset">
                 <Avatar.Root $size="40" className="shadow-xs ring-1 ring-(--stroke-soft-200)">
                     <Avatar.Image $color="gray" asChild className="size-10">
-                        <Image
-                            alt={account.name}
-                            height={40}
-                            src={`${ENV.PUBLIC_ASSETS_URL}/banks/${account.institution.id}`}
-                            width={40}
-                        />
+                        <Image alt={account.name} height={40} src={`/banks/${account.institution.id}`} width={40} />
                     </Avatar.Image>
                 </Avatar.Root>
 

@@ -58,7 +58,6 @@ services:
             - CURRENCY_API_KEY
             - SYNTH_ACCESS_TOKEN
             - WORKSPACES_PROFILE_PHOTO_DISK
-            - PUBLIC_ASSETS_URL
             - POLAR_ORGANIZATION_ID
             - POLAR_ACCESS_TOKEN
             - POLAR_WEBHOOK_SECRET

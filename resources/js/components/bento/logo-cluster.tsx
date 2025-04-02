@@ -1,4 +1,3 @@
-import { Image } from "@unpic/react";
 import { motion } from "motion/react";
 import MastercardIcon from "virtual:icons/logos/mastercard";
 import PayPalIcon from "virtual:icons/logos/paypal";
@@ -7,6 +6,7 @@ import VisaIcon from "virtual:icons/logos/visa";
 import IsotypeDark from "#/assets/isotype-dark.svg";
 import IsotypeLight from "#/assets/isotype-light.svg";
 import { cn, cnMerge } from "#/utils/cn.ts";
+import { Image } from "../image.tsx";
 
 function Circle({ size, delay, opacity }: { size: number; delay: number; opacity: string }) {
     return (
@@ -99,28 +99,13 @@ export function BentoLogoCluster({ className, ...props }: React.ComponentPropsWi
             <div className="absolute left-1/2 h-full w-[26rem] -translate-x-1/2">
                 <MainLogo />
                 <Logo hover={{ x: 6, y: 1, rotate: 5, delay: 0.38 }} left={360} top={144}>
-                    <Image
-                        className="size-10"
-                        height={40}
-                        src={`${ENV.PUBLIC_ASSETS_URL}/major-brands/hsbc`}
-                        width={40}
-                    />
+                    <Image className="size-10" height={40} src="/major-brands/hsbc.png" width={40} />
                 </Logo>
                 <Logo hover={{ x: 4, y: -5, rotate: 6, delay: 0.3 }} left={285} top={20}>
-                    <Image
-                        className="size-10"
-                        height={40}
-                        src={`${ENV.PUBLIC_ASSETS_URL}/major-brands/bofa`}
-                        width={40}
-                    />
+                    <Image className="size-10" height={40} src="/major-brands/bofa.png" width={40} />
                 </Logo>
                 <Logo hover={{ x: 3, y: 5, rotate: 7, delay: 0.2 }} left={255} top={210}>
-                    <Image
-                        className="size-10"
-                        height={40}
-                        src={`${ENV.PUBLIC_ASSETS_URL}/major-brands/payoneer`}
-                        width={40}
-                    />
+                    <Image className="size-10" height={40} src="/major-brands/payoneer.png" width={40} />
                 </Logo>
                 <Logo hover={{ x: -2, y: -5, rotate: -6, delay: 0.15 }} left={144} top={40}>
                     <VisaIcon className="size-10" />

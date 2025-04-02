@@ -15,7 +15,6 @@ declare global {
     const ENV: {
         APP_URL: string;
         IMAGE_URL: string;
-        PUBLIC_ASSETS_URL: string;
         TELLER_APP_ID: string;
         TELLER_ENVIRONMENT: "sandbox" | "development" | "production";
     };

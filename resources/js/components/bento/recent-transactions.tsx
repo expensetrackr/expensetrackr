@@ -61,7 +61,7 @@ const transactions: Resources.Transaction[] = [
         merchant: {
             id: "amazon",
             name: "Amazon",
-            icon: `${ENV.PUBLIC_ASSETS_URL}/major-brands/amazon.svg`,
+            icon: "/major-brands/amazon.svg",
         },
     },
 ];

@@ -48,10 +48,6 @@ return [
         'base_url' => 'https://v6.exchangerate-api.com/v6',
     ],
 
-    'public_assets' => [
-        'url' => env('PUBLIC_ASSETS_URL'),
-    ],
-
     'teller' => [
         'key_base64' => env('TELLER_KEY_BASE64'),
         'cert_base64' => env('TELLER_CERT_BASE64'),

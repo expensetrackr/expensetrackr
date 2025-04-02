@@ -1,11 +1,11 @@
 import * as LabelPrimitives from "@radix-ui/react-label";
-import { Image } from "@unpic/react";
 import * as React from "react";
 import AddIcon from "virtual:icons/ri/add-line";
 import ParentIcon from "virtual:icons/ri/parent-line";
 import SaveIcon from "virtual:icons/ri/save-line";
 
 import { type VariantProps } from "#/utils/tv.ts";
+import { Image } from "../image.tsx";
 import * as Avatar from "../ui/avatar.tsx";
 import { type avatarVariants } from "../ui/avatar.tsx";
 import * as Button from "../ui/button.tsx";
@@ -89,12 +89,7 @@ export function BentoWorkspaces(props: React.CustomComponentPropsWithRef<typeof 
                         >
                             <Avatar.Root $color={member.color} $size="40">
                                 <Avatar.Image asChild>
-                                    <Image
-                                        alt={member.name}
-                                        height={40}
-                                        src={`${ENV.PUBLIC_ASSETS_URL}${member.avatar}`}
-                                        width={40}
-                                    />
+                                    <Image alt={member.name} height={40} src={member.avatar} width={40} />
                                 </Avatar.Image>
                             </Avatar.Root>
                             <div className="flex-1 space-y-1">

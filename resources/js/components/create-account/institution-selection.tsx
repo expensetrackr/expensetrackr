@@ -1,10 +1,10 @@
 import * as ScrollAreaPrimitives from "@radix-ui/react-scroll-area";
-import { Image } from "@unpic/react";
 import CommandIcon from "virtual:icons/hugeicons/command";
 import Search2Icon from "virtual:icons/ri/search-2-line";
 
 import { useConnectParams } from "#/hooks/use-connect-params.ts";
 import { ConnectBankProvider } from "../connect-bank-provider.tsx";
+import { Image } from "../image.tsx";
 import { InstitutionInfo } from "../institution-info.tsx";
 import { PlaceholderLogo } from "../placeholder-logo.tsx";
 import * as Avatar from "../ui/avatar.tsx";
@@ -93,7 +93,7 @@ function SearchResult({ id, name, logo, provider }: SearchResultProps) {
                             alt={provider}
                             className="size-4 rounded-full"
                             height={16}
-                            src={`${ENV.PUBLIC_ASSETS_URL}/major-brands/${provider}`}
+                            src={`/major-brands/${provider}.png`}
                             width={16}
                         />
                     </div>

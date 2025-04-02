@@ -72,7 +72,6 @@
             window.ENV = {
                 APP_URL: '{{ config('app.url') }}',
                 IMAGE_URL: 'https://image.danestves.com',
-                PUBLIC_ASSETS_URL: '{{ config('services.public_assets.url') }}',
                 TELLER_APP_ID: '{{ config('services.teller.app_id') }}',
                 TELLER_ENVIRONMENT: '{{ config('services.teller.environment') }}',
             };

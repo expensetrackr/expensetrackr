@@ -71,7 +71,7 @@ export function AccountBox({ account, className, ...rest }: CreditCardProps) {
                                 alt={account.name}
                                 className="size-8 shrink-0 rounded-8"
                                 height={32}
-                                src={`${ENV.PUBLIC_ASSETS_URL}/placeholder/apex`}
+                                src="/placeholder/apex.svg"
                                 width={32}
                             />
                         )}

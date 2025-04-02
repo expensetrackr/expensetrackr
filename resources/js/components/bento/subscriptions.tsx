@@ -1,6 +1,5 @@
 import NumberFlow, { type Format } from "@number-flow/react";
 import { resolveCurrencyFormat } from "@sumup/intl";
-import { Image } from "@unpic/react";
 import { AnimatePresence, motion } from "motion/react";
 import * as React from "react";
 
@@ -9,6 +8,7 @@ import * as Divider from "#/components/ui/divider.tsx";
 import { useCycle } from "#/hooks/use-cycle.ts";
 import { useTranslation } from "#/hooks/use-translation.ts";
 import { cn, cnMerge } from "#/utils/cn.ts";
+import { Image } from "../image.tsx";
 
 type Subscription = {
     type: string;
@@ -154,7 +154,7 @@ function BentoSubscriptionItem({ subscriptions, isHovered, className, ...props }
                         alt={item.name}
                         className="size-6"
                         height={24}
-                        src={`${ENV.PUBLIC_ASSETS_URL}/major-brands/${item.type}.svg`}
+                        src={`/major-brands/${item.type}.svg`}
                         width={24}
                     />
                 </motion.div>
