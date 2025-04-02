@@ -23,13 +23,6 @@
       <path value="$PROJECT_DIR$/vendor/symfony/psr-http-message-bridge" />
       <path value="$PROJECT_DIR$/vendor/phpunit/php-file-iterator" />
       <path value="$PROJECT_DIR$/vendor/phpunit/php-code-coverage" />
-      <path value="$PROJECT_DIR$/vendor/symfony/filesystem" />
-      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php73" />
-      <path value="$PROJECT_DIR$/vendor/symfony/property-access" />
-      <path value="$PROJECT_DIR$/vendor/symfony/property-info" />
-      <path value="$PROJECT_DIR$/vendor/symfony/serializer" />
-      <path value="$PROJECT_DIR$/vendor/symfony/type-info" />
-      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php81" />
       <path value="$PROJECT_DIR$/vendor/symfony/yaml" />
       <path value="$PROJECT_DIR$/vendor/theseer/tokenizer" />
       <path value="$PROJECT_DIR$/vendor/barryvdh/reflection-docblock" />
@@ -54,7 +47,6 @@
       <path value="$PROJECT_DIR$/vendor/hamcrest/hamcrest-php" />
       <path value="$PROJECT_DIR$/vendor/kongulov/interact-with-enum" />
       <path value="$PROJECT_DIR$/vendor/danharrin/date-format-converter" />
-      <path value="$PROJECT_DIR$/vendor/hirethunk/verbs" />
       <path value="$PROJECT_DIR$/vendor/pragmarx/google2fa" />
       <path value="$PROJECT_DIR$/vendor/danharrin/livewire-rate-limiting" />
       <path value="$PROJECT_DIR$/vendor/mtdowling/jmespath.php" />
@@ -82,14 +74,11 @@
       <path value="$PROJECT_DIR$/vendor/jenssegers/agent" />
       <path value="$PROJECT_DIR$/vendor/nunomaduro/collision" />
       <path value="$PROJECT_DIR$/vendor/anourvalar/eloquent-serialize" />
-      <path value="$PROJECT_DIR$/vendor/internachi/modular" />
       <path value="$PROJECT_DIR$/vendor/masterminds/html5" />
       <path value="$PROJECT_DIR$/vendor/blade-ui-kit/blade-heroicons" />
-      <path value="$PROJECT_DIR$/vendor/phpmyadmin/sql-parser" />
       <path value="$PROJECT_DIR$/vendor/tomasvotruba/type-coverage" />
       <path value="$PROJECT_DIR$/vendor/blade-ui-kit/blade-icons" />
       <path value="$PROJECT_DIR$/vendor/mobiledetect/mobiledetectlib" />
-      <path value="$PROJECT_DIR$/vendor/justinrainbow/json-schema" />
       <path value="$PROJECT_DIR$/vendor/carbonphp/carbon-doctrine-types" />
       <path value="$PROJECT_DIR$/vendor/phpdocumentor/reflection-docblock" />
       <path value="$PROJECT_DIR$/vendor/brick/math" />
@@ -180,15 +169,10 @@
       <path value="$PROJECT_DIR$/vendor/aws/aws-crt-php" />
       <path value="$PROJECT_DIR$/vendor/aws/aws-sdk-php" />
       <path value="$PROJECT_DIR$/vendor/psr/cache" />
-      <path value="$PROJECT_DIR$/vendor/seld/signal-handler" />
-      <path value="$PROJECT_DIR$/vendor/seld/phar-utils" />
       <path value="$PROJECT_DIR$/vendor/filp/whoops" />
-      <path value="$PROJECT_DIR$/vendor/glhd/bits" />
       <path value="$PROJECT_DIR$/vendor/bacon/bacon-qr-code" />
-      <path value="$PROJECT_DIR$/vendor/seld/jsonlint" />
       <path value="$PROJECT_DIR$/vendor/fidry/cpu-core-counter" />
       <path value="$PROJECT_DIR$/vendor/jean85/pretty-package-versions" />
-      <path value="$PROJECT_DIR$/vendor/react/promise" />
       <path value="$PROJECT_DIR$/vendor/facade/ignition-contracts" />
       <path value="$PROJECT_DIR$/vendor/league/uri" />
       <path value="$PROJECT_DIR$/vendor/league/csv" />
@@ -245,21 +229,19 @@
       <path value="$PROJECT_DIR$/vendor/php-http/discovery" />
       <path value="$PROJECT_DIR$/vendor/spatie/laravel-webhook-client" />
       <path value="$PROJECT_DIR$/vendor/spatie/enum" />
-      <path value="$PROJECT_DIR$/vendor/vagebond/runtype" />
       <path value="$PROJECT_DIR$/vendor/spatie/laravel-typescript-transformer" />
       <path value="$PROJECT_DIR$/vendor/spatie/typescript-transformer" />
       <path value="$PROJECT_DIR$/vendor/spatie/laravel-query-builder" />
-      <path value="$PROJECT_DIR$/vendor/levizoesch/teller-sdk" />
-      <path value="$PROJECT_DIR$/vendor/levizoesch/laravel-set-environment" />
       <path value="$PROJECT_DIR$/vendor/cloudinary-labs/cloudinary-laravel" />
       <path value="$PROJECT_DIR$/vendor/cloudinary/transformation-builder-sdk" />
       <path value="$PROJECT_DIR$/vendor/cloudinary/cloudinary_php" />
-      <path value="$PROJECT_DIR$/vendor/bleckert/openpanel-laravel" />
       <path value="$PROJECT_DIR$/vendor/meilisearch/meilisearch-php" />
       <path value="$PROJECT_DIR$/vendor/danestves/laravel-polar" />
       <path value="$PROJECT_DIR$/vendor/laravel/scout" />
       <path value="$PROJECT_DIR$/vendor/laravel/pail" />
       <path value="$PROJECT_DIR$/vendor/pestphp/pest-plugin-drift" />
+      <path value="$PROJECT_DIR$/vendor/timothepearce/laravel-time-series" />
+      <path value="$PROJECT_DIR$/vendor/iamcal/sql-parser" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.3" />

@@ -1,8 +1,8 @@
 import { format } from "date-fns";
 
-import * as Badge from "#/components/ui/badge.tsx";
 import { cnMerge } from "#/utils/cn.ts";
 import ChartStepLine from "../chart-step-line.tsx";
+import * as Badge from "../ui/badge.tsx";
 
 export function TotalBalanceWidget({ className, ...rest }: React.HTMLAttributes<HTMLDivElement>) {
     return (

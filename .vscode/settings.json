@@ -36,5 +36,12 @@
     "tailwindCSS.includeLanguages": {
         "typescript": "javascript",
         "typescriptreact": "javascript"
-    }
+    },
+    "typescript.preferences.autoImportFileExcludePatterns": [
+        "@radix-ui/**",
+        "@unpic/react/**",
+        "node:stream/consumers",
+        "node:test",
+        "node:console"
+    ],
 }

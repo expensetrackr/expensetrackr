@@ -30,7 +30,7 @@ export const plans = [
         icon: BrainFillIcon,
         iconBg: "bg-state-feature-base",
         price: {
-            onetime: 199.99,
+            onetime: 249.99,
         },
         productPriceId: "be41d3b8-14c9-4b8d-bee8-64633a54da42",
         glowColor: "var(--color-state-feature-base)",

@@ -1,7 +1,6 @@
 import { getFormProps, useForm } from "@conform-to/react";
 import NumberFlow, { type Format } from "@number-flow/react";
 import { resolveCurrencyFormat } from "@sumup/intl";
-import { Image, Source } from "@unpic/react";
 import { getValibotConstraint, parseWithValibot } from "conform-to-valibot";
 import * as React from "react";
 import Mail01Icon from "virtual:icons/hugeicons/mail-01";
@@ -20,7 +19,9 @@ import { BentoWorkspaces } from "#/components/bento/workspaces.tsx";
 import { BentoCard } from "#/components/bento-card.tsx";
 import { BalanceStep } from "#/components/create-account/balance-step.tsx";
 import * as Glow from "#/components/glow.tsx";
+import { Image } from "#/components/image.tsx";
 import { Link } from "#/components/link.tsx";
+import { Source } from "#/components/source.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
 import * as SegmentedControl from "#/components/ui/segmented-control.tsx";
@@ -263,13 +264,13 @@ function ImageAndTextSection() {
                         <Source
                             height={752.27}
                             media="(prefers-color-scheme: light)"
-                            src={`${ENV.PUBLIC_ASSETS_URL}/steps-pattern`}
+                            src="/img/steps-pattern.png"
                             width={921}
                         />
                         <Source
                             height={752.27}
                             media="(prefers-color-scheme: dark)"
-                            src={`${ENV.PUBLIC_ASSETS_URL}/steps-pattern-dark`}
+                            src="/img/steps-pattern-dark.png"
                             width={921}
                         />
                         <Image
@@ -277,7 +278,7 @@ function ImageAndTextSection() {
                             className="pointer-events-none absolute bottom-8 h-auto !w-230"
                             height={752.27}
                             objectFit="contain"
-                            src={`${ENV.PUBLIC_ASSETS_URL}/steps-pattern`}
+                            src="/img/steps-pattern.png"
                             width={921}
                         />
                     </picture>
@@ -313,7 +314,7 @@ function FeatureSection() {
                 </div>
 
                 <div className="grid grid-cols-12">
-                    <div className="relative col-span-12 lg:col-span-10 lg:col-start-2">
+                    <div className="col-span-12 lg:col-span-10 lg:col-start-2">
                         <picture>
                             <Source
                                 layout="fullWidth"
@@ -327,12 +328,11 @@ function FeatureSection() {
                             />
                             <Image
                                 alt=""
-                                className="rounded-16"
+                                className="rounded-16 mask-b-to-100"
                                 layout="fullWidth"
                                 src={`${ENV.PUBLIC_ASSETS_URL}/ui`}
                             />
                         </picture>
-                        <div className="absolute inset-0 rounded-12 bg-linear-to-t from-(--bg-white-0) to-90%" />
                     </div>
                 </div>
             </div>
