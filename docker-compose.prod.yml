@@ -77,6 +77,18 @@ services:
             - SSR_URL=http://ssr:13714
         networks:
             - app_network
+
+    task:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        command: ["php", "/var/www/html/artisan", "schedule:work"]
+        stop_signal: SIGTERM # Set this for graceful shutdown if you're using fpm-apache or fpm-nginx
+        healthcheck:
+            # This is our native healthcheck script for the scheduler
+            test: ["CMD", "healthcheck-schedule"]
+            start_period: 10s
+
     queue:
         build:
             context: .
