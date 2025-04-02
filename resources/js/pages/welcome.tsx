@@ -58,17 +58,17 @@ export default function WelcomePage() {
                                         height={40}
                                         media="(prefers-color-scheme: light)"
                                         priority
-                                        src="/isotype.png"
+                                        src="/img/isotype.png"
                                         width={64}
                                     />
                                     <Source
                                         height={40}
                                         media="(prefers-color-scheme: dark)"
                                         priority
-                                        src="/isotype-dark.png"
+                                        src="/img/isotype-dark.png"
                                         width={64}
                                     />
-                                    <Image alt="ExpenseTrackr" height={40} priority src="/isotype.png" width={64} />
+                                    <Image alt="ExpenseTrackr" height={40} priority src="/img/isotype.png" width={64} />
                                 </picture>
 
                                 <span className="text-h5 font-light">
@@ -520,17 +520,17 @@ function Footer() {
                                 height={40}
                                 media="(prefers-color-scheme: light)"
                                 priority
-                                src="/isotype.png"
+                                src="/img/isotype.png"
                                 width={64}
                             />
                             <Source
                                 height={40}
                                 media="(prefers-color-scheme: dark)"
                                 priority
-                                src="/isotype-dark.png"
+                                src="/img/isotype-dark.png"
                                 width={64}
                             />
-                            <Image alt="ExpenseTrackr" height={40} priority src="/isotype.png" width={64} />
+                            <Image alt="ExpenseTrackr" height={40} priority src="/img/isotype.png" width={64} />
                         </picture>
                     </Link>
 
