@@ -23,6 +23,7 @@
         "danestves/laravel-polar": "1.1.1",
         "filament/filament": "3.3.7",
         "inertiajs/inertia-laravel": "2.0.1",
+        "intervention/image-laravel": "1.5.5",
         "joelbutcher/socialstream": "6.x-dev",
         "kongulov/interact-with-enum": "1.0.0",
         "laravel/fortify": "1.25.4",

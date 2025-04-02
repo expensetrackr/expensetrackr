@@ -12,7 +12,10 @@ use App\Services\MeilisearchService;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
+use Throwable;
 
 final class InstitutionsGetCommand extends Command
 {
@@ -55,11 +58,16 @@ final class InstitutionsGetCommand extends Command
     private const int BATCH_SIZE = 100;
 
     /**
+     * Cache TTL in seconds (1 hour)
+     */
+    private const int CACHE_TTL = 3600;
+
+    /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'institutions:get';
+    protected $signature = 'institutions:get {--force : Force refresh ignoring cache}';
 
     /**
      * The console command description.
@@ -78,9 +86,16 @@ final class InstitutionsGetCommand extends Command
      */
     public function handle(): void
     {
-        $this->getTellerInstitutions();
-
-        $this->info('All institution batches have been dispatched to jobs for processing');
+        try {
+            $this->getTellerInstitutions();
+            $this->info('All institution batches have been dispatched to jobs for processing');
+        } catch (Throwable $e) {
+            Log::error('Failed to process institutions', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+            $this->error('Failed to process institutions: '.$e->getMessage());
+        }
     }
 
     /**
@@ -88,62 +103,106 @@ final class InstitutionsGetCommand extends Command
      */
     private function getTellerInstitutions(): void
     {
-        try {
-            $response = Http::get('https://api.teller.io/institutions');
+        $cacheKey = 'teller_institutions';
+        $forceRefresh = $this->option('force');
 
-            if (! $response->successful()) {
-                $this->error('Teller API request failed with status: '.$response->status());
+        if (! $forceRefresh && Cache::has($cacheKey)) {
+            $this->info('Using cached institutions data');
+            $institutions = Cache::get($cacheKey);
+        } else {
+            $institutions = $this->fetchTellerInstitutions();
+            Cache::put($cacheKey, $institutions, self::CACHE_TTL);
+        }
 
-                return;
-            }
+        if ($institutions->isEmpty()) {
+            $this->warn('No institutions found to process');
 
-            $institutions = TellerInstitutionItemData::collect((array) $response->json(), Collection::class);
+            return;
+        }
 
-            // Convert to SearchableInstitutionData objects
-            $allInstitutions = $institutions->map(fn ($institution): SearchableInstitutionData => new SearchableInstitutionData(
+        // Convert to SearchableInstitutionData objects
+        $allInstitutions = $institutions->map(
+            fn ($institution): SearchableInstitutionData => new SearchableInstitutionData(
                 id: $institution->id,
                 name: $institution->name,
                 logo: '',
                 countries: ['US'],
-                popularity: $this->getPopularity($institution->id) > 0 ? $this->getPopularity($institution->id) : 10, // We want to rank Teller institutions higher than others
+                popularity: $this->getPopularity($institution->id),
                 provider: ProviderType::Teller,
-            ));
+            )
+        );
 
-            // Create institutions with processing data
-            $institutionsWithProcessingData = $allInstitutions->map(fn ($institutionData) => [
+        // Create institutions with processing data
+        $institutionsWithProcessingData = $allInstitutions->map(
+            fn ($institutionData) => [
                 ...$institutionData->toArray(),
                 'imageUrl' => "https://cdn.teller.io/web/images/banks/{$institutionData->id}.jpg",
                 'folder' => 'banks',
+            ]
+        );
+
+        // Add basic institution data to Meilisearch first
+        $this->addInstitutionsToMeilisearch($allInstitutions);
+
+        // Process in batches
+        $this->dispatchInstitutionBatches($institutionsWithProcessingData);
+    }
+
+    /**
+     * Fetch institutions from Teller API
+     */
+    private function fetchTellerInstitutions(): Collection
+    {
+        $response = Http::timeout(30)
+            ->retry(3, 1000)
+            ->get('https://api.teller.io/institutions');
+
+        if (! $response->successful()) {
+            Log::error('Teller API request failed', [
+                'status' => $response->status(),
+                'body' => $response->body(),
             ]);
-
-            // Add basic institution data to Meilisearch first
-            // This ensures users have some data to search even before logos are processed
-            $this->meilisearch->addDocuments('institutions', $allInstitutions->toArray());
-
-            $this->info('Added '.count($allInstitutions).' institutions to Meilisearch (without logos)');
-
-            // Process in batches of 100
-            $totalInstitutions = $institutionsWithProcessingData->count();
-            $batches = $institutionsWithProcessingData->chunk(self::BATCH_SIZE);
-            $batchCount = $batches->count();
-
-            $this->info("Dispatching {$totalInstitutions} institutions in {$batchCount} batches to jobs");
-
-            // Dispatch all batches to jobs
-            $batchNumber = 1;
-            foreach ($batches as $batch) {
-                /** @var array<int, array<string, mixed>> $typedBatch */
-                $typedBatch = $batch->toArray();
-                ProcessInstitutionLogos::dispatch($typedBatch);
-
-                $this->info("Dispatched batch {$batchNumber} of {$batchCount} with ".count($batch).' institutions');
-
-                $batchNumber++;
-            }
-
-        } catch (Exception $e) {
-            $this->error('Failed to fetch Teller institutions: '.$e->getMessage());
+            throw new Exception('Teller API request failed with status: '.$response->status());
         }
+
+        return TellerInstitutionItemData::collect((array) $response->json(), Collection::class);
+    }
+
+    /**
+     * Add institutions to Meilisearch
+     */
+    private function addInstitutionsToMeilisearch(Collection $institutions): void
+    {
+        try {
+            $this->meilisearch->addDocuments('institutions', $institutions->toArray());
+            $this->info('Added '.$institutions->count().' institutions to Meilisearch (without logos)');
+        } catch (Exception $e) {
+            Log::error('Failed to add institutions to Meilisearch', [
+                'error' => $e->getMessage(),
+            ]);
+            throw $e;
+        }
+    }
+
+    /**
+     * Dispatch institution batches for processing
+     */
+    private function dispatchInstitutionBatches(Collection $institutions): void
+    {
+        $totalInstitutions = $institutions->count();
+        $batches = $institutions->chunk(self::BATCH_SIZE);
+        $batchCount = $batches->count();
+
+        $this->info("Dispatching {$totalInstitutions} institutions in {$batchCount} batches to jobs");
+
+        $batches->each(function ($batch, $index) use ($batchCount) {
+            /** @var array<int, array<string, mixed>> $typedBatch */
+            $typedBatch = $batch->toArray();
+            ProcessInstitutionLogos::dispatch($typedBatch);
+
+            $batchNumber = $index + 1;
+            $this->info("Dispatched batch {$batchNumber} of {$batchCount} with ".count($batch).' institutions');
+        });
     }
 
     /**
@@ -151,10 +210,8 @@ final class InstitutionsGetCommand extends Command
      */
     private function getPopularity(string $id): int
     {
-        if (in_array($id, self::PRIORITY_INSTITUTIONS)) {
-            return 100 - array_search($id, self::PRIORITY_INSTITUTIONS);
-        }
-
-        return 0;
+        return in_array($id, self::PRIORITY_INSTITUTIONS)
+            ? 100 - array_search($id, self::PRIORITY_INSTITUTIONS, true)
+            : 10; // Base popularity for Teller institutions
     }
 }

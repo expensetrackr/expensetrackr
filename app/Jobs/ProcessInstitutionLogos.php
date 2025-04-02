@@ -5,19 +5,37 @@ declare(strict_types=1);
 namespace App\Jobs;
 
 use App\Services\MeilisearchService;
-use Cloudinary\Api\Upload\UploadApi;
 use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Laravel\Facades\Image;
 
 final class ProcessInstitutionLogos implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
+    /**
+     * Maximum width for institution logos
+     */
+    private const int MAX_WIDTH = 300;
+
+    /**
+     * Maximum height for institution logos
+     */
+    private const int MAX_HEIGHT = 300;
+
+    /**
+     * Cache TTL in seconds (1 week)
+     */
+    private const int CACHE_TTL = 604800;
 
     /**
      * The number of times the job may be attempted.
@@ -43,110 +61,28 @@ final class ProcessInstitutionLogos implements ShouldQueue
     ) {}
 
     /**
-     * Execute the job.
-     */
-    public function handle(MeilisearchService $meilisearch): void
-    {
-        $readyToIndex = [];
-        $processedCount = 0;
-        $existingCount = 0;
-
-        foreach ($this->batch as $institution) {
-            try {
-                if (! isset($institution['id']) ||
-                    ! isset($institution['folder']) ||
-                    ! isset($institution['imageUrl'])) {
-                    Log::warning('Invalid institution data', ['institution' => $institution]);
-
-                    continue;
-                }
-
-                // Ensure we have string values
-                $id = is_scalar($institution['id']) ? (string) $institution['id'] : '';
-                $folder = is_scalar($institution['folder']) ? (string) $institution['folder'] : '';
-                $imageUrl = is_scalar($institution['imageUrl']) ? (string) $institution['imageUrl'] : '';
-
-                if ($id === '' || $folder === '' || $imageUrl === '') {
-                    Log::warning('Invalid institution data values', ['institution' => $institution]);
-
-                    continue;
-                }
-
-                // First check if logo already exists in Cloudinary
-                $existingLogo = $this->getLogoFromCloudinary($folder, $id);
-
-                if ($existingLogo !== null && $existingLogo !== '' && $existingLogo !== '0') {
-                    // Logo already exists, use the existing URL
-                    $institution['logo'] = $existingLogo;
-                    $existingCount++;
-                } else {
-                    // Logo doesn't exist, try to upload it
-                    $logoUrl = $this->uploadLogo($id, $imageUrl, $folder);
-
-                    if ($logoUrl !== '' && $logoUrl !== '0') {
-                        $institution['logo'] = $logoUrl;
-                        $processedCount++;
-                    }
-                }
-
-                // Remove processing fields before adding to Meilisearch
-                unset($institution['imageUrl']);
-                unset($institution['folder']);
-
-                // Only add to index if we have a logo
-                if (isset($institution['logo']) && ! empty($institution['logo'])) {
-                    $readyToIndex[] = $institution;
-                }
-            } catch (Exception $e) {
-                $institutionId = isset($institution['id']) ? is_scalar($institution['id']) ? (string) $institution['id'] : 'unknown' : 'unknown';
-
-                Log::error("Error processing institution: {$institutionId}", [
-                    'error' => $e->getMessage(),
-                    'institution' => $institutionId,
-                ]);
-
-                // Continue processing other items in batch
-                continue;
-            }
-        }
-
-        // Update Meilisearch with institutions that have logos
-        if ($readyToIndex !== []) {
-            try {
-                $meilisearch->addDocuments('institutions', $readyToIndex);
-                Log::info('Updated '.count($readyToIndex)." institutions in Meilisearch with logos (existing: {$existingCount}, new: {$processedCount})");
-            } catch (Exception $e) {
-                Log::error("Failed to update Meilisearch: {$e->getMessage()}");
-            }
-        }
-
-        Log::info('Completed processing batch of '.count($this->batch).' institutions, added '.count($readyToIndex).' logos to Meilisearch');
-    }
-
-    /**
-     * Check if logo exists in Cloudinary and return the URL if it does
+     * Check if logo exists locally and return the URL if it does
      *
-     * @param  string  $folder  Cloudinary folder
+     * @param  string  $folder  Local storage folder
      * @param  string  $id  Institution ID
      * @return string|null Logo URL if exists, null otherwise
      */
-    private function getLogoFromCloudinary(string $folder, string $id): ?string
+    public static function getLogoFromLocal(string $folder, string $id): ?string
     {
         try {
-            $baseUrl = config('services.public_assets.url');
-            $baseUrlString = is_string($baseUrl) ? $baseUrl : '';
+            $cacheKey = "institution_logo:{$folder}:{$id}";
 
-            $cloudinaryUrl = $baseUrlString."/{$folder}/{$id}";
-            $response = Http::head($cloudinaryUrl);
+            return Cache::remember($cacheKey, self::CACHE_TTL, function () use ($folder, $id) {
+                $path = "{$folder}/{$id}.png";
 
-            $contentType = $response->header('Content-Type');
-            if ($response->successful() && $contentType && str_contains($contentType, 'image')) {
-                Log::info("Logo for {$id} already exists in Cloudinary");
+                if (Storage::exists($path)) {
+                    Log::info("Logo for {$id} already exists locally");
 
-                return $cloudinaryUrl;
-            }
+                    return Storage::url($path);
+                }
 
-            return null;
+                return null;
+            });
         } catch (Exception $e) {
             Log::warning("Error checking if logo {$id} exists: {$e->getMessage()}");
 
@@ -155,33 +91,45 @@ final class ProcessInstitutionLogos implements ShouldQueue
     }
 
     /**
-     * Upload a logo to Cloudinary
+     * Upload a logo to local storage
      *
      * @param  string  $id  The institution ID
      * @param  string  $imageUrl  The image URL to upload
-     * @param  string  $folder  The Cloudinary folder
+     * @param  string  $folder  The storage folder
      * @return string The logo URL or empty string
      */
-    private function uploadLogo(string $id, string $imageUrl, string $folder): string
+    public static function uploadLogo(string $id, string $imageUrl, string $folder): string
     {
         try {
-            // Verify the source image exists
-            $response = Http::head($imageUrl);
+            // Use concurrent requests for faster image fetching
+            $response = Http::timeout(10)->get($imageUrl);
 
-            $contentType = $response->header('Content-Type');
-            if ($response->successful() && $contentType && str_contains($contentType, 'image')) {
-                // Upload to Cloudinary
-                $uploadResult = (new UploadApi())->upload($imageUrl, [
-                    'public_id' => $id,
-                    'folder' => $folder,
-                ]);
-                $uploadResult = $uploadResult->getArrayCopy();
+            if ($response->successful() && str_contains($response->header('Content-Type'), 'image')) {
+                // Process and optimize the image
+                $image = Image::read($response->body());
 
-                Log::info("Uploaded new logo for {$id} to Cloudinary");
+                // Resize if needed while maintaining aspect ratio
+                if ($image->width() > self::MAX_WIDTH || $image->height() > self::MAX_HEIGHT) {
+                    $image->resize(self::MAX_WIDTH, self::MAX_HEIGHT);
+                }
 
-                $url = $uploadResult['url'];
+                // Ensure directory exists
+                Storage::makeDirectory($folder);
 
-                return $url ?: '';
+                // Store the image
+                $filename = "{$id}.png";
+                $fullPath = "{$folder}/{$filename}";
+
+                if (Storage::put($fullPath, $image->toPng()->toFilePointer())) {
+                    Log::info("Uploaded new logo for {$id} to local storage");
+
+                    $url = Storage::url($fullPath);
+
+                    // Cache the URL
+                    Cache::put("institution_logo:{$folder}:{$id}", $url, self::CACHE_TTL);
+
+                    return $url;
+                }
             }
 
             Log::warning("Source image for {$id} is not valid", [
@@ -195,5 +143,48 @@ final class ProcessInstitutionLogos implements ShouldQueue
 
             return '';
         }
+    }
+
+    /**
+     * Execute the job.
+     */
+    public function handle(MeilisearchService $meilisearch): void
+    {
+        $readyToIndex = [];
+        $processedCount = 0;
+        $existingCount = 0;
+
+        // Process institutions in parallel batches
+        Collection::make($this->batch)
+            ->chunk(10)
+            ->each(function ($chunk) use (&$readyToIndex, &$processedCount, &$existingCount) {
+                $jobs = $chunk->map(fn ($institution) => new ProcessSingleInstitutionLogo($institution));
+
+                // Process jobs immediately
+                foreach ($jobs as $job) {
+                    $output = $job->handle();
+
+                    if ($output && isset($output['logo'])) {
+                        $readyToIndex[] = $output;
+                        if ($job->wasExisting) {
+                            $existingCount++;
+                        } else {
+                            $processedCount++;
+                        }
+                    }
+                }
+            });
+
+        // Update Meilisearch with institutions that have logos
+        if ($readyToIndex !== []) {
+            try {
+                $meilisearch->addDocuments('institutions', $readyToIndex);
+                Log::info('Updated '.count($readyToIndex)." institutions in Meilisearch with logos (existing: {$existingCount}, new: {$processedCount})");
+            } catch (Exception $e) {
+                Log::error("Failed to update Meilisearch: {$e->getMessage()}");
+            }
+        }
+
+        Log::info('Completed processing batch of '.count($this->batch).' institutions, added '.count($readyToIndex).' logos to Meilisearch');
     }
 }
