@@ -51,7 +51,7 @@ return [
                 'free' => [
                     'title' => 'Free',
                     'description' => 'For solo users who want to get a grip on their finances',
-                    'features' => 'Personal workspace, Up to 3 accounts, Up to 15 transactions per month, Default categories, Up to 30 days of graph history, Manual accounts',
+                    'features' => 'Personal workspace, Up to 1 account, Default categories, Last month of graph history, Manual accounts',
                     'button_label' => 'Get started for free',
                 ],
                 'analyst' => [
