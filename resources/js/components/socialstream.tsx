@@ -1,4 +1,3 @@
-import { Link } from "@inertiajs/react";
 import GoogleIcon from "virtual:icons/logos/google-icon";
 
 import * as Divider from "#/components/ui/divider.tsx";
@@ -30,10 +29,10 @@ export function Socialstream() {
                             className="w-full"
                             key={provider.id}
                         >
-                            <Link href={route("oauth.redirect", provider)}>
+                            <a href={route("oauth.redirect", provider.id)}>
                                 <SocialButton.Icon as={socialsIcons[provider.id]} />
                                 {t("socialstream.continue_with", { provider: provider.name })}
-                            </Link>
+                            </a>
                         </SocialButton.Root>
                     );
                 })}
