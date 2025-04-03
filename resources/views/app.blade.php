@@ -12,7 +12,7 @@
         <link href="{{ url()->current() }}" rel="canonical" />
 
         <!-- Primary Meta Tags -->
-        <meta content="@yield('title', 'Dashboard') - ExpenseTrackr" name="title" />
+        <meta content="{{ config('app.name') }} - Manage your expenses effortlessly" name="title" />
         <meta
             content="Manage your expenses effortlessly with ExpenseTrackr, the all-in-one web app designed for both personal and business finance tracking. Organize accounts, categorize transactions, and collaborate with workspaces to gain insightful graphics and reports on your financial activities. Stay in control of your finances with ExpenseTrackr's intuitive features and user-friendly interface."
             name="description"
