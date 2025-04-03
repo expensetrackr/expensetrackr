@@ -61,7 +61,7 @@ export default function WelcomePage() {
                                         height={40}
                                         media="(prefers-color-scheme: light)"
                                         priority
-                                        src="/img/isotype.png"
+                                        src="/img/isotype-light.png"
                                         width={64}
                                     />
                                     <Source
@@ -71,7 +71,13 @@ export default function WelcomePage() {
                                         src="/img/isotype-dark.png"
                                         width={64}
                                     />
-                                    <Image alt="ExpenseTrackr" height={40} priority src="/img/isotype.png" width={64} />
+                                    <Image
+                                        alt="ExpenseTrackr"
+                                        height={40}
+                                        priority
+                                        src="/img/isotype-light.png"
+                                        width={64}
+                                    />
                                 </picture>
 
                                 <span className="text-h5 font-light">
@@ -351,7 +357,7 @@ function FeatureSection() {
                             />
                             <Image
                                 alt=""
-                                className="rounded-16 mask-b-to-20%"
+                                className="rounded-16 mask-b-to-100%"
                                 layout="fullWidth"
                                 src="/img/dashboard.png"
                             />
@@ -616,7 +622,7 @@ function Footer() {
                                 height={40}
                                 media="(prefers-color-scheme: light)"
                                 priority
-                                src="/img/isotype.png"
+                                src="/img/isotype-light.png"
                                 width={64}
                             />
                             <Source
@@ -626,7 +632,7 @@ function Footer() {
                                 src="/img/isotype-dark.png"
                                 width={64}
                             />
-                            <Image alt="ExpenseTrackr" height={40} priority src="/img/isotype.png" width={64} />
+                            <Image alt="ExpenseTrackr" height={40} priority src="/img/isotype-light.png" width={64} />
                         </picture>
                     </Link>
 

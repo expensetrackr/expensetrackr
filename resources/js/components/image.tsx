@@ -66,6 +66,13 @@ export const extract: URLExtractor<"vercel"> = (url, options = {}) => {
 export const transform: URLTransformer<"vercel"> = createExtractAndGenerate(extract, generate);
 
 export function Image(props: Omit<UnpicImageProps<ImageOperations, ImageOptions>, "transformer">) {
-    // @ts-ignore
-    return <UnpicImage {...props} src={`${ENV.APP_URL}${props.src}`} transformer={transform} />;
+    return (
+        // @ts-ignore
+        <UnpicImage
+            {...props}
+            src={`${ENV.APP_URL}${props.src}`}
+            // @ts-expect-error - transformer is not needed on development
+            transformer={process.env.NODE_ENV === "production" ? transform : undefined}
+        />
+    );
 }
