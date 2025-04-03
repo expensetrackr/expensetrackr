@@ -6,19 +6,8 @@ import { TooltipProvider } from "@radix-ui/react-tooltip";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { ThemeProvider } from "next-themes";
 import { createRoot, hydrateRoot } from "react-dom/client";
-import { type route as routeFn } from "ziggy-js";
 
 import { NuqsAdapter } from "#/utils/nuqs-adapter.ts";
-
-declare global {
-    const route: typeof routeFn;
-    const ENV: {
-        APP_URL: string;
-        IMAGE_URL: string;
-        TELLER_APP_ID: string;
-        TELLER_ENVIRONMENT: "sandbox" | "development" | "production";
-    };
-}
 
 const appName = import.meta.env.VITE_APP_NAME || "ExpenseTrackr";
 
