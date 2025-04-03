@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b881562f7a4c4eab23ed06246e15453c",
+    "content-hash": "4143afc58de49feff3cc0706d75bd9f9",
     "packages": [
         {
             "name": "akaunting/laravel-money",
@@ -5015,16 +5015,16 @@
         },
         {
             "name": "laravel/wayfinder",
-            "version": "v0.1.1",
+            "version": "v0.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/wayfinder.git",
-                "reference": "17d8f8adbb99d3208caff2c0e5bb09b49d2d37e5"
+                "reference": "fb3a7a0b7cb1492654817210d4d845fd33be0051"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/wayfinder/zipball/17d8f8adbb99d3208caff2c0e5bb09b49d2d37e5",
-                "reference": "17d8f8adbb99d3208caff2c0e5bb09b49d2d37e5",
+                "url": "https://api.github.com/repos/laravel/wayfinder/zipball/fb3a7a0b7cb1492654817210d4d845fd33be0051",
+                "reference": "fb3a7a0b7cb1492654817210d4d845fd33be0051",
                 "shasum": ""
             },
             "require": {
@@ -5073,7 +5073,7 @@
                 "issues": "https://github.com/laravel/wayfinder/issues",
                 "source": "https://github.com/laravel/wayfinder"
             },
-            "time": "2025-04-02T19:52:21+00:00"
+            "time": "2025-04-03T15:16:10+00:00"
         },
         {
             "name": "league/commonmark",
