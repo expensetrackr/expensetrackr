@@ -1,3 +1,5 @@
+"use client";
+
 import { getInputProps, type useForm, useInputControl } from "@conform-to/react";
 import { resolveCurrencyFormat } from "@sumup/intl";
 import { type NumberFormat } from "@sumup/intl/dist/es/types/index";
