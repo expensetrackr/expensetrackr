@@ -42,6 +42,7 @@ export function BalanceStep({ currencies, fields }: DetailsStepProps) {
 
     return (
         <>
+            <input {...getInputProps(fields.initial_balance, { type: "hidden" })} />
             <input {...getInputProps(fields.type, { type: "hidden" })} />
             <input {...getInputProps(fields.currency_code, { type: "hidden" })} />
 
@@ -141,7 +142,10 @@ function CreditCardFields({ fields, currencyFormat, handleMoneyChange }: CreditC
 
     return (
         <>
+            <input {...getInputProps(fields.available_balance, { type: "hidden" })} />
+            <input {...getInputProps(fields.minimum_payment, { type: "hidden" })} />
             <input {...getInputProps(fields.expires_at, { type: "hidden" })} />
+            <input {...getInputProps(fields.annual_fee, { type: "hidden" })} />
 
             <CurrencyInput
                 currency={currencyFormat?.currency || "USD"}
@@ -269,6 +273,8 @@ function LoanFields({ fields }: LoanFieldsProps) {
 
     return (
         <>
+            <input {...getInputProps(fields.interest_rate, { type: "hidden" })} />
+
             <div className="grid grid-cols-2 gap-4">
                 <TextField
                     error={fields.interest_rate.errors}

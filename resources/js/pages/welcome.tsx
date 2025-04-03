@@ -305,7 +305,12 @@ function ImageAndTextSection() {
                         />
                     </picture>
 
-                    <form method="post" {...getFormProps(form)} className="relative flex w-full justify-center">
+                    <form
+                        autoFocus={false}
+                        method="post"
+                        {...getFormProps(form)}
+                        className="relative flex w-full justify-center"
+                    >
                         <Card
                             description={t("home.sections.image_and_text.balance_step.description")}
                             icon={MoneyDollarCircleFillIcon}
@@ -346,7 +351,7 @@ function FeatureSection() {
                             />
                             <Image
                                 alt=""
-                                className="rounded-16 mask-b-to-100"
+                                className="rounded-16 mask-b-to-20%"
                                 layout="fullWidth"
                                 src="/img/dashboard.png"
                             />
