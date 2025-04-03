@@ -26,7 +26,7 @@ return [
         'description' => 'Ingresa tu correo electrónico para restablecer tu contraseña.',
         'actions' => [
             'submit' => [
-                'label' => 'Enviar enlace para restablecer la contraseña por correo electrónico',
+                'label' => 'Enviar correo de restablecimiento',
             ],
         ],
     ],
