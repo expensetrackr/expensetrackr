@@ -58,8 +58,6 @@ services:
         command: ["php", "/var/www/html/artisan", "inertia:start-ssr", "--runtime=bun"]
         ports:
             - "13714:13714"
-        healthcheck:
-            test: ["CMD", "curl", "-f", "http://localhost:13714/health"]
         environment:
             PHP_FPM_POOL_NAME: app_ssr
 
