@@ -15,8 +15,14 @@ export const plans = [
         iconBg: "bg-primary",
         featured: true,
         price: {
-            monthly: 14.99,
-            yearly: 149.99,
+            monthly: {
+                price: 14.99,
+                previous: 24.99,
+            },
+            yearly: {
+                price: 149.99,
+                previous: 199.99,
+            },
         },
         productPriceId: {
             monthly: "2b006aff-cf3b-4237-a4ff-2bb79cd0e802",
@@ -24,15 +30,23 @@ export const plans = [
         },
         buttonLabel: "Subscribe now",
         glowColor: "var(--color-primary)",
+        buyNow: {
+            monthly: "https://buy.polar.sh/polar_cl_3rpOu2DpnOjk7tEwZDy3QFZD35c2TDZqGJOp42TKql6",
+            yearly: "https://buy.polar.sh/polar_cl_gkwfnwL0mTl2mZRzHmRpp6b3tRVL0MdkB6EM00ircKS",
+        },
     },
     {
         code: "lifetime",
         icon: BrainFillIcon,
         iconBg: "bg-state-feature-base",
         price: {
-            onetime: 249.99,
+            onetime: {
+                price: 149.99,
+                previous: 249.99,
+            },
         },
         productPriceId: "be41d3b8-14c9-4b8d-bee8-64633a54da42",
         glowColor: "var(--color-state-feature-base)",
+        buyNow: "https://buy.polar.sh/polar_cl_MX3laEezVBa2fto7mIAlaNmRja2b83iCufGU80q47ar",
     },
 ];

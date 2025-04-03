@@ -3,8 +3,9 @@ import NumberFlow, { type Format } from "@number-flow/react";
 import { resolveCurrencyFormat } from "@sumup/intl";
 import { getValibotConstraint, parseWithValibot } from "conform-to-valibot";
 import * as React from "react";
+import Alert01Icon from "virtual:icons/hugeicons/alert-01";
+import Coupon01Icon from "virtual:icons/hugeicons/coupon-01";
 import Mail01Icon from "virtual:icons/hugeicons/mail-01";
-import GithubIcon from "virtual:icons/mdi/github";
 import CheckboxCircleFillIcon from "virtual:icons/ri/checkbox-circle-fill";
 import MoneyDollarCircleFillIcon from "virtual:icons/ri/money-dollar-circle-fill";
 
@@ -18,23 +19,25 @@ import { BentoSubscriptions } from "#/components/bento/subscriptions.tsx";
 import { BentoWorkspaces } from "#/components/bento/workspaces.tsx";
 import { BentoCard } from "#/components/bento-card.tsx";
 import { BalanceStep } from "#/components/create-account/balance-step.tsx";
+import { Card } from "#/components/create-account/card.tsx";
 import * as Glow from "#/components/glow.tsx";
 import { Image } from "#/components/image.tsx";
 import { Link } from "#/components/link.tsx";
 import { Source } from "#/components/source.tsx";
+import * as Alert from "#/components/ui/alert.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
+import * as LinkButton from "#/components/ui/link-button.tsx";
 import * as SegmentedControl from "#/components/ui/segmented-control.tsx";
 import { useTranslation } from "#/hooks/use-translation.ts";
 import { cn } from "#/utils/cn.ts";
 import { plans } from "#/utils/plans.ts";
 import { BalanceSchema } from "#/utils/steppers/create-account.step.ts";
-import { Card } from "../components/create-account/card.tsx";
 
 export default function WelcomePage() {
     return (
         <>
-            <div className="relative">
+            <div className="relative pb-26">
                 <div aria-hidden="true" className="pointer-events-none absolute h-[80dvh] w-full">
                     <Image
                         alt=""
@@ -77,12 +80,12 @@ export default function WelcomePage() {
                             </div>
 
                             <div className="flex items-center gap-2">
-                                <Button.Root $style="ghost" $type="neutral" asChild className="min-w-24">
+                                {/* <Button.Root $style="ghost" $type="neutral" asChild className="min-w-24">
                                     <Link href={route("login")}>Log in</Link>
-                                </Button.Root>
+                                </Button.Root> */}
 
                                 <Button.Root asChild className="min-w-24">
-                                    <Link href={route("register")}>Get started</Link>
+                                    <a href="#pricing">Be the first</a>
                                 </Button.Root>
                             </div>
                         </div>
@@ -102,6 +105,26 @@ export default function WelcomePage() {
                 <CallToAction />
 
                 <Footer />
+
+                <Alert.Root
+                    $size="lg"
+                    $status="information"
+                    $variant="filled"
+                    className="fixed right-0 bottom-0 left-0 z-50 rounded-none"
+                >
+                    <Alert.Icon as={Coupon01Icon} />
+                    <div className="space-y-2.5">
+                        <div className="space-y-1">
+                            <div className="text-label-sm">We are running a limited time offer!</div>
+                            <div>Get any plan or lifetime access for an special price before launch on April 14th.</div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <LinkButton.Root $size="md" $style="modifiable" $underline asChild>
+                                <a href="#pricing">Get Offer</a>
+                            </LinkButton.Root>
+                        </div>
+                    </div>
+                </Alert.Root>
             </div>
         </>
     );
@@ -123,11 +146,16 @@ function HeroSection() {
                 </div>
 
                 <div className="flex flex-col items-center justify-center gap-4 lg:flex-row lg:gap-6">
-                    <Button.Root $style="stroke" className="w-full lg:w-auto lg:min-w-36">
-                        {t("home.sections.hero.contact_us")}
+                    <Button.Root $style="stroke" asChild className="w-full lg:w-auto lg:min-w-36">
+                        <a href="mailto:support@expensetrackr.com" rel="noopener noreferrer" target="_blank">
+                            {t("home.sections.hero.contact_us")}
+                        </a>
                     </Button.Root>
                     <Button.Root asChild className="w-full lg:w-auto lg:min-w-36">
-                        <Link href={route("register")}>{t("home.sections.hero.get_started")}</Link>
+                        <a href="#pricing">
+                            {/* {t("home.sections.hero.get_started")} */}
+                            Start your financial journey
+                        </a>
                     </Button.Root>
                 </div>
             </div>
@@ -335,6 +363,34 @@ function PricingSection() {
     const { language, t } = useTranslation();
     const currencyFormat = resolveCurrencyFormat(language, "USD");
 
+    // Add countdown timer state
+    const [timeLeft, setTimeLeft] = React.useState("");
+
+    React.useEffect(() => {
+        const endDate = new Date("2025-04-14T23:59:59");
+
+        const updateTimer = () => {
+            const now = new Date();
+            const diff = endDate.getTime() - now.getTime();
+
+            if (diff <= 0) {
+                setTimeLeft("Offer ended");
+                return;
+            }
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+            setTimeLeft(`${days}d ${hours}h ${minutes}m`);
+        };
+
+        updateTimer();
+        const intervalId = window.setInterval(updateTimer, 60000); // Update every minute
+
+        return () => window.clearInterval(intervalId);
+    }, []);
+
     const format: Format = React.useMemo(
         () => ({
             style: "currency",
@@ -346,11 +402,15 @@ function PricingSection() {
     );
 
     return (
-        <Glow.Area className="container py-12" id="pricing">
+        <Glow.Area className="container scroll-mt-20 py-12" id="pricing">
             <div className="flex flex-col gap-8">
                 <div className="mx-auto flex max-w-160 flex-col">
                     <h2 className="text-center text-h4">{t("home.sections.pricing.title")}</h2>
                     <p className="text-center text-paragraph-md">{t("home.sections.pricing.description")}</p>
+                    <Alert.Root $size="sm" $status="information" $variant="lighter" className="mx-auto mt-4 w-fit">
+                        <Alert.Icon as={Alert01Icon} />
+                        Limited time offer will end in <span className="font-medium">{timeLeft}</span>
+                    </Alert.Root>
                 </div>
 
                 <div className="flex flex-col items-center gap-8">
@@ -423,36 +483,52 @@ function PricingSection() {
                                                         </div>
                                                     </div>
 
-                                                    <h2 className="text-h2">
-                                                        {plan.code === "free" ? (
-                                                            <></>
-                                                        ) : (
-                                                            <>
-                                                                <NumberFlow
-                                                                    className="[--number-flow-char-height:0.85em]"
-                                                                    format={format}
-                                                                    locales={language}
-                                                                    value={
-                                                                        plan.price?.[
-                                                                            interval as keyof typeof plan.price
-                                                                        ] ??
-                                                                        plan.price?.onetime ??
-                                                                        0
-                                                                    }
-                                                                    willChange
-                                                                />
-
-                                                                {plan.price?.[interval as keyof typeof plan.price] && (
-                                                                    <span
-                                                                        className="ml-3 text-h6 text-(--text-soft-400) animate-in fade-in"
-                                                                        key={interval}
-                                                                    >
-                                                                        / {interval}
-                                                                    </span>
-                                                                )}
-                                                            </>
-                                                        )}
-                                                    </h2>
+                                                    <div className="flex flex-col gap-1">
+                                                        <h2 className="text-h2">
+                                                            {plan.code === "free" ? (
+                                                                <></>
+                                                            ) : (
+                                                                <>
+                                                                    <div className="flex flex-col -space-y-3">
+                                                                        <NumberFlow
+                                                                            className="[--number-flow-char-height:0.85em] [&::part(suffix)]:text-h5 [&::part(suffix)]:text-(--text-soft-400) [&::part(suffix)]:line-through"
+                                                                            format={format}
+                                                                            locales={language}
+                                                                            suffix={
+                                                                                plan.price?.[
+                                                                                    interval as keyof typeof plan.price
+                                                                                ] && ` / ${interval}`
+                                                                            }
+                                                                            value={
+                                                                                plan.price?.[
+                                                                                    interval as keyof typeof plan.price
+                                                                                ]?.price ??
+                                                                                plan.price?.onetime?.price ??
+                                                                                0
+                                                                            }
+                                                                            willChange
+                                                                        />
+                                                                        <div className="relative flex w-fit">
+                                                                            <NumberFlow
+                                                                                className="text-h6 text-(--text-soft-400) [--number-flow-char-height:0.85em] [&::part(suffix)]:text-h6 [&::part(suffix)]:text-(--text-soft-400)"
+                                                                                format={format}
+                                                                                locales={language}
+                                                                                value={
+                                                                                    plan.price?.[
+                                                                                        interval as keyof typeof plan.price
+                                                                                    ]?.previous ??
+                                                                                    plan.price?.onetime?.previous ??
+                                                                                    0
+                                                                                }
+                                                                                willChange
+                                                                            />
+                                                                            <hr className="absolute top-3.5 h-0.5 w-full border-0 bg-(--text-soft-400)" />
+                                                                        </div>
+                                                                    </div>
+                                                                </>
+                                                            )}
+                                                        </h2>
+                                                    </div>
                                                 </div>
 
                                                 <Divider.Root />
@@ -469,9 +545,21 @@ function PricingSection() {
                                                     ))}
                                                 </ul>
 
-                                                <Button.Root $style="filled" $type="neutral">
-                                                    {t(`home.sections.pricing.plans.${plan.code}.button_label`)}
-                                                </Button.Root>
+                                                {plan.buyNow && (
+                                                    <Button.Root $style="filled" $type="neutral" asChild>
+                                                        <Link
+                                                            href={
+                                                                typeof plan.buyNow === "string"
+                                                                    ? plan.buyNow
+                                                                    : plan.buyNow?.[
+                                                                          interval as keyof typeof plan.buyNow
+                                                                      ] || ""
+                                                            }
+                                                        >
+                                                            {t(`home.sections.pricing.plans.${plan.code}.button_label`)}
+                                                        </Link>
+                                                    </Button.Root>
+                                                )}
                                             </div>
                                         </Glow.Root>
                                     );
@@ -499,7 +587,10 @@ function CallToAction() {
                                 {t("home.sections.call_to_action.description")}
                             </p>
                             <Button.Root asChild>
-                                <Link href={route("register")}>{t("home.sections.call_to_action.button_label")}</Link>
+                                <Link href="/#pricing">
+                                    {/* {t("home.sections.call_to_action.button_label")} */}
+                                    Be the first to try
+                                </Link>
                             </Button.Root>
                         </div>
                     </div>
@@ -535,7 +626,7 @@ function Footer() {
                     </Link>
 
                     <ul className="flex items-center gap-5">
-                        <li>
+                        {/* <li>
                             <a
                                 href="https://github.com/expensetrackr/expensetrackr.app"
                                 rel="noopener noreferrer"
@@ -543,9 +634,9 @@ function Footer() {
                             >
                                 <GithubIcon className="size-6" />
                             </a>
-                        </li>
+                        </li> */}
                         <li>
-                            <a href="mailto:hi@expensetrackr.app" rel="noopener noreferrer" target="_blank">
+                            <a href="mailto:support@expensetrackr.app" rel="noopener noreferrer" target="_blank">
                                 <Mail01Icon className="size-6" />
                             </a>
                         </li>

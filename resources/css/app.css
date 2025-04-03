@@ -1,6 +1,8 @@
 :root,
 html {
     --font-family: "Geist";
+
+    scroll-behavior: smooth;
 }
 
 :root,
