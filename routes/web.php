@@ -53,6 +53,8 @@ Route::middleware([
 
 Route::post('/language', LanguageController::class)->name('language.store');
 
+Route::get('/thank-you', fn () => Inertia::render('thank-you'))->name('thank-you');
+
 /**
  * If the route is /login, /register or /forgot-password, redirect to the homepage.
  */

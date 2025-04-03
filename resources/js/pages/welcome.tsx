@@ -547,7 +547,7 @@ function PricingSection() {
 
                                                 {plan.buyNow && (
                                                     <Button.Root $style="filled" $type="neutral" asChild>
-                                                        <Link
+                                                        <a
                                                             href={
                                                                 typeof plan.buyNow === "string"
                                                                     ? plan.buyNow
@@ -557,7 +557,7 @@ function PricingSection() {
                                                             }
                                                         >
                                                             {t(`home.sections.pricing.plans.${plan.code}.button_label`)}
-                                                        </Link>
+                                                        </a>
                                                     </Button.Root>
                                                 )}
                                             </div>
