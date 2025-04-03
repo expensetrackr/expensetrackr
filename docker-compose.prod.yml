@@ -11,10 +11,6 @@ x-web-base: &web-base
     <<: *base
     networks:
         - web_network
-    healthcheck:
-        interval: 30s
-        timeout: 10s
-        retries: 3
 
 x-worker-base: &worker-base
     <<: *base
@@ -22,6 +18,7 @@ x-worker-base: &worker-base
         - worker_network
     stop_signal: SIGTERM
     healthcheck:
+        test: ["CMD", "healthcheck-queue"]
         interval: 30s
         timeout: 10s
         retries: 3
@@ -29,8 +26,6 @@ x-worker-base: &worker-base
 services:
     app:
         <<: *web-base
-        healthcheck:
-            test: ["CMD", "php", "artisan", "health:check"]
 
     task:
         <<: *worker-base
@@ -42,9 +37,6 @@ services:
     queue:
         <<: *worker-base
         command: ["php", "/var/www/html/artisan", "queue:work", "--sleep=3", "--tries=3", "--max-time=3600"]
-        healthcheck:
-            test: ["CMD", "healthcheck-queue"]
-            start_period: 10s
         environment:
             PHP_FPM_POOL_NAME: app_queue
 
@@ -58,9 +50,6 @@ services:
             - --tries=3
             - --max-time=3600
             - --backoff=60
-        healthcheck:
-            test: ["CMD", "healthcheck-queue"]
-            start_period: 10s
         environment:
             PHP_FPM_POOL_NAME: financial_transactions_queue
 
