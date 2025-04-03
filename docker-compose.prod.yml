@@ -1,75 +1,81 @@
+version: "3.8"
+
+x-base: &base
+    build:
+        context: .
+        dockerfile: Dockerfile
+    volumes:
+        - "./storage:/var/www/html/storage"
+
+x-web-base: &web-base
+    <<: *base
+    networks:
+        - web_network
+    healthcheck:
+        interval: 30s
+        timeout: 10s
+        retries: 3
+
+x-worker-base: &worker-base
+    <<: *base
+    networks:
+        - worker_network
+    stop_signal: SIGTERM
+    healthcheck:
+        interval: 30s
+        timeout: 10s
+        retries: 3
+
 services:
     app:
-        build:
-            context: .
-            dockerfile: Dockerfile
-        volumes:
-            - "./storage:/var/www/html/storage"
-        networks:
-            - app_network
+        <<: *web-base
+        healthcheck:
+            test: ["CMD", "php", "artisan", "health:check"]
 
     task:
-        build:
-            context: .
-            dockerfile: Dockerfile
+        <<: *worker-base
         command: ["php", "/var/www/html/artisan", "schedule:work"]
-        stop_signal: SIGTERM # Set this for graceful shutdown if you're using fpm-apache or fpm-nginx
         healthcheck:
-            # This is our native healthcheck script for the scheduler
             test: ["CMD", "healthcheck-schedule"]
             start_period: 10s
 
     queue:
-        build:
-            context: .
-            dockerfile: Dockerfile
+        <<: *worker-base
         command: ["php", "/var/www/html/artisan", "queue:work", "--sleep=3", "--tries=3", "--max-time=3600"]
-        stop_signal: SIGTERM # Set this for graceful shutdown if you're using fpm-apache or fpm-nginx
         healthcheck:
-            # This is our native healthcheck script for the queue
             test: ["CMD", "healthcheck-queue"]
             start_period: 10s
-        volumes:
-            - "./storage:/var/www/html/storage"
         environment:
             PHP_FPM_POOL_NAME: app_queue
-    bank_connection_queue:
-        build:
-            context: .
-            dockerfile: Dockerfile
+
+    financial_transactions_queue:
+        <<: *worker-base
         command:
-            [
-                "php",
-                "/var/www/html/artisan",
-                "queue:work",
-                "--queue=bank-connection",
-                "--tries=3",
-                "--max-time=3600",
-                "--backoff=60",
-            ]
-        stop_signal: SIGTERM # Set this for graceful shutdown if you're using fpm-apache or fpm-nginx
+            - php
+            - /var/www/html/artisan
+            - queue:work
+            - --queue=bank-connection
+            - --tries=3
+            - --max-time=3600
+            - --backoff=60
         healthcheck:
             test: ["CMD", "healthcheck-queue"]
             start_period: 10s
-        volumes:
-            - "./storage:/var/www/html/storage"
         environment:
-            PHP_FPM_POOL_NAME: bank_connection_queue
+            PHP_FPM_POOL_NAME: financial_transactions_queue
 
     ssr:
-        build:
-            context: .
-            dockerfile: Dockerfile
+        <<: *web-base
         command: ["php", "/var/www/html/artisan", "inertia:start-ssr", "--runtime=bun"]
         ports:
             - "13714:13714"
-        volumes:
-            - "./storage:/var/www/html/storage"
+        healthcheck:
+            test: ["CMD", "curl", "-f", "http://localhost:13714/health"]
         environment:
             PHP_FPM_POOL_NAME: app_ssr
-        networks:
-            - app_network
 
 networks:
-    app_network:
+    web_network:
+        driver: bridge
+    worker_network:
         driver: bridge
