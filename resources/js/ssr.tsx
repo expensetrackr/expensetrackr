@@ -25,10 +25,10 @@ declare global {
 }
 
 global.ENV = {
-    APP_URL: import.meta.env.APP_URL,
-    IMAGE_URL: import.meta.env.IMAGE_URL,
-    TELLER_APP_ID: import.meta.env.TELLER_APP_ID,
-    TELLER_ENVIRONMENT: import.meta.env.TELLER_ENVIRONMENT,
+    APP_URL: import.meta.env.VITE_APP_URL,
+    IMAGE_URL: import.meta.env.VITE_IMAGE_URL,
+    TELLER_APP_ID: import.meta.env.VITE_TELLER_APP_ID,
+    TELLER_ENVIRONMENT: import.meta.env.VITE_TELLER_ENVIRONMENT,
 };
 
 createServer((page) =>
@@ -38,8 +38,9 @@ createServer((page) =>
         title: (title) => (title ? `${title} - ${appName}` : `${appName} - Manage your expenses effortlessly`),
         resolve: (name) => resolvePageComponent(`./pages/${name}.tsx`, import.meta.glob("./pages/**/*.tsx")),
         setup: ({ App, props }) => {
-            (global as any).route = <T extends RouteName>(name: T, params?: any, absolute?: boolean) =>
-                route(name, params, absolute, {
+            // @ts-expect-error
+            global.route<RouteName> = (name, params, absolute) =>
+                route(name, params as any, absolute, {
                     // @ts-expect-error
                     ...page.props.ziggy,
                     // @ts-expect-error
