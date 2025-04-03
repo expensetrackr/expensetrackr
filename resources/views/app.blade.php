@@ -26,7 +26,7 @@
             content="Manage your expenses effortlessly with ExpenseTrackr, the all-in-one web app designed for both personal and business finance tracking. Organize accounts, categorize transactions, and collaborate with workspaces to gain insightful graphics and reports on your financial activities. Stay in control of your finances with ExpenseTrackr's intuitive features and user-friendly interface."
             property="og:description"
         />
-        <meta content="https://expensetrackr.app/img/logo.png" property="og:image" />
+        <meta content="https://expensetrackr.app/og.png" property="og:image" />
 
         <!-- Twitter -->
         <meta content="summary_large_image" property="twitter:card" />
@@ -36,7 +36,7 @@
             content="Manage your expenses effortlessly with ExpenseTrackr, the all-in-one web app designed for both personal and business finance tracking. Organize accounts, categorize transactions, and collaborate with workspaces to gain insightful graphics and reports on your financial activities. Stay in control of your finances with ExpenseTrackr's intuitive features and user-friendly interface."
             property="twitter:description"
         />
-        <meta content="https://expensetrackr.app/img/logo.png" property="twitter:image" />
+        <meta content="https://expensetrackr.app/og.png" property="twitter:image" />
 
         <!-- Favicon -->
         <link href="/favicons/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180" />
