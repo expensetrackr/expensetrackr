@@ -21,7 +21,7 @@
         <!-- Open Graph / Facebook -->
         <meta content="website" property="og:type" />
         <meta content="{{ url()->current() }}" property="og:url" />
-        <meta content="@yield('title', 'Dashboard') - ExpenseTrackr" property="og:title" />
+        <meta content="{{ config('app.name') }} - Manage your expenses effortlessly" property="og:title" />
         <meta
             content="Manage your expenses effortlessly with ExpenseTrackr, the all-in-one web app designed for both personal and business finance tracking. Organize accounts, categorize transactions, and collaborate with workspaces to gain insightful graphics and reports on your financial activities. Stay in control of your finances with ExpenseTrackr's intuitive features and user-friendly interface."
             property="og:description"
@@ -31,7 +31,7 @@
         <!-- Twitter -->
         <meta content="summary_large_image" property="twitter:card" />
         <meta content="{{ url()->current() }}" property="twitter:url" />
-        <meta content="@yield('title', 'Dashboard') - ExpenseTrackr" property="twitter:title" />
+        <meta content="{{ config('app.name') }} - Manage your expenses effortlessly" property="twitter:title" />
         <meta
             content="Manage your expenses effortlessly with ExpenseTrackr, the all-in-one web app designed for both personal and business finance tracking. Organize accounts, categorize transactions, and collaborate with workspaces to gain insightful graphics and reports on your financial activities. Stay in control of your finances with ExpenseTrackr's intuitive features and user-friendly interface."
             property="twitter:description"
