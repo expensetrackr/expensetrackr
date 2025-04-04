@@ -19,13 +19,13 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        // $middleware->web(append: [
-        //     HandleLanguageMiddleware::class,
-        //     HandleWorkspacesPermissionMiddleware::class,
-        //     AddWorkspaceToRequest::class,
-        //     HandleInertiaRequests::class,
-        //     AddLinkHeadersForPreloadedAssets::class,
-        // ]);
+        $middleware->web(append: [
+            HandleLanguageMiddleware::class,
+            HandleWorkspacesPermissionMiddleware::class,
+            AddWorkspaceToRequest::class,
+            HandleInertiaRequests::class,
+            AddLinkHeadersForPreloadedAssets::class,
+        ]);
         $middleware->validateCsrfTokens(except: [
             'polar/webhook',
             'teller/webhook',
