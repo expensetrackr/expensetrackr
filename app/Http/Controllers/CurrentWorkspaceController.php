@@ -8,7 +8,7 @@ use App\Models\Workspace;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
-final class CurrentWorkspaceController
+final class CurrentWorkspaceController extends Controller
 {
     /**
      * Update the authenticated user's current workspace.

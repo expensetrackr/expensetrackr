@@ -13,7 +13,7 @@ use Inertia\Inertia;
 use Laravel\Fortify\Actions\ConfirmPassword;
 use Symfony\Component\HttpFoundation\Response;
 
-final class CurrentUserController
+final class CurrentUserController extends Controller
 {
     /**
      * Delete the current user.

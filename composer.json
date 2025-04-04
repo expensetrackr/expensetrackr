@@ -1,4 +1,5 @@
 {
+    "$schema": "https://getcomposer.org/schema.json",
     "name": "expensetrackr/expensetrackr.app",
     "type": "project",
     "description": "A comprehensive web application for effortless expense management, supporting both personal and business finance tracking. Features include account organization, transaction categorization, team collaboration, insightful graphics, and financial reporting.",
@@ -100,6 +101,11 @@
             "@test:refactor",
             "@test:types"
         ]
+    },
+    "extra": {
+        "laravel": {
+            "dont-discover": []
+        }
     },
     "config": {
         "optimize-autoloader": true,

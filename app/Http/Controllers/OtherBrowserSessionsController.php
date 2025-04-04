@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Laravel\Fortify\Actions\ConfirmPassword;
 
-final class OtherBrowserSessionsController
+final class OtherBrowserSessionsController extends Controller
 {
     /**
      * Log out from other browser sessions.

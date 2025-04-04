@@ -7,13 +7,6 @@ import tailwindcss from "@tailwindcss/vite";
 import { run } from "vite-plugin-run";
 
 export default defineConfig({
-    esbuild: {
-        jsx: "automatic",
-    },
-    build: {
-        cssMinify: process.env.NODE_ENV === "production",
-        sourcemap: true,
-    },
     plugins: [
         Icons({
             // experimental
@@ -45,6 +38,9 @@ export default defineConfig({
             },
         ]),
     ],
+    esbuild: {
+        jsx: "automatic",
+    },
     resolve: {
         alias: {
             "ziggy-js": path.resolve("vendor/tightenco/ziggy"),

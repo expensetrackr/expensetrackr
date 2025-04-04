@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
-final class ApiTokenController
+final class ApiTokenController extends Controller
 {
     /**
      * Show the user API token screen.

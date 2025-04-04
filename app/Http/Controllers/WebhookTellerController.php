@@ -11,7 +11,7 @@ use App\Models\BankConnection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
 
-final class WebhookTellerController
+final class WebhookTellerController extends Controller
 {
     /**
      * Handle incoming Teller webhook events.

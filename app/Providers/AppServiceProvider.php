@@ -6,7 +6,6 @@ namespace App\Providers;
 
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
@@ -24,7 +23,7 @@ final class AppServiceProvider extends ServiceProvider
         //
     }
 
-    public function boot(UrlGenerator $url): void
+    public function boot(): void
     {
         $this->configureCommands();
         $this->configureModels();

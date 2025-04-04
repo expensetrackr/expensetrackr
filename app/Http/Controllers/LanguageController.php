@@ -8,7 +8,7 @@ use App\Enums\Language;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
-final class LanguageController
+final class LanguageController extends Controller
 {
     public function __invoke(Request $request): RedirectResponse
     {

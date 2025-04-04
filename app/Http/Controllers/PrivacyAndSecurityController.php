@@ -12,7 +12,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Laravel\Fortify\Features;
 
-final class PrivacyAndSecurityController
+final class PrivacyAndSecurityController extends Controller
 {
     use ConfirmsTwoFactorAuthentication;
 

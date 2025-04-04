@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
 
-final class PrivacyPolicyController
+final class PrivacyPolicyController extends Controller
 {
     /**
      * Show the privacy policy for the application.

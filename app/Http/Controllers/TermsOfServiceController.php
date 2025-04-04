@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
 
-final class TermsOfServiceController
+final class TermsOfServiceController extends Controller
 {
     /**
      * Show the terms of service for the application.

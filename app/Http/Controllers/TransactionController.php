@@ -25,7 +25,7 @@ use Inertia\Response;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
-final class TransactionController
+final class TransactionController extends Controller
 {
     /**
      * Display all transactions.

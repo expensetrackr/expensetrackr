@@ -12,7 +12,7 @@ use App\Models\WorkspaceSetting;
 use Illuminate\Container\Attributes\CurrentUser;
 use Illuminate\Http\RedirectResponse;
 
-final class WorkspaceSettingController
+final class WorkspaceSettingController extends Controller
 {
     /**
      * Update the given workspaces settings.

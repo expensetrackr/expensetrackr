@@ -26,7 +26,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Spatie\QueryBuilder\QueryBuilder;
 
-final class AccountController
+final class AccountController extends Controller
 {
     /**
      * Display all accounts.

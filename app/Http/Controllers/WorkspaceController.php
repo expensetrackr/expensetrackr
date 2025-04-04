@@ -24,7 +24,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Spatie\Permission\Models\Role;
 
-final class WorkspaceController
+final class WorkspaceController extends Controller
 {
     use RedirectsActions;
 

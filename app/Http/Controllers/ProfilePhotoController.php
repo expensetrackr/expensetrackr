@@ -8,7 +8,7 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
-final class ProfilePhotoController
+final class ProfilePhotoController extends Controller
 {
     /**
      * Delete the current user's profile photo.

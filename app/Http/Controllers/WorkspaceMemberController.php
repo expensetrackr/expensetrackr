@@ -16,7 +16,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
-final class WorkspaceMemberController
+final class WorkspaceMemberController extends Controller
 {
     use AuthorizesRequests;
 

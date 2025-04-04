@@ -11,7 +11,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
-final class WorkspaceInvitationController
+final class WorkspaceInvitationController extends Controller
 {
     /**
      * Accept a workspace invitation.
