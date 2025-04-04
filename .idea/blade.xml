@@ -166,6 +166,8 @@
       <data directive="@vite" injection="true" prefix="&lt;?php echo vite_func(" suffix="); ?&gt;" />
       <data directive="@viteReactRefresh" />
       <data directive="@vitereactrefresh" />
+      <data directive="@wayfinderEndTrimDeadspace" />
+      <data directive="@wayfinderTrimDeadspace" />
       <data directive="@while" injection="true" prefix="&lt;?php&#10;while(" suffix="): ?&gt;" />
       <data directive="@yield" injection="true" prefix="&lt;?php&#10;echo $__env-&gt;yieldContent(" suffix="); ?&gt;" />
     </directives>
