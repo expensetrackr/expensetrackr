@@ -82,6 +82,7 @@
       <data directive="@endslot" />
       <data directive="@endswitch" />
       <data directive="@endteleport" />
+      <data directive="@endtrimDeadspace" />
       <data directive="@endunless" />
       <data directive="@endunlessrole" />
       <data directive="@endverbatim" />
@@ -152,6 +153,7 @@
       <data directive="@switch" injection="true" prefix="&lt;?php&#10;switch(" suffix="): ?&gt;" />
       <data directive="@teleport" injection="true" prefix="&lt;?php echo e(" suffix="); ?&gt;" />
       <data directive="@this" />
+      <data directive="@trimDeadspace" />
       <data directive="@unless" injection="true" prefix="&lt;?php&#10;if (! (" suffix=")): ?&gt;" />
       <data directive="@unlesshasallroles" />
       <data directive="@unlesshasanyrole" />

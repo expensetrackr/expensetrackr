@@ -40,7 +40,7 @@ trait HasWorkspaces
      */
     public function switchWorkspace(?Workspace $workspace): bool
     {
-        if (! $workspace || ! $this->belongsToWorkspace($workspace)) {
+        if (!$workspace instanceof \App\Models\Workspace || ! $this->belongsToWorkspace($workspace)) {
             return false;
         }
 
@@ -58,7 +58,7 @@ trait HasWorkspaces
      */
     public function belongsToWorkspace(?Workspace $workspace): bool
     {
-        if (! $workspace) {
+        if (!$workspace instanceof \App\Models\Workspace) {
             return false;
         }
 
@@ -74,7 +74,7 @@ trait HasWorkspaces
      */
     public function ownsWorkspace(?Workspace $workspace): bool
     {
-        if (! $workspace) {
+        if (!$workspace instanceof \App\Models\Workspace) {
             return false;
         }
 

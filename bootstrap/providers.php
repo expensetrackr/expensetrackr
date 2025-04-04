@@ -14,5 +14,4 @@ return [
     Spatie\WebhookClient\WebhookClientServiceProvider::class,
     App\Providers\CurrencyServiceProvider::class,
     App\Providers\BankSyncServiceProvider::class,
-    Laravel\Wayfinder\WayfinderServiceProvider::class,
 ];

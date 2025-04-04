@@ -8,12 +8,12 @@ use App\Models\Account;
 use App\Models\Workspace;
 use Illuminate\Database\Eloquent\Collection;
 
-final class BalanceSheet
+final readonly class BalanceSheet
 {
     private Collection $accounts;
 
     public function __construct(
-        private readonly Workspace $workspace
+        private Workspace $workspace
     ) {
         $this->accounts = Account::query()
             ->where('workspace_id', $this->workspace->id)
@@ -25,14 +25,14 @@ final class BalanceSheet
     {
         return $this->accounts
             ->filter(fn (Account $account) => $account->type->isAsset())
-            ->reduce(fn (string $carry, Account $account) => bcadd($carry, $account->current_balance, 4), '0');
+            ->reduce(fn (string $carry, Account $account): string => bcadd($carry, $account->current_balance, 4), '0');
     }
 
     public function totalLiabilities(): string
     {
         return $this->accounts
             ->filter(fn (Account $account) => $account->type->isLiability())
-            ->reduce(fn (string $carry, Account $account) => bcadd($carry, $account->current_balance, 4), '0');
+            ->reduce(fn (string $carry, Account $account): string => bcadd($carry, $account->current_balance, 4), '0');
     }
 
     public function netWorth(): string
@@ -74,14 +74,14 @@ final class BalanceSheet
         }
 
         $classificationTotal = $filteredAccounts->reduce(
-            fn (string $carry, Account $account) => bcadd($carry, $account->current_balance, 4),
+            fn (string $carry, Account $account): string => bcadd($carry, $account->current_balance, 4),
             '0'
         );
 
         return $filteredAccounts->groupBy('accountable_type')
-            ->map(function (Collection $accounts, string $accountableType) use ($classificationTotal) {
+            ->map(function (Collection $accounts, string $accountableType) use ($classificationTotal): array {
                 $groupTotal = $accounts->reduce(
-                    fn (string $carry, Account $account) => bcadd($carry, $account->current_balance, 4),
+                    fn (string $carry, Account $account): string => bcadd($carry, $account->current_balance, 4),
                     '0'
                 );
 
@@ -99,7 +99,7 @@ final class BalanceSheet
                     'total_money' => $groupTotal,
                     'weight' => $weight,
                     'color' => $this->getAccountableColor($accountableType),
-                    'accounts' => $accounts->map(function (Account $account) use ($classificationTotal) {
+                    'accounts' => $accounts->map(function (Account $account) use ($classificationTotal): array {
                         $weight = $classificationTotal === '0'
                             ? 0
                             : (float) bcmul(bcdiv($account->current_balance, $classificationTotal, 4), '100', 2);
@@ -115,7 +115,7 @@ final class BalanceSheet
                     })->sortByDesc('weight')->values()->all(),
                 ];
             })
-            ->sortByDesc(fn ($group) => $group['total'])
+            ->sortByDesc(fn ($group): string => $group['total'])
             ->values()
             ->all();
     }

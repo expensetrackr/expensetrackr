@@ -195,7 +195,7 @@ final class InstitutionsGetCommand extends Command
 
         $this->info("Dispatching {$totalInstitutions} institutions in {$batchCount} batches to jobs");
 
-        $batches->each(function ($batch, $index) use ($batchCount) {
+        $batches->each(function ($batch, $index) use ($batchCount): void {
             /** @var array<int, array<string, mixed>> $typedBatch */
             $typedBatch = $batch->toArray();
             ProcessInstitutionLogos::dispatch($typedBatch);

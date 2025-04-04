@@ -157,8 +157,8 @@ final class ProcessInstitutionLogos implements ShouldQueue
         // Process institutions in parallel batches
         Collection::make($this->batch)
             ->chunk(10)
-            ->each(function ($chunk) use (&$readyToIndex, &$processedCount, &$existingCount) {
-                $jobs = $chunk->map(fn ($institution) => new ProcessSingleInstitutionLogo($institution));
+            ->each(function ($chunk) use (&$readyToIndex, &$processedCount, &$existingCount): void {
+                $jobs = $chunk->map(fn ($institution): \App\Jobs\ProcessSingleInstitutionLogo => new ProcessSingleInstitutionLogo($institution));
 
                 // Process jobs immediately
                 foreach ($jobs as $job) {

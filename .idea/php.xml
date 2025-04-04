@@ -207,7 +207,6 @@
       <path value="$PROJECT_DIR$/vendor/phpunit/php-invoker" />
       <path value="$PROJECT_DIR$/vendor/phpunit/php-timer" />
       <path value="$PROJECT_DIR$/vendor/phpunit/phpunit" />
-      <path value="$PROJECT_DIR$/vendor/_laravel_idea" />
       <path value="$PROJECT_DIR$/vendor/kelunik/certificate" />
       <path value="$PROJECT_DIR$/vendor/revolt/event-loop" />
       <path value="$PROJECT_DIR$/vendor/daverandom/libdns" />
@@ -232,9 +231,6 @@
       <path value="$PROJECT_DIR$/vendor/spatie/laravel-typescript-transformer" />
       <path value="$PROJECT_DIR$/vendor/spatie/typescript-transformer" />
       <path value="$PROJECT_DIR$/vendor/spatie/laravel-query-builder" />
-      <path value="$PROJECT_DIR$/vendor/cloudinary-labs/cloudinary-laravel" />
-      <path value="$PROJECT_DIR$/vendor/cloudinary/transformation-builder-sdk" />
-      <path value="$PROJECT_DIR$/vendor/cloudinary/cloudinary_php" />
       <path value="$PROJECT_DIR$/vendor/meilisearch/meilisearch-php" />
       <path value="$PROJECT_DIR$/vendor/danestves/laravel-polar" />
       <path value="$PROJECT_DIR$/vendor/laravel/scout" />
@@ -242,6 +238,11 @@
       <path value="$PROJECT_DIR$/vendor/pestphp/pest-plugin-drift" />
       <path value="$PROJECT_DIR$/vendor/timothepearce/laravel-time-series" />
       <path value="$PROJECT_DIR$/vendor/iamcal/sql-parser" />
+      <path value="$PROJECT_DIR$/vendor/http-interop/http-factory-guzzle" />
+      <path value="$PROJECT_DIR$/vendor/intervention/image-laravel" />
+      <path value="$PROJECT_DIR$/vendor/intervention/gif" />
+      <path value="$PROJECT_DIR$/vendor/intervention/image" />
+      <path value="$PROJECT_DIR$/vendor/laravel/wayfinder" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.3" />
