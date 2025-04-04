@@ -4,6 +4,7 @@ import laravel from "laravel-vite-plugin";
 import Icons from "unplugin-icons/vite";
 import { defineConfig } from "vite";
 import tailwindcss from "@tailwindcss/vite";
+import { run } from "vite-plugin-run";
 
 export default defineConfig({
     esbuild: {
@@ -36,6 +37,13 @@ export default defineConfig({
             },
         }),
         tailwindcss(),
+        run([
+            {
+                name: "wayfinder",
+                run: ["php", "artisan", "wayfinder:generate"],
+                pattern: ["routes/*.php", "app/**/Http/**/*.php"],
+            },
+        ]),
     ],
     resolve: {
         alias: {
