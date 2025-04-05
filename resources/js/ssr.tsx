@@ -3,7 +3,6 @@ import createServer from "@inertiajs/react/server";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { ThemeProvider } from "next-themes";
 import ReactDOMServer from "react-dom/server";
-import { type RouteName, route, type route as routeFn } from "ziggy-js";
 
 import { NuqsAdapter } from "#/utils/nuqs-adapter.ts";
 
@@ -17,7 +16,6 @@ type ENV = {
 };
 
 declare global {
-    var route: typeof routeFn;
     var ENV: ENV;
     interface Window {
         ENV: ENV;
@@ -38,15 +36,6 @@ createServer((page) =>
         title: (title) => (title ? `${title} - ${appName}` : `${appName} - Manage your expenses effortlessly`),
         resolve: (name) => resolvePageComponent(`./pages/${name}.tsx`, import.meta.glob("./pages/**/*.tsx")),
         setup: ({ App, props }) => {
-            // @ts-expect-error
-            global.route<RouteName> = (name, params, absolute) =>
-                route(name, params as any, absolute, {
-                    // @ts-expect-error
-                    ...page.props.ziggy,
-                    // @ts-expect-error
-                    location: new URL(page.props.ziggy.location),
-                });
-
             return (
                 <NuqsAdapter>
                     <ThemeProvider
