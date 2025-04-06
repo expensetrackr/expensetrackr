@@ -1,4 +1,3 @@
-import path from "node:path";
 import react from "@vitejs/plugin-react";
 import laravel from "laravel-vite-plugin";
 import Icons from "unplugin-icons/vite";
@@ -8,13 +7,6 @@ import { run } from "vite-plugin-run";
 
 export default defineConfig({
     plugins: [
-        run([
-            {
-                name: "wayfinder",
-                run: ["php", "artisan", "wayfinder:generate"],
-                pattern: ["routes/*.php", "app/**/Http/**/*.php"],
-            },
-        ]),
         Icons({
             // experimental
             autoInstall: true,
@@ -37,13 +29,22 @@ export default defineConfig({
             },
         }),
         tailwindcss(),
+        run([
+            {
+                name: "wayfinder",
+                run: ["php", "artisan", "wayfinder:generate"],
+                pattern: ["routes/*.php", "app/**/Http/**/*.php"],
+            },
+        ]),
     ],
     esbuild: {
         jsx: "automatic",
     },
     resolve: {
         alias: {
-            "ziggy-js": path.resolve("vendor/tightenco/ziggy"),
+            "#/actions/": "./resources/js/actions",
+            "#/routes/": "./resources/js/routes",
+            "#/wayfinder/": "./resources/js/wayfinder",
         },
     },
 });

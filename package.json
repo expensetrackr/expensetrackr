@@ -3,7 +3,9 @@
     "type": "module",
     "imports": {
         "#/*": "./resources/js/*",
-        "ziggy-js": "./vendor/tightenco/ziggy"
+        "#/actions/*": "./resources/js/actions/*",
+        "#/routes/*": "./resources/js/routes/*",
+        "#/wayfinder/*": "./resources/js/wayfinder/*"
     },
     "scripts": {
         "build": "vite build && vite build --ssr",
