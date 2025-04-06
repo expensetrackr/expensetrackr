@@ -41,6 +41,11 @@ export default defineConfig({
     esbuild: {
         jsx: "automatic",
     },
+    build: {
+        rollupOptions: {
+            external: ["#/actions/**", "#/routes/**"],
+        },
+    },
     resolve: {
         alias: {
             "ziggy-js": path.resolve("vendor/tightenco/ziggy"),
