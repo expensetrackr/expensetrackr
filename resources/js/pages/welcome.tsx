@@ -5,6 +5,7 @@ import { getValibotConstraint, parseWithValibot } from "conform-to-valibot";
 import * as React from "react";
 import Alert01Icon from "virtual:icons/hugeicons/alert-01";
 import Coupon01Icon from "virtual:icons/hugeicons/coupon-01";
+import GiftIcon from "virtual:icons/hugeicons/gift";
 import Mail01Icon from "virtual:icons/hugeicons/mail-01";
 import CheckboxCircleFillIcon from "virtual:icons/ri/checkbox-circle-fill";
 import MoneyDollarCircleFillIcon from "virtual:icons/ri/money-dollar-circle-fill";
@@ -30,6 +31,7 @@ import * as Divider from "#/components/ui/divider.tsx";
 import * as LinkButton from "#/components/ui/link-button.tsx";
 import * as SegmentedControl from "#/components/ui/segmented-control.tsx";
 import { useTranslation } from "#/hooks/use-translation.ts";
+import home from "#/routes/home.ts";
 import { cn } from "#/utils/cn.ts";
 import { plans } from "#/utils/plans.ts";
 import { BalanceSchema } from "#/utils/steppers/create-account.step.ts";
@@ -151,18 +153,28 @@ function HeroSection() {
                     <p className="text-center text-paragraph-md">{t("home.sections.hero.description")}</p>
                 </div>
 
-                <div className="flex flex-col items-center justify-center gap-4 lg:flex-row lg:gap-6">
-                    <Button.Root $style="stroke" asChild className="w-full lg:w-auto lg:min-w-36">
-                        <a href="mailto:support@expensetrackr.com" rel="noopener noreferrer" target="_blank">
-                            {t("home.sections.hero.contact_us")}
-                        </a>
-                    </Button.Root>
-                    <Button.Root asChild className="w-full lg:w-auto lg:min-w-36">
-                        <a href="#pricing">
-                            {/* {t("home.sections.hero.get_started")} */}
-                            Start your financial journey
-                        </a>
-                    </Button.Root>
+                <div className="flex flex-col gap-4">
+                    <div className="flex flex-col items-center justify-center gap-4 lg:flex-row lg:gap-6">
+                        <Button.Root $style="stroke" asChild className="w-full lg:w-auto lg:min-w-36">
+                            <a href="mailto:support@expensetrackr.com" rel="noopener noreferrer" target="_blank">
+                                {t("home.sections.hero.contact_us")}
+                            </a>
+                        </Button.Root>
+                        <Button.Root asChild className="w-full lg:w-auto lg:min-w-36">
+                            <a href="#pricing">
+                                {/* {t("home.sections.hero.get_started")} */}
+                                Start your financial journey
+                            </a>
+                        </Button.Root>
+                    </div>
+
+                    <Alert.Root $size="sm" $status="success" $variant="stroke" className="mx-auto w-fit">
+                        <Alert.Icon as={GiftIcon} />
+                        <span>
+                            <span className="text-state-success-base">40% off</span> for the first 100 customers (23
+                            left) 🔥
+                        </span>
+                    </Alert.Root>
                 </div>
             </div>
         </section>
@@ -418,10 +430,29 @@ function PricingSection() {
                 <div className="mx-auto flex max-w-160 flex-col">
                     <h2 className="text-center text-h4">{t("home.sections.pricing.title")}</h2>
                     <p className="text-center text-paragraph-md">{t("home.sections.pricing.description")}</p>
-                    <Alert.Root $size="sm" $status="information" $variant="lighter" className="mx-auto mt-4 w-fit">
+                    <Alert.Root
+                        $size="sm"
+                        $status="information"
+                        $variant="lighter"
+                        className="mx-auto mt-4 w-fit animate-pulse"
+                    >
                         <Alert.Icon as={Alert01Icon} />
-                        Limited time offer will end in <span className="font-medium">{timeLeft}</span>
+                        <div className="flex flex-col items-center">
+                            <span className="font-bold text-red-500">🔥 Flash Sale Ending Soon!</span>
+                            <span>
+                                Only <span className="font-medium">{timeLeft}</span> remaining
+                            </span>
+
+                            {/* Add scarcity indicator */}
+                            <span className="text-sm mt-1">
+                                Only <span className="font-bold text-red-500">7 spots</span> left at this price!
+                            </span>
+                        </div>
                     </Alert.Root>
+
+                    <Button.Root $size="md" asChild className="mx-auto mt-6">
+                        <a href="#pricing-plans">Get Started Now - Save 40% 👇</a>
+                    </Button.Root>
                 </div>
 
                 <div className="flex flex-col items-center gap-8">
@@ -445,7 +476,7 @@ function PricingSection() {
                         </SegmentedControl.List>
                     </SegmentedControl.Root>
 
-                    <div className="grid grid-cols-12">
+                    <div className="grid scroll-mt-40 grid-cols-12" id="pricing-plans">
                         <div className="col-span-12 lg:col-span-10 lg:col-start-2">
                             <div className="grid grid-cols-12 items-center">
                                 {plans.map((plan) => {
@@ -500,40 +531,53 @@ function PricingSection() {
                                                                 <></>
                                                             ) : (
                                                                 <>
-                                                                    <div className="flex flex-col -space-y-3">
-                                                                        <NumberFlow
-                                                                            className="[--number-flow-char-height:0.85em] [&::part(suffix)]:text-h5 [&::part(suffix)]:text-(--text-soft-400) [&::part(suffix)]:line-through"
-                                                                            format={format}
-                                                                            locales={language}
-                                                                            suffix={
-                                                                                plan.price?.[
-                                                                                    interval as keyof typeof plan.price
-                                                                                ] && ` / ${interval}`
-                                                                            }
-                                                                            value={
-                                                                                plan.price?.[
-                                                                                    interval as keyof typeof plan.price
-                                                                                ]?.price ??
-                                                                                plan.price?.onetime?.price ??
-                                                                                0
-                                                                            }
-                                                                            willChange
-                                                                        />
-                                                                        <div className="relative flex w-fit">
+                                                                    <div className="flex flex-col -space-y-2">
+                                                                        <div className="flex flex-col -space-y-2">
+                                                                            <span className="text-paragraph-sm text-(--text-soft-400)">
+                                                                                Today's price:
+                                                                            </span>
+
                                                                             <NumberFlow
-                                                                                className="text-h6 text-(--text-soft-400) [--number-flow-char-height:0.85em] [&::part(suffix)]:text-h6 [&::part(suffix)]:text-(--text-soft-400)"
+                                                                                className="[--number-flow-char-height:0.85em] [&::part(suffix)]:text-h5 [&::part(suffix)]:text-(--text-soft-400) [&::part(suffix)]:line-through"
                                                                                 format={format}
                                                                                 locales={language}
+                                                                                suffix={
+                                                                                    plan.price?.[
+                                                                                        interval as keyof typeof plan.price
+                                                                                    ] && ` / ${interval}`
+                                                                                }
                                                                                 value={
                                                                                     plan.price?.[
                                                                                         interval as keyof typeof plan.price
-                                                                                    ]?.previous ??
-                                                                                    plan.price?.onetime?.previous ??
+                                                                                    ]?.price ??
+                                                                                    plan.price?.onetime?.price ??
                                                                                     0
                                                                                 }
                                                                                 willChange
                                                                             />
-                                                                            <hr className="absolute top-3.5 h-0.5 w-full border-0 bg-(--text-soft-400)" />
+                                                                        </div>
+
+                                                                        <div className="flex items-center gap-1">
+                                                                            <span className="text-paragraph-sm text-(--text-soft-400)">
+                                                                                Regular price:
+                                                                            </span>
+
+                                                                            <div className="relative flex w-fit">
+                                                                                <NumberFlow
+                                                                                    className="text-h6 text-(--text-soft-400) [--number-flow-char-height:0.85em] [&::part(suffix)]:text-h6 [&::part(suffix)]:text-(--text-soft-400)"
+                                                                                    format={format}
+                                                                                    locales={language}
+                                                                                    value={
+                                                                                        plan.price?.[
+                                                                                            interval as keyof typeof plan.price
+                                                                                        ]?.previous ??
+                                                                                        plan.price?.onetime?.previous ??
+                                                                                        0
+                                                                                    }
+                                                                                    willChange
+                                                                                />
+                                                                                <hr className="absolute top-3.5 h-0.5 w-full border-0 bg-(--text-soft-400)" />
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </>
@@ -555,6 +599,23 @@ function PricingSection() {
                                                         </li>
                                                     ))}
                                                 </ul>
+
+                                                <div className="flex flex-col gap-3">
+                                                    <span className="text-paragraph-sm font-medium text-(--text-sub-600)">
+                                                        Early bird features:
+                                                    </span>
+
+                                                    <ul className="flex flex-col gap-3">
+                                                        <li className="inline-flex items-center gap-1 text-paragraph-sm">
+                                                            <CheckboxCircleFillIcon className="size-6" />
+                                                            <span>Early Access to New Features</span>
+                                                        </li>
+                                                        <li className="inline-flex items-center gap-1 text-paragraph-sm">
+                                                            <CheckboxCircleFillIcon className="size-6" />
+                                                            <span>Premium Support Priority</span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
 
                                                 {plan.buyNow && (
                                                     <Button.Root $style="filled" $type="neutral" asChild>
@@ -598,10 +659,10 @@ function CallToAction() {
                                 {t("home.sections.call_to_action.description")}
                             </p>
                             <Button.Root asChild>
-                                <Link href="/#pricing">
+                                <a href="#pricing">
                                     {/* {t("home.sections.call_to_action.button_label")} */}
                                     Be the first to try
-                                </Link>
+                                </a>
                             </Button.Root>
                         </div>
                     </div>
@@ -616,7 +677,7 @@ function Footer() {
         <footer className="border-t-[0.2px] py-8">
             <div className="container">
                 <div className="flex items-center justify-between">
-                    <Link href={route("home")}>
+                    <Link href={home.url()}>
                         <picture>
                             <Source
                                 height={40}

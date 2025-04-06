@@ -16,12 +16,14 @@ export const plans = [
         featured: true,
         price: {
             monthly: {
-                price: 14.99,
-                previous: 24.99,
+                price: 11.99,
+                previous: 19.99,
+                savings: "40%",
             },
             yearly: {
-                price: 149.99,
-                previous: 199.99,
+                price: 99.99,
+                previous: 189.99,
+                savings: "47%",
             },
         },
         productPriceId: {
@@ -41,8 +43,9 @@ export const plans = [
         iconBg: "bg-state-feature-base",
         price: {
             onetime: {
-                price: 99.99,
-                previous: 249.99,
+                price: 299.99,
+                previous: 549.99,
+                savings: "45%",
             },
         },
         productPriceId: "be41d3b8-14c9-4b8d-bee8-64633a54da42",
