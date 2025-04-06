@@ -6,7 +6,7 @@ export function Source({ src, ...props }: Omit<SourceProps<ImageOperations, Imag
     return (
         // @ts-ignore
         <UnpicSource
-            src={`${import.meta.env.VITE_APP_URL}${src}`}
+            src={`${ENV.APP_URL}${src}`}
             // @ts-expect-error - transformer is not needed on development
             transformer={process.env.NODE_ENV === "production" ? transform : undefined}
             {...props}

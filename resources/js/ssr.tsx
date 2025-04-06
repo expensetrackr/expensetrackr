@@ -23,10 +23,10 @@ declare global {
 }
 
 global.ENV = {
-    APP_URL: import.meta.env.VITE_APP_URL,
-    IMAGE_URL: import.meta.env.VITE_IMAGE_URL,
-    TELLER_APP_ID: import.meta.env.VITE_TELLER_APP_ID,
-    TELLER_ENVIRONMENT: import.meta.env.VITE_TELLER_ENVIRONMENT,
+    APP_URL: process.env.VITE_APP_URL || "",
+    IMAGE_URL: process.env.VITE_IMAGE_URL || "",
+    TELLER_APP_ID: process.env.VITE_TELLER_APP_ID || "",
+    TELLER_ENVIRONMENT: (process.env.VITE_TELLER_ENVIRONMENT as "sandbox" | "development" | "production") || "sandbox",
 };
 
 createServer((page) =>
