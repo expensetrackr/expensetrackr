@@ -8,6 +8,13 @@ import { run } from "vite-plugin-run";
 
 export default defineConfig({
     plugins: [
+        run([
+            {
+                name: "wayfinder",
+                run: ["php", "artisan", "wayfinder:generate"],
+                pattern: ["routes/*.php", "app/**/Http/**/*.php"],
+            },
+        ]),
         Icons({
             // experimental
             autoInstall: true,
@@ -30,21 +37,9 @@ export default defineConfig({
             },
         }),
         tailwindcss(),
-        run([
-            {
-                name: "wayfinder",
-                run: ["php", "artisan", "wayfinder:generate"],
-                pattern: ["routes/*.php", "app/**/Http/**/*.php"],
-            },
-        ]),
     ],
     esbuild: {
         jsx: "automatic",
-    },
-    build: {
-        rollupOptions: {
-            external: [/^#\/(routes|actions)\/.*/],
-        },
     },
     resolve: {
         alias: {
