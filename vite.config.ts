@@ -43,7 +43,7 @@ export default defineConfig({
     },
     build: {
         rollupOptions: {
-            external: ["#/actions/**", "#/routes/**"],
+            external: [/^#\/(routes|actions)\/.*/],
         },
     },
     resolve: {
