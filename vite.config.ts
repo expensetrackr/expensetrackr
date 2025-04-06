@@ -4,6 +4,7 @@ import Icons from "unplugin-icons/vite";
 import { defineConfig } from "vite";
 import tailwindcss from "@tailwindcss/vite";
 import { run } from "vite-plugin-run";
+import path from "node:path";
 
 export default defineConfig({
     plugins: [
@@ -42,9 +43,10 @@ export default defineConfig({
     },
     resolve: {
         alias: {
-            "#/actions/": "./resources/js/actions",
-            "#/routes/": "./resources/js/routes",
-            "#/wayfinder/": "./resources/js/wayfinder",
+            "#/actions/": path.resolve("./resources/js/actions"),
+            "#/routes/": path.resolve("./resources/js/routes"),
+            "#/wayfinder/": path.resolve("./resources/js/wayfinder"),
+            "ziggy-js": path.resolve("vendor/tightenco/ziggy"),
         },
     },
 });
