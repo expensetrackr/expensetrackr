@@ -41,7 +41,7 @@ const { operationsGenerator, operationsParser } = createOperationsHandlers<Image
 
 export const generate: URLGenerator<"vercel"> = (src, operations, options = {}) => {
     const baseSrc = typeof src === "string" ? (src.startsWith("/") ? src.slice(1) : src) : src.toString();
-    const url = toUrl(`${options.baseUrl || ENV.IMAGE_URL}/image/${baseSrc}`);
+    const url = toUrl(`${options.baseUrl || import.meta.env.VITE_IMAGE_URL}/image/${baseSrc}`);
 
     url.search = operationsGenerator(operations);
 
@@ -70,7 +70,7 @@ export function Image(props: Omit<UnpicImageProps<ImageOperations, ImageOptions>
         // @ts-ignore
         <UnpicImage
             {...props}
-            src={`${ENV.APP_URL}${props.src}`}
+            src={`${import.meta.env.VITE_APP_URL}${props.src}`}
             // @ts-expect-error - transformer is not needed on development
             transformer={process.env.NODE_ENV === "production" ? transform : undefined}
         />
