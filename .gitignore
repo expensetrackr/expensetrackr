@@ -376,8 +376,3 @@ ziggy.js
 # teller certs
 teller_cert.pem
 teller_pk.pem
-
-# wayfinder
-resources/js/wayfinder
-resources/js/actions
-resources/js/routes

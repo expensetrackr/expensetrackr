@@ -29,6 +29,6 @@ export default [
         },
     },
     {
-        ignores: ["vite.config.ts"],
+        ignores: ["vite.config.ts", "resources/js/actions", "resources/js/routes", "resources/js/wayfinder"],
     },
 ];

@@ -3,3 +3,6 @@ node_modules
 /public/build
 .env
 
+/resources/js/actions
+/resources/js/routes
+/resources/js/wayfinder
