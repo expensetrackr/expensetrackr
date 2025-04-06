@@ -445,7 +445,7 @@ function PricingSection() {
 
                             {/* Add scarcity indicator */}
                             <span className="text-sm mt-1">
-                                Only <span className="font-bold text-red-500">7 spots</span> left at this price!
+                                Only <span className="font-bold text-red-500">23 spots</span> left at this price!
                             </span>
                         </div>
                     </Alert.Root>
