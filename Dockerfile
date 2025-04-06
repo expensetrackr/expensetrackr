@@ -17,5 +17,7 @@ USER www-data
 
 RUN composer install --no-interaction --optimize-autoloader --no-dev
 
+RUN php artisan wayfinder:generate --with-forms
+
 RUN bun install --frozen-lockfile
 RUN bun run build
