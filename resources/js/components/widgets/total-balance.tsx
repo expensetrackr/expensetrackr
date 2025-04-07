@@ -1,7 +1,7 @@
 import NumberFlow from "@number-flow/react";
 import { format } from "date-fns";
-
 import type Decimal from "decimal.js";
+
 import { useTranslation } from "#/hooks/use-translation.ts";
 import { type Trend } from "#/types/index.js";
 import { cnMerge } from "#/utils/cn.ts";
