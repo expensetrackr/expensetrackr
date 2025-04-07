@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Concerns\Blamable;
+use App\Concerns\Chartable;
 use App\Concerns\WorkspaceOwned;
 use App\Enums\AccountSubtype;
 use App\Enums\AccountType;
 use App\Models\Projections\AccountProjection;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -17,7 +19,6 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Carbon;
 use InvalidArgumentException;
 use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
-use TimothePearce\TimeSeries\Models\Traits\Projectable;
 
 /**
  * @property int $id
@@ -35,10 +36,12 @@ use TimothePearce\TimeSeries\Models\Traits\Projectable;
  * @property string|null $external_id
  * @property int|null $created_by
  * @property int|null $updated_by
- * @property \Carbon\CarbonImmutable|null $created_at
- * @property \Carbon\CarbonImmutable|null $updated_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  * @property int|null $bank_connection_id
  * @property-read Model $accountable
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, AccountBalance> $balances
+ * @property-read int|null $balances_count
  * @property-read BankConnection|null $bankConnection
  * @property-read User|null $createdBy
  * @property-read string|null $prefixed_id
@@ -76,7 +79,7 @@ use TimothePearce\TimeSeries\Models\Traits\Projectable;
 final class Account extends Model
 {
     /** @use HasFactory<\Database\Factories\AccountFactory> */
-    use Blamable, HasFactory, HasPrefixedId, Projectable, WorkspaceOwned;
+    use Blamable, Chartable, HasFactory, HasPrefixedId, WorkspaceOwned;
 
     /**
      * The accessors to append to the model's array form.
@@ -122,21 +125,34 @@ final class Account extends Model
     }
 
     /**
-     * Get the account type based on the accountable relationship.
+     * The account balances that the account has.
+     *
+     * @return HasMany<AccountBalance, covariant $this>
      */
-    public function getTypeAttribute(): AccountType
+    public function balances(): HasMany
     {
+        return $this->hasMany(AccountBalance::class);
+    }
 
-        return match ($this->accountable_type) {
-            Depository::class => AccountType::Depository,
-            Investment::class => AccountType::Investment,
-            Crypto::class => AccountType::Crypto,
-            OtherAsset::class => AccountType::OtherAsset,
-            CreditCard::class => AccountType::CreditCard,
-            Loan::class => AccountType::Loan,
-            OtherLiability::class => AccountType::OtherLiability,
-            default => throw new InvalidArgumentException("Unknown accountable type: {$this->accountable_type}"),
-        };
+    /**
+     * Get the account type based on the accountable relationship.
+     *
+     * @return Attribute<AccountType, never>
+     */
+    protected function type(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => match ($this->accountable_type) {
+                Depository::class => AccountType::Depository,
+                Investment::class => AccountType::Investment,
+                Crypto::class => AccountType::Crypto,
+                OtherAsset::class => AccountType::OtherAsset,
+                CreditCard::class => AccountType::CreditCard,
+                Loan::class => AccountType::Loan,
+                OtherLiability::class => AccountType::OtherLiability,
+                default => throw new InvalidArgumentException("Unknown accountable type: {$this->accountable_type}"),
+            },
+        );
     }
 
     /**

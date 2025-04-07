@@ -1,10 +1,38 @@
+import NumberFlow from "@number-flow/react";
 import { format } from "date-fns";
 
+import type Decimal from "decimal.js";
+import { useTranslation } from "#/hooks/use-translation.ts";
+import { type Trend } from "#/types/index.js";
 import { cnMerge } from "#/utils/cn.ts";
+import { decimalFlowFormatter } from "#/utils/currency-formatter.ts";
+import { decimalFormatter } from "#/utils/number-formatter.ts";
 import ChartStepLine from "../chart-step-line.tsx";
 import * as Badge from "../ui/badge.tsx";
 
-export function TotalBalanceWidget({ className, ...rest }: React.HTMLAttributes<HTMLDivElement>) {
+type TotalBalanceWidgetProps = React.HTMLAttributes<HTMLDivElement> & {
+    netWorth: Decimal.Value;
+    netWorthSeries: {
+        startDate: string;
+        endDate: string;
+        interval: string;
+        trend: Trend;
+        values: {
+            date: string;
+            dateFormatted: string;
+            trend: Trend;
+        }[];
+    };
+};
+
+export function TotalBalanceWidget({ netWorth, netWorthSeries, className, ...rest }: TotalBalanceWidgetProps) {
+    const { language } = useTranslation();
+    const netWorthFlow = decimalFlowFormatter({
+        amount: netWorth,
+        currency: "USD",
+        language,
+    });
+
     return (
         <div
             className={cnMerge(
@@ -18,9 +46,15 @@ export function TotalBalanceWidget({ className, ...rest }: React.HTMLAttributes<
                     <div>
                         <div className="text-paragraph-sm text-(--text-sub-600)">Total Balance</div>
                         <div className="mt-1 flex items-center gap-2">
-                            <div className="text-title-h5 text-text-strong-950">$14,480.24</div>
-                            <Badge.Root $color="green" $size="md" $style="light">
-                                +5%
+                            <div className="text-h5">
+                                <NumberFlow format={netWorthFlow.format} value={netWorthFlow.value} />
+                            </div>
+                            <Badge.Root
+                                $color={netWorthSeries.trend.favorableDirection === "up" ? "green" : "red"}
+                                $size="md"
+                                $style="light"
+                            >
+                                {netWorthSeries.trend.percentageChange}%
                             </Badge.Root>
                         </div>
                     </div>
@@ -28,7 +62,10 @@ export function TotalBalanceWidget({ className, ...rest }: React.HTMLAttributes<
 
                 <ChartStepLine
                     categories={["value"]}
-                    data={[]}
+                    data={netWorthSeries.values.map((value) => ({
+                        date: value.date,
+                        value: +decimalFormatter(value.trend.current, language, "USD"),
+                    }))}
                     index="date"
                     xAxisProps={{
                         tickFormatter: (value) => format(value, "MMM").toLocaleUpperCase(),

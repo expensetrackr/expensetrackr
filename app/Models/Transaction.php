@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Concerns\WorkspaceOwned;
+use App\Enums\TransactionRecurringInterval;
 use App\Enums\TransactionStatus;
 use App\Enums\TransactionType;
 use App\Observers\TransactionObserver;
@@ -26,6 +27,7 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @property string $amount
  * @property string $currency
  * @property bool $is_recurring
+ * @property TransactionRecurringInterval|null $recurring_interval
  * @property bool $is_manual
  * @property \Carbon\CarbonImmutable $dated_at
  * @property string|null $external_id
@@ -65,6 +67,7 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Transaction whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Transaction whereNote($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Transaction wherePublicId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Transaction whereRecurringInterval($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Transaction whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Transaction whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Transaction whereUpdatedAt($value)
@@ -128,6 +131,7 @@ final class Transaction extends Model
         return [
             'status' => TransactionStatus::class,
             'type' => TransactionType::class,
+            'recurring_interval' => TransactionRecurringInterval::class,
             'dated_at' => 'datetime',
             'enriched_at' => 'datetime',
         ];

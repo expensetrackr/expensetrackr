@@ -6,10 +6,13 @@ namespace App\Services;
 
 use App\Models\Account;
 use App\Models\Workspace;
+use App\ValueObjects\Period;
+use App\ValueObjects\Series;
 use Illuminate\Database\Eloquent\Collection;
 
 final readonly class BalanceSheet
 {
+    /** @var Collection<int, Account> */
     private Collection $accounts;
 
     public function __construct(
@@ -38,6 +41,17 @@ final readonly class BalanceSheet
     public function netWorth(): string
     {
         return bcadd($this->totalAssets(), $this->totalLiabilities(), 4);
+    }
+
+    public function netWorthSeries(): Series
+    {
+        $query = Account::query()->whereIn('id', $this->accounts->pluck('id'));
+
+        return $query->getBalanceSeries(
+            period: Period::last30Days(),
+            view: 'net_worth',
+            interval: '1 day'
+        );
     }
 
     public function classificationGroups(): array
@@ -96,7 +110,6 @@ final readonly class BalanceSheet
                     'name' => $this->getAccountableName($accountableType),
                     'classification' => $firstAccount->type->value,
                     'total' => $groupTotal,
-                    'total_money' => $groupTotal,
                     'weight' => $weight,
                     'color' => $this->getAccountableColor($accountableType),
                     'accounts' => $accounts->map(function (Account $account) use ($classificationTotal): array {
@@ -104,7 +117,6 @@ final readonly class BalanceSheet
                             ? 0
                             : (float) bcmul(bcdiv($account->current_balance, $classificationTotal, 4), '100', 2);
 
-                        // Create a new array instead of modifying the model
                         return [
                             'id' => $account->id,
                             'name' => $account->name,

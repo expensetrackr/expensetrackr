@@ -16,6 +16,7 @@ final class DashboardController extends Controller
 
         return Inertia::render('dashboard', [
             'netWorth' => $balanceSheet->netWorth(),
+            'netWorthSeries' => $balanceSheet->netWorthSeries(),
         ]);
     }
 }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "046603a76dbb3069b7f74ff53353fca6",
+    "content-hash": "38ad80c31dc35d7450477c510cc5f7ef",
     "packages": [
         {
             "name": "akaunting/laravel-money",
@@ -11906,85 +11906,6 @@
             "time": "2024-12-21T16:25:41+00:00"
         },
         {
-            "name": "timothepearce/laravel-time-series",
-            "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/timothepearce/laravel-time-series.git",
-                "reference": "e6f4675abcfd222d48f7d52d8c6384fe45295db7"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/timothepearce/laravel-time-series/zipball/e6f4675abcfd222d48f7d52d8c6384fe45295db7",
-                "reference": "e6f4675abcfd222d48f7d52d8c6384fe45295db7",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^8.1"
-            },
-            "require-dev": {
-                "brianium/paratest": "^6.11",
-                "nunomaduro/collision": "^6.0",
-                "nunomaduro/larastan": "^2.0.1",
-                "orchestra/testbench": "^7.0",
-                "phpstan/extension-installer": "^1.1",
-                "phpstan/phpstan-deprecation-rules": "^1.0",
-                "phpstan/phpstan-phpunit": "^1.0",
-                "phpunit/phpunit": "^9.5",
-                "spatie/laravel-ray": "^1.26",
-                "vimeo/psalm": "^4.8"
-            },
-            "default-branch": true,
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "TimothePearce\\TimeSeries\\TimeSeriesServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "TimothePearce\\TimeSeries\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Timothé Pearce",
-                    "email": "timothe.pearce@gmail.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Laravel Time Series provides an API to create and maintain projected data from you Eloquent models, and represent them as time-series.",
-            "homepage": "https://github.com/timothepearce/laravel-time-series",
-            "keywords": [
-                "LaravelTimeSeries",
-                "aggregator",
-                "laravel",
-                "laravel-time-series",
-                "projections",
-                "projectors",
-                "statistics",
-                "stats",
-                "time-series"
-            ],
-            "support": {
-                "issues": "https://github.com/timothepearce/laravel-time-series/issues",
-                "source": "https://github.com/timothepearce/laravel-time-series/tree/main"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/TimothePearce",
-                    "type": "github"
-                }
-            ],
-            "time": "2025-03-28T13:25:35+00:00"
-        },
-        {
             "name": "vlucas/phpdotenv",
             "version": "v5.6.1",
             "source": {
@@ -15904,8 +15825,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "joelbutcher/socialstream": 20,
-        "timothepearce/laravel-time-series": 20
+        "joelbutcher/socialstream": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

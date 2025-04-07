@@ -29,9 +29,11 @@ export const compactNumFormatter = new Intl.NumberFormat("en-US", {
     compactDisplay: "short",
 });
 
-export function decimalFormatter(value: string, locale = "en", currency = "USD") {
+export function decimalFormatter(value: Decimal.Value, locale = "en", currency = "USD") {
     const currencyFormat = resolveCurrencyFormat(locale, currency);
-    const decimalValue = new Decimal(value.replace(/,/g, "")).toDecimalPlaces(currencyFormat?.minimumFractionDigits);
+    const decimalValue = new Decimal(value.toString().replace(/,/g, "")).toDecimalPlaces(
+        currencyFormat?.minimumFractionDigits,
+    );
 
     return decimalValue.toFixed(currencyFormat?.minimumFractionDigits);
 }

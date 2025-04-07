@@ -19,6 +19,41 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
 
 #[ObservedBy(WorkspaceObserver::class)]
+/**
+ * @property int $id
+ * @property int $user_id
+ * @property string $name
+ * @property bool $personal_workspace
+ * @property string $public_id
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
+ * @property-read Collection<int, Category> $categories
+ * @property-read int|null $categories_count
+ * @property-read string|null $prefixed_id
+ * @property-read Collection<int, WorkspaceInvitation> $invitations
+ * @property-read int|null $invitations_count
+ * @property-read Membership|null $membership
+ * @property-read Collection<int, User> $members
+ * @property-read int|null $members_count
+ * @property-read User|null $owner
+ * @property-read WorkspaceSetting|null $settings
+ * @property-read Collection<int, Transaction> $transactions
+ * @property-read int|null $transactions_count
+ *
+ * @method static \Database\Factories\WorkspaceFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Workspace newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Workspace newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Workspace query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Workspace whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Workspace whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Workspace whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Workspace wherePersonalWorkspace($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Workspace wherePublicId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Workspace whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Workspace whereUserId($value)
+ *
+ * @mixin \Eloquent
+ */
 final class Workspace extends Model
 {
     /** @use HasFactory<\Database\Factories\WorkspaceFactory> */
