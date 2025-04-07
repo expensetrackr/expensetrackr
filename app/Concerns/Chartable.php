@@ -210,8 +210,8 @@ trait Chartable
                             SELECT balance::numeric
                             FROM account_balances ab
                             WHERE ab.account_id = accounts.id
-                            AND ab.created_at <= d.date
-                            ORDER BY created_at DESC
+                            AND ab.dated_at <= d.date
+                            ORDER BY dated_at DESC
                             LIMIT 1
                         ),
                         0

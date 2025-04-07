@@ -18,6 +18,7 @@ use InvalidArgumentException;
  * @property string $balance
  * @property int $account_id
  * @property int $workspace_id
+ * @property \Carbon\CarbonImmutable $dated_at
  * @property \Carbon\CarbonImmutable|null $created_at
  * @property \Carbon\CarbonImmutable|null $updated_at
  * @property-read Account $account
@@ -30,6 +31,7 @@ use InvalidArgumentException;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|AccountBalance whereAccountId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|AccountBalance whereBalance($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|AccountBalance whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|AccountBalance whereDatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|AccountBalance whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|AccountBalance whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|AccountBalance whereWorkspaceId($value)
@@ -79,17 +81,17 @@ final class AccountBalance extends Model
 
         // Get the last balance before the period starts to establish initial balance
         $query->where(function ($q) use ($period) {
-            $q->where('created_at', '<=', $period->end_date)
+            $q->where('dated_at', '<=', $period->end_date)
                 ->where(function ($inner) use ($period) {
-                    $inner->where('created_at', '>=', $period->start_date)
+                    $inner->where('dated_at', '>=', $period->start_date)
                         ->orWhere(function ($last) use ($period) {
-                            $last->where('created_at', '<', $period->start_date)
+                            $last->where('dated_at', '<', $period->start_date)
                                 ->whereNotExists(function ($exists) use ($period) {
                                     $exists->select(DB::raw(1))
                                         ->from('account_balances as newer')
                                         ->whereColumn('newer.account_id', 'account_balances.account_id')
-                                        ->where('newer.created_at', '>', 'account_balances.created_at')
-                                        ->where('newer.created_at', '<', $period->start_date);
+                                        ->where('newer.dated_at', '>', 'account_balances.dated_at')
+                                        ->where('newer.dated_at', '<', $period->start_date);
                                 });
                         });
                 });
@@ -167,12 +169,24 @@ final class AccountBalance extends Model
         ])
             ->rightJoin(DB::raw("({$seriesSql}) as series"), function ($join) use ($interval) {
                 $join->on(
-                    DB::raw("DATE_TRUNC('$interval', account_balances.created_at)"),
+                    DB::raw("DATE_TRUNC('$interval', account_balances.dated_at)"),
                     '=',
                     'series.timestamp'
                 );
             })
             ->addBinding([$startDate, $endDate], 'join')
             ->orderBy('series.timestamp');
+    }
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'dated_at' => 'datetime',
+        ];
     }
 }

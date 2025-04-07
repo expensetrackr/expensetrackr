@@ -20,9 +20,10 @@ return new class extends Migration
             $table->foreignId('account_id')->constrained()->cascadeOnDelete();
             $table->foreignId('workspace_id')->constrained()->cascadeOnDelete();
 
+            $table->timestamp('dated_at');
             $table->timestamps();
 
-            $table->index(['account_id', 'workspace_id', 'created_at']);
+            $table->index(['account_id', 'workspace_id', 'dated_at']);
         });
     }
 
