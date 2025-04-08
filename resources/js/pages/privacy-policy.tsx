@@ -41,7 +41,7 @@ export default function PrivacyPolicy({ policy }: Props) {
                     </picture>
 
                     <div
-                        className="prose mt-6 w-full overflow-hidden p-6 shadow-md sm:max-w-2xl sm:rounded-8"
+                        className="prose mt-6 w-full overflow-hidden p-6 shadow-md sm:max-w-2xl sm:rounded-8 dark:prose-invert"
                         // biome-ignore lint/security/noDangerouslySetInnerHtml: we are the ones who set the content
                         dangerouslySetInnerHTML={{ __html: policy }}
                     />
