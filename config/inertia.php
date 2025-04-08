@@ -27,7 +27,7 @@ return [
 
         'url' => env('SSR_URL', 'http://127.0.0.1:13714'),
 
-        // 'bundle' => base_path('bootstrap/ssr/ssr.mjs'),
+        'bundle' => base_path('bootstrap/ssr/ssr.js'),
 
     ],
 
