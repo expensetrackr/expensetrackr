@@ -16,8 +16,6 @@ Artisan::command('inspire', function () {
 Schedule::job(SnapshopAccountBalances::class)
     ->dailyAt('02:00')
     ->withoutOverlapping(60) // Prevent overlapping for 60 minutes
-    ->onOneServer()
-    ->runInBackground()
     ->appendOutputTo(storage_path('logs/daily-balances.log'))
     ->before(function () {
         Log::info('Starting daily balance snapshot job');
