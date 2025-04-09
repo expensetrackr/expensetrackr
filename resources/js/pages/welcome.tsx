@@ -32,6 +32,8 @@ import * as LinkButton from "#/components/ui/link-button.tsx";
 import * as SegmentedControl from "#/components/ui/segmented-control.tsx";
 import { useTranslation } from "#/hooks/use-translation.ts";
 import home from "#/routes/home.ts";
+import policy from "#/routes/policy/index.ts";
+import terms from "#/routes/terms/index.ts";
 import { cn } from "#/utils/cn.ts";
 import { plans } from "#/utils/plans.ts";
 import { BalanceSchema } from "#/utils/steppers/create-account.step.ts";
@@ -676,29 +678,36 @@ function Footer() {
     return (
         <footer className="border-t-[0.2px] py-8">
             <div className="container">
-                <div className="flex items-center justify-between">
-                    <Link href={home.url()}>
-                        <picture>
-                            <Source
-                                height={40}
-                                media="(prefers-color-scheme: light)"
-                                priority
-                                src="/img/isotype-light.png"
-                                width={64}
-                            />
-                            <Source
-                                height={40}
-                                media="(prefers-color-scheme: dark)"
-                                priority
-                                src="/img/isotype-dark.png"
-                                width={64}
-                            />
-                            <Image alt="ExpenseTrackr" height={40} priority src="/img/isotype-light.png" width={64} />
-                        </picture>
-                    </Link>
+                <div className="flex flex-col gap-2">
+                    <div className="flex items-center justify-between">
+                        <Link href={home.url()}>
+                            <picture>
+                                <Source
+                                    height={40}
+                                    media="(prefers-color-scheme: light)"
+                                    priority
+                                    src="/img/isotype-light.png"
+                                    width={64}
+                                />
+                                <Source
+                                    height={40}
+                                    media="(prefers-color-scheme: dark)"
+                                    priority
+                                    src="/img/isotype-dark.png"
+                                    width={64}
+                                />
+                                <Image
+                                    alt="ExpenseTrackr"
+                                    height={40}
+                                    priority
+                                    src="/img/isotype-light.png"
+                                    width={64}
+                                />
+                            </picture>
+                        </Link>
 
-                    <ul className="flex items-center gap-5">
-                        {/* <li>
+                        <ul className="flex items-center gap-5">
+                            {/* <li>
                             <a
                                 href="https://github.com/expensetrackr/expensetrackr.app"
                                 rel="noopener noreferrer"
@@ -707,12 +716,22 @@ function Footer() {
                                 <GithubIcon className="size-6" />
                             </a>
                         </li> */}
-                        <li>
-                            <a href="mailto:support@expensetrackr.app" rel="noopener noreferrer" target="_blank">
-                                <Mail01Icon className="size-6" />
-                            </a>
-                        </li>
-                    </ul>
+                            <li>
+                                <a href="mailto:support@expensetrackr.app" rel="noopener noreferrer" target="_blank">
+                                    <Mail01Icon className="size-6" />
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div className="flex items-center justify-center gap-3">
+                        <LinkButton.Root $underline asChild>
+                            <Link href={terms.show.url()}>Terms of Service</Link>
+                        </LinkButton.Root>
+                        <LinkButton.Root $underline asChild>
+                            <Link href={policy.show.url()}>Privacy Policy</Link>
+                        </LinkButton.Root>
+                    </div>
                 </div>
             </div>
         </footer>
