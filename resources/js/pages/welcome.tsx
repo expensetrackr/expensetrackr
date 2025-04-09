@@ -384,7 +384,7 @@ function FeatureSection() {
 }
 
 function PricingSection() {
-    const [interval, setInterval] = React.useState("monthly");
+    const [interval, setInterval] = React.useState("yearly");
     const { language, t } = useTranslation();
     const currencyFormat = resolveCurrencyFormat(language, "USD");
 
@@ -546,7 +546,7 @@ function PricingSection() {
                                                                                 suffix={
                                                                                     plan.price?.[
                                                                                         interval as keyof typeof plan.price
-                                                                                    ] && ` / ${interval}`
+                                                                                    ] && ` / ${interval === "yearly" ? "billed yearly" : interval}`
                                                                                 }
                                                                                 value={
                                                                                     plan.price?.[
