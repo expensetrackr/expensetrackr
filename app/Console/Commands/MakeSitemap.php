@@ -6,6 +6,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Spatie\Sitemap\Sitemap;
+use Throwable;
 
 final class MakeSitemap extends Command
 {
@@ -30,10 +31,16 @@ final class MakeSitemap extends Command
      */
     public function handle()
     {
-        Sitemap::create()
-            ->add('/')
-            ->add('/terms-of-service')
-            ->add('/privacy-policy')
-            ->writeToFile(public_path('sitemap.xml'));
+        try {
+            Sitemap::create()
+                ->add('/')
+                ->add('/terms-of-service')
+                ->add('/privacy-policy')
+                ->writeToFile(public_path('sitemap.xml'));
+
+            $this->info('Sitemap generated successfully.');
+        } catch (Throwable $th) {
+            $this->error($th->getMessage());
+        }
     }
 }
