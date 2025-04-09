@@ -17,6 +17,6 @@ final class InstitutionData extends Data
         public ?string $logo,
         public readonly ProviderType $provider,
     ) {
-        $this->logo = type(config('services.public_assets.url'))->asString()."/banks/{$id}";
+        $this->logo = type(config('filesystems.disks.s3.url'))->asString()."/banks/{$id}.png";
     }
 }

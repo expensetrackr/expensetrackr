@@ -164,8 +164,6 @@ final class Account extends Model
     {
         return [
             'subtype' => AccountSubtype::class,
-            'created_at' => Carbon::class,
-            'updated_at' => Carbon::class,
         ];
     }
 }
