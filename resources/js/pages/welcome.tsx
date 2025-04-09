@@ -40,19 +40,17 @@ export default function WelcomePage() {
     return (
         <>
             <div className="relative pb-26">
-                <div aria-hidden="true" className="pointer-events-none absolute h-[80dvh] w-full">
+                <div aria-hidden="true" className="pointer-events-none absolute h-full max-h-152.5 w-full">
                     <Image
                         alt=""
-                        className="absolute inset-0 size-full object-cover object-center hue-rotate-90 invert dark:invert-0"
+                        className="absolute inset-0 size-full mask-t-to-100% mask-b-to-100% object-cover object-center hue-rotate-90 invert dark:invert-0"
+                        height={610}
                         isCdn
                         layout="fullWidth"
                         priority
                         src="/img/hero.jpg"
                     />
                     <div className="absolute inset-0 bg-(--bg-white-0) mix-blend-color" />
-                    <div className="absolute inset-0 bg-gradient-to-b from-transparent to-(--bg-white-0)" />
-                    <div className="absolute inset-0 bg-gradient-to-b from-transparent to-(--bg-white-0)" />
-                    <div className="absolute inset-0 bg-linear-to-t from-(--bg-white-0) to-50%" />
                 </div>
 
                 <div className="fixed top-14 z-50 w-full overscroll-contain">
