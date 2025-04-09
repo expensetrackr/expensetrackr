@@ -1,16 +1,21 @@
 import { Image as UnpicImage, type ImageProps as UnpicImageProps } from "@unpic/react";
 
 type ImageProps = UnpicImageProps & {
-    isBunny?: boolean;
+    isCdn?: boolean;
 };
 
-export function Image({ isBunny, ...props }: ImageProps) {
+export function Image({ isCdn, ...props }: ImageProps) {
     return (
         <UnpicImage
             background="auto"
             {...props}
-            cdn={isBunny ? "bunny" : undefined}
-            src={isBunny ? `https://cdn.expensetrackr.app${props.src}` : props.src}
+            cdn={isCdn && process.env.NODE_ENV === "production" ? "cloudflare" : undefined}
+            options={{
+                cloudflare: {
+                    domain: "expensetrackr.app",
+                },
+            }}
+            src={isCdn && process.env.NODE_ENV === "production" ? `${ENV.APP_URL}${props.src}` : props.src}
         />
     );
 }

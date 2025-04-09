@@ -44,10 +44,10 @@ export default function WelcomePage() {
                     <Image
                         alt=""
                         className="absolute inset-0 size-full object-cover object-center hue-rotate-90 invert dark:invert-0"
-                        isBunny
+                        isCdn
                         layout="fullWidth"
                         priority
-                        src="/hero.jpg"
+                        src="/img/hero.jpg"
                     />
                     <div className="absolute inset-0 bg-(--bg-white-0) mix-blend-color" />
                     <div className="absolute inset-0 bg-gradient-to-b from-transparent to-(--bg-white-0)" />
@@ -62,26 +62,26 @@ export default function WelcomePage() {
                                 <picture>
                                     <Source
                                         height={40}
-                                        isBunny
+                                        isCdn
                                         media="(prefers-color-scheme: light)"
                                         priority
-                                        src="/isotype-light.png"
+                                        src="/img/isotype-light.png"
                                         width={64}
                                     />
                                     <Source
                                         height={40}
-                                        isBunny
+                                        isCdn
                                         media="(prefers-color-scheme: dark)"
                                         priority
-                                        src="/isotype-dark.png"
+                                        src="/img/isotype-dark.png"
                                         width={64}
                                     />
                                     <Image
                                         alt="ExpenseTrackr"
                                         height={40}
-                                        isBunny
+                                        isCdn
                                         priority
-                                        src="/isotype-light.png"
+                                        src="/img/isotype-light.png"
                                         width={64}
                                     />
                                 </picture>
@@ -307,25 +307,25 @@ function ImageAndTextSection() {
                     <picture>
                         <Source
                             height={752.27}
-                            isBunny
+                            isCdn
                             media="(prefers-color-scheme: light)"
-                            src="/steps-pattern.png"
+                            src="/img/steps-pattern.png"
                             width={921}
                         />
                         <Source
                             height={752.27}
-                            isBunny
+                            isCdn
                             media="(prefers-color-scheme: dark)"
-                            src="/steps-pattern-dark.png"
+                            src="/img/steps-pattern-dark.png"
                             width={921}
                         />
                         <Image
                             alt=""
                             className="pointer-events-none absolute bottom-8 h-auto !w-230"
                             height={752.27}
-                            isBunny
+                            isCdn
                             objectFit="contain"
-                            src="/steps-pattern.png"
+                            src="/img/steps-pattern.png"
                             width={921}
                         />
                     </picture>
@@ -369,23 +369,23 @@ function FeatureSection() {
                     <div className="col-span-12 lg:col-span-10 lg:col-start-2">
                         <picture>
                             <Source
-                                isBunny
+                                isCdn
                                 layout="fullWidth"
                                 media="(prefers-color-scheme: light)"
-                                src="/dashboard.png"
+                                src="/img/dashboard.png"
                             />
                             <Source
-                                isBunny
+                                isCdn
                                 layout="fullWidth"
                                 media="(prefers-color-scheme: dark)"
-                                src="/dashboard-dark.png"
+                                src="/img/dashboard-dark.png"
                             />
                             <Image
                                 alt=""
                                 className="rounded-16 mask-b-to-100%"
-                                isBunny
+                                isCdn
                                 layout="fullWidth"
-                                src="/dashboard.png"
+                                src="/img/dashboard.png"
                             />
                         </picture>
                     </div>
@@ -697,26 +697,26 @@ function Footer() {
                             <picture>
                                 <Source
                                     height={40}
-                                    isBunny
+                                    isCdn
                                     media="(prefers-color-scheme: light)"
                                     priority
-                                    src="/isotype-light.png"
+                                    src="/img/isotype-light.png"
                                     width={64}
                                 />
                                 <Source
                                     height={40}
-                                    isBunny
+                                    isCdn
                                     media="(prefers-color-scheme: dark)"
                                     priority
-                                    src="/isotype-dark.png"
+                                    src="/img/isotype-dark.png"
                                     width={64}
                                 />
                                 <Image
                                     alt="ExpenseTrackr"
                                     height={40}
-                                    isBunny
+                                    isCdn
                                     priority
-                                    src="/isotype-light.png"
+                                    src="/img/isotype-light.png"
                                     width={64}
                                 />
                             </picture>

@@ -45,7 +45,7 @@ export function TransactionItem({
                         <Image
                             alt={transaction.merchant.name}
                             height={24}
-                            isBunny
+                            isCdn
                             src={transaction.merchant.icon}
                             width={24}
                         />

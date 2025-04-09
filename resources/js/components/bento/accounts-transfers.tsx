@@ -196,7 +196,7 @@ export function BentoAccountsTransfers(props: React.CustomComponentPropsWithRef<
                                 alt="MasterCard"
                                 className="size-5 shrink-0"
                                 height={20}
-                                isBunny
+                                isCdn
                                 src="/major-brands/mastercard.svg"
                                 width={20}
                             />

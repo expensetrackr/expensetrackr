@@ -89,7 +89,7 @@ export function BentoWorkspaces(props: React.CustomComponentPropsWithRef<typeof 
                         >
                             <Avatar.Root $color={member.color} $size="40">
                                 <Avatar.Image asChild>
-                                    <Image alt={member.name} height={40} isBunny src={member.avatar} width={40} />
+                                    <Image alt={member.name} height={40} isCdn src={member.avatar} width={40} />
                                 </Avatar.Image>
                             </Avatar.Root>
                             <div className="flex-1 space-y-1">

@@ -1,16 +1,21 @@
 import { Source as UnpicSource, type SourceProps as UnpicSourceProps } from "@unpic/react";
 
 type SourceProps = UnpicSourceProps & {
-    isBunny?: boolean;
+    isCdn?: boolean;
 };
 
-export function Source({ isBunny, ...props }: SourceProps) {
+export function Source({ isCdn, ...props }: SourceProps) {
     return (
         <UnpicSource
             background="auto"
             {...props}
-            cdn={isBunny ? "bunny" : undefined}
-            src={isBunny ? `https://cdn.expensetrackr.app${props.src}` : props.src}
+            cdn={isCdn && process.env.NODE_ENV === "production" ? "cloudflare" : undefined}
+            options={{
+                cloudflare: {
+                    domain: "expensetrackr.app",
+                },
+            }}
+            src={isCdn && process.env.NODE_ENV === "production" ? `${ENV.APP_URL}${props.src}` : props.src}
         />
     );
 }
