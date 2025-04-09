@@ -1,6 +1,8 @@
 User-agent: *
-Allow: /$
-Allow: /sitemap.xml
-Disallow: /
+Allow: /
+Disallow: /login
+Disallow: /register
+Disallow: /forgot-password
+Disallow: /reset-password
 
 Sitemap: https://expensetrackr.app/sitemap.xml
