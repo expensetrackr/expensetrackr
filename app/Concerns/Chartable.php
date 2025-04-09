@@ -23,9 +23,13 @@ trait Chartable
      * Scope to get balance series for multiple accounts.
      *
      * @param  Builder<\App\Models\Account>  $query
+     * @param  Period  $period  The period to get the series for
+     * @param  string  $favorableDirection  One of 'up' or 'down'
+     * @param  string  $view  One of 'balance', 'cash_balance', 'holdings_balance'
+     * @param  string|null  $interval  The interval to get the series for
      */
     #[Scope]
-    public function getBalanceSeries(
+    public function balanceSeries(
         Builder $query,
         Period $period,
         string $favorableDirection = 'up',
@@ -142,7 +146,7 @@ trait Chartable
      *
      * @throws InvalidArgumentException
      */
-    public function balanceSeries(
+    public function accountBalanceSeries(
         ?Period $period = null,
         string $view = 'balance',
         ?string $interval = null
@@ -165,7 +169,7 @@ trait Chartable
         $cacheKey = "account_{$this->id}_sparkline";
 
         return Cache::remember($cacheKey, CarbonImmutable::now()->addHour(), function () {
-            return $this->balanceSeries();
+            return $this->accountBalanceSeries();
         });
     }
 

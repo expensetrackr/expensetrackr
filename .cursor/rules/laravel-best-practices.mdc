@@ -263,20 +263,6 @@ alwaysApply: false
 - Optimize database indices for common queries
 - Use Laravel Scout for efficient full-text search
 - Implement route-model binding for cleaner controller code
-- Example of eager loading:
-  ```php
-  public function index()
-  {
-      return Inertia::render('transactions/index', [
-          'transactions' => TransactionResource::collection(
-              Auth::user()->transactions()
-                  ->with(['account', 'category'])
-                  ->latest()
-                  ->paginate(15)
-          )
-      ]);
-  }
-  ```
 
 ## Key Conventions
 1. Follow Laravel's MVC architecture.

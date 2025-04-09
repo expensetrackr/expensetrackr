@@ -32,7 +32,6 @@ final class CategoryController extends Controller
                             ->where('is_system', false);
                     });
             })
-            ->with(['workspace', 'parent', 'children', 'children.workspace', 'children.parent'])
             ->orderBy('name', 'asc')
             ->get()
             ->groupBy('classification')

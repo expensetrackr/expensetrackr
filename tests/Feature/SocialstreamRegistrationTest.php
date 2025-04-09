@@ -26,6 +26,7 @@ dataset('socialiteProvidersDataProvider', function () {
         [Providers::twitterOAuth2()],
     ];
 });
+
 test('users get redirected correctly', function (string $provider) {
     if (! Providers::enabled($provider)) {
         $this->markTestSkipped("Registration support with the $provider provider is not enabled.");
@@ -40,6 +41,7 @@ test('users get redirected correctly', function (string $provider) {
     $response = $this->get("/oauth/$provider");
     $response->assertRedirectContains($provider);
 })->with('socialiteProvidersDataProvider');
+
 test('users can register using socialite providers', function (string $socialiteProvider) {
     if (! FortifyFeatures::enabled(FortifyFeatures::registration())) {
         $this->markTestSkipped('Registration support is not enabled.');

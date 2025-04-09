@@ -20,7 +20,6 @@ final readonly class BalanceSheet
     ) {
         $this->accounts = Account::query()
             ->where('workspace_id', $this->workspace->id)
-            ->with('accountable')
             ->get();
     }
 
@@ -47,7 +46,7 @@ final readonly class BalanceSheet
     {
         $query = Account::query()->whereIn('id', $this->accounts->pluck('id'));
 
-        return $query->getBalanceSeries(
+        return $query->balanceSeries(
             period: Period::last30Days(),
             view: 'net_worth',
             interval: '1 day'

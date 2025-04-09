@@ -109,10 +109,15 @@ final class SyncBankAccounts implements ShouldBeUnique, ShouldQueue
             $accounts = Account::whereHas('bankConnection', function ($query): void {
                 $query->whereId($this->bankConnectionId);
             })
-                ->select('id', 'bank_connection_id', 'external_id')
-                ->with(['bankConnection' => function ($query): void {
-                    $query->select('id', 'provider_connection_id', 'provider_type', 'access_token', 'status');
-                }])
+                ->select(
+                    'id',
+                    'external_id',
+                    'bankConnection.id',
+                    'bankConnection.provider_connection_id',
+                    'bankConnection.provider_type',
+                    'bankConnection.access_token',
+                    'bankConnection.status',
+                )
                 ->get();
 
             if (! $accounts->count()) {

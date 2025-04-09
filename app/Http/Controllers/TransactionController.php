@@ -39,7 +39,6 @@ final class TransactionController extends Controller
             ? new TransactionResource(
                 Transaction::query()
                     ->wherePublicId($transactionId->value())
-                    ->with(['account', 'category', 'merchant'])
                     ->first()
             )
             : null;
@@ -63,7 +62,6 @@ final class TransactionController extends Controller
         return Inertia::render('transactions/page', [
             'transactions' => TransactionResource::collection(
                 QueryBuilder::for(Transaction::class)
-                    ->with('category', 'merchant')
                     ->allowedFields(['name', 'note', 'type', 'base_amount', 'base_currency', 'currency_rate', 'amount', 'currency', 'is_recurring', 'is_manual', 'dated_at', 'public_id', 'category.public_id', 'category.name', 'category.slug', 'category.color', 'merchant.name', 'merchant.icon'])
                     ->allowedIncludes(includes: ['category', 'merchant'])
                     ->allowedFilters(['name', 'type', AllowedFilter::custom('account_id', new FiltersTransactionsByAccount)])
