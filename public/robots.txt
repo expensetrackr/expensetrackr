@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /$
+Allow: /sitemap.xml
 Disallow: /
 
 Sitemap: https://expensetrackr.app/sitemap.xml
