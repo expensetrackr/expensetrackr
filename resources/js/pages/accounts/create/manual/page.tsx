@@ -1,6 +1,6 @@
 import { FormProvider, FormStateInput, getFormProps, useForm } from "@conform-to/react";
+import { parseWithValibot, getValibotConstraint } from "@conform-to/valibot";
 import { Head, Link, useForm as useInertiaForm } from "@inertiajs/react";
-import { parseWithValibot, getValibotConstraint } from "conform-to-valibot";
 import { useLocalStorage } from "usehooks-ts";
 import type * as v from "valibot";
 import TextboxDuotone from "virtual:icons/ph/textbox-duotone";

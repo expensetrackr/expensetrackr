@@ -1,9 +1,9 @@
 import { getFormProps, getInputProps, useForm, useInputControl } from "@conform-to/react";
+import { getValibotConstraint, parseWithValibot } from "@conform-to/valibot";
 import { useForm as useInertiaForm } from "@inertiajs/react";
 import NumberFlow, { type Format } from "@number-flow/react";
 import * as LabelPrimitives from "@radix-ui/react-label";
 import { resolveCurrencyFormat } from "@sumup/intl";
-import { getValibotConstraint, parseWithValibot } from "conform-to-valibot";
 import * as React from "react";
 import * as v from "valibot";
 

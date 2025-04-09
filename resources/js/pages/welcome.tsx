@@ -1,7 +1,7 @@
 import { getFormProps, useForm } from "@conform-to/react";
+import { getValibotConstraint, parseWithValibot } from "@conform-to/valibot";
 import NumberFlow, { type Format } from "@number-flow/react";
 import { resolveCurrencyFormat } from "@sumup/intl";
-import { getValibotConstraint, parseWithValibot } from "conform-to-valibot";
 import * as React from "react";
 import Alert01Icon from "virtual:icons/hugeicons/alert-01";
 import Coupon01Icon from "virtual:icons/hugeicons/coupon-01";
