@@ -1,6 +1,5 @@
 import { Head, Link, useForm } from "@inertiajs/react";
 import UserAddLineIcon from "virtual:icons/ri/user-add-fill";
-import { route } from "ziggy-js";
 
 import { Checkbox } from "#/components/form/checkbox.tsx";
 import { TextField } from "#/components/form/text-field.tsx";
@@ -10,6 +9,7 @@ import * as LinkButton from "#/components/ui/link-button.tsx";
 import { useTranslation } from "#/hooks/use-translation.ts";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";
 import { AuthCard } from "#/layouts/partials/auth-card.tsx";
+import { routes } from "#/routes.ts";
 import { type PageProps } from "#/types/globals.js";
 
 type RegisterForm = {
@@ -35,7 +35,7 @@ export default function RegisterPage({ socialstream }: PageProps) {
     const handleSubmit: React.FormEventHandler = (e) => {
         e.preventDefault();
 
-        post(route("register"), {
+        post(routes.register.url(), {
             onSuccess() {
                 reset("password", "password_confirmation");
             },
@@ -107,11 +107,11 @@ export default function RegisterPage({ socialstream }: PageProps) {
                             <>
                                 <span dangerouslySetInnerHTML={{ __html: t("auth.register.terms.label") }} />
                                 <LinkButton.Root $style="black" $underline asChild className="whitespace-normal">
-                                    <Link href={route("terms.show")}>{t("auth.register.terms.link.label")}</Link>
+                                    <Link href={routes.terms.show.url()}>{t("auth.register.terms.link.label")}</Link>
                                 </LinkButton.Root>
                                 <span dangerouslySetInnerHTML={{ __html: t("auth.register.terms.and") }} />
                                 <LinkButton.Root $style="black" $underline asChild className="whitespace-normal">
-                                    <Link href={route("policy.show")}>{t("auth.register.terms.link2.label")}</Link>
+                                    <Link href={routes.policy.show.url()}>{t("auth.register.terms.link2.label")}</Link>
                                 </LinkButton.Root>
                             </>
                         }

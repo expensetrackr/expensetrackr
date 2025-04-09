@@ -22,7 +22,6 @@ use Inertia\Middleware;
 use JoelButcher\Socialstream\ConnectedAccount;
 use JoelButcher\Socialstream\Socialstream;
 use stdClass;
-use Tighten\Ziggy\Ziggy;
 
 final class HandleInertiaRequests extends Middleware
 {
@@ -60,7 +59,6 @@ final class HandleInertiaRequests extends Middleware
                 $this->authData($request),
                 $this->workspacesData($request),
                 [
-                    'ziggy' => (new Ziggy)->toArray(),
                     'socialstream' => [
                         'show' => Socialstream::show(),
                         'prompt' => config('socialstream.prompt', 'Or Login Via'),

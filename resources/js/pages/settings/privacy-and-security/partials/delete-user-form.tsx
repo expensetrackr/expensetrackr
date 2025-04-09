@@ -7,6 +7,7 @@ import { ActionSection } from "#/components/action-section.tsx";
 import { TextField } from "#/components/form/text-field.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import * as Modal from "#/components/ui/modal.tsx";
+import { routes } from "#/routes.ts";
 import { Action } from "#/utils/action.ts";
 
 export function DeleteUserForm() {
@@ -19,7 +20,7 @@ export function DeleteUserForm() {
     function onSubmit(e: React.FormEvent) {
         e.preventDefault();
 
-        form.delete(route("current-user.destroy"), {
+        form.delete(routes.currentUser.destroy.url(), {
             preserveScroll: true,
             onSuccess: () => closeModal(),
             onError: () => passwordRef.current?.focus(),
@@ -54,7 +55,12 @@ export function DeleteUserForm() {
                         />
 
                         <Modal.Body>
-                            <form className="flex flex-col gap-3" id="delete-user-form" onSubmit={onSubmit}>
+                            <form
+                                {...routes.currentUser.destroy.form()}
+                                className="flex flex-col gap-3"
+                                id="delete-user-form"
+                                onSubmit={onSubmit}
+                            >
                                 <TextField
                                     $error={!!form.errors.password}
                                     autoComplete="current-password"

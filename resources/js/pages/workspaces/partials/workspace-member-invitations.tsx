@@ -3,12 +3,12 @@ import { flexRender, getCoreRowModel, useReactTable, type ColumnDef } from "@tan
 import { parseAsStringEnum, useQueryState } from "nuqs";
 import * as React from "react";
 import MailCloseIcon from "virtual:icons/ri/mail-close-line";
-import { route } from "ziggy-js";
 
 import { ActionSection } from "#/components/action-section.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import * as Modal from "#/components/ui/modal.tsx";
 import * as Table from "#/components/ui/table.tsx";
+import { routes } from "#/routes.ts";
 import { Action, getAction } from "#/utils/action.ts";
 
 interface WorkspaceMemberInvitationsProps {
@@ -155,7 +155,7 @@ function CancelInvitation({ invitation }: { invitation: App.Data.Workspace.Works
     function cancelWorkspaceInvitation(invitation: App.Data.Workspace.WorkspaceInvitationData) {
         setCancelling(true);
 
-        router.delete(route("workspace-invitations.destroy", [invitation.id]), {
+        router.delete(routes.workspaceInvitations.destroy.url({ invitation: invitation.id.toString() }), {
             preserveScroll: true,
             onSuccess: async () => {
                 await setAction(null);

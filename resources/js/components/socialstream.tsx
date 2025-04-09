@@ -4,6 +4,7 @@ import * as Divider from "#/components/ui/divider.tsx";
 import * as SocialButton from "#/components/ui/social-button.tsx";
 import { useSocialstream } from "#/hooks/use-socialstream.ts";
 import { useTranslation } from "#/hooks/use-translation.ts";
+import oauth from "#/routes/oauth/index.ts";
 
 const socialsIcons = {
     google: GoogleIcon,
@@ -29,7 +30,11 @@ export function Socialstream() {
                             className="w-full"
                             key={provider.id}
                         >
-                            <a href={route("oauth.redirect", provider.id)}>
+                            <a
+                                href={oauth.redirect.url({
+                                    provider: provider.id,
+                                })}
+                            >
                                 <SocialButton.Icon as={socialsIcons[provider.id]} />
                                 {t("socialstream.continue_with", { provider: provider.name })}
                             </a>

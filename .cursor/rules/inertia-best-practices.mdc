@@ -12,7 +12,6 @@ alwaysApply: false
 - Return only necessary data as props to minimize payload size (reduce page weight)
 - Use Inertia's form handling instead of raw XHR/fetch requests
 - Implement proper CSRF protection via Laravel's built-in mechanisms
-- Leverage Ziggy for route generation to maintain a single source of truth for routes
 - Use TypeScript for all Inertia components for better type safety and developer experience
 - Follow React's functional component patterns with hooks for all Inertia components
 

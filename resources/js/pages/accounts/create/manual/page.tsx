@@ -16,6 +16,7 @@ import { DetailsStep } from "#/components/create-account/details-step.tsx";
 import { FlowSidebar } from "#/components/create-account/sidebar.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import { useCreateAccountParams } from "#/hooks/use-create-account-params.ts";
+import { routes } from "#/routes.ts";
 import {
     type BalanceSchema,
     type CreateAccountSchema,
@@ -64,7 +65,7 @@ export default function CreateManualAccountPage({ currencies }: CreateAccountPag
                         }),
                     }));
 
-                    post(route("accounts.store"), {
+                    post(routes.accounts.store.url(), {
                         onSuccess() {
                             removeAccount();
                         },
@@ -100,7 +101,7 @@ export default function CreateManualAccountPage({ currencies }: CreateAccountPag
                             asChild
                             className="fixed top-6 right-8 hidden lg:flex"
                         >
-                            <Link href={route("accounts.create")}>
+                            <Link href={routes.accounts.create.url()}>
                                 <Button.Icon as={CloseIcon} />
                             </Link>
                         </Button.Root>

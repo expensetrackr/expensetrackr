@@ -17,6 +17,7 @@ import * as Dropdown from "#/components/ui/dropdown.tsx";
 import * as Modal from "#/components/ui/modal.tsx";
 import * as Table from "#/components/ui/table.tsx";
 import { useUser } from "#/hooks/use-user.ts";
+import { routes } from "#/routes.ts";
 import { Action, getAction } from "#/utils/action.ts";
 import { AddWorkspaceMemberForm } from "./add-workspace-member-form.tsx";
 
@@ -381,7 +382,7 @@ function ManageRoleDialog({
     function onSubmit(e: React.FormEvent) {
         e.preventDefault();
 
-        form.put(route("workspace-members.update", [workspace.id, user.id]), {
+        form.put(routes.workspaceMembers.update.url({ workspace: workspace.id, user: user.id }), {
             preserveScroll: true,
             onSuccess: async () => {
                 form.reset();
@@ -403,7 +404,11 @@ function ManageRoleDialog({
                 />
 
                 <Modal.Body>
-                    <form id={`update-workspace-members-role-${user.id}-form`} onSubmit={onSubmit}>
+                    <form
+                        {...routes.workspaceMembers.update.form({ workspace: workspace.id, user: user.id })}
+                        id={`update-workspace-members-role-${user.id}-form`}
+                        onSubmit={onSubmit}
+                    >
                         {availableRoles.length > 0 ? (
                             <SelectField
                                 error={form.errors.role}
@@ -470,7 +475,7 @@ function RemoveMemberDialog({
     function onSubmit(e: React.FormEvent) {
         e.preventDefault();
 
-        form.delete(route("workspace-members.destroy", [workspace.id, user.id]), {
+        form.delete(routes.workspaceMembers.destroy.url({ workspace: workspace.id, user: user.id }), {
             errorBag: "removeWorkspaceMember",
             preserveScroll: true,
             preserveState: true,
@@ -490,7 +495,12 @@ function RemoveMemberDialog({
                 <Modal.Header description={dialogDescription} icon={EraserIcon} title={dialogTitle} />
 
                 <Modal.Body>
-                    <form className="sr-only" id={`destroy-workspace-members-${user.id}-form`} onSubmit={onSubmit} />
+                    <form
+                        {...routes.workspaceMembers.destroy.form({ workspace: workspace.id, user: user.id })}
+                        className="sr-only"
+                        id={`destroy-workspace-members-${user.id}-form`}
+                        onSubmit={onSubmit}
+                    />
                 </Modal.Body>
 
                 <Modal.Footer>

@@ -10,6 +10,7 @@ import * as Divider from "#/components/ui/divider.tsx";
 import { usePaginationParams } from "#/hooks/use-pagination-params.ts";
 import { usePermissions } from "#/hooks/use-permissions.ts";
 import { AppLayout } from "#/layouts/app-layout.tsx";
+import { routes } from "#/routes.ts";
 import { type PageProps } from "#/types/globals.ts";
 import { TransactionDetailsDrawer } from "./__components/details-drawer.tsx";
 import { Filters } from "./__components/filters.tsx";
@@ -48,7 +49,7 @@ export default function TransactionsPage({ transactions, transaction, categories
                 </Button.Root>
                 {canCreateTransactions && (
                     <Button.Root asChild>
-                        <Link href={route("transactions.create")}>
+                        <Link href={routes.transactions.create.url()}>
                             <Button.Icon as={PlusSignIcon} />
                             Add Transaction
                         </Link>

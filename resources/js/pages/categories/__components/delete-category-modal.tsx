@@ -4,6 +4,7 @@ import Delete02Icon from "virtual:icons/hugeicons/delete-02";
 import * as Button from "#/components/ui/button.tsx";
 import * as Modal from "#/components/ui/modal.tsx";
 import { useCategoriesParams } from "#/hooks/use-categories-params.ts";
+import { routes } from "#/routes.ts";
 
 type DeleteCategoryModalProps = {
     category: Resources.Category;
@@ -20,15 +21,20 @@ export function DeleteCategoryModal({ category }: DeleteCategoryModalProps) {
             return;
         }
 
-        form.delete(route("categories.destroy", [category.id]), {
-            preserveScroll: true,
-            async onSuccess() {
-                await setParams({ action: null });
+        form.delete(
+            routes.categories.destroy.url({
+                category: category.id,
+            }),
+            {
+                preserveScroll: true,
+                async onSuccess() {
+                    await setParams({ action: null });
+                },
+                onError() {
+                    form.reset();
+                },
             },
-            onError() {
-                form.reset();
-            },
-        });
+        );
     };
 
     return (
@@ -45,7 +51,9 @@ export function DeleteCategoryModal({ category }: DeleteCategoryModalProps) {
 
                 <Modal.Body className="p-0">
                     <form
-                        action={route("categories.destroy", [category.id])}
+                        action={routes.categories.destroy.url({
+                            category: category.id,
+                        })}
                         id="delete-category-form"
                         method="POST"
                         onSubmit={handleSubmit}

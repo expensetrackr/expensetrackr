@@ -4,6 +4,7 @@ import Delete02Icon from "virtual:icons/hugeicons/delete-02";
 import * as Button from "#/components/ui/button.tsx";
 import * as Modal from "#/components/ui/modal.tsx";
 import { useTransactionsParams } from "#/hooks/use-transactions-params.ts";
+import { routes } from "#/routes.ts";
 
 type DeleteTransactionModalProps = {
     transaction: Resources.Transaction;
@@ -20,7 +21,7 @@ export function DeleteTransactionModal({ transaction }: DeleteTransactionModalPr
             return;
         }
 
-        form.delete(route("transactions.destroy", [transaction.id]), {
+        form.delete(routes.transactions.destroy.url({ transaction: transaction.id }), {
             preserveScroll: true,
             async onSuccess() {
                 await setParams({ action: null });
@@ -45,9 +46,8 @@ export function DeleteTransactionModal({ transaction }: DeleteTransactionModalPr
 
                 <Modal.Body className="p-0">
                     <form
-                        action={route("transactions.destroy", [transaction.id])}
+                        {...routes.transactions.destroy.form({ transaction: transaction.id })}
                         id="delete-transaction-form"
-                        method="POST"
                         onSubmit={handleSubmit}
                     >
                         <input name="_method" type="hidden" value="DELETE" />

@@ -11,6 +11,7 @@ import * as Dropdown from "#/components/ui/dropdown.tsx";
 import * as Hint from "#/components/ui/hint.tsx";
 import * as Label from "#/components/ui/label.tsx";
 import { useUser } from "#/hooks/use-user.ts";
+import { routes } from "#/routes.ts";
 
 export function UpdateProfilePictureForm() {
     const [photoPreview, setPhotoPreview] = React.useState<string | null>(null);
@@ -34,7 +35,7 @@ export function UpdateProfilePictureForm() {
 
         e.preventDefault();
 
-        form.post(route("user-profile-information.update"), {
+        form.post(routes.userProfileInformation.update.url(), {
             errorBag: "updateProfileInformation",
             preserveScroll: true,
             onSuccess: () => clearPhotoFileInput(),
@@ -52,7 +53,7 @@ export function UpdateProfilePictureForm() {
     }
 
     function deletePhoto() {
-        router.delete(route("current-user-photo.destroy"), {
+        router.delete(routes.currentUserPhoto.destroy.url(), {
             preserveScroll: true,
             onSuccess: () => {
                 setPhotoPreview(null);
@@ -67,6 +68,7 @@ export function UpdateProfilePictureForm() {
             title="Profile photo"
         >
             <form
+                {...routes.userProfileInformation.update.form()}
                 className="flex w-full flex-col items-center gap-4 sm:flex-row"
                 encType="multipart/form-data"
                 onSubmit={updateProfilePhoto}

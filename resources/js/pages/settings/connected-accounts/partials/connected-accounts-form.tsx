@@ -1,13 +1,13 @@
 import { Link, useForm } from "@inertiajs/react";
 import { parseAsStringEnum, useQueryState } from "nuqs";
 import ShareIcon from "virtual:icons/ri/share-line";
-import { route } from "ziggy-js";
 
 import { ActionSection } from "#/components/action-section.tsx";
 import { ConnectedAccount } from "#/components/connected-account.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import * as Modal from "#/components/ui/modal.tsx";
 import { useSocialstream } from "#/hooks/use-socialstream.ts";
+import { routes } from "#/routes.ts";
 import { Action, getAction } from "#/utils/action.ts";
 
 export default function ConnectedAccountsForm() {
@@ -24,7 +24,7 @@ export default function ConnectedAccountsForm() {
         const id = action?.split("destroy:connected-accounts:")[1];
         if (!id) return;
 
-        form.post(route("connected-accounts.destroy", { id }), {
+        form.post(routes.connectedAccounts.destroy.url({ id }), {
             preserveScroll: true,
             async onSuccess() {
                 await setAction(null);
@@ -79,7 +79,7 @@ export default function ConnectedAccountsForm() {
                             ) : (
                                 <Button.Root $size="sm" $style="stroke" asChild className="px-4">
                                     <Link
-                                        href={route("oauth.redirect", {
+                                        href={routes.oauth.redirect.url({
                                             provider: provider.id,
                                         })}
                                     >

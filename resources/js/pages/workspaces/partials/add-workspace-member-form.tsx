@@ -6,6 +6,7 @@ import { SelectField } from "#/components/form/select-field.tsx";
 import { TextField } from "#/components/form/text-field.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import * as Modal from "#/components/ui/modal.tsx";
+import { routes } from "#/routes.ts";
 import { Action } from "#/utils/action.ts";
 
 interface AddWorkspaceMemberFormProps {
@@ -23,7 +24,7 @@ export function AddWorkspaceMemberForm({ workspace, availableRoles }: AddWorkspa
     function onSubmit(e: React.FormEvent) {
         e.preventDefault();
 
-        form.post(route("workspace-members.store", [workspace.id]), {
+        form.post(routes.workspaceMembers.store.url({ workspace: workspace.id }), {
             errorBag: "addWorkspaceMember",
             preserveScroll: true,
             onSuccess: async () => {
@@ -52,7 +53,12 @@ export function AddWorkspaceMemberForm({ workspace, availableRoles }: AddWorkspa
                 />
 
                 <Modal.Body>
-                    <form className="flex flex-col gap-3" id="add-workspace-member-form" onSubmit={onSubmit}>
+                    <form
+                        {...routes.workspaceMembers.store.form({ workspace: workspace.id })}
+                        className="flex flex-col gap-3"
+                        id="add-workspace-member-form"
+                        onSubmit={onSubmit}
+                    >
                         <TextField
                             $error={!!form.errors.email}
                             autoComplete="off"

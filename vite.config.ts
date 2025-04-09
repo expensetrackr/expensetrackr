@@ -33,8 +33,8 @@ export default defineConfig({
         run([
             {
                 name: "wayfinder",
-                run: ["php", "artisan", "wayfinder:generate"],
-                pattern: ["routes/*.php", "app/**/Http/**/*.php"],
+                run: ["php", "artisan", "wayfinder:generate", "--with-form"],
+                pattern: ["routes/**/*.php", "app/**/Http/**/*.php"],
             },
         ]),
     ],
@@ -46,7 +46,6 @@ export default defineConfig({
             "#/actions/": path.resolve("./resources/js/actions"),
             "#/routes/": path.resolve("./resources/js/routes"),
             "#/wayfinder/": path.resolve("./resources/js/wayfinder"),
-            "ziggy-js": path.resolve("vendor/tightenco/ziggy"),
         },
     },
 });

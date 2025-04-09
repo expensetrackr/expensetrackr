@@ -7,6 +7,7 @@ import { Header } from "#/components/header.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
 import { AppLayout } from "#/layouts/app-layout.tsx";
+import { routes } from "#/routes.ts";
 import { type PageProps } from "#/types/globals.js";
 import { AccountsList } from "./__components/accounts-lists.tsx";
 import { AccountDetailsDrawer } from "./__components/details-drawer.tsx";
@@ -32,7 +33,7 @@ export default function AccountsPage({ accounts, account, permissions }: PagePro
             >
                 {permissions.canCreateAccounts && (
                     <Button.Root asChild className="w-full md:w-auto">
-                        <Link href={route("accounts.create")}>
+                        <Link href={routes.accounts.create.url()}>
                             <Button.Icon as={WalletAdd01} />
                             Add account
                         </Link>
@@ -58,7 +59,7 @@ export default function AccountsPage({ accounts, account, permissions }: PagePro
                                 Click the button to add one.
                             </div>
                             <Button.Root $size="xs" $style="stroke" asChild>
-                                <Link href={route("accounts.create")}>
+                                <Link href={routes.accounts.create.url()}>
                                     <Button.Icon as={WalletAdd01} />
                                     Add account
                                 </Link>

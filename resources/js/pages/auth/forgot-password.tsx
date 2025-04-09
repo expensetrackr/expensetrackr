@@ -8,6 +8,7 @@ import * as FancyButton from "#/components/ui/fancy-button.tsx";
 import { useTranslation } from "#/hooks/use-translation.ts";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";
 import { AuthCard } from "#/layouts/partials/auth-card.tsx";
+import { routes } from "#/routes.ts";
 import { type PageProps } from "#/types/globals.js";
 
 export default function ForgotPasswordPage({ status }: { status?: string }) {
@@ -25,7 +26,7 @@ export default function ForgotPasswordPage({ status }: { status?: string }) {
     const submit: React.FormEventHandler = (e) => {
         e.preventDefault();
 
-        post(route("password.email"));
+        post(routes.password.email.url());
     };
 
     return (

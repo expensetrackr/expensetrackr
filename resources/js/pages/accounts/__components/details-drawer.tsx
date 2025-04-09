@@ -7,6 +7,7 @@ import * as Button from "#/components/ui/button.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
 import * as Drawer from "#/components/ui/drawer.tsx";
 import { useAccountsParams } from "#/hooks/use-accounts-params.ts";
+import { routes } from "#/routes.ts";
 import { AccountBox } from "./account-box.tsx";
 
 const MLink = motion.create(Link);
@@ -51,7 +52,11 @@ export function AccountDetailsDrawer({ account }: AccountDetailsDrawerProps) {
                                 <MLink
                                     animate="animate"
                                     className="rounded-12 transition duration-200 focus:shadow-button-important-focus focus:outline-none"
-                                    href={route("transactions.index", { transaction_id: trx.id })}
+                                    href={routes.transactions.index.url({
+                                        query: {
+                                            transaction_id: trx.id,
+                                        },
+                                    })}
                                     initial="initial"
                                     key={trx.id}
                                     variants={recentTransactionItemVariants(i)}
@@ -65,7 +70,13 @@ export function AccountDetailsDrawer({ account }: AccountDetailsDrawerProps) {
 
                 <Drawer.Footer>
                     <Button.Root $size="md" $style="stroke" $type="neutral" asChild className="w-full">
-                        <Link href={route("transactions.index", { "filter[account_id]": account?.id })}>
+                        <Link
+                            href={routes.transactions.index.url({
+                                query: {
+                                    "filter[account_id]": account?.id,
+                                },
+                            })}
+                        >
                             <Button.Icon as={Clock04Icon} />
                             See All Transactions
                         </Link>

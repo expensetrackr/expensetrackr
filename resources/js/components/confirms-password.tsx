@@ -4,6 +4,7 @@ import { parseAsStringEnum, useQueryState } from "nuqs";
 import * as React from "react";
 import LockPasswordIcon from "virtual:icons/ri/lock-password-line";
 
+import { routes } from "#/routes.ts";
 import { Action } from "#/utils/action.ts";
 import { TextField } from "./form/text-field.tsx";
 import * as Button from "./ui/button.tsx";
@@ -22,7 +23,7 @@ export function ConfirmsPassword({ onConfirm, children }: ConfirmsPasswordProps)
     const passwordRef = React.useRef<HTMLInputElement>(null);
 
     async function startConfirmingPassword() {
-        return axios.get(route("password.confirmation")).then(async (response) => {
+        return axios.get(routes.password.confirmation.url()).then(async (response) => {
             if (response.data.confirmed) {
                 onConfirm?.();
             } else {
@@ -34,7 +35,7 @@ export function ConfirmsPassword({ onConfirm, children }: ConfirmsPasswordProps)
     function onSubmit(e: React.FormEvent) {
         e.preventDefault();
 
-        form.post(route("password.confirm"), {
+        form.post(routes.password.confirm.url(), {
             errorBag: "password",
             preserveScroll: true,
             async onSuccess() {
@@ -69,7 +70,12 @@ export function ConfirmsPassword({ onConfirm, children }: ConfirmsPasswordProps)
                     />
 
                     <Modal.Body>
-                        <form className="flex flex-col gap-3" id="set-password-form" onSubmit={onSubmit}>
+                        <form
+                            {...routes.password.confirm.form()}
+                            className="flex flex-col gap-3"
+                            id="set-password-form"
+                            onSubmit={onSubmit}
+                        >
                             <TextField
                                 $error={!!errors.password}
                                 autoComplete="current-password"

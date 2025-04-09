@@ -8,6 +8,7 @@ import TransactionIcon from "virtual:icons/hugeicons/transaction";
 import Wallet01Icon from "virtual:icons/hugeicons/wallet-01";
 import ArrowRightSIcon from "virtual:icons/ri/arrow-right-s-line";
 
+import { routes } from "#/routes.ts";
 import { cn } from "#/utils/cn.ts";
 import { Link } from "./link.tsx";
 import * as Divider from "./ui/divider.tsx";
@@ -22,9 +23,9 @@ type NavigationLink = {
 };
 
 export const navigationLinks: Array<NavigationLink> = [
-    { icon: Analytics02Icon, label: "Dashboard", href: route("dashboard") },
-    { icon: Wallet01Icon, label: "Accounts", href: route("accounts.index") },
-    { icon: TransactionIcon, label: "Transactions", href: route("transactions.index") },
+    { icon: Analytics02Icon, label: "Dashboard", href: routes.dashboard.url() },
+    { icon: Wallet01Icon, label: "Accounts", href: routes.accounts.index.url() },
+    { icon: TransactionIcon, label: "Transactions", href: routes.transactions.index.url() },
 ];
 
 function useCollapsedState({ defaultCollapsed = false }: { defaultCollapsed?: boolean }): {

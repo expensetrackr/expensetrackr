@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { TextField } from "#/components/form/text-field.tsx";
 import { FormSection } from "#/components/form-section.tsx";
 import { useUser } from "#/hooks/use-user.ts";
+import { routes } from "#/routes.ts";
 
 export function UpdateNameForm() {
     const user = useUser();
@@ -17,7 +18,7 @@ export function UpdateNameForm() {
     function onSubmit(e: React.FormEvent) {
         e.preventDefault();
 
-        form.post(route("user-profile-information.update"), {
+        form.post(routes.userProfileInformation.update.url(), {
             errorBag: "updateProfileInformation",
             preserveScroll: true,
             onSuccess: () => {
@@ -28,7 +29,11 @@ export function UpdateNameForm() {
 
     return (
         <FormSection description="Use your real name to build trust with others." title="Full name">
-            <form className="flex w-full flex-col gap-4" onSubmit={onSubmit}>
+            <form
+                {...routes.userProfileInformation.update.form()}
+                className="flex w-full flex-col gap-4"
+                onSubmit={onSubmit}
+            >
                 <TextField
                     $error={!!errors.name}
                     autoComplete="name"

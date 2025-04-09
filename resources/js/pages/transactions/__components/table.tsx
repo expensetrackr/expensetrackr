@@ -14,6 +14,7 @@ import * as Button from "#/components/ui/button.tsx";
 import * as Table from "#/components/ui/table.tsx";
 import { usePaginationParams } from "#/hooks/use-pagination-params.ts";
 import { useTranslation } from "#/hooks/use-translation.ts";
+import { routes } from "#/routes.ts";
 import { cn } from "#/utils/cn.ts";
 import { formatDate } from "#/utils/date-formatter.ts";
 
@@ -151,8 +152,10 @@ export function TransactionsTable({ data: initialData, total }: TransactionsTabl
                     return (
                         <Button.Root $size="xs" $style="ghost" $type="neutral" asChild>
                             <Link
-                                href={route("transactions.index", {
-                                    transaction_id: row.original.id,
+                                href={routes.transactions.index.url({
+                                    query: {
+                                        transaction_id: row.original.id,
+                                    },
                                 })}
                             >
                                 <Button.Icon as={MoreVerticalIcon} className="size-6" />

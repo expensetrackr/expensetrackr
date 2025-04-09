@@ -1,11 +1,11 @@
 import { Head, useForm } from "@inertiajs/react";
-import { route } from "ziggy-js";
 
 import { TextField } from "#/components/form/text-field.tsx";
 import * as FancyButton from "#/components/ui/fancy-button.tsx";
 import { useTranslation } from "#/hooks/use-translation.ts";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";
 import { AuthCard } from "#/layouts/partials/auth-card.tsx";
+import { routes } from "#/routes.ts";
 import { type PageProps } from "#/types/globals.js";
 
 export default function ConfirmPasswordPage() {
@@ -17,7 +17,7 @@ export default function ConfirmPasswordPage() {
     const submit: React.FormEventHandler = (e) => {
         e.preventDefault();
 
-        post(route("password.confirm"), {
+        post(routes.password.confirm.url(), {
             onSuccess() {
                 reset("password");
             },

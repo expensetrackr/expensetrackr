@@ -369,10 +369,6 @@ frankenphp-worker.php
 _ide_helper.php
 .phpstorm.meta.php
 
-# ziggy
-ziggy.d.ts
-ziggy.js
-
 # teller certs
 teller_cert.pem
 teller_pk.pem

@@ -4,7 +4,6 @@ import { toast } from "sonner";
 import LockLineIcon from "virtual:icons/ri/lock-line";
 import MailLineIcon from "virtual:icons/ri/mail-line";
 import UserIcon from "virtual:icons/ri/user-fill";
-import { route } from "ziggy-js";
 
 import { Checkbox } from "#/components/form/checkbox.tsx";
 import { Field } from "#/components/form/field.tsx";
@@ -16,6 +15,7 @@ import * as LinkButton from "#/components/ui/link-button.tsx";
 import { useTranslation } from "#/hooks/use-translation.ts";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";
 import { AuthCard } from "#/layouts/partials/auth-card.tsx";
+import { routes } from "#/routes.ts";
 import { type PageProps } from "#/types/globals.js";
 
 type LoginForm = {
@@ -45,7 +45,7 @@ export default function LoginPage({
     const handleSubmit: React.FormEventHandler = (e) => {
         e.preventDefault();
 
-        post(route("login"), {
+        post(routes.login.url(), {
             onSuccess() {
                 reset("password");
             },
@@ -93,7 +93,7 @@ export default function LoginPage({
 
                     {canResetPassword && (
                         <LinkButton.Root $underline asChild>
-                            <Link href={route("password.request")}>
+                            <Link href={routes.password.request.url()}>
                                 {t("auth.login.actions.forgot_password.label")}
                             </Link>
                         </LinkButton.Root>

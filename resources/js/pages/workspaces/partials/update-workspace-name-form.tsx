@@ -1,10 +1,10 @@
 import { useForm } from "@inertiajs/react";
 import * as React from "react";
 import { toast } from "sonner";
-import { route } from "ziggy-js";
 
 import { TextField } from "#/components/form/text-field.tsx";
 import { FormSection } from "#/components/form-section.tsx";
+import { routes } from "#/routes.ts";
 
 interface UpdateWorkspaceNameFormProps {
     defaultValues: Pick<App.Data.Workspace.WorkspaceData, "id" | "name">;
@@ -19,7 +19,7 @@ export function UpdateWorkspaceNameForm({ defaultValues, permissions }: UpdateWo
 
         if (!permissions.canUpdateWorkspace) return;
 
-        form.put(route("workspaces.update", [defaultValues.id]), {
+        form.put(routes.workspaces.update.url({ workspace: defaultValues.id }), {
             errorBag: "updateWorkspace",
             preserveScroll: true,
             onSuccess: () => {
@@ -34,10 +34,9 @@ export function UpdateWorkspaceNameForm({ defaultValues, permissions }: UpdateWo
     return (
         <FormSection description="Your workspace name is how others will recognize you on the platform." title="Name">
             <form
-                action={route("workspaces.update", [defaultValues.id])}
+                {...routes.workspaces.update.form({ workspace: defaultValues.id })}
                 className="w-full"
                 id="update-workspace-name-form"
-                method="POST"
                 onSubmit={onSubmit}
             >
                 <input name="_method" type="hidden" value="PUT" />

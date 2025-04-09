@@ -11,6 +11,7 @@ import UserCircle02Icon from "virtual:icons/hugeicons/user-circle-02";
 
 import * as Switch from "#/components/ui/switch.tsx";
 import { useUser } from "#/hooks/use-user.ts";
+import { routes } from "#/routes.ts";
 import { cn, cnMerge } from "#/utils/cn.ts";
 import * as Avatar from "./ui/avatar.tsx";
 import * as Divider from "./ui/divider.tsx";
@@ -65,13 +66,13 @@ export function UserButton({ className }: { className?: string }) {
 
                 <Dropdown.Group>
                     <Dropdown.Item asChild>
-                        <Link href={route("settings.show")}>
+                        <Link href={routes.settings.show.url()}>
                             <Dropdown.ItemIcon as={UserCircle02Icon} />
                             My profile
                         </Link>
                     </Dropdown.Item>
                     <Dropdown.Item asChild>
-                        <Link href={route("settings.show")}>
+                        <Link href={routes.settings.show.url()}>
                             <Dropdown.ItemIcon as={Setting07Icon} />
                             Settings
                         </Link>
@@ -82,7 +83,7 @@ export function UserButton({ className }: { className?: string }) {
 
                 <Dropdown.Group>
                     <Dropdown.Item asChild>
-                        <Link as="button" href={route("logout")} method="post">
+                        <Link as="button" href={routes.logout.url()} method="post">
                             <Dropdown.ItemIcon as={Logout04Icon} />
                             Logout
                         </Link>
@@ -91,7 +92,7 @@ export function UserButton({ className }: { className?: string }) {
 
                 <div className="p-2 text-paragraph-sm text-(--text-soft-400)">
                     <span>v1.0.0 · </span>
-                    <Link href={route("terms.show")}>Terms & Conditions</Link>
+                    <Link href={routes.terms.show.url()}>Terms & Conditions</Link>
                 </div>
             </Dropdown.Content>
         </Dropdown.Root>
@@ -132,19 +133,19 @@ export function UserButtonMobile({ className }: { className?: string }) {
 
                 <Dropdown.Group>
                     <Dropdown.Item asChild>
-                        <Link href={route("settings.show")}>
+                        <Link href={routes.settings.show.url()}>
                             <Dropdown.ItemIcon as={UserCircle02Icon} />
                             My profile
                         </Link>
                     </Dropdown.Item>
                     <Dropdown.Item asChild>
-                        <Link href={route("settings.show")}>
+                        <Link href={routes.settings.show.url()}>
                             <Dropdown.ItemIcon as={Setting07Icon} />
                             Settings
                         </Link>
                     </Dropdown.Item>
                     <Dropdown.Item asChild>
-                        <Link href={route("policy.show")}>
+                        <Link href={routes.policy.show.url()}>
                             <Dropdown.ItemIcon as={SecurityCheckIcon} />
                             Privacy policy
                         </Link>
@@ -161,7 +162,7 @@ export function UserButtonMobile({ className }: { className?: string }) {
 
                 <Dropdown.Group>
                     <Dropdown.Item asChild>
-                        <Link as="button" href={route("logout")} method="post">
+                        <Link as="button" href={routes.logout.url()} method="post">
                             <Dropdown.ItemIcon as={Logout04Icon} />
                             Logout
                         </Link>

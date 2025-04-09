@@ -11,6 +11,7 @@ import { TextField } from "#/components/form/text-field.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import * as Modal from "#/components/ui/modal.tsx";
 import * as Table from "#/components/ui/table.tsx";
+import { routes } from "#/routes.ts";
 import { Action } from "#/utils/action.ts";
 import { cn } from "#/utils/cn.ts";
 
@@ -70,7 +71,7 @@ export function LogoutOtherBrowserSessionsForm({ sessions }: LogoutOtherBrowserS
     function onSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
 
-        form.delete(route("other-browser-sessions.destroy"), {
+        form.delete(routes.otherBrowserSessions.destroy.url(), {
             preserveScroll: true,
             onSuccess: () => closeModal(),
             onError: () => passwordRef.current?.focus(),
@@ -116,6 +117,7 @@ export function LogoutOtherBrowserSessionsForm({ sessions }: LogoutOtherBrowserS
 
                         <Modal.Body>
                             <form
+                                {...routes.otherBrowserSessions.destroy.form()}
                                 className="flex flex-col gap-3"
                                 id="logout-other-browser-sessions-form"
                                 onSubmit={onSubmit}

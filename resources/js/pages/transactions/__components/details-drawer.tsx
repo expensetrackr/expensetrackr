@@ -14,6 +14,7 @@ import * as Divider from "#/components/ui/divider.tsx";
 import * as Drawer from "#/components/ui/drawer.tsx";
 import { useTransactionsParams } from "#/hooks/use-transactions-params.ts";
 import { useTranslation } from "#/hooks/use-translation.ts";
+import { routes } from "#/routes.ts";
 import { currencyFormatter } from "#/utils/number-formatter.ts";
 import { DeleteTransactionModal } from "./delete-transaction-modal.tsx";
 
@@ -35,7 +36,7 @@ export function TransactionDetailsDrawer({ transaction, categories }: Transactio
     const onSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
-        form.put(route("transactions.update", [transaction?.id ?? ""]), {
+        form.put(routes.transactions.update.url({ transaction: transaction?.id ?? "" }), {
             errorBag: "updateTransaction",
             preserveScroll: true,
             onSuccess: () => {
@@ -199,10 +200,9 @@ export function TransactionDetailsDrawer({ transaction, categories }: Transactio
                         <Divider.Root $type="solid-text">Details</Divider.Root>
 
                         <form
-                            action={route("transactions.update", [transaction?.id ?? ""])}
+                            {...routes.transactions.update.form({ transaction: transaction?.id ?? "" })}
                             className="flex flex-col gap-3 p-5"
                             id="update-transaction-form"
-                            method="POST"
                             onSubmit={onSubmit}
                         >
                             <input name="_method" type="hidden" value="PUT" />

@@ -7,7 +7,6 @@ namespace App\Data\Shared;
 use App\Data\Auth\InertiaAuthData;
 use App\Data\Socialstream\SocialstreamData;
 use App\Data\Workspace\WorkspacesPermissionsData;
-use App\Data\Ziggy\ZiggyData;
 use App\Enums\Language;
 use Closure;
 use Inertia\AlwaysProp;
@@ -21,7 +20,6 @@ final class SharedInertiaData extends Data
     public function __construct(
         public readonly ?InertiaAuthData $auth,
         public readonly ?WorkspacesPermissionsData $workspaces,
-        public readonly ?ZiggyData $ziggy,
         public readonly ?ToastData $toast,
         public readonly Language $language,
         /** @var array<LanguageData>|null */

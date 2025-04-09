@@ -2,8 +2,7 @@
     "private": true,
     "type": "module",
     "imports": {
-        "#/*": "./resources/js/*",
-        "ziggy-js": "./vendor/tightenco/ziggy"
+        "#/*": "./resources/js/*"
     },
     "scripts": {
         "build": "vite build && vite build --ssr",

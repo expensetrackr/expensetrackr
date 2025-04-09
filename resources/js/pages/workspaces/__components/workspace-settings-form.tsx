@@ -4,6 +4,7 @@ import { toast } from "sonner";
 
 import * as Switch from "#/components/ui/switch.tsx";
 import { useUser } from "#/hooks/use-user.ts";
+import { routes } from "#/routes.ts";
 
 type WorkspaceSettingsFormProps = {
     workspaceId: string;
@@ -17,7 +18,7 @@ export function WorkspaceSettingsForm({ workspaceId, defaultValues }: WorkspaceS
     const onSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
-        form.put(route("workspaces.update-settings", [workspaceId, defaultValues.id]), {
+        form.put(routes.workspaces.updateSettings.url({ workspace: workspaceId, settings: defaultValues.id }), {
             errorBag: "updateWorkspaceSettings",
             preserveScroll: true,
             onSuccess: () => {
@@ -37,10 +38,9 @@ export function WorkspaceSettingsForm({ workspaceId, defaultValues }: WorkspaceS
                 <div className="mt-1 text-paragraph-xs text-(--text-sub-600)">Configure your workspace settings.</div>
             </div>
             <form
-                action={route("workspaces.update-settings", [workspaceId, defaultValues.id])}
+                {...routes.workspaces.updateSettings.form({ workspace: workspaceId, settings: defaultValues.id })}
                 className="flex flex-col gap-5"
                 id="update-workspace-settings-form"
-                method="POST"
                 onSubmit={onSubmit}
             >
                 <input name="_method" type="hidden" value="PUT" />

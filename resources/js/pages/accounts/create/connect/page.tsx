@@ -9,6 +9,7 @@ import { InstitutionSelection } from "#/components/create-account/institution-se
 import { FlowSidebar } from "#/components/create-account/sidebar.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import { useConnectParams } from "#/hooks/use-connect-params.ts";
+import { routes } from "#/routes.ts";
 import { ConnectAccountStepper } from "#/utils/steppers/create-account.step";
 
 type CreateAccountConnectPageProps = {
@@ -53,7 +54,7 @@ function PageContent({ institutions, bankAccounts }: CreateAccountConnectPagePro
                     asChild
                     className="fixed top-6 right-8 hidden lg:flex"
                 >
-                    <Link href={route("accounts.create")}>
+                    <Link href={routes.accounts.create.url()}>
                         <Button.Icon as={CloseIcon} />
                     </Link>
                 </Button.Root>

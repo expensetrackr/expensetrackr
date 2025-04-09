@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { TextField } from "#/components/form/text-field.tsx";
 import { FormSection } from "#/components/form-section.tsx";
 import { useUser } from "#/hooks/use-user.ts";
+import { routes } from "#/routes.ts";
 
 export function UpdateEmailForm() {
     const user = useUser();
@@ -17,7 +18,7 @@ export function UpdateEmailForm() {
     function onSubmit(e: React.FormEvent) {
         e.preventDefault();
 
-        form.post(route("user-profile-information.update"), {
+        form.post(routes.userProfileInformation.update.url(), {
             errorBag: "updateProfileInformation",
             preserveScroll: true,
             onSuccess: () => toast.success("Email updated."),
@@ -29,7 +30,11 @@ export function UpdateEmailForm() {
             description="Your email address is used to log in and receive important notifications."
             title="Email address"
         >
-            <form className="flex w-full flex-col gap-4" onSubmit={onSubmit}>
+            <form
+                {...routes.userProfileInformation.update.form()}
+                className="flex w-full flex-col gap-4"
+                onSubmit={onSubmit}
+            >
                 <TextField
                     $error={!!errors.email}
                     autoComplete="username"

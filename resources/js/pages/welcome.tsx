@@ -31,9 +31,7 @@ import * as Divider from "#/components/ui/divider.tsx";
 import * as LinkButton from "#/components/ui/link-button.tsx";
 import * as SegmentedControl from "#/components/ui/segmented-control.tsx";
 import { useTranslation } from "#/hooks/use-translation.ts";
-import home from "#/routes/home.ts";
-import policy from "#/routes/policy/index.ts";
-import terms from "#/routes/terms/index.ts";
+import { routes } from "#/routes.ts";
 import { cn } from "#/utils/cn.ts";
 import { plans } from "#/utils/plans.ts";
 import { BalanceSchema } from "#/utils/steppers/create-account.step.ts";
@@ -95,7 +93,7 @@ export default function WelcomePage() {
 
                             <div className="flex items-center gap-2">
                                 {/* <Button.Root $style="ghost" $type="neutral" asChild className="min-w-24">
-                                    <Link href={route("login")}>Log in</Link>
+                                    <Link href={routes.login.url()}>Log in</Link>
                                 </Button.Root> */}
 
                                 <Button.Root asChild className="min-w-24">
@@ -695,7 +693,7 @@ function Footer() {
             <div className="container">
                 <div className="flex flex-col gap-2">
                     <div className="flex items-center justify-between">
-                        <Link href={home.url()}>
+                        <Link href={routes.home.url()}>
                             <picture>
                                 <Source
                                     height={40}
@@ -744,10 +742,10 @@ function Footer() {
 
                     <div className="flex items-center justify-center gap-3">
                         <LinkButton.Root $underline asChild>
-                            <Link href={terms.show.url()}>Terms of Service</Link>
+                            <Link href={routes.terms.show.url()}>Terms of Service</Link>
                         </LinkButton.Root>
                         <LinkButton.Root $underline asChild>
-                            <Link href={policy.show.url()}>Privacy Policy</Link>
+                            <Link href={routes.policy.show.url()}>Privacy Policy</Link>
                         </LinkButton.Root>
                     </div>
                 </div>

@@ -9,6 +9,7 @@ import * as v from "valibot";
 
 import { useConnectParams } from "#/hooks/use-connect-params.ts";
 import { useTranslation } from "#/hooks/use-translation.ts";
+import { routes } from "#/routes.ts";
 import { AccountSubtypeEnum, AccountTypeEnum } from "#/schemas/account.ts";
 import { BankConnectionProviderSchema } from "#/schemas/bank-connection.ts";
 import { decimalFormatter } from "#/utils/number-formatter.ts";
@@ -77,7 +78,7 @@ export function BankAccountsSelectionStep({ bankAccounts }: BankAccountsSelectio
             if (submission && "value" in submission) {
                 transform((data) => ({ ...data, ...submission.value }));
 
-                post(route("accounts.bank-connections.store"));
+                post(routes.accounts.bankConnections.store.url());
             }
         },
     });

@@ -10,6 +10,7 @@ import { FlowSidebar } from "#/components/create-account/sidebar.tsx";
 import { TypeStep } from "#/components/create-account/type-step.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import { useCreateAccountParams } from "#/hooks/use-create-account-params.ts";
+import { routes } from "#/routes.ts";
 import { CreateAccountStepper } from "#/utils/steppers/create-account.step";
 
 export default function CreateAccountPage() {
@@ -40,7 +41,7 @@ export default function CreateAccountPage() {
                             asChild
                             className="fixed top-6 right-8 hidden lg:flex"
                         >
-                            <Link href={route("accounts.index")}>
+                            <Link href={routes.accounts.index.url()}>
                                 <Button.Icon as={CloseIcon} />
                             </Link>
                         </Button.Root>
@@ -70,10 +71,14 @@ export default function CreateAccountPage() {
                                         connectionType && (
                                             <Button.Root $size="sm" asChild className="w-full" type="submit">
                                                 <Link
-                                                    href={route("accounts.create.connection-type", {
-                                                        connectionType,
-                                                        type,
-                                                    })}
+                                                    href={routes.accounts.create.connectionType.url(
+                                                        {
+                                                            connectionType,
+                                                        },
+                                                        {
+                                                            query: { type },
+                                                        },
+                                                    )}
                                                 >
                                                     Continue
                                                 </Link>

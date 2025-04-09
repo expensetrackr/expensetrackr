@@ -10,6 +10,7 @@ import { Textarea } from "#/components/form/textarea.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import * as Modal from "#/components/ui/modal.tsx";
 import { useCategoriesParams } from "#/hooks/use-categories-params.ts";
+import { routes } from "#/routes.ts";
 
 type UpdateCategoryModalProps = {
     categories: {
@@ -31,16 +32,21 @@ export function UpdateCategoryModal({ categories, category }: UpdateCategoryModa
     const onSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
-        form.put(route("categories.update", [category.id]), {
-            errorBag: "updateCategory",
-            preserveScroll: true,
-            async onSuccess() {
-                await setParams({ action: null, categoryId: null });
+        form.put(
+            routes.categories.update.url({
+                category: category.id,
+            }),
+            {
+                errorBag: "updateCategory",
+                preserveScroll: true,
+                async onSuccess() {
+                    await setParams({ action: null, categoryId: null });
+                },
+                onError() {
+                    form.reset();
+                },
             },
-            onError() {
-                form.reset();
-            },
-        });
+        );
     };
 
     return (
@@ -52,10 +58,11 @@ export function UpdateCategoryModal({ categories, category }: UpdateCategoryModa
             <Modal.Content aria-describedby={undefined} className="max-w-[440px]">
                 <Modal.Body className="flex items-start gap-4">
                     <form
-                        action={route("categories.update", [category.id])}
+                        {...routes.categories.update.form({
+                            category: category.id,
+                        })}
                         className="flex w-full flex-col gap-3"
                         id="update-category-form"
-                        method="POST"
                         onSubmit={onSubmit}
                     >
                         <input name="_method" type="hidden" value="PUT" />

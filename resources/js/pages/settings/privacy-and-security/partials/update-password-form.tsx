@@ -7,6 +7,7 @@ import { ActionSection } from "#/components/action-section.tsx";
 import { TextField } from "#/components/form/text-field.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import * as Modal from "#/components/ui/modal.tsx";
+import { routes } from "#/routes.ts";
 import { Action } from "#/utils/action.ts";
 
 export function UpdatePasswordForm() {
@@ -22,7 +23,7 @@ export function UpdatePasswordForm() {
     function onSubmit(e: React.FormEvent) {
         e.preventDefault();
 
-        form.put(route("user-password.update"), {
+        form.put(routes.userPassword.update.url(), {
             errorBag: "updatePassword",
             preserveScroll: true,
             onSuccess: () => {
@@ -68,7 +69,12 @@ export function UpdatePasswordForm() {
                         />
 
                         <Modal.Body>
-                            <form className="flex flex-col gap-3" id="update-password-form" onSubmit={onSubmit}>
+                            <form
+                                {...routes.userPassword.update.form()}
+                                className="flex flex-col gap-3"
+                                id="update-password-form"
+                                onSubmit={onSubmit}
+                            >
                                 <TextField
                                     $error={!!errors.current_password}
                                     autoComplete="current-password"

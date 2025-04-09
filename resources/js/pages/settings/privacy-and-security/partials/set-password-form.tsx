@@ -7,6 +7,7 @@ import { ActionSection } from "#/components/action-section.tsx";
 import { TextField } from "#/components/form/text-field.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import * as Modal from "#/components/ui/modal.tsx";
+import { routes } from "#/routes.ts";
 import { Action } from "#/utils/action.ts";
 
 export function SetPasswordForm() {
@@ -20,7 +21,7 @@ export function SetPasswordForm() {
     function onSubmit(e: React.FormEvent) {
         e.preventDefault();
 
-        form.post(route("user-password.set"), {
+        form.post(routes.userPassword.set.url(), {
             errorBag: "setPassword",
             preserveScroll: true,
             onSuccess: () => {
@@ -61,7 +62,12 @@ export function SetPasswordForm() {
                         />
 
                         <Modal.Body>
-                            <form className="flex flex-col gap-3" id="set-password-form" onSubmit={onSubmit}>
+                            <form
+                                {...routes.userPassword.set.form()}
+                                className="flex flex-col gap-3"
+                                id="set-password-form"
+                                onSubmit={onSubmit}
+                            >
                                 <TextField
                                     $error={!!errors.password}
                                     autoComplete="new-password"

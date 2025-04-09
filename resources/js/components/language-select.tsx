@@ -2,13 +2,14 @@ import { router } from "@inertiajs/react";
 import GlobalIcon from "virtual:icons/ri/global-line";
 
 import { usePageProps } from "#/hooks/use-page-props.ts";
+import { routes } from "#/routes.ts";
 import * as Select from "./ui/select.tsx";
 
 export function LanguageSelect(props: React.CustomComponentPropsWithRef<typeof Select.Root>) {
     const page = usePageProps().props;
 
     const handleChange = (value: string) => {
-        router.post(route("language.store"), { language: value });
+        router.post(routes.language.store.url(), { language: value });
     };
 
     return (

@@ -20,6 +20,7 @@ import * as Input from "#/components/ui/input.tsx";
 import * as Label from "#/components/ui/label.tsx";
 import * as Switch from "#/components/ui/switch.tsx";
 import { useTranslation } from "#/hooks/use-translation.ts";
+import { routes } from "#/routes.ts";
 import { TransactionRecurringInterval, TransactionType } from "#/schemas/enums.ts";
 import { cn } from "#/utils/cn.ts";
 import { decimalFlowFormatter } from "#/utils/currency-formatter.ts";
@@ -68,7 +69,7 @@ export default function CreateTransactionPage({ accounts, currencies, categories
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        form.post(route("transactions.store"));
+        form.post(routes.transactions.store.url());
     };
 
     return (
@@ -89,7 +90,7 @@ export default function CreateTransactionPage({ accounts, currencies, categories
                     asChild
                     className="fixed top-6 right-8 hidden lg:flex"
                 >
-                    <Link href={route("transactions.index")}>
+                    <Link href={routes.transactions.index.url()}>
                         <Button.Icon as={Cancel01Icon} />
                     </Link>
                 </Button.Root>
@@ -120,10 +121,9 @@ export default function CreateTransactionPage({ accounts, currencies, categories
                         </div>
 
                         <form
-                            action={route("transactions.store")}
+                            {...routes.transactions.store.form()}
                             className="w-full shrink-0 rounded-20 bg-(--bg-white-0) shadow-xs ring-1 ring-(--stroke-soft-200) ring-inset min-[420px]:w-[400px]"
                             id="create-transaction-form"
-                            method="POST"
                             onSubmit={handleSubmit}
                         >
                             <div className="p-4">
@@ -305,7 +305,7 @@ export default function CreateTransactionPage({ accounts, currencies, categories
 
                             <div className="grid grid-cols-2 gap-4 px-5 py-4">
                                 <Button.Root $size="sm" $style="stroke" $type="neutral" asChild>
-                                    <Link href={route("transactions.index")}>Back</Link>
+                                    <Link href={routes.transactions.index.url()}>Back</Link>
                                 </Button.Root>
                                 <Button.Root
                                     $size="sm"

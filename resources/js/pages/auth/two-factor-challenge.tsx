@@ -1,6 +1,5 @@
 import { Head, useForm } from "@inertiajs/react";
 import * as React from "react";
-import { route } from "ziggy-js";
 
 import { TextField } from "#/components/form/text-field.tsx";
 import { Link } from "#/components/link.tsx";
@@ -12,6 +11,7 @@ import * as LinkButton from "#/components/ui/link-button.tsx";
 import { useTranslation } from "#/hooks/use-translation.ts";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";
 import { AuthCard } from "#/layouts/partials/auth-card.tsx";
+import { routes } from "#/routes.ts";
 import { type PageProps } from "#/types/globals.js";
 
 export default function TwoFactorChallengePage() {
@@ -39,7 +39,7 @@ export default function TwoFactorChallengePage() {
     const submit: React.FormEventHandler = (e) => {
         e.preventDefault();
 
-        post(route("two-factor.login"));
+        post(routes.twoFactor.login.url());
     };
 
     return (
@@ -83,7 +83,7 @@ export default function TwoFactorChallengePage() {
 
                 <div className="flex items-center justify-end gap-3 py-2">
                     <LinkButton.Root $style="black" onClick={toggleRecovery}>
-                        <Link href={route("two-factor.login")}>
+                        <Link href={routes.twoFactor.login.url()}>
                             {recovery
                                 ? t("auth.two_factor_challenge.actions.login.recovery")
                                 : t("auth.two_factor_challenge.actions.login.code")}

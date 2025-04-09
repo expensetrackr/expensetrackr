@@ -8,6 +8,7 @@ import { useCurrentWorkspace } from "#/hooks/use-current-workspace.ts";
 import { useUser } from "#/hooks/use-user.ts";
 import { useWorkspacesPermissions } from "#/hooks/use-workspaces-permissions.ts";
 import { useWorkspaces } from "#/hooks/use-workspaces.ts";
+import { routes } from "#/routes.ts";
 import { cnMerge } from "#/utils/cn.ts";
 import { Link } from "./link.tsx";
 import * as Avatar from "./ui/avatar.tsx";
@@ -19,7 +20,7 @@ function WorkspaceItem({ workspace }: { workspace: App.Data.Workspace.WorkspaceD
 
     function switchToWorkspace(workspace: App.Data.Workspace.WorkspaceData) {
         router.put(
-            route("current-workspace.update"),
+            routes.currentWorkspace.update.url(),
             {
                 workspace_id: workspace.id,
             },
@@ -90,7 +91,7 @@ export function WorkspaceSwitch({ className }: { className?: string }) {
                     <Dropdown.Group>
                         <Dropdown.Item asChild>
                             <Link
-                                href={route("workspaces.show", {
+                                href={routes.workspaces.show.url({
                                     workspace: currentWorkspace.id,
                                 })}
                             >
@@ -116,7 +117,7 @@ export function WorkspaceSwitch({ className }: { className?: string }) {
                 {permissions.canCreateWorkspaces ? (
                     <Dropdown.Group>
                         <Dropdown.Item asChild>
-                            <Link href={route("workspaces.create")}>
+                            <Link href={routes.workspaces.create.url()}>
                                 <Dropdown.ItemIcon as={AddIcon} />
                                 New workspace&hellip;
                             </Link>

@@ -10,6 +10,7 @@ import { Textarea } from "#/components/form/textarea.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import * as Modal from "#/components/ui/modal.tsx";
 import { useCategoriesParams } from "#/hooks/use-categories-params.ts";
+import { routes } from "#/routes.ts";
 
 type CreateCategoryModalProps = {
     categories: {
@@ -30,7 +31,7 @@ export function CreateCategoryModal({ categories }: CreateCategoryModalProps) {
     const onSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
-        form.post(route("categories.store"), {
+        form.post(routes.categories.store.url(), {
             errorBag: "createCategory",
             preserveScroll: true,
             async onSuccess() {
@@ -57,7 +58,7 @@ export function CreateCategoryModal({ categories }: CreateCategoryModalProps) {
 
                 <Modal.Body>
                     <form
-                        action={route("categories.store")}
+                        action={routes.categories.store.url()}
                         className="flex w-full flex-col gap-3"
                         id="create-category-form"
                         method="POST"

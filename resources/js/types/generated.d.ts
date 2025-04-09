@@ -185,7 +185,6 @@ declare namespace App.Data.Shared {
     export type SharedInertiaData = {
         auth: App.Data.Auth.InertiaAuthData | null;
         workspaces: App.Data.Workspace.WorkspacesPermissionsData | null;
-        ziggy: App.Data.Ziggy.ZiggyData | null;
         toast: App.Data.Shared.ToastData | null;
         language: App.Enums.Language;
         languages: Array<App.Data.Shared.LanguageData> | null;
@@ -293,21 +292,6 @@ declare namespace App.Data.Workspace {
         hasWorkspaceFeatures: boolean;
         hasTermsAndPrivacyPolicyFeature: boolean;
         managesProfilePhotos: boolean;
-    };
-}
-declare namespace App.Data.Ziggy {
-    export type RouteData = {
-        uri: string;
-        methods: Array<string>;
-        parameters: Array<string> | null;
-        bindings: { [key: string]: string } | null;
-    };
-    export type ZiggyData = {
-        url: string;
-        port: number | null;
-        defaults: { [key: string]: any };
-        routes: { [key: string]: App.Data.Ziggy.RouteData };
-        location: string | null;
     };
 }
 declare namespace App.Enums {
