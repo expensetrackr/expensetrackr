@@ -1,6 +1,5 @@
 import NumberFlow, { type Format } from "@number-flow/react";
 import { resolveCurrencyFormat } from "@sumup/intl";
-import { Image } from "@unpic/react";
 import Decimal from "decimal.js";
 import ArrowRightSIcon from "virtual:icons/ri/arrow-right-s-line";
 
@@ -9,6 +8,7 @@ import { useTranslation } from "#/hooks/use-translation.ts";
 import { cn, cnMerge } from "#/utils/cn.ts";
 import { formatDate } from "#/utils/date-formatter.ts";
 import { CategoryIcon } from "./category-icon.tsx";
+import { Image } from "./image.tsx";
 import * as Avatar from "./ui/avatar.tsx";
 
 type TransactionItemProps = {
@@ -42,7 +42,13 @@ export function TransactionItem({
             {transaction.merchant?.icon ? (
                 <Avatar.Root $color="blue" $size="40" className="shrink-0">
                     <Avatar.Image alt={transaction.merchant.name} asChild src={transaction.merchant.icon}>
-                        <Image alt={transaction.merchant.name} height={24} src={transaction.merchant.icon} width={24} />
+                        <Image
+                            alt={transaction.merchant.name}
+                            height={24}
+                            isBunny
+                            src={transaction.merchant.icon}
+                            width={24}
+                        />
                     </Avatar.Image>
                 </Avatar.Root>
             ) : transaction.category ? (

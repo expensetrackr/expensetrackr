@@ -1,11 +1,11 @@
 import NumberFlow, { type Format } from "@number-flow/react";
 import { resolveCurrencyFormat } from "@sumup/intl";
-import { Image } from "@unpic/react";
 import Decimal from "decimal.js";
 import * as React from "react";
 import CheckboxCircleFillIcon from "virtual:icons/ri/checkbox-circle-fill";
 import LoopRightIcon from "virtual:icons/ri/loop-right-line";
 
+import { Image } from "#/components/image.tsx";
 import * as StatusBadge from "#/components/ui/status-badge.tsx";
 import { useTranslation } from "#/hooks/use-translation.ts";
 import { cnMerge } from "#/utils/cn.ts";
@@ -71,6 +71,7 @@ export function AccountBox({ account, className, ...rest }: CreditCardProps) {
                                 alt={account.name}
                                 className="size-8 shrink-0 rounded-8"
                                 height={32}
+                                isBunny
                                 src="/placeholder/apex.svg"
                                 width={32}
                             />

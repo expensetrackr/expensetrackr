@@ -1,5 +1,4 @@
 import { useForm } from "@inertiajs/react";
-import { Image } from "@unpic/react";
 import { toast } from "sonner";
 import Delete02Icon from "virtual:icons/hugeicons/delete-02";
 
@@ -7,6 +6,7 @@ import { CategoryIcon } from "#/components/category-icon.tsx";
 import { SelectField } from "#/components/form/select-field.tsx";
 import { TextField } from "#/components/form/text-field.tsx";
 import { Textarea } from "#/components/form/textarea.tsx";
+import { Image } from "#/components/image.tsx";
 import * as Avatar from "#/components/ui/avatar.tsx";
 import * as Badge from "#/components/ui/badge.tsx";
 import * as Button from "#/components/ui/button.tsx";

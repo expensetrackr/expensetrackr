@@ -1,15 +1,16 @@
-import { Source as UnpicSource, type SourceProps } from "@unpic/react/base";
+import { Source as UnpicSource, type SourceProps as UnpicSourceProps } from "@unpic/react";
 
-import { transform, type ImageOperations, type ImageOptions } from "./image.tsx";
+type SourceProps = UnpicSourceProps & {
+    isBunny?: boolean;
+};
 
-export function Source({ src, ...props }: Omit<SourceProps<ImageOperations, ImageOptions>, "transformer">) {
+export function Source({ isBunny, ...props }: SourceProps) {
     return (
-        // @ts-ignore
         <UnpicSource
-            src={`${ENV.APP_URL}${src}`}
-            // @ts-expect-error - transformer is not needed on development
-            transformer={process.env.NODE_ENV === "production" ? transform : undefined}
+            background="auto"
             {...props}
+            cdn={isBunny ? "bunny" : undefined}
+            src={isBunny ? `https://cdn.expensetrackr.app${props.src}` : props.src}
         />
     );
 }

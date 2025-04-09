@@ -93,6 +93,7 @@ function SearchResult({ id, name, logo, provider }: SearchResultProps) {
                             alt={provider}
                             className="size-4 rounded-full"
                             height={16}
+                            isBunny
                             src={`/major-brands/${provider}.png`}
                             width={16}
                         />

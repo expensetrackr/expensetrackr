@@ -1,81 +1,16 @@
-import { type Operations } from "@unpic/core/base";
-import { Image as UnpicImage, type ImageProps as UnpicImageProps } from "@unpic/react/base";
-import { type URLExtractor, type URLTransformer, type URLGenerator } from "unpic";
-import { createExtractAndGenerate, createOperationsHandlers, toCanonicalUrlString, toUrl } from "unpic/utils";
+import { Image as UnpicImage, type ImageProps as UnpicImageProps } from "@unpic/react";
 
-/**
- * Next Image Optimization provider.
- * @see https://github.com/coollabsio/next-image-transformation
- */
-export interface ImageOperations extends Operations {
-    /**
-     * Resize the image to a specified width in pixels.
-     * Shorthand for `width`.
-     * @type {number} Range: 1-8192
-     */
-    w?: number;
-
-    /**
-     * Image quality for lossy formats like JPEG and WebP.
-     * Shorthand for `quality`.
-     * @type {number} Range: 1-100
-     */
-    q?: number;
-}
-
-export interface ImageOptions {
-    baseUrl?: string;
-}
-
-const { operationsGenerator, operationsParser } = createOperationsHandlers<ImageOperations>({
-    keyMap: {
-        width: "w",
-        quality: "q",
-        height: false,
-        format: false,
-    },
-    defaults: {
-        q: 75,
-    },
-});
-
-export const generate: URLGenerator<"vercel"> = (src, operations, options = {}) => {
-    const baseSrc = typeof src === "string" ? (src.startsWith("/") ? src.slice(1) : src) : src.toString();
-    const url = toUrl(`${options.baseUrl || ENV.IMAGE_URL}/image/${baseSrc}`);
-
-    url.search = operationsGenerator(operations);
-
-    return toCanonicalUrlString(url);
+type ImageProps = UnpicImageProps & {
+    isBunny?: boolean;
 };
 
-export const extract: URLExtractor<"vercel"> = (url, options = {}) => {
-    const parsedUrl = toUrl(url);
-    const operations = operationsParser(url);
-
-    parsedUrl.search = "";
-
-    return {
-        src: parsedUrl.toString(),
-        operations,
-        options: {
-            baseUrl: options.baseUrl,
-        },
-    };
-};
-
-export const transform: URLTransformer<"vercel"> = createExtractAndGenerate(extract, generate);
-
-export function Image(props: Omit<UnpicImageProps<ImageOperations, ImageOptions>, "transformer">) {
-    const src = props.src.startsWith("/") ? props.src.slice(1) : props.src;
-    const isExternal = src.startsWith("http");
-
+export function Image({ isBunny, ...props }: ImageProps) {
     return (
-        // @ts-ignore
         <UnpicImage
+            background="auto"
             {...props}
-            src={isExternal ? src : `${ENV.APP_URL}/${src}`}
-            // @ts-expect-error - transformer is not needed on development
-            transformer={process.env.NODE_ENV === "production" ? transform : undefined}
+            cdn={isBunny ? "bunny" : undefined}
+            src={isBunny ? `https://cdn.expensetrackr.app${props.src}` : props.src}
         />
     );
 }

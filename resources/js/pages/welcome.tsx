@@ -46,9 +46,10 @@ export default function WelcomePage() {
                     <Image
                         alt=""
                         className="absolute inset-0 size-full object-cover object-center hue-rotate-90 invert dark:invert-0"
+                        isBunny
                         layout="fullWidth"
                         priority
-                        src="/img/hero.jpg"
+                        src="/hero.jpg"
                     />
                     <div className="absolute inset-0 bg-(--bg-white-0) mix-blend-color" />
                     <div className="absolute inset-0 bg-gradient-to-b from-transparent to-(--bg-white-0)" />
@@ -63,23 +64,26 @@ export default function WelcomePage() {
                                 <picture>
                                     <Source
                                         height={40}
+                                        isBunny
                                         media="(prefers-color-scheme: light)"
                                         priority
-                                        src="/img/isotype-light.png"
+                                        src="/isotype-light.png"
                                         width={64}
                                     />
                                     <Source
                                         height={40}
+                                        isBunny
                                         media="(prefers-color-scheme: dark)"
                                         priority
-                                        src="/img/isotype-dark.png"
+                                        src="/isotype-dark.png"
                                         width={64}
                                     />
                                     <Image
                                         alt="ExpenseTrackr"
                                         height={40}
+                                        isBunny
                                         priority
-                                        src="/img/isotype-light.png"
+                                        src="/isotype-light.png"
                                         width={64}
                                     />
                                 </picture>
@@ -305,22 +309,25 @@ function ImageAndTextSection() {
                     <picture>
                         <Source
                             height={752.27}
+                            isBunny
                             media="(prefers-color-scheme: light)"
-                            src="/img/steps-pattern.png"
+                            src="/steps-pattern.png"
                             width={921}
                         />
                         <Source
                             height={752.27}
+                            isBunny
                             media="(prefers-color-scheme: dark)"
-                            src="/img/steps-pattern-dark.png"
+                            src="/steps-pattern-dark.png"
                             width={921}
                         />
                         <Image
                             alt=""
                             className="pointer-events-none absolute bottom-8 h-auto !w-230"
                             height={752.27}
+                            isBunny
                             objectFit="contain"
-                            src="/img/steps-pattern.png"
+                            src="/steps-pattern.png"
                             width={921}
                         />
                     </picture>
@@ -363,17 +370,24 @@ function FeatureSection() {
                 <div className="grid grid-cols-12">
                     <div className="col-span-12 lg:col-span-10 lg:col-start-2">
                         <picture>
-                            <Source layout="fullWidth" media="(prefers-color-scheme: light)" src="/img/dashboard.png" />
                             <Source
+                                isBunny
+                                layout="fullWidth"
+                                media="(prefers-color-scheme: light)"
+                                src="/dashboard.png"
+                            />
+                            <Source
+                                isBunny
                                 layout="fullWidth"
                                 media="(prefers-color-scheme: dark)"
-                                src="/img/dashboard-dark.png"
+                                src="/dashboard-dark.png"
                             />
                             <Image
                                 alt=""
                                 className="rounded-16 mask-b-to-100%"
+                                isBunny
                                 layout="fullWidth"
-                                src="/img/dashboard.png"
+                                src="/dashboard.png"
                             />
                         </picture>
                     </div>
@@ -546,7 +560,8 @@ function PricingSection() {
                                                                                 suffix={
                                                                                     plan.price?.[
                                                                                         interval as keyof typeof plan.price
-                                                                                    ] && ` / ${interval === "yearly" ? "billed yearly" : interval}`
+                                                                                    ] &&
+                                                                                    ` / ${interval === "yearly" ? "billed yearly" : interval}`
                                                                                 }
                                                                                 value={
                                                                                     plan.price?.[
@@ -684,23 +699,26 @@ function Footer() {
                             <picture>
                                 <Source
                                     height={40}
+                                    isBunny
                                     media="(prefers-color-scheme: light)"
                                     priority
-                                    src="/img/isotype-light.png"
+                                    src="/isotype-light.png"
                                     width={64}
                                 />
                                 <Source
                                     height={40}
+                                    isBunny
                                     media="(prefers-color-scheme: dark)"
                                     priority
-                                    src="/img/isotype-dark.png"
+                                    src="/isotype-dark.png"
                                     width={64}
                                 />
                                 <Image
                                     alt="ExpenseTrackr"
                                     height={40}
+                                    isBunny
                                     priority
-                                    src="/img/isotype-light.png"
+                                    src="/isotype-light.png"
                                     width={64}
                                 />
                             </picture>

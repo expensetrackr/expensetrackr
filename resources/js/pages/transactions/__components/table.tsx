@@ -2,12 +2,12 @@ import { Link } from "@inertiajs/react";
 import NumberFlow, { type Format } from "@number-flow/react";
 import { resolveCurrencyFormat } from "@sumup/intl";
 import { getCoreRowModel, getSortedRowModel, useReactTable, type ColumnDef, flexRender } from "@tanstack/react-table";
-import { Image } from "@unpic/react";
 import Decimal from "decimal.js";
 import * as React from "react";
 import MoreVerticalIcon from "virtual:icons/hugeicons/more-vertical";
 
 import { CategoryIcon } from "#/components/category-icon.tsx";
+import { Image } from "#/components/image.tsx";
 import * as Avatar from "#/components/ui/avatar.tsx";
 import * as Badge from "#/components/ui/badge.tsx";
 import * as Button from "#/components/ui/button.tsx";

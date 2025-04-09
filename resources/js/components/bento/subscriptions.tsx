@@ -154,6 +154,7 @@ function BentoSubscriptionItem({ subscriptions, isHovered, className, ...props }
                         alt={item.name}
                         className="size-6"
                         height={24}
+                        isBunny
                         src={`/major-brands/${item.type}.svg`}
                         width={24}
                     />
