@@ -22,4 +22,6 @@ php artisan inertia:stop-ssr
 
 php artisan queue:restart
 
+php artisan make:sitemap
+
 php artisan up

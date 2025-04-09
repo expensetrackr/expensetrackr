@@ -381,3 +381,6 @@ teller_pk.pem
 resources/js/actions/**/*.ts
 resources/js/routes/**/*.ts
 resources/js/wayfinder/**/*.ts
+
+# sitemap
+public/sitemap.xml

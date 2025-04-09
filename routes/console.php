@@ -12,7 +12,8 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
 
-// Schedule daily balance snapshots at 2 AM to avoid peak times and ensure all transactions are settled
+Schedule::command('make:sitemap')->daily();
+
 Schedule::job(SnapshopAccountBalances::class)
     ->dailyAt('02:00')
     ->withoutOverlapping(60) // Prevent overlapping for 60 minutes
