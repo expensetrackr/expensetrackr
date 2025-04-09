@@ -46,7 +46,7 @@ services:
             - php
             - /var/www/html/artisan
             - queue:work
-            - --queue=bank-connection
+            - --queue=financial
             - --tries=3
             - --max-time=3600
             - --backoff=60

@@ -59,6 +59,6 @@ final readonly class CreateBankConnection
             $workspaceId,
             $bankConnection->id,
             true
-        )->onQueue('bank-connection');
+        )->onQueue('financial');
     }
 }

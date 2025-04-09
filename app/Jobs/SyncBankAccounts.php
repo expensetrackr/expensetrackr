@@ -57,7 +57,7 @@ final class SyncBankAccounts implements ShouldBeUnique, ShouldQueue
         public readonly int $bankConnectionId,
         public readonly ?bool $isManualSync = false,
     ) {
-        $this->onQueue('bank-connection');
+        $this->onQueue('financial');
         $this->workspace = Workspace::findOrFail($this->workspaceId);
     }
 
