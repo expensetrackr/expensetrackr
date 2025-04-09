@@ -21,8 +21,8 @@ export const plans = [
                 savings: "40%",
             },
             yearly: {
-                price: 99.99,
-                previous: 189.99,
+                price: 8.33,
+                previous: 15.99,
                 savings: "47%",
             },
         },
