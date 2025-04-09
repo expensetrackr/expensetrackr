@@ -9,13 +9,13 @@ export function Source({ isCdn, ...props }: SourceProps) {
         <UnpicSource
             background="auto"
             {...props}
-            cdn={isCdn ? "cloudflare" : undefined}
+            cdn={isCdn && import.meta.env.PROD ? "cloudflare" : undefined}
             options={{
                 cloudflare: {
                     domain: "expensetrackr.app",
                 },
             }}
-            src={isCdn ? `${ENV.APP_URL}${props.src}` : props.src}
+            src={isCdn && import.meta.env.PROD ? `${ENV.APP_URL}${props.src}` : props.src}
         />
     );
 }
