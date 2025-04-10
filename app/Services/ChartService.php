@@ -2,33 +2,30 @@
 
 declare(strict_types=1);
 
-namespace App\Concerns;
+namespace App\Services;
 
 use App\Data\Finance\ChartBalanceData;
 use App\Data\Finance\ChartSeriesData;
+use App\Models\Account;
 use App\ValueObjects\Period;
 use Carbon\CarbonImmutable;
-use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use InvalidArgumentException;
 
-/** @mixin \App\Models\Account */
-trait Chartable
+final class ChartService
 {
     /**
-     * Scope to get balance series for multiple accounts.
+     * Get balance series data for multiple accounts.
      *
-     * @param  Builder<\App\Models\Account>  $query
+     * @param  Builder<Account>  $query
      * @param  Period  $period  The period to get the series for
      * @param  string  $favorableDirection  One of 'up' or 'down'
      * @param  string  $view  One of 'balance', 'cash_balance', 'holdings_balance'
      * @param  string|null  $interval  The interval to get the series for
      */
-    #[Scope]
-    public function balanceSeries(
+    public static function getBalanceSeries(
         Builder $query,
         Period $period,
         string $favorableDirection = 'up',
@@ -42,7 +39,7 @@ trait Chartable
         $seriesInterval = $interval ?? $period->getInterval();
 
         /** @var Collection<int, ChartBalanceData> */
-        $balances = static::getBalanceSeriesQuery(
+        $balances = self::getBalanceSeriesQuery(
             $period->startDate,
             $period->endDate,
             $seriesInterval,
@@ -104,10 +101,10 @@ trait Chartable
             }
         }
 
-        $balances = static::gapfillBalances($balances);
+        $balances = self::gapfillBalances($balances);
 
         if ($favorableDirection === 'down') {
-            $balances = static::invertBalances($balances);
+            $balances = self::invertBalances($balances);
         }
 
         return ChartSeriesData::fromPeriodAndBalances(
@@ -120,54 +117,9 @@ trait Chartable
     }
 
     /**
-     * Get the favorable direction for the account.
-     */
-    public function getFavorableDirection(): string
-    {
-        return $this->type->isAsset() ? 'up' : 'down';
-    }
-
-    /**
-     * Get balance series for the account.
-     *
-     * @param  string  $view  One of 'balance', 'cash_balance', 'holdings_balance'
-     *
-     * @throws InvalidArgumentException
-     */
-    public function accountBalanceSeries(
-        ?Period $period = null,
-        string $view = 'balance',
-        ?string $interval = null
-    ): ChartSeriesData {
-        $period ??= Period::last30Days();
-
-        /** @var Builder<\App\Models\Account> $query */
-        $query = static::query()->where('id', $this->id);
-
-        // @phpstan-ignore method.notFound, return.type (scope is a valid method)
-        return $query->balanceSeries(
-            period: $period,
-            view: $view,
-            interval: $interval,
-            favorableDirection: $this->getFavorableDirection()
-        );
-    }
-
-    /**
-     * Get sparkline series for the account (cached version of balance series).
-     */
-    public function sparklineSeries(): ChartSeriesData
-    {
-        $cacheKey = "account_{$this->id}_sparkline";
-
-        /** @var ChartSeriesData */
-        return Cache::remember($cacheKey, CarbonImmutable::now()->addHour(), fn () => $this->accountBalanceSeries());
-    }
-
-    /**
      * Get the raw SQL query for balance series.
      *
-     * @param  Builder<\App\Models\Account>  $query
+     * @param  Builder<Account>  $query
      * @return Collection<int, ChartBalanceData>
      */
     private static function getBalanceSeriesQuery(

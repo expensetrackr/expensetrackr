@@ -23,12 +23,16 @@ final readonly class BalanceSheet
     /** @var Collection<int, Account> */
     private Collection $accounts;
 
+    private ChartService $chartService;
+
     public function __construct(
-        private Workspace $workspace
+        private Workspace $workspace,
     ) {
         $this->accounts = Account::query()
             ->where('workspace_id', $this->workspace->id)
             ->get();
+
+        $this->chartService = new ChartService();
     }
 
     /**
@@ -67,8 +71,8 @@ final readonly class BalanceSheet
         /** @var Builder<Account> $query */
         $query = Account::query()->whereIn('id', $this->accounts->pluck('id'));
 
-        // @phpstan-ignore method.notFound, return.type (scope is a valid method)
-        return $query->balanceSeries(
+        return $this->chartService->getBalanceSeries(
+            query: $query,
             period: $period,
             favorableDirection: 'up',
             view: 'net_worth',

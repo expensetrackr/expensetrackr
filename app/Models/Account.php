@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Concerns\Blamable;
-use App\Concerns\Chartable;
 use App\Concerns\WorkspaceOwned;
 use App\Enums\Finance\AccountSubtype;
 use App\Enums\Finance\AccountType;
@@ -78,7 +77,7 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
 final class Account extends Model
 {
     /** @use HasFactory<\Database\Factories\AccountFactory> */
-    use Blamable, Chartable, HasFactory, HasPrefixedId, Searchable, WorkspaceOwned;
+    use Blamable, HasFactory, HasPrefixedId, Searchable, WorkspaceOwned;
 
     /**
      * The accessors to append to the model's array form.
