@@ -6,6 +6,7 @@ namespace App\Data\Finance;
 
 use App\Data\Banking\TellerTransactionData;
 use App\Enums\Finance\TransactionStatus;
+use Exception;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Spatie\LaravelData\Attributes\MapName;
@@ -34,6 +35,10 @@ final class TransactionData extends Data
 
     public static function fromTeller(TellerTransactionData $transaction): self
     {
+        if ($transaction->details->category === null) {
+            throw new Exception('Transaction category is not set');
+        }
+
         return new self(
             id: $transaction->id,
             name: $transaction->description,

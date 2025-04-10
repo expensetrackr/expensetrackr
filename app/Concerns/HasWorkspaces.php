@@ -9,6 +9,7 @@ use App\Models\Workspace;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Support\Collection;
 
 trait HasWorkspaces
@@ -112,7 +113,7 @@ trait HasWorkspaces
     /**
      * Get all the workspace the user belongs to.
      *
-     * @return BelongsToMany<Workspace, covariant $this>
+     * @return BelongsToMany<Workspace, covariant $this, Pivot, 'membership'>
      */
     public function workspaces(): BelongsToMany
     {

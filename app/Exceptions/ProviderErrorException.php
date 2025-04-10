@@ -19,6 +19,8 @@ final class ProviderErrorException extends Exception
 
     /**
      * Create an error response array
+     *
+     * @return array<string, string>
      */
     public static function createErrorResponse(string $requestId, Throwable $error): array
     {

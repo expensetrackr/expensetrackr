@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Http\Requests;
 
 use App\Enums\Banking\ProviderType;
+use App\Enums\Finance\AccountSubtype;
+use App\Enums\Finance\AccountType;
 use App\Models\BankConnection;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\RedirectResponse;
@@ -40,8 +42,8 @@ final class BankConnectionRequest extends FormRequest
             'accounts.*.currency' => ['string'],
             'accounts.*.balance' => ['numeric', 'min:50'],
             'accounts.*.enabled' => ['boolean'],
-            'accounts.*.type' => ['string', Rule::enum(TellerAccountType::class)],
-            'accounts.*.subtype' => ['string', Rule::enum(TellerAccountSubtype::class)],
+            'accounts.*.type' => ['string', Rule::enum(AccountType::class)],
+            'accounts.*.subtype' => ['string', Rule::enum(AccountSubtype::class)],
             'accounts.*.token_expires_at' => ['nullable', 'date'],
         ];
     }

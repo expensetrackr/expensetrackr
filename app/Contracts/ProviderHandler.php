@@ -14,7 +14,7 @@ interface ProviderHandler
     /**
      * List all accounts for the authenticated user.
      *
-     * @return Collection<int, AccountData>
+     * @return Collection<int, BankAccountData>
      */
     public function getAccounts(): Collection;
 

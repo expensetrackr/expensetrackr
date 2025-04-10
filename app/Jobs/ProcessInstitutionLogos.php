@@ -72,6 +72,7 @@ final class ProcessInstitutionLogos implements ShouldQueue
         try {
             $cacheKey = "institution_logo:{$folder}:{$id}";
 
+            /** @var string|null */
             return Cache::remember($cacheKey, self::CACHE_TTL, function () use ($folder, $id) {
                 $path = "{$folder}/{$id}.png";
 

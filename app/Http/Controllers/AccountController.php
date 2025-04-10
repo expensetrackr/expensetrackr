@@ -6,8 +6,8 @@ namespace App\Http\Controllers;
 
 use App\Actions\BankAccounts\CreateAccount;
 use App\Actions\BankAccounts\CreateBankConnection;
-use App\Data\Banking\Account\CreateAccountData;
-use App\Data\Banking\Connection\CreateBankConnectionData;
+use App\Data\Finance\AccountCreateData;
+use App\Data\Finance\BankConnectionCreateData;
 use App\Enums\Banking\ProviderType;
 use App\Facades\Forex;
 use App\Http\Requests\BankConnectionRequest;
@@ -39,9 +39,11 @@ final class AccountController extends Controller
             ->allowedFilters(['name'])
             ->allowedSorts(sorts: 'created_at')
             ->defaultSort('-created_at')
-            ->tap(function ($builder) use ($request) {
-                if (filled($request->search)) {
-                    return $builder->whereIn('id', Account::search($request->search)->get()->pluck('id'));
+            ->tap(function (Builder $builder) use ($request) {
+                if (is_string($request->search)) {
+                    $search = Account::search($request->search)->get()->pluck('id');
+
+                    return $builder->whereIn('id', $search);
                 }
             })
             ->paginate(100)
@@ -146,7 +148,7 @@ final class AccountController extends Controller
      */
     public function storeBankConnections(BankConnectionRequest $request, CreateBankConnection $action): RedirectResponse
     {
-        $action->create(CreateBankConnectionData::from($request->validated()));
+        $action->create(BankConnectionCreateData::from($request->validated()));
 
         return redirect(route('accounts.index'))
             ->with('toast',
@@ -166,7 +168,7 @@ final class AccountController extends Controller
      */
     public function store(CreateAccountRequest $request, CreateAccount $action): RedirectResponse
     {
-        $action->create(CreateAccountData::from([
+        $action->create(AccountCreateData::from([
             ...$request->validated(),
             'isDefault' => false,
         ]));

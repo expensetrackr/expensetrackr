@@ -20,7 +20,7 @@ final class CreateCategoryRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return $this->user()->can('create', Category::class) ?? false;
+        return $this->user()?->can('create', Category::class) ?? false;
     }
 
     /**
@@ -40,10 +40,11 @@ final class CreateCategoryRequest extends FormRequest
                 'nullable',
                 'exists:categories,id',
                 'not_in:id',
-                function ($attribute, $value, $fail): void {
+                function ($attribute, $value, callable $fail): void {
                     if ($value) {
-                        $parent = Category::find($value);
-                        if ($parent && $parent->children()->exists()) {
+                        /** @var Category|null */
+                        $parent = Category::find($value)?->first();
+                        if ($parent?->children->count() > 0) {
                             $fail('Cannot set a parent category that already has children. Only two levels of nesting are allowed.');
                         }
                     }
@@ -67,7 +68,7 @@ final class CreateCategoryRequest extends FormRequest
         $this->replace($snakeCaseInput);
 
         $this->merge([
-            'slug' => Str::slug($this->name),
+            'slug' => Str::slug(type($this->name)->asString()),
         ]);
     }
 

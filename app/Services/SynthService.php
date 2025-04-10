@@ -21,8 +21,8 @@ final readonly class SynthService
 
     public function __construct()
     {
-        $this->accessToken = config('services.synth.access_token');
-        $this->baseUrl = config('services.synth.base_url');
+        $this->accessToken = type(config('services.synth.access_token'))->asString();
+        $this->baseUrl = type(config('services.synth.base_url'))->asString();
     }
 
     public function enrichTransaction(string $description, ?string $categoryHint = ''): ?SynthEnrichData
@@ -41,6 +41,7 @@ final readonly class SynthService
             }
 
             $response = $this->request('GET', "/enrich?description=$description&category_hint=$categoryHint");
+            /** @var array{merchant?: mixed} */
             $response = json_decode($response, true);
 
             if (! isset($response['merchant'])) {

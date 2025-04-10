@@ -9,15 +9,14 @@ use App\Concerns\Chartable;
 use App\Concerns\WorkspaceOwned;
 use App\Enums\Finance\AccountSubtype;
 use App\Enums\Finance\AccountType;
-use App\Models\Projections\AccountProjection;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Illuminate\Support\Carbon;
 use InvalidArgumentException;
+use Laravel\Scout\Searchable;
 use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
 
 /**
@@ -36,8 +35,8 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @property string|null $external_id
  * @property int|null $created_by
  * @property int|null $updated_by
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
  * @property int|null $bank_connection_id
  * @property-read Model $accountable
  * @property-read \Illuminate\Database\Eloquent\Collection<int, AccountBalance> $balances
@@ -45,9 +44,9 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @property-read BankConnection|null $bankConnection
  * @property-read User|null $createdBy
  * @property-read string|null $prefixed_id
- * @property-read AccountType $type
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Transaction> $transactions
  * @property-read int|null $transactions_count
+ * @property-read AccountType $type
  * @property-read User|null $updatedBy
  * @property-read Workspace $workspace
  *
@@ -79,7 +78,7 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
 final class Account extends Model
 {
     /** @use HasFactory<\Database\Factories\AccountFactory> */
-    use Blamable, Chartable, HasFactory, HasPrefixedId, WorkspaceOwned;
+    use Blamable, Chartable, HasFactory, HasPrefixedId, Searchable, WorkspaceOwned;
 
     /**
      * The accessors to append to the model's array form.
@@ -88,10 +87,6 @@ final class Account extends Model
      */
     protected $appends = [
         'type',
-    ];
-
-    private array $projections = [
-        AccountProjection::class,
     ];
 
     /**
@@ -142,14 +137,14 @@ final class Account extends Model
     protected function type(): Attribute
     {
         return Attribute::make(
-            get: fn (): \App\Enums\AccountType => match ($this->accountable_type) {
-                Depository::class => TellerAccountType::Depository,
-                Investment::class => TellerAccountType::Investment,
-                Crypto::class => TellerAccountType::Crypto,
-                OtherAsset::class => TellerAccountType::OtherAsset,
-                CreditCard::class => TellerAccountType::CreditCard,
-                Loan::class => TellerAccountType::Loan,
-                OtherLiability::class => TellerAccountType::OtherLiability,
+            get: fn (): AccountType => match ($this->accountable_type) {
+                Depository::class => AccountType::Depository,
+                Investment::class => AccountType::Investment,
+                Crypto::class => AccountType::Crypto,
+                OtherAsset::class => AccountType::OtherAsset,
+                CreditCard::class => AccountType::CreditCard,
+                Loan::class => AccountType::Loan,
+                OtherLiability::class => AccountType::OtherLiability,
                 default => throw new InvalidArgumentException("Unknown accountable type: {$this->accountable_type}"),
             },
         );
@@ -163,7 +158,7 @@ final class Account extends Model
     protected function casts(): array
     {
         return [
-            'subtype' => TellerAccountSubtype::class,
+            'subtype' => AccountSubtype::class,
         ];
     }
 }

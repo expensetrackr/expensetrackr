@@ -22,7 +22,7 @@ interface CurrencyHandler
      * Get the exchange rates for the given base currency and target currencies.
      *
      * @param  array<string>  $targetCurrencies
-     * @return array<string, float>|null
+     * @return array<string, int|float|string>|null
      */
     public function getExchangeRates(string $baseCurrency, array $targetCurrencies): ?array;
 
@@ -30,7 +30,7 @@ interface CurrencyHandler
      * Get the cached exchange rates for the given base currency and target currencies.
      *
      * @param  array<string>  $targetCurrencies
-     * @return array<string, float>|null
+     * @return array<string, int|float|string>|null
      */
     public function getCachedExchangeRates(string $baseCurrency, array $targetCurrencies): ?array;
 
@@ -42,7 +42,7 @@ interface CurrencyHandler
     /**
      * Update the currency rates cache for the given base currency.
      *
-     * @return array<string, float>|null
+     * @return array<string, int|float|string>|null
      */
     public function updateCurrencyRatesCache(string $baseCurrency): ?array;
 }

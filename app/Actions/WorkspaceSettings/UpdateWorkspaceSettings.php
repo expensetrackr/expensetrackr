@@ -11,7 +11,7 @@ final class UpdateWorkspaceSettings
     /**
      * Update the given workspace settings.
      *
-     * @param  array<string, mixed>  $input
+     * @param  array<string, mixed>  $data
      */
     public function update(WorkspaceSetting $settings, array $data): void
     {

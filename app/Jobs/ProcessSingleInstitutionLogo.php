@@ -19,12 +19,12 @@ final class ProcessSingleInstitutionLogo implements ShouldQueue
     /**
      * The number of times the job may be attempted.
      */
-    public $tries = 3;
+    public int $tries = 3;
 
     /**
      * The number of seconds the job can run before timing out.
      */
-    public $timeout = 30;
+    public int $timeout = 30;
 
     /**
      * Whether the logo already existed
@@ -42,6 +42,8 @@ final class ProcessSingleInstitutionLogo implements ShouldQueue
 
     /**
      * Execute the job.
+     *
+     * @return array<string, mixed>|null
      */
     public function handle(): ?array
     {

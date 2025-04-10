@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Concerns\WorkspaceOwned;
+use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 use InvalidArgumentException;
 
@@ -18,9 +19,9 @@ use InvalidArgumentException;
  * @property string $balance
  * @property int $account_id
  * @property int $workspace_id
- * @property \Carbon\CarbonImmutable $dated_at
- * @property \Carbon\CarbonImmutable|null $created_at
- * @property \Carbon\CarbonImmutable|null $updated_at
+ * @property CarbonImmutable $dated_at
+ * @property CarbonImmutable|null $created_at
+ * @property CarbonImmutable|null $updated_at
  * @property-read Account $account
  * @property-read Workspace $workspace
  *
@@ -70,7 +71,8 @@ final class AccountBalance extends Model
      * Scope a query to only include records within a given period.
      * This scope is optimized to return only significant balance changes within the period.
      *
-     * @param  Builder<AccountBalance>  $query
+     * @param  Builder<covariant $this>  $query
+     * @param  ?object{start_date: CarbonImmutable, end_date: CarbonImmutable}  $period
      */
     #[Scope]
     public function period(Builder $query, ?object $period): void
@@ -86,7 +88,7 @@ final class AccountBalance extends Model
                     $inner->where('dated_at', '>=', $period->start_date)
                         ->orWhere(function ($last) use ($period): void {
                             $last->where('dated_at', '<', $period->start_date)
-                                ->whereNotExists(function ($exists) use ($period): void {
+                                ->whereNotExists(function (Builder $exists) use ($period): void {
                                     $exists->select(DB::raw(1))
                                         ->from('account_balances as newer')
                                         ->whereColumn('newer.account_id', 'account_balances.account_id')
@@ -104,7 +106,7 @@ final class AccountBalance extends Model
      *
      * @param  Builder<AccountBalance>  $query
      * @param  'year'|'month'|'week'|'day'|'hour'  $interval  The interval for snapshots
-     * @param  ?object  $period  The period to generate series for
+     * @param  ?object{start_date: CarbonImmutable, end_date: CarbonImmutable}  $period  The period to generate series for
      *
      * @throws InvalidArgumentException If invalid interval is provided
      */
@@ -159,15 +161,15 @@ final class AccountBalance extends Model
             ",
         };
 
-        $startDate = $period?->start_date ?? now()->startOfYear();
-        $endDate = $period?->end_date ?? now();
+        $startDate = $period->start_date ?? now()->startOfYear();
+        $endDate = $period->end_date ?? now();
 
         $query->select([
             'series.timestamp',
             DB::raw('COALESCE(account_balances.balance, 0) as balance'),
             'account_balances.account_id',
         ])
-            ->rightJoin(DB::raw("({$seriesSql}) as series"), function ($join) use ($interval): void {
+            ->rightJoin(DB::raw("({$seriesSql}) as series"), function (\Illuminate\Database\Query\JoinClause $join) use ($interval): void {
                 $join->on(
                     DB::raw("DATE_TRUNC('$interval', account_balances.dated_at)"),
                     '=',

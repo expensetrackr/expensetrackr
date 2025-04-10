@@ -11,8 +11,8 @@ use App\Data\Banking\TellerTransactionData;
 use App\Data\Finance\BalanceData;
 use App\Data\Finance\BankAccountData;
 use App\Data\Finance\TransactionData;
-use App\Enums\Banking\TellerTransactionStatus;
-use App\Enums\Teller\TellerEnvironment;
+use App\Enums\Banking\TellerEnvironment;
+use App\Enums\Finance\TransactionStatus;
 use App\Exceptions\MissingTellerCertException;
 use App\Exceptions\MissingTellerConfigurationException;
 use App\Exceptions\MissingTellerKeyException;
@@ -43,7 +43,7 @@ final class TellerService implements ProviderHandler
     /**
      * List all accounts for the authenticated user.
      *
-     * @return Collection<int, AccountData>
+     * @return Collection<int, BankAccountData>
      */
     public function getAccounts(): Collection
     {
@@ -92,7 +92,7 @@ final class TellerService implements ProviderHandler
         $transactions = TellerTransactionData::collect($transactions);
 
         // NOTE: Remove pending transactions until upsert issue is fixed
-        return TransactionData::collectFromTeller($transactions)->filter(fn ($transaction): bool => $transaction->status !== TellerTransactionStatus::Pending);
+        return TransactionData::collectFromTeller($transactions)->filter(fn ($transaction): bool => $transaction->status !== TransactionStatus::Pending);
     }
 
     /**
@@ -112,21 +112,19 @@ final class TellerService implements ProviderHandler
             }
 
             // Check all accounts in parallel
-            $results = $accounts->map(function (TellerAccountData $account): void {
-                $this->getAccount($account->id);
-            });
+            try {
+                $accounts->each(function ($account): void {
+                    $this->getAccount($account->id);
+                });
 
-            // If any account request succeeded, connection is valid
-            if ($results->every(fn ($result): bool => $result !== null)) {
                 return [
                     'status' => 'connected',
                 ];
+            } catch (Throwable) {
+                return [
+                    'status' => 'disconnected',
+                ];
             }
-
-            // If we couldn't verify any accounts, assume disconnected
-            return [
-                'status' => 'disconnected',
-            ];
         } catch (Throwable $th) {
             $response = ProviderErrorException::createErrorResponse(
                 requestId: (string) Str::uuid(),
@@ -149,6 +147,7 @@ final class TellerService implements ProviderHandler
 
     /**
      * @param  ?array<array-key, mixed>  $data
+     * @return array<array-key, mixed>
      *
      * @throws MissingTellerConfigurationException
      * @throws JsonException
@@ -157,7 +156,8 @@ final class TellerService implements ProviderHandler
      */
     public function get(string $path, ?array $data = null): mixed
     {
-        return json_decode($this->request('GET', $path, $data), false, 512, JSON_THROW_ON_ERROR);
+        /** @var array<array-key, mixed> */
+        return json_decode(type($this->request('GET', $path, $data))->asString(), false, 512, JSON_THROW_ON_ERROR);
     }
 
     /**
@@ -204,23 +204,24 @@ final class TellerService implements ProviderHandler
         // Check if we have a cached response for this request
         $cacheKey = md5($method.$path.json_encode($data));
         if (Cache::has($cacheKey)) {
+            /** @var string */
             return Cache::get($cacheKey);
         }
 
         if ($tellerEnvironment === TellerEnvironment::Production || $tellerEnvironment === TellerEnvironment::Development) {
-            $certPath = config('services.teller.cert_path');
-            $keyPath = config('services.teller.key_path');
+            $certPath = type(config('services.teller.cert_path'))->asString();
+            $keyPath = type(config('services.teller.key_path'))->asString();
 
-            if (! file_exists($certPath)) {
+            if (! file_exists($certPath) || empty($certPath)) {
                 throw new MissingTellerCertException();
             }
 
-            if (! file_exists($keyPath)) {
+            if (! file_exists($keyPath) || empty($keyPath)) {
                 throw new MissingTellerKeyException();
             }
 
-            curl_setopt($curl, CURLOPT_SSLCERT, $certPath);
-            curl_setopt($curl, CURLOPT_SSLKEY, $keyPath);
+            curl_setopt($curl, CURLOPT_SSLCERT, (string) $certPath);
+            curl_setopt($curl, CURLOPT_SSLKEY, (string) $keyPath);
         }
 
         $response = curl_exec($curl);
@@ -241,7 +242,8 @@ final class TellerService implements ProviderHandler
             return $response;
         }
 
-        $errorObj = json_decode($response, true);
+        /** @var array<array-key, array<array-key, string|int>> */
+        $errorObj = json_decode(type($response)->asString(), true);
 
         if ($errorObj && isset($errorObj['error'])) {
             $errorCode = $errorObj['error']['code'];

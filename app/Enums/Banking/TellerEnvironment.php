@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Enums\Teller;
+namespace App\Enums\Banking;
 
 use Kongulov\Traits\InteractWithEnum;
 

@@ -108,6 +108,8 @@ final class InstitutionsGetCommand extends Command
 
         if (! $forceRefresh && Cache::has($cacheKey)) {
             $this->info('Using cached institutions data');
+
+            /** @var Collection<int, TellerInstitutionItemData> $institutions */
             $institutions = Cache::get($cacheKey);
         } else {
             $institutions = $this->fetchTellerInstitutions();
@@ -150,6 +152,8 @@ final class InstitutionsGetCommand extends Command
 
     /**
      * Fetch institutions from Teller API
+     *
+     * @return Collection<int, TellerInstitutionItemData>
      */
     private function fetchTellerInstitutions(): Collection
     {
@@ -170,6 +174,8 @@ final class InstitutionsGetCommand extends Command
 
     /**
      * Add institutions to Meilisearch
+     *
+     * @param  Collection<int, InstitutionSearchData>  $institutions
      */
     private function addInstitutionsToMeilisearch(Collection $institutions): void
     {
@@ -186,6 +192,8 @@ final class InstitutionsGetCommand extends Command
 
     /**
      * Dispatch institution batches for processing
+     *
+     * @param  Collection<int, non-empty-array<mixed>>  $institutions
      */
     private function dispatchInstitutionBatches(Collection $institutions): void
     {

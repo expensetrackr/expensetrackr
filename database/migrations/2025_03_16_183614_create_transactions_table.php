@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-use App\Enums\TransactionRecurringInterval;
-use App\Enums\TransactionType;
+use App\Enums\Finance\TransactionRecurringInterval;
+use App\Enums\Finance\TransactionStatus;
+use App\Enums\Finance\TransactionType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,7 +20,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('note')->nullable();
-            $table->string('status')->default(TellerTransactionStatus::Posted->value);
+            $table->string('status')->default(TransactionStatus::Posted->value);
             $table->string('type')->default(TransactionType::Expense->value);
             $table->decimal('base_amount', 19, 4)->nullable();
             $table->char('base_currency', 3)->nullable();

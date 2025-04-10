@@ -9,6 +9,7 @@ use App\Data\Finance\BalanceData;
 use App\Data\Finance\BankAccountData;
 use App\Data\Finance\TransactionData;
 use App\Enums\Banking\ProviderType;
+use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 
@@ -31,6 +32,7 @@ final readonly class FinanceCoreService implements ProviderHandler
     {
         return match ($this->providerType) {
             ProviderType::Teller => new TellerService($this->accessToken),
+            ProviderType::Mx => throw new Exception('Mx is not supported yet'),
         };
     }
 
@@ -50,7 +52,7 @@ final readonly class FinanceCoreService implements ProviderHandler
     /**
      * List all accounts for the authenticated user.
      *
-     * @return Collection<int, AccountData>
+     * @return Collection<int, BankAccountData>
      */
     public function getAccounts(): Collection
     {

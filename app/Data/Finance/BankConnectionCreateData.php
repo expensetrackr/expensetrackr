@@ -19,7 +19,7 @@ final class BankConnectionCreateData extends Data
         public readonly ?string $providerConnectionId,
         public readonly ProviderType $providerType,
         public readonly string $accessToken,
-        /** @var array<ConnectionAccountCreateData> */
+        /** @var array<BankConnectionAccountCreateData> */
         public readonly array $accounts,
     ) {}
 }

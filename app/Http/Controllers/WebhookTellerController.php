@@ -66,7 +66,7 @@ final class WebhookTellerController extends Controller
         SyncBankAccounts::dispatch(
             $bankConnection->workspace_id,
             $bankConnection->id,
-            $bankConnection->created_at->diffInHours() < 24,
+            $bankConnection->created_at?->diffInHours() < 24,
         )->onQueue('financial');
 
         return response()->json(['success' => true]);

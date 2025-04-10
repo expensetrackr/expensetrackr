@@ -5,14 +5,15 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Contracts\CurrencyHandler;
-use App\Data\ExchangeRate\ArgentinaResponseData;
-use App\Data\ExchangeRate\CodesResponseData;
-use App\Data\ExchangeRate\LatestResponseData;
-use App\Data\ExchangeRate\VenezuelaResponseData;
+use App\Data\Currency\ArgentinaResponseData;
+use App\Data\Currency\CodesResponseData;
+use App\Data\Currency\LatestResponseData;
+use App\Data\Currency\VenezuelaResponseData;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Throwable;
 
 final class CurrencyService implements CurrencyHandler
 {
@@ -161,11 +162,20 @@ final class CurrencyService implements CurrencyHandler
      */
     private function getVenezuelaDolarData(): ?VenezuelaResponseData
     {
-        $response = Http::withHeader('Origin', 'https://monitordolarvenezuela.com')
-            ->get('https://api.monitordolarvenezuela.com/dolarhoy')
-            ->json();
+        try {
+            $response = Http::withHeader('Origin', 'https://monitordolarvenezuela.com')
+                ->get('https://api.monitordolarvenezuela.com/dolarhoy')
+                ->json();
 
-        return Cache::remember('venezuela_dolar_data', now()->addHours(6), fn (): VenezuelaResponseData => VenezuelaResponseData::from($response));
+            /** @var VenezuelaResponseData|null */
+            return Cache::remember('venezuela_dolar_data', now()->addHours(6), fn (): VenezuelaResponseData => VenezuelaResponseData::from($response));
+        } catch (Throwable $e) {
+            Log::error('Error retrieving Venezuela dolar data', [
+                'message' => $e->getMessage(),
+            ]);
+
+            return null;
+        }
     }
 
     /**
@@ -177,9 +187,26 @@ final class CurrencyService implements CurrencyHandler
      */
     private function getArgentinaDolarData(): ?ArgentinaResponseData
     {
-        $response = Http::get('https://api.bluelytics.com.ar/v2/latest')
-            ->json();
+        try {
+            $response = Http::get('https://api.bluelytics.com.ar/v2/latest');
 
-        return Cache::remember('argentina_dolar_data', now()->addHours(6), fn (): ArgentinaResponseData => ArgentinaResponseData::from($response));
+            if ($response->successful()) {
+                /** @var ArgentinaResponseData|null */
+                return Cache::remember('argentina_dolar_data', now()->addHours(6), fn (): ArgentinaResponseData => ArgentinaResponseData::from($response->json()));
+            }
+
+            Log::error('Failed to retrieve Argentina dolar data', [
+                'status_code' => $response->status(),
+                'response' => $response->json(),
+            ]);
+
+            return null;
+        } catch (Throwable $e) {
+            Log::error('Error retrieving Argentina dolar data', [
+                'message' => $e->getMessage(),
+            ]);
+
+            return null;
+        }
     }
 }

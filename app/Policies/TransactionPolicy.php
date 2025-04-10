@@ -30,7 +30,7 @@ final class TransactionPolicy
      */
     public function create(User $user): bool
     {
-        if (! $user->subscribed() && $user->currentWorkspace->transactions()
+        if (! $user->subscribed() && $user->currentWorkspace?->transactions()
             ->whereMonth('created_at', now()->month)
             ->whereYear('created_at', now()->year)
             ->count() >= 50

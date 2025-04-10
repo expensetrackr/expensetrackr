@@ -129,7 +129,7 @@ final class Transaction extends Model
     protected function casts(): array
     {
         return [
-            'status' => TellerTransactionStatus::class,
+            'status' => TransactionStatus::class,
             'type' => TransactionType::class,
             'recurring_interval' => TransactionRecurringInterval::class,
             'dated_at' => 'datetime',

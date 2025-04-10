@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Requests;
 
+use App\Enums\Finance\AccountSubtype;
+use App\Enums\Finance\AccountType;
 use App\Models\Account;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\RedirectResponse;
@@ -33,8 +35,8 @@ final class CreateAccountRequest extends FormRequest
             'initial_balance' => ['required', 'numeric', 'min:50'],
             'is_default' => ['sometimes', 'boolean', 'default:false'],
             'external_id' => ['sometimes', 'nullable', 'string', 'unique:accounts,external_id', 'max:255'],
-            'type' => ['required', 'string', Rule::enum(TellerAccountType::class)],
-            'subtype' => ['sometimes', 'nullable', 'string', Rule::enum(TellerAccountSubtype::class)],
+            'type' => ['required', 'string', Rule::enum(AccountType::class)],
+            'subtype' => ['sometimes', 'nullable', 'string', Rule::enum(AccountSubtype::class)],
         ];
     }
 

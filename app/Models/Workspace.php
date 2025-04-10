@@ -16,9 +16,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
 
-#[ObservedBy(WorkspaceObserver::class)]
 /**
  * @property int $id
  * @property int $user_id
@@ -54,6 +54,7 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  *
  * @mixin \Eloquent
  */
+#[ObservedBy(WorkspaceObserver::class)]
 final class Workspace extends Model
 {
     /** @use HasFactory<\Database\Factories\WorkspaceFactory> */
@@ -137,7 +138,7 @@ final class Workspace extends Model
     /**
      * Get all the users that belong to the workspace.
      *
-     * @return BelongsToMany<User, covariant $this>
+     * @return BelongsToMany<User, covariant $this, Pivot, 'membership'>
      */
     public function members(): BelongsToMany
     {

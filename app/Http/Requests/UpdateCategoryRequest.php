@@ -37,7 +37,7 @@ final class UpdateCategoryRequest extends FormRequest
                 'nullable',
                 'exists:categories,public_id',
                 'not_in:public_id',
-                function ($attribute, $value, $fail): void {
+                function ($attribute, $value, callable $fail): void {
                     if ($value) {
                         // Get the current category being updated
                         $category = Category::wherePublicId($this->route('category'))->first();

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Data\ExchangeRate;
+namespace App\Data\Currency;
 
 use Spatie\LaravelData\Data;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;

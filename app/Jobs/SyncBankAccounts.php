@@ -22,7 +22,8 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
-use Log;
+use Illuminate\Support\Facades\Log;
+use Spatie\PrefixedIds\PrefixedIds;
 use Throwable;
 
 final class SyncBankAccounts implements ShouldBeUnique, ShouldQueue
@@ -86,7 +87,7 @@ final class SyncBankAccounts implements ShouldBeUnique, ShouldQueue
         }
 
         $financeCore = new FinanceCoreService(
-            providerConnectionId: $bankConnection->provider_connection_id,
+            providerConnectionId: $bankConnection->provider_connection_id ?? '',
             providerType: $bankConnection->provider_type,
             accessToken: $bankConnection->access_token,
         );
@@ -156,14 +157,30 @@ final class SyncBankAccounts implements ShouldBeUnique, ShouldQueue
      */
     private function syncAccount(Account $account, ?bool $isManualSync = false): void
     {
+        if (! $account->bankConnection) {
+            Log::error('Bank connection not found for account', [
+                'account_id' => $account->id,
+            ]);
+
+            return;
+        }
+
         $financeCore = new FinanceCoreService(
-            providerConnectionId: $account->bankConnection->provider_connection_id,
+            providerConnectionId: $account->bankConnection->provider_connection_id ?? '',
             providerType: $account->bankConnection->provider_type,
             accessToken: $account->bankConnection->access_token,
         );
 
         // First update the balance
         try {
+            if (! $account->external_id) {
+                Log::error('Account external ID not found', [
+                    'account_id' => $account->id,
+                ]);
+
+                return;
+            }
+
             $balance = $financeCore->getAccountBalances($account->external_id);
 
             $amount = $balance->amount ?? 0;
@@ -223,6 +240,7 @@ final class SyncBankAccounts implements ShouldBeUnique, ShouldQueue
             }
 
             // Cache system categories for the duration of this job
+            /** @var Collection<string, Category> $systemCategories */
             $systemCategories = Cache::remember('system_categories', 3600, fn () => Category::whereIsSystem(true)
                 ->get(['id', 'slug'])
                 ->keyBy('slug'));
@@ -247,13 +265,13 @@ final class SyncBankAccounts implements ShouldBeUnique, ShouldQueue
                 'external_id' => $transaction->id,
                 'account_id' => $account->id,
                 'workspace_id' => $this->workspaceId,
-                'category_id' => $systemCategories->get($transaction->categorySlug)?->id ?? $defaultCategoryId,
-                'public_id' => Transaction::generatePrefixedId(),
+                'category_id' => $systemCategories->get($transaction->categorySlug)->id ?? $defaultCategoryId,
+                'public_id' => 'txn_'.PrefixedIds::getUniqueId(),
             ])->toArray();
 
             Transaction::upsert($transactionsData, ['external_id']);
 
-            if ($this->workspace->settings->is_data_enrichment_enabled) {
+            if ($this->workspace->settings?->is_data_enrichment_enabled) {
                 // Get the transactions that were just upserted
                 $transactions = Transaction::whereIn('external_id', array_column($transactionsData, 'external_id'))->get();
 

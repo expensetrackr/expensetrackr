@@ -25,7 +25,7 @@ final class UpdateTransaction
             'name' => $input['name'],
             'note' => $input['note'],
             'type' => $input['type'],
-            'category_id' => $category->id,
+            'category_id' => $category?->id,
         ])->save();
     }
 }

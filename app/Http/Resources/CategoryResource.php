@@ -11,6 +11,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
 /** @mixin \App\Models\Category */
 final class CategoryResource extends JsonResource
 {
+    private bool $appendExtraFields = false;
+
     /**
      * Transform the resource into an array.
      *
@@ -26,14 +28,21 @@ final class CategoryResource extends JsonResource
             'color' => $this->color,
             'description' => $this->description,
             'isSystem' => $this->is_system,
-            'classification' => $this->when($request->route()->named('categories.index'), fn () => $this->classification),
-            'parentId' => $this->when($request->route()->named('categories.index'), fn () => $this->parent?->public_id ?? null),
-            'permissions' => $this->when($request->route()->named('categories.index'), fn (): array => [
-                'canUpdate' => $request->user()->can('update', $this->resource),
-                'canDelete' => $request->user()->can('delete', $this->resource),
+            'classification' => $this->when($this->appendExtraFields, fn () => $this->classification),
+            'parentId' => $this->when($this->appendExtraFields, fn () => $this->parent->public_id ?? null),
+            'permissions' => $this->when($this->appendExtraFields, fn (): array => [
+                'canUpdate' => $request->user()?->can('update', $this->resource),
+                'canDelete' => $request->user()?->can('delete', $this->resource),
             ]),
-            'hasParent' => $this->when($request->route()->named('categories.index'), fn () => $this->parent()->exists()),
+            'hasParent' => $this->when($this->appendExtraFields, fn () => $this->parent()->exists()),
             'children' => $this->whenLoaded('children', fn () => $this->children->map(fn (Category $category): CategoryResource => new CategoryResource($category))),
         ];
+    }
+
+    public function withExtraFields(bool $append = true): self
+    {
+        $this->appendExtraFields = $append;
+
+        return $this;
     }
 }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Data\ExchangeRate;
+namespace App\Data\Currency;
 
 use Spatie\LaravelData\Attributes\MapInputName;
 use Spatie\LaravelData\Data;
@@ -22,7 +22,7 @@ final class LatestResponseData extends Data
         public readonly int $timeNextUpdateUnix,
         public readonly string $timeNextUpdateUtc,
         public readonly string $baseCode,
-        /** @var array<string, int|float> */
+        /** @var array<string, int|float|string> */
         public array $conversionRates,
     ) {}
 }

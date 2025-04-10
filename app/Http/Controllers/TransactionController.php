@@ -16,6 +16,8 @@ use App\Http\Resources\TransactionResource;
 use App\Models\Account;
 use App\Models\Category;
 use App\Models\Transaction;
+use App\Models\User;
+use Illuminate\Container\Attributes\CurrentUser;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -30,7 +32,7 @@ final class TransactionController extends Controller
     /**
      * Display all transactions.
      */
-    public function index(Request $request): Response
+    public function index(Request $request, #[CurrentUser] User $user): Response
     {
         $perPage = $request->integer('per_page', default: 12);
         $transactionId = $request->string('transaction_id');
@@ -47,10 +49,10 @@ final class TransactionController extends Controller
         if ($transaction instanceof TransactionResource) {
             $categories = CategoryResource::collection(
                 Category::query()
-                    ->where(function ($query) use ($request): void {
+                    ->where(function ($query) use ($user): void {
                         $query->where('is_system', true)
-                            ->orWhere(function ($query) use ($request): void {
-                                $query->where('workspace_id', $request->user()->current_workspace_id)
+                            ->orWhere(function ($query) use ($user): void {
+                                $query->where('workspace_id', $user->current_workspace_id)
                                     ->where('is_system', false);
                             });
                     })
@@ -81,7 +83,7 @@ final class TransactionController extends Controller
     /**
      * Show the form for creating a new transaction.
      */
-    public function create(Request $request): RedirectResponse|Response
+    public function create(Request $request, #[CurrentUser] User $user): RedirectResponse|Response
     {
         if (! Gate::forUser($request->user())->check('create', Transaction::class)) {
             return to_route('transactions.index')
@@ -101,8 +103,8 @@ final class TransactionController extends Controller
             'categories' => CategoryResource::collection(
                 Category::query()
                     ->where('is_system', true)
-                    ->orWhere(function ($query): void {
-                        $query->where('workspace_id', auth()->user()->current_workspace_id)
+                    ->orWhere(function ($query) use ($user): void {
+                        $query->where('workspace_id', $user->current_workspace_id)
                             ->where('is_system', false);
                     })
                     ->orderBy('name', 'asc')

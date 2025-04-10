@@ -12,23 +12,25 @@ use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
+use Inertia\Response;
 
 final class CategoryController extends Controller
 {
     /**
      * Display all categories.
      */
-    public function index(Request $request)
+    public function index(Request $request): Response
     {
         $categories = Category::query()
             ->where(function ($query) use ($request): void {
                 $query->where('is_system', true)
-                    ->orWhere(function ($query) use ($request): void {
-                        $query->where('workspace_id', $request->user()->current_workspace_id)
+                    ->orWhere(function (Builder $query) use ($request): void {
+                        $query->where('workspace_id', $request->user()?->current_workspace_id)
                             ->where('is_system', false);
                     });
             })
@@ -45,7 +47,7 @@ final class CategoryController extends Controller
     /**
      * Store a new category.
      */
-    public function store(CreateCategoryRequest $request, CreateCategory $action)
+    public function store(CreateCategoryRequest $request, CreateCategory $action): RedirectResponse
     {
         $action->handle(type($request->user())->as(User::class), $request->validated());
 
@@ -58,7 +60,7 @@ final class CategoryController extends Controller
     /**
      * Update the specified category.
      */
-    public function update(UpdateCategoryRequest $request, Category $category, UpdateCategory $action)
+    public function update(UpdateCategoryRequest $request, Category $category, UpdateCategory $action): RedirectResponse
     {
         $action->handle($category, $request->validated());
 
@@ -84,7 +86,7 @@ final class CategoryController extends Controller
             ]);
         }
 
-        if ($request->user()->cannot('delete', $category)) {
+        if ($request->user()?->cannot('delete', $category)) {
             return back()->with('toast', [
                 'title' => 'Cannot delete category',
                 'type' => 'error',

@@ -19,7 +19,7 @@ final class CreateTransaction
      *
      * @param  array<string, mixed>  $input
      */
-    public function handle(array $input, ?bool $isManual = false): Transaction
+    public function handle(array $input, ?bool $isManual): Transaction
     {
         try {
             $account = Account::query()
@@ -27,32 +27,42 @@ final class CreateTransaction
                 ->select('id')
                 ->first();
 
+            if ($account === null) {
+                throw new Exception('Account not found.');
+            }
+
             $category = Category::query()
                 ->wherePublicId($input['category_id'])
                 ->select('id')
                 ->first();
 
+            if ($category === null) {
+                throw new Exception('Category not found.');
+            }
+
             $type = $input['type'];
+            $amount = type($input['amount'])->asFloat();
+            $currency = type($input['currency'])->asString();
 
             if ($type === TransactionType::Expense->value) {
-                $input['amount'] = -$input['amount'];
+                $amount = -$amount;
             }
 
             /**
              * If currency is !== from USD, then we are going to fetch the exchange rate from the API.
              */
-            if ($input['currency'] !== 'USD') {
-                $exchangeRate = Forex::getCachedExchangeRate('USD', $input['currency']);
+            if ($currency !== 'USD') {
+                $exchangeRate = Forex::getCachedExchangeRate('USD', $currency);
 
                 if ($exchangeRate === null) {
                     throw new Exception('Failed to fetch exchange rate from the API.');
                 }
 
                 $input['base_amount'] = $input['amount'];
-                $input['base_currency'] = $input['currency'];
+                $input['base_currency'] = $currency;
                 $input['currency_rate'] = $exchangeRate;
-                $input['amount'] /= $exchangeRate;
-                $input['currency'] = 'USD';
+                $amount /= $exchangeRate;
+                $currency = 'USD';
             }
 
             return Transaction::create([
@@ -62,7 +72,7 @@ final class CreateTransaction
                 'is_manual' => $isManual,
                 'account_id' => $account->id,
                 'category_id' => $category->id,
-                'workspace_id' => $input['workspace_id'] ?? auth()->user()->current_workspace_id,
+                'workspace_id' => $input['workspace_id'] ?? auth()->user()?->current_workspace_id,
             ]);
         } catch (QueryException $e) {
             throw new Exception('Failed to create transaction due to database error', $e->getCode(), previous: $e);

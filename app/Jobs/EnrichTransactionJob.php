@@ -14,6 +14,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 use Spatie\PrefixedIds\PrefixedIds;
 
@@ -38,7 +39,7 @@ final class EnrichTransactionJob implements ShouldQueue
     public function handle(SynthService $synth): void
     {
         try {
-            if (! $this->transaction->workspace->settings->is_data_enrichment_enabled) {
+            if (! $this->transaction->workspace->settings?->is_data_enrichment_enabled) {
                 Log::info('Data enrichment is disabled for workspace', [
                     'workspace_id' => $this->transaction->workspace->id,
                     'transaction_id' => $this->transaction->id,
@@ -59,20 +60,14 @@ final class EnrichTransactionJob implements ShouldQueue
 
             $existingMerchant = $this->findBestMatchingMerchant($searchTerms);
 
-            if ($existingMerchant) {
-                Log::info('Found existing merchant for transaction', [
-                    'transaction_id' => $this->transaction->id,
-                    'merchant_id' => $existingMerchant->id,
-                    'merchant_name' => $existingMerchant->name,
-                ]);
-
+            if ($existingMerchant instanceof Merchant) {
                 $this->attachMerchantToTransaction($existingMerchant);
 
                 return;
             }
 
             // If no existing enrichment found, fetch from SynthService
-            $enrichmentData = $synth->enrichTransaction($description, $this->transaction->category?->name ?? '');
+            $enrichmentData = $synth->enrichTransaction($description, $this->transaction->category->name ?? '');
 
             if (! $enrichmentData instanceof SynthEnrichData) {
                 Log::warning('Failed to enrich transaction data', [
@@ -103,7 +98,10 @@ final class EnrichTransactionJob implements ShouldQueue
         }
     }
 
-    private function findBestMatchingMerchant($searchTerms)
+    /**
+     * @param  Collection<int, string>  $searchTerms
+     */
+    private function findBestMatchingMerchant(Collection $searchTerms): ?Merchant
     {
         return Merchant::query()
             ->select('*')
@@ -134,7 +132,7 @@ final class EnrichTransactionJob implements ShouldQueue
             'icon' => $enrichmentData->icon ?? '',
             'address' => $enrichmentData->address?->toJson(),
             'is_system' => true,
-            'public_id' => Merchant::generatePrefixedId(),
+            'public_id' => 'mch_'.PrefixedIds::getUniqueId(),
         ]);
     }
 

@@ -8,6 +8,7 @@ use App\Data\Auth\UserData;
 use App\Models\User;
 use App\Models\Workspace;
 use App\Models\WorkspaceInvitation;
+use Exception;
 use Spatie\LaravelData\Attributes\MapName;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\Mappers\CamelCaseMapper;
@@ -32,6 +33,14 @@ final class WorkspaceData extends Data
 
     public static function fromModel(Workspace $workspace): self
     {
+        if ($workspace->settings === null) {
+            throw new Exception('Workspace settings are not set');
+        }
+
+        if ($workspace->owner === null) {
+            throw new Exception('Workspace owner is not set');
+        }
+
         return self::from([
             'id' => $workspace->public_id,
             'name' => $workspace->name,
