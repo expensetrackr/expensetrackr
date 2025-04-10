@@ -29,25 +29,29 @@ global.ENV = {
     TELLER_ENVIRONMENT: (process.env.VITE_TELLER_ENVIRONMENT as "sandbox" | "development" | "production") || "sandbox",
 };
 
-createServer((page) =>
-    createInertiaApp({
-        page,
-        render: ReactDOMServer.renderToString,
-        title: (title) => (title ? `${title} - ${appName}` : `${appName} - Manage your expenses effortlessly`),
-        resolve: (name) => resolvePageComponent(`./pages/${name}.tsx`, import.meta.glob("./pages/**/*.tsx")),
-        setup: ({ App, props }) => {
-            return (
-                <NuqsAdapter>
-                    <ThemeProvider
-                        attribute={["class", "data-theme"]}
-                        defaultTheme="system"
-                        disableTransitionOnChange
-                        enableSystem
-                    >
-                        <App {...props} />
-                    </ThemeProvider>
-                </NuqsAdapter>
-            );
-        },
-    }),
+createServer(
+    (page) =>
+        createInertiaApp({
+            page,
+            render: ReactDOMServer.renderToString,
+            title: (title) => (title ? `${title} - ${appName}` : `${appName} - Manage your expenses effortlessly`),
+            resolve: (name) => resolvePageComponent(`./pages/${name}.tsx`, import.meta.glob("./pages/**/*.tsx")),
+            setup: ({ App, props }) => {
+                return (
+                    <NuqsAdapter>
+                        <ThemeProvider
+                            attribute={["class", "data-theme"]}
+                            defaultTheme="system"
+                            disableTransitionOnChange
+                            enableSystem
+                        >
+                            <App {...props} />
+                        </ThemeProvider>
+                    </NuqsAdapter>
+                );
+            },
+        }),
+    {
+        cluster: true,
+    },
 );
