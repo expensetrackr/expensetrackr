@@ -68,7 +68,7 @@
         "valibot": "1.0.0"
     },
     "devDependencies": {
-        "@epic-web/config": "1.18.3",
+        "@epic-web/config": "1.19.0",
         "@iconify-json/hugeicons": "^1.2.4",
         "@iconify-json/logos": "1.2.4",
         "@iconify-json/lucide": "1.2.35",
