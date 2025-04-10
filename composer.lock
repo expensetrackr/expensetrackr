@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "253776ca136e838c553fae3fd2382a53",
+    "content-hash": "86de710dc2f9d07ec997c8ae57eb9d0b",
     "packages": [
         {
             "name": "akaunting/laravel-money",
@@ -1503,16 +1503,16 @@
         },
         {
             "name": "danestves/laravel-polar",
-            "version": "v1.1.1",
+            "version": "v1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/danestves/laravel-polar.git",
-                "reference": "f66b6c3aec6728c5abd590687183e97c68e84743"
+                "reference": "0bad9dc1520c83cda819bfa58de9d14353e232bd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/danestves/laravel-polar/zipball/f66b6c3aec6728c5abd590687183e97c68e84743",
-                "reference": "f66b6c3aec6728c5abd590687183e97c68e84743",
+                "url": "https://api.github.com/repos/danestves/laravel-polar/zipball/0bad9dc1520c83cda819bfa58de9d14353e232bd",
+                "reference": "0bad9dc1520c83cda819bfa58de9d14353e232bd",
                 "shasum": ""
             },
             "require": {
@@ -1576,7 +1576,7 @@
             ],
             "support": {
                 "issues": "https://github.com/danestves/laravel-polar/issues",
-                "source": "https://github.com/danestves/laravel-polar/tree/v1.1.1"
+                "source": "https://github.com/danestves/laravel-polar/tree/v1.1.2"
             },
             "funding": [
                 {
@@ -1588,7 +1588,7 @@
                     "type": "polar"
                 }
             ],
-            "time": "2025-03-16T16:27:28+00:00"
+            "time": "2025-04-10T23:20:17+00:00"
         },
         {
             "name": "danharrin/date-format-converter",
