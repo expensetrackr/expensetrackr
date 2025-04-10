@@ -2,8 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Enums\ConnectionStatus;
-use App\Enums\ProviderType;
+use App\Enums\Banking\ConnectionStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -25,7 +24,7 @@ return new class extends Migration
 
             // Provider-specific identifiers
             $table->string('provider_connection_id')->nullable(); // Plaid item_id, MX member_guid, Teller enrollment_id
-            $table->enum('provider_type', ProviderType::values());
+            $table->string('provider_type');
 
             // Authentication details
             $table->text('access_token');
@@ -33,7 +32,7 @@ return new class extends Migration
             $table->timestamp('token_expires_at')->nullable();
 
             // Connection status
-            $table->enum('status', ConnectionStatus::values())->default(ConnectionStatus::Connected);
+            $table->string('status')->default(ConnectionStatus::Connected);
             $table->timestamp('last_sync_at')->nullable();
             $table->text('error_message')->nullable();
 

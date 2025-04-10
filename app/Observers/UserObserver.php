@@ -18,6 +18,9 @@ final class UserObserver
                 'personal_workspace' => true,
             ]);
 
+            $user->current_workspace_id = $workspace->id;
+            $user->save();
+
             setPermissionsTeamId($workspace->id);
 
             $workspace->settings()->create([

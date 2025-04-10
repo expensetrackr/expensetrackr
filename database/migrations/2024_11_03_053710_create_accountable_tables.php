@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Enums\RateType;
+use App\Enums\Finance\RateType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,7 +19,7 @@ return new class extends Migration
             $table->morphs('accountable');
             $table->string('name');
             $table->string('description')->nullable();
-            $table->enum('subtype', TellerAccountSubtype::values())->nullable();
+            $table->string('subtype')->nullable();
             $table->string('currency_code');
             $table->decimal('initial_balance', 19, 4)->default(0);
             $table->decimal('current_balance', 19, 4)->default(0);
@@ -68,7 +68,7 @@ return new class extends Migration
         Schema::create('loans', function (Blueprint $table): void {
             $table->id();
             $table->decimal('interest_rate', 10, 4)->default(0);
-            $table->enum('rate_type', array_column(RateType::cases(), 'value'))->default(RateType::Fixed->value);
+            $table->string('rate_type')->default(RateType::Fixed);
             $table->integer('term_months');
             $table->timestamps();
         });

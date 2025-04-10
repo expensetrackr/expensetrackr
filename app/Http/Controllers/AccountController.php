@@ -12,7 +12,6 @@ use App\Enums\Banking\ProviderType;
 use App\Facades\Forex;
 use App\Http\Requests\BankConnectionRequest;
 use App\Http\Requests\CreateAccountRequest;
-use App\Http\Resources\AccountResource;
 use App\Models\Account;
 use App\Services\MeilisearchService;
 use App\Services\TellerService;
@@ -59,33 +58,14 @@ final class AccountController extends Controller
                     'transactions' => function (Builder $query): void {
                         $query
                             ->orderBy('dated_at', 'desc')
-                            ->select(
-                                'name',
-                                'note',
-                                'base_amount',
-                                'base_currency',
-                                'currency_rate',
-                                'amount',
-                                'currency',
-                                'dated_at',
-                                'account_id',
-                                'public_id',
-                                'category.id',
-                                'category.name',
-                                'category.slug',
-                                'category.color',
-                                'category.public_id',
-                                'merchant.id',
-                                'merchant.name',
-                                'merchant.icon',
-                            )
+                            ->with('category')
                             ->limit(3);
                     },
                 ]
             )
                 ->wherePublicId($accountPublicId)
-                ->firstOrFail();
-            $account = new AccountResource($account);
+                ->firstOrFail()
+                ->toResource();
         }
 
         return Inertia::render('accounts/page', [
