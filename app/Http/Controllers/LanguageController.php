@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Enums\Language;
+use App\Enums\Shared\Language;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 

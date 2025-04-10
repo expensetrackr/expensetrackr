@@ -6,16 +6,18 @@ namespace App\Data\Banking;
 
 use Spatie\LaravelData\Attributes\MapName;
 use Spatie\LaravelData\Data;
+use Spatie\LaravelData\Mappers\CamelCaseMapper;
+use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
 #[TypeScript]
+#[MapName(SnakeCaseMapper::class, CamelCaseMapper::class)]
 final class TellerAccountBalanceData extends Data
 {
     public function __construct(
         /**
          * The id of the account the account balances belong to.
          */
-        #[MapName('account_id')]
         public readonly string $accountId,
         /**
          * The account's ledger balance. The ledger balance is the total amount of funds in the account.

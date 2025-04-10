@@ -8,7 +8,7 @@ use App\Contracts\ProviderHandler;
 use App\Data\Finance\AccountData;
 use App\Data\Finance\BalanceData;
 use App\Data\Finance\TransactionData;
-use App\Enums\ProviderType;
+use App\Enums\Banking\ProviderType;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 

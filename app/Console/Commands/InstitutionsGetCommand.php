@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
-use App\Data\Banking\Institution\SearchableInstitutionData;
 use App\Data\Banking\TellerInstitutionItemData;
-use App\Enums\ProviderType;
+use App\Data\Finance\InstitutionSearchData;
+use App\Enums\Banking\ProviderType;
 use App\Jobs\ProcessInstitutionLogos;
 use App\Services\MeilisearchService;
 use Exception;
@@ -122,7 +122,7 @@ final class InstitutionsGetCommand extends Command
 
         // Convert to SearchableInstitutionData objects
         $allInstitutions = $institutions->map(
-            fn ($institution): SearchableInstitutionData => new SearchableInstitutionData(
+            fn ($institution): InstitutionSearchData => new InstitutionSearchData(
                 id: $institution->id,
                 name: $institution->name,
                 logo: '',

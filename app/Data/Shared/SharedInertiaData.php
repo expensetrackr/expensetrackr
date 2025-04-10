@@ -6,7 +6,7 @@ namespace App\Data\Shared;
 
 use App\Data\Auth\InertiaAuthData;
 use App\Data\Workspace\WorkspacesPermissionsData;
-use App\Enums\Language;
+use App\Enums\Shared\Language;
 use Closure;
 use Inertia\AlwaysProp;
 use Spatie\LaravelData\Data;

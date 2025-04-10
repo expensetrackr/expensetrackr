@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Actions\Categories;
 
-use App\Enums\CategoryClassification;
+use App\Enums\Finance\CategoryClassification;
 use App\Models\Category;
 use App\Models\Workspace;
 use Illuminate\Support\Str;

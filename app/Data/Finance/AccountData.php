@@ -5,14 +5,17 @@ declare(strict_types=1);
 namespace App\Data\Finance;
 
 use App\Data\Banking\TellerAccountData;
-use App\Enums\AccountSubtype;
-use App\Enums\AccountType;
-use App\Enums\ProviderType;
+use App\Enums\Banking\ProviderType;
+use App\Enums\Finance\AccountSubtype;
+use App\Enums\Finance\AccountType;
 use Spatie\LaravelData\Attributes\MapName;
 use Spatie\LaravelData\Data;
+use Spatie\LaravelData\Mappers\CamelCaseMapper;
+use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
 #[TypeScript]
+#[MapName(SnakeCaseMapper::class, CamelCaseMapper::class)]
 final class AccountData extends Data
 {
     public function __construct(
@@ -23,11 +26,8 @@ final class AccountData extends Data
         public readonly AccountSubtype $subtype,
         public readonly InstitutionData $institution,
         public readonly BalanceData $balance,
-        #[MapName('enrollment_id')]
         public readonly ?string $enrollmentId, // Teller only
-        #[MapName('institution_code')]
         public readonly ?string $institutionCode, // MX only
-        #[MapName('expires_at')]
         public readonly ?string $expiresAt,
     ) {}
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Data\BlackMarketDolar;
+namespace App\Data\ExchangeRate;
 
 use Spatie\LaravelData\Data;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;

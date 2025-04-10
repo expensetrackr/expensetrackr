@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Data\ExchangeRate;
+namespace App\Data\Finance;
 
+use App\Enums\Banking\ProviderType;
 use Spatie\LaravelData\Attributes\MapName;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\Mappers\CamelCaseMapper;
@@ -12,11 +13,13 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
 #[TypeScript]
 #[MapName(SnakeCaseMapper::class, CamelCaseMapper::class)]
-final class ArgentinaDolarItemData extends Data
+final class BankConnectionCreateData extends Data
 {
     public function __construct(
-        public readonly int|float $valueAvg,
-        public readonly int|float $valueSell,
-        public readonly int|float $valueBuy,
+        public readonly ?string $providerConnectionId,
+        public readonly ProviderType $providerType,
+        public readonly string $accessToken,
+        /** @var array<ConnectionAccountCreateData> */
+        public readonly array $accounts,
     ) {}
 }

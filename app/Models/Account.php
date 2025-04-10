@@ -7,8 +7,8 @@ namespace App\Models;
 use App\Concerns\Blamable;
 use App\Concerns\Chartable;
 use App\Concerns\WorkspaceOwned;
-use App\Enums\AccountSubtype;
-use App\Enums\AccountType;
+use App\Enums\Finance\AccountSubtype;
+use App\Enums\Finance\AccountType;
 use App\Models\Projections\AccountProjection;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -143,13 +143,13 @@ final class Account extends Model
     {
         return Attribute::make(
             get: fn (): \App\Enums\AccountType => match ($this->accountable_type) {
-                Depository::class => AccountType::Depository,
-                Investment::class => AccountType::Investment,
-                Crypto::class => AccountType::Crypto,
-                OtherAsset::class => AccountType::OtherAsset,
-                CreditCard::class => AccountType::CreditCard,
-                Loan::class => AccountType::Loan,
-                OtherLiability::class => AccountType::OtherLiability,
+                Depository::class => TellerAccountType::Depository,
+                Investment::class => TellerAccountType::Investment,
+                Crypto::class => TellerAccountType::Crypto,
+                OtherAsset::class => TellerAccountType::OtherAsset,
+                CreditCard::class => TellerAccountType::CreditCard,
+                Loan::class => TellerAccountType::Loan,
+                OtherLiability::class => TellerAccountType::OtherLiability,
                 default => throw new InvalidArgumentException("Unknown accountable type: {$this->accountable_type}"),
             },
         );
@@ -163,7 +163,7 @@ final class Account extends Model
     protected function casts(): array
     {
         return [
-            'subtype' => AccountSubtype::class,
+            'subtype' => TellerAccountSubtype::class,
         ];
     }
 }

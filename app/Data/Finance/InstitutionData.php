@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Data\Finance;
 
-use App\Enums\ProviderType;
+use App\Enums\Banking\ProviderType;
 use Spatie\LaravelData\Data;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 

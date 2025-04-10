@@ -27,36 +27,84 @@ declare namespace App.Data.Auth {
         isSubscribed: boolean | null;
     };
 }
-declare namespace App.Data.Banking.Account {
-    export type BalanceData = {
-        currency: string;
-        amount: number;
+declare namespace App.Data.Banking {
+    export type TellerAccountBalanceData = {
+        accountId: string;
+        ledger: string | null;
+        available: string | null;
     };
-    export type BankAccountData = {
+    export type TellerAccountData = {
+        currency: string;
+        enrollmentId: string;
+        id: string;
+        institution: App.Data.Banking.TellerInstitutionData;
+        name: string;
+        type: App.Enums.Banking.TellerAccountType;
+        status: App.Enums.Banking.TellerAccountStatus;
+        subtype: App.Enums.Banking.TellerAccountSubtype;
+        balances: App.Data.Banking.TellerAccountBalanceData | null;
+    };
+    export type TellerInstitutionData = {
         id: string;
         name: string;
-        currency: string;
-        type: App.Enums.AccountType;
-        subtype: App.Enums.AccountSubtype;
-        institution: App.Data.Banking.Institution.InstitutionData;
-        balance: App.Data.Banking.Account.BalanceData;
-        enrollmentId: string | null;
-        institutionCode: string | null;
-        expiresAt: string | null;
     };
-    export type CreateAccountData = {
+    export type TellerLinksData = {
+        self: string;
+    };
+    export type TellerTransactionData = {
+        accountId: string;
+        amount: string;
+        date: string;
+        description: string;
+        details: App.Data.Banking.TellerTransactionDetailsData;
+        status: App.Enums.Banking.TellerTransactionStatus;
+        id: string;
+        links: App.Data.Banking.TellerTransactionLinksData;
+        runningBalance: string | null;
+        type: string;
+    };
+    export type TellerTransactionDetailsData = {
+        processingStatus: string;
+        category: string | null;
+        counterparty: App.Data.Banking.TransactionDetailsCounterpartyData;
+    };
+    export type TellerTransactionLinksData = {
+        account: string;
+        self: string;
+    };
+    export type TransactionDetailsCounterpartyData = {
+        name: string | null;
+        type: string | null;
+    };
+}
+declare namespace App.Data.Finance {
+    export type AccountCreateData = {
         bankConnectionId: number | null;
         name: string;
         currencyCode: string;
         initialBalance: number;
         isDefault: boolean | null;
         externalId: string | null;
-        type: App.Enums.AccountType;
-        subtype: App.Enums.AccountSubtype | null;
+        type: App.Enums.Finance.AccountType;
+        subtype: App.Enums.Finance.AccountSubtype | null;
     };
-}
-declare namespace App.Data.Banking.Connection {
-    export type CreateBankConnectionAccountData = {
+    export type AccountData = {
+        id: string;
+        name: string;
+        currency: string;
+        type: App.Enums.Finance.AccountType;
+        subtype: App.Enums.Finance.AccountSubtype;
+        institution: App.Data.Finance.InstitutionData;
+        balance: App.Data.Finance.BalanceData;
+        enrollmentId: string | null;
+        institutionCode: string | null;
+        expiresAt: string | null;
+    };
+    export type BalanceData = {
+        currency: string;
+        amount: number;
+    };
+    export type BankConnectionAccountCreateData = {
         institutionId: string;
         institutionLogoUrl: string | null;
         institutionName: string;
@@ -65,111 +113,42 @@ declare namespace App.Data.Banking.Connection {
         currency: string;
         balance: number;
         enabled: boolean;
-        type: App.Enums.AccountType;
-        subtype: App.Enums.AccountSubtype;
+        type: App.Enums.Finance.AccountType;
+        subtype: App.Enums.Finance.AccountSubtype;
         tokenExpiresAt: string | null;
     };
-    export type CreateBankConnectionData = {
+    export type BankConnectionCreateData = {
         providerConnectionId: string | null;
-        providerType: App.Enums.ProviderType;
+        providerType: App.Enums.Banking.ProviderType;
         accessToken: string;
-        accounts: Array<App.Data.Banking.Connection.CreateBankConnectionAccountData>;
+        accounts: Array<any>;
     };
-}
-declare namespace App.Data.Banking.Institution {
     export type InstitutionData = {
         id: string;
         name: string;
         logo: string | null;
-        provider: App.Enums.ProviderType;
+        provider: App.Enums.Banking.ProviderType;
     };
-    export type SearchableInstitutionData = {
+    export type InstitutionSearchData = {
         id: string;
         name: string;
         logo: string;
         countries: Array<string>;
         popularity: number;
-        provider: App.Enums.ProviderType;
+        provider: App.Enums.Banking.ProviderType;
     };
-}
-declare namespace App.Data.BlackMarketDolar {
-    export type ArgentinaDolarItemData = {
-        valueAvg: number;
-        valueSell: number;
-        valueBuy: number;
-    };
-    export type ArgentinaResponseData = {
-        oficial: App.Data.BlackMarketDolar.ArgentinaDolarItemData;
-        blue: App.Data.BlackMarketDolar.ArgentinaDolarItemData;
-        oficialEuro: App.Data.BlackMarketDolar.ArgentinaDolarItemData;
-        blueEuro: App.Data.BlackMarketDolar.ArgentinaDolarItemData;
-    };
-    export type VenezuelaResponseData = {
-        status: number;
-        total: number;
-        result: Array<App.Data.BlackMarketDolar.VenezuelaResponseItemData>;
-    };
-    export type VenezuelaResponseItemData = {
-        id: number;
-        binance: string;
-        dolartoday: string;
-        localbitcoindt: string;
-        yadio: string;
-        airtm: string;
-        akb: string | null;
-        cambiosrya: string;
-        mkambio: string;
-        bcv: string;
-        promediototalmk: string;
-        promediovip: string;
-        fecha: string;
-        hora: string;
-        horaEpv: string;
-        fechaEpv: string;
-        promEpv: string;
-    };
-}
-declare namespace App.Data.ExchangeRate {
-    export type CodesResponseData = {
-        result: string;
-        documentation: string;
-        termsOfUse: string;
-        supportedCodes: [string, string][];
-    };
-    export type LatestResponseData = {
-        result: string;
-        documentation: string;
-        termsOfUse: string;
-        timeLastUpdateUnix: number;
-        timeLastUpdateUtc: string;
-        timeNextUpdateUnix: number;
-        timeNextUpdateUtc: string;
-        baseCode: string;
-        conversionRates: { [key: string]: number };
-    };
-}
-declare namespace App.Data.FinanceCore {
-    export type AccountData = {
+    export type TransactionData = {
         id: string;
         name: string;
+        note: string | null;
+        status: App.Enums.Finance.TransactionStatus;
+        categorySlug: string;
+        baseAmount: string | null;
+        baseCurrency: string | null;
+        currencyRate: string | null;
+        amount: string;
         currency: string;
-        type: App.Enums.AccountType;
-        subtype: App.Enums.AccountSubtype;
-        institution: App.Data.FinanceCore.InstitutionData;
-        balance: App.Data.FinanceCore.BalanceData;
-        enrollmentId: string | null;
-        institutionCode: string | null;
-        expiresAt: string | null;
-    };
-    export type BalanceData = {
-        currency: string;
-        amount: number;
-    };
-    export type InstitutionData = {
-        id: string;
-        name: string;
-        logo: string | null;
-        provider: App.Enums.ProviderType;
+        datedAt: any;
     };
 }
 declare namespace App.Data.Shared {
@@ -186,59 +165,34 @@ declare namespace App.Data.Shared {
         auth: App.Data.Auth.InertiaAuthData | null;
         workspaces: App.Data.Workspace.WorkspacesPermissionsData | null;
         toast: App.Data.Shared.ToastData | null;
-        language: App.Enums.Language;
+        language: App.Enums.Shared.Language;
         languages: Array<App.Data.Shared.LanguageData> | null;
         translations: Record<string, string>;
-        socialstream: App.Data.Socialstream.SocialstreamData;
         permissions: App.Data.Shared.PermissionsData;
         errors: { [key: string]: string } | null;
     };
     export type ToastData = {
-        type: App.Enums.ToastType;
+        type: App.Enums.Shared.ToastType;
         title: string;
         description: string | null;
         duration: number | null;
     };
 }
-declare namespace App.Data.Socialstream {
-    export type ConnectedAccount = {
-        id: number;
-        provider: string;
-        avatarPath: string;
-        createdAt: string;
+declare namespace App.Data.Synth {
+    export type SynthEnrichAddressData = {
+        line1: string | null;
+        city: string | null;
+        state: string | null;
+        postalCode: string | null;
+        country: string | null;
     };
-    export type ProviderData = {
-        id: App.Enums.Socialstream.Provider;
-        name: string;
-        buttonLabel: string | null;
-    };
-    export type SocialstreamData = {
-        providers: Array<App.Data.Socialstream.ProviderData>;
-        show: boolean;
-        connectedAccounts: Array<App.Data.Socialstream.ConnectedAccount>;
-        hasPassword: boolean;
-    };
-}
-declare namespace App.Data.Teller {
-    export type TellerAccountBalanceData = {
-        accountId: string;
-        ledger: string | null;
-        available: string | null;
-    };
-    export type TellerAccountData = {
-        currency: string;
-        enrollmentId: string;
-        id: string;
-        institution: App.Data.Teller.TellerInstitutionData;
-        name: string;
-        type: App.Enums.Teller.AccountType;
-        status: App.Enums.Teller.AccountStatus;
-        subtype: App.Enums.Teller.AccountSubtype;
-        balances: App.Data.Teller.TellerAccountBalanceData | null;
-    };
-    export type TellerInstitutionData = {
-        id: string;
-        name: string;
+    export type SynthEnrichData = {
+        merchant: string;
+        merchantId: string;
+        category: string | null;
+        website: string | null;
+        icon: string | null;
+        address: App.Data.Synth.SynthEnrichAddressData | null;
     };
 }
 declare namespace App.Data.Workspace {
@@ -294,7 +248,22 @@ declare namespace App.Data.Workspace {
         managesProfilePhotos: boolean;
     };
 }
-declare namespace App.Enums {
+declare namespace App.Enums.Banking {
+    export type ConnectionStatus = "connected" | "disconnected" | "unknown";
+    export type ProviderType = "teller" | "mx";
+    export type TellerAccountStatus = "open" | "closed";
+    export type TellerAccountSubtype =
+        | "checking"
+        | "savings"
+        | "money_market"
+        | "certificate_of_deposit"
+        | "treasury"
+        | "sweep"
+        | "credit_card";
+    export type TellerAccountType = "depository" | "credit";
+    export type TellerTransactionStatus = "posted" | "pending";
+}
+declare namespace App.Enums.Finance {
     export type AccountSubtype =
         | "none"
         | "checking"
@@ -320,30 +289,13 @@ declare namespace App.Enums {
         | "loan"
         | "other_liability";
     export type CategoryClassification = "income" | "expense" | "transfer" | "other";
-    export type ConnectionStatus = "connected" | "disconnected" | "unknown";
-    export type Language = "en" | "es";
-    export type MediaService = "product_media";
-    export type ProviderType = "teller" | "mx";
     export type RateType = "fixed" | "variable" | "adjustable";
-    export type ToastType = "error" | "warning" | "success" | "info";
     export type TransactionRecurringInterval = "daily" | "weekly" | "monthly" | "quarterly" | "yearly";
     export type TransactionStatus = "posted" | "pending" | "excluded" | "completed";
     export type TransactionType = "income" | "expense" | "transfer";
 }
-declare namespace App.Enums.Socialstream {
-    export type Provider = "google";
-}
-declare namespace App.Enums.Teller {
-    export type AccountStatus = "open" | "closed";
-    export type AccountSubtype =
-        | "checking"
-        | "savings"
-        | "money_market"
-        | "certificate_of_deposit"
-        | "treasury"
-        | "sweep"
-        | "credit_card";
-    export type AccountType = "depository" | "credit";
-    export type EnvironmentType = "sandbox" | "development" | "production";
-    export type TransactionStatus = "posted" | "pending";
+declare namespace App.Enums.Shared {
+    export type Language = "en" | "es";
+    export type MediaService = "product_media";
+    export type ToastType = "error" | "warning" | "success" | "info";
 }

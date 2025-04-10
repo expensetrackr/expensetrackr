@@ -9,7 +9,7 @@ use App\Data\Shared\SharedInertiaData;
 use App\Data\Shared\ToastData;
 use App\Data\Workspace\WorkspaceData;
 use App\Data\Workspace\WorkspacesPermissionsData;
-use App\Enums\Language;
+use App\Enums\Shared\Language;
 use App\Http\Resources\LanguageResource;
 use App\Models\Account;
 use App\Models\Category;

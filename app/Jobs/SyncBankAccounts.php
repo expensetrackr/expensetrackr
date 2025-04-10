@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Jobs;
 
 use App\Data\Finance\TransactionData;
-use App\Enums\ConnectionStatus;
-use App\Enums\TransactionType;
+use App\Enums\Banking\ConnectionStatus;
+use App\Enums\Finance\TransactionType;
 use App\Models\Account;
 use App\Models\BankConnection;
 use App\Models\Category;

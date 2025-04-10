@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Actions\BankAccounts;
 
-use App\Data\Banking\Account\CreateAccountData;
-use App\Enums\AccountType;
-use App\Enums\RateType;
+use App\Data\Finance\AccountCreateData;
+use App\Enums\Finance\AccountType;
+use App\Enums\Finance\RateType;
 use App\Models\Account;
 use App\Models\CreditCard;
 use App\Models\Crypto;
@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Context;
 
 final class CreateAccount
 {
-    public function create(CreateAccountData $payload): void
+    public function create(AccountCreateData $payload): void
     {
         // Determine the account model class based on the account type
         $type = match ($payload->type) {

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Enums\Teller;
+namespace App\Enums\Banking;
 
 use Filament\Support\Contracts\HasLabel;
 
-enum AccountSubtype: string implements HasLabel
+enum TellerAccountSubtype: string implements HasLabel
 {
     case Checking = 'checking';
     case Savings = 'savings';

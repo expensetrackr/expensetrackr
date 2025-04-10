@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Enums\AccountSubtype;
 use App\Enums\RateType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -20,7 +19,7 @@ return new class extends Migration
             $table->morphs('accountable');
             $table->string('name');
             $table->string('description')->nullable();
-            $table->enum('subtype', AccountSubtype::values())->nullable();
+            $table->enum('subtype', TellerAccountSubtype::values())->nullable();
             $table->string('currency_code');
             $table->decimal('initial_balance', 19, 4)->default(0);
             $table->decimal('current_balance', 19, 4)->default(0);

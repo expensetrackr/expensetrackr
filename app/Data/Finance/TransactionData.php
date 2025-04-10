@@ -5,12 +5,17 @@ declare(strict_types=1);
 namespace App\Data\Finance;
 
 use App\Data\Banking\TellerTransactionData;
-use App\Enums\TransactionStatus;
+use App\Enums\Finance\TransactionStatus;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Spatie\LaravelData\Attributes\MapName;
 use Spatie\LaravelData\Data;
+use Spatie\LaravelData\Mappers\CamelCaseMapper;
+use Spatie\LaravelData\Mappers\SnakeCaseMapper;
+use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
+#[TypeScript]
+#[MapName(SnakeCaseMapper::class, CamelCaseMapper::class)]
 final class TransactionData extends Data
 {
     public function __construct(
@@ -19,15 +24,11 @@ final class TransactionData extends Data
         public readonly ?string $note,
         public readonly TransactionStatus $status,
         public readonly string $categorySlug,
-        #[MapName('base_amount')]
         public readonly ?string $baseAmount,
-        #[MapName('base_currency')]
         public readonly ?string $baseCurrency,
-        #[MapName('currency_rate')]
         public readonly ?string $currencyRate,
         public readonly string $amount,
         public readonly string $currency,
-        #[MapName('dated_at')]
         public readonly Carbon $datedAt,
     ) {}
 

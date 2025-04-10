@@ -11,8 +11,8 @@ use App\Data\Banking\TellerTransactionData;
 use App\Data\Finance\AccountData;
 use App\Data\Finance\BalanceData;
 use App\Data\Finance\TransactionData;
-use App\Enums\Teller\EnvironmentType;
-use App\Enums\TransactionStatus;
+use App\Enums\Banking\TellerTransactionStatus;
+use App\Enums\Teller\TellerEnvironment;
 use App\Exceptions\MissingTellerCertException;
 use App\Exceptions\MissingTellerConfigurationException;
 use App\Exceptions\MissingTellerKeyException;
@@ -92,7 +92,7 @@ final class TellerService implements ProviderHandler
         $transactions = TellerTransactionData::collect($transactions);
 
         // NOTE: Remove pending transactions until upsert issue is fixed
-        return TransactionData::collectFromTeller($transactions)->filter(fn ($transaction): bool => $transaction->status !== TransactionStatus::Pending);
+        return TransactionData::collectFromTeller($transactions)->filter(fn ($transaction): bool => $transaction->status !== TellerTransactionStatus::Pending);
     }
 
     /**
@@ -184,7 +184,7 @@ final class TellerService implements ProviderHandler
             throw new Exception('Environment is not set');
         }
 
-        if (! in_array($tellerEnvironment, EnvironmentType::values())) {
+        if (! in_array($tellerEnvironment, TellerEnvironment::values())) {
             throw new Exception('Invalid environment');
         }
 
@@ -207,7 +207,7 @@ final class TellerService implements ProviderHandler
             return Cache::get($cacheKey);
         }
 
-        if ($tellerEnvironment === EnvironmentType::Production || $tellerEnvironment === EnvironmentType::Development) {
+        if ($tellerEnvironment === TellerEnvironment::Production || $tellerEnvironment === TellerEnvironment::Development) {
             $certPath = config('services.teller.cert_path');
             $keyPath = config('services.teller.key_path');
 

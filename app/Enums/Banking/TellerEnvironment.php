@@ -6,7 +6,7 @@ namespace App\Enums\Teller;
 
 use Kongulov\Traits\InteractWithEnum;
 
-enum EnvironmentType: string
+enum TellerEnvironment: string
 {
     use InteractWithEnum;
 

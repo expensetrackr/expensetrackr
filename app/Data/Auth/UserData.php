@@ -8,21 +8,21 @@ use App\Models\User;
 use Laravel\Fortify\Features;
 use Spatie\LaravelData\Attributes\MapName;
 use Spatie\LaravelData\Data;
+use Spatie\LaravelData\Mappers\CamelCaseMapper;
+use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
 /** @final */
 #[TypeScript]
+#[MapName(SnakeCaseMapper::class, CamelCaseMapper::class)]
 class UserData extends Data
 {
     public function __construct(
         public readonly int $id,
         public readonly string $name,
         public readonly string $email,
-        #[MapName('profile_photo_path', 'profilePhotoPath')]
         public readonly ?string $profilePhotoPath,
-        #[MapName('profile_photo_url', 'profilePhotoUrl')]
         public readonly ?string $profilePhotoUrl,
-        #[MapName('two_factor_enabled', 'twoFactorEnabled')]
         public readonly bool $twoFactorEnabled,
         public readonly ?bool $isSubscribed,
     ) {}

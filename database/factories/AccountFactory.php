@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
-use App\Enums\AccountType;
+use App\Enums\Finance\AccountType;
 use App\Models\Account;
 use App\Models\User;
 use App\Models\Workspace;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Data\Shared;
 
-use App\Enums\ToastType;
+use App\Enums\Shared\ToastType;
 use Illuminate\Support\Arr;
 use Spatie\LaravelData\Data;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;

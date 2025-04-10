@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Actions\BankAccounts;
 
-use App\Data\Banking\Account\CreateAccountData;
-use App\Data\Banking\Connection\CreateBankConnectionData;
+use App\Data\Finance\AccountCreateData;
+use App\Data\Finance\BankConnectionCreateData;
 use App\Jobs\SyncBankAccounts;
 use App\Models\BankConnection;
 use Illuminate\Support\Facades\Context;
@@ -19,7 +19,7 @@ final readonly class CreateBankConnection
     /**
      * Create bank connections after the user has selected the accounts they want to connect.
      */
-    public function create(CreateBankConnectionData $payload): void
+    public function create(BankConnectionCreateData $payload): void
     {
         $account = $payload->accounts[0];
 
@@ -39,7 +39,7 @@ final readonly class CreateBankConnection
         );
 
         foreach ($payload->accounts as $account) {
-            $this->action->create(CreateAccountData::from([
+            $this->action->create(AccountCreateData::from([
                 'bankConnectionId' => $bankConnection->id,
                 'name' => $account->name,
                 'currencyCode' => $account->currency,

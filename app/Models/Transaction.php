@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Concerns\WorkspaceOwned;
-use App\Enums\TransactionRecurringInterval;
-use App\Enums\TransactionStatus;
-use App\Enums\TransactionType;
+use App\Enums\Finance\TransactionRecurringInterval;
+use App\Enums\Finance\TransactionStatus;
+use App\Enums\Finance\TransactionType;
 use App\Observers\TransactionObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -129,7 +129,7 @@ final class Transaction extends Model
     protected function casts(): array
     {
         return [
-            'status' => TransactionStatus::class,
+            'status' => TellerTransactionStatus::class,
             'type' => TransactionType::class,
             'recurring_interval' => TransactionRecurringInterval::class,
             'dated_at' => 'datetime',

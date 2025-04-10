@@ -98,7 +98,7 @@ trait Chartable
         }
 
         // Transform balances directly without sliding window
-        $values = $balances->map(fn ($curr): \App\ValueObjects\SeriesValue => new SeriesValue(
+        $values = $balances->map(fn ($curr): SeriesValue => new SeriesValue(
             date: CarbonImmutable::parse($curr->date),
             dateFormatted: CarbonImmutable::parse($curr->date)->isoFormat('LL'),
             trend: new Trend(
@@ -109,7 +109,7 @@ trait Chartable
         ));
 
         // Update previous values in a second pass
-        $values = $values->map(function ($value, $index) use ($values): \App\ValueObjects\SeriesValue {
+        $values = $values->map(function ($value, $index) use ($values): SeriesValue {
             if ($index > 0) {
                 $prev = $values[$index - 1];
                 $value->trend->previous = $prev->trend->current;
@@ -168,7 +168,7 @@ trait Chartable
     {
         $cacheKey = "account_{$this->id}_sparkline";
 
-        return Cache::remember($cacheKey, CarbonImmutable::now()->addHour(), fn() => $this->accountBalanceSeries());
+        return Cache::remember($cacheKey, CarbonImmutable::now()->addHour(), fn () => $this->accountBalanceSeries());
     }
 
     /**

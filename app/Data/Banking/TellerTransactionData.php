@@ -4,17 +4,21 @@ declare(strict_types=1);
 
 namespace App\Data\Banking;
 
-use App\Enums\Teller\TransactionStatus;
+use App\Enums\Banking\TellerTransactionStatus;
 use Spatie\LaravelData\Attributes\MapName;
 use Spatie\LaravelData\Data;
+use Spatie\LaravelData\Mappers\CamelCaseMapper;
+use Spatie\LaravelData\Mappers\SnakeCaseMapper;
+use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
+#[TypeScript]
+#[MapName(SnakeCaseMapper::class, CamelCaseMapper::class)]
 final class TellerTransactionData extends Data
 {
     public function __construct(
         /**
          * The id of the account that the transaction belongs to.
          */
-        #[MapName('account_id')]
         public readonly string $accountId,
         /**
          * The signed amount of the transaction as a string.
@@ -35,7 +39,7 @@ final class TellerTransactionData extends Data
         /**
          * The transaction's status: `posted` or `pending`.
          */
-        public readonly TransactionStatus $status,
+        public readonly TellerTransactionStatus $status,
         /**
          * The id of the transaction itself.
          */
@@ -47,7 +51,6 @@ final class TellerTransactionData extends Data
         /**
          * The running balance of the account that the transaction belongs to. Running balance is only present on transactions with a `posted` status.
          */
-        #[MapName('running_balance')]
         public readonly ?string $runningBalance,
         /**
          * The type code transaction, e.g. `card_payment`.

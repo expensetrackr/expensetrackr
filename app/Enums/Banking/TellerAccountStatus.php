@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Enums\Teller;
+namespace App\Enums\Banking;
 
 use Filament\Support\Contracts\HasLabel;
 
-enum AccountStatus: string implements HasLabel
+enum TellerAccountStatus: string implements HasLabel
 {
     case Open = 'open';
     case Closed = 'closed';

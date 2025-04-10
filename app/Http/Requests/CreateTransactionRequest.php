@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Requests;
 
-use App\Enums\TransactionRecurringInterval;
-use App\Enums\TransactionType;
+use App\Enums\Finance\TransactionRecurringInterval;
+use App\Enums\Finance\TransactionType;
 use App\Models\Transaction;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\RedirectResponse;

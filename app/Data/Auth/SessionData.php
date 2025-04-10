@@ -6,18 +6,18 @@ namespace App\Data\Auth;
 
 use Spatie\LaravelData\Attributes\MapName;
 use Spatie\LaravelData\Data;
+use Spatie\LaravelData\Mappers\CamelCaseMapper;
+use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
 #[TypeScript]
+#[MapName(SnakeCaseMapper::class, CamelCaseMapper::class)]
 final class SessionData extends Data
 {
     public function __construct(
-        #[MapName('ip_address', 'ipAddress')]
         public readonly string $ipAddress,
-        #[MapName('is_current_device', 'isCurrentDevice')]
         public readonly bool $isCurrentDevice,
         public readonly UserAgentData $device,
-        #[MapName('last_active', 'lastActive')]
         public readonly string $lastActive,
     ) {}
 }

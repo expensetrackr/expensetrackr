@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
-use App\Enums\TransactionStatus;
-use App\Enums\TransactionType;
+use App\Enums\Finance\TransactionStatus;
+use App\Enums\Finance\TransactionType;
 use App\Models\Workspace;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
