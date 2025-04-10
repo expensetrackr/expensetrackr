@@ -373,6 +373,9 @@ _ide_helper.php
 teller_cert.pem
 teller_pk.pem
 
+# laravel-data-types
+resources/js/types/generated.d.ts
+
 # wayfinder
 resources/js/actions/**/*.ts
 resources/js/routes/**/*.ts
