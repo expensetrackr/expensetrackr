@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
-use App\Data\FinanceCore\TransactionData;
+use App\Data\Finance\TransactionData;
 use App\Enums\ConnectionStatus;
 use App\Enums\TransactionType;
 use App\Models\Account;
@@ -212,7 +212,7 @@ final class SyncBankAccounts implements ShouldBeUnique, ShouldQueue
                 'error_message' => null,
             ]);
 
-            if (! $transactions->count()) {
+            if ($transactions->count() === 0) {
                 Log::info('No transactions found for account', [
                     'bank_connection_id' => $this->bankConnectionId,
                     'workspace_id' => $this->workspaceId,

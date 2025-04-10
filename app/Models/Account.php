@@ -90,7 +90,7 @@ final class Account extends Model
         'type',
     ];
 
-    protected array $projections = [
+    private array $projections = [
         AccountProjection::class,
     ];
 
@@ -142,7 +142,7 @@ final class Account extends Model
     protected function type(): Attribute
     {
         return Attribute::make(
-            get: fn () => match ($this->accountable_type) {
+            get: fn (): \App\Enums\AccountType => match ($this->accountable_type) {
                 Depository::class => AccountType::Depository,
                 Investment::class => AccountType::Investment,
                 Crypto::class => AccountType::Crypto,

@@ -17,7 +17,7 @@ final class Trend implements JsonSerializable
     public function getPercentageChange(): string
     {
         // If no previous value, return 100% if current is positive, -100% if negative
-        if (! $this->previous) {
+        if ($this->previous === null || $this->previous === '' || $this->previous === '0') {
             $comparison = bccomp($this->current, '0.0000', 4);
             if ($comparison === 0) {
                 return '0.00';
@@ -48,7 +48,7 @@ final class Trend implements JsonSerializable
 
     public function getDirection(): string
     {
-        if (! $this->previous) {
+        if ($this->previous === null || $this->previous === '' || $this->previous === '0') {
             return 'neutral';
         }
 

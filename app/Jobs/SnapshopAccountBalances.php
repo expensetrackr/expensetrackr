@@ -59,8 +59,8 @@ final class SnapshopAccountBalances implements ShouldQueue
 
             Account::query()
                 ->select(['id', 'current_balance', 'workspace_id'])
-                ->chunk(1000, function ($accounts) use ($now) {
-                    $balances = $accounts->map(fn ($account) => [
+                ->chunk(1000, function ($accounts) use ($now): void {
+                    $balances = $accounts->map(fn ($account): array => [
                         'balance' => $account->current_balance,
                         'dated_at' => $now,
                         'account_id' => $account->id,

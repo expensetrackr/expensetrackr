@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Data\FinanceCore;
+namespace App\Data\Finance;
 
-use App\Data\Teller\TellerTransactionData;
+use App\Data\Banking\TellerTransactionData;
 use App\Enums\TransactionStatus;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;

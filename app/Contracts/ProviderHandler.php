@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Contracts;
 
-use App\Data\FinanceCore\AccountData;
-use App\Data\FinanceCore\BalanceData;
-use App\Data\FinanceCore\TransactionData;
+use App\Data\Finance\AccountData;
+use App\Data\Finance\BalanceData;
+use App\Data\Finance\TransactionData;
 use Illuminate\Support\Collection;
 
 interface ProviderHandler

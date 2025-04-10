@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Contracts\ProviderHandler;
-use App\Data\FinanceCore\AccountData;
-use App\Data\FinanceCore\BalanceData;
-use App\Data\FinanceCore\TransactionData;
-use App\Data\Teller\TellerAccountBalanceData;
-use App\Data\Teller\TellerAccountData;
-use App\Data\Teller\TellerTransactionData;
+use App\Data\Banking\TellerAccountBalanceData;
+use App\Data\Banking\TellerAccountData;
+use App\Data\Banking\TellerTransactionData;
+use App\Data\Finance\AccountData;
+use App\Data\Finance\BalanceData;
+use App\Data\Finance\TransactionData;
 use App\Enums\Teller\EnvironmentType;
 use App\Enums\TransactionStatus;
 use App\Exceptions\MissingTellerCertException;

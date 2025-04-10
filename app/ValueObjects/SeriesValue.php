@@ -7,12 +7,12 @@ namespace App\ValueObjects;
 use Carbon\CarbonImmutable;
 use JsonSerializable;
 
-final class SeriesValue implements JsonSerializable
+final readonly class SeriesValue implements JsonSerializable
 {
     public function __construct(
-        public readonly CarbonImmutable $date,
-        public readonly string $dateFormatted,
-        public readonly Trend $trend,
+        public CarbonImmutable $date,
+        public string $dateFormatted,
+        public Trend $trend,
     ) {}
 
     public function jsonSerialize(): array

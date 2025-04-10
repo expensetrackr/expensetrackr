@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Data\FinanceCore;
+namespace App\Data\Finance;
 
-use App\Data\Teller\TellerAccountBalanceData;
+use App\Data\Banking\TellerAccountBalanceData;
 use Spatie\LaravelData\Data;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 

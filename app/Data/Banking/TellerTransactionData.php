@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Data\Teller;
+namespace App\Data\Banking;
 
 use App\Enums\Teller\TransactionStatus;
 use Spatie\LaravelData\Attributes\MapName;

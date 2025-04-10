@@ -8,17 +8,17 @@ use Carbon\CarbonImmutable;
 use Illuminate\Support\Collection;
 use JsonSerializable;
 
-final class Series implements JsonSerializable
+final readonly class Series implements JsonSerializable
 {
     /**
      * @param  Collection<int, SeriesValue>  $values
      */
     public function __construct(
-        public readonly CarbonImmutable $startDate,
-        public readonly CarbonImmutable $endDate,
-        public readonly string $interval,
-        public readonly Trend $trend,
-        public readonly Collection $values,
+        public CarbonImmutable $startDate,
+        public CarbonImmutable $endDate,
+        public string $interval,
+        public Trend $trend,
+        public Collection $values,
     ) {}
 
     public function jsonSerialize(): array
@@ -28,7 +28,7 @@ final class Series implements JsonSerializable
             'endDate' => $this->endDate->toISOString(),
             'interval' => $this->interval,
             'trend' => $this->trend->jsonSerialize(),
-            'values' => $this->values->map(fn ($value) => [
+            'values' => $this->values->map(fn ($value): array => [
                 'date' => $value->date->toISOString(),
                 'dateFormatted' => $value->dateFormatted,
                 'trend' => $value->trend->jsonSerialize(),

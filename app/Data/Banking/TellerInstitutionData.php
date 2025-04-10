@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Data\Teller;
+namespace App\Data\Banking;
 
 use Spatie\LaravelData\Data;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;

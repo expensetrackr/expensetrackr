@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Data\FinanceCore;
+namespace App\Data\Finance;
 
-use App\Data\Teller\TellerAccountData;
+use App\Data\Banking\TellerAccountData;
 use App\Enums\AccountSubtype;
 use App\Enums\AccountType;
 use App\Enums\ProviderType;

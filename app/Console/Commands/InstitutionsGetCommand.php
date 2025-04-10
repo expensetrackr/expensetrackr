@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Console\Commands;
 
 use App\Data\Banking\Institution\SearchableInstitutionData;
-use App\Data\Teller\TellerInstitutionItemData;
+use App\Data\Banking\TellerInstitutionItemData;
 use App\Enums\ProviderType;
 use App\Jobs\ProcessInstitutionLogos;
 use App\Services\MeilisearchService;

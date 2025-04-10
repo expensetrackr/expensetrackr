@@ -6,11 +6,11 @@ namespace App\ValueObjects;
 
 use Carbon\CarbonImmutable;
 
-final class Period
+final readonly class Period
 {
     public function __construct(
-        public readonly CarbonImmutable $startDate,
-        public readonly CarbonImmutable $endDate,
+        public CarbonImmutable $startDate,
+        public CarbonImmutable $endDate,
     ) {}
 
     public static function last30Days(): self

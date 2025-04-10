@@ -7,13 +7,13 @@ namespace App\ValueObjects;
 use Akaunting\Money\Currency;
 use Akaunting\Money\Money as AkauntingMoney;
 
-final class Money
+final readonly class Money
 {
-    private readonly AkauntingMoney $money;
+    private AkauntingMoney $money;
 
     public function __construct(
-        public readonly string $amount,
-        public readonly string $currency,
+        public string $amount,
+        public string $currency,
     ) {
         $this->money = new AkauntingMoney($amount, new Currency($currency));
     }

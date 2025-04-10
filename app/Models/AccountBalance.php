@@ -80,13 +80,13 @@ final class AccountBalance extends Model
         }
 
         // Get the last balance before the period starts to establish initial balance
-        $query->where(function ($q) use ($period) {
+        $query->where(function ($q) use ($period): void {
             $q->where('dated_at', '<=', $period->end_date)
-                ->where(function ($inner) use ($period) {
+                ->where(function ($inner) use ($period): void {
                     $inner->where('dated_at', '>=', $period->start_date)
-                        ->orWhere(function ($last) use ($period) {
+                        ->orWhere(function ($last) use ($period): void {
                             $last->where('dated_at', '<', $period->start_date)
-                                ->whereNotExists(function ($exists) use ($period) {
+                                ->whereNotExists(function ($exists) use ($period): void {
                                     $exists->select(DB::raw(1))
                                         ->from('account_balances as newer')
                                         ->whereColumn('newer.account_id', 'account_balances.account_id')
@@ -167,7 +167,7 @@ final class AccountBalance extends Model
             DB::raw('COALESCE(account_balances.balance, 0) as balance'),
             'account_balances.account_id',
         ])
-            ->rightJoin(DB::raw("({$seriesSql}) as series"), function ($join) use ($interval) {
+            ->rightJoin(DB::raw("({$seriesSql}) as series"), function ($join) use ($interval): void {
                 $join->on(
                     DB::raw("DATE_TRUNC('$interval', account_balances.dated_at)"),
                     '=',

@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Contracts\CurrencyHandler;
-use App\Data\BlackMarketDolar\ArgentinaResponseData;
-use App\Data\BlackMarketDolar\VenezuelaResponseData;
-use App\Data\ExchangeRate\CodesResponseData;
-use App\Data\ExchangeRate\LatestResponseData;
+use App\Data\Currency\ArgentinaResponseData;
+use App\Data\Currency\CodesResponseData;
+use App\Data\Currency\LatestResponseData;
+use App\Data\Currency\VenezuelaResponseData;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
