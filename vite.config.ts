@@ -36,6 +36,11 @@ export default defineConfig({
                 run: ["php", "artisan", "wayfinder:generate", "--with-form"],
                 pattern: ["routes/**/*.php", "app/**/Http/**/*.php"],
             },
+            {
+                name: "laravel-data-types",
+                run: ["php", "artisan", "typescript:transform", "--format"],
+                pattern: ["app/Data/**/*.php"],
+            },
         ]),
     ],
     esbuild: {
