@@ -18,7 +18,7 @@ import { UpdateCategoryModal } from "./update-category-modal.tsx";
 type CategoryCardProps = {
     category: Resources.Category;
     categories: {
-        [key in App.Enums.CategoryClassification]: Array<Resources.Category>;
+        [key in App.Enums.Finance.CategoryClassification]: Array<Resources.Category>;
     };
     isChild?: boolean;
 };

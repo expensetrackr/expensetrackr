@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Data\Shared;
 
 use App\Data\Auth\InertiaAuthData;
+use App\Data\Socialstream\SocialstreamData;
 use App\Data\Workspace\WorkspacesPermissionsData;
 use App\Enums\Shared\Language;
 use Closure;
@@ -26,6 +27,7 @@ final class SharedInertiaData extends Data
         /** @var array<string, string>|Closure */
         #[LiteralTypeScriptType('Record<string, string>')]
         public readonly array|Closure $translations,
+        public readonly SocialstreamData $socialstream,
         public readonly PermissionsData $permissions,
         /** @var array<string,string>|null */
         public readonly array|string|AlwaysProp|null $errors = null,

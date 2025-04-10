@@ -6,7 +6,7 @@ type ConnectedAccountProps = {
     children?: React.ReactNode;
 };
 
-const providerIcons: Record<App.Enums.Socialstream.Provider, React.ReactNode> = {
+const providerIcons: Record<App.Enums.Shared.SocialstreamProvider, React.ReactNode> = {
     google: <GoogleIcon className="size-7" />,
 };
 

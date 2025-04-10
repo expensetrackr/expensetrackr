@@ -13,8 +13,8 @@ import { routes } from "#/routes.ts";
 import { ConnectAccountStepper } from "#/utils/steppers/create-account.step";
 
 type CreateAccountConnectPageProps = {
-    institutions: Array<App.Data.Banking.Institution.SearchableInstitutionData>;
-    bankAccounts: Array<App.Data.Banking.Account.BankAccountData>;
+    institutions: Array<App.Data.Finance.InstitutionSearchData>;
+    bankAccounts: Array<App.Data.Finance.BankAccountData>;
 };
 
 export default function CreateAccountConnectPage({ institutions, bankAccounts }: CreateAccountConnectPageProps) {

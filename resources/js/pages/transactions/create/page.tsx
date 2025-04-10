@@ -29,11 +29,11 @@ import { decimalFormatter } from "#/utils/number-formatter.ts";
 type FormData = {
     name: string;
     note?: string | null;
-    type: App.Enums.TransactionType;
+    type: App.Enums.Finance.TransactionType;
     amount: string;
     currency: string;
     isRecurring: boolean;
-    recurringInterval?: App.Enums.TransactionRecurringInterval | null;
+    recurringInterval?: App.Enums.Finance.TransactionRecurringInterval | null;
     accountId: string;
     categoryId: string;
 };
@@ -232,7 +232,9 @@ export default function CreateTransactionPage({ accounts, currencies, categories
                                     id="type"
                                     label="Type"
                                     name="type"
-                                    onValueChange={(value) => form.setData("type", value as App.Enums.TransactionType)}
+                                    onValueChange={(value) =>
+                                        form.setData("type", value as App.Enums.Finance.TransactionType)
+                                    }
                                     options={TransactionType.options.map((type) => ({
                                         label: type,
                                         value: type,
@@ -286,7 +288,7 @@ export default function CreateTransactionPage({ accounts, currencies, categories
                                             onValueChange={(value) =>
                                                 form.setData(
                                                     "recurringInterval",
-                                                    value as App.Enums.TransactionRecurringInterval,
+                                                    value as App.Enums.Finance.TransactionRecurringInterval,
                                                 )
                                             }
                                             options={TransactionRecurringInterval.options.map((interval) => ({

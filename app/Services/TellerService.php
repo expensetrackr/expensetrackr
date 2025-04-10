@@ -8,8 +8,8 @@ use App\Contracts\ProviderHandler;
 use App\Data\Banking\TellerAccountBalanceData;
 use App\Data\Banking\TellerAccountData;
 use App\Data\Banking\TellerTransactionData;
-use App\Data\Finance\AccountData;
 use App\Data\Finance\BalanceData;
+use App\Data\Finance\BankAccountData;
 use App\Data\Finance\TransactionData;
 use App\Enums\Banking\TellerTransactionStatus;
 use App\Enums\Teller\TellerEnvironment;
@@ -49,21 +49,21 @@ final class TellerService implements ProviderHandler
     {
         $accounts = collect(TellerAccountData::collect((array) $this->get('/accounts')));
 
-        return $accounts->map(function (TellerAccountData $account): AccountData {
+        return $accounts->map(function (TellerAccountData $account): BankAccountData {
             $balance = $this->getAccountBalances($account->id);
 
-            return AccountData::fromTeller($account, $balance);
+            return BankAccountData::fromTeller($account, $balance);
         });
     }
 
     /**
      * Get a single account by ID
      */
-    public function getAccount(string $accountId): AccountData
+    public function getAccount(string $accountId): BankAccountData
     {
         $account = TellerAccountData::from($this->get("/accounts/{$accountId}"));
 
-        return AccountData::fromTeller($account, $this->getAccountBalances($accountId));
+        return BankAccountData::fromTeller($account, $this->getAccountBalances($accountId));
     }
 
     /**

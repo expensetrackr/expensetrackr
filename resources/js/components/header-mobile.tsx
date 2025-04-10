@@ -16,12 +16,19 @@ export function HeaderMobile() {
             <div className="flex h-[60px] w-full items-center justify-between border-b border-(--stroke-soft-200) px-4 lg:hidden">
                 <Link className="shrink-0" href="/">
                     <picture>
-                        <Source media="(prefers-color-scheme: dark)" src="/img/isotype-dark.svg" />
+                        <Source
+                            height={36}
+                            media="(prefers-color-scheme: dark)"
+                            src="/img/isotype-dark.svg"
+                            width={36}
+                        />
                         <Image
                             alt="ExpenseTrackr"
                             className="size-9"
                             fetchPriority="high"
+                            height={36}
                             src="/img/isotype-light.svg"
+                            width={36}
                         />
                     </picture>
                 </Link>

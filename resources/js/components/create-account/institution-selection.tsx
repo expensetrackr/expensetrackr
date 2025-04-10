@@ -14,7 +14,7 @@ import * as Kbd from "../ui/kbd.tsx";
 import * as Label from "../ui/label.tsx";
 
 type InstitutionSelectionProps = {
-    institutions: Array<App.Data.Banking.Institution.SearchableInstitutionData>;
+    institutions: Array<App.Data.Finance.InstitutionSearchData>;
 };
 
 export function InstitutionSelection({ institutions }: InstitutionSelectionProps) {
@@ -67,7 +67,7 @@ type SearchResultProps = {
     id: string;
     name: string;
     logo: string | null;
-    provider: App.Enums.ProviderType;
+    provider: App.Enums.Banking.ProviderType;
 };
 
 function SearchResult({ id, name, logo, provider }: SearchResultProps) {

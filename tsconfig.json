@@ -4,6 +4,11 @@
         "resources/js/**/*.tsx",
         "resources/js/**/*.d.ts"
     ],
+    "exclude": [
+        "resources/js/actions/**/*.ts",
+        "resources/js/routes/**/*.ts",
+        "resources/js/wayfinder/**/*.ts"
+    ],
     "extends": [
         "@epic-web/config/typescript"
     ],

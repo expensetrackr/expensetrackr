@@ -8,7 +8,10 @@ import oauth from "#/routes/oauth/index.ts";
 
 const socialsIcons = {
     google: GoogleIcon,
-} satisfies Record<App.Enums.Socialstream.Provider, React.ForwardRefExoticComponent<React.SVGProps<SVGSVGElement>>>;
+} satisfies Record<
+    App.Enums.Shared.SocialstreamProvider,
+    React.ForwardRefExoticComponent<React.SVGProps<SVGSVGElement>>
+>;
 
 export function Socialstream() {
     const socialstream = useSocialstream();

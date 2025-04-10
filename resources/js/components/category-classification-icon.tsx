@@ -4,7 +4,7 @@ import ShoppingBasket03Icon from "virtual:icons/hugeicons/shopping-basket-03";
 import Wallet02Icon from "virtual:icons/hugeicons/wallet-02";
 
 export const classificationIcons: Record<
-    App.Enums.CategoryClassification,
+    App.Enums.Finance.CategoryClassification,
     React.ComponentType<React.SVGProps<SVGSVGElement>>
 > = {
     income: Wallet02Icon,
@@ -16,7 +16,7 @@ export const classificationIcons: Record<
 export function CategoryClassificationIcon({
     classification,
     ...props
-}: { classification: App.Enums.CategoryClassification } & React.SVGProps<SVGSVGElement>) {
+}: { classification: App.Enums.Finance.CategoryClassification } & React.SVGProps<SVGSVGElement>) {
     const Icon = classificationIcons[classification];
 
     return <Icon {...props} />;

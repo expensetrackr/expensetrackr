@@ -3,7 +3,7 @@ import { TellerConnect } from "./teller-connect.tsx";
 type ConnectBankProviderProps = {
     id: string;
     name: string;
-    provider: App.Enums.ProviderType;
+    provider: App.Enums.Banking.ProviderType;
 };
 
 export function ConnectBankProvider({ id, provider }: ConnectBankProviderProps) {

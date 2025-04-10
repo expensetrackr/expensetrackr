@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Contracts;
 
-use App\Data\Finance\AccountData;
 use App\Data\Finance\BalanceData;
+use App\Data\Finance\BankAccountData;
 use App\Data\Finance\TransactionData;
 use Illuminate\Support\Collection;
 
@@ -21,7 +21,7 @@ interface ProviderHandler
     /**
      * Get a single account by ID
      */
-    public function getAccount(string $accountId): AccountData;
+    public function getAccount(string $accountId): BankAccountData;
 
     /**
      * Get the balances for an account

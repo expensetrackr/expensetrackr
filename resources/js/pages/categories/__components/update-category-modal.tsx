@@ -14,7 +14,7 @@ import { routes } from "#/routes.ts";
 
 type UpdateCategoryModalProps = {
     categories: {
-        [key in App.Enums.CategoryClassification]: Array<Resources.Category>;
+        [key in App.Enums.Finance.CategoryClassification]: Array<Resources.Category>;
     };
     category: Resources.Category;
 };
@@ -25,7 +25,7 @@ export function UpdateCategoryModal({ categories, category }: UpdateCategoryModa
         name: category.name,
         color: category.color,
         description: category.description || "",
-        classification: category.classification,
+        classification: category.classification as App.Enums.Finance.CategoryClassification,
         parentId: category.parentId,
     });
 
@@ -112,13 +112,15 @@ export function UpdateCategoryModal({ categories, category }: UpdateCategoryModa
                                 label="Classification"
                                 name="classification"
                                 onValueChange={(value) => {
-                                    form.setData("classification", value as App.Enums.CategoryClassification);
+                                    form.setData("classification", value as App.Enums.Finance.CategoryClassification);
                                     form.setData("parentId", "");
                                 }}
                                 options={["income", "expense", "transfer", "other"].map((classification) => ({
                                     value: classification,
                                     label: classification,
-                                    icon: classificationIcons[classification as App.Enums.CategoryClassification],
+                                    icon: classificationIcons[
+                                        classification as App.Enums.Finance.CategoryClassification
+                                    ],
                                 }))}
                                 value={form.data.classification}
                             />

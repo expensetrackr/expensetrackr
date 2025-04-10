@@ -13,7 +13,7 @@ import { CreateCategoryModal } from "./__components/create-category-modal.tsx";
 
 type CategoriesPageProps = {
     categories: {
-        [key in App.Enums.CategoryClassification]: Array<Resources.Category>;
+        [key in App.Enums.Finance.CategoryClassification]: Array<Resources.Category>;
     };
     category: Resources.Category | null;
 };

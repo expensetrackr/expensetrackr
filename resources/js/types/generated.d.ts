@@ -88,7 +88,11 @@ declare namespace App.Data.Finance {
         type: App.Enums.Finance.AccountType;
         subtype: App.Enums.Finance.AccountSubtype | null;
     };
-    export type AccountData = {
+    export type BalanceData = {
+        currency: string;
+        amount: number;
+    };
+    export type BankAccountData = {
         id: string;
         name: string;
         currency: string;
@@ -99,10 +103,6 @@ declare namespace App.Data.Finance {
         enrollmentId: string | null;
         institutionCode: string | null;
         expiresAt: string | null;
-    };
-    export type BalanceData = {
-        currency: string;
-        amount: number;
     };
     export type BankConnectionAccountCreateData = {
         institutionId: string;
@@ -168,6 +168,7 @@ declare namespace App.Data.Shared {
         language: App.Enums.Shared.Language;
         languages: Array<App.Data.Shared.LanguageData> | null;
         translations: Record<string, string>;
+        socialstream: App.Data.Socialstream.SocialstreamData;
         permissions: App.Data.Shared.PermissionsData;
         errors: { [key: string]: string } | null;
     };
@@ -176,6 +177,25 @@ declare namespace App.Data.Shared {
         title: string;
         description: string | null;
         duration: number | null;
+    };
+}
+declare namespace App.Data.Socialstream {
+    export type ConnectedAccount = {
+        id: number;
+        provider: string;
+        avatarPath: string;
+        createdAt: string;
+    };
+    export type ProviderData = {
+        id: App.Enums.Shared.SocialstreamProvider;
+        name: string;
+        buttonLabel: string | null;
+    };
+    export type SocialstreamData = {
+        providers: Array<App.Data.Socialstream.ProviderData>;
+        show: boolean;
+        connectedAccounts: Array<App.Data.Socialstream.ConnectedAccount>;
+        hasPassword: boolean;
     };
 }
 declare namespace App.Data.Synth {
@@ -297,5 +317,6 @@ declare namespace App.Enums.Finance {
 declare namespace App.Enums.Shared {
     export type Language = "en" | "es";
     export type MediaService = "product_media";
+    export type SocialstreamProvider = "google";
     export type ToastType = "error" | "warning" | "success" | "info";
 }

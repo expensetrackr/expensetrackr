@@ -16,7 +16,7 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
 #[TypeScript]
 #[MapName(SnakeCaseMapper::class, CamelCaseMapper::class)]
-final class AccountData extends Data
+final class BankAccountData extends Data
 {
     public function __construct(
         public readonly string $id,

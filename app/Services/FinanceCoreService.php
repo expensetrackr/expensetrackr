@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Contracts\ProviderHandler;
-use App\Data\Finance\AccountData;
 use App\Data\Finance\BalanceData;
+use App\Data\Finance\BankAccountData;
 use App\Data\Finance\TransactionData;
 use App\Enums\Banking\ProviderType;
 use Illuminate\Support\Collection;
@@ -60,7 +60,7 @@ final readonly class FinanceCoreService implements ProviderHandler
     /**
      * Get a single account by ID
      */
-    public function getAccount(string $accountId): AccountData
+    public function getAccount(string $accountId): BankAccountData
     {
         return $this->getProviderInstance()->getAccount($accountId);
     }
