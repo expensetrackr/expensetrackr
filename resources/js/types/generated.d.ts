@@ -77,6 +77,60 @@ declare namespace App.Data.Banking {
         type: string | null;
     };
 }
+declare namespace App.Data.Currency {
+    export type ArgentinaDolarItemData = {
+        valueAvg: number;
+        valueSell: number;
+        valueBuy: number;
+    };
+    export type ArgentinaResponseData = {
+        oficial: App.Data.Currency.ArgentinaDolarItemData;
+        blue: App.Data.Currency.ArgentinaDolarItemData;
+        oficialEuro: App.Data.Currency.ArgentinaDolarItemData;
+        blueEuro: App.Data.Currency.ArgentinaDolarItemData;
+    };
+    export type CodesResponseData = {
+        result: string;
+        documentation: string;
+        termsOfUse: string;
+        supportedCodes: [string, string][];
+    };
+    export type LatestResponseData = {
+        result: string;
+        documentation: string;
+        termsOfUse: string;
+        timeLastUpdateUnix: number;
+        timeLastUpdateUtc: string;
+        timeNextUpdateUnix: number;
+        timeNextUpdateUtc: string;
+        baseCode: string;
+        conversionRates: { [key: string]: number | string };
+    };
+    export type VenezuelaResponseData = {
+        status: number;
+        total: number;
+        result: Array<App.Data.Currency.VenezuelaResponseItemData>;
+    };
+    export type VenezuelaResponseItemData = {
+        id: number;
+        binance: string;
+        dolartoday: string;
+        localbitcoindt: string;
+        yadio: string;
+        airtm: string;
+        akb: string | null;
+        cambiosrya: string;
+        mkambio: string;
+        bcv: string;
+        promediototalmk: string;
+        promediovip: string;
+        fecha: string;
+        hora: string;
+        horaEpv: string;
+        fechaEpv: string;
+        promEpv: string;
+    };
+}
 declare namespace App.Data.Finance {
     export type AccountCreateData = {
         bankConnectionId: number | null;
@@ -88,9 +142,29 @@ declare namespace App.Data.Finance {
         type: App.Enums.Finance.AccountType;
         subtype: App.Enums.Finance.AccountSubtype | null;
     };
+    export type AccountData = {
+        id: number;
+        name: string;
+        currentBalance: string;
+        type: App.Enums.Finance.AccountType;
+        weight: number;
+    };
+    export type AccountGroupData = {
+        key: string;
+        name: string;
+        classification: string;
+        total: string;
+        weight: number;
+        color: string;
+        accounts: { [key: number]: App.Data.Finance.AccountData };
+    };
     export type BalanceData = {
         currency: string;
         amount: number;
+    };
+    export type BalanceSheetData = {
+        assets: App.Data.Finance.ClassificationGroupData;
+        liabilities: App.Data.Finance.ClassificationGroupData;
     };
     export type BankAccountData = {
         id: string;
@@ -121,7 +195,26 @@ declare namespace App.Data.Finance {
         providerConnectionId: string | null;
         providerType: App.Enums.Banking.ProviderType;
         accessToken: string;
-        accounts: Array<any>;
+        accounts: Array<App.Data.Finance.BankConnectionAccountCreateData>;
+    };
+    export type ChartBalanceData = {
+        date: string | null;
+        balance: string;
+        cashBalance: string;
+        holdingsBalance: string;
+    };
+    export type ChartSeriesData = {
+        startDate: string;
+        endDate: string;
+        interval: string;
+        trend: App.Data.Finance.TrendData;
+        values: { [key: number]: App.Data.Finance.SeriesValueData };
+    };
+    export type ClassificationGroupData = {
+        key: string;
+        displayName: string;
+        icon: string;
+        accountGroups: { [key: number]: App.Data.Finance.AccountGroupData };
     };
     export type InstitutionData = {
         id: string;
@@ -137,6 +230,11 @@ declare namespace App.Data.Finance {
         popularity: number;
         provider: App.Enums.Banking.ProviderType;
     };
+    export type SeriesValueData = {
+        date: string;
+        dateFormatted: string;
+        trend: App.Data.Finance.TrendData;
+    };
     export type TransactionData = {
         id: string;
         name: string;
@@ -149,6 +247,11 @@ declare namespace App.Data.Finance {
         amount: string;
         currency: string;
         datedAt: any;
+    };
+    export type TrendData = {
+        current: string;
+        previous: string | null;
+        favorableDirection: string;
     };
 }
 declare namespace App.Data.Shared {
@@ -281,6 +384,7 @@ declare namespace App.Enums.Banking {
         | "sweep"
         | "credit_card";
     export type TellerAccountType = "depository" | "credit";
+    export type TellerEnvironment = "sandbox" | "development" | "production";
     export type TellerTransactionStatus = "posted" | "pending";
 }
 declare namespace App.Enums.Finance {

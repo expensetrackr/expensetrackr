@@ -58,10 +58,10 @@ Route::get('/thank-you', fn () => Inertia::render('thank-you'))->name('thank-you
 /**
  * If the route is /login, /register or /forgot-password, redirect to the homepage.
  */
-Route::redirect('/login', '/', 307);
-Route::redirect('/register', '/', 307);
-Route::redirect('/forgot-password', '/', 307);
-Route::redirect('/reset-password', '/', 307);
+// Route::redirect('/login', '/', 307);
+// Route::redirect('/register', '/', 307);
+// Route::redirect('/forgot-password', '/', 307);
+// Route::redirect('/reset-password', '/', 307);
 
 require __DIR__.'/socialstream.php';
 require __DIR__.'/workspaces.php';

@@ -11,7 +11,6 @@ use App\Filters\FiltersTransactionsByAccount;
 use App\Http\Requests\CreateTransactionRequest;
 use App\Http\Requests\UpdateTransactionRequest;
 use App\Http\Resources\AccountResource;
-use App\Http\Resources\CategoryResource;
 use App\Http\Resources\TransactionResource;
 use App\Models\Account;
 use App\Models\Category;
@@ -38,41 +37,39 @@ final class TransactionController extends Controller
         $transactionId = $request->string('transaction_id');
 
         $transaction = $transactionId->isNotEmpty()
-            ? new TransactionResource(
-                Transaction::query()
-                    ->wherePublicId($transactionId->value())
-                    ->first()
-            )
+            ? Transaction::query()
+                ->with(['category', 'merchant'])
+                ->wherePublicId($transactionId->value())
+                ->first()
+                ?->toResource()
             : null;
         $categories = collect();
 
         if ($transaction instanceof TransactionResource) {
-            $categories = CategoryResource::collection(
-                Category::query()
-                    ->where(function ($query) use ($user): void {
-                        $query->where('is_system', true)
-                            ->orWhere(function ($query) use ($user): void {
-                                $query->where('workspace_id', $user->current_workspace_id)
-                                    ->where('is_system', false);
-                            });
-                    })
-                    ->orderBy('name', 'asc')
-                    ->get()
-            );
+            $categories = Category::query()
+                ->where(function ($query) use ($user): void {
+                    $query->where('is_system', true)
+                        ->orWhere(function ($query) use ($user): void {
+                            $query->where('workspace_id', $user->current_workspace_id)
+                                ->where('is_system', false);
+                        });
+                })
+                ->orderBy('name', 'asc')
+                ->get()
+                ->toResourceCollection();
         }
 
         return Inertia::render('transactions/page', [
-            'transactions' => TransactionResource::collection(
-                QueryBuilder::for(Transaction::class)
-                    ->allowedFields(['name', 'note', 'type', 'base_amount', 'base_currency', 'currency_rate', 'amount', 'currency', 'is_recurring', 'is_manual', 'dated_at', 'public_id', 'category.public_id', 'category.name', 'category.slug', 'category.color', 'merchant.name', 'merchant.icon'])
-                    ->allowedIncludes(includes: ['category', 'merchant'])
-                    ->allowedFilters(['name', 'type', AllowedFilter::custom('account_id', new FiltersTransactionsByAccount)])
-                    ->allowedSorts(sorts: 'dated_at')
-                    ->defaultSort(sorts: '-dated_at')
-                    ->paginate(perPage: $perPage)
-                    ->onEachSide(1)
-                    ->appends($request->query())
-            ),
+            'transactions' => QueryBuilder::for(Transaction::class)
+                ->allowedIncludes(includes: ['category', 'merchant'])
+                ->allowedFilters(['name', 'type', AllowedFilter::custom('account_id', new FiltersTransactionsByAccount)])
+                ->allowedSorts(sorts: 'dated_at')
+                ->defaultSort(sorts: '-dated_at')
+                ->with(['category', 'merchant'])
+                ->paginate(perPage: $perPage)
+                ->onEachSide(1)
+                ->appends($request->query())
+                ->toResourceCollection(),
             'transaction' => $transaction,
             'categories' => $categories,
             // Handy for updating the table when anything from server side changes
@@ -100,16 +97,15 @@ final class TransactionController extends Controller
         return Inertia::render('transactions/create/page', [
             'accounts' => $accounts,
             'currencies' => Forex::getSupportedCurrencies(),
-            'categories' => CategoryResource::collection(
-                Category::query()
-                    ->where('is_system', true)
-                    ->orWhere(function ($query) use ($user): void {
-                        $query->where('workspace_id', $user->current_workspace_id)
-                            ->where('is_system', false);
-                    })
-                    ->orderBy('name', 'asc')
-                    ->get()
-            ),
+            'categories' => Category::query()
+                ->where('is_system', true)
+                ->orWhere(function ($query) use ($user): void {
+                    $query->where('workspace_id', $user->current_workspace_id)
+                        ->where('is_system', false);
+                })
+                ->orderBy('name', 'asc')
+                ->get()
+                ->toResourceCollection(),
         ]);
     }
 

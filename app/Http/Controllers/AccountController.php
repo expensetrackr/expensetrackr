@@ -35,7 +35,7 @@ final class AccountController extends Controller
     {
         $accountPublicId = $request->query('account_id');
 
-        $accounts = AccountResource::collection(QueryBuilder::for(Account::class)
+        $accounts = QueryBuilder::for(Account::class)
             ->allowedFilters(['name'])
             ->allowedSorts(sorts: 'created_at')
             ->defaultSort('-created_at')
@@ -46,8 +46,10 @@ final class AccountController extends Controller
                     return $builder->whereIn('id', $search);
                 }
             })
+            ->with('bankConnection')
             ->paginate(100)
-            ->appends($request->query()));
+            ->appends($request->query())
+            ->toResourceCollection();
 
         $account = null;
         if ($accountPublicId) {

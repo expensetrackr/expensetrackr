@@ -17,6 +17,7 @@ use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
@@ -38,7 +39,7 @@ final class SyncBankAccounts implements ShouldBeUnique, ShouldQueue
     /**
      * The number of seconds to wait before retrying the job.
      */
-    public int $backoff = 60;
+    public int $backoff = 10;
 
     /**
      * The number of seconds after which the job's unique lock will be released.
@@ -107,17 +108,21 @@ final class SyncBankAccounts implements ShouldBeUnique, ShouldQueue
                 'last_sync_at' => now(),
             ]);
 
-            $accounts = Account::whereHas('bankConnection', function ($query): void {
-                $query->whereId($this->bankConnectionId);
+            $accounts = Account::whereHas('bankConnection', function (Builder $query): void {
+                $query
+                    ->whereId($this->bankConnectionId)
+                    ->select(
+                        'id',
+                        'provider_connection_id',
+                        'provider_type',
+                        'access_token',
+                        'status',
+                    );
             })
                 ->select(
                     'id',
                     'external_id',
-                    'bankConnection.id',
-                    'bankConnection.provider_connection_id',
-                    'bankConnection.provider_type',
-                    'bankConnection.access_token',
-                    'bankConnection.status',
+                    'bank_connection_id',
                 )
                 ->get();
 
@@ -240,15 +245,19 @@ final class SyncBankAccounts implements ShouldBeUnique, ShouldQueue
             }
 
             // Cache system categories for the duration of this job
-            /** @var Collection<string, Category> $systemCategories */
-            $systemCategories = Cache::remember('system_categories', 3600, fn () => Category::whereIsSystem(true)
+            /** @var array<string, array{id: int, slug: string}> */
+            $cachedSystemCategories = Cache::remember('system_categories', 3600, fn () => Category::whereIsSystem(true)
                 ->get(['id', 'slug'])
-                ->keyBy('slug'));
+                ->keyBy('slug')
+                ->toArray()
+            );
+
+            $systemCategories = collect($cachedSystemCategories);
 
             // Get default 'other' category ID once
-            $defaultCategoryId = $systemCategories->get('other')?->id;
+            $defaultCategory = $systemCategories->get('other');
 
-            if (! $defaultCategoryId) {
+            if (! $defaultCategory) {
                 throw new Exception("Default 'other' category not found");
             }
 
@@ -265,7 +274,7 @@ final class SyncBankAccounts implements ShouldBeUnique, ShouldQueue
                 'external_id' => $transaction->id,
                 'account_id' => $account->id,
                 'workspace_id' => $this->workspaceId,
-                'category_id' => $systemCategories->get($transaction->categorySlug)->id ?? $defaultCategoryId,
+                'category_id' => $systemCategories->get($transaction->categorySlug)['id'] ?? $defaultCategory['id'],
                 'public_id' => 'txn_'.PrefixedIds::getUniqueId(),
             ])->toArray();
 

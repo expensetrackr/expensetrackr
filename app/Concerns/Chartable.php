@@ -53,16 +53,16 @@ trait Chartable
         $lastBalance = $balances->last();
         $shouldInjectCurrentBalance = $balances->isEmpty() ||
             ($lastBalance && bccomp($lastBalance->balance, '0.0000', 4) === 0);
-        /** @var numeric-string $currentBalance */
-        $currentBalance = $this->current_balance;
 
         if ($shouldInjectCurrentBalance) {
             // Get the current balance for all accounts in the query
-            $currentBalances = $query->get()->mapWithKeys(function ($account) use ($currentBalance) {
-                $balance = bcadd($currentBalance, '0.0000', 4);
+            $currentBalances = $query->get()->mapWithKeys(function ($account) {
+                /** @var numeric-string $currentBalance */
+                $currentBalance = $account->current_balance;
+                $balance = bcadd($currentBalance, '0', 4);
                 $cashBalance = $account->type->isAsset()
-                    ? bcadd($currentBalance, '0.0000', 4)
-                    : bcmul($currentBalance, '-1.0000', 4);
+                    ? bcadd($currentBalance, '0', 4)
+                    : bcmul($currentBalance, '-1', 4);
 
                 return [$account->id => [
                     'balance' => $balance,
@@ -93,12 +93,15 @@ trait Chartable
                 );
             }
 
-            $balances->push(new ChartBalanceData(
-                now()->startOfDay()->toDateString(),
-                $totalBalance,
-                $totalCashBalance,
-                '0.0000'
-            ));
+            // Only add if the current balance is not zero
+            if (bccomp($totalBalance, '0.0000', 4) !== 0) {
+                $balances->push(new ChartBalanceData(
+                    now()->startOfDay()->toDateString(),
+                    $totalBalance,
+                    $totalCashBalance,
+                    '0.0000'
+                ));
+            }
         }
 
         $balances = static::gapfillBalances($balances);
@@ -261,7 +264,7 @@ trait Chartable
                 $startDate->startOfDay(),
                 $pgInterval,
                 $endDate->endOfDay(),
-                $interval,
+                "1 {$pgInterval}",
                 '{'.implode(',', $ids).'}',
             ]
         );
