@@ -3,277 +3,94 @@ description: Best practices and guidelines for Laravel
 globs: **/*.{php}
 alwaysApply: false
 ---
-## Key Principles
+1. Core Principles
 
-- Write concise, technical responses with accurate PHP examples.
-- Follow Laravel best practices and conventions.
-- Use object-oriented programming with a focus on SOLID principles.
-- Prefer iteration and modularization over duplication.
-- Use descriptive variable and method names.
-- Use lowercase with dashes for directories (e.g., app/Http/Controllers).
-- Favor dependency injection and service containers.
+    - Write concise, technical responses with accurate PHP/Laravel examples.
+    - Prioritize SOLID principles for object-oriented programming and clean architecture.
+    - Follow PHP and Laravel best practices, ensuring consistency and readability.
+    - Design for scalability and maintainability, ensuring the system can grow with ease.
+    - Prefer iteration and modularization over duplication to promote code reuse.
+    - Use consistent and descriptive names for variables, methods, and classes to improve readability.
 
-## PHP/Laravel
+2. Coding Standards
 
-- Use PHP 8.3+ features when appropriate (e.g., typed properties, match expressions, constructor property promotion).
-- Follow PSR-12 coding standards.
-- Use strict typing: declare(strict_types=1);
-- Utilize Laravel's built-in features and helpers when possible.
-- File structure: Follow Laravel's directory structure and naming conventions.
-- Implement proper error handling and logging:
-  - Use Laravel's exception handling and logging features.
-  - Create custom exceptions when necessary.
-  - Use try-catch blocks for expected exceptions.
-- Use Laravel's validation features for form and request validation.
-- Implement middleware for request filtering and modification.
-- Utilize Laravel's Eloquent ORM for database interactions.
-- Use Laravel's query builder for complex database queries.
-- Implement proper database migrations and seeders.
+    - Utilize the latest PHP v8.4 features.
+    - Adhere to coding standards defined in `pint.json`.
+    - Enforce strict type safety, including `array` shapes using PHPStan.
 
-## Laravel with Inertia.js Integration
+    2.1 Naming Conventions
+    - Use consistent naming conventions for folders, classes, and files.
+    - Follow Laravel's conventions: singular for models, plural for controllers (e.g., User.php, UsersController.php).
+    - Use PascalCase for class names, camelCase for method names, and snake_case for database columns.
 
-### Controllers & Responses
-- Structure controllers to return Inertia responses for web routes
-- Keep controllers focused on a single resource or concept
-- Use Form Request classes for validation rather than inline validation
-- Return only necessary data to Inertia views to minimize payload size
-- Example:
-  ```php
-  public function index()
-  {
-      return Inertia::render('accounts/index', [
-          'accounts' => AccountResource::collection(
-              Auth::user()->accounts()->latest()->paginate(10)
-          ),
-          'totalBalance' => Auth::user()->accounts()->sum('balance'),
-      ]);
-  }
-  ```
-- All the methods must be in lowercase like the example `accounts/index`
+    2.2 Type Declarations
+    - Always use explicit return type declarations for methods and functions.
+    - Use appropriate PHP type hints for method parameters.
+    - Leverage PHP 8.1+ features like union types and nullable types when necessary.
 
-### Prop Management & Data Passing
-- Use Eloquent Resources to transform models into JSON representations
-- Only pass needed data as props to minimize response size
-- Follow a consistent naming convention for props (camelCase in JavaScript)
-- Leverage Inertia's shared data for globally needed data like auth user
-- Use `HandleInertiaRequests` middleware to customize shared data
-- Example shared data:
-  ```php
-  public function share(Request $request): array
-  {
-      return array_merge(parent::share($request), [
-            'toast' => collect(Arr::only($request->session()->all(), ['error', 'warning', 'success', 'info']))
-                ->mapWithKeys(fn ($notification, $key): array => ['type' => $key, 'message' => $notification]),
-            'language' => session()->get('language', app()->getLocale()),
-            'languages' => LanguageResource::collection(Language::cases()),
-            'translations' => function () {
-                $locale = app()->getLocale();
-                $files = File::allFiles(base_path('lang/'.$locale));
+    2.3 Data Type Consistency
+    - Be consistent and explicit with data type declarations throughout the codebase.
+    - Use type hints for properties, method parameters, and return types.
+    - Leverage PHP's strict typing to catch type-related errors early.
 
-                // Get last modified time of all translation files
-                $lastModified = collect($files)->max(fn ($file) => $file->getMTime());
+3. Project Structure & Architecture
 
-                $cacheKey = 'translations.'.$locale;
-                $lastModifiedKey = 'translations_modified.'.$locale;
+    - Remove the existing `.gitkeep` file when creating a new file.
+    - Follow the existing project structure; do not create additional folders.
+    - Do not use the `DB::` facade directly—always use `Model::query()`.
+    - Do not add, update, or delete dependencies without prior approval.
 
-                // If cached last modified time differs, invalidate cache
-                if (cache()->get($lastModifiedKey) !== $lastModified) {
-                    cache()->forget($cacheKey);
-                }
+    3.1 Directory Conventions
 
-                return cache()->remember($cacheKey, now()->addYear(), function () use ($files, $lastModified, $lastModifiedKey) {
-                    cache()->forever($lastModifiedKey, $lastModified);
+    `app/Http/Controllers` - Controllers
+        - Do not use abstract `Controller.php` or any base controller.
 
-                    return collect($files)->flatMap(function ($file) {
-                        $fileContents = File::getRequire($file->getRealPath());
+    `app/Http/Requests` - Form Requests
+        - Always use FormRequest for validation.
+        - Use `Create`, `Update`, and `Delete` verbs in naming.
 
-                        return is_array($fileContents) ? Arr::dot($fileContents, $file->getBasename('.'.$file->getExtension()).'.') : [];
-                    });
-                });
-            },
-      ]);
-  }
-  ```
+    `app/Actions` - Business Logic
+        - Follow the Actions pattern.
+        - Use `Create`, `Update`, and `Delete` verbs in naming.
+        - Example Implementation:
+            ```php
+            public function store(CreateTodoRequest $request, CreateTodoAction $action)
+            {
+                /** @var User $user */
+                $user = $request->user();
 
-### Form Processing & Validation
-- Use Form Request classes for complex validation scenarios
-- Return validation errors in a format Inertia can handle
-- Properly handle file uploads through Inertia forms 
-- Set appropriate redirect responses after form processing
-- Example:
-  ```php
-  public function store(StoreAccountRequest $request)
-  {
-      $account = Auth::user()->accounts()->create(
-          $request->validated()
-      );
-      
-      return redirect()->route('accounts.show', $account)
-          ->with('message', 'Account created successfully.');
-  }
-  ```
+                $action->handle($user, $request->validated());
+                
+                // ...
+            }
+            ```
 
-### Error Handling
-- Create custom exception handlers that format errors for Inertia
-- Use flash messages for user-friendly error notifications
-- Return appropriate HTTP status codes with Inertia responses
-- Example exception handler:
-  ```php
-  public function render($request, Throwable $e)
-  {
-      $response = parent::render($request, $e);
-      
-      if ($request->header('X-Inertia') && $response->status() === 419) {
-          return back()->with([
-              'error' => 'The page expired, please try again.',
-          ]);
-      }
-      
-      return $response;
-  }
-  ```
+    `app/Models` - Eloquent Models
+        - Do not use `fillable` in models.
 
-### Authentication & Authorization
-- Use Laravel's built-in auth mechanisms with Inertia adaptations
-- Implement gates and policies for authorization
-- Check authorization in controllers before actions
-- Pass authorization results to Inertia props when needed
-- Example:
-  ```php
-  public function edit(Workspace $workspace)
-  {
-      $this->authorize('update', $workspace);
-      
-      return Inertia::render('workspaces/edit', [
-          'workspace' => WorkspaceResource::make($workspace),
-          'permissions' => [
-              'canAddMembers' => Auth::user()->can('addMember', $workspace),
-              'canDeleteWorkspace' => Auth::user()->can('delete', $workspace),
-          ],
-      ]);
-  }
-  ```
+4. Testing
 
-### API Resource Transformations
-- Create dedicated API resources for different response contexts
-- Use conditional attributes and relationships in resources
-- Implement proper nesting of resources for complex responses
-- Example:
-  ```php
-  class AccountResource extends JsonResource
-  {
-      public function toArray($request): array
-      {
-          return [
-              'id' => $this->id,
-              'name' => $this->name,
-              'balance' => $this->balance,
-              'currency' => new CurrencyResource($this->currency),
-              'created_at' => $this->created_at,
-              'updated_at' => $this->updated_at,
-              'can' => [
-                  'update' => $request->user()->can('update', $this->resource),
-                  'delete' => $request->user()->can('delete', $this->resource),
-              ],
-          ];
-      }
-  }
-  ```
+    - All tests must be written using PEST PHP.
+    - Run `composer lint` after creating or modifying a file.
+    - Run `composer test` before finalizing any changes to ensure tests pass.
+    - Always confirm with approval before removing a test.
+    - Ensure all new code is covered by tests.
+    - When creating models, always generate a `{Model}Factory`.
 
-### Routing
-- Group Inertia page routes logically
-- Use route names consistently with frontend expectations
-- Implement middleware for route groups appropriately
-- Example:
-  ```php
-  Route::middleware([
-      'auth:sanctum',
-      config('workspaces.auth_session'),
-      'verified',
-  ])->group(function () {
-      Route::get('/accounts', [AccountController::class, 'index'])->name('accounts.index');
-      Route::get('/accounts/create', [AccountController::class, 'create'])->name('accounts.create');
-      Route::post('/accounts', [AccountController::class, 'store'])->name('accounts.store');
-  });
-  ```
+    4.1 Test Directory Structure
 
-### Middleware for Inertia
-- Use `HandleInertiaRequests` middleware for shared data
-- Create custom middleware for Inertia-specific concerns
-- Use middleware for version negotiation if needed
-- Example custom middleware:
-  ```php
-  public function handle(Request $request, Closure $next)
-  {
-      $response = $next($request);
-      
-      if ($request->header('X-Inertia') && $response instanceof Response) {
-          $response->header('Vary', 'X-Inertia');
-      }
-      
-      return $response;
-  }
-  ```
+    - Commands: tests/Feature/Console
+    - Controllers: tests/Feature/Http
+    - Actions: tests/Unit/Actions
+    - Models: tests/Unit/Models
+    - Jobs: tests/Unit/Jobs
 
-## Best Practices
+5. Styling & UI
 
-- Use Eloquent ORM instead of raw SQL queries when possible.
-- Implement Repository pattern for data access layer.
-- Use Laravel's built-in authentication and authorization features.
-- Utilize Laravel's caching mechanisms for improved performance.
-- Implement job queues for long-running tasks.
-- Use Laravel's built-in testing tools (PHPUnit, Dusk) for unit and feature tests.
-- Implement API versioning for public APIs.
-- Use Laravel's localization features for multi-language support.
-- Implement proper CSRF protection and security measures.
-- Use Vite for asset compilation.
-- Implement proper database indexing for improved query performance.
-- Use Laravel's built-in pagination features.
-- Implement proper error logging and monitoring.
+    - Tailwind CSS must be used for styling.
+    - Maintain a minimal UI design.
 
-## Testing with Laravel and Inertia
+6. Task Completion Requirements
 
-- Test Inertia responses in feature tests
-- Assert proper props are being passed to components
-- Test form submissions and redirects
-- Example:
-  ```php
-  public function test_can_view_accounts_index()
-  {
-      $user = User::factory()->create();
-      $accounts = Account::factory()->count(3)->create(['user_id' => $user->id]);
-      
-      $response = $this->actingAs($user)
-          ->get(route('accounts.index'));
-          
-      $response->assertInertia(fn (Assert $page) => $page
-          ->component('accounts/index')
-          ->has('accounts.data', 3)
-          ->where('totalBalance', $accounts->sum('balance'))
-      );
-  }
-  ```
-
-## Performance Optimization
-
-- Use eager loading to avoid N+1 query problems
-- Implement database query caching where appropriate
-- Use API resources to limit data transferred to the frontend
-- Implement query builders for complex filtering operations
-- Optimize database indices for common queries
-- Use Laravel Scout for efficient full-text search
-- Implement route-model binding for cleaner controller code
-
-## Key Conventions
-1. Follow Laravel's MVC architecture.
-2. Use Laravel's routing system for defining application endpoints.
-3. Implement proper request validation using Form Requests.
-4. Use Inertia.js for server-side rendering React views.
-5. Implement proper database relationships using Eloquent.
-6. Use Laravel's built-in authentication scaffolding with Inertia adaptations.
-7. Implement proper API resource transformations for Inertia props.
-8. Use Laravel's event and listener system for decoupled code.
-9. Implement proper database transactions for data integrity.
-10. Use Laravel's built-in scheduling features for recurring tasks.
-11. Use TypeScript for better type safety between backend and frontend.
-12. Set up proper IDE helpers for better developer experience.
+    - Recompile assets after making frontend-related changes.
+    - Ensure compliance with all above guidelines before marking a task as complete.
