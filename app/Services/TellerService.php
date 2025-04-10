@@ -212,16 +212,16 @@ final class TellerService implements ProviderHandler
             $certPath = type(config('services.teller.cert_path'))->asString();
             $keyPath = type(config('services.teller.key_path'))->asString();
 
-            if (! file_exists($certPath) || empty($certPath)) {
+            if (! file_exists($certPath) || ($certPath === '' || $certPath === '0')) {
                 throw new MissingTellerCertException();
             }
 
-            if (! file_exists($keyPath) || empty($keyPath)) {
+            if (! file_exists($keyPath) || ($keyPath === '' || $keyPath === '0')) {
                 throw new MissingTellerKeyException();
             }
 
-            curl_setopt($curl, CURLOPT_SSLCERT, (string) $certPath);
-            curl_setopt($curl, CURLOPT_SSLKEY, (string) $keyPath);
+            curl_setopt($curl, CURLOPT_SSLCERT, $certPath);
+            curl_setopt($curl, CURLOPT_SSLKEY, $keyPath);
         }
 
         $response = curl_exec($curl);

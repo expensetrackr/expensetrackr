@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace App\Concerns;
 
+use App\Data\Finance\ChartBalanceData;
+use App\Data\Finance\ChartSeriesData;
 use App\ValueObjects\Period;
-use App\ValueObjects\Series;
-use App\ValueObjects\SeriesValue;
-use App\ValueObjects\Trend;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
@@ -35,32 +34,35 @@ trait Chartable
         string $favorableDirection = 'up',
         string $view = 'balance',
         ?string $interval = null
-    ): Series {
+    ): ChartSeriesData {
         if (! in_array($view, ['balance', 'cash_balance', 'holdings_balance', 'net_worth'])) {
             throw new InvalidArgumentException("Invalid view type: {$view}");
         }
 
         $seriesInterval = $interval ?? $period->getInterval();
 
+        /** @var Collection<int, ChartBalanceData> */
         $balances = static::getBalanceSeriesQuery(
-            startDate: $period->startDate,
-            endDate: $period->endDate,
-            interval: $seriesInterval,
-            query: $query
+            $period->startDate,
+            $period->endDate,
+            $seriesInterval,
+            $query
         );
 
         // Only inject current balance if the series is empty or last balance is 0
         $lastBalance = $balances->last();
         $shouldInjectCurrentBalance = $balances->isEmpty() ||
-            ($lastBalance && bccomp((string) ($lastBalance->balance ?? '0.0000'), '0.0000', 4) === 0);
+            ($lastBalance && bccomp($lastBalance->balance, '0.0000', 4) === 0);
+        /** @var numeric-string $currentBalance */
+        $currentBalance = $this->current_balance;
 
         if ($shouldInjectCurrentBalance) {
             // Get the current balance for all accounts in the query
-            $currentBalances = $query->get()->mapWithKeys(function ($account) {
-                $balance = bcadd((string) $account->current_balance, '0', 4);
+            $currentBalances = $query->get()->mapWithKeys(function ($account) use ($currentBalance) {
+                $balance = bcadd($currentBalance, '0.0000', 4);
                 $cashBalance = $account->type->isAsset()
-                    ? bcadd((string) $account->current_balance, '0', 4)
-                    : bcmul((string) $account->current_balance, '-1', 4);
+                    ? bcadd($currentBalance, '0.0000', 4)
+                    : bcmul($currentBalance, '-1.0000', 4);
 
                 return [$account->id => [
                     'balance' => $balance,
@@ -74,21 +76,29 @@ trait Chartable
             $totalCashBalance = '0.0000';
 
             foreach ($currentBalances as $balance) {
-                $totalBalance = bcadd($totalBalance, $balance['balance'], 4);
-                $totalCashBalance = bcadd($totalCashBalance, $balance['cash_balance'], 4);
+                /** @var numeric-string */
+                $numericBalance = $balance['balance'];
+                /** @var numeric-string */
+                $numericCashBalance = $balance['cash_balance'];
+
+                $totalBalance = bcadd(
+                    $totalBalance,
+                    $numericBalance,
+                    4
+                );
+                $totalCashBalance = bcadd(
+                    $totalCashBalance,
+                    $numericCashBalance,
+                    4
+                );
             }
 
-            $currentBalance = (object) [
-                'date' => now()->startOfDay()->toDateString(),
-                'balance' => $totalBalance,
-                'cash_balance' => $totalCashBalance,
-                'holdings_balance' => '0.0000',
-            ];
-
-            // Only add if the current balance is not zero
-            if (bccomp($currentBalance->balance, '0.0000', 4) !== 0) {
-                $balances->push($currentBalance);
-            }
+            $balances->push(new ChartBalanceData(
+                now()->startOfDay()->toDateString(),
+                $totalBalance,
+                $totalCashBalance,
+                '0.0000'
+            ));
         }
 
         $balances = static::gapfillBalances($balances);
@@ -97,37 +107,12 @@ trait Chartable
             $balances = static::invertBalances($balances);
         }
 
-        // Transform balances directly without sliding window
-        $values = $balances->map(fn ($curr): SeriesValue => new SeriesValue(
-            date: CarbonImmutable::parse($curr->date),
-            dateFormatted: CarbonImmutable::parse($curr->date)->isoFormat('LL'),
-            trend: new Trend(
-                current: static::getBalanceValueFor($curr, $view),
-                previous: null, // We'll update this in a second pass
-                favorableDirection: 'up'
-            )
-        ));
-
-        // Update previous values in a second pass
-        $values = $values->map(function ($value, $index) use ($values): SeriesValue {
-            if ($index > 0) {
-                $prev = $values[$index - 1];
-                $value->trend->previous = $prev->trend->current;
-            }
-
-            return $value;
-        });
-
-        return new Series(
-            startDate: $period->startDate,
-            endDate: $period->endDate,
-            interval: $seriesInterval,
-            trend: new Trend(
-                current: static::getBalanceValueFor($balances->last(), $view) ?? '0.0000',
-                previous: static::getBalanceValueFor($balances->first(), $view) ?? '0.0000',
-                favorableDirection: $favorableDirection
-            ),
-            values: $values
+        return ChartSeriesData::fromPeriodAndBalances(
+            $period,
+            $seriesInterval,
+            $balances,
+            $favorableDirection,
+            $view
         );
     }
 
@@ -150,10 +135,14 @@ trait Chartable
         ?Period $period = null,
         string $view = 'balance',
         ?string $interval = null
-    ): Series {
+    ): ChartSeriesData {
         $period ??= Period::last30Days();
 
-        return static::where('id', $this->id)->getBalanceSeries(
+        /** @var Builder<\App\Models\Account> $query */
+        $query = static::query()->where('id', $this->id);
+
+        // @phpstan-ignore method.notFound, return.type (scope is a valid method)
+        return $query->balanceSeries(
             period: $period,
             view: $view,
             interval: $interval,
@@ -164,10 +153,11 @@ trait Chartable
     /**
      * Get sparkline series for the account (cached version of balance series).
      */
-    public function sparklineSeries(): Series
+    public function sparklineSeries(): ChartSeriesData
     {
         $cacheKey = "account_{$this->id}_sparkline";
 
+        /** @var ChartSeriesData */
         return Cache::remember($cacheKey, CarbonImmutable::now()->addHour(), fn () => $this->accountBalanceSeries());
     }
 
@@ -175,7 +165,7 @@ trait Chartable
      * Get the raw SQL query for balance series.
      *
      * @param  Builder<\App\Models\Account>  $query
-     * @return Collection<int, object>
+     * @return Collection<int, ChartBalanceData>
      */
     private static function getBalanceSeriesQuery(
         CarbonImmutable $startDate,
@@ -194,7 +184,8 @@ trait Chartable
             default => 'day'
         };
 
-        return collect(DB::select(
+        /** @var array<int, object{date: string, balance: numeric-string, cash_balance: numeric-string, holdings_balance: numeric-string}> */
+        $results = DB::select(
             "WITH dates AS (
                 SELECT generate_series(
                     date_trunc(?, ?::timestamp),
@@ -273,70 +264,67 @@ trait Chartable
                 $interval,
                 '{'.implode(',', $ids).'}',
             ]
+        );
+
+        return collect($results)->map(fn ($result): ChartBalanceData => new ChartBalanceData(
+            $result->date,
+            $result->balance,
+            $result->cash_balance,
+            $result->holdings_balance
         ));
-    }
-
-    /**
-     * Get balance value for a specific view type.
-     *
-     * @throws InvalidArgumentException
-     */
-    private static function getBalanceValueFor(?object $balanceRecord, string $view): ?string
-    {
-        if (! $balanceRecord) {
-            return '0.0000';
-        }
-
-        return match ($view) {
-            'balance', 'net_worth' => $balanceRecord->balance,
-            'cash_balance' => $balanceRecord->cash_balance,
-            'holdings_balance' => $balanceRecord->holdings_balance,
-            default => throw new InvalidArgumentException("Invalid view type: {$view}"),
-        };
     }
 
     /**
      * Invert balances for the series.
      *
-     * @param  Collection<int, object>  $balances
-     * @return Collection<int, object>
+     * @param  Collection<int, ChartBalanceData>  $balances
+     * @return Collection<int, ChartBalanceData>
      */
     private static function invertBalances(Collection $balances): Collection
     {
-        return $balances->map(function ($balance): object {
-            $balance->balance = bcmul($balance->balance ?? '0.0000', '-1');
-            $balance->cash_balance = bcmul($balance->cash_balance ?? '0.0000', '-1');
-            $balance->holdings_balance = bcmul($balance->holdings_balance ?? '0.0000', '-1');
+        return $balances->map(function (ChartBalanceData $balance): ChartBalanceData {
+            $invertedBalance = bcmul($balance->balance, '-1.0000', 4);
+            $invertedCashBalance = bcmul($balance->cashBalance, '-1.0000', 4);
+            $invertedHoldingsBalance = bcmul($balance->holdingsBalance, '-1.0000', 4);
 
-            return $balance;
+            return new ChartBalanceData(
+                $balance->date,
+                $invertedBalance,
+                $invertedCashBalance,
+                $invertedHoldingsBalance
+            );
         });
     }
 
     /**
      * Fill gaps in balance series with previous values.
      *
-     * @param  Collection<int, object>  $balances
-     * @return Collection<int, object>
+     * @param  Collection<int, ChartBalanceData>  $balances
+     * @return Collection<int, ChartBalanceData>
      */
     private static function gapfillBalances(Collection $balances): Collection
     {
+        if ($balances->isEmpty()) {
+            return $balances;
+        }
+
+        /** @var Collection<int, ChartBalanceData> */
         $gapfilled = collect();
+        /** @var ChartBalanceData|null */
         $prev = null;
 
         foreach ($balances as $curr) {
             if (! $prev) {
-                // Initialize first record with zeros if null
-                $curr->balance ??= '0.0000';
-                $curr->cash_balance ??= '0.0000';
-                $curr->holdings_balance ??= '0.0000';
+                $gapfilled->push($curr);
             } else {
-                // Copy previous values for nil fields
-                $curr->balance ??= $prev->balance;
-                $curr->cash_balance ??= $prev->cash_balance;
-                $curr->holdings_balance ??= $prev->holdings_balance;
+                $gapfilled->push(new ChartBalanceData(
+                    $curr->date,
+                    $curr->balance ?? $prev->balance,
+                    $curr->cashBalance ?? $prev->cashBalance,
+                    $curr->holdingsBalance ?? $prev->holdingsBalance
+                ));
             }
 
-            $gapfilled->push($curr);
             $prev = $curr;
         }
 

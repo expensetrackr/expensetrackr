@@ -27,8 +27,8 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @property string|null $description
  * @property AccountSubtype|null $subtype
  * @property string $currency_code
- * @property string $initial_balance
- * @property string $current_balance
+ * @property numeric $initial_balance
+ * @property numeric $current_balance
  * @property bool $is_default
  * @property string $public_id
  * @property int $workspace_id
@@ -158,6 +158,8 @@ final class Account extends Model
     protected function casts(): array
     {
         return [
+            'current_balance' => 'decimal:4',
+            'initial_balance' => 'decimal:4',
             'subtype' => AccountSubtype::class,
         ];
     }

@@ -18,10 +18,8 @@ final class HandleWorkspacesPermissionMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if ($user = Auth::user()) {
-            if ($user->currentWorkspace) {
-                setPermissionsTeamId($user->currentWorkspace->id);
-            }
+        if (($user = Auth::user()) && $user->currentWorkspace) {
+            setPermissionsTeamId($user->currentWorkspace->id);
         }
 
         return $next($request);

@@ -4,12 +4,20 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Data\Finance\AccountData;
+use App\Data\Finance\AccountGroupData;
+use App\Data\Finance\BalanceSheetData;
+use App\Data\Finance\ChartSeriesData;
+use App\Data\Finance\ClassificationGroupData;
 use App\Models\Account;
 use App\Models\Workspace;
 use App\ValueObjects\Period;
-use App\ValueObjects\Series;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
+/**
+ * @property Collection<int, Account> $accounts
+ */
 final readonly class BalanceSheet
 {
     /** @var Collection<int, Account> */
@@ -23,112 +31,131 @@ final readonly class BalanceSheet
             ->get();
     }
 
+    /**
+     * @return numeric-string
+     */
     public function totalAssets(): string
     {
+        /** @var numeric-string */
         return $this->accounts
             ->filter(fn (Account $account) => $account->type->isAsset())
-            ->reduce(fn (string $carry, Account $account): string => bcadd($carry, $account->current_balance, 4), '0');
+            ->reduce(fn (string $carry, Account $account): string => bcadd($carry, (string) $account->current_balance, 4), '0.0000');
     }
 
+    /**
+     * @return numeric-string
+     */
     public function totalLiabilities(): string
     {
+        /** @var numeric-string */
         return $this->accounts
             ->filter(fn (Account $account) => $account->type->isLiability())
-            ->reduce(fn (string $carry, Account $account): string => bcadd($carry, $account->current_balance, 4), '0');
+            ->reduce(fn (string $carry, Account $account): string => bcadd($carry, (string) $account->current_balance, 4), '0.0000');
     }
 
+    /**
+     * @return numeric-string
+     */
     public function netWorth(): string
     {
-        return bcadd($this->totalAssets(), $this->totalLiabilities(), 4);
+        /** @var numeric-string */
+        return bcadd($this->totalAssets(), bcmul($this->totalLiabilities(), '-1.0000', 4), 4);
     }
 
-    public function netWorthSeries(): Series
+    public function netWorthSeries(Period $period): ChartSeriesData
     {
+        /** @var Builder<Account> $query */
         $query = Account::query()->whereIn('id', $this->accounts->pluck('id'));
 
+        // @phpstan-ignore method.notFound, return.type (scope is a valid method)
         return $query->balanceSeries(
-            period: Period::last30Days(),
+            period: $period,
+            favorableDirection: 'up',
             view: 'net_worth',
-            interval: '1 day'
+            interval: 'day',
         );
     }
 
-    public function classificationGroups(): array
+    public function classificationGroups(): BalanceSheetData
     {
-        $assetGroups = $this->accountGroups('asset');
-        $liabilityGroups = $this->accountGroups('liability');
+        $assetGroups = $this->accountGroupsByClassification('asset');
+        $liabilityGroups = $this->accountGroupsByClassification('liability');
 
-        return [
-            [
-                'key' => 'asset',
-                'display_name' => 'Assets',
-                'icon' => 'blocks',
-                'account_groups' => $assetGroups,
-            ],
-            [
-                'key' => 'liability',
-                'display_name' => 'Debts',
-                'icon' => 'scale',
-                'account_groups' => $liabilityGroups,
-            ],
-        ];
+        return new BalanceSheetData(
+            new ClassificationGroupData(
+                'asset',
+                'Assets',
+                'blocks',
+                $assetGroups
+            ),
+            new ClassificationGroupData(
+                'liability',
+                'Debts',
+                'scale',
+                $liabilityGroups
+            )
+        );
     }
 
-    public function accountGroups(?string $type = null): array
+    /**
+     * @return array<int, AccountGroupData>
+     */
+    private function accountGroupsByClassification(string $classification): array
     {
-        $filteredAccounts = match ($type) {
-            'asset' => $this->accounts->filter(fn (Account $account) => $account->type->isAsset()),
-            'liability' => $this->accounts->filter(fn (Account $account) => $account->type->isLiability()),
-            default => $this->accounts
-        };
+        $accounts = $this->accounts->filter(fn (Account $account) => $account->type->isAsset());
+        /** @var numeric-string */
+        $total = $this->totalAssets();
 
-        if ($filteredAccounts->isEmpty()) {
-            return [];
+        if ($classification === 'liability') {
+            $accounts = $this->accounts->filter(fn (Account $account) => $account->type->isLiability());
+            /** @var numeric-string */
+            $total = $this->totalLiabilities();
         }
 
-        $classificationTotal = $filteredAccounts->reduce(
-            fn (string $carry, Account $account): string => bcadd($carry, $account->current_balance, 4),
-            '0'
-        );
+        /** @var array<string, Collection<int, Account>> */
+        $groupedAccounts = $accounts->groupBy('accountable_type')->all();
+        $result = [];
 
-        return $filteredAccounts->groupBy('accountable_type')
-            ->map(function (Collection $accounts, string $accountableType) use ($classificationTotal): array {
-                $groupTotal = $accounts->reduce(
-                    fn (string $carry, Account $account): string => bcadd($carry, $account->current_balance, 4),
-                    '0'
+        foreach ($groupedAccounts as $type => $accounts) {
+            /** @var numeric-string */
+            $groupTotal = $accounts->reduce(function (string $carry, Account $account): string {
+                /** @var numeric-string */
+                $currentBalance = (string) $account->current_balance;
+
+                /** @var numeric-string */
+                return bcadd($carry, $currentBalance, 4);
+            }, '0.0000');
+
+            /** @var float */
+            $weight = $total === '0.0000' ? 0 : (float) bcmul(bcdiv($groupTotal, $total, 4), '100.0000', 4);
+
+            $accountsData = $accounts->map(function (Account $account) use ($groupTotal): AccountData {
+                /** @var numeric-string */
+                $currentBalance = (string) $account->current_balance;
+                /** @var float */
+                $weight = $groupTotal === '0.0000' ? 0 : (float) bcmul(bcdiv($currentBalance, $groupTotal, 4), '100.0000', 4);
+
+                return new AccountData(
+                    $account->id,
+                    $account->name,
+                    $currentBalance,
+                    $account->type,
+                    $weight
                 );
+            })->sortByDesc('weight')->values();
 
-                $weight = $classificationTotal === '0'
-                    ? 0
-                    : (float) bcmul(bcdiv($groupTotal, $classificationTotal, 4), '100', 2);
+            $result[] = new AccountGroupData(
+                $this->getAccountableKey($type),
+                $this->getAccountableName($type),
+                $classification,
+                $groupTotal,
+                $weight,
+                $this->getAccountableColor($type),
+                $accountsData->all()
+            );
+        }
 
-                $firstAccount = $accounts->first();
-
-                return [
-                    'key' => $this->getAccountableKey($accountableType),
-                    'name' => $this->getAccountableName($accountableType),
-                    'classification' => $firstAccount->type->value,
-                    'total' => $groupTotal,
-                    'weight' => $weight,
-                    'color' => $this->getAccountableColor($accountableType),
-                    'accounts' => $accounts->map(function (Account $account) use ($classificationTotal): array {
-                        $weight = $classificationTotal === '0'
-                            ? 0
-                            : (float) bcmul(bcdiv($account->current_balance, $classificationTotal, 4), '100', 2);
-
-                        return [
-                            'id' => $account->id,
-                            'name' => $account->name,
-                            'current_balance' => $account->current_balance,
-                            'type' => $account->type,
-                            'weight' => $weight,
-                        ];
-                    })->sortByDesc('weight')->values()->all(),
-                ];
-            })
-            ->sortByDesc(fn ($group): string => $group['total'])
-            ->values()
-            ->all();
+        return $result;
     }
 
     private function getAccountableKey(string $type): string

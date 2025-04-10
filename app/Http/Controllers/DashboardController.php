@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Services\BalanceSheet;
+use App\ValueObjects\Period;
 use Illuminate\Container\Attributes\CurrentUser;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
@@ -27,7 +28,7 @@ final class DashboardController extends Controller
 
         return Inertia::render('dashboard', [
             'netWorth' => $balanceSheet->netWorth(),
-            'netWorthSeries' => $balanceSheet->netWorthSeries(),
+            'netWorthSeries' => $balanceSheet->netWorthSeries(Period::last30Days()),
         ]);
     }
 }
