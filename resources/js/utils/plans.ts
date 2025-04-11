@@ -44,8 +44,8 @@ export const plans = [
         iconBg: "bg-state-feature-base",
         price: {
             onetime: {
-                price: 299.99,
-                previous: 549.99,
+                price: 99.99,
+                previous: 299.99,
                 savings: "45%",
             },
         },
