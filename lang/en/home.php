@@ -49,15 +49,15 @@ return [
             'coming_soon' => 'More coming soon',
             'plans' => [
                 'free' => [
-                    'title' => 'Free',
+                    'title' => 'Starter',
                     'description' => 'For solo users who want to get a grip on their finances',
-                    'features' => 'Personal workspace, Up to 1 account, Default categories, Last month of graph history, Manual accounts',
+                    'features' => 'Personal workspace, Up to 1 account, Default categories, Last month of graph history, Manual accounts, Community support',
                     'button_label' => 'Get started for free',
                 ],
-                'analyst' => [
-                    'title' => 'Analyst',
+                'personal' => [
+                    'title' => 'Personal',
                     'description' => 'For small and large teams (or families) or even solo users who want to get a grip on their finances',
-                    'features' => 'Unlimited workspaces and members, Unlimited accounts and transactions, File attachments for transactions, Default and custom categories, Custom graph history, <strong>Connect your bank accounts</strong>, <strong>CSV imports</strong>, <strong>Multi-currency</strong>',
+                    'features' => 'Unlimited workspaces, Up to 5 workspace members, Unlimited accounts and transactions, File attachments, <strong>Multi-currency</strong>, Custom categories, Custom graph history',
                     'button_label' => 'Subscribe now',
                 ],
                 'lifetime' => [

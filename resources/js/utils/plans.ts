@@ -1,19 +1,20 @@
-import BarChartBoxAiFillIcon from "virtual:icons/ri/bar-chart-box-ai-fill";
-import BrainFillIcon from "virtual:icons/ri/brain-fill";
-import MedalFillIcon from "virtual:icons/ri/medal-fill";
+import Medal06Icon from "virtual:icons/hugeicons/medal-06";
+import PieChart02Icon from "virtual:icons/hugeicons/pie-chart-02";
+import PiggyBankIcon from "virtual:icons/hugeicons/piggy-bank";
 
 export const plans = [
     {
         code: "free",
-        icon: MedalFillIcon,
+        icon: Medal06Icon,
         iconBg: "bg-state-faded-base",
         glowColor: "var(--color-state-faded-base)",
     },
     {
-        code: "analyst",
-        icon: BarChartBoxAiFillIcon,
+        code: "personal",
+        icon: PieChart02Icon,
         iconBg: "bg-primary",
-        featured: true,
+        isFeatured: true,
+        isSubscription: true,
         price: {
             monthly: {
                 price: 11.99,
@@ -39,7 +40,7 @@ export const plans = [
     },
     {
         code: "lifetime",
-        icon: BrainFillIcon,
+        icon: PiggyBankIcon,
         iconBg: "bg-state-feature-base",
         price: {
             onetime: {

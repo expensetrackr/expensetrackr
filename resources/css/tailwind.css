@@ -220,20 +220,20 @@
     --color-black-alpha-10: oklch(0% 0 0deg / 10%);
 
     /* brand colors */
-    --color-brand-primary-50: oklch(97.2% 0.0136 255deg);
-    --color-brand-primary-100: oklch(93.2% 0.0313 258deg);
-    --color-brand-primary-200: oklch(87.8% 0.0606 255deg);
-    --color-brand-primary-300: oklch(80% 0.101 254deg);
-    --color-brand-primary-400: oklch(71% 0.148 256deg);
-    --color-brand-primary-500: oklch(61.9% 0.193 261deg);
-    --color-brand-primary-600: oklch(55.7% 0.236 267deg);
-    --color-brand-primary-700: oklch(49.1% 0.227 265deg);
-    --color-brand-primary-800: oklch(41.7% 0.188 266deg);
-    --color-brand-primary-900: oklch(37.3% 0.143 266deg);
-    --color-brand-primary-950: oklch(27.9% 0.0916 268deg);
-    --color-brand-primary-alpha-24: oklch(27.9% 0.0916 268deg / 24%);
-    --color-brand-primary-alpha-16: oklch(27.9% 0.0916 268deg / 16%);
-    --color-brand-primary-alpha-10: oklch(27.9% 0.0916 268deg / 10%);
+    --color-brand-primary-50: hsl(214deg, 100%, 97%);
+    --color-brand-primary-100: hsl(216deg, 94.5%, 92.9%);
+    --color-brand-primary-200: hsl(214deg, 99.9%, 87%);
+    --color-brand-primary-300: hsl(213deg, 97.9%, 78%);
+    --color-brand-primary-400: hsl(214deg, 96.2%, 68.1%);
+    --color-brand-primary-500: hsl(219deg, 92.8%, 60.4%);
+    --color-brand-primary-600: hsl(228deg, 95.8%, 59.9%);
+    --color-brand-primary-700: hsl(226deg, 75.9%, 49.6%);
+    --color-brand-primary-800: hsl(227deg, 72.6%, 40%);
+    --color-brand-primary-900: hsl(225deg, 66%, 32.8%);
+    --color-brand-primary-950: hsl(227deg, 59.6%, 20.9%);
+    --color-brand-primary-alpha-24: oklch(61.6% 0.195 261deg / 24%);
+    --color-brand-primary-alpha-16: oklch(61.6% 0.195 261deg / 16%);
+    --color-brand-primary-alpha-10: oklch(61.6% 0.195 261deg / 10%);
 
     /* primary colors */
     --color-primary-darker: var(--color-brand-primary-800);

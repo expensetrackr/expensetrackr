@@ -55,6 +55,7 @@ export const badgeVariants = tv({
             sky: {},
             pink: {},
             teal: {},
+            primary: {},
         },
         disabled: {
             true: {
@@ -137,6 +138,13 @@ export const badgeVariants = tv({
                 root: "bg-state-stable-base",
             },
         },
+        {
+            $style: "filled",
+            $color: "primary",
+            class: {
+                root: "bg-primary",
+            },
+        },
         // #endregion
 
         //#region variant=light
@@ -208,6 +216,13 @@ export const badgeVariants = tv({
             $color: "teal",
             class: {
                 root: "bg-state-stable-light text-state-stable-dark",
+            },
+        },
+        {
+            $style: "light",
+            $color: "primary",
+            class: {
+                root: "bg-primary-light text-primary-dark",
             },
         },
         //#endregion
@@ -283,6 +298,13 @@ export const badgeVariants = tv({
                 root: "bg-state-stable-lighter text-state-stable-base",
             },
         },
+        {
+            $style: "lighter",
+            $color: "primary",
+            class: {
+                root: "bg-primary-lighter text-primary-dark",
+            },
+        },
         //#endregion
 
         //#region variant=stroke
@@ -356,6 +378,13 @@ export const badgeVariants = tv({
                 root: "text-state-stable-base",
             },
         },
+        {
+            $style: "stroke",
+            $color: "primary",
+            class: {
+                root: "text-primary",
+            },
+        },
         //#endregion
 
         //#region square
@@ -379,7 +408,7 @@ export const badgeVariants = tv({
         {
             disabled: true,
             $style: ["stroke", "filled", "light", "lighter"],
-            $color: ["red", "gray", "blue", "orange", "green", "yellow", "purple", "sky", "pink", "teal"],
+            $color: ["red", "gray", "blue", "orange", "green", "yellow", "purple", "sky", "pink", "teal", "primary"],
             class: {
                 root: ["ring-stroke-soft-200 ring-1 ring-inset", "bg-transparent text-(--text-disabled-300)"],
             },
