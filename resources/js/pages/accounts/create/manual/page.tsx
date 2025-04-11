@@ -203,14 +203,20 @@ export default function CreateManualAccountPage({ currencies }: CreateAccountPag
                                 <div className="text-paragraph-sm text-(--text-sub-600)">
                                     Having trouble with account creation?
                                 </div>
-                                <Button.Root $style="stroke" $type="neutral">
-                                    <Button.Icon as={HeadphoneIcon} />
-                                    Contact
+                                <Button.Root $style="stroke" $type="neutral" asChild>
+                                    <a
+                                        href="mailto:support@expensetrackr.app"
+                                        rel="noopener noreferrer"
+                                        target="_blank"
+                                    >
+                                        <Button.Icon as={HeadphoneIcon} />
+                                        Contact
+                                    </a>
                                 </Button.Root>
                             </div>
 
                             <div className="text-center text-paragraph-xs text-(--text-soft-400)">
-                                © {new Date().getFullYear()} ExpenseTrackr
+                                © {new Date().getFullYear()} {import.meta.env.VITE_APP_NAME}
                             </div>
                         </div>
                     </div>

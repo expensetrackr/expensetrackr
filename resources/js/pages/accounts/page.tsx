@@ -19,7 +19,6 @@ type AccountsPageProps = {
 };
 
 export default function AccountsPage({ accounts, account, permissions }: PageProps<AccountsPageProps>) {
-    console.info(permissions);
     return (
         <>
             <Header
@@ -55,16 +54,18 @@ export default function AccountsPage({ accounts, account, permissions }: PagePro
                         <div className="flex flex-col items-center gap-5 p-5">
                             <IllustrationEmptyAccounts className="size-[108px]" />
                             <div className="text-center text-paragraph-sm text-(--text-soft-400)">
-                                You do not have any accounts yet.
+                                <span>You do not have any accounts yet.</span>
                                 <br />
-                                Click the button to add one.
+                                {permissions.canCreateAccounts && <span>Click the button to add one.</span>}
                             </div>
-                            <Button.Root $size="xs" $style="stroke" asChild>
-                                <Link href={routes.accounts.create.url()}>
-                                    <Button.Icon as={WalletAdd01} />
-                                    Add account
-                                </Link>
-                            </Button.Root>
+                            {permissions.canCreateAccounts && (
+                                <Button.Root $size="xs" $style="stroke" asChild>
+                                    <Link href={routes.accounts.create.url()}>
+                                        <Button.Icon as={WalletAdd01} />
+                                        Add account
+                                    </Link>
+                                </Button.Root>
+                            )}
                         </div>
                     </div>
                 )}
