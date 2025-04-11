@@ -19,6 +19,7 @@ type AccountsPageProps = {
 };
 
 export default function AccountsPage({ accounts, account, permissions }: PageProps<AccountsPageProps>) {
+    console.info(permissions);
     return (
         <>
             <Header

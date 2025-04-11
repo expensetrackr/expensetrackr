@@ -234,7 +234,7 @@ const ChartStepLine = <T extends string>({
     const newPathsAttrs = useUpdatedPaths(chartRef);
 
     return (
-        <ResponsiveContainer height={70} ref={chartRef} width="100%">
+        <ResponsiveContainer ref={chartRef} width="100%">
             <RechartsLineChart data={data} margin={{ top: 1, right: 0, bottom: 0, left: 0 }}>
                 <XAxis
                     axisLine={false}

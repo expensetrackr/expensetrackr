@@ -11,6 +11,7 @@ import ChartStepLine from "../chart-step-line.tsx";
 import * as Badge from "../ui/badge.tsx";
 
 type TotalBalanceWidgetProps = React.HTMLAttributes<HTMLDivElement> & {
+    title: string;
     netWorth: Decimal.Value;
     netWorthSeries: {
         startDate: string;
@@ -23,9 +24,17 @@ type TotalBalanceWidgetProps = React.HTMLAttributes<HTMLDivElement> & {
             trend: Trend;
         }[];
     };
+    formatStr?: string;
 };
 
-export function TotalBalanceWidget({ netWorth, netWorthSeries, className, ...rest }: TotalBalanceWidgetProps) {
+export function TotalBalanceWidget({
+    title,
+    formatStr = "MMM",
+    netWorth,
+    netWorthSeries,
+    className,
+    ...rest
+}: TotalBalanceWidgetProps) {
     const { language } = useTranslation();
     const netWorthFlow = decimalFlowFormatter({
         amount: netWorth,
@@ -36,15 +45,15 @@ export function TotalBalanceWidget({ netWorth, netWorthSeries, className, ...res
     return (
         <div
             className={cnMerge(
-                "relative flex h-[178px] flex-col rounded-16 bg-(--bg-white-0) p-5 pb-[18px] shadow-xs ring-1 ring-(--stroke-soft-200) ring-inset",
+                "relative flex flex-col rounded-16 bg-(--bg-white-0) p-5 pb-[18px] shadow-xs ring-1 ring-(--stroke-soft-200) ring-inset",
                 className,
             )}
             {...rest}
         >
-            <div className="flex flex-col gap-5">
+            <div className="flex h-full flex-col gap-5">
                 <div className="flex items-start justify-between">
                     <div>
-                        <div className="text-paragraph-sm text-(--text-sub-600)">Total Balance</div>
+                        <div className="text-paragraph-sm text-(--text-sub-600)">{title}</div>
                         <div className="mt-1 flex items-center gap-2">
                             <div className="text-h5">
                                 <NumberFlow format={netWorthFlow.format} value={netWorthFlow.value} />
@@ -68,7 +77,7 @@ export function TotalBalanceWidget({ netWorth, netWorthSeries, className, ...res
                     }))}
                     index="date"
                     xAxisProps={{
-                        tickFormatter: (value) => format(value, "MMM").toLocaleUpperCase(),
+                        tickFormatter: (value) => format(value, formatStr).toLocaleUpperCase(),
                         tickMargin: 8,
                     }}
                     yAxisProps={{ hide: true }}

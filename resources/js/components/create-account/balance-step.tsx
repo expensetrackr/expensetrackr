@@ -42,7 +42,7 @@ export function BalanceStep({ currencies, fields }: DetailsStepProps) {
 
     return (
         <>
-            <input {...getInputProps(fields.initial_balance, { type: "hidden" })} />
+            {/* <input {...getInputProps(fields.initial_balance, { type: "hidden" })} /> */}
             <input {...getInputProps(fields.type, { type: "hidden" })} />
             <input {...getInputProps(fields.currency_code, { type: "hidden" })} />
 

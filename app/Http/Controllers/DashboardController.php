@@ -28,7 +28,11 @@ final class DashboardController extends Controller
 
         return Inertia::render('dashboard', [
             'netWorth' => $balanceSheet->netWorth(),
-            'netWorthSeries' => $balanceSheet->netWorthSeries(Period::last30Days()),
+            'series' => [
+                'lastWeek' => $balanceSheet->netWorthSeries(Period::lastWeek(), 'day'),
+                'lastMonth' => $balanceSheet->netWorthSeries(Period::lastMonth(), 'day'),
+                'lastYear' => $balanceSheet->netWorthSeries(Period::lastYear(), 'month'),
+            ],
         ]);
     }
 }

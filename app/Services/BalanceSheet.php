@@ -66,17 +66,17 @@ final readonly class BalanceSheet
         return bcadd($this->totalAssets(), bcmul($this->totalLiabilities(), '-1.0000', 4), 4);
     }
 
-    public function netWorthSeries(Period $period): ChartSeriesData
+    public function netWorthSeries(?Period $period = null, ?string $interval = null): ChartSeriesData
     {
         /** @var Builder<Account> $query */
         $query = Account::query()->whereIn('id', $this->accounts->pluck('id'));
 
         return $this->chartService->getBalanceSeries(
             query: $query,
-            period: $period,
+            period: $period ?? Period::last6Months(),
             favorableDirection: 'up',
             view: 'net_worth',
-            interval: 'day',
+            interval: $interval ?? 'month',
         );
     }
 

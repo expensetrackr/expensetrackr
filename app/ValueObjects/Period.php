@@ -13,10 +13,26 @@ final readonly class Period
         public CarbonImmutable $endDate,
     ) {}
 
-    public static function last30Days(): self
+    public static function lastWeek(): self
+    {
+        return new self(
+            startDate: CarbonImmutable::now()->subDays(6)->startOfDay(),
+            endDate: CarbonImmutable::now()->endOfDay(),
+        );
+    }
+
+    public static function lastMonth(): self
     {
         return new self(
             startDate: CarbonImmutable::now()->subDays(29)->startOfDay(),
+            endDate: CarbonImmutable::now()->endOfDay(),
+        );
+    }
+
+    public static function last6Months(): self
+    {
+        return new self(
+            startDate: CarbonImmutable::now()->subMonths(5)->startOfDay(),
             endDate: CarbonImmutable::now()->endOfDay(),
         );
     }

@@ -6,6 +6,7 @@ import * as React from "react";
 import Alert01Icon from "virtual:icons/hugeicons/alert-01";
 import Coupon01Icon from "virtual:icons/hugeicons/coupon-01";
 import GiftIcon from "virtual:icons/hugeicons/gift";
+import GithubIcon from "virtual:icons/hugeicons/github";
 import Mail01Icon from "virtual:icons/hugeicons/mail-01";
 import CheckboxCircleFillIcon from "virtual:icons/ri/checkbox-circle-fill";
 import MoneyDollarCircleFillIcon from "virtual:icons/ri/money-dollar-circle-fill";
@@ -24,6 +25,7 @@ import { Card } from "#/components/create-account/card.tsx";
 import * as Glow from "#/components/glow.tsx";
 import { Image } from "#/components/image.tsx";
 import { Link } from "#/components/link.tsx";
+import Logo from "#/components/logo.tsx";
 import { Source } from "#/components/source.tsx";
 import * as Alert from "#/components/ui/alert.tsx";
 import * as Button from "#/components/ui/button.tsx";
@@ -57,32 +59,10 @@ export default function WelcomePage() {
                     <div className="container">
                         <div className="relative z-50 flex items-center justify-between rounded-12 border bg-linear-270 from-(--bg-white-0)/40 from-[3.14%] to-(--bg-white-0)/40 to-[101.19%] px-6 py-2 backdrop-blur-[2px]">
                             <div className="flex items-center gap-1">
-                                <picture>
-                                    <Source
-                                        height={40}
-                                        isCdn
-                                        media="(prefers-color-scheme: light)"
-                                        priority
-                                        src="/img/isotype-light.png"
-                                        width={64}
-                                    />
-                                    <Source
-                                        height={40}
-                                        isCdn
-                                        media="(prefers-color-scheme: dark)"
-                                        priority
-                                        src="/img/isotype-dark.png"
-                                        width={64}
-                                    />
-                                    <Image
-                                        alt="ExpenseTrackr"
-                                        height={40}
-                                        isCdn
-                                        priority
-                                        src="/img/isotype-light.png"
-                                        width={64}
-                                    />
-                                </picture>
+                                <Logo
+                                    aria-label={import.meta.env.VITE_APP_NAME}
+                                    className="h-auto w-16 dark:grayscale-300"
+                                />
 
                                 <span className="text-h5 font-light">
                                     Expense<span className="font-bold">Trackr</span>
@@ -712,44 +692,19 @@ function Footer() {
                 <div className="flex flex-col gap-2">
                     <div className="flex items-center justify-between">
                         <Link href={routes.home.url()}>
-                            <picture>
-                                <Source
-                                    height={40}
-                                    isCdn
-                                    media="(prefers-color-scheme: light)"
-                                    priority
-                                    src="/img/isotype-light.png"
-                                    width={64}
-                                />
-                                <Source
-                                    height={40}
-                                    isCdn
-                                    media="(prefers-color-scheme: dark)"
-                                    priority
-                                    src="/img/isotype-dark.png"
-                                    width={64}
-                                />
-                                <Image
-                                    alt="ExpenseTrackr"
-                                    height={40}
-                                    isCdn
-                                    priority
-                                    src="/img/isotype-light.png"
-                                    width={64}
-                                />
-                            </picture>
+                            <Logo aria-label={import.meta.env.VITE_APP_NAME} className="h-auto w-16" />
                         </Link>
 
                         <ul className="flex items-center gap-5">
-                            {/* <li>
-                            <a
-                                href="https://github.com/expensetrackr/expensetrackr.app"
-                                rel="noopener noreferrer"
-                                target="_blank"
-                            >
-                                <GithubIcon className="size-6" />
-                            </a>
-                        </li> */}
+                            <li>
+                                <a
+                                    href="https://github.com/expensetrackr/expensetrackr.app"
+                                    rel="noopener noreferrer"
+                                    target="_blank"
+                                >
+                                    <GithubIcon className="size-6" />
+                                </a>
+                            </li>
                             <li>
                                 <a href="mailto:support@expensetrackr.app" rel="noopener noreferrer" target="_blank">
                                     <Mail01Icon className="size-6" />

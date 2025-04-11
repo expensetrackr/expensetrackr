@@ -85,7 +85,6 @@ final class CurrencyService implements CurrencyHandler
             $response = Http::get("{$this->baseUrl}/{$this->apiKey}/latest/{$baseCurrency}");
 
             if ($response->getStatusCode() === 200) {
-                dump($response->json());
                 $responseData = LatestResponseData::from($response->json());
 
                 if ($responseData->result === 'success' && isset($responseData->conversionRates)) {
@@ -136,7 +135,6 @@ final class CurrencyService implements CurrencyHandler
             $response = Http::get("{$this->baseUrl}/{$this->apiKey}/codes");
 
             if ($response->getStatusCode() === 200) {
-                dump($response->json());
                 $responseData = CodesResponseData::from($response->json());
 
                 if ($responseData->result === 'success' && filled($responseData->supportedCodes)) {

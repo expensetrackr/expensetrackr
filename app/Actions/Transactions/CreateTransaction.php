@@ -41,17 +41,19 @@ final class CreateTransaction
             }
 
             $type = $input['type'];
-            $amount = type($input['amount'])->asFloat();
+            /** @var numeric-string $amount */
+            $amount = $input['amount'];
             $currency = type($input['currency'])->asString();
 
             if ($type === TransactionType::Expense->value) {
-                $amount = -$amount;
+                $input['amount'] = -$amount;
             }
 
             /**
              * If currency is !== from USD, then we are going to fetch the exchange rate from the API.
              */
             if ($currency !== 'USD') {
+                /** @var numeric-string|null */
                 $exchangeRate = Forex::getCachedExchangeRate('USD', $currency);
 
                 if ($exchangeRate === null) {
@@ -61,8 +63,8 @@ final class CreateTransaction
                 $input['base_amount'] = $input['amount'];
                 $input['base_currency'] = $currency;
                 $input['currency_rate'] = $exchangeRate;
-                $amount /= $exchangeRate;
-                $currency = 'USD';
+                $input['amount'] = $amount / $exchangeRate;
+                $input['currency'] = 'USD';
             }
 
             return Transaction::create([

@@ -32,7 +32,7 @@ final class CreateAccountRequest extends FormRequest
             'bank_connection_id' => ['sometimes', 'nullable', 'exists:bank_connections,id'],
             'name' => ['required', 'string', 'max:255'],
             'currency_code' => ['required', 'string', 'max:3'],
-            'initial_balance' => ['required', 'numeric', 'min:50'],
+            'initial_balance' => ['required', 'numeric', 'min:0.50'],
             'is_default' => ['sometimes', 'boolean', 'default:false'],
             'external_id' => ['sometimes', 'nullable', 'string', 'unique:accounts,external_id', 'max:255'],
             'type' => ['required', 'string', Rule::enum(AccountType::class)],

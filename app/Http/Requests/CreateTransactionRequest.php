@@ -33,7 +33,7 @@ final class CreateTransactionRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'note' => ['nullable', 'string', 'max:255'],
             'type' => ['required', 'string', Rule::enum(TransactionType::class)],
-            'amount' => ['required', 'numeric', 'min:50'],
+            'amount' => ['required', 'numeric', 'min:0.01'],
             'currency' => ['required', 'string', 'max:3'],
             'is_recurring' => ['required', 'boolean'],
             'recurring_interval' => ['required_if:is_recurring,true', 'nullable', 'string', Rule::enum(TransactionRecurringInterval::class)],

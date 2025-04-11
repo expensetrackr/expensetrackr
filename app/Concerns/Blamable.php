@@ -14,15 +14,15 @@ trait Blamable
     public static function bootBlamable(): void
     {
         static::creating(static function (Model $model): void {
-            if (property_exists($model, 'created_by') && property_exists($model, 'updated_by') && Auth::check() && $authId = Auth::id()) {
-                $model->created_by ??= $authId;
-                $model->updated_by ??= $authId;
+            if (Auth::check() && $authId = Auth::id()) {
+                $model->setAttribute('created_by', $model->getAttribute('created_by') ?? $authId);
+                $model->setAttribute('updated_by', $model->getAttribute('updated_by') ?? $authId);
             }
         });
 
         static::updating(static function (Model $model): void {
-            if (property_exists($model, 'updated_by') && Auth::check() && $authId = Auth::id()) {
-                $model->updated_by = $authId;
+            if (Auth::check() && $authId = Auth::id()) {
+                $model->setAttribute('updated_by', $authId);
             }
         });
     }
