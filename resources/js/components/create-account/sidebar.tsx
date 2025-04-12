@@ -18,7 +18,7 @@ type FlowSidebarProps<Steps extends Step[]> = {
 };
 
 export function FlowSidebar<Steps extends Step[]>({ stepper, utils }: FlowSidebarProps<Steps>) {
-    const { connection_type: connectionType } = useCreateAccountParams();
+    const { connectionType } = useCreateAccountParams();
 
     const getState = (index: number) => {
         if (utils.getIndex(stepper.current.id) > index) return "completed";

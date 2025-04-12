@@ -15,7 +15,7 @@ import { CreateAccountStepper } from "#/utils/steppers/create-account.step";
 
 export default function CreateAccountPage() {
     const stepper = CreateAccountStepper.useStepper();
-    const { type, connection_type: connectionType } = useCreateAccountParams();
+    const { type, connectionType } = useCreateAccountParams();
 
     return (
         <>

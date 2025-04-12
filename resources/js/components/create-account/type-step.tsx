@@ -59,7 +59,7 @@ const accountTypes = {
 };
 
 export function TypeStep() {
-    const { type, connection_type: connectionType, setParams } = useCreateAccountParams();
+    const { type, connectionType, setParams } = useCreateAccountParams();
 
     async function handleChange(value: v.InferOutput<typeof AccountTypeEnum>) {
         const isConnectionAvailable =

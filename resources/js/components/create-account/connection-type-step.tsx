@@ -26,10 +26,10 @@ const connectionTypes = {
 };
 
 export function ConnectionTypeStep() {
-    const { connection_type: connectionType, setParams } = useCreateAccountParams();
+    const { type, connectionType, setParams } = useCreateAccountParams();
 
     const handleChange = async (value: v.InferOutput<typeof ConnectionTypeEnum>) => {
-        await setParams({ connection_type: value });
+        await setParams({ connectionType: value });
     };
 
     return (
@@ -41,8 +41,9 @@ export function ConnectionTypeStep() {
             value={connectionType ?? undefined}
         >
             {ConnectionTypeEnum.options
-                // We only accept manual connection for now
-                .filter((option) => option === ConnectionTypeEnum.enum.Manual)
+                .filter((option) =>
+                    type !== "depository" && type !== "credit_card" ? option === ConnectionTypeEnum.enum.Manual : true,
+                )
                 .map((option) => {
                     const Icon = connectionTypes[option].icon;
                     return (
