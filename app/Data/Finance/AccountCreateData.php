@@ -6,6 +6,8 @@ namespace App\Data\Finance;
 
 use App\Enums\Finance\AccountSubtype;
 use App\Enums\Finance\AccountType;
+use App\Enums\Finance\RateType;
+use Illuminate\Support\Carbon;
 use Spatie\LaravelData\Attributes\MapName;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\Mappers\CamelCaseMapper;
@@ -25,5 +27,15 @@ final class AccountCreateData extends Data
         public readonly ?string $externalId,
         public readonly AccountType $type,
         public readonly ?AccountSubtype $subtype,
+        // Credit Card
+        public readonly ?float $availableCredit,
+        public readonly ?float $minimumPayment,
+        public readonly ?float $apr,
+        public readonly ?float $annualFee,
+        public readonly ?Carbon $expiresAt,
+        // Loan
+        public readonly ?float $interestRate,
+        public readonly ?RateType $rateType,
+        public readonly ?int $termMonths,
     ) {}
 }

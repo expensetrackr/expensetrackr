@@ -33,6 +33,7 @@ final class DashboardController extends Controller
                 'lastMonth' => $balanceSheet->netWorthSeries(Period::lastMonth(), 'day'),
                 'lastYear' => $balanceSheet->netWorthSeries(Period::lastYear(), 'month'),
             ],
+            'transactions' => $user->currentWorkspace->transactions()->latest()->take(5)->get()->toResourceCollection(),
         ]);
     }
 }

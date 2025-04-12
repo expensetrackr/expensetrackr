@@ -231,9 +231,9 @@
     --color-brand-primary-800: hsl(227deg, 72.6%, 40%);
     --color-brand-primary-900: hsl(225deg, 66%, 32.8%);
     --color-brand-primary-950: hsl(227deg, 59.6%, 20.9%);
-    --color-brand-primary-alpha-24: oklch(61.6% 0.195 261deg / 24%);
-    --color-brand-primary-alpha-16: oklch(61.6% 0.195 261deg / 16%);
-    --color-brand-primary-alpha-10: oklch(61.6% 0.195 261deg / 10%);
+    --color-brand-primary-alpha-24: oklch(71.1% 0.148 256deg / 24%);
+    --color-brand-primary-alpha-16: oklch(71.1% 0.148 256deg / 16%);
+    --color-brand-primary-alpha-10: oklch(71.1% 0.148 256deg / 10%);
 
     /* primary colors */
     --color-primary-darker: var(--color-brand-primary-800);

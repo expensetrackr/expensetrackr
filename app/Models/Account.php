@@ -29,6 +29,7 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @property numeric $initial_balance
  * @property numeric $current_balance
  * @property bool $is_default
+ * @property bool $is_manual
  * @property string $public_id
  * @property int $workspace_id
  * @property string|null $external_id
@@ -65,6 +66,7 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereInitialBalance($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereIsDefault($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereIsManual($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Account wherePublicId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereSubtype($value)

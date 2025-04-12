@@ -6,7 +6,6 @@ namespace App\Actions\BankAccounts;
 
 use App\Data\Finance\AccountCreateData;
 use App\Enums\Finance\AccountType;
-use App\Enums\Finance\RateType;
 use App\Models\Account;
 use App\Models\CreditCard;
 use App\Models\Crypto;
@@ -15,12 +14,11 @@ use App\Models\Investment;
 use App\Models\Loan;
 use App\Models\OtherAsset;
 use App\Models\OtherLiability;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Context;
 
 final class CreateAccount
 {
-    public function create(AccountCreateData $payload): void
+    public function create(AccountCreateData $payload, bool $isManual = false): void
     {
         // Determine the account model class based on the account type
         $type = match ($payload->type) {
@@ -36,37 +34,47 @@ final class CreateAccount
         // Create the accountable model based on the account type with default values
         $accountable = match ($payload->type) {
             AccountType::CreditCard => new CreditCard([
-                'available_credit' => 0,
-                'minimum_payment' => 0,
-                'apr' => 0,
-                'annual_fee' => 0,
-                'expires_at' => Carbon::now()->addYears(3),
+                'available_credit' => $payload->availableCredit,
+                'minimum_payment' => $payload->minimumPayment,
+                'apr' => $payload->apr,
+                'annual_fee' => $payload->annualFee,
+                'expires_at' => $payload->expiresAt,
             ]),
             AccountType::Loan => new Loan([
-                'interest_rate' => 0,
-                'rate_type' => RateType::Fixed,
-                'term_months' => 0,
+                'interest_rate' => $payload->interestRate,
+                'rate_type' => $payload->rateType,
+                'term_months' => $payload->termMonths,
             ]),
             default => new $type(),
         };
         $accountable->save();
 
+        $values = [
+            'bank_connection_id' => $payload->bankConnectionId,
+            'name' => $payload->name,
+            'currency_code' => $payload->currencyCode,
+            'initial_balance' => $payload->initialBalance,
+            'current_balance' => $payload->initialBalance,
+            'is_default' => $payload->isDefault,
+            'is_manual' => $isManual,
+            'external_id' => $payload->externalId,
+            'workspace_id' => Context::get('currentWorkspace'),
+            'subtype' => $payload->subtype,
+            'accountable_id' => $accountable->id,
+            'accountable_type' => $accountable->getMorphClass(),
+        ];
+
+        if ($isManual) {
+            Account::create($values);
+
+            return;
+        }
+
         Account::updateOrCreate(
             [
                 'external_id' => $payload->externalId,
             ],
-            [
-                'bank_connection_id' => $payload->bankConnectionId,
-                'name' => $payload->name,
-                'currency_code' => $payload->currencyCode,
-                'initial_balance' => $payload->initialBalance,
-                'current_balance' => $payload->initialBalance,
-                'is_default' => $payload->isDefault,
-                'external_id' => $payload->externalId,
-                'workspace_id' => Context::get('currentWorkspace'),
-                'subtype' => $payload->subtype,
-                'accountable_id' => $accountable->id,
-                'accountable_type' => $accountable->getMorphClass(),
-            ]);
+            $values
+        );
     }
 }

@@ -4,6 +4,7 @@ import type Decimal from "decimal.js";
 import { Header } from "#/components/header.tsx";
 import * as Avatar from "#/components/ui/avatar.tsx";
 import { TotalBalanceWidget } from "#/components/widgets/total-balance.tsx";
+import { TransactionsTableWidget } from "#/components/widgets/transactions-table-widget.tsx";
 import { AppLayout } from "#/layouts/app-layout.tsx";
 import { type PageProps } from "#/types/globals.js";
 import { type Trend } from "#/types/index.js";
@@ -27,13 +28,14 @@ type DashboardProps = {
         lastMonth: NetWorthSeries;
         lastYear: NetWorthSeries;
     };
+    transactions: Resources.Transaction[];
 };
 
 export default function Dashboard(props: PageProps<DashboardProps>) {
-    console.log(props);
+    console.log(props.transactions);
     return (
         <div className="flex flex-col gap-6 overflow-hidden px-4 pb-6 lg:px-8 lg:pt-1">
-            <div className="mx-auto grid w-full max-w-md grid-cols-1 items-start gap-6 min-[1300px]:max-w-4xl lg:max-w-3xl lg:grid-cols-2 lg:justify-center 2xl:max-w-full 2xl:grid-cols-3">
+            <div className="mx-auto grid w-full max-w-md grid-cols-1 items-start gap-6 min-[1300px]:max-w-4xl min-[1400px]:max-w-full min-[1400px]:grid-cols-3 lg:max-[1300px]:max-w-3xl lg:max-[1300px]:grid-cols-2 lg:max-[1300px]:justify-center">
                 <TotalBalanceWidget
                     className="h-64"
                     formatStr="EEE"
@@ -54,6 +56,7 @@ export default function Dashboard(props: PageProps<DashboardProps>) {
                     netWorthSeries={props.series.lastYear}
                     title="Last year balance"
                 />
+                <TransactionsTableWidget className="[grid-column:1/-1]" transactions={props.transactions} />
             </div>
         </div>
     );

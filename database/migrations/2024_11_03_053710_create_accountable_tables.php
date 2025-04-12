@@ -24,6 +24,7 @@ return new class extends Migration
             $table->decimal('initial_balance', 19, 4)->default(0);
             $table->decimal('current_balance', 19, 4)->default(0);
             $table->boolean('is_default')->default(false);
+            $table->boolean('is_manual')->default(false);
             $table->string('public_id')->unique();
             $table->foreignId('workspace_id')->constrained()->cascadeOnDelete();
             $table->string('external_id')->index()->nullable();
@@ -57,19 +58,19 @@ return new class extends Migration
 
         Schema::create('credit_cards', function (Blueprint $table): void {
             $table->id();
-            $table->decimal('available_credit', 19, 4);
-            $table->decimal('minimum_payment', 19, 4);
-            $table->decimal('apr', 19, 4);
-            $table->decimal('annual_fee', 19, 4);
-            $table->timestamp('expires_at');
+            $table->decimal('available_credit', 19, 4)->nullable();
+            $table->decimal('minimum_payment', 19, 4)->nullable();
+            $table->decimal('apr', 19, 4)->nullable();
+            $table->decimal('annual_fee', 19, 4)->nullable();
+            $table->timestamp('expires_at')->nullable();
             $table->timestamps();
         });
 
         Schema::create('loans', function (Blueprint $table): void {
             $table->id();
-            $table->decimal('interest_rate', 10, 4)->default(0);
-            $table->string('rate_type')->default(RateType::Fixed);
-            $table->integer('term_months');
+            $table->decimal('interest_rate', 10, 3)->default(0)->nullable();
+            $table->string('rate_type')->default(RateType::Fixed)->nullable();
+            $table->integer('term_months')->default(0)->nullable();
             $table->timestamps();
         });
 
