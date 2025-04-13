@@ -70,12 +70,12 @@ export default function WelcomePage() {
                             </div>
 
                             <div className="flex items-center gap-2">
-                                {/* <Button.Root $style="ghost" $type="neutral" asChild className="min-w-24">
+                                <Button.Root $style="ghost" $type="neutral" asChild className="min-w-24">
                                     <Link href={routes.login.url()}>Log in</Link>
-                                </Button.Root> */}
+                                </Button.Root>
 
                                 <Button.Root asChild className="min-w-24">
-                                    <a href="#pricing">Be the first</a>
+                                    <Link href={routes.register.url()}>Get started</Link>
                                 </Button.Root>
                             </div>
                         </div>
@@ -143,10 +143,7 @@ function HeroSection() {
                             </a>
                         </Button.Root>
                         <Button.Root asChild className="w-full lg:w-auto lg:min-w-36">
-                            <a href="#pricing">
-                                {/* {t("home.sections.hero.get_started")} */}
-                                Start your financial journey
-                            </a>
+                            <a href="#pricing">{t("home.sections.hero.get_started")}</a>
                         </Button.Root>
                     </div>
 
@@ -378,7 +375,6 @@ function PricingSection() {
     const { language, t } = useTranslation();
     const currencyFormat = resolveCurrencyFormat(language, "USD");
 
-    // Add countdown timer state
     const [timeLeft, setTimeLeft] = React.useState("");
 
     React.useEffect(() => {
@@ -552,12 +548,6 @@ function PricingSection() {
                                                                                     className="[--number-flow-char-height:0.85em] [&::part(suffix)]:text-h5 [&::part(suffix)]:text-(--text-soft-400) [&::part(suffix)]:line-through"
                                                                                     format={format}
                                                                                     locales={language}
-                                                                                    // suffix={
-                                                                                    //     plan.price?.[
-                                                                                    //         interval as keyof typeof plan.price
-                                                                                    //     ] &&
-                                                                                    //     ` / ${interval === "yearly" ? "billed yearly" : interval}`
-                                                                                    // }
                                                                                     value={
                                                                                         plan.price?.[
                                                                                             interval as keyof typeof plan.price
@@ -620,30 +610,20 @@ function PricingSection() {
                                                         </div>
                                                     )}
 
-                                                    {plan.buyNow ? (
-                                                        <Button.Root
-                                                            $style={plan.isFeatured ? "filled" : "stroke"}
-                                                            asChild
-                                                        >
-                                                            <a
-                                                                href={
-                                                                    typeof plan.buyNow === "string"
-                                                                        ? plan.buyNow
-                                                                        : plan.buyNow?.[
-                                                                              interval as keyof typeof plan.buyNow
-                                                                          ] || ""
-                                                                }
-                                                            >
-                                                                {t(
-                                                                    `home.sections.pricing.plans.${plan.code}.button_label`,
-                                                                )}
-                                                            </a>
-                                                        </Button.Root>
-                                                    ) : (
-                                                        <Button.Root $style="stroke" asChild>
-                                                            <Link href={routes.login.url()}>Get started for free</Link>
-                                                        </Button.Root>
-                                                    )}
+                                                    <Button.Root
+                                                        $style={
+                                                            plan.code === "free"
+                                                                ? "stroke"
+                                                                : plan.isFeatured
+                                                                  ? "filled"
+                                                                  : "stroke"
+                                                        }
+                                                        asChild
+                                                    >
+                                                        <Link href={routes.login.url()}>
+                                                            {t(`home.sections.pricing.plans.${plan.code}.button_label`)}
+                                                        </Link>
+                                                    </Button.Root>
                                                 </div>
                                             </Glow.Root>
                                         </div>
@@ -672,10 +652,7 @@ function CallToAction() {
                                 {t("home.sections.call_to_action.description")}
                             </p>
                             <Button.Root asChild>
-                                <a href="#pricing">
-                                    {/* {t("home.sections.call_to_action.button_label")} */}
-                                    Be the first to try
-                                </a>
+                                <a href="#pricing">{t("home.sections.call_to_action.button_label")}</a>
                             </Button.Root>
                         </div>
                     </div>
