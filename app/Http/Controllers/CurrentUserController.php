@@ -21,7 +21,7 @@ final class CurrentUserController extends Controller
     public function destroy(Request $request, StatefulGuard $guard, DeleteUser $action): Response
     {
         $user = type($request->user())->as(User::class);
-        $confirmed = app(ConfirmPassword::class)(
+        $confirmed = resolve(ConfirmPassword::class)(
             $guard,
             $user,
             type($request->password)->asString()

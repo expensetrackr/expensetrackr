@@ -34,7 +34,7 @@ trait ConfirmsTwoFactorAuthentication
 
         // If the profile is reloaded and is not confirmed but was previously in confirming state, disable...
         if ($this->neverFinishedConfirmingTwoFactorAuthentication($request, $currentTime)) {
-            app(DisableTwoFactorAuthentication::class)(Auth::user());
+            resolve(DisableTwoFactorAuthentication::class)(Auth::user());
 
             $request->session()->put('two_factor_empty_at', $currentTime);
             $request->session()->remove('two_factor_confirming_at');
