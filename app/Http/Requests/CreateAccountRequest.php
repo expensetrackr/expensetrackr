@@ -6,6 +6,7 @@ namespace App\Http\Requests;
 
 use App\Enums\Finance\AccountSubtype;
 use App\Enums\Finance\AccountType;
+use App\Enums\Finance\RateType;
 use App\Models\Account;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\RedirectResponse;
@@ -37,6 +38,16 @@ final class CreateAccountRequest extends FormRequest
             'external_id' => ['sometimes', 'nullable', 'string', 'unique:accounts,external_id', 'max:255'],
             'type' => ['required', 'string', Rule::enum(AccountType::class)],
             'subtype' => ['sometimes', 'nullable', 'string', Rule::enum(AccountSubtype::class)],
+            // Credit Card
+            'available_credit' => ['required_if:type,credit_card', 'numeric', 'min:0'],
+            'minimum_payment' => ['required_if:type,credit_card', 'numeric', 'min:0'],
+            'apr' => ['required_if:type,credit_card', 'numeric', 'min:0'],
+            'annual_fee' => ['required_if:type,credit_card', 'numeric', 'min:0'],
+            'expires_at' => ['required_if:type,credit_card', 'date'],
+            // Loan
+            'interest_rate' => ['required_if:type,loan', 'numeric', 'min:0'],
+            'rate_type' => ['required_if:type,loan', 'string', Rule::enum(RateType::class)],
+            'term_months' => ['required_if:type,loan', 'integer', 'min:1'],
         ];
     }
 
