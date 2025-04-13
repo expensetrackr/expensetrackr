@@ -57,7 +57,7 @@ final class AccountController extends Controller
                     'bankConnection',
                     'transactions' => function (Builder $query): void {
                         $query
-                            ->orderByDesc('dated_at')
+                            ->latest('dated_at')
                             ->with('category')
                             ->limit(3);
                     },
