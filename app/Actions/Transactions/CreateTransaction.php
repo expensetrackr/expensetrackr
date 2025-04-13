@@ -63,7 +63,7 @@ final class CreateTransaction
                 $input['base_amount'] = $input['amount'];
                 $input['base_currency'] = $currency;
                 $input['currency_rate'] = $exchangeRate;
-                $input['amount'] = $amount / $exchangeRate;
+                $input['amount'] = ($type === TransactionType::Expense->value ? -1 : 1) * abs($amount / $exchangeRate);
                 $input['currency'] = 'USD';
             }
 
