@@ -79,6 +79,8 @@ jobs:
 
             - name: 🔍 Generate wayfinder types
               run: php artisan wayfinder:generate --with-form
+              env:
+                  LOG_CHANNEL: "null"
 
             - name: 📥 Download deps
               run: bun install
