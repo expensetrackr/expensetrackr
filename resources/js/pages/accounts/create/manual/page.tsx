@@ -61,7 +61,7 @@ export default function CreateManualAccountPage({ currencies }: CreateAccountPag
                         ...data,
                         ...submission.value,
                         ...("initial_balance" in submission.value && {
-                            current_balance: submission.value.initial_balance,
+                            current_balance: submission.value.initial_balance.replace(/,/g, ""),
                         }),
                     }));
 

@@ -32,7 +32,6 @@ type DashboardProps = {
 };
 
 export default function Dashboard(props: PageProps<DashboardProps>) {
-    console.log(props.transactions);
     return (
         <div className="flex flex-col gap-6 overflow-hidden px-4 pb-6 lg:px-8 lg:pt-1">
             <div className="mx-auto grid w-full max-w-md grid-cols-1 items-start gap-6 min-[1300px]:max-w-4xl min-[1400px]:max-w-full min-[1400px]:grid-cols-3 lg:max-[1300px]:max-w-3xl lg:max-[1300px]:grid-cols-2 lg:max-[1300px]:justify-center">

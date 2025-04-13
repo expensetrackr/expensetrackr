@@ -86,7 +86,7 @@ export function AccountSummaryStep({ fields }: AccountSummaryStepProps) {
                             <div className="text-paragraph-sm text-(--text-sub-600)">Balance</div>
                             <div className="text-right text-label-sm">
                                 {currencyFormatter({
-                                    amount: fields.initial_balance.value,
+                                    amount: fields.initial_balance.value.replace(/,/g, ""),
                                     currency: fields.currency_code.value,
                                     locale: language,
                                 })}
@@ -121,7 +121,7 @@ export function AccountSummaryStep({ fields }: AccountSummaryStepProps) {
                                 <div className="text-right text-label-sm">
                                     {fields.minimum_payment.value
                                         ? currencyFormatter({
-                                              amount: fields.minimum_payment.value,
+                                              amount: fields.minimum_payment.value.replace(/,/g, ""),
                                               currency: fields.currency_code.value,
                                               locale: language,
                                           })

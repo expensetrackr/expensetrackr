@@ -18,8 +18,6 @@ import * as Dropdown from "./ui/dropdown.tsx";
 function WorkspaceItem({ workspace }: { workspace: App.Data.Workspace.WorkspaceData }) {
     const currentWorkspace = useCurrentWorkspace();
 
-    console.info(workspace);
-
     function switchToWorkspace(workspace: App.Data.Workspace.WorkspaceData) {
         router.put(
             routes.currentWorkspace.update.url(),

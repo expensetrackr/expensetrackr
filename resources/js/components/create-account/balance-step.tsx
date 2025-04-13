@@ -42,7 +42,7 @@ export function BalanceStep({ currencies, fields }: DetailsStepProps) {
 
     return (
         <>
-            {/* <input {...getInputProps(fields.initial_balance, { type: "hidden" })} /> */}
+            <input {...getInputProps(fields.initial_balance, { type: "hidden" })} />
             <input {...getInputProps(fields.type, { type: "hidden" })} />
             <input {...getInputProps(fields.currency_code, { type: "hidden" })} />
 
@@ -54,8 +54,8 @@ export function BalanceStep({ currencies, fields }: DetailsStepProps) {
                     <InputPrimitives.InlineAffix>{currencyFormat?.currencySymbol}</InputPrimitives.InlineAffix>
                 }
                 label="Initial balance"
-                name="initial_balance"
-                onValueChange={handleMoneyChange}
+                name="initial_balance_currency_input"
+                onValueChange={(values) => initialBalanceControl.change(handleMoneyChange(values))}
                 placeholder="e.g. 1.00"
                 trailingNode={
                     <SelectCurrencies
@@ -155,7 +155,7 @@ function CreditCardFields({ fields, currencyFormat, handleMoneyChange }: CreditC
                     <InputPrimitives.InlineAffix>{currencyFormat?.currencySymbol}</InputPrimitives.InlineAffix>
                 }
                 label={t("form.fields.available_balance.label")}
-                name="available_balance"
+                name="available_balance_currency_input"
                 onValueChange={(values) => availableBalanceControl.change(handleMoneyChange(values))}
                 placeholder={t("form.fields.available_balance.placeholder")}
                 value={availableBalanceControl.value}
@@ -171,7 +171,7 @@ function CreditCardFields({ fields, currencyFormat, handleMoneyChange }: CreditC
                         <InputPrimitives.InlineAffix>{currencyFormat?.currencySymbol}</InputPrimitives.InlineAffix>
                     }
                     label={t("form.fields.minimum_payment.label")}
-                    name="minimum_payment"
+                    name="minimum_payment_currency_input"
                     onValueChange={(values) => minimumPaymentControl.change(handleMoneyChange(values))}
                     placeholder={t("form.fields.minimum_payment.placeholder")}
                     value={minimumPaymentControl.value}
@@ -204,9 +204,7 @@ function CreditCardFields({ fields, currencyFormat, handleMoneyChange }: CreditC
                         <Popover.Content className="p-0" showArrow={false}>
                             <DatepickerPrimivites.Calendar
                                 mode="single"
-                                onSelect={(date) => {
-                                    expiresAtControl.change(date?.toISOString());
-                                }}
+                                onSelect={(date) => expiresAtControl.change(date?.toISOString())}
                                 selected={expiresAtControl.value ? new Date(expiresAtControl.value) : undefined}
                             />
                             <div className="flex items-center justify-between gap-4 border-t border-(--stroke-soft-200) p-4 py-5">
@@ -252,7 +250,7 @@ function CreditCardFields({ fields, currencyFormat, handleMoneyChange }: CreditC
                         <InputPrimitives.InlineAffix>{currencyFormat?.currencySymbol}</InputPrimitives.InlineAffix>
                     }
                     label={t("form.fields.annual_fee.label")}
-                    name="annual_fee"
+                    name="annual_fee_currency_input"
                     onValueChange={(values) => annualFeeControl.change(handleMoneyChange(values))}
                     placeholder={t("form.fields.annual_fee.placeholder")}
                     value={annualFeeControl.value}
