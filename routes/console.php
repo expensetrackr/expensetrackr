@@ -24,3 +24,8 @@ Schedule::job(SnapshopAccountBalances::class)
     ->after(function () {
         Log::info('Completed daily balance snapshot job');
     });
+
+Schedule::command('transactions:process-recurring')
+    ->daily()
+    ->at('00:00')
+    ->withoutOverlapping();

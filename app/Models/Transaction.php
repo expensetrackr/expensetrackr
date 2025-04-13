@@ -10,9 +10,11 @@ use App\Enums\Finance\TransactionStatus;
 use App\Enums\Finance\TransactionType;
 use App\Observers\TransactionObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
 
 /**
@@ -39,10 +41,16 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @property int|null $category_id
  * @property \Carbon\CarbonImmutable|null $enriched_at
  * @property int|null $merchant_id
+ * @property int|null $recurring_parent_id
+ * @property \Carbon\CarbonImmutable|null $recurring_start_at The date when this recurring transaction should start
  * @property-read Account $account
  * @property-read Category|null $category
  * @property-read string|null $prefixed_id
+ * @property-read Collection<int, Transaction> $recurring_chain
  * @property-read Merchant|null $merchant
+ * @property-read Collection<int, Transaction> $recurringChildren
+ * @property-read int|null $recurring_children_count
+ * @property-read Transaction|null $recurringParent
  * @property-read Workspace $workspace
  *
  * @method static \Database\Factories\TransactionFactory factory($count = null, $state = [])
@@ -68,6 +76,8 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Transaction whereNote($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Transaction wherePublicId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Transaction whereRecurringInterval($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Transaction whereRecurringParentId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Transaction whereRecurringStartAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Transaction whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Transaction whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Transaction whereUpdatedAt($value)
@@ -122,6 +132,40 @@ final class Transaction extends Model
     }
 
     /**
+     * Get the parent recurring transaction.
+     *
+     * @return BelongsTo<Transaction, covariant $this>
+     */
+    public function recurringParent(): BelongsTo
+    {
+        return $this->belongsTo(self::class, 'recurring_parent_id');
+    }
+
+    /**
+     * Get all transactions that were created from this recurring transaction.
+     *
+     * @return HasMany<Transaction, covariant $this>
+     */
+    public function recurringChildren(): HasMany
+    {
+        return $this->hasMany(self::class, 'recurring_parent_id');
+    }
+
+    /**
+     * Get all transactions in the recurring chain, including parent and siblings.
+     *
+     * @return Collection<int, Transaction>
+     */
+    public function getRecurringChainAttribute(): Collection
+    {
+        if ($this->recurringParent) {
+            return $this->recurringParent->recurringChildren;
+        }
+
+        return $this->recurringChildren;
+    }
+
+    /**
      * The attributes that should be cast.
      *
      * @return array<string, string>
@@ -134,6 +178,7 @@ final class Transaction extends Model
             'recurring_interval' => TransactionRecurringInterval::class,
             'dated_at' => 'datetime',
             'enriched_at' => 'datetime',
+            'recurring_start_at' => 'datetime',
         ];
     }
 }
