@@ -1,6 +1,5 @@
 import { getFormProps, useForm } from "@conform-to/react";
 import { getValibotConstraint, parseWithValibot } from "@conform-to/valibot";
-import Coupon01Icon from "virtual:icons/hugeicons/coupon-01";
 import GiftIcon from "virtual:icons/hugeicons/gift";
 import GithubIcon from "virtual:icons/hugeicons/github";
 import Mail01Icon from "virtual:icons/hugeicons/mail-01";
@@ -58,7 +57,7 @@ export default function WelcomePage() {
                                     className="h-auto w-16 dark:grayscale-300"
                                 />
 
-                                <span className="text-h5 font-light">
+                                <span className="hidden text-h5 font-light md:block">
                                     Expense<span className="font-bold">Trackr</span>
                                 </span>
                             </div>
@@ -97,26 +96,6 @@ export default function WelcomePage() {
                 <CallToAction />
 
                 <Footer />
-
-                <Alert.Root
-                    $size="lg"
-                    $status="information"
-                    $variant="filled"
-                    className="fixed right-0 bottom-0 left-0 z-50 rounded-none"
-                >
-                    <Alert.Icon as={Coupon01Icon} />
-                    <div className="space-y-2.5">
-                        <div className="space-y-1">
-                            <div className="text-label-sm">We are running a limited time offer!</div>
-                            <div>Get any plan or lifetime access for an special price before launch on April 14th.</div>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <LinkButton.Root $size="md" $style="modifiable" $underline asChild>
-                                <a href="#pricing">Get Offer</a>
-                            </LinkButton.Root>
-                        </div>
-                    </div>
-                </Alert.Root>
             </div>
         </>
     );
