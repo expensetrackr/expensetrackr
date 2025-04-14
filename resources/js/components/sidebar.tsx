@@ -2,7 +2,6 @@ import { usePage } from "@inertiajs/react";
 import * as React from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import Analytics02Icon from "virtual:icons/hugeicons/analytics-02";
-import CustomerSupportIcon from "virtual:icons/hugeicons/customer-support";
 import Setting07Icon from "virtual:icons/hugeicons/setting-07";
 import TransactionIcon from "virtual:icons/hugeicons/transaction";
 import Wallet01Icon from "virtual:icons/hugeicons/wallet-01";
@@ -157,11 +156,6 @@ function SettingsAndSupport({ collapsed }: { collapsed: boolean }) {
             icon: Setting07Icon,
             label: "Settings",
         },
-        {
-            href: "mailto:support@expensetrackr.app",
-            icon: CustomerSupportIcon,
-            label: "Support",
-        },
     ];
 
     return (
@@ -191,10 +185,6 @@ function SettingsAndSupport({ collapsed }: { collapsed: boolean }) {
                             )}
                             href={href}
                             key={i}
-                            {...(href.startsWith("mailto:") && {
-                                rel: "noopener noreferrer",
-                                target: "_blank",
-                            })}
                         >
                             <div
                                 className={cn(
