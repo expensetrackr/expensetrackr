@@ -14,14 +14,12 @@ const connectionTypes = {
         title: "Connect your bank",
         description: "Connect your account using one of our supported providers",
         color: "bg-blue-50 text-blue-500 dark:bg-blue-400/20 dark:text-blue-400",
-        disabled: true,
     },
     [ConnectionTypeEnum.enum.Manual]: {
         icon: KeyboardIcon,
         title: "Manual",
         description: "Manually add your account information",
         color: "bg-neutral-50 text-neutral-500 dark:bg-neutral-400/20 dark:text-neutral-400",
-        disabled: false,
     },
 };
 
@@ -52,12 +50,7 @@ export function ConnectionTypeStep() {
                             htmlFor={option}
                             key={option}
                         >
-                            <Radio.Item
-                                className="sr-only absolute size-px"
-                                disabled={connectionTypes[option].disabled}
-                                id={option}
-                                value={option}
-                            />
+                            <Radio.Item className="sr-only absolute size-px" id={option} value={option} />
 
                             <div className="flex items-center justify-start gap-3">
                                 <span
