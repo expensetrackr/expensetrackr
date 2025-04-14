@@ -44,7 +44,10 @@ final class BillingController
 
         if ($isSinglePurchase) {
             try {
-                return $user->checkout([type($productId)->asString()])->redirect();
+                return $user
+                    ->checkout([type($productId)->asString()])
+                    ->withSuccessUrl('https://expensetrackr.app/thank-you')
+                    ->redirect();
             } catch (Throwable $th) {
                 return back()->with('toast', [
                     'title' => 'Error',
@@ -55,7 +58,10 @@ final class BillingController
         }
 
         try {
-            return $user->subscribe(type($productId)->asString())->redirect();
+            return $user
+                ->subscribe(type($productId)->asString())
+                ->withSuccessUrl('https://expensetrackr.app/thank-you')
+                ->redirect();
         } catch (Throwable $th) {
             return back()->with('toast', [
                 'title' => 'Error',
