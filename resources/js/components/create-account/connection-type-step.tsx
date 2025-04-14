@@ -4,6 +4,7 @@ import KeyboardIcon from "virtual:icons/ri/keyboard-line";
 import LinkIcon from "virtual:icons/ri/link";
 
 import { useCreateAccountParams } from "#/hooks/use-create-account-params.ts";
+import { useUser } from "#/hooks/use-user.ts";
 import { ConnectionTypeEnum } from "#/schemas/account.ts";
 import { cn } from "#/utils/cn.ts";
 import * as Radio from "../ui/radio.tsx";
@@ -25,6 +26,7 @@ const connectionTypes = {
 
 export function ConnectionTypeStep() {
     const { type, connectionType, setParams } = useCreateAccountParams();
+    const user = useUser();
 
     const handleChange = async (value: v.InferOutput<typeof ConnectionTypeEnum>) => {
         await setParams({ connectionType: value });
@@ -42,6 +44,12 @@ export function ConnectionTypeStep() {
                 .filter((option) =>
                     type !== "depository" && type !== "credit_card" ? option === ConnectionTypeEnum.enum.Manual : true,
                 )
+                .filter((option) => {
+                    if (option === ConnectionTypeEnum.enum.Connect) {
+                        return user.isSubscribed;
+                    }
+                    return true;
+                })
                 .map((option) => {
                     const Icon = connectionTypes[option].icon;
                     return (
