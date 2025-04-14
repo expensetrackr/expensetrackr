@@ -34,7 +34,7 @@ export default function WelcomePage() {
     const user = useUser();
     return (
         <>
-            <div className="relative pb-26">
+            <div className="relative">
                 <div aria-hidden="true" className="pointer-events-none absolute h-full max-h-152.5 w-full">
                     <Image
                         alt=""
