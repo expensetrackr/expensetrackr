@@ -126,6 +126,18 @@ final class User extends Authenticatable
     }
 
     /**
+     * Checks if the user is subscribed to the given product.
+     */
+    public function isSubscribed(?string $productId = null): bool
+    {
+        if ($productId) {
+            return $this->hasPurchasedProduct($productId);
+        }
+
+        return $this->subscribed();
+    }
+
+    /**
      * The attributes that should be cast.
      *
      * @return array<string, string>

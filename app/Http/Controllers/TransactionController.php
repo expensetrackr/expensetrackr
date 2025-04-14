@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Actions\Transactions\CreateTransaction;
 use App\Actions\Transactions\UpdateTransaction;
+use App\Enums\Finance\TransactionType;
 use App\Facades\Forex;
 use App\Filters\FiltersTransactionsByAccount;
 use App\Http\Requests\CreateTransactionRequest;
@@ -16,6 +17,7 @@ use App\Models\Account;
 use App\Models\Category;
 use App\Models\Transaction;
 use App\Models\User;
+use Exception;
 use Illuminate\Container\Attributes\CurrentUser;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -143,7 +145,40 @@ final class TransactionController extends Controller
                 ]);
         }
 
-        $transaction->delete();
+        $trx = $transaction->delete();
+
+        /**
+         * 1. If the transaction is manual, we need to detach the amount from the account.
+         * 2. If the transaction is not manual, we need to add the amount to the account.
+         */
+        if ($transaction->is_manual) {
+            /** @var numeric-string $amount */
+            $amount = $transaction->amount;
+            /** @var numeric-string $accountCurrentBalance */
+            $accountCurrentBalance = $transaction->account->current_balance;
+
+            // Convert negative amount to positive for calculations
+            /** @var numeric-string $absoluteAmount */
+            $absoluteAmount = ltrim((string) $amount, '-');
+
+            switch ($transaction->type) {
+                case TransactionType::Expense:
+                    $newCurrentBalance = bcadd($accountCurrentBalance, $absoluteAmount, 4);
+                    break;
+                case TransactionType::Income:
+                    $newCurrentBalance = bcsub($accountCurrentBalance, $absoluteAmount, 4);
+                    break;
+                case TransactionType::Transfer:
+                    $newCurrentBalance = $accountCurrentBalance;
+                    break;
+                default:
+                    throw new Exception('Invalid transaction type');
+            }
+
+            $transaction->account()->update([
+                'current_balance' => $newCurrentBalance,
+            ]);
+        }
 
         return to_route('transactions.index')
             ->with('toast', [

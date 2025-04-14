@@ -37,7 +37,7 @@ class UserData extends Data
             'profilePhotoUrl' => $user->profile_photo_url,
             'twoFactorEnabled' => Features::enabled(Features::twoFactorAuthentication())
                 && $user->two_factor_secret !== null,
-            'isSubscribed' => $user->subscribed(),
+            'isSubscribed' => $user->isSubscribed(),
         ]);
     }
 }

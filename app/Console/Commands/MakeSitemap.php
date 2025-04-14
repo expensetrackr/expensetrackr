@@ -34,6 +34,8 @@ final class MakeSitemap extends Command
                 ->add('/')
                 ->add('/terms-of-service')
                 ->add('/privacy-policy')
+                ->add('/login')
+                ->add('/register')
                 ->writeToFile(public_path('sitemap.xml'));
 
             $this->info('Sitemap generated successfully.');

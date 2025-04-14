@@ -16,6 +16,7 @@ import password from "./routes/password/index.ts";
 import policy from "./routes/policy/index.ts";
 import register from "./routes/register.ts";
 import settings from "./routes/settings/index.ts";
+import subscribe from "./routes/subscribe.ts";
 import terms from "./routes/terms/index.ts";
 import transactions from "./routes/transactions/index.ts";
 import twoFactor from "./routes/two-factor/index.ts";
@@ -50,6 +51,7 @@ export const routes = {
     policy,
     register,
     settings,
+    subscribe,
     terms,
     transactions,
     twoFactor,

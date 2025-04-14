@@ -1,6 +1,7 @@
 import { router } from "@inertiajs/react";
 import ArrowRight01Icon from "virtual:icons/hugeicons/arrow-right-01";
 import BlockedIcon from "virtual:icons/hugeicons/blocked";
+import CreditCardIcon from "virtual:icons/hugeicons/credit-card";
 import GeometricShapes01Icon from "virtual:icons/hugeicons/geometric-shapes-01";
 import Link04Icon from "virtual:icons/hugeicons/link-04";
 import UserCircle02Icon from "virtual:icons/hugeicons/user-circle-02";
@@ -22,6 +23,11 @@ export function SettingsVerticalMenu() {
             label: "Profile",
             icon: UserCircle02Icon,
             href: "/settings",
+        },
+        {
+            label: "Billing",
+            icon: CreditCardIcon,
+            href: "/settings/billing",
         },
         {
             label: "Workspace",

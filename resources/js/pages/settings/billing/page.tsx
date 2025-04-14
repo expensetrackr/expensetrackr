@@ -1,0 +1,38 @@
+import { Head } from "@inertiajs/react";
+import Invoice03Icon from "virtual:icons/hugeicons/invoice-03";
+
+import { Header } from "#/components/header.tsx";
+import { PricingTables } from "#/components/pricing-tables.tsx";
+import * as Divider from "#/components/ui/divider.tsx";
+import { SettingsLayout } from "#/layouts/settings-layout.tsx";
+import { type PageProps } from "#/types/globals.js";
+
+export default function SettingsBillingPage() {
+    return (
+        <div className="flex w-full flex-col gap-5 px-4 py-6 lg:px-8">
+            <PricingTables />
+        </div>
+    );
+}
+
+SettingsBillingPage.layout = (page: React.ReactNode & { props: PageProps }) => (
+    <SettingsLayout {...page.props}>
+        <Head title="Billing" />
+
+        <Header
+            description="Manage your billing information and subscription details."
+            icon={
+                <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-(--bg-white-0) shadow-xs ring-1 ring-(--stroke-soft-200) ring-inset">
+                    <Invoice03Icon className="size-6 text-(--text-sub-600)" />
+                </div>
+            }
+            title="Billing"
+        />
+
+        <div className="px-4 lg:px-8">
+            <Divider.Root />
+        </div>
+
+        {page}
+    </SettingsLayout>
+);

@@ -1,14 +1,9 @@
 import { getFormProps, useForm } from "@conform-to/react";
 import { getValibotConstraint, parseWithValibot } from "@conform-to/valibot";
-import NumberFlow, { type Format } from "@number-flow/react";
-import { resolveCurrencyFormat } from "@sumup/intl";
-import * as React from "react";
-import Alert01Icon from "virtual:icons/hugeicons/alert-01";
 import Coupon01Icon from "virtual:icons/hugeicons/coupon-01";
 import GiftIcon from "virtual:icons/hugeicons/gift";
 import GithubIcon from "virtual:icons/hugeicons/github";
 import Mail01Icon from "virtual:icons/hugeicons/mail-01";
-import CheckboxCircleFillIcon from "virtual:icons/ri/checkbox-circle-fill";
 import MoneyDollarCircleFillIcon from "virtual:icons/ri/money-dollar-circle-fill";
 
 import { BentoAccountsTransfers } from "#/components/bento/accounts-transfers.tsx";
@@ -26,19 +21,18 @@ import * as Glow from "#/components/glow.tsx";
 import { Image } from "#/components/image.tsx";
 import { Link } from "#/components/link.tsx";
 import Logo from "#/components/logo.tsx";
+import { PricingTables } from "#/components/pricing-tables.tsx";
 import { Source } from "#/components/source.tsx";
 import * as Alert from "#/components/ui/alert.tsx";
 import * as Button from "#/components/ui/button.tsx";
-import * as Divider from "#/components/ui/divider.tsx";
 import * as LinkButton from "#/components/ui/link-button.tsx";
-import * as SegmentedControl from "#/components/ui/segmented-control.tsx";
 import { useTranslation } from "#/hooks/use-translation.ts";
+import { useUser } from "#/hooks/use-user.ts";
 import { routes } from "#/routes.ts";
-import { cn } from "#/utils/cn.ts";
-import { plans } from "#/utils/plans.ts";
 import { BalanceSchema } from "#/utils/steppers/create-account.step.ts";
 
 export default function WelcomePage() {
+    const user = useUser();
     return (
         <>
             <div className="relative pb-26">
@@ -70,13 +64,21 @@ export default function WelcomePage() {
                             </div>
 
                             <div className="flex items-center gap-2">
-                                <Button.Root $style="ghost" $type="neutral" asChild className="min-w-24">
-                                    <Link href={routes.login.url()}>Log in</Link>
-                                </Button.Root>
+                                {user ? (
+                                    <Button.Root asChild className="min-w-24">
+                                        <Link href={routes.dashboard.url()}>Dashboard</Link>
+                                    </Button.Root>
+                                ) : (
+                                    <>
+                                        <Button.Root $style="ghost" $type="neutral" asChild className="min-w-24">
+                                            <Link href={routes.login.url()}>Log in</Link>
+                                        </Button.Root>
 
-                                <Button.Root asChild className="min-w-24">
-                                    <Link href={routes.register.url()}>Get started</Link>
-                                </Button.Root>
+                                        <Button.Root asChild className="min-w-24">
+                                            <Link href={routes.register.url()}>Get started</Link>
+                                        </Button.Root>
+                                    </>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -371,46 +373,7 @@ function FeatureSection() {
 }
 
 function PricingSection() {
-    const [interval, setInterval] = React.useState("yearly");
-    const { language, t } = useTranslation();
-    const currencyFormat = resolveCurrencyFormat(language, "USD");
-
-    const [timeLeft, setTimeLeft] = React.useState("");
-
-    React.useEffect(() => {
-        const endDate = new Date("2025-04-14T23:59:59");
-
-        const updateTimer = () => {
-            const now = new Date();
-            const diff = endDate.getTime() - now.getTime();
-
-            if (diff <= 0) {
-                setTimeLeft("Offer ended");
-                return;
-            }
-
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-
-            setTimeLeft(`${days}d ${hours}h ${minutes}m`);
-        };
-
-        updateTimer();
-        const intervalId = window.setInterval(updateTimer, 60000); // Update every minute
-
-        return () => window.clearInterval(intervalId);
-    }, []);
-
-    const format: Format = React.useMemo(
-        () => ({
-            style: "currency",
-            currency: "USD",
-            minimumFractionDigits: currencyFormat?.minimumFractionDigits,
-            maximumFractionDigits: currencyFormat?.maximumFractionDigits,
-        }),
-        [currencyFormat?.maximumFractionDigits, currencyFormat?.minimumFractionDigits],
-    );
+    const { t } = useTranslation();
 
     return (
         <Glow.Area className="container scroll-mt-20 py-12" id="pricing">
@@ -418,221 +381,9 @@ function PricingSection() {
                 <div className="mx-auto flex max-w-160 flex-col">
                     <h2 className="text-center text-h4">{t("home.sections.pricing.title")}</h2>
                     <p className="text-center text-paragraph-md">{t("home.sections.pricing.description")}</p>
-                    <Alert.Root
-                        $size="sm"
-                        $status="information"
-                        $variant="lighter"
-                        className="mx-auto mt-4 w-fit animate-pulse"
-                    >
-                        <Alert.Icon as={Alert01Icon} />
-                        <div className="flex flex-col items-center">
-                            <span className="font-bold text-red-500">🔥 Flash Sale Ending Soon!</span>
-                            <span>
-                                Only <span className="font-medium">{timeLeft}</span> remaining
-                            </span>
-
-                            {/* Add scarcity indicator */}
-                            <span className="text-sm mt-1">
-                                Only <span className="font-bold text-red-500">23 spots</span> left at this price!
-                            </span>
-                        </div>
-                    </Alert.Root>
-
-                    <Button.Root $size="md" asChild className="mx-auto mt-6">
-                        <a href="#pricing-plans">Get Started Now - Save 40% 👇</a>
-                    </Button.Root>
                 </div>
 
-                <div className="flex flex-col items-center gap-8">
-                    <SegmentedControl.Root defaultValue={interval} onValueChange={setInterval}>
-                        <SegmentedControl.List
-                            className="w-fit gap-2 rounded-full"
-                            floatingBgClassName="rounded-full bg-primary"
-                        >
-                            <SegmentedControl.Trigger
-                                className="px-3 text-(--text-strong-950) data-[state=active]:text-white"
-                                value="monthly"
-                            >
-                                {t("common.monthly")}
-                            </SegmentedControl.Trigger>
-                            <SegmentedControl.Trigger
-                                className="px-3 text-(--text-strong-950) data-[state=active]:text-white"
-                                value="yearly"
-                            >
-                                {t("common.yearly")}
-                            </SegmentedControl.Trigger>
-                        </SegmentedControl.List>
-                    </SegmentedControl.Root>
-
-                    <div className="grid scroll-mt-40 grid-cols-12" id="pricing-plans">
-                        <div className="col-span-12 lg:col-span-10 lg:col-start-2">
-                            <div className="grid grid-cols-12">
-                                {plans.map((plan, index) => {
-                                    const features = t(`home.sections.pricing.plans.${plan.code}.features`)?.split(",");
-
-                                    return (
-                                        <div
-                                            className={cn(
-                                                "col-span-12 lg:col-span-4",
-                                                (index === 0 || index === 2) && "lg:mt-8",
-                                            )}
-                                            key={plan.code}
-                                        >
-                                            <Glow.Root className="rounded-20" color={plan.glowColor}>
-                                                <div
-                                                    className={cn(
-                                                        "flex flex-col gap-6 px-5 py-12",
-                                                        plan.isFeatured
-                                                            ? "relative z-10 rounded-20 border bg-linear-41 from-(--bg-white-0) from-1% to-(--bg-weak-50) to-178% shadow-(color:--bg-weak-50)"
-                                                            : "rounded-[18px] border-[0.3px] bg-(--bg-white-0)",
-                                                    )}
-                                                    style={{
-                                                        ...(plan.isFeatured && {
-                                                            boxShadow:
-                                                                "0px 0px 56.962px 0px var(--tw-shadow-color), 0px 0px 16.275px 0px var(--tw-shadow-color), 0px 0px 8.137px 0px var(--tw-shadow-color)",
-                                                        }),
-                                                    }}
-                                                >
-                                                    <div className="flex flex-col gap-5">
-                                                        <div className="flex gap-2">
-                                                            <div className="flex flex-1 flex-col gap-0.5">
-                                                                <h5 className="text-h5">
-                                                                    {t(
-                                                                        `home.sections.pricing.plans.${plan.code}.title`,
-                                                                    )}
-                                                                </h5>
-                                                                <p className="text-paragraph-sm text-(--text-sub-600)">
-                                                                    {t(
-                                                                        `home.sections.pricing.plans.${plan.code}.description`,
-                                                                    )}
-                                                                </p>
-                                                            </div>
-
-                                                            <div
-                                                                className={cn(
-                                                                    "flex size-10 items-center justify-center rounded-full",
-                                                                    plan.iconBg,
-                                                                )}
-                                                            >
-                                                                <plan.icon className="size-6 text-white" />
-                                                            </div>
-                                                        </div>
-
-                                                        <div className="flex flex-col gap-1">
-                                                            <h2 className="text-h3">
-                                                                {plan.code === "free" ? (
-                                                                    <span>Free</span>
-                                                                ) : (
-                                                                    <>
-                                                                        <div className="flex flex-col -space-y-2">
-                                                                            <div className="flex items-center gap-1">
-                                                                                <div className="relative flex w-fit">
-                                                                                    <NumberFlow
-                                                                                        className="text-(--text-soft-400) [--number-flow-char-height:0.85em] [&::part(suffix)]:text-h6 [&::part(suffix)]:text-(--text-soft-400)"
-                                                                                        format={format}
-                                                                                        locales={language}
-                                                                                        value={
-                                                                                            plan.price?.[
-                                                                                                interval as keyof typeof plan.price
-                                                                                            ]?.previous ??
-                                                                                            plan.price?.onetime
-                                                                                                ?.previous ??
-                                                                                            0
-                                                                                        }
-                                                                                        willChange
-                                                                                    />
-                                                                                    <hr className="absolute top-6.5 h-1 w-full border-0 bg-(--text-soft-400)" />
-                                                                                </div>
-
-                                                                                <NumberFlow
-                                                                                    className="[--number-flow-char-height:0.85em] [&::part(suffix)]:text-h5 [&::part(suffix)]:text-(--text-soft-400) [&::part(suffix)]:line-through"
-                                                                                    format={format}
-                                                                                    locales={language}
-                                                                                    value={
-                                                                                        plan.price?.[
-                                                                                            interval as keyof typeof plan.price
-                                                                                        ]?.price ??
-                                                                                        plan.price?.onetime?.price ??
-                                                                                        0
-                                                                                    }
-                                                                                    willChange
-                                                                                />
-                                                                            </div>
-
-                                                                            {plan.isSubscription && (
-                                                                                <p
-                                                                                    className="text-paragraph-md text-(--text-soft-400) animate-in fade-in-0"
-                                                                                    key={interval}
-                                                                                >
-                                                                                    /{" "}
-                                                                                    {interval === "yearly"
-                                                                                        ? "billed yearly"
-                                                                                        : interval}
-                                                                                </p>
-                                                                            )}
-                                                                        </div>
-                                                                    </>
-                                                                )}
-                                                            </h2>
-                                                        </div>
-                                                    </div>
-
-                                                    <Divider.Root />
-
-                                                    <ul className="flex flex-col gap-3">
-                                                        {features?.map((feature, idx) => (
-                                                            <li
-                                                                className="inline-flex items-center gap-1 text-paragraph-sm"
-                                                                key={idx}
-                                                            >
-                                                                <CheckboxCircleFillIcon className="size-6" />
-                                                                <span dangerouslySetInnerHTML={{ __html: feature }} />
-                                                            </li>
-                                                        ))}
-                                                    </ul>
-
-                                                    {plan.code !== "free" && (
-                                                        <div className="flex flex-col gap-3">
-                                                            <span className="text-paragraph-sm font-medium text-(--text-sub-600)">
-                                                                Early bird features:
-                                                            </span>
-
-                                                            <ul className="flex flex-col gap-3">
-                                                                <li className="inline-flex items-center gap-1 text-paragraph-sm">
-                                                                    <CheckboxCircleFillIcon className="size-6" />
-                                                                    <span>Early access to new features</span>
-                                                                </li>
-                                                                <li className="inline-flex items-center gap-1 text-paragraph-sm">
-                                                                    <CheckboxCircleFillIcon className="size-6" />
-                                                                    <span>Priority support</span>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    )}
-
-                                                    <Button.Root
-                                                        $style={
-                                                            plan.code === "free"
-                                                                ? "stroke"
-                                                                : plan.isFeatured
-                                                                  ? "filled"
-                                                                  : "stroke"
-                                                        }
-                                                        asChild
-                                                    >
-                                                        <Link href={routes.login.url()}>
-                                                            {t(`home.sections.pricing.plans.${plan.code}.button_label`)}
-                                                        </Link>
-                                                    </Button.Root>
-                                                </div>
-                                            </Glow.Root>
-                                        </div>
-                                    );
-                                })}
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <PricingTables />
             </div>
         </Glow.Area>
     );

@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\BillingController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LanguageController;
@@ -45,10 +46,13 @@ Route::middleware([
 
     Route::prefix('settings')->group(function () {
         Route::get('/', fn () => Inertia::render('settings/show'))->name('settings.show');
+        Route::get('/billing', [BillingController::class, 'show'])->name('settings.billing.show');
         Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
 
         Route::get('/connected-accounts', fn () => Inertia::render('settings/connected-accounts/show'))->name('settings.connected-accounts.show');
     });
+
+    Route::get('/subscribe', [BillingController::class, 'subscribe'])->name('subscribe');
 });
 
 Route::post('/language', LanguageController::class)->name('language.store');

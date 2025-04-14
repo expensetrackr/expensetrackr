@@ -67,7 +67,7 @@ export const fancyButtonVariants = tv({
                     "before:bg-gradient-to-b before:p-px",
                     "before:from-white/[.12] before:to-transparent",
                     // before mask
-                    "before:[mask-clip:content-box,border-box] before:[mask-composite:exclude] before:[mask-image:linear-gradient(#fff_0_0),linear-gradient(#fff_0_0)]",
+                    "before:[mask-image:linear-gradient(#fff_0_0),linear-gradient(#fff_0_0)] before:[mask-composite:exclude] before:[mask-clip:content-box,border-box]",
                     // after
                     "after:absolute after:inset-0 after:rounded-[inherit] after:bg-gradient-to-b after:from-white after:to-transparent",
                     "after:pointer-events-none after:opacity-[.16] after:transition after:duration-200 after:ease-out",

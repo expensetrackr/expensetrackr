@@ -158,10 +158,9 @@ function SettingsAndSupport({ collapsed }: { collapsed: boolean }) {
             label: "Settings",
         },
         {
-            href: "/support",
+            href: "mailto:support@expensetrackr.app",
             icon: CustomerSupportIcon,
             label: "Support",
-            disabled: true,
         },
     ];
 
@@ -175,12 +174,11 @@ function SettingsAndSupport({ collapsed }: { collapsed: boolean }) {
                 Others
             </div>
             <div className="space-y-1">
-                {links.map(({ icon: Icon, label, href, disabled }, i) => {
+                {links.map(({ icon: Icon, label, href }, i) => {
                     const isActivePage = url.startsWith(href);
 
                     return (
                         <Link
-                            aria-disabled={disabled}
                             className={cn(
                                 "group relative flex items-center gap-2 rounded-8 py-2 whitespace-nowrap text-(--text-sub-600) hover:bg-(--bg-weak-50)",
                                 "transition",
@@ -193,6 +191,10 @@ function SettingsAndSupport({ collapsed }: { collapsed: boolean }) {
                             )}
                             href={href}
                             key={i}
+                            {...(href.startsWith("mailto:") && {
+                                rel: "noopener noreferrer",
+                                target: "_blank",
+                            })}
                         >
                             <div
                                 className={cn(
