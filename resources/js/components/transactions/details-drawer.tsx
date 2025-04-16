@@ -3,6 +3,7 @@ import { toast } from "sonner";
 import Delete02Icon from "virtual:icons/hugeicons/delete-02";
 
 import { CategoryIcon } from "#/components/category-icon.tsx";
+import { DeleteTransactionModal } from "#/components/delete-transaction-modal.tsx";
 import { SelectField } from "#/components/form/select-field.tsx";
 import { TextField } from "#/components/form/text-field.tsx";
 import { Textarea } from "#/components/form/textarea.tsx";
@@ -16,7 +17,6 @@ import { useTransactionsParams } from "#/hooks/use-transactions-params.ts";
 import { useTranslation } from "#/hooks/use-translation.ts";
 import { routes } from "#/routes.ts";
 import { currencyFormatter } from "#/utils/number-formatter.ts";
-import { DeleteTransactionModal } from "./delete-transaction-modal.tsx";
 
 type TransactionDetailsDrawerProps = {
     transaction?: Resources.Transaction | null;

@@ -2,6 +2,9 @@ import { Head, Link } from "@inertiajs/react";
 import Wallet01Icon from "virtual:icons/hugeicons/wallet-01";
 import WalletAdd01 from "virtual:icons/hugeicons/wallet-add-01";
 
+import { AccountsList } from "#/components/accounts/accounts-lists.tsx";
+import { AccountDetailsDrawer } from "#/components/accounts/details-drawer.tsx";
+import { AccountsFilters } from "#/components/accounts/filters.tsx";
 import { IllustrationEmptyAccounts } from "#/components/empty-illustrations/accounts.tsx";
 import { Header } from "#/components/header.tsx";
 import * as Button from "#/components/ui/button.tsx";
@@ -9,9 +12,6 @@ import * as Divider from "#/components/ui/divider.tsx";
 import { AppLayout } from "#/layouts/app-layout.tsx";
 import { routes } from "#/routes.ts";
 import { type PageProps } from "#/types/globals.js";
-import { AccountsList } from "./__components/accounts-lists.tsx";
-import { AccountDetailsDrawer } from "./__components/details-drawer.tsx";
-import { Filters } from "./__components/filters.tsx";
 
 type AccountsPageProps = {
     accounts: Laravel.PaginatedResponse<Resources.Account>;
@@ -46,7 +46,7 @@ export default function AccountsPage({ accounts, account, permissions }: PagePro
             </div>
 
             <div className="flex flex-col gap-6 px-4 py-6 lg:px-8">
-                <Filters />
+                <AccountsFilters />
                 <AccountsList accounts={accounts.data} />
 
                 {accounts.data.length === 0 && (

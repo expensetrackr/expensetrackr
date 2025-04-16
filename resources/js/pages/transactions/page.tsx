@@ -5,6 +5,9 @@ import TransactionIcon from "virtual:icons/hugeicons/transaction";
 
 import { Header } from "#/components/header.tsx";
 import { TablePagination } from "#/components/table-pagination.tsx";
+import { TransactionDetailsDrawer } from "#/components/transactions/details-drawer.tsx";
+import { TransactionsFilters } from "#/components/transactions/filters.tsx";
+import { TransactionsTable } from "#/components/transactions/table.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
 import { usePaginationParams } from "#/hooks/use-pagination-params.ts";
@@ -12,9 +15,6 @@ import { usePermissions } from "#/hooks/use-permissions.ts";
 import { AppLayout } from "#/layouts/app-layout.tsx";
 import { routes } from "#/routes.ts";
 import { type PageProps } from "#/types/globals.ts";
-import { TransactionDetailsDrawer } from "./__components/details-drawer.tsx";
-import { Filters } from "./__components/filters.tsx";
-import { TransactionsTable } from "./__components/table.tsx";
 
 type TransactionsPageProps = {
     transactions: Laravel.PaginatedResponse<Resources.Transaction>;
@@ -62,7 +62,7 @@ export default function TransactionsPage({ transactions, transaction, categories
             </div>
 
             <div className="flex flex-1 flex-col gap-4 px-4 py-6 lg:px-8">
-                <Filters />
+                <TransactionsFilters />
                 <TransactionsTable
                     // use a key to compare the data so the table is not re-rendered when the params change
                     data={transactions.data ?? []}

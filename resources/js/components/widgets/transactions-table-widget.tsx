@@ -1,8 +1,11 @@
+import { Link } from "@inertiajs/react";
 import CommandIcon from "virtual:icons/hugeicons/command";
 import Search01Icon from "virtual:icons/hugeicons/search-01";
 import TransactionIcon from "virtual:icons/hugeicons/transaction";
+
+import { TransactionsTable } from "#/components/transactions/table.tsx";
+import { routes } from "#/routes.ts";
 import { cnMerge } from "#/utils/cn.ts";
-import { TransactionsTable } from "../tables/transactions.tsx";
 import * as Button from "../ui/button.tsx";
 import * as Input from "../ui/input.tsx";
 import * as Kbd from "../ui/kbd.tsx";
@@ -42,8 +45,8 @@ export function TransactionsTableWidget({ className, transactions, ...props }: T
                             </Kbd.Root>
                         </Input.Wrapper>
                     </Input.Root>
-                    <Button.Root $size="sm" $style="stroke" $type="neutral">
-                        See All
+                    <Button.Root $size="sm" $style="stroke" $type="neutral" asChild>
+                        <Link href={routes.transactions.index.url()}>See All</Link>
                     </Button.Root>
                 </div>
             </div>

@@ -8,7 +8,7 @@ import * as Kbd from "#/components/ui/kbd.tsx";
 import * as SegmentedControl from "#/components/ui/segmented-control.tsx";
 import { useTransactionsParams } from "#/hooks/use-transactions-params.ts";
 
-export function Filters() {
+export function TransactionsFilters() {
     const { setParams, ...params } = useTransactionsParams();
 
     const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {

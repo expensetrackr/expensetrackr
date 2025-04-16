@@ -7,7 +7,7 @@ import { TextField } from "#/components/form/text-field.tsx";
 import * as Kbd from "#/components/ui/kbd.tsx";
 import { useAccountsParams } from "#/hooks/use-accounts-params.ts";
 
-export function Filters() {
+export function AccountsFilters() {
     const { setParams, ...params } = useAccountsParams();
 
     const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {

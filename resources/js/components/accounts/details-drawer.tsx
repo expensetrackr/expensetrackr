@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from "motion/react";
 import Clock04Icon from "virtual:icons/hugeicons/clock-04";
+import Delete02Icon from "virtual:icons/hugeicons/delete-02";
 
 import { Link } from "#/components/link.tsx";
 import { TransactionItem } from "#/components/transaction-item.tsx";
@@ -68,7 +69,7 @@ export function AccountDetailsDrawer({ account }: AccountDetailsDrawerProps) {
                     </div>
                 </Drawer.Body>
 
-                <Drawer.Footer>
+                <Drawer.Footer className="flex-col gap-2">
                     <Button.Root $size="md" $style="stroke" $type="neutral" asChild className="w-full">
                         <Link
                             href={routes.transactions.index.url({
@@ -80,6 +81,17 @@ export function AccountDetailsDrawer({ account }: AccountDetailsDrawerProps) {
                             <Button.Icon as={Clock04Icon} />
                             See All Transactions
                         </Link>
+                    </Button.Root>
+
+                    <Button.Root
+                        $size="md"
+                        $style="ghost"
+                        $type="error"
+                        className="w-full"
+                        onClick={() => setParams({ action: "delete" })}
+                    >
+                        <Button.Icon as={Delete02Icon} />
+                        Delete Account
                     </Button.Root>
                 </Drawer.Footer>
             </Drawer.Content>
