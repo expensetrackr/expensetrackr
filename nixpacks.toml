@@ -84,10 +84,25 @@ stdout_logfile=/var/log/worker-laravel.log
 stderr_logfile=/var/log/worker-laravel.log
 '''
 
+"finance-worker-laravel.conf" = '''
+[program:finance-worker-laravel]
+process_name=%(program_name)s_%(process_num)02d
+command=bash -c 'exec php /app/artisan queue:work --sleep=3 --tries=3 --max-time=3600 --queue=finance'
+autostart=true
+autorestart=true
+stopasgroup=true
+killasgroup=true
+numprocs=12
+startsecs=0
+stopwaitsecs=3600
+stdout_logfile=/var/log/finance-worker-laravel.log
+stderr_logfile=/var/log/finance-worker-laravel.log
+'''
+
 "worker-inertia-ssr.conf" = '''
 [program:inertia-ssr]
 process_name=%(program_name)s_%(process_num)02d
-command=bash -c 'exec php /app/artisan inertia:start-ssr'
+command=bash -c 'exec php /app/artisan inertia:start-ssr --runtime=bun'
 autostart=true
 autorestart=true
 stderr_logfile=/var/log/worker-inertia-ssr.log
