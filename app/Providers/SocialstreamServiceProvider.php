@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Actions\Socialstream\CreateConnectedAccount;
-use App\Actions\Socialstream\CreateUserWithWorkspacesFromProvider;
+use App\Actions\Socialstream\CreateUserFromProvider;
 use App\Actions\Socialstream\GenerateRedirectForProvider;
 use App\Actions\Socialstream\HandleInvalidState;
 use App\Actions\Socialstream\ResolveSocialiteUser;
@@ -19,7 +19,7 @@ final class SocialstreamServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Socialstream::createConnectedAccountsUsing(CreateConnectedAccount::class);
-        Socialstream::createUsersFromProviderUsing(CreateUserWithWorkspacesFromProvider::class);
+        Socialstream::createUsersFromProviderUsing(CreateUserFromProvider::class);
         Socialstream::generatesProvidersRedirectsUsing(GenerateRedirectForProvider::class);
         Socialstream::handlesInvalidStateUsing(HandleInvalidState::class);
         Socialstream::resolvesSocialiteUsersUsing(ResolveSocialiteUser::class);
