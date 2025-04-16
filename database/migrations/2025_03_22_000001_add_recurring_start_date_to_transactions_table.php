@@ -10,7 +10,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table('transactions', function (Blueprint $table) {
+        Schema::table('transactions', function (Blueprint $table): void {
             $table->timestamp('recurring_start_at')
                 ->nullable()
                 ->after('recurring_interval')
@@ -20,7 +20,7 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::table('transactions', function (Blueprint $table) {
+        Schema::table('transactions', function (Blueprint $table): void {
             $table->dropColumn('recurring_start_at');
         });
     }

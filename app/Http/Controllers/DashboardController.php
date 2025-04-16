@@ -40,7 +40,7 @@ final class DashboardController extends Controller
                 'lastYear' => $balanceSheet->netWorthSeries(Period::lastYear(), 'month'),
             ],
             'transactions' => Transaction::search($query)
-                ->query(function (Builder $query) {
+                ->query(function (Builder $query): void {
                     $query->with('category');
                 })
                 ->take(5)->get()->toResourceCollection(),

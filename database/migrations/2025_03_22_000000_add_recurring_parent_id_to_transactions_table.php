@@ -10,7 +10,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table('transactions', function (Blueprint $table) {
+        Schema::table('transactions', function (Blueprint $table): void {
             $table->foreignId('recurring_parent_id')
                 ->nullable()
                 ->after('merchant_id')
@@ -21,7 +21,7 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::table('transactions', function (Blueprint $table) {
+        Schema::table('transactions', function (Blueprint $table): void {
             $table->dropForeign(['recurring_parent_id']);
             $table->dropColumn('recurring_parent_id');
         });

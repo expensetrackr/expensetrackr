@@ -130,7 +130,7 @@ final class User extends Authenticatable
      */
     public function isSubscribed(?string $productId = null): bool
     {
-        if ($productId) {
+        if ($productId !== null && $productId !== '' && $productId !== '0') {
             return $this->hasPurchasedProduct($productId);
         }
 

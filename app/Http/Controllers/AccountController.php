@@ -64,13 +64,13 @@ final class AccountController extends Controller
                 $searchQuery,
                 function (Indexes $meiliSearch, string $query, array $options) use ($filters) {
                     // if sort and sort_direction are not empty, add them to the options
-                    if (! empty($filters['sort']) && ! empty($filters['sort_direction'])) {
+                    if (! empty($filters['sort']) && (isset($filters['sort_direction']) && ($filters['sort_direction'] !== '' && $filters['sort_direction'] !== '0'))) {
                         $options['sort'] = [$filters['sort'].':'.$filters['sort_direction']];
                     }
 
                     return $meiliSearch->search($query, $options);
                 })
-                ->query(function (Builder $query) {
+                ->query(function (Builder $query): void {
                     $query->with(['bankConnection']);
                 })
                 ->paginate(100)

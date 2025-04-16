@@ -73,7 +73,7 @@ final class TransactionController extends Controller
                 $query,
                 function (Indexes $meiliSearch, string $query, array $options) use ($filters) {
                     // if sort and sort_direction are not empty, add them to the options
-                    if (! empty($filters['sort']) && ! empty($filters['sort_direction'])) {
+                    if (! empty($filters['sort']) && (isset($filters['sort_direction']) && ($filters['sort_direction'] !== '' && $filters['sort_direction'] !== '0'))) {
                         $options['sort'] = [$filters['sort'].':'.$filters['sort_direction']];
                     }
 
@@ -81,7 +81,7 @@ final class TransactionController extends Controller
                 })
                 ->when(! empty($filters['account_id']), fn (ScoutBuilder $query) => $query->where('account_id', $filters['account_id']))
                 ->when(! empty($filters['type']), fn (ScoutBuilder $query) => $query->where('type', $filters['type']))
-                ->query(function (Builder $query) {
+                ->query(function (Builder $query): void {
                     $query->with(['category', 'merchant']);
                 })
                 ->paginate(perPage: $perPage)

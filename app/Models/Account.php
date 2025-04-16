@@ -156,11 +156,25 @@ final class Account extends Model
     }
 
     /**
+     * The attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'current_balance' => 'decimal:4',
+            'initial_balance' => 'decimal:4',
+            'subtype' => AccountSubtype::class,
+        ];
+    }
+
+    /**
      * Get the account type based on the accountable relationship.
      *
      * @return Attribute<AccountType, never>
      */
-    protected function type(): Attribute
+    private function type(): Attribute
     {
         return Attribute::make(
             get: fn (): AccountType => match ($this->accountable_type) {
@@ -174,19 +188,5 @@ final class Account extends Model
                 default => throw new InvalidArgumentException("Unknown accountable type: {$this->accountable_type}"),
             },
         );
-    }
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
-    {
-        return [
-            'current_balance' => 'decimal:4',
-            'initial_balance' => 'decimal:4',
-            'subtype' => AccountSubtype::class,
-        ];
     }
 }

@@ -41,8 +41,7 @@ final class TrendData extends Data
 
         // Calculate the percentage change
         $change = bcsub($this->current, $this->previous, 4);
-        $percentage = bcmul(bcdiv($change, $this->previous, 4), '100.0000', 2);
 
-        return $percentage;
+        return bcmul(bcdiv($change, $this->previous, 4), '100.0000', 2);
     }
 }

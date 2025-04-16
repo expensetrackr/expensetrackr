@@ -48,7 +48,7 @@ final class BillingController
                     ->checkout([type($productId)->asString()])
                     ->withSuccessUrl('https://expensetrackr.app/thank-you')
                     ->redirect();
-            } catch (Throwable $th) {
+            } catch (Throwable) {
                 return back()->with('toast', [
                     'title' => 'Error',
                     'description' => 'There was an error while checking out. Please try again.',
@@ -62,7 +62,7 @@ final class BillingController
                 ->subscribe(type($productId)->asString())
                 ->withSuccessUrl('https://expensetrackr.app/thank-you')
                 ->redirect();
-        } catch (Throwable $th) {
+        } catch (Throwable) {
             return back()->with('toast', [
                 'title' => 'Error',
                 'description' => 'There was an error while subscribing. Please try again.',

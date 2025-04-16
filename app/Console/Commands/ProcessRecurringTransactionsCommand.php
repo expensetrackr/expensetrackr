@@ -21,7 +21,7 @@ final class ProcessRecurringTransactionsCommand extends Command
     {
         $this->info('Processing recurring transactions...');
 
-        DB::transaction(function () {
+        DB::transaction(function (): void {
             // Get all recurring transactions that have either:
             // 1. Already started (recurring_start_date in the past or null)
             // 2. Are due to start today
@@ -30,7 +30,7 @@ final class ProcessRecurringTransactionsCommand extends Command
             $recurringTransactions = Transaction::query()
                 ->where('is_recurring', true)
                 ->whereNotNull('recurring_interval')
-                ->where(function ($query) use ($now) {
+                ->where(function ($query) use ($now): void {
                     $query->whereNull('recurring_start_at')
                         ->orWhere('recurring_start_at', '<=', $now);
                 })
@@ -49,7 +49,7 @@ final class ProcessRecurringTransactionsCommand extends Command
      *
      * @param  Transaction  $transaction  The transaction to process.
      */
-    protected function processRecurringTransaction(Transaction $transaction): void
+    private function processRecurringTransaction(Transaction $transaction): void
     {
         $now = Carbon::now();
 
@@ -97,7 +97,7 @@ final class ProcessRecurringTransactionsCommand extends Command
      * @param  TransactionRecurringInterval|null  $interval  The interval to calculate the next date for.
      * @return CarbonImmutable The next date.
      */
-    protected function calculateNextDate(CarbonImmutable $date, ?TransactionRecurringInterval $interval): CarbonImmutable
+    private function calculateNextDate(CarbonImmutable $date, ?TransactionRecurringInterval $interval): CarbonImmutable
     {
         return match ($interval) {
             TransactionRecurringInterval::Daily => $date->addDay(),
