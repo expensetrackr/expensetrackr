@@ -1,6 +1,5 @@
 import { getFormProps, useForm } from "@conform-to/react";
 import { getValibotConstraint, parseWithValibot } from "@conform-to/valibot";
-import GiftIcon from "virtual:icons/hugeicons/gift";
 import GithubIcon from "virtual:icons/hugeicons/github";
 import Mail01Icon from "virtual:icons/hugeicons/mail-01";
 import MoneyDollarCircleFillIcon from "virtual:icons/ri/money-dollar-circle-fill";
@@ -22,7 +21,6 @@ import { Link } from "#/components/link.tsx";
 import Logo from "#/components/logo.tsx";
 import { PricingTables } from "#/components/pricing-tables.tsx";
 import { Source } from "#/components/source.tsx";
-import * as Alert from "#/components/ui/alert.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import * as LinkButton from "#/components/ui/link-button.tsx";
 import { useTranslation } from "#/hooks/use-translation.ts";
@@ -127,14 +125,6 @@ function HeroSection() {
                             <a href="#pricing">{t("home.sections.hero.get_started")}</a>
                         </Button.Root>
                     </div>
-
-                    <Alert.Root $size="sm" $status="success" $variant="stroke" className="mx-auto w-fit">
-                        <Alert.Icon as={GiftIcon} />
-                        <span>
-                            <span className="text-state-success-base">40% off</span> for the first 100 customers (23
-                            left) 🔥
-                        </span>
-                    </Alert.Root>
                 </div>
             </div>
         </section>
@@ -338,7 +328,7 @@ function FeatureSection() {
                             />
                             <Image
                                 alt=""
-                                className="rounded-16 mask-b-to-100%"
+                                className="rounded-6 mask-b-to-100%"
                                 isCdn
                                 layout="fullWidth"
                                 src="/img/dashboard.png"
@@ -363,6 +353,21 @@ function PricingSection() {
                 </div>
 
                 <PricingTables />
+
+                <div className="mx-auto flex w-full max-w-5xl flex-col items-start gap-x-8 gap-y-6 rounded-24 p-8 ring-1 ring-(--stroke-soft-200) sm:gap-y-10 sm:p-10 lg:col-span-2 lg:flex-row lg:items-center">
+                    <div className="lg:min-w-0 lg:flex-1">
+                        <h3 className="font-semibold text-brand-primary-600">Part of a team?</h3>
+                        <p className="mt-1 text-(--text-sub-600)">
+                            Send us an email and we'll give you a discount for your entire team.
+                        </p>
+                    </div>
+
+                    <Button.Root $style="stroke" asChild>
+                        <a href="mailto:teams@expensetrackr.app" rel="noopener noreferrer" target="_blank">
+                            Buy discounted licenses <span aria-hidden="true">&rarr;</span>
+                        </a>
+                    </Button.Root>
+                </div>
             </div>
         </Glow.Area>
     );

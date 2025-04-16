@@ -46,7 +46,7 @@ export default function Dashboard(props: PageProps<DashboardProps>) {
                     />
                     <TotalBalanceWidget
                         className="[grid-column:1/-1] h-64 min-[1300px]:col-span-2"
-                        formatStr="EEE"
+                        formatStr="EEEEE"
                         netWorth={props.netWorth}
                         netWorthSeries={props.series.lastMonth}
                         title="Last month balance"

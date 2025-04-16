@@ -17,7 +17,7 @@ export const plans = [
         isSubscription: true,
         price: {
             monthly: 14.99,
-            yearly: 9.99,
+            yearly: 12.99,
         },
         productPriceId: {
             monthly: "42d54e49-6f94-4e90-a137-e850d38ee5c7",
@@ -31,7 +31,7 @@ export const plans = [
         icon: PiggyBankIcon,
         iconBg: "bg-state-feature-base",
         price: {
-            onetime: 299.99,
+            onetime: 269.99,
         },
         productPriceId: "c969cccd-95cc-4c0c-b7a4-721a61d63e4b",
         glowColor: "var(--color-state-feature-base)",

@@ -160,7 +160,7 @@ p {
 }
 
 .parity-banner {
-    position: fixed;
+    position: fixed !important;
     bottom: 0;
     z-index: 1000;
     width: 100%;
