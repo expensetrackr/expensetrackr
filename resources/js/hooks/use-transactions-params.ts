@@ -9,10 +9,11 @@ export function useTransactionsParams() {
             "filter[name]": parseAsString.withDefault("").withOptions({
                 throttleMs: 1000,
             }),
-            "filter[type]": parseAsStringEnum(["", "income", "expense"]).withDefault("").withOptions({
+            type: parseAsStringEnum(["", "income", "expense"]).withDefault("").withOptions({
                 throttleMs: 500,
             }),
-            sort: parseAsStringEnum(["-dated_at", "dated_at"]),
+            sort: parseAsStringEnum(["", "dated_at"]).withDefault(""),
+            sortDirection: parseAsStringEnum(["", "desc", "asc"]).withDefault(""),
             action: parseAsStringLiteral(["delete"]),
         },
         {
@@ -21,6 +22,9 @@ export function useTransactionsParams() {
             urlKeys: {
                 accountId: "account_id",
                 transactionId: "transaction_id",
+                type: "filters[type]",
+                sort: "filters[sort]",
+                sortDirection: "filters[sort_direction]",
                 query: "q",
             },
         },

@@ -167,6 +167,34 @@ final class Transaction extends Model
     }
 
     /**
+     * Get the indexable data array for the model.
+     *
+     * @return array<string, mixed>
+     */
+    public function toSearchableArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'status' => $this->status,
+            'note' => $this->note,
+            'type' => $this->type,
+            'base_amount' => $this->base_amount,
+            'base_currency' => $this->base_currency,
+            'amount' => $this->amount,
+            'currency' => $this->currency,
+            'account_id' => $this->account->public_id,
+            'category_id' => $this->category?->public_id,
+            'category_name' => $this->category?->name,
+            'merchant_id' => $this->merchant?->public_id,
+            'merchant_name' => $this->merchant?->name,
+            'dated_at' => $this->dated_at,
+            'enriched_at' => $this->enriched_at,
+            'recurring_start_at' => $this->recurring_start_at,
+        ];
+    }
+
+    /**
      * The attributes that should be cast.
      *
      * @return array<string, string>

@@ -131,6 +131,31 @@ final class Account extends Model
     }
 
     /**
+     * Get the indexable data array for the model.
+     *
+     * @return array<string, mixed>
+     */
+    public function toSearchableArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'description' => $this->description,
+            'type' => $this->type,
+            'currency_code' => $this->currency_code,
+            'initial_balance' => $this->initial_balance,
+            'current_balance' => $this->current_balance,
+            'is_default' => $this->is_default,
+            'is_manual' => $this->is_manual,
+            'external_id' => $this->external_id,
+            'bank_connection_id' => $this->bankConnection?->public_id,
+            'workspace_id' => $this->workspace->public_id,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+        ];
+    }
+
+    /**
      * Get the account type based on the accountable relationship.
      *
      * @return Attribute<AccountType, never>

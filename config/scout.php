@@ -1,6 +1,8 @@
 <?php
 
 declare(strict_types=1);
+use App\Models\Account;
+use App\Models\Transaction;
 
 return [
 
@@ -142,6 +144,14 @@ return [
         'host' => env('MEILISEARCH_HOST', 'http://localhost:7700'),
         'key' => env('MEILISEARCH_KEY', 'my-secret-key'),
         'index-settings' => [
+            Account::class => [
+                'filterableAttributes' => ['name', 'type'],
+                'sortableAttributes' => ['created_at'],
+            ],
+            Transaction::class => [
+                'filterableAttributes' => ['name', 'type', 'account_id'],
+                'sortableAttributes' => ['dated_at'],
+            ],
             // 'users' => [
             //     'filterableAttributes'=> ['id', 'name', 'email'],
             // ],

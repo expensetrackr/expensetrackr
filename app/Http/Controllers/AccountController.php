@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use Inertia\Response;
-use Spatie\QueryBuilder\QueryBuilder;
+use Meilisearch\Endpoints\Indexes;
 
 final class AccountController extends Controller
 {
@@ -32,23 +32,13 @@ final class AccountController extends Controller
      */
     public function index(Request $request): Response
     {
+        $searchQuery = type($request->query('q', ''))->asString();
+        /** @var array<string, string> */
+        $filters = type($request->query('filters', [
+            'sort' => 'created_at',
+            'sort_direction' => 'desc',
+        ]))->asArray();
         $accountPublicId = $request->query('account_id');
-
-        $accounts = QueryBuilder::for(Account::class)
-            ->allowedFilters(['name'])
-            ->allowedSorts(sorts: 'created_at')
-            ->defaultSort('-created_at')
-            ->tap(function (Builder $builder) use ($request) {
-                if (is_string($request->search)) {
-                    $search = Account::search($request->search)->get()->pluck('id');
-
-                    return $builder->whereIn('id', $search);
-                }
-            })
-            ->with('bankConnection')
-            ->paginate(100)
-            ->appends($request->query())
-            ->toResourceCollection();
 
         $account = null;
         if ($accountPublicId) {
@@ -70,7 +60,22 @@ final class AccountController extends Controller
 
         return Inertia::render('accounts/page', [
             'query' => $request->query(),
-            'accounts' => $accounts,
+            'accounts' => Account::search(
+                $searchQuery,
+                function (Indexes $meiliSearch, string $query, array $options) use ($filters) {
+                    // if sort and sort_direction are not empty, add them to the options
+                    if (! empty($filters['sort']) && ! empty($filters['sort_direction'])) {
+                        $options['sort'] = [$filters['sort'].':'.$filters['sort_direction']];
+                    }
+
+                    return $meiliSearch->search($query, $options);
+                })
+                ->query(function (Builder $query) {
+                    $query->with(['bankConnection']);
+                })
+                ->paginate(100)
+                ->withQueryString()
+                ->toResourceCollection(),
             'account' => $account,
         ]);
     }

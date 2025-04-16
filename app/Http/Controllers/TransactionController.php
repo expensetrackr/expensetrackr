@@ -8,7 +8,6 @@ use App\Actions\Transactions\CreateTransaction;
 use App\Actions\Transactions\UpdateTransaction;
 use App\Enums\Finance\TransactionType;
 use App\Facades\Forex;
-use App\Filters\FiltersTransactionsByAccount;
 use App\Http\Requests\CreateTransactionRequest;
 use App\Http\Requests\UpdateTransactionRequest;
 use App\Http\Resources\AccountResource;
@@ -19,14 +18,15 @@ use App\Models\Transaction;
 use App\Models\User;
 use Exception;
 use Illuminate\Container\Attributes\CurrentUser;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
-use Spatie\QueryBuilder\AllowedFilter;
-use Spatie\QueryBuilder\QueryBuilder;
+use Laravel\Scout\Builder as ScoutBuilder;
+use Meilisearch\Endpoints\Indexes;
 
 final class TransactionController extends Controller
 {
@@ -46,6 +46,12 @@ final class TransactionController extends Controller
                 ?->toResource()
             : null;
         $categories = collect();
+        $query = type($request->query('q', ''))->asString();
+        /** @var array<string, string> $filters */
+        $filters = type($request->query('filters', [
+            'sort' => 'dated_at',
+            'sort_direction' => 'desc',
+        ]))->asArray();
 
         if ($transaction instanceof TransactionResource) {
             $categories = Category::query()
@@ -62,15 +68,24 @@ final class TransactionController extends Controller
         }
 
         return Inertia::render('transactions/page', [
-            'transactions' => QueryBuilder::for(Transaction::class)
-                ->allowedIncludes(includes: ['category', 'merchant'])
-                ->allowedFilters(['name', 'type', AllowedFilter::custom('account_id', new FiltersTransactionsByAccount)])
-                ->allowedSorts(sorts: 'dated_at')
-                ->defaultSort(sorts: '-dated_at')
-                ->with(['category', 'merchant'])
+            // @phpstan-ignore-next-line - This is a valid use of the `search` method
+            'transactions' => Transaction::search(
+                $query,
+                function (Indexes $meiliSearch, string $query, array $options) use ($filters) {
+                    // if sort and sort_direction are not empty, add them to the options
+                    if (! empty($filters['sort']) && ! empty($filters['sort_direction'])) {
+                        $options['sort'] = [$filters['sort'].':'.$filters['sort_direction']];
+                    }
+
+                    return $meiliSearch->search($query, $options);
+                })
+                ->when(! empty($filters['account_id']), fn (ScoutBuilder $query) => $query->where('account_id', $filters['account_id']))
+                ->when(! empty($filters['type']), fn (ScoutBuilder $query) => $query->where('type', $filters['type']))
+                ->query(function (Builder $query) {
+                    $query->with(['category', 'merchant']);
+                })
                 ->paginate(perPage: $perPage)
-                ->onEachSide(1)
-                ->appends($request->query())
+                ->withQueryString()
                 ->toResourceCollection(),
             'transaction' => $transaction,
             'categories' => $categories,
