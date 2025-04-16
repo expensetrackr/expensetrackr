@@ -5,7 +5,7 @@
         "#/*": "./resources/js/*"
     },
     "scripts": {
-        "build": "vite build && vite build --ssr",
+        "build": "php artisan wayfinder:generate --with-form && vite build && vite build --ssr",
         "dev": "vite",
         "format": "prettier --write ./resources",
         "lint": "eslint ./resources",
