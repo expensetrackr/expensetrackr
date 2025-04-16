@@ -10,7 +10,20 @@ interface Props {
 export default function TermsOfService({ terms }: Props) {
     return (
         <div className="font-sans antialiased">
-            <Head title="Terms of Service" />
+            <Head title="Terms of Service">
+                <script
+                    dangerouslySetInnerHTML={{
+                        __html: JSON.stringify({
+                            "@context": "https://schema.org",
+                            "@type": "AboutPage",
+                            name: "Terms of Service - ExpenseTrackr",
+                            lastReviewed: "2025-04-08",
+                            url: "https://expensetrackr.app/terms-of-service",
+                        }),
+                    }}
+                    type="application/ld+json"
+                />
+            </Head>
 
             <div className="py-4">
                 <div className="flex min-h-screen flex-col items-center pt-6 sm:pt-0">
