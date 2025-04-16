@@ -51,8 +51,8 @@ return [
     'teller' => [
         'key_base64' => env('TELLER_KEY_BASE64'),
         'cert_base64' => env('TELLER_CERT_BASE64'),
-        'cert_path' => base_path('teller_cert.pem'),
-        'key_path' => base_path('teller_pk.pem'),
+        'cert_path' => storage_path('app/teller/teller_cert.pem'),
+        'key_path' => storage_path('app/teller/teller_pk.pem'),
         'environment' => env('TELLER_ENVIRONMENT', 'sandbox'),
         'app_id' => env('TELLER_APP_ID'),
         'signing_key' => env('TELLER_SIGNING_KEY'),

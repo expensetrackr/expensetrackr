@@ -31,6 +31,7 @@ final class TellerCertificatesServiceProvider extends ServiceProvider
             $certPathString = is_string($certPath) ? $certPath : '';
             $directory = dirname($certPathString);
 
+            // Ensure directory exists with proper permissions
             if (! is_dir($directory)) {
                 mkdir($directory, 0755, true);
             }
@@ -38,19 +39,12 @@ final class TellerCertificatesServiceProvider extends ServiceProvider
             // Write decoded content to the files
             if (is_string($certPath) && is_string($certBase64)) {
                 file_put_contents($certPath, base64_decode($certBase64));
+                chmod($certPath, 0644); // Certificate can be readable
             }
 
             if (is_string($keyPath) && is_string($keyBase64)) {
                 file_put_contents($keyPath, base64_decode($keyBase64));
-            }
-
-            // Set proper permissions
-            if (is_string($keyPath)) {
                 chmod($keyPath, 0600); // Private key should be more restricted
-            }
-
-            if (is_string($certPath)) {
-                chmod($certPath, 0644);
             }
         }
     }
