@@ -18,6 +18,8 @@ php artisan filament:cache-components
 bun install --frozen-lockfile
 bun run build
 
+php artisan migrate --force
+
 php artisan inertia:stop-ssr
 
 php artisan queue:restart
