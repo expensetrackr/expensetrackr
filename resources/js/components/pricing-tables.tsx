@@ -110,23 +110,6 @@ export function PricingTables() {
                                                             <>
                                                                 <div className="flex flex-col -space-y-2">
                                                                     <div className="flex items-center gap-1">
-                                                                        <div className="relative flex w-fit">
-                                                                            <NumberFlow
-                                                                                className="text-(--text-soft-400) [--number-flow-char-height:0.85em] [&::part(suffix)]:text-h6 [&::part(suffix)]:text-(--text-soft-400)"
-                                                                                format={format}
-                                                                                locales={language}
-                                                                                value={
-                                                                                    plan.price?.[
-                                                                                        interval as keyof typeof plan.price
-                                                                                    ]?.previous ??
-                                                                                    plan.price?.onetime?.previous ??
-                                                                                    0
-                                                                                }
-                                                                                willChange
-                                                                            />
-                                                                            <hr className="absolute top-6.5 h-1 w-full border-0 bg-(--text-soft-400)" />
-                                                                        </div>
-
                                                                         <NumberFlow
                                                                             className="[--number-flow-char-height:0.85em] [&::part(suffix)]:text-h5 [&::part(suffix)]:text-(--text-soft-400) [&::part(suffix)]:line-through"
                                                                             format={format}
@@ -134,8 +117,8 @@ export function PricingTables() {
                                                                             value={
                                                                                 plan.price?.[
                                                                                     interval as keyof typeof plan.price
-                                                                                ]?.price ??
-                                                                                plan.price?.onetime?.price ??
+                                                                                ] ??
+                                                                                plan.price?.onetime ??
                                                                                 0
                                                                             }
                                                                             willChange

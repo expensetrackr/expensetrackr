@@ -16,16 +16,8 @@ export const plans = [
         isFeatured: true,
         isSubscription: true,
         price: {
-            monthly: {
-                price: 11.99,
-                previous: 19.99,
-                savings: "40%",
-            },
-            yearly: {
-                price: 8.33,
-                previous: 15.99,
-                savings: "47%",
-            },
+            monthly: 14.99,
+            yearly: 9.99,
         },
         productPriceId: {
             monthly: "42d54e49-6f94-4e90-a137-e850d38ee5c7",
@@ -33,24 +25,15 @@ export const plans = [
         },
         buttonLabel: "Subscribe now",
         glowColor: "var(--color-primary)",
-        buyNow: {
-            monthly: "https://buy.polar.sh/polar_cl_3rpOu2DpnOjk7tEwZDy3QFZD35c2TDZqGJOp42TKql6",
-            yearly: "https://buy.polar.sh/polar_cl_gkwfnwL0mTl2mZRzHmRpp6b3tRVL0MdkB6EM00ircKS",
-        },
     },
     {
         code: "lifetime",
         icon: PiggyBankIcon,
         iconBg: "bg-state-feature-base",
         price: {
-            onetime: {
-                price: 99.99,
-                previous: 299.99,
-                savings: "45%",
-            },
+            onetime: 299.99,
         },
         productPriceId: "c969cccd-95cc-4c0c-b7a4-721a61d63e4b",
         glowColor: "var(--color-state-feature-base)",
-        buyNow: "https://buy.polar.sh/polar_cl_MX3laEezVBa2fto7mIAlaNmRja2b83iCufGU80q47ar",
     },
 ];
