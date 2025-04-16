@@ -62,6 +62,27 @@
         @inertiaHead
         @include('partials.theme')
         @include('partials.auto-submit-form')
+
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "SoftwareApplication",
+                "name": "ExpenseTrackr",
+                "offers": {
+                    "@type": "Offer",
+                    "price": "12.99",
+                    "priceCurrency": "USD",
+                    "availability": "https://schema.org/InStock",
+                    "seller": {
+                        "@type": "Organization",
+                        "name": "ExpenseTrackr"
+                    },
+                    "category": "Finance",
+                    "description": "ExpenseTrackr is the best financial management app that helps you track your expenses, budgets, investments, and assets effortlessly. Get started for free and manage your finances with confidence.",
+                    "url": "https://expensetrackr.app"
+                }
+            }
+        </script>
     </head>
 
     <body class="h-full bg-(--bg-white-0) text-(--text-strong-950)">
