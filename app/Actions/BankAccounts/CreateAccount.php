@@ -64,7 +64,7 @@ final class CreateAccount
             'accountable_type' => $accountable->getMorphClass(),
         ];
 
-        if ($isManual) {
+        if ($isManual || ! $payload->externalId) {
             Account::create($values);
 
             return;
