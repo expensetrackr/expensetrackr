@@ -40,6 +40,7 @@ Route::middleware([
     Route::get('/accounts/create/{connectionType}', [AccountController::class, 'createAccountByType'])
         ->where('connectionType', 'manual|connect')
         ->name('accounts.create.connection-type');
+    Route::delete('/accounts/{account}', [AccountController::class, 'destroy'])->name('accounts.destroy');
 
     Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
     Route::get('/transactions/create', [TransactionController::class, 'create'])->name('transactions.create');

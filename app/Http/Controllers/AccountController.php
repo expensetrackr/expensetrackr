@@ -164,8 +164,30 @@ final class AccountController extends Controller
             ->with('toast',
                 [
                     'type' => 'success',
-                    'title' => __('Account created successfully'),
+                    'title' => __('accounts.created'),
                 ]
             );
+    }
+
+    /**
+     * Delete an account
+     */
+    public function destroy(Request $request, Account $account): RedirectResponse
+    {
+        if (! Gate::forUser($request->user())->check('delete', $account)) {
+            return back()
+                ->with('toast', [
+                    'title' => 'You are not allowed to delete this account',
+                    'type' => 'error',
+                ]);
+        }
+
+        $account->delete();
+
+        return redirect()->route('accounts.index')
+            ->with('toast', [
+                'type' => 'success',
+                'title' => __('accounts.deleted'),
+            ]);
     }
 }

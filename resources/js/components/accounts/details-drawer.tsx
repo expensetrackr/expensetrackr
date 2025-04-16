@@ -10,6 +10,7 @@ import * as Drawer from "#/components/ui/drawer.tsx";
 import { useAccountsParams } from "#/hooks/use-accounts-params.ts";
 import { routes } from "#/routes.ts";
 import { AccountBox } from "./account-box.tsx";
+import { DeleteAccountModal } from "./delete-account-modal.tsx";
 
 const MLink = motion.create(Link);
 
@@ -34,67 +35,73 @@ export function AccountDetailsDrawer({ account }: AccountDetailsDrawerProps) {
     const { setParams } = useAccountsParams();
 
     return (
-        <Drawer.Root onOpenChange={() => setParams({ accountId: null })} open={!!account}>
-            <Drawer.Content>
-                <Drawer.Header>
-                    <Drawer.Title>Account Details</Drawer.Title>
-                </Drawer.Header>
+        <>
+            <Drawer.Root onOpenChange={() => setParams({ accountId: null })} open={!!account}>
+                <Drawer.Content>
+                    <Drawer.Header>
+                        <Drawer.Title>Account Details</Drawer.Title>
+                    </Drawer.Header>
 
-                <Drawer.Body>
-                    <Divider.Root />
+                    <Drawer.Body>
+                        <Divider.Root />
 
-                    <div className="flex flex-col gap-4 p-5">{account ? <AccountBox account={account} /> : null}</div>
+                        <div className="flex flex-col gap-4 p-5">
+                            {account ? <AccountBox account={account} /> : null}
+                        </div>
 
-                    <Divider.Root $type="solid-text">Recent Transactions</Divider.Root>
+                        <Divider.Root $type="solid-text">Recent Transactions</Divider.Root>
 
-                    <div className="flex flex-col gap-2 px-5 py-3">
-                        <AnimatePresence mode="wait">
-                            {account?.transactions?.map((trx, i) => (
-                                <MLink
-                                    animate="animate"
-                                    className="rounded-12 transition duration-200 focus:shadow-button-important-focus focus:outline-none"
-                                    href={routes.transactions.index.url({
-                                        query: {
-                                            transaction_id: trx.id,
-                                        },
-                                    })}
-                                    initial="initial"
-                                    key={trx.id}
-                                    variants={recentTransactionItemVariants(i)}
-                                >
-                                    <TransactionItem transaction={trx} />
-                                </MLink>
-                            ))}
-                        </AnimatePresence>
-                    </div>
-                </Drawer.Body>
+                        <div className="flex flex-col gap-2 px-5 py-3">
+                            <AnimatePresence mode="wait">
+                                {account?.transactions?.map((trx, i) => (
+                                    <MLink
+                                        animate="animate"
+                                        className="rounded-12 transition duration-200 focus:shadow-button-important-focus focus:outline-none"
+                                        href={routes.transactions.index.url({
+                                            query: {
+                                                transaction_id: trx.id,
+                                            },
+                                        })}
+                                        initial="initial"
+                                        key={trx.id}
+                                        variants={recentTransactionItemVariants(i)}
+                                    >
+                                        <TransactionItem transaction={trx} />
+                                    </MLink>
+                                ))}
+                            </AnimatePresence>
+                        </div>
+                    </Drawer.Body>
 
-                <Drawer.Footer className="flex-col gap-2">
-                    <Button.Root $size="md" $style="stroke" $type="neutral" asChild className="w-full">
-                        <Link
-                            href={routes.transactions.index.url({
-                                query: {
-                                    "filters[account_id]": account?.id,
-                                },
-                            })}
+                    <Drawer.Footer className="flex-col gap-2">
+                        <Button.Root $size="md" $style="stroke" $type="neutral" asChild className="w-full">
+                            <Link
+                                href={routes.transactions.index.url({
+                                    query: {
+                                        "filters[account_id]": account?.id,
+                                    },
+                                })}
+                            >
+                                <Button.Icon as={Clock04Icon} />
+                                See All Transactions
+                            </Link>
+                        </Button.Root>
+
+                        <Button.Root
+                            $size="md"
+                            $style="ghost"
+                            $type="error"
+                            className="w-full"
+                            onClick={() => setParams({ action: "delete" })}
                         >
-                            <Button.Icon as={Clock04Icon} />
-                            See All Transactions
-                        </Link>
-                    </Button.Root>
+                            <Button.Icon as={Delete02Icon} />
+                            Delete Account
+                        </Button.Root>
+                    </Drawer.Footer>
+                </Drawer.Content>
+            </Drawer.Root>
 
-                    <Button.Root
-                        $size="md"
-                        $style="ghost"
-                        $type="error"
-                        className="w-full"
-                        onClick={() => setParams({ action: "delete" })}
-                    >
-                        <Button.Icon as={Delete02Icon} />
-                        Delete Account
-                    </Button.Root>
-                </Drawer.Footer>
-            </Drawer.Content>
-        </Drawer.Root>
+            {account && <DeleteAccountModal account={account} />}
+        </>
     );
 }
