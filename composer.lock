@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8186041debc4282b4989f93a4f665755",
+    "content-hash": "b5066bd6452373fa8361d9f3a6493b1a",
     "packages": [
         {
             "name": "akaunting/laravel-money",
@@ -1004,16 +1004,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.342.27",
+            "version": "3.342.28",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "4c18299000c34ab4903100fe68721d6f26c7cdf2"
+                "reference": "16cec140483869b3d244a5995b55d5365465dc58"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/4c18299000c34ab4903100fe68721d6f26c7cdf2",
-                "reference": "4c18299000c34ab4903100fe68721d6f26c7cdf2",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/16cec140483869b3d244a5995b55d5365465dc58",
+                "reference": "16cec140483869b3d244a5995b55d5365465dc58",
                 "shasum": ""
             },
             "require": {
@@ -1095,9 +1095,9 @@
             "support": {
                 "forum": "https://github.com/aws/aws-sdk-php/discussions",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.342.27"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.342.28"
             },
-            "time": "2025-04-14T18:08:09+00:00"
+            "time": "2025-04-16T18:13:32+00:00"
         },
         {
             "name": "bacon/bacon-qr-code",
@@ -6716,6 +6716,85 @@
                 "source": "https://github.com/nikic/PHP-Parser/tree/v5.4.0"
             },
             "time": "2024-12-30T11:07:19+00:00"
+        },
+        {
+            "name": "nunomaduro/essentials",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nunomaduro/essentials.git",
+                "reference": "fffc4bae3d2ff5ab3daaa4bb7e4d0290ebe02b69"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nunomaduro/essentials/zipball/fffc4bae3d2ff5ab3daaa4bb7e4d0290ebe02b69",
+                "reference": "fffc4bae3d2ff5ab3daaa4bb7e4d0290ebe02b69",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "^11.44.2|^12.9.2",
+                "php": "^8.3.0"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.22.0",
+                "orchestra/testbench": "^10.2.1",
+                "pestphp/pest": "^3.8.1",
+                "pestphp/pest-plugin-type-coverage": "^3.5",
+                "phpstan/phpstan": "^2.1.12",
+                "rector/rector": "^2.0.11",
+                "symfony/var-dumper": "^7.2.3"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "NunoMaduro\\Essentials\\EssentialsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "NunoMaduro\\Essentials\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nuno Maduro",
+                    "email": "enunomaduro@gmail.com"
+                }
+            ],
+            "description": "Just better defaults for your Laravel projects.",
+            "keywords": [
+                "essentials",
+                "laravel",
+                "laravel-essentials",
+                "package",
+                "php"
+            ],
+            "support": {
+                "issues": "https://github.com/nunomaduro/essentials/issues",
+                "source": "https://github.com/nunomaduro/essentials/tree/main"
+            },
+            "funding": [
+                {
+                    "url": "https://www.paypal.com/paypalme/enunomaduro",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/nunomaduro",
+                    "type": "github"
+                },
+                {
+                    "url": "https://www.patreon.com/nunomaduro",
+                    "type": "patreon"
+                }
+            ],
+            "time": "2025-04-16T21:43:22+00:00"
         },
         {
             "name": "nunomaduro/termwind",
@@ -13491,6 +13570,43 @@
             "time": "2025-03-17T16:59:46+00:00"
         },
         {
+            "name": "joetannenbaum/chewie",
+            "version": "0.1.11",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/joetannenbaum/chewie.git",
+                "reference": "7040f1c157e6756f45f49f4a821303cae3cfe424"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/joetannenbaum/chewie/zipball/7040f1c157e6756f45f49f4a821303cae3cfe424",
+                "reference": "7040f1c157e6756f45f49f4a821303cae3cfe424",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/prompts": "0.x"
+            },
+            "require-dev": {
+                "pestphp/pest": "^2.33",
+                "tightenco/duster": "^2.7"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/helpers.php"
+                ],
+                "psr-4": {
+                    "Chewie\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "support": {
+                "issues": "https://github.com/joetannenbaum/chewie/issues",
+                "source": "https://github.com/joetannenbaum/chewie/tree/0.1.11"
+            },
+            "time": "2024-12-07T01:53:54+00:00"
+        },
+        {
             "name": "larastan/larastan",
             "version": "v3.3.1",
             "source": {
@@ -16161,6 +16277,199 @@
             "time": "2024-10-09T05:16:32+00:00"
         },
         {
+            "name": "soloterm/dumps",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/soloterm/dumps.git",
+                "reference": "a1946b0a9b8038a1d4ef4da5a4f0d25604f68d1b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/soloterm/dumps/zipball/a1946b0a9b8038a1d4ef4da5a4f0d25604f68d1b",
+                "reference": "a1946b0a9b8038a1d4ef4da5a4f0d25604f68d1b",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/console": "^10|^11|^12",
+                "illuminate/support": "^10|^11|^12",
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "illuminate/process": "^10|^11|^12",
+                "orchestra/testbench": "^8.29|^9.5|^10",
+                "phpunit/phpunit": "^10.5|^11"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "SoloTerm\\Dumps\\Providers\\DumpServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "SoloTerm\\Dumps\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Aaron Francis",
+                    "email": "aarondfrancis@gmail.com"
+                }
+            ],
+            "description": "A Laravel command to intercept dumps from your Laravel application.",
+            "support": {
+                "issues": "https://github.com/soloterm/dumps/issues",
+                "source": "https://github.com/soloterm/dumps/tree/v1.0.1"
+            },
+            "funding": [
+                {
+                    "url": "https://aaronfrancis.com/backstage",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/aarondfrancis",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-03-20T17:41:33+00:00"
+        },
+        {
+            "name": "soloterm/grapheme",
+            "version": "v1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/soloterm/grapheme.git",
+                "reference": "502334c51a208750e8fc418228c8956e585ba34b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/soloterm/grapheme/zipball/502334c51a208750e8fc418228c8956e585ba34b",
+                "reference": "502334c51a208750e8fc418228c8956e585ba34b",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.1",
+                "symfony/polyfill-intl-normalizer": "^1.27.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^10.5|^11"
+            },
+            "suggest": {
+                "ext-intl": "For best performance"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SoloTerm\\Grapheme\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Aaron Francis",
+                    "email": "aarondfrancis@gmail.com"
+                }
+            ],
+            "description": "A PHP package to measure the width of unicode strings rendered to a terminal.",
+            "support": {
+                "issues": "https://github.com/soloterm/grapheme/issues",
+                "source": "https://github.com/soloterm/grapheme/tree/v1.0.2"
+            },
+            "funding": [
+                {
+                    "url": "https://aaronfrancis.com/backstage",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/aarondfrancis",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-03-24T16:35:42+00:00"
+        },
+        {
+            "name": "soloterm/solo",
+            "version": "v0.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/soloterm/solo.git",
+                "reference": "61435ff5b9278d592e29e3fa896b06dac2f39586"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/soloterm/solo/zipball/61435ff5b9278d592e29e3fa896b06dac2f39586",
+                "reference": "61435ff5b9278d592e29e3fa896b06dac2f39586",
+                "shasum": ""
+            },
+            "require": {
+                "ext-pcntl": "*",
+                "ext-posix": "*",
+                "illuminate/console": "^10|^11|^12",
+                "illuminate/process": "^10|^11|^12",
+                "illuminate/support": "^10|^11|^12",
+                "joetannenbaum/chewie": "^0.1",
+                "laravel/prompts": "^0.1.21|^0.2|^0.3",
+                "php": "^8.2",
+                "soloterm/dumps": "^1.0.0",
+                "soloterm/grapheme": "^1"
+            },
+            "require-dev": {
+                "illuminate/database": "^10|^11|^12",
+                "laravel/serializable-closure": "^1.3",
+                "orchestra/testbench": "^8.29|^9.5|^10",
+                "phpunit/phpunit": "^10.5|^11"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "SoloTerm\\Solo\\Providers\\SoloServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "SoloTerm\\Solo\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Aaron Francis",
+                    "email": "aarondfrancis@gmail.com"
+                }
+            ],
+            "description": "A Laravel package to run multiple commands at once, to aid in local development.",
+            "support": {
+                "issues": "https://github.com/soloterm/solo/issues",
+                "source": "https://github.com/soloterm/solo/tree/v0.5.0"
+            },
+            "funding": [
+                {
+                    "url": "https://aaronfrancis.com/backstage",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/aarondfrancis",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-03-21T19:37:43+00:00"
+        },
+        {
             "name": "staabm/side-effects-detector",
             "version": "1.0.5",
             "source": {
@@ -16454,7 +16763,8 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "joelbutcher/socialstream": 20
+        "joelbutcher/socialstream": 20,
+        "nunomaduro/essentials": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
