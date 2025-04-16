@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;
 
 final class TellerCertificatesServiceProvider extends ServiceProvider
@@ -33,18 +34,18 @@ final class TellerCertificatesServiceProvider extends ServiceProvider
 
             // Ensure directory exists with proper permissions
             if (! is_dir($directory)) {
-                mkdir($directory, 0755, true);
+                Storage::disk('local')->makeDirectory('teller');
             }
 
             // Write decoded content to the files
             if (is_string($certPath) && is_string($certBase64)) {
-                file_put_contents($certPath, base64_decode($certBase64));
-                chmod($certPath, 0644); // Certificate can be readable
+                Storage::disk('local')->put('teller/teller_cert.pem', base64_decode($certBase64));
+                chmod(Storage::disk('local')->path('teller/teller_cert.pem'), 0644); // Certificate can be readable
             }
 
             if (is_string($keyPath) && is_string($keyBase64)) {
-                file_put_contents($keyPath, base64_decode($keyBase64));
-                chmod($keyPath, 0600); // Private key should be more restricted
+                Storage::disk('local')->put('teller/teller_pk.pem', base64_decode($keyBase64));
+                chmod(Storage::disk('local')->path('teller/teller_pk.pem'), 0600); // Private key should be more restricted
             }
         }
     }
