@@ -41,7 +41,7 @@ export function DeleteAccountModal({ account }: DeleteAccountModalProps) {
                 <Modal.Header
                     description="This action cannot be undone."
                     icon={Delete02Icon}
-                    title="Are you sure you want to delete this transaction?"
+                    title="Are you sure you want to delete this account?"
                 />
 
                 <Modal.Body className="p-0">

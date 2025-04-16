@@ -91,6 +91,16 @@ final class Account extends Model
     ];
 
     /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'public_id';
+    }
+
+    /**
      * The accountable model.
      *
      * @return MorphTo<Model, covariant $this>
