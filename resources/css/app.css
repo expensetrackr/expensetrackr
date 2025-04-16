@@ -158,3 +158,9 @@ p {
     animation: var(--animate-spin);
     animation-duration: 20s;
 }
+
+.parity-banner {
+    position: fixed;
+    bottom: 0;
+    z-index: 1000;
+}
