@@ -83,5 +83,6 @@
             data-do-not-track="true"
         ></script>
         <script defer src="https://cdn.paritydeals.com/banner.js"></script>
+        <script defer src="https://schemakit.ai/e.js"></script>
     </body>
 </html>
