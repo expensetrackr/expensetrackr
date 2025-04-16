@@ -82,5 +82,6 @@
             data-exclude-search="true"
             data-do-not-track="true"
         ></script>
+        <script defer src="https://cdn.paritydeals.com/banner.js"></script>
     </body>
 </html>
