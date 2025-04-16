@@ -29,35 +29,42 @@ type DashboardProps = {
         lastYear: NetWorthSeries;
     };
     transactions: Resources.Transaction[];
+    requestId: string;
 };
 
 export default function Dashboard(props: PageProps<DashboardProps>) {
     return (
-        <div className="flex flex-col gap-6 overflow-hidden px-4 pb-6 lg:px-8 lg:pt-1">
-            <div className="mx-auto grid w-full max-w-md grid-cols-1 items-start gap-6 min-[1300px]:max-w-4xl min-[1400px]:max-w-full min-[1400px]:grid-cols-3 lg:max-[1300px]:max-w-3xl lg:max-[1300px]:grid-cols-2 lg:max-[1300px]:justify-center">
-                <TotalBalanceWidget
-                    className="h-64"
-                    formatStr="EEE"
-                    netWorth={props.netWorth}
-                    netWorthSeries={props.series.lastWeek}
-                    title="Last week balance"
-                />
-                <TotalBalanceWidget
-                    className="[grid-column:1/-1] h-64 min-[1300px]:col-span-2"
-                    formatStr="EEE"
-                    netWorth={props.netWorth}
-                    netWorthSeries={props.series.lastMonth}
-                    title="Last month balance"
-                />
-                <TotalBalanceWidget
-                    className="h-64 lg:col-span-full"
-                    netWorth={props.netWorth}
-                    netWorthSeries={props.series.lastYear}
-                    title="Last year balance"
-                />
-                <TransactionsTableWidget className="[grid-column:1/-1]" transactions={props.transactions} />
+        <>
+            <div className="flex flex-col gap-6 overflow-hidden px-4 pb-6 lg:px-8 lg:pt-1">
+                <div className="mx-auto grid w-full max-w-md grid-cols-1 items-start gap-6 min-[1300px]:max-w-4xl min-[1400px]:max-w-full min-[1400px]:grid-cols-3 lg:max-[1300px]:max-w-3xl lg:max-[1300px]:grid-cols-2 lg:max-[1300px]:justify-center">
+                    <TotalBalanceWidget
+                        className="h-64"
+                        formatStr="EEE"
+                        netWorth={props.netWorth}
+                        netWorthSeries={props.series.lastWeek}
+                        title="Last week balance"
+                    />
+                    <TotalBalanceWidget
+                        className="[grid-column:1/-1] h-64 min-[1300px]:col-span-2"
+                        formatStr="EEE"
+                        netWorth={props.netWorth}
+                        netWorthSeries={props.series.lastMonth}
+                        title="Last month balance"
+                    />
+                    <TotalBalanceWidget
+                        className="h-64 lg:col-span-full"
+                        netWorth={props.netWorth}
+                        netWorthSeries={props.series.lastYear}
+                        title="Last year balance"
+                    />
+                    <TransactionsTableWidget
+                        className="[grid-column:1/-1]"
+                        requestId={props.requestId}
+                        transactions={props.transactions}
+                    />
+                </div>
             </div>
-        </div>
+        </>
     );
 }
 

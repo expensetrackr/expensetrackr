@@ -5,6 +5,7 @@ export function useTransactionsParams() {
         {
             accountId: parseAsString,
             transactionId: parseAsString,
+            query: parseAsString.withDefault(""),
             "filter[name]": parseAsString.withDefault("").withOptions({
                 throttleMs: 1000,
             }),
@@ -20,6 +21,7 @@ export function useTransactionsParams() {
             urlKeys: {
                 accountId: "account_id",
                 transactionId: "transaction_id",
+                query: "q",
             },
         },
     );

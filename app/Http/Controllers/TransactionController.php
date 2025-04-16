@@ -145,7 +145,7 @@ final class TransactionController extends Controller
                 ]);
         }
 
-        $trx = $transaction->delete();
+        $transaction->delete();
 
         /**
          * 1. If the transaction is manual, we need to detach the amount from the account.

@@ -1,9 +1,11 @@
 import { Link } from "@inertiajs/react";
+import * as React from "react";
 import CommandIcon from "virtual:icons/hugeicons/command";
 import Search01Icon from "virtual:icons/hugeicons/search-01";
 import TransactionIcon from "virtual:icons/hugeicons/transaction";
 
 import { TransactionsTable } from "#/components/transactions/table.tsx";
+import { useTransactionsParams } from "#/hooks/use-transactions-params.ts";
 import { routes } from "#/routes.ts";
 import { cnMerge } from "#/utils/cn.ts";
 import * as Button from "../ui/button.tsx";
@@ -12,9 +14,17 @@ import * as Kbd from "../ui/kbd.tsx";
 
 type TransactionsTableWidgetProps = React.HTMLAttributes<HTMLDivElement> & {
     transactions: Resources.Transaction[];
+    requestId: string;
 };
 
-export function TransactionsTableWidget({ className, transactions, ...props }: TransactionsTableWidgetProps) {
+export function TransactionsTableWidget({
+    className,
+    transactions,
+    requestId,
+    ...props
+}: TransactionsTableWidgetProps) {
+    const { setParams, ...params } = useTransactionsParams();
+
     return (
         <div
             className={cnMerge(
@@ -39,7 +49,11 @@ export function TransactionsTableWidget({ className, transactions, ...props }: T
                     <Input.Root $size="sm" className="max-w-lg lg:w-[300px]">
                         <Input.Wrapper>
                             <Input.Icon as={Search01Icon} />
-                            <Input.Input placeholder="Search..." />
+                            <Input.Input
+                                onChange={(e) => setParams({ query: e.target.value })}
+                                placeholder="Search..."
+                                value={params.query}
+                            />
                             <Kbd.Root>
                                 <CommandIcon className="size-2.5" />1
                             </Kbd.Root>
@@ -51,7 +65,7 @@ export function TransactionsTableWidget({ className, transactions, ...props }: T
                 </div>
             </div>
 
-            <TransactionsTable data={transactions} total={transactions.length} />
+            <TransactionsTable data={transactions} key={requestId} total={transactions.length} />
         </div>
     );
 }
