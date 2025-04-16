@@ -13,4 +13,5 @@ return [
     Spatie\WebhookClient\WebhookClientServiceProvider::class,
     App\Providers\CurrencyServiceProvider::class,
     App\Providers\BankSyncServiceProvider::class,
+    NunoMaduro\Essentials\EssentialsServiceProvider::class,
 ];

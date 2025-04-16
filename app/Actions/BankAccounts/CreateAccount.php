@@ -20,6 +20,8 @@ final class CreateAccount
 {
     public function create(AccountCreateData $payload, bool $isManual = false): void
     {
+        $isManual = $isManual || $payload->externalId === null;
+
         // Determine the account model class based on the account type
         $type = match ($payload->type) {
             AccountType::Depository => Depository::class,
@@ -64,7 +66,7 @@ final class CreateAccount
             'accountable_type' => $accountable->getMorphClass(),
         ];
 
-        if ($isManual || ! $payload->externalId) {
+        if ($isManual) {
             Account::create($values);
 
             return;
