@@ -177,7 +177,7 @@ final class AccountBalance extends Model
                 );
             })
             ->addBinding([$startDate, $endDate], 'join')
-            ->orderBy('series.timestamp');
+            ->oldest('series.timestamp');
     }
 
     /**
