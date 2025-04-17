@@ -22,7 +22,7 @@ final class OtherBrowserSessionsController extends Controller
      */
     public function destroy(Request $request, StatefulGuard $guard): RedirectResponse
     {
-        $confirmed = app(ConfirmPassword::class)(
+        $confirmed = resolve(ConfirmPassword::class)(
             $guard,
             type($request->user())->as(User::class),
             type($request->password)->asString()

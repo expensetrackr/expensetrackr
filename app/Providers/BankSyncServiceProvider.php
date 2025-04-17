@@ -28,7 +28,7 @@ final class BankSyncServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->app->booted(function (): void {
-            $schedule = $this->app->make(Schedule::class);
+            $schedule = resolve(Schedule::class);
 
             try {
                 // First verify that BankConnection table exists
