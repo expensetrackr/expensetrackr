@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Concerns\WorkspaceOwned;
 use App\Enums\Banking\ConnectionStatus;
 use App\Enums\Banking\ProviderType;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -121,7 +122,8 @@ final class BankConnection extends Model
      * @param  Builder<BankConnection>  $query
      * @return Builder<BankConnection>
      */
-    public function scopeTeller(Builder $query): Builder
+    #[Scope]
+    protected function teller(Builder $query): Builder
     {
         return $query->whereProviderType(ProviderType::Teller);
     }
@@ -132,7 +134,8 @@ final class BankConnection extends Model
      * @param  Builder<BankConnection>  $query
      * @return Builder<BankConnection>
      */
-    public function scopeMx(Builder $query): Builder
+    #[Scope]
+    protected function mx(Builder $query): Builder
     {
         return $query->whereProviderType(ProviderType::Mx);
     }

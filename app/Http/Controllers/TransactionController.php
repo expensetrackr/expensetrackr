@@ -62,7 +62,7 @@ final class TransactionController extends Controller
                                 ->where('is_system', false);
                         });
                 })
-                ->orderBy('name', 'asc')
+                ->oldest('name')
                 ->get()
                 ->toResourceCollection();
         }
@@ -120,7 +120,7 @@ final class TransactionController extends Controller
                     $query->where('workspace_id', $user->current_workspace_id)
                         ->where('is_system', false);
                 })
-                ->orderBy('name', 'asc')
+                ->oldest('name')
                 ->get()
                 ->toResourceCollection(),
         ]);

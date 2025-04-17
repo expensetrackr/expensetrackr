@@ -16,6 +16,6 @@ final class AuthenticateSessionMiddleware extends BaseAuthenticateSession
      */
     protected function guard(): Factory|Guard
     {
-        return app(StatefulGuard::class);
+        return resolve(StatefulGuard::class);
     }
 }

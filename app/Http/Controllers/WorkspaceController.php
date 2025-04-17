@@ -93,7 +93,7 @@ final class WorkspaceController extends Controller
             return to_route('workspaces.show', $workspace);
         }
 
-        app(ValidateWorkspaceDeletion::class)->validate(type($request->user())->as(User::class), $workspace);
+        resolve(ValidateWorkspaceDeletion::class)->validate(type($request->user())->as(User::class), $workspace);
 
         $action->handle($workspace);
 

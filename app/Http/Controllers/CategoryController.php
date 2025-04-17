@@ -34,7 +34,7 @@ final class CategoryController extends Controller
                             ->where('is_system', false);
                     });
             })
-            ->orderBy('name', 'asc')
+            ->oldest('name')
             ->get()
             ->groupBy('classification')
             ->map(fn ($group) => CategoryResource::collection($group));
