@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
+use App\Actions\AccountBalances\SnapshotBalanceAction;
 use App\Models\Account;
-use App\Models\AccountBalance;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -51,23 +51,15 @@ final class SnapshopAccountBalances implements ShouldQueue
     /**
      * Execute the job.
      */
-    public function handle(): void
+    public function handle(SnapshotBalanceAction $action): void
     {
         try {
-            // Ensure we're using the start of day for consistency
-            $now = now()->startOfDay();
-
             Account::query()
                 ->select(['id', 'current_balance', 'workspace_id'])
-                ->chunk(1000, function ($accounts) use ($now): void {
-                    $balances = $accounts->map(fn ($account): array => [
-                        'balance' => $account->current_balance,
-                        'dated_at' => $now,
-                        'account_id' => $account->id,
-                        'workspace_id' => $account->workspace_id,
-                    ])->toArray();
-
-                    AccountBalance::insert($balances);
+                ->chunk(1000, function ($accounts) use ($action): void {
+                    foreach ($accounts as $account) {
+                        $action->handle($account);
+                    }
                 });
         } catch (Throwable $e) {
             $this->fail("Failed to save daily balances: {$e->getMessage()}");

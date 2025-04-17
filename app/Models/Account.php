@@ -8,6 +8,8 @@ use App\Concerns\Blamable;
 use App\Concerns\WorkspaceOwned;
 use App\Enums\Finance\AccountSubtype;
 use App\Enums\Finance\AccountType;
+use App\Observers\AccountObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -76,6 +78,7 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  *
  * @mixin \Eloquent
  */
+#[ObservedBy(AccountObserver::class)]
 final class Account extends Model
 {
     /** @use HasFactory<\Database\Factories\AccountFactory> */
@@ -170,7 +173,7 @@ final class Account extends Model
      *
      * @return Attribute<AccountType, never>
      */
-    public function type(): Attribute
+    protected function type(): Attribute
     {
         return Attribute::make(
             get: fn (): AccountType => match ($this->accountable_type) {
