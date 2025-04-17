@@ -34,7 +34,7 @@ final class CategoryPolicy
      */
     public function create(User $user): bool
     {
-        return $user->subscribed();
+        return $user->isSubscribed();
     }
 
     /**

@@ -33,7 +33,7 @@ final class WorkspacePolicy
      */
     public function create(User $user): bool
     {
-        return $user->subscribed();
+        return $user->isSubscribed();
     }
 
     /**
