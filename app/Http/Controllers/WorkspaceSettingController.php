@@ -25,7 +25,7 @@ final class WorkspaceSettingController extends Controller
         User $user,
         UpdateWorkspaceSettings $action,
     ): RedirectResponse {
-        if (! $user->subscribed()) {
+        if (! $user->isSubscribed()) {
             return back(303)
                 ->with('toast',
                     [
