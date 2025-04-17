@@ -41,7 +41,7 @@ final class DashboardController extends Controller
             ],
             'transactions' => Transaction::search($query)
                 ->query(function (Builder $query): void {
-                    $query->with('category');
+                    $query->with(['category', 'merchant']);
                 })
                 ->take(5)->get()->toResourceCollection(),
             // Handy for updating the table when anything from server side changes
