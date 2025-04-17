@@ -128,7 +128,10 @@ final class User extends Authenticatable
     }
 
     /**
-     * Checks if the user is subscribed to the given product.
+     * Checks if the user has an active subscription or has purchased a specific product.
+     *
+     * @param  string|null  $productId  The ID of the product to check for purchase. If null, checks for any active subscription.
+     * @return bool True if the user is an admin, has purchased the specific product, or has an active subscription.
      */
     public function isSubscribed(?string $productId = null): bool
     {
@@ -136,11 +139,10 @@ final class User extends Authenticatable
             return true;
         }
 
-        if ($productId !== null && $productId !== '' && $productId !== '0') {
-            return $this->hasPurchasedProduct($productId);
-        }
-
-        return $this->subscribed();
+        return match (true) {
+            is_string($productId) && $productId !== '' => $this->hasPurchasedProduct($productId),
+            default => $this->subscribed(),
+        };
     }
 
     /**
