@@ -9,7 +9,7 @@ use SoloTerm\Solo\Themes;
 
 // Solo may not (should not!) exist in prod, so we have to
 // check here first to see if it's installed.
-if (! class_exists('\SoloTerm\Solo\Manager')) {
+if (! class_exists(SoloTerm\Solo\Manager::class)) {
     return [
         //
     ];
@@ -56,7 +56,7 @@ return [
         'FinancialQueue' => Command::from('php artisan queue:listen --tries=1 --queue=financial')->lazy(),
         'Dumps' => Command::from('php artisan solo:dumps')->lazy(),
         'Pint' => Command::from('./vendor/bin/pint --ansi')->lazy(),
-        'Tests' => Command::from('php artisan test --colors=always')->withEnv(['APP_ENV' => 'testing'])->lazy(),
+        'Tests' => Command::from('php artisan test --colors=always')->lazy()->withEnv(['APP_ENV' => 'testing']),
     ],
 
     /**

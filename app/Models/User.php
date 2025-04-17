@@ -34,6 +34,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string|null $two_factor_recovery_codes
  * @property \Carbon\CarbonImmutable|null $two_factor_confirmed_at
  * @property int|null $current_workspace_id
+ * @property bool $is_admin
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Account> $accounts
  * @property-read int|null $accounts_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \JoelButcher\Socialstream\ConnectedAccount> $connectedAccounts
@@ -71,6 +72,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmailVerifiedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereIsAdmin($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User wherePassword($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereProfilePhotoPath($value)
@@ -126,15 +128,21 @@ final class User extends Authenticatable
     }
 
     /**
-     * Checks if the user is subscribed to the given product.
+     * Checks if the user has an active subscription or has purchased a specific product.
+     *
+     * @param  string|null  $productId  The ID of the product to check for purchase. If null, checks for any active subscription.
+     * @return bool True if the user is an admin, has purchased the specific product, or has an active subscription.
      */
     public function isSubscribed(?string $productId = null): bool
     {
-        if ($productId !== null && $productId !== '' && $productId !== '0') {
-            return $this->hasPurchasedProduct($productId);
+        if ($this->is_admin) {
+            return true;
         }
 
-        return $this->subscribed();
+        return match (true) {
+            is_string($productId) && $productId !== '' => $this->hasPurchasedProduct($productId),
+            default => $this->subscribed(),
+        };
     }
 
     /**

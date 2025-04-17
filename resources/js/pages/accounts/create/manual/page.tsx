@@ -15,7 +15,6 @@ import { Card } from "#/components/create-account/card.tsx";
 import { DetailsStep } from "#/components/create-account/details-step.tsx";
 import { FlowSidebar } from "#/components/create-account/sidebar.tsx";
 import * as Button from "#/components/ui/button.tsx";
-import { useCreateAccountParams } from "#/hooks/use-create-account-params.ts";
 import { routes } from "#/routes.ts";
 import {
     type BalanceSchema,
@@ -30,8 +29,10 @@ type CreateAccountPageProps = {
 
 export default function CreateManualAccountPage({ currencies }: CreateAccountPageProps) {
     const stepper = CreateManualAccountStepper.useStepper();
-    const { type } = useCreateAccountParams();
-    const [account, setAccount, removeAccount] = useLocalStorage<Record<string, unknown> | null>("account", null);
+    const [account, setAccount, removeAccount] = useLocalStorage<Record<string, string | number | null> | null>(
+        "account",
+        null,
+    );
     const { transform, post } = useInertiaForm();
     const [form, fields] = useForm({
         id: `create-account-${stepper.current.id}-form`,
@@ -39,7 +40,7 @@ export default function CreateManualAccountPage({ currencies }: CreateAccountPag
         shouldRevalidate: "onInput",
         constraint: getValibotConstraint(stepper.current.schema),
         defaultValue: {
-            type,
+            type: account?.type as string,
             currency_code: "USD",
             initial_balance: "0.00",
             ...account,

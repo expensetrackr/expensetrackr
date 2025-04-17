@@ -125,10 +125,14 @@ export function FlowSidebar<Steps extends Step[]>({ stepper, utils }: FlowSideba
                     </div>
 
                     <div className="flex flex-col gap-4 text-center">
-                        <div className="text-paragraph-sm text-(--text-sub-600)">Having trouble with transfer?</div>
-                        <Button.Root $style="stroke" $type="neutral">
-                            <Button.Icon as={HeadphoneIcon} />
-                            Contact
+                        <div className="text-paragraph-sm text-(--text-sub-600)">
+                            Having trouble with account creation?
+                        </div>
+                        <Button.Root $style="stroke" $type="neutral" asChild>
+                            <a href="mailto:support@expensetracker.com" rel="noopener noreferrer" target="_blank">
+                                <Button.Icon as={HeadphoneIcon} />
+                                Contact
+                            </a>
                         </Button.Root>
                     </div>
 
