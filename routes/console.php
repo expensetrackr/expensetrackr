@@ -12,7 +12,7 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
 
-Schedule::command('make:sitemap')->daily();
+Schedule::command('make:sitemap')->daily()->sentryMonitor();
 
 Schedule::job(SnapshopAccountBalances::class)
     ->dailyAt('02:00')
@@ -23,9 +23,11 @@ Schedule::job(SnapshopAccountBalances::class)
     })
     ->after(function () {
         Log::info('Completed daily balance snapshot job');
-    });
+    })
+    ->sentryMonitor();
 
 Schedule::command('transactions:process-recurring')
     ->daily()
     ->at('00:00')
-    ->withoutOverlapping();
+    ->withoutOverlapping()
+    ->sentryMonitor();
