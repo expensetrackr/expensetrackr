@@ -7,7 +7,7 @@ curl -sL https://sentry.io/get-cli/ | sh
 SENTRY_AUTH_TOKEN="${SENTRY_AUTH_TOKEN:?'SENTRY_AUTH_TOKEN environment variable is required'}"
 SENTRY_ORG="${SENTRY_ORG:?'SENTRY_ORG environment variable is required'}"
 SENTRY_PROJECT="${SENTRY_PROJECT:?'SENTRY_PROJECT environment variable is required'}"
-VERSION=`sentry-cli releases propose-version`
+VERSION="${SOURCE_COMMIT:?'SOURCE_COMMIT environment variable is required'}"
 
 # Workflow to create releases
 sentry-cli releases new "$VERSION"
