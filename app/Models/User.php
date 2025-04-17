@@ -34,6 +34,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string|null $two_factor_recovery_codes
  * @property \Carbon\CarbonImmutable|null $two_factor_confirmed_at
  * @property int|null $current_workspace_id
+ * @property bool $is_admin
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Account> $accounts
  * @property-read int|null $accounts_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \JoelButcher\Socialstream\ConnectedAccount> $connectedAccounts
@@ -71,6 +72,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmailVerifiedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereIsAdmin($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User wherePassword($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereProfilePhotoPath($value)
@@ -130,6 +132,10 @@ final class User extends Authenticatable
      */
     public function isSubscribed(?string $productId = null): bool
     {
+        if ($this->is_admin) {
+            return true;
+        }
+
         if ($productId !== null && $productId !== '' && $productId !== '0') {
             return $this->hasPurchasedProduct($productId);
         }

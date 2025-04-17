@@ -9,7 +9,7 @@ use SoloTerm\Solo\Themes;
 
 // Solo may not (should not!) exist in prod, so we have to
 // check here first to see if it's installed.
-if (! class_exists('\SoloTerm\Solo\Manager')) {
+if (! class_exists(SoloTerm\Solo\Manager::class)) {
     return [
         //
     ];
