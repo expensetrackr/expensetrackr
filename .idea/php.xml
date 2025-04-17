@@ -254,6 +254,11 @@
       <path value="$PROJECT_DIR$/vendor/sentry/sentry-laravel" />
       <path value="$PROJECT_DIR$/vendor/sentry/sentry" />
       <path value="$PROJECT_DIR$/vendor/_laravel_idea" />
+      <path value="$PROJECT_DIR$/vendor/soloterm/grapheme" />
+      <path value="$PROJECT_DIR$/vendor/soloterm/dumps" />
+      <path value="$PROJECT_DIR$/vendor/soloterm/solo" />
+      <path value="$PROJECT_DIR$/vendor/nunomaduro/essentials" />
+      <path value="$PROJECT_DIR$/vendor/joetannenbaum/chewie" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.3" />
