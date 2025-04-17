@@ -41,6 +41,7 @@
         "@tanstack/react-table": "8.21.3",
         "@unpic/react": "1.0.1",
         "clsx": "2.1.1",
+        "cmdk": "1.1.1",
         "d3-curve-circlecorners": "0.1.6",
         "d3-shape": "3.2.0",
         "date-fns": "4.1.0",
@@ -64,6 +65,7 @@
         "tailwind-merge": "3.2.0",
         "tailwind-variants": "1.0.0",
         "teller-connect-react": "0.2.3",
+        "ts-key-enum": "3.0.13",
         "usehooks-ts": "3.1.1",
         "valibot": "1.0.0"
     },

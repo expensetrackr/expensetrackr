@@ -1,6 +1,7 @@
 import * as React from "react";
 import { toast } from "sonner";
 
+import { AppCommandMenu } from "#/components/app-command-menu.tsx";
 import { HeaderMobile } from "#/components/header-mobile.tsx";
 import { Sidebar } from "#/components/sidebar.tsx";
 import { Toaster } from "#/components/toaster.tsx";
@@ -30,6 +31,7 @@ export function AppLayout({
             </div>
 
             <Toaster position="top-center" />
+            <AppCommandMenu />
         </>
     );
 }
