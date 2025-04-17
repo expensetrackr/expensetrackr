@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b5066bd6452373fa8361d9f3a6493b1a",
+    "content-hash": "a930818db72dc786e505739ba0dfa784",
     "packages": [
         {
             "name": "akaunting/laravel-money",
@@ -6723,12 +6723,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nunomaduro/essentials.git",
-                "reference": "fffc4bae3d2ff5ab3daaa4bb7e4d0290ebe02b69"
+                "reference": "b971233f3a4b1624c8d401ae41dfe357c32b6478"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nunomaduro/essentials/zipball/fffc4bae3d2ff5ab3daaa4bb7e4d0290ebe02b69",
-                "reference": "fffc4bae3d2ff5ab3daaa4bb7e4d0290ebe02b69",
+                "url": "https://api.github.com/repos/nunomaduro/essentials/zipball/b971233f3a4b1624c8d401ae41dfe357c32b6478",
+                "reference": "b971233f3a4b1624c8d401ae41dfe357c32b6478",
                 "shasum": ""
             },
             "require": {
@@ -6794,7 +6794,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2025-04-16T21:43:22+00:00"
+            "time": "2025-04-17T09:43:55+00:00"
         },
         {
             "name": "nunomaduro/termwind",
@@ -14154,16 +14154,16 @@
         },
         {
             "name": "pestphp/pest",
-            "version": "v3.8.1",
+            "version": "v3.8.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pestphp/pest.git",
-                "reference": "6080f51a0b0830715c48ba0e7458b06907febfe5"
+                "reference": "c6244a8712968dbac88eb998e7ff3b5caa556b0d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pestphp/pest/zipball/6080f51a0b0830715c48ba0e7458b06907febfe5",
-                "reference": "6080f51a0b0830715c48ba0e7458b06907febfe5",
+                "url": "https://api.github.com/repos/pestphp/pest/zipball/c6244a8712968dbac88eb998e7ff3b5caa556b0d",
+                "reference": "c6244a8712968dbac88eb998e7ff3b5caa556b0d",
                 "shasum": ""
             },
             "require": {
@@ -14250,7 +14250,7 @@
             ],
             "support": {
                 "issues": "https://github.com/pestphp/pest/issues",
-                "source": "https://github.com/pestphp/pest/tree/v3.8.1"
+                "source": "https://github.com/pestphp/pest/tree/v3.8.2"
             },
             "funding": [
                 {
@@ -14262,7 +14262,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-04-03T16:35:58+00:00"
+            "time": "2025-04-17T10:53:02+00:00"
         },
         {
             "name": "pestphp/pest-plugin",
@@ -14336,16 +14336,16 @@
         },
         {
             "name": "pestphp/pest-plugin-arch",
-            "version": "v3.1.0",
+            "version": "v3.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pestphp/pest-plugin-arch.git",
-                "reference": "ebec636b97ee73936ee8485e15a59c3f5a4c21b2"
+                "reference": "db7bd9cb1612b223e16618d85475c6f63b9c8daa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pestphp/pest-plugin-arch/zipball/ebec636b97ee73936ee8485e15a59c3f5a4c21b2",
-                "reference": "ebec636b97ee73936ee8485e15a59c3f5a4c21b2",
+                "url": "https://api.github.com/repos/pestphp/pest-plugin-arch/zipball/db7bd9cb1612b223e16618d85475c6f63b9c8daa",
+                "reference": "db7bd9cb1612b223e16618d85475c6f63b9c8daa",
                 "shasum": ""
             },
             "require": {
@@ -14354,7 +14354,7 @@
                 "ta-tikoma/phpunit-architecture-test": "^0.8.4"
             },
             "require-dev": {
-                "pestphp/pest": "^3.7.5",
+                "pestphp/pest": "^3.8.1",
                 "pestphp/pest-dev-tools": "^3.4.0"
             },
             "type": "library",
@@ -14390,7 +14390,7 @@
                 "unit"
             ],
             "support": {
-                "source": "https://github.com/pestphp/pest-plugin-arch/tree/v3.1.0"
+                "source": "https://github.com/pestphp/pest-plugin-arch/tree/v3.1.1"
             },
             "funding": [
                 {
@@ -14402,7 +14402,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-03-30T17:28:50+00:00"
+            "time": "2025-04-16T22:59:48+00:00"
         },
         {
             "name": "pestphp/pest-plugin-drift",
