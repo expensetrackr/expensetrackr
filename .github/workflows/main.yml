@@ -78,7 +78,9 @@ jobs:
                   args: --optimize-autoloader
 
             - name: 🔍 Generate wayfinder types
-              run: php artisan wayfinder:generate --with-form
+              run: |
+                  php -r "file_exists('database/database.sqlite') || touch('database/database.sqlite');"
+                  php artisan wayfinder:generate --with-form
               env:
                   LOG_CHANNEL: "stderr"
 
