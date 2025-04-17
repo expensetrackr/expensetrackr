@@ -4,11 +4,11 @@ import * as TopbarItemButton from "#/components/topbar-item-button.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
 import * as LinkButton from "#/components/ui/link-button.tsx";
 import * as Popover from "#/components/ui/popover.tsx";
-import { cnMerge } from "#/utils/cn.ts";
+import { cn } from "#/utils/cn.ts";
 
 export function BentoNotifications({ className, ...props }: React.ComponentPropsWithRef<"div">) {
     return (
-        <div className={cnMerge("flex size-full flex-col items-center justify-center gap-1", className)} {...props}>
+        <div className={cn("flex size-full flex-col items-center justify-center gap-1", className)} {...props}>
             <div className="mb-5 flex size-full flex-col items-center justify-center gap-2">
                 <Popover.Root>
                     <Popover.Trigger asChild>

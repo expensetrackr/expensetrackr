@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { cnMerge } from "#/utils/cn.ts";
+import { cn } from "#/utils/cn.ts";
 import * as Hint from "../ui/hint.tsx";
 import * as Label from "../ui/label.tsx";
 import * as SelectPrimitives from "../ui/select.tsx";
@@ -48,7 +48,7 @@ export function SelectField({
     const id = idProp || generatedId;
 
     return (
-        <div className={cnMerge("flex flex-col gap-1", wrapperClassName)}>
+        <div className={cn("flex flex-col gap-1", wrapperClassName)}>
             {label ? (
                 <Label.Root className={labelClassName} disabled={rest.disabled} htmlFor={id}>
                     {label}

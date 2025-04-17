@@ -2,7 +2,7 @@ import * as DialogPrimitive from "@radix-ui/react-dialog";
 import * as React from "react";
 import CloseIcon from "virtual:icons/ri/close-line";
 
-import { cnMerge } from "#/utils/cn.ts";
+import { cn } from "#/utils/cn.ts";
 import * as CompactButton from "./compact-button.tsx";
 
 const ModalRoot = DialogPrimitive.Root;
@@ -13,7 +13,7 @@ const ModalPortal = DialogPrimitive.Portal;
 function ModalOverlay({ className, ...rest }: React.CustomComponentPropsWithRef<typeof DialogPrimitive.Overlay>) {
     return (
         <DialogPrimitive.Overlay
-            className={cnMerge(
+            className={cn(
                 // base
                 "fixed inset-0 z-50 flex flex-col items-center justify-center overflow-y-auto bg-overlay p-4 backdrop-blur-[10px]",
                 // animation
@@ -39,7 +39,7 @@ function ModalContent({
         <ModalPortal>
             <ModalOverlay className={overlayClassName}>
                 <DialogPrimitive.Content
-                    className={cnMerge(
+                    className={cn(
                         // base
                         "relative w-full max-w-[400px]",
                         "rounded-20 bg-(--bg-white-0) shadow-md",
@@ -81,7 +81,7 @@ function ModalHeader({
 }) {
     return (
         <div
-            className={cnMerge(
+            className={cn(
                 "relative flex items-start gap-3.5 py-4 pr-14 pl-5 before:absolute before:inset-x-0 before:bottom-0 before:border-b before:border-(--stroke-soft-200)",
                 className,
             )}
@@ -107,7 +107,7 @@ function ModalHeader({
 }
 
 function ModalTitle({ className, ...rest }: React.CustomComponentPropsWithRef<typeof DialogPrimitive.Title>) {
-    return <DialogPrimitive.Title className={cnMerge("text-label-sm text-(--text-strong-950)", className)} {...rest} />;
+    return <DialogPrimitive.Title className={cn("text-label-sm text-(--text-strong-950)", className)} {...rest} />;
 }
 
 function ModalDescription({
@@ -115,21 +115,18 @@ function ModalDescription({
     ...rest
 }: React.CustomComponentPropsWithRef<typeof DialogPrimitive.Description>) {
     return (
-        <DialogPrimitive.Description
-            className={cnMerge("text-paragraph-xs text-(--text-sub-600)", className)}
-            {...rest}
-        />
+        <DialogPrimitive.Description className={cn("text-paragraph-xs text-(--text-sub-600)", className)} {...rest} />
     );
 }
 
 function ModalBody({ className, ...rest }: React.HTMLAttributes<HTMLDivElement>) {
-    return <div className={cnMerge("p-5", className)} {...rest} />;
+    return <div className={cn("p-5", className)} {...rest} />;
 }
 
 function ModalFooter({ className, ...rest }: React.HTMLAttributes<HTMLDivElement>) {
     return (
         <div
-            className={cnMerge(
+            className={cn(
                 "flex items-center justify-between gap-3 border-t border-(--stroke-soft-200) px-5 py-4",
                 className,
             )}

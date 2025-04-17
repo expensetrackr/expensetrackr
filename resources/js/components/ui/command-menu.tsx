@@ -2,13 +2,14 @@ import { type DialogProps } from "@radix-ui/react-dialog";
 import { Command } from "cmdk";
 import * as React from "react";
 
-import { cn, cnMerge } from "#/utils/cn.ts";
+import { cn } from "#/utils/cn.ts";
 import { type PolymorphicComponentProps } from "#/utils/polymorphic.ts";
 import { tv, type VariantProps } from "#/utils/tv.ts";
 import * as Modal from "./modal.tsx";
 
 const CommandDialogTitle = Modal.Title;
 const CommandDialogDescription = Modal.Description;
+const CommandEmpty = Command.Empty;
 
 const CommandDialog = ({
     children,
@@ -91,7 +92,7 @@ const CommandGroup = React.forwardRef<
 >(({ className, ...rest }, forwardedRef) => {
     return (
         <Command.Group
-            className={cnMerge(
+            className={cn(
                 "relative px-2 py-3",
                 // heading
                 "[&>[cmdk-group-heading]]:text-label-xs [&>[cmdk-group-heading]]:text-(--text-sub-600)",
@@ -163,6 +164,7 @@ export {
     CommandDialogDescription as DialogDescription,
     CommandInput as Input,
     CommandList as List,
+    CommandEmpty as Empty,
     CommandGroup as Group,
     CommandItem as Item,
     CommandItemIcon as ItemIcon,

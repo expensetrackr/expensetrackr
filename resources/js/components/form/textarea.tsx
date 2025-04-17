@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { cn, cnMerge } from "#/utils/cn.ts";
+import { cn } from "#/utils/cn.ts";
 import * as Hint from "../ui/hint.tsx";
 import * as Label from "../ui/label.tsx";
 import * as TextareaPrimitive from "../ui/textarea.tsx";
@@ -34,7 +34,7 @@ export function Textarea({
     const id = rest.id || generatedId;
 
     return (
-        <div className={cnMerge("flex flex-col gap-1", wrapperClassName)}>
+        <div className={cn("flex flex-col gap-1", wrapperClassName)}>
             {label ? (
                 <Label.Root
                     className={cn({ "sr-only": hiddenLabel }, labelClassName)}

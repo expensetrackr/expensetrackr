@@ -151,7 +151,7 @@ final class Account extends Model
     public function toSearchableArray(): array
     {
         return [
-            'id' => $this->id,
+            'id' => $this->public_id,
             'name' => $this->name,
             'description' => $this->description,
             'type' => $this->type,

@@ -4,7 +4,7 @@ import type Decimal from "decimal.js";
 
 import { useTranslation } from "#/hooks/use-translation.ts";
 import { type Trend } from "#/types/index.js";
-import { cnMerge } from "#/utils/cn.ts";
+import { cn } from "#/utils/cn.ts";
 import { decimalFlowFormatter } from "#/utils/currency-formatter.ts";
 import { decimalFormatter } from "#/utils/number-formatter.ts";
 import ChartStepLine from "../chart-step-line.tsx";
@@ -44,7 +44,7 @@ export function TotalBalanceWidget({
 
     return (
         <div
-            className={cnMerge(
+            className={cn(
                 "relative flex flex-col rounded-16 bg-(--bg-white-0) p-5 pb-[18px] shadow-xs ring-1 ring-(--stroke-soft-200) ring-inset",
                 className,
             )}

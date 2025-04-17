@@ -1,7 +1,7 @@
 import * as PopoverPrimitive from "@radix-ui/react-popover";
 import { Slottable } from "@radix-ui/react-slot";
 
-import { cnMerge } from "#/utils/cn.ts";
+import { cn } from "#/utils/cn.ts";
 
 const PopoverRoot = PopoverPrimitive.Root;
 const PopoverTrigger = PopoverPrimitive.Trigger;
@@ -26,7 +26,7 @@ function PopoverContent({
             <PopoverPrimitive.Content
                 align={align}
                 arrowPadding={arrowPadding}
-                className={cnMerge(
+                className={cn(
                     // base
                     [
                         !unstyled &&
@@ -62,7 +62,7 @@ function PopoverClose({
 }: React.CustomComponentPropsWithRef<typeof PopoverPrimitive.Close> & {
     unstyled?: boolean;
 }) {
-    return <PopoverPrimitive.Close className={cnMerge([!unstyled && "absolute top-4 right-4"], className)} {...rest} />;
+    return <PopoverPrimitive.Close className={cn([!unstyled && "absolute top-4 right-4"], className)} {...rest} />;
 }
 PopoverClose.displayName = "PopoverClose";
 

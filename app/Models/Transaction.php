@@ -174,7 +174,7 @@ final class Transaction extends Model
     public function toSearchableArray(): array
     {
         return [
-            'id' => $this->id,
+            'id' => $this->public_id,
             'name' => $this->name,
             'status' => $this->status,
             'note' => $this->note,

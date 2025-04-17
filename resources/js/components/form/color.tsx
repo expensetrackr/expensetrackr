@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Input as AriaInput, getColorChannels, type Color, type ColorSpace } from "react-aria-components";
-import { cn, cnMerge } from "#/utils/cn.ts";
 
+import { cn } from "#/utils/cn.ts";
 import * as Button from "../ui/button.tsx";
 import * as ColorPicker from "../ui/color-picker.tsx";
 import * as Divider from "../ui/divider.tsx";
@@ -53,7 +53,7 @@ export function ColorField({
     };
 
     return (
-        <div className={cnMerge("flex flex-col gap-1", wrapperClassName)}>
+        <div className={cn("flex flex-col gap-1", wrapperClassName)}>
             {label ? (
                 <Label.Root className={cn({ "sr-only": hiddenLabel })} disabled={rest.disabled} htmlFor={id}>
                     {label}

@@ -1,6 +1,6 @@
 import Refund2Icon from "virtual:icons/ri/refund-2-line";
 
-import { cnMerge } from "#/utils/cn.ts";
+import { cn } from "#/utils/cn.ts";
 import { TransactionItem } from "../transaction-item.tsx";
 import * as Button from "../ui/button.tsx";
 import * as SegmentedControl from "../ui/segmented-control.tsx";
@@ -71,7 +71,7 @@ export function BentoRecentTransactions({
     ...props
 }: React.CustomComponentPropsWithRef<typeof WidgetBox.Root>) {
     return (
-        <WidgetBox.Root className={cnMerge("pb-5", className)} {...props}>
+        <WidgetBox.Root className={cn("pb-5", className)} {...props}>
             <WidgetBox.Header>
                 <WidgetBox.HeaderIcon as={Refund2Icon} />
                 Recent Transactions

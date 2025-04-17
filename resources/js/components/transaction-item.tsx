@@ -5,7 +5,7 @@ import ArrowRightSIcon from "virtual:icons/ri/arrow-right-s-line";
 
 import * as CompactButton from "#/components/ui/compact-button.tsx";
 import { useTranslation } from "#/hooks/use-translation.ts";
-import { cn, cnMerge } from "#/utils/cn.ts";
+import { cn } from "#/utils/cn.ts";
 import { formatDate } from "#/utils/date-formatter.ts";
 import { CategoryIcon } from "./category-icon.tsx";
 import { Image } from "./image.tsx";
@@ -33,7 +33,7 @@ export function TransactionItem({
 
     return (
         <div
-            className={cnMerge(
+            className={cn(
                 "flex w-full items-center gap-3 rounded-12 py-2 text-left transition-all duration-200 ease-out hover:bg-(--bg-weak-50) hover:px-3",
                 className,
             )}

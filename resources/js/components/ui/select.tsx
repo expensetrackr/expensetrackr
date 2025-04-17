@@ -5,7 +5,7 @@ import * as React from "react";
 import ArrowDownSIcon from "virtual:icons/ri/arrow-down-s-line";
 import CheckIcon from "virtual:icons/ri/check-line";
 
-import { cnMerge } from "#/utils/cn.ts";
+import { cn } from "#/utils/cn.ts";
 import { type PolymorphicComponentProps } from "#/utils/polymorphic.ts";
 import { tv, type VariantProps } from "#/utils/tv.ts";
 
@@ -299,7 +299,7 @@ function SelectContent({
     return (
         <SelectPrimitives.Portal>
             <SelectPrimitives.Content
-                className={cnMerge(
+                className={cn(
                     // base
                     "relative z-50 overflow-hidden rounded-16 bg-(--bg-white-0) shadow-md ring-1 ring-(--stroke-soft-200) ring-inset",
                     // widths
@@ -342,7 +342,7 @@ function SelectItem({ className, children, ...rest }: React.ComponentProps<typeo
 
     return (
         <SelectPrimitives.Item
-            className={cnMerge(
+            className={cn(
                 // base
                 "group relative cursor-pointer rounded-8 p-2 pr-9 text-paragraph-sm text-(--text-strong-950) select-none",
                 "flex items-center gap-2 transition duration-200 ease-out",
@@ -357,7 +357,7 @@ function SelectItem({ className, children, ...rest }: React.ComponentProps<typeo
         >
             <SelectPrimitives.ItemText asChild>
                 <span
-                    className={cnMerge(
+                    className={cn(
                         // base
                         "flex flex-1 items-center gap-2",
                         // disabled

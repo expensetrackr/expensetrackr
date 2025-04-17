@@ -1,7 +1,7 @@
 import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";
 import ArrowRightSIcon from "virtual:icons/ri/arrow-right-s-line";
 
-import { cnMerge } from "#/utils/cn.ts";
+import { cn } from "#/utils/cn.ts";
 import { type PolymorphicComponentProps } from "#/utils/polymorphic.ts";
 
 const DropdownMenu = DropdownMenuPrimitive.Root;
@@ -22,7 +22,7 @@ function DropdownMenuContent({
     return (
         <DropdownMenuPrimitive.Portal>
             <DropdownMenuPrimitive.Content
-                className={cnMerge(
+                className={cn(
                     "z-50 w-[300px] overflow-hidden rounded-16 bg-(--bg-white-0) p-2 shadow-md ring-1 ring-(--stroke-soft-200) ring-inset",
                     "flex flex-col gap-1",
                     // origin
@@ -50,7 +50,7 @@ function DropdownMenuItem({
 }) {
     return (
         <DropdownMenuPrimitive.Item
-            className={cnMerge(
+            className={cn(
                 // base
                 "group/item relative cursor-pointer rounded-8 p-2 text-paragraph-sm text-(--text-strong-950) outline-none select-none",
                 "flex items-center gap-2",
@@ -74,7 +74,7 @@ function DropdownItemIcon<T extends React.ElementType>({ className, as, ...rest 
 
     return (
         <Component
-            className={cnMerge(
+            className={cn(
                 // base
                 "size-5 text-(--text-sub-600)",
                 // disabled
@@ -90,7 +90,7 @@ function DropdownMenuGroup({
     className,
     ...rest
 }: React.CustomComponentPropsWithRef<typeof DropdownMenuPrimitive.Group>) {
-    return <DropdownMenuPrimitive.Group className={cnMerge("flex flex-col gap-1", className)} {...rest} />;
+    return <DropdownMenuPrimitive.Group className={cn("flex flex-col gap-1", className)} {...rest} />;
 }
 
 function DropdownMenuLabel({
@@ -99,7 +99,7 @@ function DropdownMenuLabel({
 }: React.CustomComponentPropsWithRef<typeof DropdownMenuPrimitive.Label>) {
     return (
         <DropdownMenuPrimitive.Label
-            className={cnMerge("px-2 py-1 text-subheading-xs text-(--text-soft-400) uppercase", className)}
+            className={cn("px-2 py-1 text-subheading-xs text-(--text-soft-400) uppercase", className)}
             {...rest}
         />
     );
@@ -115,7 +115,7 @@ function DropdownMenuSubTrigger({
 }) {
     return (
         <DropdownMenuPrimitive.SubTrigger
-            className={cnMerge(
+            className={cn(
                 // base
                 "group/item relative cursor-pointer rounded-8 p-2 text-paragraph-sm text-(--text-strong-950) outline-0 select-none",
                 "flex items-center gap-2",
@@ -142,7 +142,7 @@ function DropdownMenuSubContent({
 }: React.CustomComponentPropsWithRef<typeof DropdownMenuPrimitive.SubContent>) {
     return (
         <DropdownMenuPrimitive.SubContent
-            className={cnMerge(
+            className={cn(
                 "z-50 w-max overflow-hidden rounded-16 bg-(--bg-white-0) p-2 shadow-md ring-1 ring-(--stroke-soft-200) ring-inset",
                 "flex flex-col gap-1",
                 // animation

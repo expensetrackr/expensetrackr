@@ -25,13 +25,9 @@
     ],
     "tailwindCSS.experimental.classRegex": [
         [
-            "tv\\(([^)]*)\\)",
-            "{?\\s?[\\w].*:\\s*?[\"'`]([^\"'`]*).*?,?\\s?}?"
+            "([\"'`][^\"'`]*.*?[\"'`])",
+            "[\"'`]([^\"'`]*).*?[\"'`]"
         ],
-        [
-            "cn\\(.*?\\)(?!\\])",
-            "(?:'|\"|`)([^\"'`]*)(?:'|\"|`)"
-        ]
     ],
     "tailwindCSS.experimental.configFile": "./resources/css/tailwind.css",
     "tailwindCSS.includeLanguages": {

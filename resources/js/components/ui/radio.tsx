@@ -1,7 +1,7 @@
 import * as RadioGroupPrimitive from "@radix-ui/react-radio-group";
 import * as React from "react";
 
-import { cn, cnMerge } from "#/utils/cn.ts";
+import { cn } from "#/utils/cn.ts";
 
 const RadioGroup = RadioGroupPrimitive.Root;
 RadioGroup.displayName = "RadioGroup";
@@ -11,7 +11,7 @@ function RadioGroupItem({ className, ...rest }: React.ComponentProps<typeof Radi
 
     return (
         <RadioGroupPrimitive.Item
-            className={cnMerge("group/radio relative size-5 shrink-0 outline-none focus:outline-none", className)}
+            className={cn("group/radio relative size-5 shrink-0 outline-none focus:outline-none", className)}
             {...rest}
         >
             <svg

@@ -14,7 +14,7 @@ import * as Button from "#/components/ui/button.tsx";
 import * as CompactButton from "#/components/ui/compact-button.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
 import * as WidgetBox from "#/components/widget-box.tsx";
-import { cnMerge } from "#/utils/cn.ts";
+import { cn } from "#/utils/cn.ts";
 import { Image } from "../image.tsx";
 
 type Account = {
@@ -65,7 +65,7 @@ type AccountPillProps = React.ComponentPropsWithRef<"button"> & {
 function AccountPill({ account, selected, className, ref, ...rest }: AccountPillProps) {
     return (
         <button
-            className={cnMerge(
+            className={cn(
                 "flex h-8 min-w-auto items-center rounded-full bg-(--bg-white-0) px-3 whitespace-nowrap ring-1 ring-(--stroke-soft-200) transition duration-200 ease-out outline-none ring-inset",
                 selected ? "bg-(--bg-weak-50)" : "hover:bg-(--bg-weak-50) hover:ring-transparent",
                 className,
@@ -74,7 +74,7 @@ function AccountPill({ account, selected, className, ref, ...rest }: AccountPill
             {...rest}
         >
             <div
-                className={cnMerge(
+                className={cn(
                     selected ? "text-label-sm text-(--text-strong-950)" : "text-paragraph-sm text-(--text-sub-600)",
                 )}
             >

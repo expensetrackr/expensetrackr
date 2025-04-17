@@ -9,7 +9,7 @@ import { useUser } from "#/hooks/use-user.ts";
 import { useWorkspacesPermissions } from "#/hooks/use-workspaces-permissions.ts";
 import { useWorkspaces } from "#/hooks/use-workspaces.ts";
 import { routes } from "#/routes.ts";
-import { cnMerge } from "#/utils/cn.ts";
+import { cn } from "#/utils/cn.ts";
 import { Link } from "./link.tsx";
 import * as Avatar from "./ui/avatar.tsx";
 import * as Divider from "./ui/divider.tsx";
@@ -63,7 +63,7 @@ export function WorkspaceSwitch({ className }: { className?: string }) {
     return (
         <Dropdown.Root>
             <Dropdown.Trigger
-                className={cnMerge(
+                className={cn(
                     "flex w-full items-center gap-3 p-3 text-left whitespace-nowrap outline-none focus:outline-none",
                     className,
                 )}

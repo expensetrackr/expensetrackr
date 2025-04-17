@@ -12,5 +12,5 @@
     "tabWidth": 4,
     "tailwindStylesheet": "./resources/css/tailwind.css",
     "tailwindAttributes": ["class", "className", "buttonClassName"],
-    "tailwindFunctions": ["cx", "cva", "tv", "cn", "cnMerge", "clsx"]
+    "tailwindFunctions": ["cx", "cva", "tv", "cn", "clsx"]
 }

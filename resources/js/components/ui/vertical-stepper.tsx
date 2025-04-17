@@ -2,7 +2,7 @@ import { Slot } from "@radix-ui/react-slot";
 import * as React from "react";
 import ArrowRightSIcon from "virtual:icons/ri/arrow-right-s-line";
 
-import { cnMerge } from "#/utils/cn.ts";
+import { cn } from "#/utils/cn.ts";
 import { type PolymorphicComponentProps } from "#/utils/polymorphic.ts";
 import { recursiveCloneChildren } from "#/utils/recursive-clone-children.tsx";
 import { tv, type VariantProps } from "#/utils/tv.ts";
@@ -22,7 +22,7 @@ function VerticalStepperRoot({
 }) {
     const Component = asChild ? Slot : "div";
     return (
-        <Component className={cnMerge("w-full space-y-2", className)} {...rest}>
+        <Component className={cn("w-full space-y-2", className)} {...rest}>
             {children}
         </Component>
     );
@@ -32,7 +32,7 @@ VerticalStepperRoot.displayName = VERTICAL_STEPPER_ROOT_NAME;
 function VerticalStepperArrow<T extends React.ElementType>({ className, as, ...rest }: PolymorphicComponentProps<T>) {
     const Component = as || ArrowRightSIcon;
 
-    return <Component className={cnMerge("size-5 shrink-0 text-(--text-sub-600)", className)} {...rest} />;
+    return <Component className={cn("size-5 shrink-0 text-(--text-sub-600)", className)} {...rest} />;
 }
 VerticalStepperArrow.displayName = VERTICAL_STEPPER_ARROW_NAME;
 

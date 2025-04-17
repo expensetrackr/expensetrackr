@@ -1,4 +1,4 @@
-import { cnMerge } from "#/utils/cn.ts";
+import { cn } from "#/utils/cn.ts";
 
 export function Header({
     children,
@@ -16,7 +16,7 @@ export function Header({
 }) {
     return (
         <header
-            className={cnMerge(
+            className={cn(
                 "flex min-h-[88px] flex-col gap-4 px-4 py-5 md:flex-row md:items-center md:justify-between md:gap-3 lg:px-8",
                 className,
             )}
@@ -29,7 +29,7 @@ export function Header({
                     <div className="text-paragraph-sm text-(--text-sub-600)">{description}</div>
                 </div>
             </div>
-            <div className={cnMerge("flex items-center gap-3", contentClassName)}>{children}</div>
+            <div className={cn("flex items-center gap-3", contentClassName)}>{children}</div>
         </header>
     );
 }
