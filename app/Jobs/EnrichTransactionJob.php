@@ -14,7 +14,6 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 use Spatie\PrefixedIds\PrefixedIds;
 
@@ -50,15 +49,7 @@ final class EnrichTransactionJob implements ShouldQueue
 
             $description = "{$this->transaction->name} - {$this->transaction->note}";
 
-            // Clean and prepare search terms with improved tokenization
-            $searchTerms = collect(explode(' ', $description))
-                ->map(fn ($term): string => trim($term, '- .,!?()[]{}:;'))
-                ->filter(fn ($term): bool => mb_strlen($term) > 2)
-                ->map(fn ($term): string => str_replace(['&', '|', '!'], '', $term))
-                ->unique()
-                ->values();
-
-            $existingMerchant = $this->findBestMatchingMerchant($searchTerms);
+            $existingMerchant = $this->findBestMatchingMerchant();
 
             if ($existingMerchant instanceof Merchant) {
                 $this->attachMerchantToTransaction($existingMerchant);
@@ -99,25 +90,13 @@ final class EnrichTransactionJob implements ShouldQueue
     }
 
     /**
-     * @param  Collection<int, string>  $searchTerms
+     * Find the best matching merchant for the transaction.
      */
-    private function findBestMatchingMerchant(Collection $searchTerms): ?Merchant
+    private function findBestMatchingMerchant(): ?Merchant
     {
-        return Merchant::query()
-            ->select('*')
-            ->where(function ($query) use ($searchTerms): void {
-                // First try exact match on transaction name
-                $query->where('name', 'ilike', "%{$this->transaction->name}%");
-
-                // Then try individual terms with Levenshtein distance for fuzzy matching
-                $searchTerms->each(function ($term) use ($query): void {
-                    $query->orWhereRaw('levenshtein(lower(name), lower(?)) <= ?', [
-                        $term,
-                        min(3, mb_strlen($term) / 3), // Allow more distance for longer terms
-                    ]);
-                });
-            })
-            ->orderByRaw('length(name) ASC')
+        /** @var Merchant|null */
+        return Merchant::search($this->transaction->name)
+            ->latest()
             ->first();
     }
 

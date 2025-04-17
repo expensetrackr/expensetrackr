@@ -7,6 +7,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Laravel\Scout\Searchable;
 use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
 
 /**
@@ -48,7 +49,7 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
 final class Merchant extends Model
 {
     /** @use HasFactory<\Database\Factories\MerchantFactory> */
-    use HasFactory, HasPrefixedId;
+    use HasFactory, HasPrefixedId, Searchable;
 
     /**
      * Get the transactions for the merchant.
@@ -58,6 +59,26 @@ final class Merchant extends Model
     public function transactions(): HasMany
     {
         return $this->hasMany(Transaction::class);
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array<string, mixed>
+     */
+    public function toSearchableArray(): array
+    {
+        return [
+            'id' => $this->public_id,
+            'name' => $this->name,
+            'website' => $this->website,
+            'icon' => $this->icon,
+            'address' => $this->address,
+            'is_system' => $this->is_system,
+            'external_id' => $this->external_id,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+        ];
     }
 
     /**

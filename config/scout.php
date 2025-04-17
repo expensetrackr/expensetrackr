@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 use App\Models\Account;
+use App\Models\Merchant;
 use App\Models\Transaction;
 
 return [
@@ -145,6 +146,10 @@ return [
         'key' => env('MEILISEARCH_KEY', 'my-secret-key'),
         'index-settings' => [
             Account::class => [
+                'filterableAttributes' => ['name', 'type'],
+                'sortableAttributes' => ['created_at'],
+            ],
+            Merchant::class => [
                 'filterableAttributes' => ['name', 'type'],
                 'sortableAttributes' => ['created_at'],
             ],
