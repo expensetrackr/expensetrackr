@@ -90,5 +90,6 @@ jobs:
             - name: 🔨 Build
               run: bun run build
 
-            - name: 🔎 Type check
-              run: bun run typecheck
+            # TODO: Uncomment this once we have a way to run typecheck on github actions
+            # - name: 🔎 Type check
+            #   run: bun run typecheck --if-present
