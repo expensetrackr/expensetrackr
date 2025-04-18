@@ -174,7 +174,7 @@ final class Transaction extends Model
     public function toSearchableArray(): array
     {
         return [
-            'id' => $this->id,
+            'id' => $this->public_id,
             'name' => $this->name,
             'status' => $this->status,
             'note' => $this->note,
@@ -188,9 +188,9 @@ final class Transaction extends Model
             'category_name' => $this->category?->name,
             'merchant_id' => $this->merchant?->public_id,
             'merchant_name' => $this->merchant?->name,
-            'dated_at' => $this->dated_at,
-            'enriched_at' => $this->enriched_at,
-            'recurring_start_at' => $this->recurring_start_at,
+            'dated_at' => (int) $this->dated_at->timestamp,
+            'enriched_at' => (int) $this->enriched_at?->timestamp,
+            'recurring_start_at' => (int) $this->recurring_start_at?->timestamp,
         ];
     }
 

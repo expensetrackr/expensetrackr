@@ -157,9 +157,6 @@ return [
                 'filterableAttributes' => ['name', 'type', 'account_id'],
                 'sortableAttributes' => ['dated_at'],
             ],
-            // 'users' => [
-            //     'filterableAttributes'=> ['id', 'name', 'email'],
-            // ],
         ],
     ],
 

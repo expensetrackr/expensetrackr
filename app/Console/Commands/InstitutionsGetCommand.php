@@ -180,7 +180,7 @@ final class InstitutionsGetCommand extends Command
     private function addInstitutionsToMeilisearch(Collection $institutions): void
     {
         try {
-            $this->meilisearch->addDocuments('institutions', $institutions->toArray());
+            $this->meilisearch->addDocuments('institutions', $institutions->toArray(), ['popularity']);
             $this->info('Added '.$institutions->count().' institutions to Meilisearch (without logos)');
         } catch (Exception $e) {
             Log::error('Failed to add institutions to Meilisearch', [
