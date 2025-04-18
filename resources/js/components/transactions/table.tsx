@@ -1,7 +1,7 @@
 import { Link } from "@inertiajs/react";
 import NumberFlow, { type Format } from "@number-flow/react";
 import { resolveCurrencyFormat } from "@sumup/intl";
-import { getCoreRowModel, getSortedRowModel, useReactTable, type ColumnDef, flexRender } from "@tanstack/react-table";
+import { getCoreRowModel, useReactTable, type ColumnDef, flexRender } from "@tanstack/react-table";
 import Decimal from "decimal.js";
 import * as React from "react";
 import MoreVerticalIcon from "virtual:icons/hugeicons/more-vertical";
@@ -176,7 +176,7 @@ export function TransactionsTable({ data: initialData, total }: TransactionsTabl
         columns,
         getCoreRowModel: getCoreRowModel(),
         rowCount: total,
-        getSortedRowModel: getSortedRowModel(),
+        manualSorting: true,
         manualPagination: true,
         onPaginationChange: setPagination,
         state: {
