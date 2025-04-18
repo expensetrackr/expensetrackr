@@ -23,6 +23,9 @@ final class InstitutionController extends Controller
             $searchQuery,
             [
                 'limit' => 48,
+                'sort' => [
+                    'popularity:desc',
+                ],
             ]
         );
 

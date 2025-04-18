@@ -28,9 +28,9 @@ export function AppCommandMenu() {
     useHotkeys("meta+k", () => setOpen(true));
 
     const goToPreviousStep = async () => {
-        switch (params.page) {
+        switch (params.commandPage) {
             case "institution":
-                await setParams({ page: "home" });
+                await setParams({ commandPage: "home" });
                 break;
             default:
                 break;
@@ -39,7 +39,7 @@ export function AppCommandMenu() {
 
     const handleOpenChange = async (open: boolean) => {
         if (!open) {
-            await setParams({ page: "home" });
+            await setParams({ commandPage: "home" });
         }
 
         setOpen(open);
@@ -50,7 +50,7 @@ export function AppCommandMenu() {
             className="max-h-[64vh]"
             onOpenChange={handleOpenChange}
             open={isOpen}
-            shouldFilter={params.page === "home"}
+            shouldFilter={params.commandPage === "home"}
         >
             {/* Input wrapper */}
             <div className="group/cmd-input flex h-12 w-full items-center gap-2 bg-(--bg-white-0) px-5">
@@ -64,7 +64,7 @@ export function AppCommandMenu() {
                 />
                 <CommandMenu.Input
                     onKeyDown={async (e) => {
-                        if (params.page === "home" || params.query.length) {
+                        if (params.commandPage === "home" || params.institutionQuery.length) {
                             return;
                         }
 
@@ -73,9 +73,9 @@ export function AppCommandMenu() {
                             await goToPreviousStep();
                         }
                     }}
-                    onValueChange={(query) => setParams({ query })}
+                    onValueChange={(search) => setParams({ institutionQuery: search })}
                     placeholder="Search or jump to"
-                    value={params.query}
+                    value={params.institutionQuery}
                 />
                 <CompactButton.Root $size="md" $style="ghost" onClick={() => setOpen(false)}>
                     <CompactButton.Icon as={Cancel01Icon} />
@@ -83,8 +83,8 @@ export function AppCommandMenu() {
             </div>
 
             <CommandMenu.List>
-                {params.page === "home" && <Home />}
-                {params.page === "institution" && <ChooseInstitution />}
+                {params.commandPage === "home" && <Home />}
+                {params.commandPage === "institution" && <ChooseInstitution />}
             </CommandMenu.List>
         </CommandMenu.Dialog>
     );
@@ -97,7 +97,7 @@ function Home() {
     return (
         <>
             <CommandMenu.Group heading="Quick Actions">
-                <CommandMenu.Item onSelect={() => setParams({ page: "institution" })}>
+                <CommandMenu.Item onSelect={() => setParams({ commandPage: "institution" })}>
                     <CommandMenu.ItemIcon as={ConnectIcon} />
                     Connect your bank account
                 </CommandMenu.Item>
@@ -126,17 +126,15 @@ function Home() {
 
 function ChooseInstitution() {
     const { setParams, ...params } = useAppCommandParams();
-    const [debouncedSearchQuery] = useDebounceValue(params.query, 500);
+    const [debouncedSearchQuery] = useDebounceValue(params.institutionQuery, 500);
     const query = useQuery<App.Data.Finance.InstitutionSearchData[]>({
         queryKey: ["institutions", debouncedSearchQuery],
         queryFn: async () => {
             const res = await fetch(routes.api.institutions.index({ query: { q: debouncedSearchQuery } }).url);
             return (await res.json()) as App.Data.Finance.InstitutionSearchData[];
         },
-        enabled: params.page === "institution",
+        enabled: params.commandPage === "institution",
     });
-
-    console.log(query.data);
 
     return (
         <>
@@ -148,7 +146,7 @@ function ChooseInstitution() {
             {query.isLoading ? (
                 <Command.Loading>
                     <div className="flex flex-col gap-1 px-2 py-3">
-                        {Array.from({ length: 10 }).map((_, index) => (
+                        {Array.from({ length: 15 }).map((_, index) => (
                             <div
                                 aria-hidden="true"
                                 className="h-10 animate-pulse rounded-10 bg-(--bg-weak-50)"
@@ -175,7 +173,7 @@ function ChooseInstitution() {
                         ) : (
                             <CommandMenu.ItemIcon
                                 as={PlaceholderLogo}
-                                className="rounded-4 bg-(--bg-weak-50) text-(--text-disabled-300) ring-1 ring-(--stroke-soft-200)"
+                                className="size-7 rounded-4 bg-(--bg-weak-50) text-(--text-disabled-300) ring-1 ring-(--stroke-soft-200)"
                             />
                         )}
                         <div className="flex flex-1 items-center justify-between">

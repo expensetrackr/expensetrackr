@@ -24,11 +24,16 @@ final readonly class MeilisearchService
      *
      * @param  string  $indexName  The name of the index
      * @param  array<int|string, mixed>  $documents  The documents to add
+     * @param  list<non-empty-string>  $sortableAttributes  Additional options for the operation
      * @return array<mixed> The operation result
      */
-    public function addDocuments(string $indexName, array $documents): array
+    public function addDocuments(string $indexName, array $documents, array $sortableAttributes = []): array
     {
         $index = $this->client->index($indexName);
+
+        if (count($sortableAttributes) > 0) {
+            $index->updateSortableAttributes($sortableAttributes);
+        }
 
         $result = $index->addDocuments($documents);
 

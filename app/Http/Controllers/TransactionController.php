@@ -50,7 +50,7 @@ final class TransactionController extends Controller
         /** @var array<string, string> $filters */
         $filters = type($request->query('filters', [
             'sort' => 'dated_at',
-            'sort_direction' => 'desc',
+            'sort_direction' => 'asc',
         ]))->asArray();
 
         if ($transaction instanceof TransactionResource) {

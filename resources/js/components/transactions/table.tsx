@@ -176,6 +176,7 @@ export function TransactionsTable({ data: initialData, total }: TransactionsTabl
         columns,
         getCoreRowModel: getCoreRowModel(),
         rowCount: total,
+        manualSorting: true,
         getSortedRowModel: getSortedRowModel(),
         manualPagination: true,
         onPaginationChange: setPagination,
