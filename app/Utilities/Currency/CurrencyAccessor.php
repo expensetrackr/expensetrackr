@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Utilities\Currency;
 
 use Akaunting\Money\Currency as ISOCurrencies;
+use App\Data\Currency\CurrencyData;
 use App\Facades\Forex;
 use App\Models\Currency;
 use Illuminate\Support\Facades\Cache;
@@ -41,30 +42,11 @@ final class CurrencyAccessor
     /**
      * Get the list of all currencies
      *
-     * @return array<string, array{
-     *   name: string,
-     *   code: int,
-     *   precision: int,
-     *   subunit: int,
-     *   symbol: string,
-     *   symbol_first: bool,
-     *   decimal_mark: string,
-     *   thousands_separator: string
-     * }>
+     * @return array<CurrencyData>
      */
     public static function getAllCurrencies(): array
     {
-        /** @var array<string, array{
-         *   name: string,
-         *   code: int,
-         *   precision: int,
-         *   subunit: int,
-         *   symbol: string,
-         *   symbol_first: bool,
-         *   decimal_mark: string,
-         *   thousands_separator: string
-         * }> */
-        return ISOCurrencies::getCurrencies();
+        return CurrencyData::collect(ISOCurrencies::getCurrencies());
     }
 
     /**

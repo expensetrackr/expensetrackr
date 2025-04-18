@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b5066bd6452373fa8361d9f3a6493b1a",
+    "content-hash": "e6f30310fc056fb2911793354deaf5ad",
     "packages": [
         {
             "name": "akaunting/laravel-money",
@@ -1004,16 +1004,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.342.28",
+            "version": "3.342.30",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "16cec140483869b3d244a5995b55d5365465dc58"
+                "reference": "eaa4f64784fdf8e66b511df18de43c43fbeb4f63"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/16cec140483869b3d244a5995b55d5365465dc58",
-                "reference": "16cec140483869b3d244a5995b55d5365465dc58",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/eaa4f64784fdf8e66b511df18de43c43fbeb4f63",
+                "reference": "eaa4f64784fdf8e66b511df18de43c43fbeb4f63",
                 "shasum": ""
             },
             "require": {
@@ -1095,9 +1095,9 @@
             "support": {
                 "forum": "https://github.com/aws/aws-sdk-php/discussions",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.342.28"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.342.30"
             },
-            "time": "2025-04-16T18:13:32+00:00"
+            "time": "2025-04-18T18:05:51+00:00"
         },
         {
             "name": "bacon/bacon-qr-code",
@@ -1158,12 +1158,12 @@
             "version": "2.6.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/blade-ui-kit/blade-heroicons.git",
+                "url": "https://github.com/driesvints/blade-heroicons.git",
                 "reference": "4553b2a1f6c76f0ac7f3bc0de4c0cfa06a097d19"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/blade-ui-kit/blade-heroicons/zipball/4553b2a1f6c76f0ac7f3bc0de4c0cfa06a097d19",
+                "url": "https://api.github.com/repos/driesvints/blade-heroicons/zipball/4553b2a1f6c76f0ac7f3bc0de4c0cfa06a097d19",
                 "reference": "4553b2a1f6c76f0ac7f3bc0de4c0cfa06a097d19",
                 "shasum": ""
             },
@@ -1207,8 +1207,8 @@
                 "laravel"
             ],
             "support": {
-                "issues": "https://github.com/blade-ui-kit/blade-heroicons/issues",
-                "source": "https://github.com/blade-ui-kit/blade-heroicons/tree/2.6.0"
+                "issues": "https://github.com/driesvints/blade-heroicons/issues",
+                "source": "https://github.com/driesvints/blade-heroicons/tree/2.6.0"
             },
             "funding": [
                 {
@@ -1227,12 +1227,12 @@
             "version": "1.8.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/blade-ui-kit/blade-icons.git",
+                "url": "https://github.com/driesvints/blade-icons.git",
                 "reference": "7b743f27476acb2ed04cb518213d78abe096e814"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/blade-ui-kit/blade-icons/zipball/7b743f27476acb2ed04cb518213d78abe096e814",
+                "url": "https://api.github.com/repos/driesvints/blade-icons/zipball/7b743f27476acb2ed04cb518213d78abe096e814",
                 "reference": "7b743f27476acb2ed04cb518213d78abe096e814",
                 "shasum": ""
             },
@@ -6723,12 +6723,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nunomaduro/essentials.git",
-                "reference": "fffc4bae3d2ff5ab3daaa4bb7e4d0290ebe02b69"
+                "reference": "6bbaffe4efc9867b7c12ce074ceca1f0bdc66947"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nunomaduro/essentials/zipball/fffc4bae3d2ff5ab3daaa4bb7e4d0290ebe02b69",
-                "reference": "fffc4bae3d2ff5ab3daaa4bb7e4d0290ebe02b69",
+                "url": "https://api.github.com/repos/nunomaduro/essentials/zipball/6bbaffe4efc9867b7c12ce074ceca1f0bdc66947",
+                "reference": "6bbaffe4efc9867b7c12ce074ceca1f0bdc66947",
                 "shasum": ""
             },
             "require": {
@@ -6794,7 +6794,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2025-04-16T21:43:22+00:00"
+            "time": "2025-04-17T17:11:04+00:00"
         },
         {
             "name": "nunomaduro/termwind",
@@ -14153,6 +14153,80 @@
             "time": "2025-04-03T14:33:09+00:00"
         },
         {
+            "name": "peckphp/peck",
+            "version": "v0.1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/peckphp/peck.git",
+                "reference": "907d7221b057519627811c7c752d65ffa9163dc1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/peckphp/peck/zipball/907d7221b057519627811c7c752d65ffa9163dc1",
+                "reference": "907d7221b057519627811c7c752d65ffa9163dc1",
+                "shasum": ""
+            },
+            "require": {
+                "nunomaduro/termwind": "^1.17.0|^2.3.0",
+                "php": "^8.2",
+                "symfony/console": "^6.4.17|^7.2.1",
+                "symfony/finder": "^6.4.17|^7.2.2"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.20.0",
+                "pestphp/pest": "^2.36|^3.7.4",
+                "pestphp/pest-plugin-type-coverage": "^2.8.7|^3.2.3",
+                "phpstan/phpstan": "^1.12.16",
+                "rector/rector": "^1.2.10",
+                "symfony/var-dumper": "^7.2.0"
+            },
+            "bin": [
+                "bin/peck"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Peck\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nuno Maduro",
+                    "email": "enunomaduro@gmail.com"
+                }
+            ],
+            "description": "Peck is a powerful CLI tool designed to identify pure wording or spelling (grammar) mistakes in your codebase.",
+            "keywords": [
+                "checker",
+                "codebase",
+                "php",
+                "spelling"
+            ],
+            "support": {
+                "issues": "https://github.com/peckphp/peck/issues",
+                "source": "https://github.com/peckphp/peck/tree/v0.1.3"
+            },
+            "funding": [
+                {
+                    "url": "https://www.paypal.com/paypalme/enunomaduro",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/nunomaduro",
+                    "type": "github"
+                },
+                {
+                    "url": "https://www.patreon.com/nunomaduro",
+                    "type": "patreon"
+                }
+            ],
+            "time": "2025-03-31T15:16:31+00:00"
+        },
+        {
             "name": "pestphp/pest",
             "version": "v3.8.1",
             "source": {
@@ -14336,16 +14410,16 @@
         },
         {
             "name": "pestphp/pest-plugin-arch",
-            "version": "v3.1.0",
+            "version": "v3.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pestphp/pest-plugin-arch.git",
-                "reference": "ebec636b97ee73936ee8485e15a59c3f5a4c21b2"
+                "reference": "db7bd9cb1612b223e16618d85475c6f63b9c8daa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pestphp/pest-plugin-arch/zipball/ebec636b97ee73936ee8485e15a59c3f5a4c21b2",
-                "reference": "ebec636b97ee73936ee8485e15a59c3f5a4c21b2",
+                "url": "https://api.github.com/repos/pestphp/pest-plugin-arch/zipball/db7bd9cb1612b223e16618d85475c6f63b9c8daa",
+                "reference": "db7bd9cb1612b223e16618d85475c6f63b9c8daa",
                 "shasum": ""
             },
             "require": {
@@ -14354,7 +14428,7 @@
                 "ta-tikoma/phpunit-architecture-test": "^0.8.4"
             },
             "require-dev": {
-                "pestphp/pest": "^3.7.5",
+                "pestphp/pest": "^3.8.1",
                 "pestphp/pest-dev-tools": "^3.4.0"
             },
             "type": "library",
@@ -14390,7 +14464,7 @@
                 "unit"
             ],
             "support": {
-                "source": "https://github.com/pestphp/pest-plugin-arch/tree/v3.1.0"
+                "source": "https://github.com/pestphp/pest-plugin-arch/tree/v3.1.1"
             },
             "funding": [
                 {
@@ -14402,7 +14476,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-03-30T17:28:50+00:00"
+            "time": "2025-04-16T22:59:48+00:00"
         },
         {
             "name": "pestphp/pest-plugin-drift",

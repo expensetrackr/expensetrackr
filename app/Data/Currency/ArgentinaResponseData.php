@@ -15,10 +15,10 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 final class ArgentinaResponseData extends Data
 {
     public function __construct(
-        public readonly ArgentinaDolarItemData $oficial,
-        public readonly ArgentinaDolarItemData $blue,
-        public readonly ArgentinaDolarItemData $oficialEuro,
-        public readonly ArgentinaDolarItemData $blueEuro,
+        public readonly ArgentinaDollarItemData $oficial,
+        public readonly ArgentinaDollarItemData $blue,
+        public readonly ArgentinaDollarItemData $oficialEuro,
+        public readonly ArgentinaDollarItemData $blueEuro,
 
     ) {}
 }
