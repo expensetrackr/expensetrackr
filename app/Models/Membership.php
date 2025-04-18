@@ -30,7 +30,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 final class Membership extends Pivot
 {
     /**
-     * Indicates if the IDs are auto-incrementing.
+     * Indicates if the ID's are auto-incrementing.
      *
      * @var bool
      */

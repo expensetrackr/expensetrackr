@@ -43,8 +43,8 @@ final class DashboardController extends Controller
                 ->query(function (Builder $query): void {
                     $query->with(['category', 'merchant']);
                 })
-                ->take(5)
                 ->latest('dated_at')
+                ->take(5)
                 ->get()
                 ->toResourceCollection(),
             // Handy for updating the table when anything from server side changes

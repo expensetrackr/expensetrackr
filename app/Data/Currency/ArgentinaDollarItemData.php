@@ -12,7 +12,7 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
 #[TypeScript]
 #[MapName(SnakeCaseMapper::class, CamelCaseMapper::class)]
-final class ArgentinaDolarItemData extends Data
+final class ArgentinaDollarItemData extends Data
 {
     public function __construct(
         public readonly int|float $valueAvg,
