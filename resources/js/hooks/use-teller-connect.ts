@@ -1,6 +1,9 @@
 import * as React from "react";
 import { toast } from "sonner";
 import { useScript } from "usehooks-ts";
+import { useCommandMenuStore } from "#/store/command-menu.ts";
+import { useCommandMenuParams } from "./use-command-menu-params.ts";
+import { useConnectParams } from "./use-connect-params.ts";
 
 type TellerConnectProps = {
     onSelect?(institutionId: string): void;
@@ -8,6 +11,10 @@ type TellerConnectProps = {
 
 export function useTellerConnect(_props?: TellerConnectProps) {
     const [institution, setInstitution] = React.useState<string | undefined>();
+    const { setParams } = useConnectParams();
+    const { setParams: setAppCommandParams } = useCommandMenuParams();
+    const { toggleOpen } = useCommandMenuStore();
+
     useScript("https://cdn.teller.io/connect/connect.js", {
         id: "teller-connect",
     });
@@ -18,27 +25,20 @@ export function useTellerConnect(_props?: TellerConnectProps) {
                 applicationId: ENV.TELLER_APP_ID,
                 environment: ENV.TELLER_ENVIRONMENT,
                 institution,
-                async onSuccess(_enrollment) {
-                    // await setParams({
-                    //     step: "bank-accounts-selection",
-                    //     provider: "teller",
-                    //     token: enrollment.accessToken,
-                    //     enrollment_id: enrollment.enrollment.id,
-                    // });
-                    // stepper.goTo("bank-accounts-selection");
+                async onSuccess(enrollment) {
+                    await setParams({
+                        provider: "teller",
+                        token: enrollment.accessToken,
+                        enrollment_id: enrollment.enrollment.id,
+                    });
                 },
                 async onExit() {
-                    // await setParams({
-                    //     step: "institution-selection",
-                    // });
-                    // stepper.goTo("institution-selection");
+                    toggleOpen();
+                    await setAppCommandParams({ commandPage: "institution" });
                 },
                 async onFailure(failure) {
-                    // await setParams({
-                    //     step: "institution-selection",
-                    // });
-
-                    // stepper.goTo("institution-selection");
+                    toggleOpen();
+                    await setAppCommandParams({ commandPage: "institution" });
 
                     toast.error("Failed to connect to bank", {
                         description: failure.message,
@@ -48,18 +48,11 @@ export function useTellerConnect(_props?: TellerConnectProps) {
 
             teller.open();
         }
+        // eslint-disable-next-line react-compiler/react-compiler
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [institution]);
 
     return {
         setInstitution,
     };
-    // return (
-    //     <BankConnectionButton
-    //         id={id}
-    //         onClick={() => {
-    //             onSelect(id);
-    //             setInstitution(id);
-    //         }}
-    //     />
-    // );
 }

@@ -10,12 +10,12 @@ import Search01Icon from "virtual:icons/hugeicons/search-01";
 import * as Avatar from "#/components/ui/avatar.tsx";
 import * as CommandMenu from "#/components/ui/command-menu.tsx";
 import * as CompactButton from "#/components/ui/compact-button.tsx";
-import { useAppCommandParams } from "#/hooks/use-app-command-params.ts";
 import { useBankProvider } from "#/hooks/use-bank-provider.ts";
+import { useCommandMenuParams } from "#/hooks/use-command-menu-params.ts";
 import { useTranslation } from "#/hooks/use-translation.ts";
 import { routes } from "#/routes.ts";
 import { AccountTypeEnum } from "#/schemas/account.ts";
-import { useAppCommandStore } from "#/store/app-command.ts";
+import { useCommandMenuStore } from "#/store/command-menu.ts";
 import { cn } from "#/utils/cn.ts";
 import { accountTypeColors, AccountTypeIcon } from "../account-type-icon.tsx";
 import { Image } from "../image.tsx";
@@ -23,8 +23,8 @@ import { InstitutionInfo } from "../institution-info.tsx";
 import { PlaceholderLogo } from "../placeholder-logo.tsx";
 
 export function AppCommandMenu() {
-    const { isOpen, setOpen } = useAppCommandStore();
-    const { setParams, ...params } = useAppCommandParams();
+    const { isOpen, setOpen } = useCommandMenuStore();
+    const { setParams, ...params } = useCommandMenuParams();
 
     useHotkeys("meta+k", () => setOpen(true));
 
@@ -97,7 +97,7 @@ export function AppCommandMenu() {
 }
 
 function Home() {
-    const { setParams } = useAppCommandParams();
+    const { setParams } = useCommandMenuParams();
     const { t } = useTranslation();
 
     return (
@@ -131,7 +131,7 @@ function Home() {
 }
 
 function ChooseInstitution() {
-    const { setParams, ...params } = useAppCommandParams();
+    const { setParams, ...params } = useCommandMenuParams();
     const [debouncedSearchQuery] = useDebounceValue(params.institutionQuery, 500);
     const query = useQuery<App.Data.Finance.InstitutionSearchData[]>({
         queryKey: ["institutions", debouncedSearchQuery],
@@ -176,7 +176,7 @@ function InstitutionItem({ institution }: { institution: App.Data.Finance.Instit
         name: institution.name,
         provider: institution.provider,
     });
-    const { setOpen } = useAppCommandStore();
+    const { setOpen } = useCommandMenuStore();
 
     const handleSelect = () => {
         setOpen(false);

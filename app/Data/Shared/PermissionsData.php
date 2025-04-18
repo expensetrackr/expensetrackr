@@ -14,5 +14,9 @@ final class PermissionsData extends Data
         public readonly bool $canCreateAccounts,
         public readonly bool $canCreateCategories,
         public readonly bool $canCreateTransactions,
+        public readonly bool $canCreateWorkspaces,
+        public readonly bool $canManageTwoFactorAuthentication,
+        public readonly bool $canUpdatePassword,
+        public readonly bool $canUpdateProfileInformation,
     ) {}
 }

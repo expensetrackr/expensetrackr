@@ -1,6 +1,6 @@
 import { parseAsString, parseAsStringLiteral, useQueryStates } from "nuqs";
 
-export function useAppCommandParams() {
+export function useCommandMenuParams() {
     const [params, setParams] = useQueryStates(
         {
             commandPage: parseAsStringLiteral(["home", "institution"]).withDefault("home"),
