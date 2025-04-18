@@ -9,7 +9,7 @@ export function InstitutionInfo({ provider, children }: Props) {
     const getDescription = () => {
         switch (provider) {
             case "teller":
-                return "Connect instantly to more than 6,500 financial institutions in the US.";
+                return "Connect instantly to more than 7,000 financial institutions in the US.";
             default:
                 break;
         }

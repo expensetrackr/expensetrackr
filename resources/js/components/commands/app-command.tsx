@@ -18,6 +18,7 @@ import { AccountTypeEnum } from "#/schemas/account.ts";
 import { cn } from "#/utils/cn.ts";
 import { accountTypeColors, AccountTypeIcon } from "../account-type-icon.tsx";
 import { Image } from "../image.tsx";
+import { InstitutionInfo } from "../institution-info.tsx";
 import { PlaceholderLogo } from "../placeholder-logo.tsx";
 
 export function AppCommandMenu() {
@@ -46,7 +47,7 @@ export function AppCommandMenu() {
 
     return (
         <CommandMenu.Dialog
-            className="max-h-[42vh] min-h-[42vh]"
+            className="max-h-[64vh]"
             onOpenChange={handleOpenChange}
             open={isOpen}
             shouldFilter={params.page === "home"}
@@ -150,7 +151,7 @@ function ChooseInstitution() {
                         {Array.from({ length: 10 }).map((_, index) => (
                             <div
                                 aria-hidden="true"
-                                className="h-9 animate-pulse rounded-10 bg-(--bg-weak-50)"
+                                className="h-10 animate-pulse rounded-10 bg-(--bg-weak-50)"
                                 key={index}
                             />
                         ))}
@@ -163,12 +164,12 @@ function ChooseInstitution() {
                     <CommandMenu.Item key={institution.id}>
                         {institution.logo ? (
                             <CommandMenu.ItemIcon
-                                $size="20"
+                                $size="24"
                                 as={Avatar.Root}
-                                className="!rounded-4 ring-1 ring-(--stroke-soft-200)"
+                                className="size-7 !rounded-4 ring-1 ring-(--stroke-soft-200)"
                             >
-                                <Avatar.Image $color="gray" asChild className="!rounded-4">
-                                    <Image alt={institution.name} height={20} src={institution.logo} width={20} />
+                                <Avatar.Image $color="gray" asChild className="size-7 !rounded-4">
+                                    <Image alt={institution.name} height={28} src={institution.logo} width={28} />
                                 </Avatar.Image>
                             </CommandMenu.ItemIcon>
                         ) : (
@@ -177,7 +178,24 @@ function ChooseInstitution() {
                                 className="rounded-4 bg-(--bg-weak-50) text-(--text-disabled-300) ring-1 ring-(--stroke-soft-200)"
                             />
                         )}
-                        {institution.name}
+                        <div className="flex flex-1 items-center justify-between">
+                            <p>{institution.name}</p>
+                            <InstitutionInfo provider={institution.provider}>
+                                <p className="inline-flex items-center gap-1 text-paragraph-xs text-(--text-sub-600)">
+                                    <span>
+                                        Via <span className="capitalize">{institution.provider}</span>
+                                    </span>
+                                    <Image
+                                        alt={institution.provider}
+                                        className="size-4 rounded-4"
+                                        height={16}
+                                        isCdn
+                                        src={`/major-brands/${institution.provider}.png`}
+                                        width={16}
+                                    />
+                                </p>
+                            </InstitutionInfo>
+                        </div>
                     </CommandMenu.Item>
                 ))}
             </CommandMenu.Group>
