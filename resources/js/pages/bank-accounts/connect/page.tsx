@@ -1,20 +1,99 @@
 import { getFormProps, getInputProps, useForm, useInputControl } from "@conform-to/react";
 import { getValibotConstraint, parseWithValibot } from "@conform-to/valibot";
-import { useForm as useInertiaForm } from "@inertiajs/react";
+import { Deferred, useForm as useInertiaForm } from "@inertiajs/react";
 import NumberFlow, { type Format } from "@number-flow/react";
 import * as LabelPrimitives from "@radix-ui/react-label";
 import { resolveCurrencyFormat } from "@sumup/intl";
 import * as React from "react";
 import * as v from "valibot";
+import Cancel01Icon from "virtual:icons/hugeicons/cancel-01";
+import CustomizeIcon from "virtual:icons/hugeicons/customize";
 
-import { useConnectParams } from "#/hooks/use-connect-params.ts";
+import { Card } from "#/components/create-account/card.tsx";
+import { Image } from "#/components/image.tsx";
+import { Link } from "#/components/link.tsx";
+import * as Avatar from "#/components/ui/avatar.tsx";
+import * as Button from "#/components/ui/button.tsx";
+import * as Switch from "#/components/ui/switch.tsx";
 import { useTranslation } from "#/hooks/use-translation.ts";
 import { routes } from "#/routes.ts";
 import { AccountSubtypeEnum, AccountTypeEnum } from "#/schemas/account.ts";
 import { BankConnectionProviderSchema } from "#/schemas/bank-connection.ts";
 import { decimalFormatter } from "#/utils/number-formatter.ts";
-import * as Avatar from "../ui/avatar.tsx";
-import * as Switch from "../ui/switch.tsx";
+
+type BankAccountsConnectPageProps = {
+    enrollmentId: string;
+    provider: string;
+    token: string;
+    bankAccounts: Array<App.Data.Finance.BankAccountData>;
+};
+
+export default function BankAccountsConnectPage({
+    enrollmentId,
+    provider,
+    token,
+    bankAccounts,
+}: BankAccountsConnectPageProps) {
+    return (
+        <div className="flex min-h-screen flex-col lg:grid lg:items-start">
+            <div className="relative isolate mx-auto flex w-full max-w-[1392px] flex-1 flex-col">
+                <img
+                    alt=""
+                    className="pointer-events-none absolute top-0 left-1/2 -z-10 hidden -translate-x-1/2 lg:block"
+                    height={456}
+                    src="/img/onboarding-pattern.svg"
+                    width={964}
+                />
+
+                <Button.Root
+                    $size="xs"
+                    $style="ghost"
+                    $type="neutral"
+                    asChild
+                    className="fixed top-6 right-8 hidden lg:flex"
+                >
+                    <Link href={routes.accounts.index.url()}>
+                        <Button.Icon as={Cancel01Icon} />
+                    </Link>
+                </Button.Root>
+
+                <div className="flex w-full justify-center py-12">
+                    <Card
+                        actions={
+                            <Button.Root $size="sm" className="w-full" form="create-bank-connection-form" type="submit">
+                                Connect
+                            </Button.Root>
+                        }
+                        description="Choose the bank accounts that you want to sync with our app."
+                        icon={CustomizeIcon}
+                        title="Bank accounts selection"
+                    >
+                        <Deferred
+                            data="bankAccounts"
+                            fallback={
+                                <div className="flex shrink-0 flex-col gap-3">
+                                    {Array.from({ length: 3 }).map((_, index) => (
+                                        <div
+                                            className="h-18 w-full animate-pulse rounded-12 bg-(--bg-sub-300)"
+                                            key={index}
+                                        />
+                                    ))}
+                                </div>
+                            }
+                        >
+                            <CreateBankConnectionForm
+                                bankAccounts={bankAccounts}
+                                enrollmentId={enrollmentId}
+                                provider={provider}
+                                token={token}
+                            />
+                        </Deferred>
+                    </Card>
+                </div>
+            </div>
+        </div>
+    );
+}
 
 const FormSchema = v.object({
     provider_connection_id: v.nullable(v.string()),
@@ -37,16 +116,23 @@ const FormSchema = v.object({
     ),
 });
 
-type BankAccountsSelectionStepProps = {
+type CreateBankConnectionFormProps = {
+    enrollmentId: string;
+    provider: string;
+    token: string;
     bankAccounts: Array<App.Data.Finance.BankAccountData>;
 };
 
-export function BankAccountsSelectionStep({ bankAccounts }: BankAccountsSelectionStepProps) {
-    const { enrollment_id: enrollmentId, provider, token } = useConnectParams();
+export function CreateBankConnectionForm({
+    enrollmentId,
+    provider,
+    token,
+    bankAccounts,
+}: CreateBankConnectionFormProps) {
     const { language } = useTranslation();
     const { transform, post } = useInertiaForm();
     const [form, fields] = useForm({
-        id: "bank-accounts-selection",
+        id: "create-bank-connection-form",
         shouldValidate: "onSubmit",
         shouldRevalidate: "onInput",
         constraint: getValibotConstraint(FormSchema),
@@ -78,11 +164,13 @@ export function BankAccountsSelectionStep({ bankAccounts }: BankAccountsSelectio
             if (submission && "value" in submission) {
                 transform((data) => ({ ...data, ...submission.value }));
 
-                post(routes.accounts.bankConnections.store.url());
+                post(routes.bankConnections.store.url());
             }
         },
     });
     const accounts = fields.accounts.getFieldList();
+
+    console.info(form.allErrors);
 
     return (
         <form {...getFormProps(form)} className="flex shrink-0 flex-col gap-3">
@@ -148,13 +236,12 @@ function BankAccount({ account, fields, children }: BankAccountProps) {
 
             <LabelPrimitives.Root className="flex cursor-pointer items-center gap-3.5 rounded-12 bg-(--bg-white-0) px-4 py-2.5 shadow-xs ring-1 ring-(--stroke-soft-200) ring-inset">
                 <Avatar.Root $size="40" className="shadow-xs ring-1 ring-(--stroke-soft-200)">
-                    <Avatar.Image
-                        $color="gray"
-                        alt={account.name}
-                        className="size-10"
-                        src={account.institution.logo || ""}
-                    >
-                        {/* <Image alt={account.name} height={40} src={`/banks/${account.institution.id}`} width={40} /> */}
+                    <Avatar.Image $color="gray" asChild className="size-10">
+                        {account.institution.logo ? (
+                            <Image alt={account.name} height={40} src={account.institution.logo} width={40} />
+                        ) : (
+                            account.institution.name.charAt(0)
+                        )}
                     </Avatar.Image>
                 </Avatar.Root>
 

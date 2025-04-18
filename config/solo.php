@@ -47,7 +47,7 @@ return [
     |
     */
     'commands' => [
-        'Logs' => Command::from('php artisan pail --timeout=0'),
+        'Logs' => Command::from('php artisan pail --timeout=0 -v'),
         'Vite' => 'bun run dev',
         'Make' => new MakeCommand,
 

@@ -1,6 +1,8 @@
+import { router } from "@inertiajs/react";
 import * as React from "react";
 import { toast } from "sonner";
 import { useScript } from "usehooks-ts";
+import { routes } from "#/routes.ts";
 import { useCommandMenuStore } from "#/store/command-menu.ts";
 import { useCommandMenuParams } from "./use-command-menu-params.ts";
 import { useConnectParams } from "./use-connect-params.ts";
@@ -29,8 +31,16 @@ export function useTellerConnect(_props?: TellerConnectProps) {
                     await setParams({
                         provider: "teller",
                         token: enrollment.accessToken,
-                        enrollment_id: enrollment.enrollment.id,
+                        enrollmentId: enrollment.enrollment.id,
                     });
+
+                    router.visit(
+                        routes.bankConnections.connect({
+                            enrollmentId: enrollment.enrollment.id,
+                            provider: "teller",
+                            token: enrollment.accessToken,
+                        }).url,
+                    );
                 },
                 async onExit() {
                     toggleOpen();

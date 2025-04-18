@@ -2,13 +2,13 @@ import * as React from "react";
 import EyeLineIcon from "virtual:icons/ri/eye-line";
 import EyeOffLineIcon from "virtual:icons/ri/eye-off-line";
 
-import { Input } from "../composables/input.tsx";
+import { TextField } from "./text-field.tsx";
 
-export function PasswordInput(props: React.CustomComponentPropsWithRef<typeof Input>) {
+export function PasswordInput(props: React.CustomComponentPropsWithRef<typeof TextField>) {
     const [showPassword, setShowPassword] = React.useState(false);
 
     return (
-        <Input
+        <TextField
             inlineTrailingNode={
                 <button onClick={() => setShowPassword((s) => !s)} type="button">
                     {showPassword ? (

@@ -1,22 +1,28 @@
 import * as React from "react";
 
 import { cn } from "#/utils/cn.ts";
-import { Input, type InputProps } from "../composables/input.tsx";
 import * as Hint from "../ui/hint.tsx";
+import * as Input from "../ui/input.tsx";
 import * as Label from "../ui/label.tsx";
 
-type TextFieldProps = Omit<InputProps, "error"> & {
-    wrapperClassName?: string;
-    label?: string;
-    hiddenLabel?: boolean;
-    labelClassName?: string;
-    hint?: string | Array<string> | Array<undefined>;
-    error?: string | Array<string>;
-};
+type TextFieldProps = React.CustomComponentPropsWithRef<typeof Input.Input> &
+    Pick<React.CustomComponentPropsWithRef<typeof Input.Root>, "$error" | "$size"> & {
+        wrapperClassName?: string;
+        label?: string;
+        hiddenLabel?: boolean;
+        labelClassName?: string;
+        hint?: string | Array<string> | Array<undefined>;
+        error?: string | Array<string>;
+        leadingIcon?: React.ForwardRefExoticComponent<React.SVGProps<SVGSVGElement>>;
+        trailingIcon?: React.ForwardRefExoticComponent<React.SVGProps<SVGSVGElement>>;
+        leadingNode?: React.ReactNode;
+        trailingNode?: React.ReactNode;
+        inlineLeadingNode?: React.ReactNode;
+        inlineTrailingNode?: React.ReactNode;
+    };
 
 export function TextField({
     wrapperClassName,
-    $error,
     $size,
     error,
     label,
@@ -46,26 +52,29 @@ export function TextField({
                 </Label.Root>
             ) : null}
 
-            <Input
-                $error={!!error}
-                $size={$size}
-                aria-describedby={[error && `${id}-error`, `${id}-description`].filter(Boolean).join(" ")}
-                aria-invalid={error ? true : undefined}
-                id={id}
-                inlineLeadingNode={inlineLeadingNode}
-                inlineTrailingNode={inlineTrailingNode}
-                leadingIcon={LeadingIcon}
-                leadingNode={leadingNode}
-                trailingIcon={TrailingIcon}
-                trailingNode={trailingNode}
-                {...rest}
-            />
+            <Input.Root $error={!!error} $size={$size}>
+                {leadingNode}
+                <Input.Wrapper>
+                    {inlineLeadingNode}
+                    {LeadingIcon && <Input.Icon as={LeadingIcon} />}
+                    <Input.Input
+                        aria-describedby={[error && `${id}-error`, `${id}-description`].filter(Boolean).join(" ")}
+                        aria-invalid={error ? true : undefined}
+                        id={id}
+                        type="text"
+                        {...rest}
+                    />
+                    {TrailingIcon && <Input.Icon as={TrailingIcon} />}
+                    {inlineTrailingNode}
+                </Input.Wrapper>
+                {trailingNode}
+            </Input.Root>
 
             {error || hint ? (
                 <Hint.Root
                     $disabled={rest.disabled}
                     $error={!!error}
-                    id={[$error && `${id}-error`, `${id}-description`].filter(Boolean).join(" ")}
+                    id={[error && `${id}-error`, `${id}-description`].filter(Boolean).join(" ")}
                 >
                     <Hint.Icon />
                     {error || hint}

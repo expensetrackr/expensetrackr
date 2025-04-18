@@ -85,6 +85,7 @@ final class TransactionController extends Controller
                     $query->with(['category', 'merchant']);
                 })
                 ->paginate(perPage: $perPage)
+                ->onEachSide(1)
                 ->withQueryString()
                 ->toResourceCollection(),
             'transaction' => $transaction,

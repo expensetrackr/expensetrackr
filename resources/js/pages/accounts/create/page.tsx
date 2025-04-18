@@ -1,29 +1,90 @@
-import { Head, Link } from "@inertiajs/react";
+import { FormProvider, FormStateInput, getFormProps, useForm } from "@conform-to/react";
+import { parseWithValibot, getValibotConstraint } from "@conform-to/valibot";
+import { Head, Link, useForm as useInertiaForm } from "@inertiajs/react";
+import { useLocalStorage } from "usehooks-ts";
+import type * as v from "valibot";
+import TextboxDuotone from "virtual:icons/ph/textbox-duotone";
 import CloseIcon from "virtual:icons/ri/close-line";
+import FileTextFillIcon from "virtual:icons/ri/file-text-fill";
 import HeadphoneIcon from "virtual:icons/ri/headphone-line";
-import LinksIcon from "virtual:icons/ri/links-line";
-import ListSettings from "virtual:icons/ri/list-settings-fill";
+import MoneyDollarCircleFillIcon from "virtual:icons/ri/money-dollar-circle-fill";
 
+import { AccountSummaryStep } from "#/components/create-account/account-summary-step.tsx";
+import { BalanceStep } from "#/components/create-account/balance-step.tsx";
 import { Card } from "#/components/create-account/card.tsx";
-import { ConnectionTypeStep } from "#/components/create-account/connection-type-step.tsx";
+import { DetailsStep } from "#/components/create-account/details-step.tsx";
 import { FlowSidebar } from "#/components/create-account/sidebar.tsx";
-import { TypeStep } from "#/components/create-account/type-step.tsx";
 import * as Button from "#/components/ui/button.tsx";
-import { useCreateAccountParams } from "#/hooks/use-create-account-params.ts";
 import { routes } from "#/routes.ts";
-import { CreateAccountStepper } from "#/utils/steppers/create-account.step";
+import {
+    type BalanceSchema,
+    type CreateAccountSchema,
+    CreateManualAccountStepper,
+    type DetailsSchema,
+} from "#/utils/steppers/create-account.step.ts";
 
-export default function CreateAccountPage() {
-    const stepper = CreateAccountStepper.useStepper();
-    const { type, connectionType } = useCreateAccountParams();
+type CreateAccountPageProps = {
+    currencies: Array<string>;
+};
+
+export default function CreateManualAccountPage({ currencies }: CreateAccountPageProps) {
+    const stepper = CreateManualAccountStepper.useStepper();
+    const [account, setAccount, removeAccount] = useLocalStorage<Record<string, string | number | null> | null>(
+        "account",
+        null,
+    );
+    const { transform, post } = useInertiaForm();
+    const [form, fields] = useForm({
+        id: `create-account-${stepper.current.id}-form`,
+        shouldValidate: "onSubmit",
+        shouldRevalidate: "onInput",
+        constraint: getValibotConstraint(stepper.current.schema),
+        defaultValue: {
+            type: account?.type as string,
+            currency_code: "USD",
+            initial_balance: "0.00",
+            ...account,
+        },
+        onValidate({ formData }) {
+            return parseWithValibot(formData, { schema: stepper.current.schema });
+        },
+        onSubmit(event, { submission }) {
+            event.preventDefault();
+
+            if (submission && "value" in submission) {
+                setAccount({
+                    ...account,
+                    ...submission.value,
+                });
+
+                if (stepper.isLast) {
+                    transform((data) => ({
+                        ...data,
+                        ...submission.value,
+                        ...("initial_balance" in submission.value && {
+                            current_balance: submission.value.initial_balance.replace(/,/g, ""),
+                        }),
+                    }));
+
+                    post(routes.accounts.store.url(), {
+                        onSuccess() {
+                            removeAccount();
+                        },
+                    });
+                } else {
+                    stepper.next();
+                }
+            }
+        },
+    });
 
     return (
         <>
-            <Head title="Create account" />
+            <Head title="Create account manually" />
 
-            <CreateAccountStepper.Scoped>
+            <CreateManualAccountStepper.Scoped>
                 <div className="flex min-h-screen flex-col lg:grid lg:grid-cols-[auto_minmax(0,1fr)] lg:items-start">
-                    <FlowSidebar stepper={stepper} utils={CreateAccountStepper.utils} />
+                    <FlowSidebar stepper={stepper} utils={CreateManualAccountStepper.utils} />
 
                     <div className="relative isolate mx-auto flex w-full max-w-[1392px] flex-1 flex-col">
                         <img
@@ -41,60 +102,102 @@ export default function CreateAccountPage() {
                             asChild
                             className="fixed top-6 right-8 hidden lg:flex"
                         >
-                            <Link href={routes.accounts.index.url()}>
+                            <Link href={routes.accounts.create.url()}>
                                 <Button.Icon as={CloseIcon} />
                             </Link>
                         </Button.Root>
 
-                        <div className="flex w-full justify-center py-12">
-                            {stepper.when("type", (step) => (
-                                <Card
-                                    actions={
-                                        type && (
-                                            <Button.Root $size="sm" className="w-full" onClick={stepper.next}>
-                                                Continue
-                                            </Button.Root>
-                                        )
-                                    }
-                                    description="Choose the type of account you want to add."
-                                    icon={ListSettings}
-                                    key={step.id}
-                                    stepper={stepper}
-                                    title="Type selection"
-                                >
-                                    <TypeStep />
-                                </Card>
-                            ))}
-                            {stepper.when("connection_type", (step) => (
-                                <Card
-                                    actions={
-                                        connectionType && (
-                                            <Button.Root $size="sm" asChild className="w-full" type="submit">
-                                                <Link
-                                                    href={routes.accounts.create.connectionType.url(
-                                                        {
-                                                            connectionType,
-                                                        },
-                                                        {
-                                                            query: { type },
-                                                        },
-                                                    )}
+                        <FormProvider context={form.context}>
+                            <FormStateInput />
+
+                            <form {...getFormProps(form)} className="flex w-full justify-center py-12">
+                                {stepper.switch({
+                                    details: (step) => (
+                                        <Card
+                                            actions={
+                                                <Button.Root
+                                                    $size="sm"
+                                                    className="w-full"
+                                                    form={`create-account-${step.id}-form`}
+                                                    type="submit"
                                                 >
                                                     Continue
-                                                </Link>
-                                            </Button.Root>
-                                        )
-                                    }
-                                    description="Choose how you want to connect your account."
-                                    icon={LinksIcon}
-                                    key={step.id}
-                                    stepper={stepper}
-                                    title="Connection"
-                                >
-                                    <ConnectionTypeStep />
-                                </Card>
-                            ))}
-                        </div>
+                                                </Button.Root>
+                                            }
+                                            description="Enter your account's name and any additional details. The available options are customized based on your selected account type."
+                                            icon={TextboxDuotone}
+                                            key={step.id}
+                                            stepper={stepper}
+                                            title="Account details"
+                                        >
+                                            <DetailsStep
+                                                fields={
+                                                    fields as ReturnType<
+                                                        typeof useForm<v.InferOutput<typeof DetailsSchema>>
+                                                    >[1]
+                                                }
+                                            />
+                                        </Card>
+                                    ),
+                                    balance: (step) => (
+                                        <Card
+                                            actions={
+                                                <Button.Root
+                                                    $size="sm"
+                                                    className="w-full"
+                                                    form={`create-account-${step.id}-form`}
+                                                    type="submit"
+                                                >
+                                                    Continue
+                                                </Button.Root>
+                                            }
+                                            description="Enter your account's balance and currency. The available options are customized based on your selected account type."
+                                            icon={MoneyDollarCircleFillIcon}
+                                            key={step.id}
+                                            stepper={stepper}
+                                            title="Balance & Currency"
+                                        >
+                                            <BalanceStep
+                                                currencies={currencies}
+                                                fields={
+                                                    fields as ReturnType<
+                                                        typeof useForm<v.InferOutput<typeof BalanceSchema>>
+                                                    >[1]
+                                                }
+                                            />
+                                        </Card>
+                                    ),
+                                    summary: (step) => (
+                                        <Card
+                                            actions={
+                                                <Button.Root
+                                                    $size="sm"
+                                                    className="w-full"
+                                                    form={`create-account-${step.id}-form`}
+                                                    type="submit"
+                                                >
+                                                    Continue
+                                                </Button.Root>
+                                            }
+                                            className="[&_[data-card-content]]:p-0"
+                                            description="Review your account's details and confirm the information is correct."
+                                            icon={FileTextFillIcon}
+                                            key={step.id}
+                                            stepper={stepper}
+                                            title="Account Summary"
+                                        >
+                                            <AccountSummaryStep
+                                                fields={
+                                                    fields as ReturnType<
+                                                        typeof useForm<v.InferOutput<typeof CreateAccountSchema>>
+                                                    >[1]
+                                                }
+                                            />
+                                        </Card>
+                                    ),
+                                })}
+                            </form>
+                        </FormProvider>
 
                         <div className="mx-auto flex w-full max-w-md flex-col gap-3 p-4 lg:hidden">
                             <div className="flex flex-col gap-4 text-center">
@@ -119,7 +222,7 @@ export default function CreateAccountPage() {
                         </div>
                     </div>
                 </div>
-            </CreateAccountStepper.Scoped>
+            </CreateManualAccountStepper.Scoped>
         </>
     );
 }

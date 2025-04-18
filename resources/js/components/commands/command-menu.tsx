@@ -136,7 +136,7 @@ function ChooseInstitution() {
     const query = useQuery<App.Data.Finance.InstitutionSearchData[]>({
         queryKey: ["institutions", debouncedSearchQuery],
         queryFn: async () => {
-            const res = await fetch(routes.api.institutions.index({ query: { q: debouncedSearchQuery } }).url);
+            const res = await fetch(routes.api.finance.institutions.index({ query: { q: debouncedSearchQuery } }).url);
             return (await res.json()) as App.Data.Finance.InstitutionSearchData[];
         },
         enabled: params.commandPage === "institution",
@@ -192,7 +192,7 @@ function InstitutionItem({ institution }: { institution: App.Data.Finance.Instit
                     className="size-7 !rounded-4 ring-1 ring-(--stroke-soft-200)"
                 >
                     <Avatar.Image $color="gray" asChild className="size-7 !rounded-4">
-                        <Image alt={institution.name} height={28} src={institution.logo} width={28} />
+                        <Image alt={institution.name} height={28} isCdn src={institution.logo} width={28} />
                     </Avatar.Image>
                 </CommandMenu.ItemIcon>
             ) : (

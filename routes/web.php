@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\BankConnectionController;
 use App\Http\Controllers\BillingController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
@@ -34,13 +35,12 @@ Route::middleware([
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
 
     Route::post('/accounts', [AccountController::class, 'store'])->name('accounts.store');
-    Route::post('/accounts/bank-connections', [AccountController::class, 'storeBankConnections'])->name('accounts.bank-connections.store');
     Route::get('/accounts', [AccountController::class, 'index'])->name('accounts.index');
     Route::get('/accounts/create', [AccountController::class, 'create'])->name('accounts.create');
-    Route::get('/accounts/create/{connectionType}', [AccountController::class, 'createAccountByType'])
-        ->where('connectionType', 'manual|connect')
-        ->name('accounts.create.connection-type');
     Route::delete('/accounts/{account}', [AccountController::class, 'destroy'])->name('accounts.destroy');
+
+    Route::post('/bank-connections', [BankConnectionController::class, 'store'])->name('bank-connections.store');
+    Route::get('/bank-connections/connect/{enrollmentId}/{provider}/{token}', [BankConnectionController::class, 'connect'])->name('bank-connections.connect');
 
     Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
     Route::get('/transactions/create', [TransactionController::class, 'create'])->name('transactions.create');

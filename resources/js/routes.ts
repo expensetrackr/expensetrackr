@@ -1,6 +1,6 @@
-import connectionType from "./routes/accounts/create/connection-type.ts";
 import accounts from "./routes/accounts/index.ts";
 import api from "./routes/api/index.ts";
+import bankConnections from "./routes/bank-connections/index.ts";
 import categories from "./routes/categories/index.ts";
 import connectedAccounts from "./routes/connected-accounts/index.ts";
 import currentUser from "./routes/current-user/index.ts";
@@ -29,14 +29,9 @@ import workspaceMembers from "./routes/workspace-members/index.ts";
 import workspaces from "./routes/workspaces/index.ts";
 
 export const routes = {
-    accounts: {
-        ...accounts,
-        create: {
-            ...accounts.create,
-            connectionType: connectionType,
-        },
-    },
+    accounts,
     api,
+    bankConnections,
     categories,
     connectedAccounts,
     currentUser,

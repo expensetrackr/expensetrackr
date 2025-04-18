@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace App\Enums\Banking;
 
+use Kongulov\Traits\InteractWithEnum;
+
 enum ProviderType: string
 {
+    use InteractWithEnum;
+
     case Teller = 'teller';
     case Mx = 'mx';
 

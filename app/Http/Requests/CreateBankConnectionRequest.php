@@ -12,7 +12,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Validation\Rule;
 
-final class BankConnectionRequest extends FormRequest
+final class CreateBankConnectionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
