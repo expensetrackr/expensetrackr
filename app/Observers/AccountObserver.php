@@ -10,10 +10,15 @@ use App\Models\Account;
 final class AccountObserver
 {
     /**
+     * Create a new observer instance.
+     */
+    public function __construct(private readonly SnapshotBalanceAction $action) {}
+
+    /**
      * Handle the Account "created" event.
      */
-    public function created(Account $account, SnapshotBalanceAction $action): void
+    public function created(Account $account): void
     {
-        $action->handle($account);
+        $this->action->handle($account);
     }
 }
