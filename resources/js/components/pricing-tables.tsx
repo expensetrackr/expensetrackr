@@ -188,22 +188,24 @@ export function PricingTables() {
                                             >
                                                 <Link
                                                     href={
-                                                        user
-                                                            ? routes.subscribe.url({
-                                                                  query: {
-                                                                      product_id:
-                                                                          typeof plan.productPriceId === "string"
-                                                                              ? plan.productPriceId
-                                                                              : plan.productPriceId?.[
-                                                                                    interval as keyof typeof plan.productPriceId
-                                                                                ],
-                                                                      single_purchase:
-                                                                          typeof plan.productPriceId === "string"
-                                                                              ? "true"
-                                                                              : undefined,
-                                                                  },
-                                                              })
-                                                            : routes.settings.billing.show.url()
+                                                        plan.code === "free"
+                                                            ? routes.register.url()
+                                                            : user
+                                                              ? routes.subscribe.url({
+                                                                    query: {
+                                                                        product_id:
+                                                                            typeof plan.productPriceId === "string"
+                                                                                ? plan.productPriceId
+                                                                                : plan.productPriceId?.[
+                                                                                      interval as keyof typeof plan.productPriceId
+                                                                                  ],
+                                                                        single_purchase:
+                                                                            typeof plan.productPriceId === "string"
+                                                                                ? "true"
+                                                                                : undefined,
+                                                                    },
+                                                                })
+                                                              : routes.settings.billing.show.url()
                                                     }
                                                 >
                                                     {t(`home.sections.pricing.plans.${plan.code}.button_label`)}
