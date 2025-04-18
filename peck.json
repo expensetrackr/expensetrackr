@@ -1,0 +1,45 @@
+{
+    "preset": "laravel",
+    "ignore": {
+        "words": [
+            "php",
+            "workspaces",
+            "mutator",
+            "forex",
+            "sortable",
+            "gapfill",
+            "meilisearch",
+            "socialstream",
+            "subtype",
+            "crypto",
+            "subunit",
+            "counterparty",
+            "deleter",
+            "twc",
+            "nuqs",
+            "utils",
+            "ssr",
+            "breakpoint",
+            "topbar",
+            "bento",
+            "isotype",
+            "js",
+            "nixpacks",
+            "languine",
+            "eslint",
+            "filesystems",
+            "cloudinary",
+            "dockerfile"
+        ],
+        "paths": [
+            "app/Data/Currency/ArgentinaResponseData.php",
+            "app/Data/Currency/VenezuelaResponseItemData.php",
+            "public",
+            "resources/js/components/form",
+            "resources/js/components/ui",
+            "resources/js/types",
+            "resources/js/wayfinder",
+            "tsconfig.json"
+        ]
+    }
+}

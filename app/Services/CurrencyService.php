@@ -88,15 +88,15 @@ final class CurrencyService implements CurrencyHandler
                 $responseData = LatestResponseData::from($response->json());
 
                 if ($responseData->result === 'success' && isset($responseData->conversionRates)) {
-                    $venezuelaDolarData = $this->getVenezuelaDolarData();
-                    $argentinaDolarData = $this->getArgentinaDolarData();
+                    $venezuelaDollarData = $this->getVenezuelaDollarData();
+                    $argentinaDollarData = $this->getArgentinaDollarData();
 
-                    if ($venezuelaDolarData instanceof VenezuelaResponseData) {
-                        $responseData->conversionRates['VES'] = $venezuelaDolarData->result[0]->promEpv;
+                    if ($venezuelaDollarData instanceof VenezuelaResponseData) {
+                        $responseData->conversionRates['VES'] = $venezuelaDollarData->result[0]->promEpv;
                     }
 
-                    if ($argentinaDolarData instanceof ArgentinaResponseData) {
-                        $responseData->conversionRates['ARS'] = $argentinaDolarData->blue->valueAvg;
+                    if ($argentinaDollarData instanceof ArgentinaResponseData) {
+                        $responseData->conversionRates['ARS'] = $argentinaDollarData->blue->valueAvg;
                     }
 
                     Cache::put("currency_rates_{$baseCurrency}", $responseData->conversionRates, now()->addHours(12));
@@ -152,13 +152,13 @@ final class CurrencyService implements CurrencyHandler
     }
 
     /**
-     * Get the Venezuela dolar data from the external API.
-     * This is an special case because Venezuela have a lot of different dolar prices.
-     * So, for better rates for the user we use the black market dolar data.
+     * Get the Venezuela dollar data from the external API.
+     * This is an special case because Venezuela have a lot of different dollar prices.
+     * So, for better rates for the user we use the black market dollar data.
      *
-     * This is safe to delete it if you don't want to support black market dolar data.
+     * This is safe to delete it if you don't want to support black market dollar data.
      */
-    private function getVenezuelaDolarData(): ?VenezuelaResponseData
+    private function getVenezuelaDollarData(): ?VenezuelaResponseData
     {
         try {
             $response = Http::withHeader('Origin', 'https://monitordolarvenezuela.com')
@@ -166,9 +166,9 @@ final class CurrencyService implements CurrencyHandler
                 ->json();
 
             /** @var VenezuelaResponseData|null */
-            return Cache::remember('venezuela_dolar_data', now()->addHours(6), fn (): VenezuelaResponseData => VenezuelaResponseData::from($response));
+            return Cache::remember('venezuela_dollar_data', now()->addHours(6), fn (): VenezuelaResponseData => VenezuelaResponseData::from($response));
         } catch (Throwable $e) {
-            Log::error('Error retrieving Venezuela dolar data', [
+            Log::error('Error retrieving Venezuela dollar data', [
                 'message' => $e->getMessage(),
             ]);
 
@@ -177,30 +177,30 @@ final class CurrencyService implements CurrencyHandler
     }
 
     /**
-     * Get the Argentina dolar data from the external API.
-     * This is an special case because Argentina have a lot of different dolar prices.
-     * So, for better rates for the user we use the black market dolar data.
+     * Get the Argentina dollar data from the external API.
+     * This is an special case because Argentina have a lot of different dollar prices.
+     * So, for better rates for the user we use the black market dollar data.
      *
-     * This is safe to delete it if you don't want to support black market dolar data.
+     * This is safe to delete it if you don't want to support black market dollar data.
      */
-    private function getArgentinaDolarData(): ?ArgentinaResponseData
+    private function getArgentinaDollarData(): ?ArgentinaResponseData
     {
         try {
             $response = Http::get('https://api.bluelytics.com.ar/v2/latest');
 
             if ($response->successful()) {
                 /** @var ArgentinaResponseData|null */
-                return Cache::remember('argentina_dolar_data', now()->addHours(6), fn (): ArgentinaResponseData => ArgentinaResponseData::from($response->json()));
+                return Cache::remember('argentina_dollar_data', now()->addHours(6), fn (): ArgentinaResponseData => ArgentinaResponseData::from($response->json()));
             }
 
-            Log::error('Failed to retrieve Argentina dolar data', [
+            Log::error('Failed to retrieve Argentina dollar data', [
                 'status_code' => $response->status(),
                 'response' => $response->json(),
             ]);
 
             return null;
         } catch (Throwable $e) {
-            Log::error('Error retrieving Argentina dolar data', [
+            Log::error('Error retrieving Argentina dollar data', [
                 'message' => $e->getMessage(),
             ]);
 

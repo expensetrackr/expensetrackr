@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Jobs\SnapshopAccountBalances;
+use App\Jobs\SnapshotAccountBalances;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Log;
@@ -14,7 +14,7 @@ Artisan::command('inspire', function () {
 
 Schedule::command('make:sitemap')->daily();
 
-Schedule::job(SnapshopAccountBalances::class)
+Schedule::job(SnapshotAccountBalances::class)
     ->dailyAt('02:00')
     ->withoutOverlapping(60) // Prevent overlapping for 60 minutes
     ->appendOutputTo(storage_path('logs/daily-balances.log'))
