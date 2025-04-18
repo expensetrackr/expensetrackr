@@ -25,15 +25,23 @@ final class AccountBalancesSnapshot extends Command
     protected $description = 'Snapshot the balances of all accounts';
 
     /**
+     * Create a new console command instance.
+     */
+    public function __construct(private readonly SnapshotBalanceAction $action)
+    {
+        parent::__construct();
+    }
+
+    /**
      * Execute the console command.
      */
-    public function handle(SnapshotBalanceAction $action): void
+    public function handle(): void
     {
         $this->info('Snapshotting balances of all accounts...');
 
-        Account::query()->chunk(1000, function ($accounts) use ($action): void {
+        Account::query()->chunk(1000, function ($accounts) {
             foreach ($accounts as $account) {
-                $action->handle($account);
+                $this->action->handle($account);
             }
         });
 
