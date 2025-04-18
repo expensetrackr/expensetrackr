@@ -38,6 +38,7 @@
         "@radix-ui/react-tooltip": "1.2.0",
         "@stepperize/react": "5.1.5",
         "@sumup/intl": "1.6.0",
+        "@tanstack/react-query": "5.74.4",
         "@tanstack/react-table": "8.21.3",
         "@unpic/react": "1.0.1",
         "clsx": "2.1.1",

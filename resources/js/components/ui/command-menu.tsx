@@ -15,16 +15,18 @@ const CommandDialog = ({
     children,
     className,
     overlayClassName,
+    shouldFilter = true,
     ...rest
 }: DialogProps & {
     className?: string;
     overlayClassName?: string;
+    shouldFilter?: boolean;
 }) => {
     return (
         <Modal.Root {...rest}>
             <Modal.Content
                 className={cn("flex max-h-full max-w-[720px] flex-col overflow-hidden rounded-16", className)}
-                overlayClassName={cn("justify-start pt-20", overlayClassName)}
+                overlayClassName={cn("justify-start pt-[14vh]", overlayClassName)}
                 showClose={false}
             >
                 <Command
@@ -33,6 +35,7 @@ const CommandDialog = ({
                         "grid min-h-0 auto-cols-auto grid-flow-row",
                         "[&>[cmdk-label]+*]:!border-t-0",
                     )}
+                    shouldFilter={shouldFilter}
                 >
                     {children}
                 </Command>

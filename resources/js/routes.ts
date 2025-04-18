@@ -1,5 +1,6 @@
 import connectionType from "./routes/accounts/create/connection-type.ts";
 import accounts from "./routes/accounts/index.ts";
+import api from "./routes/api/index.ts";
 import categories from "./routes/categories/index.ts";
 import connectedAccounts from "./routes/connected-accounts/index.ts";
 import currentUser from "./routes/current-user/index.ts";
@@ -35,6 +36,7 @@ export const routes = {
             connectionType: connectionType,
         },
     },
+    api,
     categories,
     connectedAccounts,
     currentUser,
