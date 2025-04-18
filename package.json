@@ -68,7 +68,8 @@
         "teller-connect-react": "0.2.3",
         "ts-key-enum": "3.0.13",
         "usehooks-ts": "3.1.1",
-        "valibot": "1.0.0"
+        "valibot": "1.0.0",
+        "zustand": "5.0.3"
     },
     "devDependencies": {
         "@epic-web/config": "1.19.0",

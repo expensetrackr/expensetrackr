@@ -6,8 +6,11 @@ type ConnectBankProviderProps = {
     provider: App.Enums.Banking.ProviderType;
 };
 
-export function useBankProvider(_props?: ConnectBankProviderProps) {
-    return {
-        teller: useTellerConnect(),
-    };
+export function useBankProvider({ provider }: ConnectBankProviderProps) {
+    switch (provider) {
+        case "teller":
+            return useTellerConnect();
+        default:
+            throw new Error(`Unsupported provider: ${provider}`);
+    }
 }

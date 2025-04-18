@@ -28,6 +28,8 @@ export function ConnectionTypeStep() {
     const { type, connectionType, setParams } = useCreateAccountParams();
     const user = useUser();
 
+    console.info(user);
+
     const handleChange = async (value: v.InferOutput<typeof ConnectionTypeEnum>) => {
         await setParams({ connectionType: value });
     };

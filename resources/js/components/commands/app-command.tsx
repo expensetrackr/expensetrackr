@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import { Command } from "cmdk";
-import * as React from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import { useDebounceValue } from "usehooks-ts";
 import ArrowLeftRightIcon from "virtual:icons/hugeicons/arrow-left-right";
@@ -12,9 +11,11 @@ import * as Avatar from "#/components/ui/avatar.tsx";
 import * as CommandMenu from "#/components/ui/command-menu.tsx";
 import * as CompactButton from "#/components/ui/compact-button.tsx";
 import { useAppCommandParams } from "#/hooks/use-app-command-params.ts";
+import { useBankProvider } from "#/hooks/use-bank-provider.ts";
 import { useTranslation } from "#/hooks/use-translation.ts";
 import { routes } from "#/routes.ts";
 import { AccountTypeEnum } from "#/schemas/account.ts";
+import { useAppCommandStore } from "#/store/app-command.ts";
 import { cn } from "#/utils/cn.ts";
 import { accountTypeColors, AccountTypeIcon } from "../account-type-icon.tsx";
 import { Image } from "../image.tsx";
@@ -22,7 +23,7 @@ import { InstitutionInfo } from "../institution-info.tsx";
 import { PlaceholderLogo } from "../placeholder-logo.tsx";
 
 export function AppCommandMenu() {
-    const [isOpen, setOpen] = React.useState(false);
+    const { isOpen, setOpen } = useAppCommandStore();
     const { setParams, ...params } = useAppCommandParams();
 
     useHotkeys("meta+k", () => setOpen(true));
@@ -52,6 +53,11 @@ export function AppCommandMenu() {
             open={isOpen}
             shouldFilter={params.commandPage === "home"}
         >
+            <CommandMenu.DialogTitle className="sr-only">Command Menu</CommandMenu.DialogTitle>
+            <CommandMenu.DialogDescription className="sr-only">
+                Use the command menu to navigate through ExpenseTrackr.
+            </CommandMenu.DialogDescription>
+
             {/* Input wrapper */}
             <div className="group/cmd-input flex h-12 w-full items-center gap-2 bg-(--bg-white-0) px-5">
                 <Search01Icon
@@ -158,45 +164,61 @@ function ChooseInstitution() {
             ) : null}
 
             <CommandMenu.Group>
-                {query.data?.map((institution) => (
-                    <CommandMenu.Item key={institution.id}>
-                        {institution.logo ? (
-                            <CommandMenu.ItemIcon
-                                $size="24"
-                                as={Avatar.Root}
-                                className="size-7 !rounded-4 ring-1 ring-(--stroke-soft-200)"
-                            >
-                                <Avatar.Image $color="gray" asChild className="size-7 !rounded-4">
-                                    <Image alt={institution.name} height={28} src={institution.logo} width={28} />
-                                </Avatar.Image>
-                            </CommandMenu.ItemIcon>
-                        ) : (
-                            <CommandMenu.ItemIcon
-                                as={PlaceholderLogo}
-                                className="size-7 rounded-4 bg-(--bg-weak-50) text-(--text-disabled-300) ring-1 ring-(--stroke-soft-200)"
-                            />
-                        )}
-                        <div className="flex flex-1 items-center justify-between">
-                            <p>{institution.name}</p>
-                            <InstitutionInfo provider={institution.provider}>
-                                <p className="inline-flex items-center gap-1 text-paragraph-xs text-(--text-sub-600)">
-                                    <span>
-                                        Via <span className="capitalize">{institution.provider}</span>
-                                    </span>
-                                    <Image
-                                        alt={institution.provider}
-                                        className="size-4 rounded-4"
-                                        height={16}
-                                        isCdn
-                                        src={`/major-brands/${institution.provider}.png`}
-                                        width={16}
-                                    />
-                                </p>
-                            </InstitutionInfo>
-                        </div>
-                    </CommandMenu.Item>
-                ))}
+                {query.data?.map((institution) => <InstitutionItem institution={institution} key={institution.id} />)}
             </CommandMenu.Group>
         </>
+    );
+}
+
+function InstitutionItem({ institution }: { institution: App.Data.Finance.InstitutionSearchData }) {
+    const { setInstitution } = useBankProvider({
+        id: institution.id,
+        name: institution.name,
+        provider: institution.provider,
+    });
+    const { setOpen } = useAppCommandStore();
+
+    const handleSelect = () => {
+        setOpen(false);
+        setInstitution(institution.id);
+    };
+
+    return (
+        <CommandMenu.Item key={institution.id} onSelect={handleSelect}>
+            {institution.logo ? (
+                <CommandMenu.ItemIcon
+                    $size="24"
+                    as={Avatar.Root}
+                    className="size-7 !rounded-4 ring-1 ring-(--stroke-soft-200)"
+                >
+                    <Avatar.Image $color="gray" asChild className="size-7 !rounded-4">
+                        <Image alt={institution.name} height={28} src={institution.logo} width={28} />
+                    </Avatar.Image>
+                </CommandMenu.ItemIcon>
+            ) : (
+                <CommandMenu.ItemIcon
+                    as={PlaceholderLogo}
+                    className="size-7 rounded-4 bg-(--bg-weak-50) text-(--text-disabled-300) ring-1 ring-(--stroke-soft-200)"
+                />
+            )}
+            <div className="flex flex-1 items-center justify-between">
+                <p>{institution.name}</p>
+                <InstitutionInfo provider={institution.provider}>
+                    <p className="inline-flex items-center gap-1 text-paragraph-xs text-(--text-sub-600)">
+                        <span>
+                            Via <span className="capitalize">{institution.provider}</span>
+                        </span>
+                        <Image
+                            alt={institution.provider}
+                            className="size-4 rounded-4"
+                            height={16}
+                            isCdn
+                            src={`/major-brands/${institution.provider}.png`}
+                            width={16}
+                        />
+                    </p>
+                </InstitutionInfo>
+            </div>
+        </CommandMenu.Item>
     );
 }

@@ -2,15 +2,12 @@ import * as React from "react";
 import { toast } from "sonner";
 import { useScript } from "usehooks-ts";
 
-import { useConnectParams } from "#/hooks/use-connect-params.ts";
-
 type TellerConnectProps = {
     onSelect?(institutionId: string): void;
 };
 
 export function useTellerConnect(_props?: TellerConnectProps) {
     const [institution, setInstitution] = React.useState<string | undefined>();
-    const { setParams } = useConnectParams();
     useScript("https://cdn.teller.io/connect/connect.js", {
         id: "teller-connect",
     });
@@ -31,16 +28,15 @@ export function useTellerConnect(_props?: TellerConnectProps) {
                     // stepper.goTo("bank-accounts-selection");
                 },
                 async onExit() {
-                    await setParams({
-                        step: "institution-selection",
-                    });
-
+                    // await setParams({
+                    //     step: "institution-selection",
+                    // });
                     // stepper.goTo("institution-selection");
                 },
                 async onFailure(failure) {
-                    await setParams({
-                        step: "institution-selection",
-                    });
+                    // await setParams({
+                    //     step: "institution-selection",
+                    // });
 
                     // stepper.goTo("institution-selection");
 
@@ -52,8 +48,6 @@ export function useTellerConnect(_props?: TellerConnectProps) {
 
             teller.open();
         }
-        // eslint-disable-next-line react-compiler/react-compiler
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [institution]);
 
     return {
