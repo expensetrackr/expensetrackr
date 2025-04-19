@@ -5,7 +5,11 @@ import { useDebounceValue } from "usehooks-ts";
 import ArrowLeftRightIcon from "virtual:icons/hugeicons/arrow-left-right";
 import Cancel01Icon from "virtual:icons/hugeicons/cancel-01";
 import ConnectIcon from "virtual:icons/hugeicons/connect";
+import LicenseDraftIcon from "virtual:icons/hugeicons/license-draft";
 import Search01Icon from "virtual:icons/hugeicons/search-01";
+import ArrowNarrowDownLineIcon from "virtual:icons/untitled/arrow-narrow-down-line";
+import ArrowNarrowUpLineIcon from "virtual:icons/untitled/arrow-narrow-up-line";
+import CornerDownLeftLineIcon from "virtual:icons/untitled/corner-down-left-line";
 
 import * as Avatar from "#/components/ui/avatar.tsx";
 import * as CommandMenu from "#/components/ui/command-menu.tsx";
@@ -93,6 +97,26 @@ export function AppCommandMenu() {
                 {params.commandPage === "home" && <Home />}
                 {params.commandPage === "institution" && <ChooseInstitution />}
             </CommandMenu.List>
+
+            <CommandMenu.Footer>
+                <div className="flex gap-3">
+                    <div className="flex items-center gap-2">
+                        <CommandMenu.FooterKeyBox>
+                            <ArrowNarrowUpLineIcon className="size-4" />
+                        </CommandMenu.FooterKeyBox>
+                        <CommandMenu.FooterKeyBox>
+                            <ArrowNarrowDownLineIcon className="size-4" />
+                        </CommandMenu.FooterKeyBox>
+                        <span className="text-paragraph-xs text-(--text-sub-600)">Navigate</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <CommandMenu.FooterKeyBox>
+                            <CornerDownLeftLineIcon className="size-4" />
+                        </CommandMenu.FooterKeyBox>
+                        <span className="text-paragraph-xs text-(--text-sub-600)">Select</span>
+                    </div>
+                </div>
+            </CommandMenu.Footer>
         </CommandMenu.Dialog>
     );
 }
@@ -109,6 +133,10 @@ function Home() {
                 <CommandMenu.Item onSelect={() => setParams({ commandPage: "institution" })}>
                     <CommandMenu.ItemIcon as={ConnectIcon} />
                     Connect your bank account
+                </CommandMenu.Item>
+                <CommandMenu.Item onSelect={() => setActionsParams({ action: "create", resource: "accounts" })}>
+                    <CommandMenu.ItemIcon as={LicenseDraftIcon} />
+                    Create a new account
                 </CommandMenu.Item>
                 <CommandMenu.Item>
                     <CommandMenu.ItemIcon as={ArrowLeftRightIcon} />

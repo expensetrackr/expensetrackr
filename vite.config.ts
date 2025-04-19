@@ -5,14 +5,17 @@ import { defineConfig } from "vite";
 import tailwindcss from "@tailwindcss/vite";
 import { run } from "vite-plugin-run";
 import path from "node:path";
+import { FileSystemIconLoader } from "unplugin-icons/loaders";
 
 export default defineConfig({
     plugins: [
         Icons({
-            // experimental
-            autoInstall: true,
             compiler: "jsx",
             jsx: "react",
+            autoInstall: true,
+            customCollections: {
+                untitled: FileSystemIconLoader("./public/untitled"),
+            },
             iconCustomizer(_collection, _icon, props) {
                 props.width = "1em";
                 props.height = "1em";
