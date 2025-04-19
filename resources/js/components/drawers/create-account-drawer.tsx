@@ -3,14 +3,15 @@ import { getValibotConstraint, parseWithValibot } from "@conform-to/valibot";
 import { useForm as useInertiaForm } from "@inertiajs/react";
 import { resolveCurrencyFormat } from "@sumup/intl";
 import { type NumberFormat } from "@sumup/intl/dist/es/types/index";
+import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns/format";
 import Decimal from "decimal.js";
 import { CurrencyInput } from "headless-currency-input";
 import * as React from "react";
-
 import { type NumberFormatValues } from "react-number-format";
 import { toast } from "sonner";
 import type * as v from "valibot";
+
 import { useActionsParams } from "#/hooks/use-actions-params.ts";
 import { useTranslation } from "#/hooks/use-translation.ts";
 import { routes } from "#/routes.ts";
@@ -191,7 +192,6 @@ export function CreateAccountDrawer() {
                                     placeholder="e.g. 1.00"
                                     trailingNode={
                                         <SelectCurrencies
-                                            currencies={[]}
                                             onValueChange={currencyCodeControl.change}
                                             value={currencyCodeControl.value}
                                         />
@@ -237,32 +237,34 @@ export function CreateAccountDrawer() {
     );
 }
 
-type SelectCurrenciesProps = React.CustomComponentPropsWithRef<typeof Select.Root> & {
-    currencies: Array<string>;
-};
-
-function SelectCurrencies({ currencies, ...rest }: SelectCurrenciesProps) {
-    const items = React.useMemo(() => currencies, [currencies]);
+function SelectCurrencies(props: React.CustomComponentPropsWithRef<typeof Select.Root>) {
+    const query = useQuery<string[]>({
+        queryKey: ["currencies"],
+        queryFn: async () => {
+            const res = await fetch(routes.api.finance.currencies.index.url());
+            return (await res.json()) as string[];
+        },
+    });
 
     return (
-        <Select.Root $variant="compactForInput" defaultValue="USD" {...rest}>
+        <Select.Root $variant="compactForInput" defaultValue="USD" {...props}>
             <Select.Trigger>
                 <Select.Value>
                     <span className="flex flex-1 items-center gap-2">
                         <svg
-                            aria-label={`${rest.value || "USD"} flag`}
+                            aria-label={`${props.value || "USD"} flag`}
                             className="size-5 rounded-full"
                             preserveAspectRatio="xMidYMid meet"
                             role="img"
                         >
-                            <use href={`/img/flags.svg#${rest.value || "USD"}`} />
+                            <use href={`/img/flags.svg#${props.value || "USD"}`} />
                         </svg>
-                        <span>{rest.value || "USD"}</span>
+                        <span>{props.value || "USD"}</span>
                     </span>
                 </Select.Value>
             </Select.Trigger>
             <Select.Content>
-                {items.map((item) => (
+                {query.data?.map((item) => (
                     <Select.Item key={item} value={item}>
                         <Select.ItemIcon
                             aria-label={`${item} flag`}
