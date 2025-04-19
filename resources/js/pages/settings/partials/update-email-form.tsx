@@ -2,8 +2,8 @@ import { useForm } from "@inertiajs/react";
 import * as React from "react";
 import { toast } from "sonner";
 
-import { TextField } from "#/components/form/text-field.tsx";
 import { FormSection } from "#/components/form-section.tsx";
+import { TextField } from "#/components/ui/form/text-field.tsx";
 import { useUser } from "#/hooks/use-user.ts";
 import { routes } from "#/routes.ts";
 

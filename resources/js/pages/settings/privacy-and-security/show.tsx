@@ -21,8 +21,9 @@ export default function PrivacyAndSecurityShow({
     confirmsTwoFactorAuthentication,
     ...props
 }: PageProps<PrivacyAndSecurityShowProps>) {
-    const workspaces = props.workspaces;
-    const canUpdatePassword = workspaces?.canUpdatePassword && props.socialstream.hasPassword;
+    const permissions = props.permissions;
+    const features = props.features;
+    const canUpdatePassword = permissions?.canUpdatePassword && props.socialstream.hasPassword;
 
     return (
         <>
@@ -31,11 +32,11 @@ export default function PrivacyAndSecurityShow({
             </div>
 
             <div className="flex w-full flex-col gap-5 px-4 py-6 lg:px-8">
-                {workspaces?.canUpdatePassword && (
+                {permissions?.canUpdatePassword && (
                     <>{canUpdatePassword ? <UpdatePasswordForm /> : <SetPasswordForm />}</>
                 )}
 
-                {workspaces?.canManageTwoFactorAuthentication && (
+                {permissions?.canManageTwoFactorAuthentication && (
                     <>
                         <Divider.Root $type="line-spacing" />
 
@@ -47,7 +48,7 @@ export default function PrivacyAndSecurityShow({
 
                 <LogoutOtherBrowserSessionsForm sessions={sessions} />
 
-                {workspaces?.hasAccountDeletionFeatures && (
+                {features?.hasAccountDeletionFeatures && (
                     <>
                         <Divider.Root $type="line-spacing" />
 

@@ -1,7 +1,7 @@
 import { Slot } from "@radix-ui/react-slot";
 import * as React from "react";
 
-import { cnMerge } from "#/utils/cn.ts";
+import { cn } from "#/utils/cn.ts";
 import { type PolymorphicComponentProps } from "#/utils/polymorphic.ts";
 import { recursiveCloneChildren } from "#/utils/recursive-clone-children.tsx";
 import { tv, type VariantProps } from "#/utils/tv.ts";
@@ -117,7 +117,7 @@ const PaginationItem = React.forwardRef<HTMLButtonElement, PaginationItemProps>(
 
         return (
             <Component
-                className={cnMerge(item({ class: className }), current && "text-(--text-strong-950)")}
+                className={cn(item({ class: className }), current && "text-(--text-strong-950)")}
                 ref={forwardedRef}
                 {...rest}
             >

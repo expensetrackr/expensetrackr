@@ -50,7 +50,7 @@ final class TransactionController extends Controller
         /** @var array<string, string> $filters */
         $filters = type($request->query('filters', [
             'sort' => 'dated_at',
-            'sort_direction' => 'desc',
+            'sort_direction' => 'asc',
         ]))->asArray();
 
         if ($transaction instanceof TransactionResource) {
@@ -85,6 +85,7 @@ final class TransactionController extends Controller
                     $query->with(['category', 'merchant']);
                 })
                 ->paginate(perPage: $perPage)
+                ->onEachSide(1)
                 ->withQueryString()
                 ->toResourceCollection(),
             'transaction' => $transaction,

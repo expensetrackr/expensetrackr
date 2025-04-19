@@ -1,7 +1,7 @@
 import { Head, useForm } from "@inertiajs/react";
 
-import { TextField } from "#/components/form/text-field.tsx";
 import * as FancyButton from "#/components/ui/fancy-button.tsx";
+import { TextField } from "#/components/ui/form/text-field.tsx";
 import { useTranslation } from "#/hooks/use-translation.ts";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";
 import { AuthCard } from "#/layouts/partials/auth-card.tsx";

@@ -1,4 +1,4 @@
-import { cnMerge } from "#/utils/cn.ts";
+import { cn } from "#/utils/cn.ts";
 
 const TEXTAREA_ROOT_NAME = "TextareaRoot";
 const TEXTAREA_NAME = "Textarea";
@@ -14,7 +14,7 @@ type TextareaProps = Omit<React.ComponentPropsWithRef<"textarea">, "children"> &
 function Textarea({ className, $error, $simple, disabled, ...rest }: TextareaProps) {
     return (
         <textarea
-            className={cnMerge(
+            className={cn(
                 [
                     // base
                     "block w-full resize-none text-paragraph-sm text-(--text-strong-950) outline-none",
@@ -97,7 +97,7 @@ function TextareaRoot({ containerClassName, children, $error, $simple, ...rest }
 
     return (
         <div
-            className={cnMerge(
+            className={cn(
                 [
                     // base
                     "group/textarea relative flex w-full flex-col rounded-12 bg-(--bg-white-0) pb-2.5 shadow-xs",
@@ -152,12 +152,11 @@ function CharCounter({
 
     return (
         <span
-            className={cnMerge(
+            className={cn(
                 "text-subheading-2xs text-(--text-soft-400)",
                 // disabled
                 "group-has-[[disabled]]/textarea:text-(--text-disabled-300)",
                 {
-                    // @ts-expect-error
                     "text-state-error-base": isError,
                 },
                 className,

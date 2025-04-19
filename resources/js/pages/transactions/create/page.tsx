@@ -10,12 +10,12 @@ import RepeatIcon from "virtual:icons/hugeicons/repeat";
 import TransactionIcon from "virtual:icons/hugeicons/transaction";
 
 import { CurrencySelect } from "#/components/currency-select.tsx";
-import { SelectField } from "#/components/form/select-field.tsx";
-import { TextField } from "#/components/form/text-field.tsx";
-import { Textarea } from "#/components/form/textarea.tsx";
 import * as Avatar from "#/components/ui/avatar.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
+import { SelectField } from "#/components/ui/form/select-field.tsx";
+import { TextField } from "#/components/ui/form/text-field.tsx";
+import { Textarea } from "#/components/ui/form/textarea.tsx";
 import * as Input from "#/components/ui/input.tsx";
 import * as Label from "#/components/ui/label.tsx";
 import * as Switch from "#/components/ui/switch.tsx";

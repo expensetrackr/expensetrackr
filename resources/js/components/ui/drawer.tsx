@@ -3,7 +3,7 @@ import * as React from "react";
 import CloseIcon from "virtual:icons/ri/close-line";
 
 import * as CompactButton from "#/components/ui/compact-button.tsx";
-import { cnMerge } from "#/utils/cn.ts";
+import { cn } from "#/utils/cn.ts";
 
 const DrawerRoot = DialogPrimitive.Root;
 DrawerRoot.displayName = "Drawer";
@@ -20,7 +20,7 @@ DrawerPortal.displayName = "DrawerPortal";
 function DrawerOverlay({ className, ...rest }: React.CustomComponentPropsWithRef<typeof DialogPrimitive.Overlay>) {
     return (
         <DialogPrimitive.Overlay
-            className={cnMerge(
+            className={cn(
                 // base
                 "fixed inset-0 z-50 grid grid-cols-1 place-items-end overflow-hidden bg-overlay backdrop-blur-[10px]",
                 // animation
@@ -42,7 +42,7 @@ function DrawerContent({
         <DrawerPortal>
             <DrawerOverlay>
                 <DialogPrimitive.Content
-                    className={cnMerge(
+                    className={cn(
                         // base
                         "size-full max-w-[400px] overflow-y-auto",
                         "border-l border-(--stroke-soft-200) bg-(--bg-white-0)",
@@ -72,7 +72,7 @@ function DrawerHeader({
     showCloseButton?: boolean;
 }) {
     return (
-        <div className={cnMerge("flex items-center gap-3 border-(--stroke-soft-200) p-5", className)} {...rest}>
+        <div className={cn("flex items-center gap-3 border-(--stroke-soft-200) p-5", className)} {...rest}>
             {children}
 
             {showCloseButton && (
@@ -89,17 +89,14 @@ DrawerHeader.displayName = "DrawerHeader";
 
 function DrawerTitle({ className, ...rest }: React.CustomComponentPropsWithRef<typeof DialogPrimitive.Title>) {
     return (
-        <DialogPrimitive.Title
-            className={cnMerge("flex-1 text-label-lg text-(--text-strong-950)", className)}
-            {...rest}
-        />
+        <DialogPrimitive.Title className={cn("flex-1 text-label-lg text-(--text-strong-950)", className)} {...rest} />
     );
 }
 DrawerTitle.displayName = "DrawerTitle";
 
 function DrawerBody({ className, children, ...rest }: React.HTMLAttributes<HTMLDivElement>) {
     return (
-        <div className={cnMerge("flex-1", className)} {...rest}>
+        <div className={cn("flex-1", className)} {...rest}>
             {children}
         </div>
     );
@@ -107,7 +104,7 @@ function DrawerBody({ className, children, ...rest }: React.HTMLAttributes<HTMLD
 DrawerBody.displayName = "DrawerBody";
 
 function DrawerFooter({ className, ...rest }: React.HTMLAttributes<HTMLDivElement>) {
-    return <div className={cnMerge("flex items-center gap-4 border-(--stroke-soft-200) p-5", className)} {...rest} />;
+    return <div className={cn("flex items-center gap-4 border-(--stroke-soft-200) p-5", className)} {...rest} />;
 }
 DrawerFooter.displayName = "DrawerFooter";
 

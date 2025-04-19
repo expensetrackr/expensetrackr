@@ -4,7 +4,7 @@ import * as TabsPrimitive from "@radix-ui/react-tabs";
 import * as React from "react";
 
 import { useTabObserver } from "#/hooks/use-tab-observer.ts";
-import { cn, cnMerge } from "#/utils/cn.ts";
+import { cn } from "#/utils/cn.ts";
 import { type PolymorphicComponentProps } from "#/utils/polymorphic.ts";
 
 const TabMenuHorizontalContent = TabsPrimitive.Content;
@@ -14,7 +14,7 @@ function TabMenuHorizontalRoot({
     className,
     ...rest
 }: Omit<React.ComponentPropsWithoutRef<typeof TabsPrimitive.Root>, "orientation">) {
-    return <TabsPrimitive.Root className={cnMerge("w-full", className)} orientation="horizontal" {...rest} />;
+    return <TabsPrimitive.Root className={cn("w-full", className)} orientation="horizontal" {...rest} />;
 }
 
 function TabMenuHorizontalList({
@@ -52,7 +52,7 @@ function TabMenuHorizontalList({
             ref={listWrapperRef}
         >
             <TabsPrimitive.List
-                className={cnMerge(
+                className={cn(
                     "group/tab-list relative flex h-12 min-w-auto items-center gap-6 border-y border-(--stroke-soft-200) whitespace-nowrap",
                     className,
                 )}
@@ -87,7 +87,7 @@ function TabMenuHorizontalTrigger({
 }: React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>) {
     return (
         <TabsPrimitive.Trigger
-            className={cnMerge(
+            className={cn(
                 // base
                 "group/tab-item h-12 py-3.5 text-label-sm text-(--text-sub-600) outline-none",
                 "flex items-center justify-center gap-1.5",
@@ -108,7 +108,7 @@ function TabMenuHorizontalIcon<T extends React.ElementType>({ className, as, ...
 
     return (
         <Component
-            className={cnMerge(
+            className={cn(
                 // base
                 "size-5 text-(--text-sub-600)",
                 "transition duration-200 ease-out",
@@ -129,7 +129,7 @@ function TabMenuHorizontalArrowIcon<T extends React.ElementType>({
 }: PolymorphicComponentProps<T, React.HTMLAttributes<HTMLDivElement>>) {
     const Component = as || "div";
 
-    return <Component className={cnMerge("size-5 text-(--text-sub-600)", className)} {...rest} />;
+    return <Component className={cn("size-5 text-(--text-sub-600)", className)} {...rest} />;
 }
 TabMenuHorizontalArrowIcon.displayName = "TabsHorizontalArrow";
 

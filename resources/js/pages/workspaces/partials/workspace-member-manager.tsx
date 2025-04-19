@@ -10,10 +10,10 @@ import EraserIcon from "virtual:icons/ri/eraser-line";
 import FolderShield2Icon from "virtual:icons/ri/folder-shield-2-line";
 
 import { ActionSection } from "#/components/action-section.tsx";
-import { SelectField } from "#/components/form/select-field.tsx";
 import * as Avatar from "#/components/ui/avatar.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import * as Dropdown from "#/components/ui/dropdown.tsx";
+import { SelectField } from "#/components/ui/form/select-field.tsx";
 import * as Modal from "#/components/ui/modal.tsx";
 import * as Table from "#/components/ui/table.tsx";
 import { useUser } from "#/hooks/use-user.ts";

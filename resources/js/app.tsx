@@ -3,6 +3,7 @@ import "../css/app.css";
 
 import { createInertiaApp } from "@inertiajs/react";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { ThemeProvider } from "next-themes";
 import { createRoot, hydrateRoot } from "react-dom/client";
@@ -11,24 +12,28 @@ import { NuqsAdapter } from "#/utils/nuqs-adapter.ts";
 
 const appName = import.meta.env.VITE_APP_NAME || "ExpenseTrackr";
 
+const queryClient = new QueryClient();
+
 void createInertiaApp({
     title: (title) => (title ? `${title} - ${appName}` : `${appName} - Manage your expenses effortlessly`),
     resolve: (name) => resolvePageComponent(`./pages/${name}.tsx`, import.meta.glob("./pages/**/*.tsx")),
     setup({ el, App, props }) {
         const AppWithProviders = () => {
             return (
-                <NuqsAdapter>
-                    <TooltipProvider>
-                        <ThemeProvider
-                            attribute={["class", "data-theme"]}
-                            defaultTheme="system"
-                            disableTransitionOnChange
-                            enableSystem
-                        >
-                            <App {...props} />
-                        </ThemeProvider>
-                    </TooltipProvider>
-                </NuqsAdapter>
+                <QueryClientProvider client={queryClient}>
+                    <NuqsAdapter>
+                        <TooltipProvider>
+                            <ThemeProvider
+                                attribute={["class", "data-theme"]}
+                                defaultTheme="system"
+                                disableTransitionOnChange
+                                enableSystem
+                            >
+                                <App {...props} />
+                            </ThemeProvider>
+                        </TooltipProvider>
+                    </NuqsAdapter>
+                </QueryClientProvider>
             );
         };
 

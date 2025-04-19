@@ -1,7 +1,7 @@
 import { Slot, Slottable } from "@radix-ui/react-slot";
 import * as React from "react";
 
-import { cnMerge } from "#/utils/cn.ts";
+import { cn } from "#/utils/cn.ts";
 import { type PolymorphicComponentProps } from "#/utils/polymorphic.ts";
 
 type TopbarItemButtonProps = {
@@ -14,7 +14,7 @@ function TopbarItemButton({ children, asChild, hasNotification, className, ...re
 
     return (
         <Component
-            className={cnMerge(
+            className={cn(
                 // base
                 "transition-default relative flex size-10 shrink-0 items-center justify-center rounded-10 text-(--text-sub-600) outline-none",
                 // hover
@@ -40,7 +40,7 @@ function TopbarItemButtonIcon<T extends React.ElementType>({
 }: PolymorphicComponentProps<T, React.HTMLAttributes<HTMLDivElement>>) {
     const Component = as || "div";
 
-    return <Component className={cnMerge("size-5", className)} {...rest} />;
+    return <Component className={cn("size-5", className)} {...rest} />;
 }
 
 export { TopbarItemButton as Root, TopbarItemButtonIcon as Icon };

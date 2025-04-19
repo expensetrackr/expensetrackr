@@ -1,6 +1,8 @@
 import * as React from "react";
 import { toast } from "sonner";
 
+import { AppCommandMenu } from "#/components/commands/app-command-menu.tsx";
+import { CreateAccountDrawer } from "#/components/drawers/create-account-drawer.tsx";
 import { HeaderMobile } from "#/components/header-mobile.tsx";
 import { Sidebar } from "#/components/sidebar.tsx";
 import { Toaster } from "#/components/toaster.tsx";
@@ -30,6 +32,8 @@ export function AppLayout({
             </div>
 
             <Toaster position="top-center" />
+            <AppCommandMenu />
+            {props.permissions.canCreateAccounts && <CreateAccountDrawer />}
         </>
     );
 }

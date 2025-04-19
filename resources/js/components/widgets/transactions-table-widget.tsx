@@ -7,7 +7,7 @@ import TransactionIcon from "virtual:icons/hugeicons/transaction";
 import { TransactionsTable } from "#/components/transactions/table.tsx";
 import { useTransactionsParams } from "#/hooks/use-transactions-params.ts";
 import { routes } from "#/routes.ts";
-import { cnMerge } from "#/utils/cn.ts";
+import { cn } from "#/utils/cn.ts";
 import * as Button from "../ui/button.tsx";
 import * as Input from "../ui/input.tsx";
 import * as Kbd from "../ui/kbd.tsx";
@@ -27,7 +27,7 @@ export function TransactionsTableWidget({
 
     return (
         <div
-            className={cnMerge(
+            className={cn(
                 "relative left-1/2 flex w-screen -translate-x-1/2 flex-col gap-6 px-4 lg:w-auto lg:px-0",
                 className,
             )}

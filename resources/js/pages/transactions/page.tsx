@@ -10,8 +10,8 @@ import { TransactionsFilters } from "#/components/transactions/filters.tsx";
 import { TransactionsTable } from "#/components/transactions/table.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
+import { useFeaturesAndPermissions } from "#/hooks/use-features-and-permissions.ts";
 import { usePaginationParams } from "#/hooks/use-pagination-params.ts";
-import { usePermissions } from "#/hooks/use-permissions.ts";
 import { AppLayout } from "#/layouts/app-layout.tsx";
 import { routes } from "#/routes.ts";
 import { type PageProps } from "#/types/globals.ts";
@@ -29,7 +29,7 @@ type TransactionsPageProps = {
 
 export default function TransactionsPage({ transactions, transaction, categories, requestId }: TransactionsPageProps) {
     const [, setPagination] = usePaginationParams();
-    const { canCreateTransactions } = usePermissions();
+    const { permissions } = useFeaturesAndPermissions();
 
     return (
         <>
@@ -47,7 +47,7 @@ export default function TransactionsPage({ transactions, transaction, categories
                     <Button.Icon as={Share03Icon} />
                     Export
                 </Button.Root>
-                {canCreateTransactions && (
+                {permissions?.canCreateTransactions && (
                     <Button.Root asChild>
                         <Link href={routes.transactions.create.url()}>
                             <Button.Icon as={PlusSignIcon} />

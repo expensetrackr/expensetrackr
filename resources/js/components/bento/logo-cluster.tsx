@@ -5,7 +5,7 @@ import VisaIcon from "virtual:icons/logos/visa";
 
 import IsotypeDark from "#/assets/isotype-dark.svg";
 import IsotypeLight from "#/assets/isotype-light.svg";
-import { cn, cnMerge } from "#/utils/cn.ts";
+import { cn } from "#/utils/cn.ts";
 import { Image } from "../image.tsx";
 
 function Circle({ size, delay, opacity }: { size: number; delay: number; opacity: string }) {
@@ -94,7 +94,7 @@ function Logo({
 
 export function BentoLogoCluster({ className, ...props }: React.ComponentPropsWithRef<"div">) {
     return (
-        <div aria-hidden="true" className={cnMerge("relative h-full overflow-hidden", className)} {...props}>
+        <div aria-hidden="true" className={cn("relative h-full overflow-hidden", className)} {...props}>
             <Circles />
             <div className="absolute left-1/2 h-full w-[26rem] -translate-x-1/2">
                 <MainLogo />

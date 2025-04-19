@@ -1,10 +1,10 @@
 import { Head, useForm } from "@inertiajs/react";
 import * as React from "react";
 
-import { TextField } from "#/components/form/text-field.tsx";
 import { Link } from "#/components/link.tsx";
 import * as DigitInput from "#/components/ui/digit-input.tsx";
 import * as FancyButton from "#/components/ui/fancy-button.tsx";
+import { TextField } from "#/components/ui/form/text-field.tsx";
 import * as Hint from "#/components/ui/hint.tsx";
 import * as Label from "#/components/ui/label.tsx";
 import * as LinkButton from "#/components/ui/link-button.tsx";

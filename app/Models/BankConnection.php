@@ -123,7 +123,7 @@ final class BankConnection extends Model
      * @return Builder<BankConnection>
      */
     #[Scope]
-    protected function teller(Builder $query): Builder
+    public function teller(Builder $query): Builder
     {
         return $query->whereProviderType(ProviderType::Teller);
     }
@@ -135,7 +135,7 @@ final class BankConnection extends Model
      * @return Builder<BankConnection>
      */
     #[Scope]
-    protected function mx(Builder $query): Builder
+    public function mx(Builder $query): Builder
     {
         return $query->whereProviderType(ProviderType::Mx);
     }

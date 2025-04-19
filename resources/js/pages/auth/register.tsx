@@ -1,10 +1,10 @@
 import { Head, Link, useForm } from "@inertiajs/react";
 import UserAddLineIcon from "virtual:icons/ri/user-add-fill";
 
-import { Checkbox } from "#/components/form/checkbox.tsx";
-import { TextField } from "#/components/form/text-field.tsx";
 import { Socialstream } from "#/components/socialstream.tsx";
 import * as FancyButton from "#/components/ui/fancy-button.tsx";
+import { Checkbox } from "#/components/ui/form/checkbox.tsx";
+import { TextField } from "#/components/ui/form/text-field.tsx";
 import * as LinkButton from "#/components/ui/link-button.tsx";
 import { useTranslation } from "#/hooks/use-translation.ts";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";

@@ -12,7 +12,7 @@ import UserCircle02Icon from "virtual:icons/hugeicons/user-circle-02";
 import * as Switch from "#/components/ui/switch.tsx";
 import { useUser } from "#/hooks/use-user.ts";
 import { routes } from "#/routes.ts";
-import { cn, cnMerge } from "#/utils/cn.ts";
+import { cn } from "#/utils/cn.ts";
 import * as Avatar from "./ui/avatar.tsx";
 import * as Divider from "./ui/divider.tsx";
 import * as Dropdown from "./ui/dropdown.tsx";
@@ -24,7 +24,7 @@ export function UserButton({ className }: { className?: string }) {
     return (
         <Dropdown.Root>
             <Dropdown.Trigger
-                className={cnMerge(
+                className={cn(
                     "flex w-full items-center gap-3 rounded-10 p-3 text-left whitespace-nowrap outline-none hover:bg-(--bg-weak-50) focus:outline-none",
                     className,
                 )}
@@ -106,7 +106,7 @@ export function UserButtonMobile({ className }: { className?: string }) {
     return (
         <Dropdown.Root modal={false}>
             <Dropdown.Trigger
-                className={cnMerge(
+                className={cn(
                     "group flex w-full items-center gap-3 rounded-10 p-3 text-left whitespace-nowrap outline-none hover:bg-(--bg-weak-50) focus:outline-none",
                     className,
                 )}

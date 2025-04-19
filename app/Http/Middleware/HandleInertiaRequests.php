@@ -8,12 +8,13 @@ use App\Data\Auth\UserData;
 use App\Data\Shared\SharedInertiaData;
 use App\Data\Shared\ToastData;
 use App\Data\Workspace\WorkspaceData;
-use App\Data\Workspace\WorkspacesPermissionsData;
 use App\Enums\Shared\Language;
 use App\Http\Resources\LanguageResource;
 use App\Models\Account;
 use App\Models\Category;
 use App\Models\Transaction;
+use App\Models\Workspace;
+use App\Utilities\Workspaces\WorkspaceFeatures;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
@@ -21,6 +22,7 @@ use Illuminate\Support\Facades\Gate;
 use Inertia\Middleware;
 use JoelButcher\Socialstream\ConnectedAccount;
 use JoelButcher\Socialstream\Socialstream;
+use Laravel\Fortify\Features;
 use stdClass;
 
 final class HandleInertiaRequests extends Middleware
@@ -57,7 +59,6 @@ final class HandleInertiaRequests extends Middleware
             array_merge(
                 parent::share($request),
                 $this->authData($request),
-                $this->workspacesData($request),
                 [
                     'socialstream' => [
                         'show' => Socialstream::show(),
@@ -99,25 +100,22 @@ final class HandleInertiaRequests extends Middleware
                         'canCreateAccounts' => Gate::forUser($request->user())->check('create', Account::class),
                         'canCreateCategories' => Gate::forUser($request->user())->check('create', Category::class),
                         'canCreateTransactions' => Gate::forUser($request->user())->check('create', Transaction::class),
+                        'canCreateWorkspaces' => Gate::forUser($request->user())->check('create', Workspace::class),
+                        'canManageTwoFactorAuthentication' => Features::canManageTwoFactorAuthentication(),
+                        'canUpdatePassword' => Features::enabled(Features::updatePasswords()),
+                        'canUpdateProfileInformation' => Features::canUpdateProfileInformation(),
+                    ],
+                    'features' => [
+                        'hasEmailVerification' => Features::enabled(Features::emailVerification()),
+                        'hasAccountDeletionFeatures' => WorkspaceFeatures::hasAccountDeletionFeatures(),
+                        'hasApiFeatures' => WorkspaceFeatures::hasApiFeatures(),
+                        'hasWorkspaceFeatures' => WorkspaceFeatures::hasWorkspaceFeatures(),
+                        'hasTermsAndPrivacyPolicyFeature' => WorkspaceFeatures::hasTermsAndPrivacyPolicyFeature(),
+                        'managesProfilePhotos' => WorkspaceFeatures::managesProfilePhotos(),
                     ],
                 ]
             )
         )->toArray();
-    }
-
-    /**
-     * Get the workspaces data for the current user.
-     *
-     * @param  Request  $request  The current request
-     * @return array<string, mixed> The workspaces data
-     */
-    private function workspacesData(Request $request): array
-    {
-        $user = $request->user();
-
-        return [
-            'workspaces' => WorkspacesPermissionsData::fromUser($user),
-        ];
     }
 
     /**

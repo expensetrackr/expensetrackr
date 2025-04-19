@@ -1,7 +1,7 @@
 import * as TabsPrimitive from "@radix-ui/react-tabs";
 import * as React from "react";
 
-import { cnMerge } from "#/utils/cn.ts";
+import { cn } from "#/utils/cn.ts";
 import { type PolymorphicComponentProps } from "#/utils/polymorphic.ts";
 
 const TabMenuVerticalContent = TabsPrimitive.Content;
@@ -14,13 +14,13 @@ function TabMenuVerticalRoot({ ...rest }: TabMenuVerticalRootProps) {
 }
 
 function TabMenuVerticalList({ className, ...rest }: React.CustomComponentPropsWithRef<typeof TabsPrimitive.List>) {
-    return <TabsPrimitive.List className={cnMerge("w-full space-y-2", className)} {...rest} />;
+    return <TabsPrimitive.List className={cn("w-full space-y-2", className)} {...rest} />;
 }
 
 function TabMenuVerticalTrigger({ className, ...rest }: React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>) {
     return (
         <TabsPrimitive.Trigger
-            className={cnMerge(
+            className={cn(
                 // base
                 "group/tab-item w-full rounded-8 p-2 text-left text-label-sm text-(--text-sub-600) outline-none",
                 "grid auto-cols-auto grid-flow-col grid-cols-[auto_minmax(0,1fr)] items-center gap-1.5",
@@ -43,7 +43,7 @@ function TabMenuVerticalIcon<T extends React.ElementType>({ className, as, ...re
 
     return (
         <Component
-            className={cnMerge(
+            className={cn(
                 // base
                 "size-5 text-(--text-sub-600)",
                 "transition duration-200 ease-out",
@@ -66,7 +66,7 @@ function TabMenuVerticalArrowIcon<T extends React.ElementType>({
 
     return (
         <Component
-            className={cnMerge(
+            className={cn(
                 // base
                 "size-5 p-px text-(--text-sub-600)",
                 "rounded-full bg-(--bg-white-0) opacity-0 shadow-xs",

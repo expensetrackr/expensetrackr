@@ -59,7 +59,7 @@ export const BalanceSchema = v.variant("type", [
     }),
 ]);
 
-export const CreateAccountSchema = v.intersect([BalanceSchema, DetailsSchema]);
+export const CreateAccountSchema = v.intersect([DetailsSchema, BalanceSchema]);
 
 export const CreateAccountStepper = defineStepper(
     { id: "type", label: "Type" },

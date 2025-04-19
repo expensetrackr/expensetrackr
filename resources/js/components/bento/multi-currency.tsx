@@ -5,7 +5,7 @@ import * as React from "react";
 
 import { useCycle } from "#/hooks/use-cycle.ts";
 import { useTranslation } from "#/hooks/use-translation.ts";
-import { cnMerge } from "#/utils/cn.ts";
+import { cn } from "#/utils/cn.ts";
 
 const items = [
     {
@@ -28,7 +28,7 @@ type MultiCurrencyProps = React.ComponentPropsWithRef<"div"> & {
 
 export function MultiCurrency({ isHovered, className, ...props }: MultiCurrencyProps) {
     return (
-        <div {...props} className={cnMerge("flex flex-col items-center gap-1.5", className)}>
+        <div {...props} className={cn("flex flex-col items-center gap-1.5", className)}>
             {items.map((item, index) => (
                 <MultiCurrencyItem key={index} {...item} isHovered={isHovered} />
             ))}

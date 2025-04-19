@@ -5,12 +5,12 @@ import LockLineIcon from "virtual:icons/ri/lock-line";
 import MailLineIcon from "virtual:icons/ri/mail-line";
 import UserIcon from "virtual:icons/ri/user-fill";
 
-import { Checkbox } from "#/components/form/checkbox.tsx";
-import { Field } from "#/components/form/field.tsx";
-import { PasswordInput } from "#/components/form/password-input.tsx";
-import { TextField } from "#/components/form/text-field.tsx";
 import { Socialstream } from "#/components/socialstream.tsx";
 import * as FancyButton from "#/components/ui/fancy-button.tsx";
+import { Checkbox } from "#/components/ui/form/checkbox.tsx";
+import { Field } from "#/components/ui/form/field.tsx";
+import { PasswordInput } from "#/components/ui/form/password-input.tsx";
+import { TextField } from "#/components/ui/form/text-field.tsx";
 import * as LinkButton from "#/components/ui/link-button.tsx";
 import { useTranslation } from "#/hooks/use-translation.ts";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";

@@ -6,8 +6,8 @@ import LockPasswordIcon from "virtual:icons/ri/lock-password-line";
 
 import { routes } from "#/routes.ts";
 import { Action } from "#/utils/action.ts";
-import { TextField } from "./form/text-field.tsx";
 import * as Button from "./ui/button.tsx";
+import { TextField } from "./ui/form/text-field.tsx";
 import * as Modal from "./ui/modal.tsx";
 
 interface ConfirmsPasswordProps {

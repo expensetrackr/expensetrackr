@@ -1,7 +1,7 @@
 import OtpInput, { type OTPInputProps } from "react-otp-input";
 
 import { type TwcComponentProps } from "react-twc";
-import { cnMerge } from "#/utils/cn.ts";
+import { cn } from "#/utils/cn.ts";
 import { twc } from "#/utils/twc.ts";
 
 type OtpOptions = Omit<OTPInputProps, "renderInput">;
@@ -15,7 +15,7 @@ type DigitInputProps = {
 function DigitInput({ $error, className, disabled, ...rest }: DigitInputProps) {
     return (
         <OtpInput
-            containerStyle={cnMerge("flex w-full items-center gap-2.5", className)}
+            containerStyle={cn("flex w-full items-center gap-2.5", className)}
             renderInput={(inputProps) => <DigitInputSlot $error={$error} disabled={disabled} {...inputProps} />}
             skipDefaultStyles
             {...rest}

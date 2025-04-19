@@ -4,7 +4,7 @@ import * as TabsPrimitive from "@radix-ui/react-tabs";
 import * as React from "react";
 
 import { useTabObserver } from "#/hooks/use-tab-observer.ts";
-import { cn, cnMerge } from "#/utils/cn.ts";
+import { cn } from "#/utils/cn.ts";
 
 const SegmentedControlRoot = TabsPrimitive.Root;
 SegmentedControlRoot.displayName = "SegmentedControlRoot";
@@ -28,7 +28,7 @@ function SegmentedControlList({
 
     return (
         <TabsPrimitive.List
-            className={cnMerge(
+            className={cn(
                 "relative isolate grid w-full auto-cols-fr grid-flow-col gap-1 rounded-10 bg-(--bg-weak-50) p-1",
                 className,
             )}
@@ -61,7 +61,7 @@ SegmentedControlList.displayName = "SegmentedControlList";
 function SegmentedControlTrigger({ className, ...rest }: React.ComponentPropsWithRef<typeof TabsPrimitive.Trigger>) {
     return (
         <TabsPrimitive.Trigger
-            className={cnMerge(
+            className={cn(
                 // base
                 "peer",
                 "rounded-md relative z-10 h-7 px-1 text-label-sm whitespace-nowrap text-(--text-soft-400) outline-none",

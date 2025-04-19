@@ -1,0 +1,26 @@
+import * as React from "react";
+import EyeLineIcon from "virtual:icons/ri/eye-line";
+import EyeOffLineIcon from "virtual:icons/ri/eye-off-line";
+
+import { TextField } from "./text-field.tsx";
+
+export function PasswordInput(props: React.CustomComponentPropsWithRef<typeof TextField>) {
+    const [showPassword, setShowPassword] = React.useState(false);
+
+    return (
+        <TextField
+            inlineTrailingNode={
+                <button onClick={() => setShowPassword((s) => !s)} type="button">
+                    {showPassword ? (
+                        <EyeOffLineIcon className="size-5 text-(--text-soft-400) group-has-disabled:text-(--text-disabled-300)" />
+                    ) : (
+                        <EyeLineIcon className="size-5 text-(--text-soft-400) group-has-disabled:text-(--text-disabled-300)" />
+                    )}
+                </button>
+            }
+            placeholder="••••••••••"
+            type={showPassword ? "text" : "password"}
+            {...props}
+        />
+    );
+}

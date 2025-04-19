@@ -1,7 +1,7 @@
 import { motion, type HTMLMotionProps } from "motion/react";
 import * as React from "react";
 
-import { cnMerge } from "#/utils/cn.ts";
+import { cn } from "#/utils/cn.ts";
 
 type BentoCardProps = HTMLMotionProps<"div"> & {
     eyebrow?: string;
@@ -15,7 +15,7 @@ export function BentoCard({ eyebrow, title, graphic, fade = [], className, ...pr
 
     return (
         <motion.div
-            className={cnMerge(
+            className={cn(
                 "relative overflow-hidden rounded-16 border-[0.5px] from-(--bg-white-0) to-(--bg-weak-50) p-6 transition hover:border-(--stroke-sub-300)",
                 className,
             )}

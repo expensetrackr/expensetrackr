@@ -5,8 +5,8 @@ import * as React from "react";
 
 import { ActionSection } from "#/components/action-section.tsx";
 import { ConfirmsPassword } from "#/components/confirms-password.tsx";
-import { TextField } from "#/components/form/text-field.tsx";
 import * as Button from "#/components/ui/button.tsx";
+import { TextField } from "#/components/ui/form/text-field.tsx";
 import { useUser } from "#/hooks/use-user.ts";
 import { Action } from "#/utils/action.ts";
 

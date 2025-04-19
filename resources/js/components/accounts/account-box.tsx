@@ -8,7 +8,7 @@ import LoopRightIcon from "virtual:icons/ri/loop-right-line";
 import { Image } from "#/components/image.tsx";
 import * as StatusBadge from "#/components/ui/status-badge.tsx";
 import { useTranslation } from "#/hooks/use-translation.ts";
-import { cnMerge } from "#/utils/cn.ts";
+import { cn } from "#/utils/cn.ts";
 
 function SVGCardBg(props: React.SVGProps<SVGSVGElement>) {
     return (
@@ -45,8 +45,8 @@ export function AccountBox({ account, className, ...rest }: CreditCardProps) {
 
     return (
         <div
-            className={cnMerge(
-                "relative mx-auto flex h-[188px] w-full max-w-96 shrink-0 flex-col gap-3 rounded-16 bg-(--bg-white-0) p-5 pb-[18px] ring-1 ring-(--stroke-soft-200) ring-inset",
+            className={cn(
+                "relative mx-auto flex aspect-video w-full shrink-0 flex-col gap-3 rounded-16 bg-(--bg-white-0) p-5 pb-[18px] ring-1 ring-(--stroke-soft-200) ring-inset",
                 "group-hover/account-link:ring-primary group-hover/account-link:[--tw-ring-inset:_] group-focus-visible/account-link:ring-primary group-focus-visible/account-link:[--tw-ring-inset:_]",
                 "transition duration-700 [transition-timing-function:cubic-bezier(0.4,0.2,0.2,1)] [backface-visibility:hidden] [transform-style:preserve-3d]",
                 className,

@@ -1,7 +1,7 @@
 import { Slot } from "@radix-ui/react-slot";
 import * as React from "react";
 
-import { cn, cnMerge } from "#/utils/cn.ts";
+import { cn } from "#/utils/cn.ts";
 import { recursiveCloneChildren } from "#/utils/recursive-clone-children.tsx";
 import { tv, type VariantProps } from "#/utils/tv.ts";
 import { IconEmptyCompany, IconEmptyUser } from "./avatar-empty-icons.tsx";
@@ -249,7 +249,7 @@ function AvatarBrandLogo({ asChild, className, ...rest }: AvatarBrandLogoProps) 
 
     return (
         <Component
-            className={cnMerge("box-content size-6 rounded-full border-2 border-(--bg-white-0)", className)}
+            className={cn("box-content size-6 rounded-full border-2 border-(--bg-white-0)", className)}
             {...rest}
         />
     );
@@ -259,7 +259,7 @@ AvatarBrandLogo.displayName = AVATAR_BRAND_LOGO_NAME;
 function AvatarNotification({ className, ...rest }: React.HTMLAttributes<HTMLDivElement>) {
     return (
         <div
-            className={cnMerge(
+            className={cn(
                 "box-content size-3 rounded-full border-2 border-(--bg-white-0) bg-state-error-base",
                 className,
             )}

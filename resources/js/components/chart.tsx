@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as RechartsPrimitive from "recharts";
 
-import { cnMerge } from "#/utils/cn.ts";
+import { cn } from "#/utils/cn.ts";
 
 export type ChartConfig = {
     [k in string]: {
@@ -40,7 +40,7 @@ const ChartContainer = React.forwardRef<
     return (
         <ChartContext.Provider value={{ config }}>
             <div
-                className={cnMerge(
+                className={cn(
                     "[&_.recharts-cartesian-axis-tick_text]:fill-(--text-sub-600) [&_.recharts-cartesian-axis-tick_text]:text-paragraph-xs",
                     className,
                 )}
@@ -90,7 +90,7 @@ const ChartLegend = React.forwardRef<
 >(({ children, className, color, label, ...rest }, forwardedRef) => {
     return (
         <div
-            className={cnMerge("transition-default flex items-center gap-1 text-left text-paragraph-xs", className)}
+            className={cn("transition-default flex items-center gap-1 text-left text-paragraph-xs", className)}
             ref={forwardedRef}
             {...rest}
         >

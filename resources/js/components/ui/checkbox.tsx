@@ -1,7 +1,7 @@
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
 import * as React from "react";
 
-import { cn, cnMerge } from "#/utils/cn.ts";
+import { cn } from "#/utils/cn.ts";
 
 function IconCheck({ ...rest }: React.SVGProps<SVGSVGElement>) {
     return (
@@ -29,7 +29,7 @@ function Checkbox({ className, checked, ...rest }: React.CustomComponentPropsWit
     return (
         <CheckboxPrimitive.Root
             checked={checked}
-            className={cnMerge(
+            className={cn(
                 "group/checkbox relative flex size-5 shrink-0 items-center justify-center outline-none",
                 "focus:outline-none",
                 className,

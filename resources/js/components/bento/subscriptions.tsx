@@ -7,7 +7,7 @@ import * as Badge from "#/components/ui/badge.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
 import { useCycle } from "#/hooks/use-cycle.ts";
 import { useTranslation } from "#/hooks/use-translation.ts";
-import { cn, cnMerge } from "#/utils/cn.ts";
+import { cn } from "#/utils/cn.ts";
 import { Image } from "../image.tsx";
 
 type Subscription = {
@@ -140,7 +140,7 @@ function BentoSubscriptionItem({ subscriptions, isHovered, className, ...props }
     );
 
     return (
-        <div {...props} className={cnMerge("flex w-full items-center gap-3", className)}>
+        <div {...props} className={cn("flex w-full items-center gap-3", className)}>
             <AnimatePresence mode="wait">
                 <motion.div
                     animate={{ opacity: 1, y: 0 }}

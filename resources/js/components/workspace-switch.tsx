@@ -4,12 +4,11 @@ import AddIcon from "virtual:icons/ri/add-line";
 import CheckIcon from "virtual:icons/ri/check-line";
 import Settings2Icon from "virtual:icons/ri/settings-2-line";
 
+import { useAuth } from "#/hooks/use-auth.ts";
 import { useCurrentWorkspace } from "#/hooks/use-current-workspace.ts";
-import { useUser } from "#/hooks/use-user.ts";
-import { useWorkspacesPermissions } from "#/hooks/use-workspaces-permissions.ts";
-import { useWorkspaces } from "#/hooks/use-workspaces.ts";
+import { useFeaturesAndPermissions } from "#/hooks/use-features-and-permissions.ts";
 import { routes } from "#/routes.ts";
-import { cnMerge } from "#/utils/cn.ts";
+import { cn } from "#/utils/cn.ts";
 import { Link } from "./link.tsx";
 import * as Avatar from "./ui/avatar.tsx";
 import * as Divider from "./ui/divider.tsx";
@@ -55,21 +54,19 @@ function WorkspaceItem({ workspace }: { workspace: App.Data.Workspace.WorkspaceD
 }
 
 export function WorkspaceSwitch({ className }: { className?: string }) {
-    const user = useUser();
-    const currentWorkspace = useCurrentWorkspace();
-    const workspaces = useWorkspaces();
-    const permissions = useWorkspacesPermissions();
+    const { user, currentWorkspace, workspaces } = useAuth();
+    const { permissions, features } = useFeaturesAndPermissions();
 
     return (
         <Dropdown.Root>
             <Dropdown.Trigger
-                className={cnMerge(
+                className={cn(
                     "flex w-full items-center gap-3 p-3 text-left whitespace-nowrap outline-none focus:outline-none",
                     className,
                 )}
             >
                 <Avatar.Root $size="40">
-                    {currentWorkspace?.name
+                    {currentWorkspace.name
                         .split(" ")
                         .slice(0, 2)
                         .map((word) => word[0])
@@ -87,7 +84,7 @@ export function WorkspaceSwitch({ className }: { className?: string }) {
             </Dropdown.Trigger>
 
             <Dropdown.Content align="start" side="right" sideOffset={24}>
-                {user && permissions.hasWorkspaceFeatures ? (
+                {user && features?.hasWorkspaceFeatures ? (
                     <Dropdown.Group>
                         <Dropdown.Item asChild>
                             <Link
@@ -102,7 +99,7 @@ export function WorkspaceSwitch({ className }: { className?: string }) {
                     </Dropdown.Group>
                 ) : null}
 
-                {workspaces.length > 1 ? (
+                {workspaces?.length && workspaces.length > 1 ? (
                     <>
                         <Divider.Root $type="line-spacing" />
 
@@ -114,7 +111,7 @@ export function WorkspaceSwitch({ className }: { className?: string }) {
                     </>
                 ) : null}
 
-                {permissions.canCreateWorkspaces ? (
+                {permissions?.canCreateWorkspaces ? (
                     <Dropdown.Group>
                         <Dropdown.Item asChild>
                             <Link href={routes.workspaces.create.url()}>
