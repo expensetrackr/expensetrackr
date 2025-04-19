@@ -73,18 +73,6 @@ final class AccountController extends Controller
     }
 
     /**
-     * Create a new account
-     */
-    public function create(Request $request): RedirectResponse|Response
-    {
-        if (! Gate::forUser($request->user())->check('create', Account::class)) {
-            return to_route('accounts.index');
-        }
-
-        return Inertia::render('accounts/create/page');
-    }
-
-    /**
      * Handle form submission for each step
      *
      * @throws AuthorizationException

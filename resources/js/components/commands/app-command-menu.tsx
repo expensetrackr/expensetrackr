@@ -10,6 +10,7 @@ import Search01Icon from "virtual:icons/hugeicons/search-01";
 import * as Avatar from "#/components/ui/avatar.tsx";
 import * as CommandMenu from "#/components/ui/command-menu.tsx";
 import * as CompactButton from "#/components/ui/compact-button.tsx";
+import { useActionsParams } from "#/hooks/use-actions-params.ts";
 import { useBankProvider } from "#/hooks/use-bank-provider.ts";
 import { useCommandMenuParams } from "#/hooks/use-command-menu-params.ts";
 import { useTranslation } from "#/hooks/use-translation.ts";
@@ -98,6 +99,8 @@ export function AppCommandMenu() {
 
 function Home() {
     const { setParams } = useCommandMenuParams();
+    const { setParams: setActionsParams } = useActionsParams();
+    const { toggleOpen } = useCommandMenuStore();
     const { t } = useTranslation();
 
     return (
@@ -115,7 +118,17 @@ function Home() {
 
             <CommandMenu.Group heading="Manually create an account">
                 {AccountTypeEnum.options.map((option) => (
-                    <CommandMenu.Item key={option}>
+                    <CommandMenu.Item
+                        key={option}
+                        onSelect={async () => {
+                            await setActionsParams(
+                                { action: "create", resource: "accounts", accountType: option },
+                                { shallow: false },
+                            );
+
+                            toggleOpen();
+                        }}
+                    >
                         <CommandMenu.ItemIcon
                             accountType={option}
                             as={AccountTypeIcon}

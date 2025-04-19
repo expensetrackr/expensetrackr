@@ -42,7 +42,7 @@ export function Textarea({
                     htmlFor={id}
                 >
                     {label}
-                    {labelSub ? <Label.Sub>{labelSub}</Label.Sub> : null}
+                    {labelSub ? <Label.Sub className="ml-1">{labelSub}</Label.Sub> : null}
                 </Label.Root>
             ) : null}
 
