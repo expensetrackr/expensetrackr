@@ -2,14 +2,14 @@ import * as React from "react";
 import { Input as AriaInput, getColorChannels, type Color, type ColorSpace } from "react-aria-components";
 
 import { cn } from "#/utils/cn.ts";
-import * as Button from "../ui/button.tsx";
-import * as ColorPicker from "../ui/color-picker.tsx";
-import * as Divider from "../ui/divider.tsx";
-import * as Hint from "../ui/hint.tsx";
-import * as Input from "../ui/input.tsx";
-import * as Label from "../ui/label.tsx";
-import * as Popover from "../ui/popover.tsx";
-import * as Select from "../ui/select.tsx";
+import * as Button from "../button.tsx";
+import * as ColorPicker from "../color-picker.tsx";
+import * as Divider from "../divider.tsx";
+import * as Hint from "../hint.tsx";
+import * as Input from "../input.tsx";
+import * as Label from "../label.tsx";
+import * as Popover from "../popover.tsx";
+import * as Select from "../select.tsx";
 
 export const colorSwatches = [
     "#717784", // neutral-500

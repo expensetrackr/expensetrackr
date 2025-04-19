@@ -1,8 +1,8 @@
 import * as React from "react";
 
-import * as CheckboxPrimitive from "../ui/checkbox.tsx";
-import * as Hint from "../ui/hint.tsx";
-import * as Label from "../ui/label.tsx";
+import * as CheckboxPrimitive from "../checkbox.tsx";
+import * as Hint from "../hint.tsx";
+import * as Label from "../label.tsx";
 
 type CheckboxProps = React.CustomComponentPropsWithRef<typeof CheckboxPrimitive.Root> & {
     $error?: boolean;

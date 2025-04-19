@@ -2,9 +2,9 @@ import { useForm } from "@inertiajs/react";
 import { parseAsStringEnum, useQueryState } from "nuqs";
 import TeamIcon from "virtual:icons/ri/team-line";
 
-import { SelectField } from "#/components/form/select-field.tsx";
-import { TextField } from "#/components/form/text-field.tsx";
 import * as Button from "#/components/ui/button.tsx";
+import { SelectField } from "#/components/ui/form/select-field.tsx";
+import { TextField } from "#/components/ui/form/text-field.tsx";
 import * as Modal from "#/components/ui/modal.tsx";
 import { routes } from "#/routes.ts";
 import { Action } from "#/utils/action.ts";

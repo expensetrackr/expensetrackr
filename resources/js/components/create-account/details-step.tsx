@@ -4,9 +4,9 @@ import type * as v from "valibot";
 import { useCreateAccountParams } from "#/hooks/use-create-account-params.ts";
 import { SubtypeOptions } from "#/schemas/account.ts";
 import { type DetailsSchema } from "#/utils/steppers/create-account.step.ts";
-import { SelectField } from "../form/select-field.tsx";
-import { TextField } from "../form/text-field.tsx";
-import { Textarea } from "../form/textarea.tsx";
+import { SelectField } from "../ui/form/select-field.tsx";
+import { TextField } from "../ui/form/text-field.tsx";
+import { Textarea } from "../ui/form/textarea.tsx";
 import * as Label from "../ui/label.tsx";
 
 type DetailsStepProps = {

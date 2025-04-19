@@ -2,8 +2,8 @@ import CommandIcon from "virtual:icons/hugeicons/command";
 import Search01Icon from "virtual:icons/hugeicons/search-01";
 import Sorting01Icon from "virtual:icons/hugeicons/sorting-01";
 
-import { SelectField } from "#/components/form/select-field.tsx";
-import { TextField } from "#/components/form/text-field.tsx";
+import { SelectField } from "#/components/ui/form/select-field.tsx";
+import { TextField } from "#/components/ui/form/text-field.tsx";
 import * as Kbd from "#/components/ui/kbd.tsx";
 import { useAccountsParams } from "#/hooks/use-accounts-params.ts";
 

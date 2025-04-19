@@ -3,11 +3,11 @@ import * as React from "react";
 
 import { classificationIcons } from "#/components/category-classification-icon.tsx";
 import { categoryIcons } from "#/components/category-icon.tsx";
-import { ColorField } from "#/components/form/color.tsx";
-import { SelectField } from "#/components/form/select-field.tsx";
-import { TextField } from "#/components/form/text-field.tsx";
-import { Textarea } from "#/components/form/textarea.tsx";
 import * as Button from "#/components/ui/button.tsx";
+import { ColorField } from "#/components/ui/form/color.tsx";
+import { SelectField } from "#/components/ui/form/select-field.tsx";
+import { TextField } from "#/components/ui/form/text-field.tsx";
+import { Textarea } from "#/components/ui/form/textarea.tsx";
 import * as Modal from "#/components/ui/modal.tsx";
 import { useCategoriesParams } from "#/hooks/use-categories-params.ts";
 import { routes } from "#/routes.ts";

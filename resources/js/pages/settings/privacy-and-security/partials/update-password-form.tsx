@@ -4,8 +4,8 @@ import * as React from "react";
 import LockPasswordIcon from "virtual:icons/ri/lock-password-line";
 
 import { ActionSection } from "#/components/action-section.tsx";
-import { TextField } from "#/components/form/text-field.tsx";
 import * as Button from "#/components/ui/button.tsx";
+import { TextField } from "#/components/ui/form/text-field.tsx";
 import * as Modal from "#/components/ui/modal.tsx";
 import { routes } from "#/routes.ts";
 import { Action } from "#/utils/action.ts";

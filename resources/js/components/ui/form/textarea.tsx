@@ -1,9 +1,9 @@
 import * as React from "react";
 
 import { cn } from "#/utils/cn.ts";
-import * as Hint from "../ui/hint.tsx";
-import * as Label from "../ui/label.tsx";
-import * as TextareaPrimitive from "../ui/textarea.tsx";
+import * as Hint from "../hint.tsx";
+import * as Label from "../label.tsx";
+import * as TextareaPrimitive from "../textarea.tsx";
 
 type TextareaProps = TextareaPrimitive.TextareaRootProps & {
     wrapperClassName?: string;

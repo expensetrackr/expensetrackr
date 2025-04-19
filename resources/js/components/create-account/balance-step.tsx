@@ -12,11 +12,11 @@ import type * as v from "valibot";
 
 import { useTranslation } from "#/hooks/use-translation.ts";
 import { InterestRateTypeEnum, type BalanceSchema } from "#/utils/steppers/create-account.step.ts";
-import { SelectField } from "../form/select-field.tsx";
-import { TextField } from "../form/text-field.tsx";
 import * as Button from "../ui/button.tsx";
 import * as DatepickerPrimivites from "../ui/datepicker.tsx";
 import * as Divider from "../ui/divider.tsx";
+import { SelectField } from "../ui/form/select-field.tsx";
+import { TextField } from "../ui/form/text-field.tsx";
 import * as Hint from "../ui/hint.tsx";
 import * as InputPrimitives from "../ui/input.tsx";
 import * as Label from "../ui/label.tsx";

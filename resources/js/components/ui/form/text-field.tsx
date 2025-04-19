@@ -1,9 +1,9 @@
 import * as React from "react";
 
 import { cn } from "#/utils/cn.ts";
-import * as Hint from "../ui/hint.tsx";
-import * as Input from "../ui/input.tsx";
-import * as Label from "../ui/label.tsx";
+import * as Hint from "../hint.tsx";
+import * as Input from "../input.tsx";
+import * as Label from "../label.tsx";
 
 type TextFieldProps = React.CustomComponentPropsWithRef<typeof Input.Input> &
     Pick<React.CustomComponentPropsWithRef<typeof Input.Root>, "$error" | "$size"> & {

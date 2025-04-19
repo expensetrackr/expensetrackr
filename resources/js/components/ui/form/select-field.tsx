@@ -1,9 +1,9 @@
 import * as React from "react";
 
 import { cn } from "#/utils/cn.ts";
-import * as Hint from "../ui/hint.tsx";
-import * as Label from "../ui/label.tsx";
-import * as SelectPrimitives from "../ui/select.tsx";
+import * as Hint from "../hint.tsx";
+import * as Label from "../label.tsx";
+import * as SelectPrimitives from "../select.tsx";
 
 type SelectProps = Omit<React.CustomComponentPropsWithRef<typeof SelectPrimitives.Root>, "$error"> & {
     wrapperClassName?: string;
