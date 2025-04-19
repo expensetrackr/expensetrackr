@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Financial;
 
 use App\Data\Finance\InstitutionSearchData;
 use App\Services\MeilisearchService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-final class InstitutionController extends Controller
+final class InstitutionController
 {
     /**
      * Handle the incoming request.

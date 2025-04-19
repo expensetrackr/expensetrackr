@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Inertia\Response;
-use Meilisearch\Endpoints\Indexes;
+use Spatie\QueryBuilder\QueryBuilder;
 
 final class AccountController extends Controller
 {
@@ -24,12 +24,6 @@ final class AccountController extends Controller
      */
     public function index(Request $request): Response
     {
-        $searchQuery = type($request->query('q', ''))->asString();
-        /** @var array<string, string> */
-        $filters = type($request->query('filters', [
-            'sort' => 'created_at',
-            'sort_direction' => 'desc',
-        ]))->asArray();
         $accountPublicId = $request->query('account_id');
 
         $account = null;
@@ -52,19 +46,11 @@ final class AccountController extends Controller
 
         return Inertia::render('accounts/page', [
             'query' => $request->query(),
-            'accounts' => Account::search(
-                $searchQuery,
-                function (Indexes $meiliSearch, string $query, array $options) use ($filters) {
-                    // if sort and sort_direction are not empty, add them to the options
-                    if (! empty($filters['sort']) && (isset($filters['sort_direction']) && ($filters['sort_direction'] !== '' && $filters['sort_direction'] !== '0'))) {
-                        $options['sort'] = [$filters['sort'].':'.$filters['sort_direction']];
-                    }
-
-                    return $meiliSearch->search($query, $options);
-                })
-                ->query(function (Builder $query): void {
-                    $query->with(['bankConnection']);
-                })
+            'accounts' => QueryBuilder::for(Account::class)
+                ->allowedFilters(['name'])
+                ->allowedSorts(['created_at', '-created_at'])
+                ->defaultSort('-created_at')
+                ->with(['bankConnection'])
                 ->paginate(100)
                 ->withQueryString()
                 ->toResourceCollection(),

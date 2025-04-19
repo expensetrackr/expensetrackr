@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use App\Http\Controllers\Api\CurrencyController;
-use App\Http\Controllers\InstitutionController;
+use App\Http\Controllers\Financial\CurrencyController;
+use App\Http\Controllers\Financial\InstitutionController;
 use App\Http\Controllers\WebhookTellerController;
 use Illuminate\Support\Facades\Route;
 
