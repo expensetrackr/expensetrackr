@@ -39,7 +39,7 @@ final class AccountBalancesSnapshot extends Command
     {
         $this->info('Snapshotting balances of all accounts...');
 
-        Account::query()->chunk(1000, function ($accounts) {
+        Account::query()->chunk(1000, function ($accounts): void {
             foreach ($accounts as $account) {
                 $this->action->handle($account);
             }

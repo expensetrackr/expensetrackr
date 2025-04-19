@@ -27,7 +27,7 @@ final class SentryServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Event::listen(function (Authenticated $event) {
+        Event::listen(function (Authenticated $event): void {
             /** @var User $user */
             $user = $event->user;
 
@@ -40,7 +40,7 @@ final class SentryServiceProvider extends ServiceProvider
             });
         });
 
-        Event::listen(function (Logout $event) {
+        Event::listen(function (Logout $event): void {
             Integration::configureScope(static function (Scope $scope): void {
                 $scope->removeUser();
             });

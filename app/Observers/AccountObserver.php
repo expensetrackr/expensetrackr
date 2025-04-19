@@ -7,12 +7,12 @@ namespace App\Observers;
 use App\Actions\AccountBalances\SnapshotBalanceAction;
 use App\Models\Account;
 
-final class AccountObserver
+final readonly class AccountObserver
 {
     /**
      * Create a new observer instance.
      */
-    public function __construct(private readonly SnapshotBalanceAction $action) {}
+    public function __construct(private SnapshotBalanceAction $action) {}
 
     /**
      * Handle the Account "created" event.
