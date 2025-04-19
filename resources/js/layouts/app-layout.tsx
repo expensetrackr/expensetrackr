@@ -3,6 +3,7 @@ import { toast } from "sonner";
 
 import { AppCommandMenu } from "#/components/commands/app-command-menu.tsx";
 import { CreateAccountDrawer } from "#/components/drawers/create-account-drawer.tsx";
+import { CreateTransactionDrawer } from "#/components/drawers/create-transaction-drawer.tsx";
 import { HeaderMobile } from "#/components/header-mobile.tsx";
 import { Sidebar } from "#/components/sidebar.tsx";
 import { Toaster } from "#/components/toaster.tsx";
@@ -34,6 +35,7 @@ export function AppLayout({
             <Toaster position="top-center" />
             <AppCommandMenu />
             {props.permissions.canCreateAccounts && <CreateAccountDrawer />}
+            {props.permissions.canCreateTransactions && <CreateTransactionDrawer />}
         </>
     );
 }

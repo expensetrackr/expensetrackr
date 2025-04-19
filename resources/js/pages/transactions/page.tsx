@@ -1,4 +1,4 @@
-import { Head, Link } from "@inertiajs/react";
+import { Head } from "@inertiajs/react";
 import PlusSignIcon from "virtual:icons/hugeicons/plus-sign";
 import Share03Icon from "virtual:icons/hugeicons/share-03";
 import TransactionIcon from "virtual:icons/hugeicons/transaction";
@@ -10,10 +10,10 @@ import { TransactionsFilters } from "#/components/transactions/filters.tsx";
 import { TransactionsTable } from "#/components/transactions/table.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
+import { useActionsParams } from "#/hooks/use-actions-params.ts";
 import { useFeaturesAndPermissions } from "#/hooks/use-features-and-permissions.ts";
 import { usePaginationParams } from "#/hooks/use-pagination-params.ts";
 import { AppLayout } from "#/layouts/app-layout.tsx";
-import { routes } from "#/routes.ts";
 import { type PageProps } from "#/types/globals.ts";
 
 type TransactionsPageProps = {
@@ -30,6 +30,7 @@ type TransactionsPageProps = {
 export default function TransactionsPage({ transactions, transaction, categories, requestId }: TransactionsPageProps) {
     const [, setPagination] = usePaginationParams();
     const { permissions } = useFeaturesAndPermissions();
+    const actions = useActionsParams();
 
     return (
         <>
@@ -48,11 +49,9 @@ export default function TransactionsPage({ transactions, transaction, categories
                     Export
                 </Button.Root>
                 {permissions?.canCreateTransactions && (
-                    <Button.Root asChild>
-                        <Link href={routes.transactions.create.url()}>
-                            <Button.Icon as={PlusSignIcon} />
-                            Add Transaction
-                        </Link>
+                    <Button.Root onClick={() => actions.setParams({ action: "create", resource: "transactions" })}>
+                        <Button.Icon as={PlusSignIcon} />
+                        Add Transaction
                     </Button.Root>
                 )}
             </Header>

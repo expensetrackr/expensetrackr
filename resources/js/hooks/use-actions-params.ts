@@ -6,7 +6,7 @@ export function useActionsParams() {
     const [params, setParams] = useQueryStates(
         {
             action: parseAsStringLiteral(["create"]),
-            resource: parseAsStringLiteral(["accounts"]),
+            resource: parseAsStringLiteral(["accounts", "transactions"]),
             resourceId: parseAsString,
             accountType: parseAsStringEnum(AccountTypeEnum.options).withDefault("depository"),
         },

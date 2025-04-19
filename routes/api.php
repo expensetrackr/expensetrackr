@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\API\AccountController;
 use App\Http\Controllers\Financial\CurrencyController;
 use App\Http\Controllers\Financial\InstitutionController;
 use App\Http\Controllers\WebhookTellerController;
@@ -18,3 +19,5 @@ Route::prefix('finance')->group(function () {
     Route::get('/institutions', InstitutionController::class)
         ->name('api.finance.institutions.index');
 });
+
+Route::apiResource('accounts', AccountController::class)->only('index')->names('api.accounts');
