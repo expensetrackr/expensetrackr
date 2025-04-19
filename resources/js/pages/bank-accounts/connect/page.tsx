@@ -9,7 +9,7 @@ import * as v from "valibot";
 import Cancel01Icon from "virtual:icons/hugeicons/cancel-01";
 import CustomizeIcon from "virtual:icons/hugeicons/customize";
 
-import { Card } from "#/components/create-account/card.tsx";
+import { FlowCard } from "#/components/flow-card.tsx";
 import { Image } from "#/components/image.tsx";
 import { Link } from "#/components/link.tsx";
 import * as Avatar from "#/components/ui/avatar.tsx";
@@ -58,7 +58,7 @@ export default function BankAccountsConnectPage({
                 </Button.Root>
 
                 <div className="flex w-full justify-center py-12">
-                    <Card
+                    <FlowCard
                         actions={
                             <Button.Root $size="sm" className="w-full" form="create-bank-connection-form" type="submit">
                                 Connect
@@ -88,7 +88,7 @@ export default function BankAccountsConnectPage({
                                 token={token}
                             />
                         </Deferred>
-                    </Card>
+                    </FlowCard>
                 </div>
             </div>
         </div>

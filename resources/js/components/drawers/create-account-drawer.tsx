@@ -75,7 +75,7 @@ export function CreateAccountDrawer() {
 
     const handleOpenChange = async (open: boolean) => {
         if (!open) {
-            await actions.resetParams({ shallow: false });
+            await actions.resetParams();
             return;
         }
     };

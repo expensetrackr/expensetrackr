@@ -9,6 +9,7 @@ import { IllustrationEmptyAccounts } from "#/components/empty-illustrations/acco
 import { Header } from "#/components/header.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
+import { useActionsParams } from "#/hooks/use-actions-params.ts";
 import { AppLayout } from "#/layouts/app-layout.tsx";
 import { routes } from "#/routes.ts";
 import { type PageProps } from "#/types/globals.js";
@@ -19,6 +20,8 @@ type AccountsPageProps = {
 };
 
 export default function AccountsPage({ accounts, account, permissions }: PageProps<AccountsPageProps>) {
+    const { setParams } = useActionsParams();
+
     return (
         <>
             <Header
@@ -32,11 +35,12 @@ export default function AccountsPage({ accounts, account, permissions }: PagePro
                 title="Accounts"
             >
                 {permissions.canCreateAccounts && (
-                    <Button.Root asChild className="w-full md:w-auto">
-                        <Link href={routes.accounts.create.url()}>
-                            <Button.Icon as={WalletAdd01} />
-                            Add account
-                        </Link>
+                    <Button.Root
+                        className="w-full md:w-auto"
+                        onClick={() => setParams({ action: "create", resource: "accounts" })}
+                    >
+                        <Button.Icon as={WalletAdd01} />
+                        Add account
                     </Button.Root>
                 )}
             </Header>

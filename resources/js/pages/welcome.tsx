@@ -13,8 +13,7 @@ import { BentoRecentTransactions } from "#/components/bento/recent-transactions.
 import { BentoSubscriptions } from "#/components/bento/subscriptions.tsx";
 import { BentoWorkspaces } from "#/components/bento/workspaces.tsx";
 import { BentoCard } from "#/components/bento-card.tsx";
-import { BalanceStep } from "#/components/create-account/balance-step.tsx";
-import { Card } from "#/components/create-account/card.tsx";
+import { FlowCard } from "#/components/flow-card.tsx";
 import * as Glow from "#/components/glow.tsx";
 import { Image } from "#/components/image.tsx";
 import { Link } from "#/components/link.tsx";
@@ -199,7 +198,7 @@ function BentoSection() {
 
 function ImageAndTextSection() {
     const { t } = useTranslation();
-    const [form, fields] = useForm({
+    const [form] = useForm({
         id: "create-account-example",
         shouldValidate: "onSubmit",
         shouldRevalidate: "onInput",
@@ -282,17 +281,14 @@ function ImageAndTextSection() {
                         {...getFormProps(form)}
                         className="relative flex w-full justify-center"
                     >
-                        <Card
+                        <FlowCard
                             description={t("home.sections.image_and_text.balance_step.description")}
                             icon={MoneyDollarCircleFillIcon}
                             title={t("home.sections.image_and_text.balance_step.title")}
                         >
-                            <BalanceStep
-                                currencies={["USD", "CAD", "EUR", "GBP", "ARS", "VES"]}
-                                // @ts-ignore
-                                fields={fields}
-                            />
-                        </Card>
+                            {/* TODO: Add the balance step */}
+                            <></>
+                        </FlowCard>
                     </form>
                 </div>
             </div>
