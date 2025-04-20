@@ -33,11 +33,7 @@ final class AccountPolicy
      */
     public function create(User $user): bool
     {
-        if (! $user->isSubscribed() && $user->accounts()->count() >= 3) {
-            return false;
-        }
-
-        return true;
+        return !(! $user->isSubscribed() && $user->accounts()->count() >= 3);
     }
 
     /**
