@@ -10,7 +10,6 @@ use App\Enums\Finance\AccountSubtype;
 use App\Enums\Finance\AccountType;
 use App\Observers\AccountObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -170,23 +169,19 @@ final class Account extends Model
 
     /**
      * Get the account type based on the accountable relationship.
-     *
-     * @return Attribute<AccountType, never>
      */
-    protected function type(): Attribute
+    public function getTypeAttribute(): AccountType
     {
-        return Attribute::make(
-            get: fn (): AccountType => match ($this->accountable_type) {
-                Depository::class => AccountType::Depository,
-                Investment::class => AccountType::Investment,
-                Crypto::class => AccountType::Crypto,
-                OtherAsset::class => AccountType::OtherAsset,
-                CreditCard::class => AccountType::CreditCard,
-                Loan::class => AccountType::Loan,
-                OtherLiability::class => AccountType::OtherLiability,
-                default => throw new InvalidArgumentException("Unknown accountable type: {$this->accountable_type}"),
-            },
-        );
+        return match ($this->accountable_type) {
+            Depository::class => AccountType::Depository,
+            Investment::class => AccountType::Investment,
+            Crypto::class => AccountType::Crypto,
+            OtherAsset::class => AccountType::OtherAsset,
+            CreditCard::class => AccountType::CreditCard,
+            Loan::class => AccountType::Loan,
+            OtherLiability::class => AccountType::OtherLiability,
+            default => throw new InvalidArgumentException("Unknown accountable type: {$this->accountable_type}"),
+        };
     }
 
     /**

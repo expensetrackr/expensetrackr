@@ -70,6 +70,7 @@ final class CreateTransaction
             return Transaction::create([
                 ...$input,
                 'recurring_interval' => $input['recurring_interval'] ?? null,
+                'recurring_start_at' => $input['is_recurring'] ? ($input['recurring_start_at'] ?? now()) : null,
                 'dated_at' => $input['dated_at'] ?? now(),
                 'is_manual' => $isManual,
                 'account_id' => $account->id,

@@ -4,7 +4,6 @@ import { useForm as useInertiaForm } from "@inertiajs/react";
 import { resolveCurrencyFormat } from "@sumup/intl";
 import { type NumberFormat } from "@sumup/intl/dist/es/types/index";
 import { useQuery } from "@tanstack/react-query";
-import { format } from "date-fns/format";
 import Decimal from "decimal.js";
 import { CurrencyInput } from "headless-currency-input";
 import * as React from "react";
@@ -18,16 +17,13 @@ import { routes } from "#/routes.ts";
 import { AccountTypeEnum, SubtypeOptions } from "#/schemas/account.ts";
 import { type BalanceSchema, CreateAccountSchema, InterestRateTypeEnum } from "#/utils/steppers/create-account.step.ts";
 import * as Button from "../ui/button.tsx";
-import * as DatepickerPrimivites from "../ui/datepicker.tsx";
 import * as Divider from "../ui/divider.tsx";
 import * as Drawer from "../ui/drawer.tsx";
+import { DatePicker } from "../ui/form/date-picker.tsx";
 import { SelectField } from "../ui/form/select-field.tsx";
 import { TextField } from "../ui/form/text-field.tsx";
 import { Textarea } from "../ui/form/textarea.tsx";
-import * as Hint from "../ui/hint.tsx";
 import * as Input from "../ui/input.tsx";
-import * as Label from "../ui/label.tsx";
-import * as Popover from "../ui/popover.tsx";
 import * as Select from "../ui/select.tsx";
 
 export function CreateAccountDrawer() {
@@ -342,57 +338,17 @@ function CreditCardFields({ fields, currencyFormat, handleMoneyChange }: CreditC
             </div>
 
             <div className="grid grid-cols-2 gap-3">
-                <div className="flex flex-col gap-1">
-                    <Label.Root htmlFor={fields.expires_at.id}>{t("form.fields.expires_at.label")}</Label.Root>
-
-                    <Popover.Root>
-                        <Popover.Trigger asChild>
-                            <Button.Root $style="stroke" $type="neutral" id={fields.expires_at.id}>
-                                {expiresAtControl.value
-                                    ? format(expiresAtControl.value, "LLL dd, y")
-                                    : t("form.fields.expires_at.placeholder")}
-                            </Button.Root>
-                        </Popover.Trigger>
-                        <Popover.Content className="p-0" showArrow={false}>
-                            <DatepickerPrimivites.Calendar
-                                mode="single"
-                                onSelect={(date) => expiresAtControl.change(date?.toISOString())}
-                                selected={expiresAtControl.value ? new Date(expiresAtControl.value) : undefined}
-                            />
-                            <div className="flex items-center justify-between gap-4 border-t border-(--stroke-soft-200) p-4 py-5">
-                                <Popover.Close asChild unstyled>
-                                    <Button.Root
-                                        $size="sm"
-                                        $style="stroke"
-                                        $type="neutral"
-                                        className="w-full"
-                                        //onClick={handleCancel}
-                                    >
-                                        {t("common.cancel")}
-                                    </Button.Root>
-                                </Popover.Close>
-                                <Popover.Close asChild unstyled>
-                                    <Button.Root
-                                        $size="sm"
-                                        $style="filled"
-                                        $type="primary"
-                                        className="w-full"
-                                        //onClick={handleApply}
-                                    >
-                                        {t("common.apply")}
-                                    </Button.Root>
-                                </Popover.Close>
-                            </div>
-                        </Popover.Content>
-                    </Popover.Root>
-
-                    {fields.expires_at.errors ? (
-                        <Hint.Root $error aria-describedby={`${fields.expires_at.id}-error`}>
-                            <Hint.Icon />
-                            {fields.expires_at.errors}
-                        </Hint.Root>
-                    ) : null}
-                </div>
+                <DatePicker
+                    error={fields.expires_at.errors}
+                    id={fields.expires_at.id}
+                    label={t("form.fields.expires_at.label")}
+                    labelSub="(Optional)"
+                    mode="single"
+                    onSelect={(date) => expiresAtControl.change(date?.toISOString())}
+                    placeholder={t("form.fields.expires_at.placeholder")}
+                    selected={expiresAtControl.value ? new Date(expiresAtControl.value) : undefined}
+                    value={expiresAtControl.value}
+                />
 
                 <CurrencyInput
                     currency={currencyFormat?.currency || "USD"}

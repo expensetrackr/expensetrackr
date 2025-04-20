@@ -31,7 +31,7 @@ export function AppCommandMenu() {
     const { isOpen, setOpen } = useCommandMenuStore();
     const { setParams, ...params } = useCommandMenuParams();
 
-    useHotkeys("meta+k", () => setOpen(true));
+    useHotkeys(["ctrl+k", "meta+k"], () => setOpen(true));
 
     const goToPreviousStep = async () => {
         switch (params.commandPage) {
@@ -123,9 +123,14 @@ export function AppCommandMenu() {
 
 function Home() {
     const { setParams } = useCommandMenuParams();
-    const { setParams: setActionsParams } = useActionsParams();
+    const actions = useActionsParams();
     const { toggleOpen } = useCommandMenuStore();
     const { t } = useTranslation();
+
+    const handleSelectAction = async (action: string, resource: string, params?: Record<string, string>) => {
+        await actions.setParams({ action, resource, ...params });
+        toggleOpen();
+    };
 
     return (
         <>
@@ -134,11 +139,11 @@ function Home() {
                     <CommandMenu.ItemIcon as={ConnectIcon} />
                     Connect your bank account
                 </CommandMenu.Item>
-                <CommandMenu.Item onSelect={() => setActionsParams({ action: "create", resource: "accounts" })}>
+                <CommandMenu.Item onSelect={() => handleSelectAction("create", "accounts")}>
                     <CommandMenu.ItemIcon as={LicenseDraftIcon} />
                     Create a new account
                 </CommandMenu.Item>
-                <CommandMenu.Item>
+                <CommandMenu.Item onSelect={() => handleSelectAction("create", "transactions")}>
                     <CommandMenu.ItemIcon as={ArrowLeftRightIcon} />
                     Create a transaction
                 </CommandMenu.Item>
@@ -148,14 +153,7 @@ function Home() {
                 {AccountTypeEnum.options.map((option) => (
                     <CommandMenu.Item
                         key={option}
-                        onSelect={async () => {
-                            await setActionsParams(
-                                { action: "create", resource: "accounts", accountType: option },
-                                { shallow: false },
-                            );
-
-                            toggleOpen();
-                        }}
+                        onSelect={async () => handleSelectAction("create", "accounts", { accountType: option })}
                     >
                         <CommandMenu.ItemIcon
                             accountType={option}

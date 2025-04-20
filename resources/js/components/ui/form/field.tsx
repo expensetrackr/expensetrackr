@@ -4,9 +4,10 @@ import { cn } from "#/utils/cn.ts";
 import * as Hint from "../hint.tsx";
 import * as Label from "../label.tsx";
 
-type FieldProps = {
+export type FieldProps = {
     label?: React.ReactNode;
-    hiddenLabel?: boolean;
+    labelSub?: React.ReactNode;
+    labelClassName?: string;
     hint?: string | Array<string>;
     id?: string;
     className?: string;
@@ -15,15 +16,16 @@ type FieldProps = {
     children: React.ReactNode;
 };
 
-export function Field({ error, label, hiddenLabel, className, children, hint, ...props }: FieldProps) {
+export function Field({ error, label, labelSub, labelClassName, className, children, hint, ...props }: FieldProps) {
     const generatedId = React.useId();
     const id = props.id || generatedId;
 
     return (
         <div className={cn("flex flex-col gap-1", className)}>
             {label ? (
-                <Label.Root className={cn(hiddenLabel && "sr-only")} disabled={props.disabled} htmlFor={id}>
+                <Label.Root className={labelClassName} disabled={props.disabled} htmlFor={id}>
                     {label}
+                    {labelSub ? <Label.Sub className="ml-1">{labelSub}</Label.Sub> : null}
                 </Label.Root>
             ) : null}
 
