@@ -5,30 +5,27 @@ declare(strict_types=1);
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\Account;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Spatie\QueryBuilder\QueryBuilder;
 
-final class AccountController extends Controller
+final class CategoryController extends Controller
 {
-    use AuthorizesRequests;
-
     /**
      * Display a listing of the resource.
      *
-     * @return ResourceCollection<Account>
+     * @return ResourceCollection<Category>
      */
     public function index(): ResourceCollection
     {
         /** @var int */
         $perPage = request()->get('per_page', 10);
 
-        return QueryBuilder::for(Account::class)
-            ->allowedFilters(['name'])
-            ->allowedSorts(['name', '-name', 'created_at', '-created_at'])
-            ->allowedIncludes(['bankConnection'])
+        return QueryBuilder::for(Category::class)
+            ->allowedFilters(['name', 'classification'])
+            ->allowedSorts(['created_at', '-created_at'])
+            ->allowedIncludes(['parent'])
             ->defaultSort('-created_at')
             ->paginate($perPage)
             ->withQueryString()
@@ -46,7 +43,7 @@ final class AccountController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Account $account): void
+    public function show(Category $category): void
     {
         //
     }
@@ -54,7 +51,7 @@ final class AccountController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Account $account): void
+    public function update(Request $request, Category $category): void
     {
         //
     }
@@ -62,7 +59,7 @@ final class AccountController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Account $account): void
+    public function destroy(Category $category): void
     {
         //
     }

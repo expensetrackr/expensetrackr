@@ -37,6 +37,7 @@ final class CreateTransactionRequest extends FormRequest
             'currency' => ['required', 'string', 'max:3'],
             'is_recurring' => ['required', 'boolean'],
             'recurring_interval' => ['required_if:is_recurring,true', 'nullable', 'string', Rule::enum(TransactionRecurringInterval::class)],
+            'recurring_start_at' => ['required_if:is_recurring,true', 'nullable', 'date'],
             'account_id' => ['required', 'exists:accounts,public_id'],
             'category_id' => ['required', 'exists:categories,public_id'],
         ];
