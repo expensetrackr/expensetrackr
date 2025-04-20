@@ -28,17 +28,17 @@ import * as Input from "../ui/input.tsx";
 import * as Label from "../ui/label.tsx";
 import * as Switch from "../ui/switch.tsx";
 
-type FormData = {
+type CreateTransactionFormData = {
     name: string;
     note?: string | null;
     type: App.Enums.Finance.TransactionType;
     amount: string;
     currency: string;
-    isRecurring: boolean;
-    recurringInterval?: App.Enums.Finance.TransactionRecurringInterval | null;
-    recurringStartAt?: string | null;
-    accountId: string;
-    categoryId: string;
+    is_recurring: boolean;
+    recurring_interval?: App.Enums.Finance.TransactionRecurringInterval | null;
+    recurring_start_at?: string | null;
+    account_id: string;
+    category_id: string;
 };
 
 export function CreateTransactionDrawer() {
@@ -72,16 +72,16 @@ export function CreateTransactionDrawer() {
             },
         ],
     });
-    const form = useForm<FormData>({
-        accountId: accounts?.data[0]?.id ?? "",
+    const form = useForm<CreateTransactionFormData>({
+        account_id: accounts?.data[0]?.id ?? "",
         name: "",
         note: null,
         type: "expense",
         amount: "0.00",
         currency: accounts?.data[0]?.currencyCode ?? "USD",
-        isRecurring: false,
-        recurringInterval: null,
-        categoryId: "",
+        is_recurring: false,
+        recurring_interval: null,
+        category_id: "",
     });
     const { t, language } = useTranslation();
     const currencyFormat = resolveCurrencyFormat(language, form.data.currency || "USD");
@@ -93,9 +93,15 @@ export function CreateTransactionDrawer() {
     const formRef = React.useRef(form);
     React.useEffect(() => {
         if (isOpen && accounts?.data.length) {
-            formRef.current.setData("accountId", accounts?.data[0]?.id ?? "");
+            formRef.current.setData("account_id", accounts?.data[0]?.id ?? "");
         }
     }, [isOpen, accounts?.data]);
+
+    React.useEffect(() => {
+        if (form.data.is_recurring) {
+            formRef.current.setData("recurring_start_at", new Date().toISOString());
+        }
+    }, [form.data.is_recurring]);
 
     const handleOpenChange = async (open: boolean) => {
         if (!open) {
@@ -131,11 +137,12 @@ export function CreateTransactionDrawer() {
                         >
                             <div className="px-5">
                                 <SelectField
+                                    error={form.errors.account_id}
                                     id="accountId"
                                     label="Account"
                                     labelClassName="sr-only"
                                     name="accountId"
-                                    onValueChange={(value) => form.setData("accountId", value)}
+                                    onValueChange={(value) => form.setData("account_id", value)}
                                     options={
                                         accounts?.data.map((account) => ({
                                             label: (
@@ -171,7 +178,7 @@ export function CreateTransactionDrawer() {
                                     }
                                     placeholder="Select an account"
                                     triggerClassName="py-2 px-3 h-auto min-h-auto"
-                                    value={form.data.accountId}
+                                    value={form.data.account_id}
                                 />
                             </div>
 
@@ -230,11 +237,11 @@ export function CreateTransactionDrawer() {
                                 />
 
                                 <SelectField
-                                    error={form.errors.categoryId}
+                                    error={form.errors.category_id}
                                     id="categoryId"
                                     label="Category"
                                     name="categoryId"
-                                    onValueChange={(value) => form.setData("categoryId", value)}
+                                    onValueChange={(value) => form.setData("category_id", value)}
                                     options={
                                         categories?.data.map((category) => ({
                                             label: category.name,
@@ -243,7 +250,7 @@ export function CreateTransactionDrawer() {
                                     }
                                     placeholder="Select a category"
                                     triggerIcon={GeometricShapes01Icon}
-                                    value={form.data.categoryId}
+                                    value={form.data.category_id}
                                 />
                             </div>
 
@@ -269,29 +276,30 @@ export function CreateTransactionDrawer() {
                             <div className="space-y-3 p-5">
                                 <div className="flex items-center gap-2 px-px">
                                     <Switch.Root
-                                        checked={form.data.isRecurring}
+                                        checked={form.data.is_recurring}
                                         id="isRecurring"
                                         name="isRecurring"
                                         onCheckedChange={(checked) => {
-                                            form.setData("isRecurring", checked);
+                                            form.setData("is_recurring", checked);
                                             if (!checked) {
-                                                form.setData("recurringInterval", null);
+                                                form.setData("recurring_interval", null);
+                                                form.setData("recurring_start_at", null);
                                             }
                                         }}
                                     />
                                     <Label.Root htmlFor="isRecurring">Is recurring?</Label.Root>
                                 </div>
 
-                                {form.data.isRecurring && (
+                                {form.data.is_recurring && (
                                     <>
                                         <SelectField
-                                            error={form.errors.recurringInterval}
+                                            error={form.errors.recurring_interval}
                                             hint="In what interval do you want to repeat your transaction (subscription, etc.)?"
                                             label="Recurring interval"
-                                            name="recurringInterval"
+                                            name="recurring_interval"
                                             onValueChange={(value) =>
                                                 form.setData(
-                                                    "recurringInterval",
+                                                    "recurring_interval",
                                                     value as App.Enums.Finance.TransactionRecurringInterval,
                                                 )
                                             }
@@ -301,24 +309,24 @@ export function CreateTransactionDrawer() {
                                             }))}
                                             placeholder="Choose an interval"
                                             triggerIcon={RepeatIcon}
-                                            value={form.data.recurringInterval ?? undefined}
+                                            value={form.data.recurring_interval ?? undefined}
                                         />
 
                                         <DatePicker
-                                            error={form.errors.recurringStartAt}
+                                            error={form.errors.recurring_start_at}
                                             hint="When should the recurring transaction start?"
-                                            id="recurringStartAt"
+                                            id="recurring_start_at"
                                             label="Recurring start date"
                                             labelSub="(Optional)"
                                             mode="single"
-                                            onSelect={(date) => form.setData("recurringStartAt", date?.toISOString())}
+                                            onSelect={(date) => form.setData("recurring_start_at", date?.toISOString())}
                                             placeholder={t("form.fields.expires_at.placeholder")}
                                             selected={
-                                                form.data.recurringStartAt
-                                                    ? new Date(form.data.recurringStartAt)
+                                                form.data.recurring_start_at
+                                                    ? new Date(form.data.recurring_start_at)
                                                     : undefined
                                             }
-                                            value={form.data.recurringStartAt}
+                                            value={form.data.recurring_start_at}
                                         />
                                     </>
                                 )}

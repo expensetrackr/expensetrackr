@@ -12,10 +12,9 @@ use Spatie\LaravelData\Mappers\CamelCaseMapper;
 use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
-/** @final */
 #[TypeScript]
 #[MapName(SnakeCaseMapper::class, CamelCaseMapper::class)]
-class UserData extends Data
+final class UserData extends Data
 {
     public function __construct(
         public readonly int $id,
