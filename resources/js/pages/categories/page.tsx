@@ -1,6 +1,6 @@
 import { Head, Link } from "@inertiajs/react";
 import * as React from "react";
-import GeometricShapes01Icon from "virtual:icons/hugeicons/geometric-shapes-01";
+import GeometricShapes01SolidIcon from "virtual:icons/hugeicons/geometric-shapes-01-solid";
 import ResourcesAddIcon from "virtual:icons/hugeicons/resources-add";
 
 import { Header } from "#/components/header.tsx";
@@ -58,7 +58,7 @@ CategoriesPage.layout = (page: React.ReactNode & { props: PageProps<CategoriesPa
             description="Manage your categories and add new ones."
             icon={
                 <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-(--bg-white-0) shadow-xs ring-1 ring-(--stroke-soft-200) ring-inset">
-                    <GeometricShapes01Icon className="size-6 text-(--text-sub-600)" />
+                    <GeometricShapes01SolidIcon className="size-6 text-(--text-sub-600)" />
                 </div>
             }
             title="Categories"

@@ -1,5 +1,5 @@
 import { Head } from "@inertiajs/react";
-import Invoice03Icon from "virtual:icons/hugeicons/invoice-03";
+import CreditCardSolidIcon from "virtual:icons/hugeicons/credit-card-solid";
 
 import { Header } from "#/components/header.tsx";
 import { PricingTables } from "#/components/pricing-tables.tsx";
@@ -23,7 +23,7 @@ SettingsBillingPage.layout = (page: React.ReactNode & { props: PageProps }) => (
             description="Manage your billing information and subscription details."
             icon={
                 <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-(--bg-white-0) shadow-xs ring-1 ring-(--stroke-soft-200) ring-inset">
-                    <Invoice03Icon className="size-6 text-(--text-sub-600)" />
+                    <CreditCardSolidIcon className="size-6 text-(--text-sub-600)" />
                 </div>
             }
             title="Billing"

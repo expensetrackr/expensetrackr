@@ -1,5 +1,5 @@
 import * as React from "react";
-import InformationFillIcon from "virtual:icons/ri/information-fill";
+import InformationCircleSolidIcon from "virtual:icons/hugeicons/information-circle-solid";
 
 import { type PolymorphicComponentProps } from "#/utils/polymorphic.ts";
 import { recursiveCloneChildren } from "#/utils/recursive-clone-children.tsx";
@@ -64,7 +64,7 @@ export function Icon<T extends React.ElementType>({
     $disabled,
     ...rest
 }: PolymorphicComponentProps<T, HintSharedProps>) {
-    const Component = as || InformationFillIcon;
+    const Component = as || InformationCircleSolidIcon;
     const { icon } = hintVariants({ $error, $disabled });
 
     return <Component className={icon({ class: className })} {...rest} />;

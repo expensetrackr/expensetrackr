@@ -1,8 +1,7 @@
 import * as LabelPrimitives from "@radix-ui/react-label";
 import * as React from "react";
-import AddIcon from "virtual:icons/ri/add-line";
-import ParentIcon from "virtual:icons/ri/parent-line";
-import SaveIcon from "virtual:icons/ri/save-line";
+import Add01Icon from "virtual:icons/hugeicons/add-01";
+import UserGroupIcon from "virtual:icons/hugeicons/user-group";
 
 import { type VariantProps } from "#/utils/tv.ts";
 import { Image } from "../image.tsx";
@@ -70,10 +69,10 @@ export function BentoWorkspaces(props: React.CustomComponentPropsWithRef<typeof 
     return (
         <WidgetBox.Root {...props}>
             <WidgetBox.Header>
-                <WidgetBox.HeaderIcon as={ParentIcon} />
+                <WidgetBox.HeaderIcon as={UserGroupIcon} />
                 Workspace
                 <Button.Root $size="xs" $style="stroke" $type="neutral">
-                    <Button.Icon as={AddIcon} />
+                    <Button.Icon as={Add01Icon} />
                     Add
                 </Button.Root>
             </WidgetBox.Header>
@@ -113,7 +112,6 @@ export function BentoWorkspaces(props: React.CustomComponentPropsWithRef<typeof 
 
                 <Button.Root $size="sm" $type="neutral">
                     Save changes
-                    <Button.Icon as={SaveIcon} />
                 </Button.Root>
             </div>
         </WidgetBox.Root>

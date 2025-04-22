@@ -1,6 +1,6 @@
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import * as React from "react";
-import CloseIcon from "virtual:icons/ri/close-line";
+import Cancel01Icon from "virtual:icons/hugeicons/cancel-01";
 
 import { cn } from "#/utils/cn.ts";
 import * as CompactButton from "./compact-button.tsx";
@@ -57,7 +57,7 @@ function ModalContent({
                     {showClose && (
                         <ModalClose asChild>
                             <CompactButton.Root $size="lg" $style="ghost" className="absolute top-4 right-4">
-                                <CompactButton.Icon as={CloseIcon} />
+                                <CompactButton.Icon as={Cancel01Icon} />
                             </CompactButton.Root>
                         </ModalClose>
                     )}

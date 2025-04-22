@@ -30,14 +30,25 @@ final class DashboardController extends Controller
 
         $balanceSheet = new BalanceSheet($user->currentWorkspace);
 
-        $query = type($request->query('q', ''))->asString();
+        /** @var string */
+        $query = $request->query('q', '');
+
+        /** @var array{period: string} */
+        $totalBalancePeriod = $request->query('total_balance', [
+            'period' => 'last-month',
+        ]);
+        $totalBalanceParams = match ($totalBalancePeriod['period']) {
+            'last-month' => ['period' => Period::lastMonth(), 'interval' => 'day'],
+            'last-6-months' => ['period' => Period::last6Months(), 'interval' => 'month'],
+            'last-year' => ['period' => Period::lastYear(), 'interval' => 'month'],
+            default => ['period' => Period::lastMonth(), 'interval' => 'day'],
+        };
+        dump($totalBalancePeriod, $totalBalanceParams);
 
         return Inertia::render('dashboard', [
             'netWorth' => $balanceSheet->netWorth(),
             'series' => [
-                'lastWeek' => $balanceSheet->netWorthSeries(Period::lastWeek(), 'day'),
-                'lastMonth' => $balanceSheet->netWorthSeries(Period::lastMonth(), 'day'),
-                'lastYear' => $balanceSheet->netWorthSeries(Period::lastYear(), 'month'),
+                'totalBalance' => $balanceSheet->netWorthSeries($totalBalanceParams['period'], $totalBalanceParams['interval']),
             ],
             'transactions' => Transaction::search($query)
                 ->query(function (Builder $query): void {

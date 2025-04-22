@@ -1,9 +1,9 @@
 import { Head, Link, useForm } from "@inertiajs/react";
 import * as React from "react";
 import { toast } from "sonner";
-import LockLineIcon from "virtual:icons/ri/lock-line";
-import MailLineIcon from "virtual:icons/ri/mail-line";
-import UserIcon from "virtual:icons/ri/user-fill";
+import LockPasswordIcon from "virtual:icons/hugeicons/lock-password";
+import Mail01Icon from "virtual:icons/hugeicons/mail-01";
+import User02SolidIcon from "virtual:icons/hugeicons/user-02-solid";
 
 import { Socialstream } from "#/components/socialstream.tsx";
 import * as FancyButton from "#/components/ui/fancy-button.tsx";
@@ -53,7 +53,7 @@ export default function LoginPage({
     };
 
     return (
-        <AuthCard cardIcon={UserIcon} description={t("auth.login.description")} title={t("auth.login.title")}>
+        <AuthCard cardIcon={User02SolidIcon} description={t("auth.login.description")} title={t("auth.login.title")}>
             <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
                 <TextField
                     $error={!!errors.email}
@@ -62,7 +62,7 @@ export default function LoginPage({
                     hint={errors.email}
                     inputMode="email"
                     label={t("form.fields.email.label")}
-                    leadingIcon={MailLineIcon}
+                    leadingIcon={Mail01Icon}
                     name="email"
                     onChange={(e) => setData("email", e.target.value)}
                     placeholder={t("form.fields.email.placeholder")}
@@ -76,7 +76,7 @@ export default function LoginPage({
                         autoComplete="current-password"
                         disabled={processing}
                         id="password"
-                        leadingIcon={LockLineIcon}
+                        leadingIcon={LockPasswordIcon}
                         name="password"
                         onChange={(e) => setData("password", e.target.value)}
                         value={data.password}

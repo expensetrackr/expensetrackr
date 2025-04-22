@@ -1,8 +1,8 @@
 import { getFormProps, useForm } from "@conform-to/react";
 import { getValibotConstraint, parseWithValibot } from "@conform-to/valibot";
+import DollarCircleSolidIcon from "virtual:icons/hugeicons/dollar-circle-solid";
 import GithubIcon from "virtual:icons/hugeicons/github";
 import Mail01Icon from "virtual:icons/hugeicons/mail-01";
-import MoneyDollarCircleFillIcon from "virtual:icons/ri/money-dollar-circle-fill";
 
 import { BentoAccountsTransfers } from "#/components/bento/accounts-transfers.tsx";
 import { BentoHistoricalGraphics } from "#/components/bento/graphics.tsx";
@@ -283,7 +283,7 @@ function ImageAndTextSection() {
                     >
                         <FlowCard
                             description={t("home.sections.image_and_text.balance_step.description")}
-                            icon={MoneyDollarCircleFillIcon}
+                            icon={DollarCircleSolidIcon}
                             title={t("home.sections.image_and_text.balance_step.title")}
                         >
                             {/* TODO: Add the balance step */}

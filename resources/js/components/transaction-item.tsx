@@ -1,7 +1,7 @@
 import NumberFlow, { type Format } from "@number-flow/react";
 import { resolveCurrencyFormat } from "@sumup/intl";
 import Decimal from "decimal.js";
-import ArrowRightSIcon from "virtual:icons/ri/arrow-right-s-line";
+import ArrowRight01Icon from "virtual:icons/hugeicons/arrow-right-01";
 
 import * as CompactButton from "#/components/ui/compact-button.tsx";
 import { useTranslation } from "#/hooks/use-translation.ts";
@@ -86,7 +86,7 @@ export function TransactionItem({
             </div>
             <CompactButton.Root $size="md" $style="ghost" asChild>
                 <div>
-                    <CompactButton.Icon as={ArrowRightSIcon} />
+                    <CompactButton.Icon as={ArrowRight01Icon} />
                 </div>
             </CompactButton.Root>
         </div>

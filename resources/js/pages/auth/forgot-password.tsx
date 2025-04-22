@@ -1,7 +1,7 @@
 import { Head, useForm } from "@inertiajs/react";
 import * as React from "react";
 import { toast } from "sonner";
-import DoorLockIcon from "virtual:icons/ri/door-lock-fill";
+import ForgotPasswordSolidIcon from "virtual:icons/hugeicons/forgot-password-solid";
 
 import * as FancyButton from "#/components/ui/fancy-button.tsx";
 import { TextField } from "#/components/ui/form/text-field.tsx";
@@ -31,7 +31,7 @@ export default function ForgotPasswordPage({ status }: { status?: string }) {
 
     return (
         <AuthCard
-            cardIcon={DoorLockIcon}
+            cardIcon={ForgotPasswordSolidIcon}
             description={t("auth.forgot_password.description")}
             title={t("auth.forgot_password.title")}
         >

@@ -1,4 +1,4 @@
-import Refund2Icon from "virtual:icons/ri/refund-2-line";
+import TransactionHistoryIcon from "virtual:icons/hugeicons/transaction-history";
 
 import { cn } from "#/utils/cn.ts";
 import { TransactionItem } from "../transaction-item.tsx";
@@ -73,7 +73,7 @@ export function BentoRecentTransactions({
     return (
         <WidgetBox.Root className={cn("pb-5", className)} {...props}>
             <WidgetBox.Header>
-                <WidgetBox.HeaderIcon as={Refund2Icon} />
+                <WidgetBox.HeaderIcon as={TransactionHistoryIcon} />
                 Recent Transactions
                 <Button.Root $size="xs" $style="stroke" $type="neutral">
                     See All

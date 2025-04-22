@@ -1,6 +1,6 @@
 import { Slot } from "@radix-ui/react-slot";
 import * as React from "react";
-import ArrowRightSIcon from "virtual:icons/ri/arrow-right-s-line";
+import ArrowRight01Icon from "virtual:icons/hugeicons/arrow-right-01";
 
 import { cn } from "#/utils/cn.ts";
 import { type PolymorphicComponentProps } from "#/utils/polymorphic.ts";
@@ -30,7 +30,7 @@ function VerticalStepperRoot({
 VerticalStepperRoot.displayName = VERTICAL_STEPPER_ROOT_NAME;
 
 function VerticalStepperArrow<T extends React.ElementType>({ className, as, ...rest }: PolymorphicComponentProps<T>) {
-    const Component = as || ArrowRightSIcon;
+    const Component = as || ArrowRight01Icon;
 
     return <Component className={cn("size-5 shrink-0 text-(--text-sub-600)", className)} {...rest} />;
 }

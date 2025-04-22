@@ -8,6 +8,7 @@ import * as Button from "#/components/ui/button.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
 import * as Drawer from "#/components/ui/drawer.tsx";
 import { useAccountsParams } from "#/hooks/use-accounts-params.ts";
+import { useTranslation } from "#/hooks/use-translation.ts";
 import { routes } from "#/routes.ts";
 import { AccountBox } from "./account-box.tsx";
 import { DeleteAccountModal } from "./delete-account-modal.tsx";
@@ -33,13 +34,14 @@ type AccountDetailsDrawerProps = {
 
 export function AccountDetailsDrawer({ account }: AccountDetailsDrawerProps) {
     const { setParams } = useAccountsParams();
+    const { t } = useTranslation();
 
     return (
         <>
             <Drawer.Root onOpenChange={() => setParams({ accountId: null })} open={!!account}>
                 <Drawer.Content>
                     <Drawer.Header>
-                        <Drawer.Title>Account Details</Drawer.Title>
+                        <Drawer.Title>{t("pages.accounts.detailsDrawer.title")}</Drawer.Title>
                     </Drawer.Header>
 
                     <Drawer.Body>
@@ -83,7 +85,7 @@ export function AccountDetailsDrawer({ account }: AccountDetailsDrawerProps) {
                                 })}
                             >
                                 <Button.Icon as={Clock04Icon} />
-                                See All Transactions
+                                {t("pages.accounts.detailsDrawer.actions.seeAllTransactions")}
                             </Link>
                         </Button.Root>
 
@@ -95,7 +97,7 @@ export function AccountDetailsDrawer({ account }: AccountDetailsDrawerProps) {
                             onClick={() => setParams({ action: "delete" })}
                         >
                             <Button.Icon as={Delete02Icon} />
-                            Delete Account
+                            {t("pages.accounts.detailsDrawer.actions.deleteAccount")}
                         </Button.Root>
                     </Drawer.Footer>
                 </Drawer.Content>

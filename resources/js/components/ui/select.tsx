@@ -2,8 +2,8 @@ import * as ScrollAreaPrimitives from "@radix-ui/react-scroll-area";
 import * as SelectPrimitives from "@radix-ui/react-select";
 import { Slottable } from "@radix-ui/react-slot";
 import * as React from "react";
-import ArrowDownSIcon from "virtual:icons/ri/arrow-down-s-line";
-import CheckIcon from "virtual:icons/ri/check-line";
+import ArrowDown01Icon from "virtual:icons/hugeicons/arrow-down-01";
+import Tick01Icon from "virtual:icons/hugeicons/tick-01";
 
 import { cn } from "#/utils/cn.ts";
 import { type PolymorphicComponentProps } from "#/utils/polymorphic.ts";
@@ -272,7 +272,7 @@ function SelectTrigger({
         <SelectPrimitives.Trigger className={triggerRoot({ class: className })} {...rest}>
             <Slottable>{children}</Slottable>
             <SelectPrimitives.Icon asChild>
-                <ArrowDownSIcon className={triggerArrow()} />
+                <ArrowDown01Icon className={triggerArrow()} />
             </SelectPrimitives.Icon>
         </SelectPrimitives.Trigger>
     );
@@ -369,7 +369,7 @@ function SelectItem({ className, children, ...rest }: React.ComponentProps<typeo
                 </span>
             </SelectPrimitives.ItemText>
             <SelectPrimitives.ItemIndicator asChild>
-                <CheckIcon className="absolute top-1/2 right-2 size-5 shrink-0 -translate-y-1/2 text-(--text-sub-600)" />
+                <Tick01Icon className="absolute top-1/2 right-2 size-5 shrink-0 -translate-y-1/2 text-(--text-sub-600)" />
             </SelectPrimitives.ItemIndicator>
         </SelectPrimitives.Item>
     );

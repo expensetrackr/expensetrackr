@@ -2,7 +2,7 @@ import { Link } from "@inertiajs/react";
 import NumberFlow, { type Format } from "@number-flow/react";
 import { resolveCurrencyFormat } from "@sumup/intl";
 import * as React from "react";
-import CheckboxCircleFillIcon from "virtual:icons/ri/checkbox-circle-fill";
+import CheckmarkCircle02SolidIcon from "virtual:icons/hugeicons/checkmark-circle-02-solid";
 
 import { useTranslation } from "#/hooks/use-translation.ts";
 import { useUser } from "#/hooks/use-user.ts";
@@ -151,7 +151,7 @@ export function PricingTables() {
                                                         className="inline-flex items-center gap-1 text-paragraph-sm"
                                                         key={idx}
                                                     >
-                                                        <CheckboxCircleFillIcon className="size-6" />
+                                                        <CheckmarkCircle02SolidIcon className="size-6" />
                                                         <span dangerouslySetInnerHTML={{ __html: feature }} />
                                                     </li>
                                                 ))}
@@ -165,11 +165,11 @@ export function PricingTables() {
 
                                                     <ul className="flex flex-col gap-3">
                                                         <li className="inline-flex items-center gap-1 text-paragraph-sm">
-                                                            <CheckboxCircleFillIcon className="size-6" />
+                                                            <CheckmarkCircle02SolidIcon className="size-6" />
                                                             <span>Early access to new features</span>
                                                         </li>
                                                         <li className="inline-flex items-center gap-1 text-paragraph-sm">
-                                                            <CheckboxCircleFillIcon className="size-6" />
+                                                            <CheckmarkCircle02SolidIcon className="size-6" />
                                                             <span>Priority support</span>
                                                         </li>
                                                     </ul>

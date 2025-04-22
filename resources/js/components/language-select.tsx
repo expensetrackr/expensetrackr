@@ -1,5 +1,5 @@
 import { router } from "@inertiajs/react";
-import GlobalIcon from "virtual:icons/ri/global-line";
+import LanguageSquareIcon from "virtual:icons/hugeicons/language-square";
 
 import { usePageProps } from "#/hooks/use-page-props.ts";
 import { routes } from "#/routes.ts";
@@ -20,7 +20,7 @@ export function LanguageSelect(props: React.CustomComponentPropsWithRef<typeof S
             {...props}
         >
             <Select.Trigger>
-                <Select.TriggerIcon as={GlobalIcon} />
+                <Select.TriggerIcon as={LanguageSquareIcon} />
                 <Select.Value placeholder="Select Language" />
             </Select.Trigger>
             <Select.Content>

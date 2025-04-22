@@ -1,6 +1,5 @@
 import { Head } from "@inertiajs/react";
 import PlusSignIcon from "virtual:icons/hugeicons/plus-sign";
-import Share03Icon from "virtual:icons/hugeicons/share-03";
 import TransactionIcon from "virtual:icons/hugeicons/transaction";
 
 import { Header } from "#/components/header.tsx";
@@ -44,14 +43,10 @@ export default function TransactionsPage({ transactions, transaction, categories
                 }
                 title="Transactions"
             >
-                <Button.Root $style="stroke" $type="neutral" className="w-full md:w-auto">
-                    <Button.Icon as={Share03Icon} />
-                    Export
-                </Button.Root>
                 {permissions?.canCreateTransactions && (
                     <Button.Root onClick={() => actions.setParams({ action: "create", resource: "transactions" })}>
-                        <Button.Icon as={PlusSignIcon} />
-                        Add Transaction
+                        <Button.Icon as={PlusSignIcon} className="size-4" />
+                        Add transaction
                     </Button.Root>
                 )}
             </Header>

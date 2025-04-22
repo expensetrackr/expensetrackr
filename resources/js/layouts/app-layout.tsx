@@ -8,13 +8,15 @@ import { HeaderMobile } from "#/components/header-mobile.tsx";
 import { Sidebar } from "#/components/sidebar.tsx";
 import { Toaster } from "#/components/toaster.tsx";
 import { type PageProps } from "#/types/globals.js";
+import { cn } from "#/utils/cn.ts";
 
-export function AppLayout({
-    children,
-    ...props
-}: PageProps<{
+type AppLayoutProps = PageProps<{
     children: React.ReactNode;
-}>) {
+    defaultCollapsed?: boolean;
+    childrenWrapperClassName?: string;
+}>;
+
+export function AppLayout({ children, defaultCollapsed = false, childrenWrapperClassName, ...props }: AppLayoutProps) {
     React.useEffect(() => {
         if (props.toast?.type) {
             toast[props.toast.type](props.toast.title, {
@@ -27,9 +29,16 @@ export function AppLayout({
     return (
         <>
             <div className="flex min-h-screen flex-col items-start lg:grid lg:grid-cols-[auto_minmax(0,1fr)]">
-                <Sidebar />
+                <Sidebar defaultCollapsed={defaultCollapsed} />
                 <HeaderMobile />
-                <div className="mx-auto flex w-full max-w-[1360px] flex-1 flex-col self-stretch">{children}</div>
+                <div
+                    className={cn(
+                        "mx-auto flex w-full max-w-[1360px] flex-1 flex-col self-stretch",
+                        childrenWrapperClassName,
+                    )}
+                >
+                    {children}
+                </div>
             </div>
 
             <Toaster position="top-center" />

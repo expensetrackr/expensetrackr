@@ -1,11 +1,15 @@
 import { usePage } from "@inertiajs/react";
 import * as React from "react";
 import { useHotkeys } from "react-hotkeys-hook";
-import Analytics02Icon from "virtual:icons/hugeicons/analytics-02";
-import Setting07Icon from "virtual:icons/hugeicons/setting-07";
-import TransactionIcon from "virtual:icons/hugeicons/transaction";
+import ArrowRight01Icon from "virtual:icons/hugeicons/arrow-right-01";
+import DashboardSquare02Icon from "virtual:icons/hugeicons/dashboard-square-02";
+import DashboardSquare02SolidIcon from "virtual:icons/hugeicons/dashboard-square-02-solid";
+import Settings02Icon from "virtual:icons/hugeicons/settings-02";
+import Settings02SolidIcon from "virtual:icons/hugeicons/settings-02-solid";
+import TransactionHistoryIcon from "virtual:icons/hugeicons/transaction-history";
+import TransactionHistorySolidIcon from "virtual:icons/hugeicons/transaction-history-solid";
 import Wallet05Icon from "virtual:icons/hugeicons/wallet-05";
-import ArrowRightSIcon from "virtual:icons/ri/arrow-right-s-line";
+import Wallet05SolidIcon from "virtual:icons/hugeicons/wallet-05-solid";
 
 import { routes } from "#/routes.ts";
 import { cn } from "#/utils/cn.ts";
@@ -16,15 +20,31 @@ import { WorkspaceSwitch } from "./workspace-switch.tsx";
 
 type NavigationLink = {
     icon: React.ForwardRefExoticComponent<React.SVGProps<SVGSVGElement>>;
+    activeIcon: React.ForwardRefExoticComponent<React.SVGProps<SVGSVGElement>>;
     label: string;
     href: string;
     disabled?: boolean;
 };
 
 export const navigationLinks: Array<NavigationLink> = [
-    { icon: Analytics02Icon, label: "Dashboard", href: routes.dashboard.url() },
-    { icon: Wallet05Icon, label: "Accounts", href: routes.accounts.index.url() },
-    { icon: TransactionIcon, label: "Transactions", href: routes.transactions.index.url() },
+    {
+        icon: DashboardSquare02Icon,
+        activeIcon: DashboardSquare02SolidIcon,
+        label: "Dashboard",
+        href: routes.dashboard.url(),
+    },
+    {
+        icon: Wallet05Icon,
+        activeIcon: Wallet05SolidIcon,
+        label: "Accounts",
+        href: routes.accounts.index.url(),
+    },
+    {
+        icon: TransactionHistoryIcon,
+        activeIcon: TransactionHistorySolidIcon,
+        label: "Transactions",
+        href: routes.transactions.index.url(),
+    },
 ];
 
 function useCollapsedState({ defaultCollapsed = false }: { defaultCollapsed?: boolean }): {
@@ -107,7 +127,7 @@ function NavigationMenu({ collapsed }: { collapsed: boolean }) {
                 Main
             </div>
             <div className="space-y-1">
-                {navigationLinks.map(({ icon: Icon, label, href, disabled }, i) => (
+                {navigationLinks.map(({ icon: Icon, activeIcon: ActiveIcon, label, href, disabled }, i) => (
                     <Link
                         aria-disabled={disabled}
                         className={cn(
@@ -130,16 +150,25 @@ function NavigationMenu({ collapsed }: { collapsed: boolean }) {
                                 collapsed ? "-left-[22px]" : "-left-5",
                             )}
                         />
-                        <Icon
-                            className={cn(
-                                "size-5 shrink-0 text-(--text-sub-600) transition",
-                                "group-aria-[current=page]:text-primary",
-                            )}
-                        />
+                        {url.includes(href) ? (
+                            <ActiveIcon
+                                className={cn(
+                                    "hidden size-5 shrink-0 text-(--text-sub-600) transition group-aria-[current=page]:block",
+                                    "group-aria-[current=page]:text-primary",
+                                )}
+                            />
+                        ) : (
+                            <Icon
+                                className={cn(
+                                    "block size-5 shrink-0 text-(--text-sub-600) transition group-aria-[current=page]:hidden",
+                                    "group-aria-[current=page]:text-primary",
+                                )}
+                            />
+                        )}
 
                         <div className="flex w-[180px] shrink-0 items-center gap-2" data-hide-collapsed>
                             <div className="flex-1 text-label-sm">{label}</div>
-                            {url === href && <ArrowRightSIcon className="size-5 text-(--text-sub-600)" />}
+                            {url.includes(href) && <ArrowRight01Icon className="size-5 text-(--text-sub-600)" />}
                         </div>
                     </Link>
                 ))}
@@ -154,7 +183,8 @@ function SettingsAndSupport({ collapsed }: { collapsed: boolean }) {
     const links = [
         {
             href: "/settings",
-            icon: Setting07Icon,
+            icon: Settings02Icon,
+            activeIcon: Settings02SolidIcon,
             label: "Settings",
         },
     ];
@@ -169,11 +199,12 @@ function SettingsAndSupport({ collapsed }: { collapsed: boolean }) {
                 Others
             </div>
             <div className="space-y-1">
-                {links.map(({ icon: Icon, label, href }, i) => {
-                    const isActivePage = url.startsWith(href);
+                {links.map(({ icon: Icon, activeIcon: ActiveIcon, label, href }, i) => {
+                    const isActivePage = url.includes(href) || url.includes("/workspaces/ws_");
 
                     return (
                         <Link
+                            aria-current={isActivePage ? "page" : undefined}
                             className={cn(
                                 "group relative flex items-center gap-2 rounded-8 py-2 whitespace-nowrap text-(--text-sub-600) hover:bg-(--bg-weak-50)",
                                 "transition",
@@ -198,16 +229,24 @@ function SettingsAndSupport({ collapsed }: { collapsed: boolean }) {
                                     },
                                 )}
                             />
-                            <Icon
-                                className={cn(
-                                    "size-5 shrink-0 text-(--text-sub-600) transition",
-                                    "group-aria-[current=page]:text-primary",
-                                )}
-                            />
-
+                            {isActivePage ? (
+                                <ActiveIcon
+                                    className={cn(
+                                        "size-5 shrink-0 text-(--text-sub-600) transition",
+                                        "group-aria-[current=page]:text-primary",
+                                    )}
+                                />
+                            ) : (
+                                <Icon
+                                    className={cn(
+                                        "size-5 shrink-0 text-(--text-sub-600) transition",
+                                        "group-aria-[current=page]:text-primary",
+                                    )}
+                                />
+                            )}
                             <div className="flex w-[180px] shrink-0 items-center gap-2" data-hide-collapsed>
                                 <div className="flex-1 text-label-sm">{label}</div>
-                                {isActivePage && <ArrowRightSIcon className="size-5 text-(--text-sub-600)" />}
+                                {isActivePage && <ArrowRight01Icon className="size-5 text-(--text-sub-600)" />}
                             </div>
                         </Link>
                     );

@@ -1,13 +1,13 @@
 import { Head } from "@inertiajs/react";
-import UserMultiple02Icon from "virtual:icons/hugeicons/user-multiple-02";
+import UserGroupSolidIcon from "virtual:icons/hugeicons/user-group-solid";
 
+import { UpdateWorkspaceNameForm } from "#/components/forms/update-workspace-name-form.tsx";
+import { WorkspaceSettingsForm } from "#/components/forms/workspace-settings-form.tsx";
 import { Header } from "#/components/header.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
+import { WorkspaceMemberInvitations } from "#/components/workspace-member-invitations.tsx";
+import { WorkspaceMemberManager } from "#/components/workspace-member-manager.tsx";
 import { SettingsLayout } from "#/layouts/settings-layout.tsx";
-import { WorkspaceMemberInvitations } from "#/pages/workspaces/partials/workspace-member-invitations.tsx";
-import { WorkspaceSettingsForm } from "./__components/workspace-settings-form.tsx";
-import { UpdateWorkspaceNameForm } from "./partials/update-workspace-name-form.tsx";
-import { WorkspaceMemberManager } from "./partials/workspace-member-manager.tsx";
 
 type WorkspacesShowProps = {
     workspace: App.Data.Workspace.WorkspaceData;
@@ -59,7 +59,7 @@ WorkspacesShow.layout = (page: React.ReactNode & { props: App.Data.Shared.Shared
             description="Customize and edit essential workspace details."
             icon={
                 <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-(--bg-white-0) shadow-xs ring-1 ring-(--stroke-soft-200) ring-inset">
-                    <UserMultiple02Icon className="size-6 text-(--text-sub-600)" />
+                    <UserGroupSolidIcon className="size-6 text-(--text-sub-600)" />
                 </div>
             }
             title="Workspace settings"

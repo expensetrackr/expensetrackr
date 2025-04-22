@@ -1,6 +1,6 @@
 import * as React from "react";
-import EyeLineIcon from "virtual:icons/ri/eye-line";
-import EyeOffLineIcon from "virtual:icons/ri/eye-off-line";
+import ViewIcon from "virtual:icons/hugeicons/view";
+import ViewOffSlashIcon from "virtual:icons/hugeicons/view-off-slash";
 
 import { TextField } from "./text-field.tsx";
 
@@ -12,9 +12,9 @@ export function PasswordInput(props: React.CustomComponentPropsWithRef<typeof Te
             inlineTrailingNode={
                 <button onClick={() => setShowPassword((s) => !s)} type="button">
                     {showPassword ? (
-                        <EyeOffLineIcon className="size-5 text-(--text-soft-400) group-has-disabled:text-(--text-disabled-300)" />
+                        <ViewOffSlashIcon className="size-5 text-(--text-soft-400) group-has-disabled:text-(--text-disabled-300)" />
                     ) : (
-                        <EyeLineIcon className="size-5 text-(--text-soft-400) group-has-disabled:text-(--text-disabled-300)" />
+                        <ViewIcon className="size-5 text-(--text-soft-400) group-has-disabled:text-(--text-disabled-300)" />
                     )}
                 </button>
             }
