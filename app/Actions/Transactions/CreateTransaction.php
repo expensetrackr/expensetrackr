@@ -63,7 +63,11 @@ final class CreateTransaction
                 $input['base_amount'] = $input['amount'];
                 $input['base_currency'] = $currency;
                 $input['currency_rate'] = $exchangeRate;
-                $input['amount'] = $amount / $exchangeRate;
+                $input['amount'] = bcdiv(
+                    type($input['amount'])->asString(),
+                    $exchangeRate,
+                    4,
+                );
                 $input['currency'] = 'USD';
             }
 

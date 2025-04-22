@@ -1,8 +1,5 @@
 import { Link } from "@inertiajs/react";
-import NumberFlow, { type Format } from "@number-flow/react";
-import { resolveCurrencyFormat } from "@sumup/intl";
 import { getCoreRowModel, useReactTable, type ColumnDef, flexRender } from "@tanstack/react-table";
-import Decimal from "decimal.js";
 import * as React from "react";
 import MoreVerticalIcon from "virtual:icons/hugeicons/more-vertical";
 
@@ -17,6 +14,7 @@ import { useTranslation } from "#/hooks/use-translation.ts";
 import { routes } from "#/routes.ts";
 import { cn } from "#/utils/cn.ts";
 import { formatDate } from "#/utils/date-formatter.ts";
+import { currencyFormatter } from "#/utils/number-formatter.ts";
 
 type TransactionsTableProps = {
     data: Array<Resources.Transaction>;
@@ -86,29 +84,39 @@ export function TransactionsTable({ data: initialData, total }: TransactionsTabl
                 accessorFn: (row) => row.amount,
                 header: "Amount",
                 cell: ({ row }) => {
-                    const formatter = resolveCurrencyFormat(language, row.original.currency);
-                    const decimalValue = new Decimal(row.original.amount)
-                        .toDecimalPlaces(formatter?.minimumFractionDigits)
-                        .toNumber();
-                    const isPositive = decimalValue > 0;
-                    const format: Format = {
-                        style: "currency",
-                        currency: row.original.currency,
-                        minimumFractionDigits: formatter?.minimumFractionDigits,
-                        maximumFractionDigits: formatter?.maximumFractionDigits,
-                    };
-
                     return (
-                        <div
-                            className={cn(
-                                "text-paragraph-sm",
-                                isPositive ? "text-state-success-base" : "text-state-error-base",
+                        <div className="space-y-1">
+                            <div
+                                className={cn(
+                                    "text-paragraph-sm",
+                                    row.original.type === "expense"
+                                        ? "text-state-error-base"
+                                        : "text-state-success-base",
+                                )}
+                            >
+                                <span>
+                                    {currencyFormatter({
+                                        amount: row.original.amount,
+                                        currency: row.original.currency,
+                                        locale: language,
+                                    })}
+                                </span>
+                                <span className="ml-1 text-subheading-2xs text-(--text-sub-600)">
+                                    {row.original.currency}
+                                </span>
+                            </div>
+                            {row.original.baseAmount && row.original.baseCurrency && (
+                                <div className="text-paragraph-xs text-(--text-sub-600)">
+                                    <span>
+                                        {currencyFormatter({
+                                            amount: row.original.baseAmount,
+                                            currency: row.original.baseCurrency,
+                                            locale: language,
+                                        })}
+                                    </span>
+                                    <span className="ml-1 text-subheading-2xs">{row.original.baseCurrency}</span>
+                                </div>
                             )}
-                        >
-                            <NumberFlow animated={false} format={format} value={decimalValue} />
-                            <span className="ml-1 text-subheading-2xs text-(--text-sub-600)">
-                                {row.original.currency}
-                            </span>
                         </div>
                     );
                 },
