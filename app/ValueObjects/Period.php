@@ -24,7 +24,7 @@ final readonly class Period
     public static function lastMonth(): self
     {
         return new self(
-            startDate: CarbonImmutable::now()->subDays(29)->startOfDay(),
+            startDate: CarbonImmutable::now()->subMonth()->startOfDay(),
             endDate: CarbonImmutable::now()->endOfDay(),
         );
     }

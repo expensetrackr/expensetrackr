@@ -150,17 +150,17 @@ function NavigationMenu({ collapsed }: { collapsed: boolean }) {
                                 collapsed ? "-left-[22px]" : "-left-5",
                             )}
                         />
-                        {url === href ? (
+                        {url.includes(href) ? (
                             <ActiveIcon
                                 className={cn(
-                                    "size-5 shrink-0 text-(--text-sub-600) transition",
+                                    "hidden size-5 shrink-0 text-(--text-sub-600) transition group-aria-[current=page]:block",
                                     "group-aria-[current=page]:text-primary",
                                 )}
                             />
                         ) : (
                             <Icon
                                 className={cn(
-                                    "size-5 shrink-0 text-(--text-sub-600) transition",
+                                    "block size-5 shrink-0 text-(--text-sub-600) transition group-aria-[current=page]:hidden",
                                     "group-aria-[current=page]:text-primary",
                                 )}
                             />
@@ -168,7 +168,7 @@ function NavigationMenu({ collapsed }: { collapsed: boolean }) {
 
                         <div className="flex w-[180px] shrink-0 items-center gap-2" data-hide-collapsed>
                             <div className="flex-1 text-label-sm">{label}</div>
-                            {url === href && <ArrowRight01Icon className="size-5 text-(--text-sub-600)" />}
+                            {url.includes(href) && <ArrowRight01Icon className="size-5 text-(--text-sub-600)" />}
                         </div>
                     </Link>
                 ))}
@@ -200,10 +200,11 @@ function SettingsAndSupport({ collapsed }: { collapsed: boolean }) {
             </div>
             <div className="space-y-1">
                 {links.map(({ icon: Icon, activeIcon: ActiveIcon, label, href }, i) => {
-                    const isActivePage = url.startsWith(href);
+                    const isActivePage = url.includes(href) || url.includes("/workspaces/ws_");
 
                     return (
                         <Link
+                            aria-current={isActivePage ? "page" : undefined}
                             className={cn(
                                 "group relative flex items-center gap-2 rounded-8 py-2 whitespace-nowrap text-(--text-sub-600) hover:bg-(--bg-weak-50)",
                                 "transition",

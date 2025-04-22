@@ -1,7 +1,9 @@
 import NumberFlow from "@number-flow/react";
 import { format } from "date-fns";
 import type Decimal from "decimal.js";
+import * as React from "react";
 
+import { totalBalancePeriods, useDashboardParams } from "#/hooks/use-dashboard-params.ts";
 import { useTranslation } from "#/hooks/use-translation.ts";
 import { type Trend } from "#/types/index.js";
 import { cn } from "#/utils/cn.ts";
@@ -9,6 +11,7 @@ import { decimalFlowFormatter } from "#/utils/currency-formatter.ts";
 import { decimalFormatter } from "#/utils/number-formatter.ts";
 import ChartStepLine from "../chart-step-line.tsx";
 import * as Badge from "../ui/badge.tsx";
+import * as Select from "../ui/select.tsx";
 
 type TotalBalanceWidgetProps = React.HTMLAttributes<HTMLDivElement> & {
     title: string;
@@ -24,23 +27,27 @@ type TotalBalanceWidgetProps = React.HTMLAttributes<HTMLDivElement> & {
             trend: Trend;
         }[];
     };
-    formatStr?: string;
 };
 
-export function TotalBalanceWidget({
-    title,
-    formatStr = "MMM",
-    netWorth,
-    netWorthSeries,
-    className,
-    ...rest
-}: TotalBalanceWidgetProps) {
-    const { language } = useTranslation();
+export function TotalBalanceWidget({ title, netWorth, netWorthSeries, className, ...rest }: TotalBalanceWidgetProps) {
+    const { t, language } = useTranslation();
+    const { totalBalancePeriod, setParams } = useDashboardParams();
     const netWorthFlow = decimalFlowFormatter({
         amount: netWorth,
         currency: "USD",
         language,
     });
+
+    const dateFormatString = React.useMemo(() => {
+        switch (netWorthSeries.interval) {
+            case "day":
+                return "MM/dd";
+            case "month":
+                return "MMM";
+            default:
+                return "MMM";
+        }
+    }, [netWorthSeries.interval]);
 
     return (
         <div
@@ -67,6 +74,24 @@ export function TotalBalanceWidget({
                             </Badge.Root>
                         </div>
                     </div>
+
+                    <Select.Root
+                        $size="xs"
+                        $variant="compact"
+                        onValueChange={(value) => setParams({ totalBalancePeriod: value })}
+                        value={totalBalancePeriod}
+                    >
+                        <Select.Trigger>
+                            <Select.Value />
+                        </Select.Trigger>
+                        <Select.Content align="center">
+                            {totalBalancePeriods.map((item) => (
+                                <Select.Item key={item} value={item}>
+                                    {t(`common.periods.${item}`)}
+                                </Select.Item>
+                            ))}
+                        </Select.Content>
+                    </Select.Root>
                 </div>
 
                 <ChartStepLine
@@ -77,7 +102,7 @@ export function TotalBalanceWidget({
                     }))}
                     index="date"
                     xAxisProps={{
-                        tickFormatter: (value) => format(value, formatStr).toLocaleUpperCase(),
+                        tickFormatter: (value) => format(value, dateFormatString).toLocaleUpperCase(),
                         tickMargin: 8,
                     }}
                     yAxisProps={{ hide: true }}
