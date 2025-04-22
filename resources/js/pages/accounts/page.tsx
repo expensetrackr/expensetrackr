@@ -1,4 +1,4 @@
-import { Head, Link } from "@inertiajs/react";
+import { Head } from "@inertiajs/react";
 import Add01Icon from "virtual:icons/hugeicons/add-01";
 import Wallet05Icon from "virtual:icons/hugeicons/wallet-05";
 
@@ -12,7 +12,6 @@ import * as Divider from "#/components/ui/divider.tsx";
 import { useActionsParams } from "#/hooks/use-actions-params.ts";
 import { useTranslation } from "#/hooks/use-translation.ts";
 import { AppLayout } from "#/layouts/app-layout.tsx";
-import { routes } from "#/routes.ts";
 import { type PageProps } from "#/types/globals.js";
 
 type AccountsPageProps = {
@@ -67,11 +66,13 @@ export default function AccountsPage({ accounts, account, permissions }: PagePro
                                 )}
                             </div>
                             {permissions.canCreateAccounts && (
-                                <Button.Root $size="xs" $style="stroke" asChild>
-                                    <Link href={routes.accounts.create.url()}>
-                                        <Button.Icon as={Add01Icon} className="size-4" />
-                                        {t("pages.accounts.actions.createAccount")}
-                                    </Link>
+                                <Button.Root
+                                    $size="xs"
+                                    $style="stroke"
+                                    onClick={() => setParams({ action: "create", resource: "accounts" })}
+                                >
+                                    <Button.Icon as={Add01Icon} className="size-4" />
+                                    {t("pages.accounts.actions.createAccount")}
                                 </Button.Root>
                             )}
                         </div>
