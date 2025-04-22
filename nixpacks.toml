@@ -166,7 +166,6 @@ http {
         )
 
         add_header X-Content-Type-Options "nosniff";
-        add_header X-Inertia "true";
 
         client_max_body_size 35M;
 
