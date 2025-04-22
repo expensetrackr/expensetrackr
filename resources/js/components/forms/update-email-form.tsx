@@ -38,7 +38,6 @@ export function UpdateEmailForm() {
                 <TextField
                     $error={!!errors.email}
                     autoComplete="username"
-                    autoFocus
                     data-auto-submit
                     disabled={form.processing}
                     hint={errors.email}

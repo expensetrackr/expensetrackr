@@ -1,6 +1,7 @@
 import { usePage } from "@inertiajs/react";
 import * as DialogPrimitives from "@radix-ui/react-dialog";
 import * as React from "react";
+import Add01Icon from "virtual:icons/hugeicons/add-01";
 import ArrowRight01Icon from "virtual:icons/hugeicons/arrow-right-01";
 import Cancel01Icon from "virtual:icons/hugeicons/cancel-01";
 import HeadsetIcon from "virtual:icons/hugeicons/headset";
@@ -11,15 +12,20 @@ import Settings02Icon from "virtual:icons/hugeicons/settings-02";
 import { Link } from "#/components/link.tsx";
 import { navigationLinks } from "#/components/sidebar.tsx";
 import * as TopbarItemButton from "#/components/topbar-item-button.tsx";
-import * as TabMenuHorizontal from "#/components/ui/tab-menu-horizontal.tsx";
+import * as Button from "#/components/ui/button.tsx";
 import { UserButtonMobile } from "#/components/user-button.tsx";
+import { useActionsParams } from "#/hooks/use-actions-params.ts";
 import useBreakpoint from "#/hooks/use-breakpoint.ts";
+import { useTranslation } from "#/hooks/use-translation.ts";
+import { routes } from "#/routes.ts";
 import { cn } from "#/utils/cn.ts";
 
 export function MobileMenu() {
     const { lg } = useBreakpoint();
     const [open, setOpen] = React.useState(false);
     const pathname = usePage().url;
+    const { t } = useTranslation();
+    const actions = useActionsParams();
 
     React.useEffect(() => {
         setOpen(false);
@@ -72,11 +78,19 @@ export function MobileMenu() {
                             </div>
                             <div className="flex gap-3">
                                 <div className="flex gap-1">
-                                    <TopbarItemButton.Root>
-                                        <TopbarItemButton.Icon as={HeadsetIcon} />
+                                    <TopbarItemButton.Root asChild>
+                                        <Link
+                                            href="mailto:support@expensetrackr.com"
+                                            rel="noopener noreferrer"
+                                            target="_blank"
+                                        >
+                                            <TopbarItemButton.Icon as={HeadsetIcon} />
+                                        </Link>
                                     </TopbarItemButton.Root>
-                                    <TopbarItemButton.Root>
-                                        <TopbarItemButton.Icon as={Settings02Icon} />
+                                    <TopbarItemButton.Root asChild>
+                                        <Link href={routes.settings.show.url()}>
+                                            <TopbarItemButton.Icon as={Settings02Icon} />
+                                        </Link>
                                     </TopbarItemButton.Root>
                                 </div>
                                 <div className="flex w-1 shrink-0 items-center before:h-full before:w-px before:bg-(--stroke-soft-200)" />
@@ -89,88 +103,43 @@ export function MobileMenu() {
                         </div>
                         {/* <CompanySwitchMobile /> */}
 
-                        <TabMenuHorizontal.Root className="flex flex-1 flex-col" defaultValue="main">
-                            <TabMenuHorizontal.List className="gap-8 px-7">
-                                <TabMenuHorizontal.Trigger className="flex-1 text-label-md" value="main">
-                                    Main
-                                </TabMenuHorizontal.Trigger>
-                                <div className="flex h-6 w-1 shrink-0 items-center before:h-full before:w-px before:bg-(--stroke-soft-200)" />
-                                <TabMenuHorizontal.Trigger className="flex-1 text-label-md" value="favorites">
-                                    Favorites
-                                </TabMenuHorizontal.Trigger>
-                            </TabMenuHorizontal.List>
-
-                            <div className="flex-1 py-6">
-                                <TabMenuHorizontal.Content
-                                    className="data-[state=active]:duration-300 data-[state=active]:animate-in data-[state=active]:fade-in-0"
-                                    value="main"
+                        <div className="flex flex-1 flex-col gap-5 py-6">
+                            {navigationLinks.map(({ icon: Icon, label, href }, i) => (
+                                <Link
+                                    className={cn(
+                                        "group relative flex w-full items-center gap-2.5 px-5 whitespace-nowrap text-(--text-sub-600)",
+                                    )}
+                                    href={href}
+                                    key={i}
                                 >
-                                    <div className="flex flex-col gap-5">
-                                        {navigationLinks.map(({ icon: Icon, label, href }, i) => (
-                                            <Link
-                                                className={cn(
-                                                    "group relative flex w-full items-center gap-2.5 px-5 whitespace-nowrap text-(--text-sub-600)",
-                                                )}
-                                                href={href}
-                                                key={i}
-                                            >
-                                                <Icon
-                                                    className={cn(
-                                                        "size-[22px] shrink-0 text-(--text-sub-600) transition",
-                                                        "group-aria-[current=page]:text-primary",
-                                                    )}
-                                                />
-                                                <div className="flex-1 text-label-md">{label}</div>
-                                                <div
-                                                    className={cn(
-                                                        "absolute top-1/2 left-0 h-5 w-1 origin-left -translate-y-1/2 rounded-r-full bg-primary transition",
-                                                        {
-                                                            "scale-0": pathname !== href,
-                                                        },
-                                                    )}
-                                                />
-                                                <ArrowRight01Icon className="size-6 text-(--text-sub-600)" />
-                                            </Link>
-                                        ))}
-                                    </div>
-                                </TabMenuHorizontal.Content>
-                                <TabMenuHorizontal.Content
-                                    className="data-[state=active]:duration-300 data-[state=active]:animate-in data-[state=active]:fade-in-0"
-                                    value="favorites"
-                                >
-                                    <div className="flex flex-col gap-5">
-                                        {/* {favoriteLinks.map((project, i) => (
-                        <Link
-                          key={i}
-                          href={project.href}
-                          className={cn(
-                            'group flex w-full items-center gap-2.5 whitespace-nowrap px-5 text-text-sub-600',
-                          )}
-                        >
-                          <div className='flex size-[22px] shrink-0 items-center justify-center'>
-                            <div className='size-3 scale-110 rounded-full border-2 border-stroke-white-0 shadow-regular-sm'>
-                              <div
-                                className={cn(
-                                  'size-2 rounded-full',
-                                  LABEL_COLORS[
-                                    project.color as keyof typeof LABEL_COLORS
-                                  ].bg,
-                                )}
-                              />
-                            </div>
-                          </div>
-                          <div className='flex-1 text-label-md'>
-                            {project.projectName}
-                          </div>
-                          <ArrowRightSIcon className='size-6 text-text-sub-600' />
-                        </Link>
-                      ))} */}
-                                    </div>
-                                </TabMenuHorizontal.Content>
-                            </div>
-                        </TabMenuHorizontal.Root>
+                                    <Icon
+                                        className={cn(
+                                            "size-[22px] shrink-0 text-(--text-sub-600) transition",
+                                            "group-aria-[current=page]:text-primary",
+                                        )}
+                                    />
+                                    <div className="flex-1 text-label-md">{label}</div>
+                                    <div
+                                        className={cn(
+                                            "absolute top-1/2 left-0 h-5 w-1 origin-left -translate-y-1/2 rounded-r-full bg-primary transition",
+                                            {
+                                                "scale-0": pathname !== href,
+                                            },
+                                        )}
+                                    />
+                                    <ArrowRight01Icon className="size-6 text-(--text-sub-600)" />
+                                </Link>
+                            ))}
+                        </div>
 
-                        <div className="grid border-y border-(--stroke-soft-200) p-4">{/* <MoveMoneyButton /> */}</div>
+                        <div className="grid border-y border-(--stroke-soft-200) p-4">
+                            <Button.Root
+                                onClick={() => actions.setParams({ action: "create", resource: "transactions" })}
+                            >
+                                <Button.Icon as={Add01Icon} className="size-4" />
+                                {t("dashboard.actions.createTransaction")}
+                            </Button.Root>
+                        </div>
 
                         <div className="p-2">
                             <UserButtonMobile />
