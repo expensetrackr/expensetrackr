@@ -2,9 +2,9 @@ import { useForm } from "@inertiajs/react";
 import { flexRender, getCoreRowModel, useReactTable, type ColumnDef } from "@tanstack/react-table";
 import { parseAsStringEnum, useQueryState } from "nuqs";
 import * as React from "react";
-import ChromeIcon from "virtual:icons/ri/chrome-line";
-import FirefoxIcon from "virtual:icons/ri/firefox-line";
-import LogoutCircleRIcon from "virtual:icons/ri/logout-circle-r-line";
+import Logout01Icon from "virtual:icons/hugeicons/logout-01";
+import ChromeIcon from "virtual:icons/logos/chrome";
+import FirefoxIcon from "virtual:icons/logos/firefox";
 
 import { ActionSection } from "#/components/action-section.tsx";
 import * as Button from "#/components/ui/button.tsx";
@@ -111,7 +111,7 @@ export function LogoutOtherBrowserSessionsForm({ sessions }: LogoutOtherBrowserS
                     <Modal.Content className="max-w-[440px]">
                         <Modal.Header
                             description="Please enter your password to confirm you would like to log out of your other browser sessions across all of your devices."
-                            icon={LogoutCircleRIcon}
+                            icon={Logout01Icon}
                             title="Log out other browser sessions"
                         />
 

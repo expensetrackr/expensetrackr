@@ -2,20 +2,20 @@ import useEmblaCarousel from "embla-carousel-react";
 import { CurrencyInput } from "headless-currency-input";
 import { AnimatePresence, motion } from "motion/react";
 import * as React from "react";
-import ArrowDownSIcon from "virtual:icons/ri/arrow-down-s-line";
-import ArrowLeftRightIcon from "virtual:icons/ri/arrow-left-right-line";
-import ArrowLeftSIcon from "virtual:icons/ri/arrow-left-s-line";
-import ArrowRightSIcon from "virtual:icons/ri/arrow-right-s-line";
-import CheckboxCircleFillIcon from "virtual:icons/ri/checkbox-circle-fill";
-import SendPlaneFillIcon from "virtual:icons/ri/send-plane-fill";
-import Settings4Icon from "virtual:icons/ri/settings-4-line";
+import ArrowDown01Icon from "virtual:icons/hugeicons/arrow-down-01";
+import ArrowLeft01Icon from "virtual:icons/hugeicons/arrow-left-01";
+import ArrowLeftRightIcon from "virtual:icons/hugeicons/arrow-left-right";
+import ArrowRight01Icon from "virtual:icons/hugeicons/arrow-right-01";
+import CheckmarkCircle02SolidIcon from "virtual:icons/hugeicons/checkmark-circle-02-solid";
+import SentIcon from "virtual:icons/hugeicons/sent";
+import Settings02Icon from "virtual:icons/hugeicons/settings-02";
 
-import * as Button from "#/components/ui/button.tsx";
-import * as CompactButton from "#/components/ui/compact-button.tsx";
-import * as Divider from "#/components/ui/divider.tsx";
-import * as WidgetBox from "#/components/widget-box.tsx";
 import { cn } from "#/utils/cn.ts";
 import { Image } from "../image.tsx";
+import * as Button from "../ui/button.tsx";
+import * as CompactButton from "../ui/compact-button.tsx";
+import * as Divider from "../ui/divider.tsx";
+import * as WidgetBox from "../widget-box.tsx";
 
 type Account = {
     id: string;
@@ -96,7 +96,7 @@ function AccountPill({ account, selected, className, ref, ...rest }: AccountPill
                         initial={{ width: 0, scale: 0 }}
                     >
                         <div className="pl-1.5">
-                            <CheckboxCircleFillIcon className="size-4 text-state-success-base" />
+                            <CheckmarkCircle02SolidIcon className="size-4 text-state-success-base" />
                         </div>
                     </motion.div>
                 )}
@@ -142,7 +142,7 @@ export function BentoAccountsTransfers(props: React.CustomComponentPropsWithRef<
                 <WidgetBox.HeaderIcon as={ArrowLeftRightIcon} />
                 Quick Transfer
                 <Button.Root $size="xs" $style="stroke" $type="neutral">
-                    <Button.Icon as={Settings4Icon} />
+                    <Button.Icon as={Settings02Icon} />
                     Advanced
                 </Button.Root>
             </WidgetBox.Header>
@@ -162,7 +162,7 @@ export function BentoAccountsTransfers(props: React.CustomComponentPropsWithRef<
                                 disabled={!canScrollPrev}
                                 onClick={scrollPrev}
                             >
-                                <CompactButton.Icon as={ArrowLeftSIcon} />
+                                <CompactButton.Icon as={ArrowLeft01Icon} />
                             </CompactButton.Root>
                             <CompactButton.Root
                                 $size="md"
@@ -170,7 +170,7 @@ export function BentoAccountsTransfers(props: React.CustomComponentPropsWithRef<
                                 disabled={!canScrollNext}
                                 onClick={scrollNext}
                             >
-                                <CompactButton.Icon as={ArrowRightSIcon} />
+                                <CompactButton.Icon as={ArrowRight01Icon} />
                             </CompactButton.Root>
                         </div>
                     </div>
@@ -202,7 +202,7 @@ export function BentoAccountsTransfers(props: React.CustomComponentPropsWithRef<
                             />
                             <div className="text-paragraph-sm text-(--text-sub-600)">Fast Pay</div>
                         </div>
-                        <ArrowDownSIcon className="size-5 shrink-0 text-(--text-sub-600)" />
+                        <ArrowDown01Icon className="size-5 shrink-0 text-(--text-sub-600)" />
                     </div>
                     <div className="flex flex-col items-center gap-3.5 p-2">
                         <div>
@@ -228,7 +228,7 @@ export function BentoAccountsTransfers(props: React.CustomComponentPropsWithRef<
 
                 <Button.Root $size="sm" $type="neutral" disabled={amount === "0" || amount === "0.00"}>
                     Transfer to account
-                    <Button.Icon as={SendPlaneFillIcon} />
+                    <Button.Icon as={SentIcon} />
                 </Button.Root>
             </div>
         </WidgetBox.Root>

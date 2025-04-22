@@ -1,8 +1,8 @@
 import { Toaster as Sonner, type ToasterProps as SonnerProps } from "sonner";
-import AlertFillIcon from "virtual:icons/ri/alert-fill";
-import CheckboxCircleFillIcon from "virtual:icons/ri/checkbox-circle-fill";
-import ErrorWarningFillIcon from "virtual:icons/ri/error-warning-fill";
-import InformationFillIcon from "virtual:icons/ri/information-fill";
+import Alert01SolidIcon from "virtual:icons/hugeicons/alert-01-solid";
+import CancelCircleSolidIcon from "virtual:icons/hugeicons/cancel-circle-solid";
+import CheckmarkCircle02SolidIcon from "virtual:icons/hugeicons/checkmark-circle-02-solid";
+import InformationSquareSolidIcon from "virtual:icons/hugeicons/information-square-solid";
 
 import { cn } from "#/utils/cn.ts";
 
@@ -11,10 +11,10 @@ export function Toaster(props: SonnerProps) {
         <Sonner
             className="toaster group"
             icons={{
-                error: <ErrorWarningFillIcon className="size-5 text-white" />,
-                warning: <AlertFillIcon className="size-5 text-white" />,
-                success: <CheckboxCircleFillIcon className="size-5 text-white" />,
-                info: <InformationFillIcon className="size-5 text-white" />,
+                error: <CancelCircleSolidIcon className="size-5 text-white" />,
+                warning: <Alert01SolidIcon className="size-5 text-white" />,
+                success: <CheckmarkCircle02SolidIcon className="size-5 text-white" />,
+                info: <InformationSquareSolidIcon className="size-5 text-white" />,
             }}
             style={{
                 "--width": "390px",

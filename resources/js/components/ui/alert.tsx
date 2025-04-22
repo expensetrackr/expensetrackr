@@ -1,5 +1,5 @@
 import * as React from "react";
-import CloseIcon from "virtual:icons/ri/close-line";
+import Cancel01Icon from "virtual:icons/hugeicons/cancel-01";
 
 import { type PolymorphicComponentProps } from "#/utils/polymorphic.ts";
 import { recursiveCloneChildren } from "#/utils/recursive-clone-children.tsx";
@@ -281,7 +281,7 @@ function AlertCloseIcon<T extends React.ElementType>({
     className,
     as,
 }: PolymorphicComponentProps<T, AlertSharedProps>) {
-    const Component = as || CloseIcon;
+    const Component = as || Cancel01Icon;
     const { closeIcon } = alertVariants({ $size, $variant, $status });
 
     return <Component className={closeIcon({ class: className })} />;

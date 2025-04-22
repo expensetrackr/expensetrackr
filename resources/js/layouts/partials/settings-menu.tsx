@@ -1,11 +1,17 @@
 import { router } from "@inertiajs/react";
 import ArrowRight01Icon from "virtual:icons/hugeicons/arrow-right-01";
-import BlockedIcon from "virtual:icons/hugeicons/blocked";
 import CreditCardIcon from "virtual:icons/hugeicons/credit-card";
+import CreditCardSolidIcon from "virtual:icons/hugeicons/credit-card-solid";
 import GeometricShapes01Icon from "virtual:icons/hugeicons/geometric-shapes-01";
-import Link04Icon from "virtual:icons/hugeicons/link-04";
-import UserCircle02Icon from "virtual:icons/hugeicons/user-circle-02";
-import UserMultiple02Icon from "virtual:icons/hugeicons/user-multiple-02";
+import GeometricShapes01SolidIcon from "virtual:icons/hugeicons/geometric-shapes-01-solid";
+import SecurityLockIcon from "virtual:icons/hugeicons/security-lock";
+import SecurityLockSolidIcon from "virtual:icons/hugeicons/security-lock-solid";
+import Share08Icon from "virtual:icons/hugeicons/share-08";
+import Share08SolidIcon from "virtual:icons/hugeicons/share-08-solid";
+import UserCircleIcon from "virtual:icons/hugeicons/user-circle";
+import UserCircleSolidIcon from "virtual:icons/hugeicons/user-circle-solid";
+import UserGroupIcon from "virtual:icons/hugeicons/user-group";
+import UserGroupSolidIcon from "virtual:icons/hugeicons/user-group-solid";
 
 import { Link } from "#/components/link.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
@@ -21,32 +27,38 @@ export function SettingsVerticalMenu() {
     const links = [
         {
             label: "Profile",
-            icon: UserCircle02Icon,
+            icon: UserCircleIcon,
+            iconActive: UserCircleSolidIcon,
             href: "/settings",
         },
         {
             label: "Billing",
             icon: CreditCardIcon,
+            iconActive: CreditCardSolidIcon,
             href: "/settings/billing",
         },
         {
             label: "Workspace",
-            icon: UserMultiple02Icon,
+            icon: UserGroupIcon,
+            iconActive: UserGroupSolidIcon,
             href: `/workspaces/${currentWorkspace.id}`,
         },
         {
             label: "Categories",
             icon: GeometricShapes01Icon,
+            iconActive: GeometricShapes01SolidIcon,
             href: "/settings/categories",
         },
         {
             label: "Privacy & Security",
-            icon: BlockedIcon,
+            icon: SecurityLockIcon,
+            iconActive: SecurityLockSolidIcon,
             href: "/settings/privacy-and-security",
         },
         {
             label: "Connected Accounts",
-            icon: Link04Icon,
+            icon: Share08Icon,
+            iconActive: Share08SolidIcon,
             href: "/settings/connected-accounts",
         },
     ];
@@ -93,10 +105,10 @@ export function SettingsVerticalMenu() {
                     }
                 >
                     <TabMenuVertical.List>
-                        {links.map(({ label, icon: Icon, href }) => (
+                        {links.map(({ label, icon: Icon, iconActive: IconActive, href }) => (
                             <TabMenuVertical.Trigger asChild key={label} value={href}>
                                 <Link href={href}>
-                                    <TabMenuVertical.Icon as={Icon} />
+                                    <TabMenuVertical.Icon as={href === url ? IconActive : Icon} />
                                     {label}
                                     <TabMenuVertical.ArrowIcon as={ArrowRight01Icon} />
                                 </Link>

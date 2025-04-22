@@ -2,12 +2,12 @@ import { useForm } from "@inertiajs/react";
 import { type ColumnDef, flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 import { parseAsStringEnum, useQueryState } from "nuqs";
 import * as React from "react";
+import Delete02SolidIcon from "virtual:icons/hugeicons/delete-02-solid";
+import FolderSecurityIcon from "virtual:icons/hugeicons/folder-security";
 import Logout04Icon from "virtual:icons/hugeicons/logout-04";
 import MoreVerticalCircle01Icon from "virtual:icons/hugeicons/more-vertical-circle-01";
 import ShieldUserIcon from "virtual:icons/hugeicons/shield-user";
 import UserRemove02Icon from "virtual:icons/hugeicons/user-remove-02";
-import EraserIcon from "virtual:icons/ri/eraser-line";
-import FolderShield2Icon from "virtual:icons/ri/folder-shield-2-line";
 
 import { ActionSection } from "#/components/action-section.tsx";
 import * as Avatar from "#/components/ui/avatar.tsx";
@@ -399,7 +399,7 @@ function ManageRoleDialog({
             <Modal.Content className="max-w-[440px]">
                 <Modal.Header
                     description="Select the new role for this workspace member."
-                    icon={FolderShield2Icon}
+                    icon={FolderSecurityIcon}
                     title="Manage role"
                 />
 
@@ -492,7 +492,7 @@ function RemoveMemberDialog({
             open={action === Action.WorkspaceMembersDestroy.replace("{id}", user.id.toString())}
         >
             <Modal.Content className="max-w-[440px]">
-                <Modal.Header description={dialogDescription} icon={EraserIcon} title={dialogTitle} />
+                <Modal.Header description={dialogDescription} icon={Delete02SolidIcon} title={dialogTitle} />
 
                 <Modal.Body>
                     <form

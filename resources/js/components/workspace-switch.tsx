@@ -1,8 +1,8 @@
 import { router } from "@inertiajs/react";
+import Add01Icon from "virtual:icons/hugeicons/add-01";
+import Settings02Icon from "virtual:icons/hugeicons/settings-02";
+import Tick01Icon from "virtual:icons/hugeicons/tick-01";
 import UnfoldMoreIcon from "virtual:icons/hugeicons/unfold-more";
-import AddIcon from "virtual:icons/ri/add-line";
-import CheckIcon from "virtual:icons/ri/check-line";
-import Settings2Icon from "virtual:icons/ri/settings-2-line";
 
 import { useAuth } from "#/hooks/use-auth.ts";
 import { useCurrentWorkspace } from "#/hooks/use-current-workspace.ts";
@@ -48,7 +48,7 @@ function WorkspaceItem({ workspace }: { workspace: App.Data.Workspace.WorkspaceD
             <div className="flex-1 space-y-1">
                 <div className="text-label-sm">{workspace.name}</div>
             </div>
-            {workspace.id === currentWorkspace.id ? <CheckIcon className="size-5 text-(--text-sub-600)" /> : null}
+            {workspace.id === currentWorkspace.id ? <Tick01Icon className="size-5 text-(--text-sub-600)" /> : null}
         </button>
     );
 }
@@ -92,7 +92,7 @@ export function WorkspaceSwitch({ className }: { className?: string }) {
                                     workspace: currentWorkspace.id,
                                 })}
                             >
-                                <Dropdown.ItemIcon as={Settings2Icon} />
+                                <Dropdown.ItemIcon as={Settings02Icon} />
                                 Manage workspace
                             </Link>
                         </Dropdown.Item>
@@ -115,7 +115,7 @@ export function WorkspaceSwitch({ className }: { className?: string }) {
                     <Dropdown.Group>
                         <Dropdown.Item asChild>
                             <Link href={routes.workspaces.create.url()}>
-                                <Dropdown.ItemIcon as={AddIcon} />
+                                <Dropdown.ItemIcon as={Add01Icon} />
                                 New workspace&hellip;
                             </Link>
                         </Dropdown.Item>

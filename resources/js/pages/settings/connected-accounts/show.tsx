@@ -1,5 +1,5 @@
 import { Head } from "@inertiajs/react";
-import Link04Icon from "virtual:icons/hugeicons/link-04";
+import Share08SolidIcon from "virtual:icons/hugeicons/share-08-solid";
 
 import { Header } from "#/components/header.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
@@ -28,7 +28,7 @@ ConnectedAccountsShow.layout = (page: React.ReactNode & { props: App.Data.Shared
             description="Manage your social connected accounts."
             icon={
                 <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-(--bg-white-0) shadow-xs ring-1 ring-(--stroke-soft-200) ring-inset">
-                    <Link04Icon className="size-6 text-(--text-sub-600)" />
+                    <Share08SolidIcon className="size-6 text-(--text-sub-600)" />
                 </div>
             }
             title="Connected accounts"

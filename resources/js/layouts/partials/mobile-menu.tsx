@@ -1,12 +1,12 @@
 import { usePage } from "@inertiajs/react";
 import * as DialogPrimitives from "@radix-ui/react-dialog";
 import * as React from "react";
-import ArrowRightSIcon from "virtual:icons/ri/arrow-right-s-line";
-import CloseFillIcon from "virtual:icons/ri/close-fill";
-import HeadphoneIcon from "virtual:icons/ri/headphone-line";
-import Menu3FillIcon from "virtual:icons/ri/menu-3-line";
-import Search2Icon from "virtual:icons/ri/search-2-line";
-import Settings2Icon from "virtual:icons/ri/settings-2-line";
+import ArrowRight01Icon from "virtual:icons/hugeicons/arrow-right-01";
+import Cancel01Icon from "virtual:icons/hugeicons/cancel-01";
+import HeadsetIcon from "virtual:icons/hugeicons/headset";
+import Menu11Icon from "virtual:icons/hugeicons/menu-11";
+import Search01Icon from "virtual:icons/hugeicons/search-01";
+import Settings02Icon from "virtual:icons/hugeicons/settings-02";
 
 import { Link } from "#/components/link.tsx";
 import { navigationLinks } from "#/components/sidebar.tsx";
@@ -33,7 +33,7 @@ export function MobileMenu() {
         <DialogPrimitives.Root onOpenChange={setOpen} open={open}>
             <DialogPrimitives.Trigger asChild>
                 <TopbarItemButton.Root>
-                    <TopbarItemButton.Icon as={Menu3FillIcon} />
+                    <TopbarItemButton.Icon as={Menu11Icon} />
                 </TopbarItemButton.Root>
             </DialogPrimitives.Trigger>
             <DialogPrimitives.Portal>
@@ -63,7 +63,7 @@ export function MobileMenu() {
 
                         <div className="flex h-[60px] w-full shrink-0 items-center border-b border-(--stroke-soft-200) px-4">
                             <div className="relative flex-1">
-                                <Search2Icon className="absolute top-1/2 left-0 size-6 -translate-y-1/2 text-(--text-soft-400)" />
+                                <Search01Icon className="absolute top-1/2 left-0 size-6 -translate-y-1/2 text-(--text-soft-400)" />
                                 <input
                                     className="h-6 w-full pl-9 text-paragraph-md outline-none placeholder:text-(--text-sub-600) focus:outline-none"
                                     placeholder="Search..."
@@ -73,16 +73,16 @@ export function MobileMenu() {
                             <div className="flex gap-3">
                                 <div className="flex gap-1">
                                     <TopbarItemButton.Root>
-                                        <TopbarItemButton.Icon as={HeadphoneIcon} />
+                                        <TopbarItemButton.Icon as={HeadsetIcon} />
                                     </TopbarItemButton.Root>
                                     <TopbarItemButton.Root>
-                                        <TopbarItemButton.Icon as={Settings2Icon} />
+                                        <TopbarItemButton.Icon as={Settings02Icon} />
                                     </TopbarItemButton.Root>
                                 </div>
                                 <div className="flex w-1 shrink-0 items-center before:h-full before:w-px before:bg-(--stroke-soft-200)" />
                                 <DialogPrimitives.Close asChild>
                                     <TopbarItemButton.Root>
-                                        <TopbarItemButton.Icon as={CloseFillIcon} />
+                                        <TopbarItemButton.Icon as={Cancel01Icon} />
                                     </TopbarItemButton.Root>
                                 </DialogPrimitives.Close>
                             </div>
@@ -129,7 +129,7 @@ export function MobileMenu() {
                                                         },
                                                     )}
                                                 />
-                                                <ArrowRightSIcon className="size-6 text-(--text-sub-600)" />
+                                                <ArrowRight01Icon className="size-6 text-(--text-sub-600)" />
                                             </Link>
                                         ))}
                                     </div>

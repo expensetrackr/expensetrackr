@@ -1,4 +1,7 @@
+import Search01Icon from "virtual:icons/hugeicons/search-01";
+import { useCommandMenuStore } from "#/store/command-menu.ts";
 import { cn } from "#/utils/cn.ts";
+import * as TopbarItemButton from "./topbar-item-button.tsx";
 
 export function Header({
     children,
@@ -14,6 +17,8 @@ export function Header({
     description?: string;
     contentClassName?: string;
 }) {
+    const { toggleOpen } = useCommandMenuStore();
+
     return (
         <header
             className={cn(
@@ -29,7 +34,13 @@ export function Header({
                     <div className="text-paragraph-sm text-(--text-sub-600)">{description}</div>
                 </div>
             </div>
-            <div className={cn("flex items-center gap-3", contentClassName)}>{children}</div>
+            <div className={cn("flex items-center gap-3", contentClassName)}>
+                <TopbarItemButton.Root className="hidden lg:flex" onClick={() => toggleOpen()}>
+                    <TopbarItemButton.Icon as={Search01Icon} />
+                </TopbarItemButton.Root>
+
+                {children}
+            </div>
         </header>
     );
 }

@@ -2,8 +2,8 @@ import NumberFlow, { type Format } from "@number-flow/react";
 import { resolveCurrencyFormat } from "@sumup/intl";
 import Decimal from "decimal.js";
 import * as React from "react";
-import CheckboxCircleFillIcon from "virtual:icons/ri/checkbox-circle-fill";
-import LoopRightIcon from "virtual:icons/ri/loop-right-line";
+import ArrowReloadHorizontalIcon from "virtual:icons/hugeicons/arrow-reload-horizontal";
+import CheckmarkCircle02SolidIcon from "virtual:icons/hugeicons/checkmark-circle-02-solid";
 
 import { Image } from "#/components/image.tsx";
 import * as StatusBadge from "#/components/ui/status-badge.tsx";
@@ -77,7 +77,7 @@ export function AccountBox({ account, className, ...rest }: CreditCardProps) {
                             />
                         )}
                         {account.connection?.status === "connected" && (
-                            <LoopRightIcon className="size-5 rotate-90 text-(--text-sub-600)" />
+                            <ArrowReloadHorizontalIcon className="size-5 rotate-90 text-(--text-sub-600)" />
                         )}
                     </div>
                     {account.connection?.status === "connected" && (
@@ -85,7 +85,7 @@ export function AccountBox({ account, className, ...rest }: CreditCardProps) {
                             status={account.connection.status === "connected" ? "completed" : "disabled"}
                             variant="stroke"
                         >
-                            <StatusBadge.Icon as={CheckboxCircleFillIcon} />
+                            <StatusBadge.Icon as={CheckmarkCircle02SolidIcon} />
                             {t(`common.${account.connection.status === "connected" ? "active" : "disabled"}`)}
                         </StatusBadge.Root>
                     )}

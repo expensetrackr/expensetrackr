@@ -2,7 +2,7 @@ import { useForm } from "@inertiajs/react";
 import axios from "axios";
 import { parseAsStringEnum, useQueryState } from "nuqs";
 import * as React from "react";
-import LockPasswordIcon from "virtual:icons/ri/lock-password-line";
+import LockPasswordIcon from "virtual:icons/hugeicons/password-validation";
 
 import { routes } from "#/routes.ts";
 import { Action } from "#/utils/action.ts";

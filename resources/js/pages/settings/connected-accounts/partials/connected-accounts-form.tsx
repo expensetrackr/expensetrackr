@@ -1,6 +1,6 @@
 import { Link, useForm } from "@inertiajs/react";
 import { parseAsStringEnum, useQueryState } from "nuqs";
-import ShareIcon from "virtual:icons/ri/share-line";
+import Share08Icon from "virtual:icons/hugeicons/share-08";
 
 import { ActionSection } from "#/components/action-section.tsx";
 import { ConnectedAccount } from "#/components/connected-account.tsx";
@@ -97,7 +97,7 @@ export default function ConnectedAccountsForm() {
                                 <Modal.Content className="max-w-[440px]">
                                     <Modal.Header
                                         description="This will remove the account from your connected accounts list."
-                                        icon={ShareIcon}
+                                        icon={Share08Icon}
                                         title="Are you sure you want to remove this account?"
                                     />
 

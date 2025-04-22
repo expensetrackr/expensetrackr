@@ -1,6 +1,6 @@
 import { DayPicker } from "react-day-picker";
-import ArrowLeftSIcon from "virtual:icons/ri/arrow-left-s-line";
-import ArrowRightSIcon from "virtual:icons/ri/arrow-right-s-line";
+import ArrowLeft01Icon from "virtual:icons/hugeicons/arrow-left-01";
+import ArrowRight01Icon from "virtual:icons/hugeicons/arrow-right-01";
 
 import { cn } from "#/utils/cn.ts";
 import { compactButtonVariants } from "./compact-button.tsx";
@@ -74,8 +74,8 @@ function Calendar({ classNames, showOutsideDays = true, ...rest }: CalendarProps
                 ...classNames,
             }}
             components={{
-                IconLeft: (props) => <ArrowLeftSIcon className="size-5" {...props} />,
-                IconRight: (props) => <ArrowRightSIcon className="size-5" {...props} />,
+                IconLeft: (props) => <ArrowLeft01Icon className="size-5" {...props} />,
+                IconRight: (props) => <ArrowRight01Icon className="size-5" {...props} />,
             }}
             showOutsideDays={showOutsideDays}
             {...rest}

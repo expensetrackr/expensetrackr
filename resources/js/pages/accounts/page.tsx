@@ -1,6 +1,6 @@
 import { Head, Link } from "@inertiajs/react";
-import Wallet01Icon from "virtual:icons/hugeicons/wallet-01";
-import WalletAdd01 from "virtual:icons/hugeicons/wallet-add-01";
+import Add01Icon from "virtual:icons/hugeicons/add-01";
+import Wallet05Icon from "virtual:icons/hugeicons/wallet-05";
 
 import { AccountsList } from "#/components/accounts/accounts-lists.tsx";
 import { AccountDetailsDrawer } from "#/components/accounts/details-drawer.tsx";
@@ -29,7 +29,7 @@ export default function AccountsPage({ accounts, account, permissions }: PagePro
                 description="Manage your accounts and add new ones."
                 icon={
                     <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-(--bg-white-0) shadow-xs ring-1 ring-(--stroke-soft-200) ring-inset">
-                        <Wallet01Icon className="size-6 text-(--text-sub-600)" />
+                        <Wallet05Icon className="size-6 text-(--text-sub-600)" />
                     </div>
                 }
                 title="Accounts"
@@ -39,7 +39,7 @@ export default function AccountsPage({ accounts, account, permissions }: PagePro
                         className="w-full md:w-auto"
                         onClick={() => setParams({ action: "create", resource: "accounts" })}
                     >
-                        <Button.Icon as={WalletAdd01} />
+                        <Button.Icon as={Add01Icon} className="size-4" />
                         Add account
                     </Button.Root>
                 )}
@@ -65,7 +65,7 @@ export default function AccountsPage({ accounts, account, permissions }: PagePro
                             {permissions.canCreateAccounts && (
                                 <Button.Root $size="xs" $style="stroke" asChild>
                                     <Link href={routes.accounts.create.url()}>
-                                        <Button.Icon as={WalletAdd01} />
+                                        <Button.Icon as={Add01Icon} className="size-4" />
                                         Add account
                                     </Link>
                                 </Button.Root>

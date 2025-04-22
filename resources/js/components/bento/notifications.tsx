@@ -1,10 +1,10 @@
-import Notification3Icon from "virtual:icons/ri/notification-3-line";
+import Notification3Icon from "virtual:icons/hugeicons/notification-03";
 
-import * as TopbarItemButton from "#/components/topbar-item-button.tsx";
-import * as Divider from "#/components/ui/divider.tsx";
-import * as LinkButton from "#/components/ui/link-button.tsx";
-import * as Popover from "#/components/ui/popover.tsx";
 import { cn } from "#/utils/cn.ts";
+import * as TopbarItemButton from "../topbar-item-button.tsx";
+import * as Divider from "../ui/divider.tsx";
+import * as LinkButton from "../ui/link-button.tsx";
+import * as Popover from "../ui/popover.tsx";
 
 export function BentoNotifications({ className, ...props }: React.ComponentPropsWithRef<"div">) {
     return (

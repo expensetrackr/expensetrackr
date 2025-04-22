@@ -1,6 +1,6 @@
 import { useForm } from "@inertiajs/react";
 import { parseAsStringEnum, useQueryState } from "nuqs";
-import TeamIcon from "virtual:icons/ri/team-line";
+import UserGroupIcon from "virtual:icons/hugeicons/user-group";
 
 import * as Button from "#/components/ui/button.tsx";
 import { SelectField } from "#/components/ui/form/select-field.tsx";
@@ -48,7 +48,7 @@ export function AddWorkspaceMemberForm({ workspace, availableRoles }: AddWorkspa
             <Modal.Content className="max-w-[440px]">
                 <Modal.Header
                     description="Add a new team member to your team, allowing them to collaborate with you."
-                    icon={TeamIcon}
+                    icon={UserGroupIcon}
                     title="Add workspace member"
                 />
 

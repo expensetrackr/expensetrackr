@@ -1,7 +1,7 @@
 import { useForm } from "@inertiajs/react";
 import { parseAsStringEnum, useQueryState } from "nuqs";
 import * as React from "react";
-import DeleteBinFillIcon from "virtual:icons/ri/delete-bin-fill";
+import UserMinus02SolidIcon from "virtual:icons/hugeicons/user-minus-02-solid";
 
 import { ActionSection } from "#/components/action-section.tsx";
 import * as Button from "#/components/ui/button.tsx";
@@ -50,7 +50,7 @@ export function DeleteUserForm() {
                     <Modal.Content className="max-w-[440px]">
                         <Modal.Header
                             description="Once your account is deleted, all of its resources and data will be permanently deleted."
-                            icon={DeleteBinFillIcon}
+                            icon={UserMinus02SolidIcon}
                             title="Delete account"
                         />
 

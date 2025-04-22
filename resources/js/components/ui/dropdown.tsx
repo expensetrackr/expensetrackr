@@ -1,5 +1,5 @@
 import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";
-import ArrowRightSIcon from "virtual:icons/ri/arrow-right-s-line";
+import ArrowRight01Icon from "virtual:icons/hugeicons/arrow-right-01";
 
 import { cn } from "#/utils/cn.ts";
 import { type PolymorphicComponentProps } from "#/utils/polymorphic.ts";
@@ -131,7 +131,7 @@ function DropdownMenuSubTrigger({
         >
             {children}
             <span className="flex-1" />
-            <DropdownItemIcon as={ArrowRightSIcon} />
+            <DropdownItemIcon as={ArrowRight01Icon} />
         </DropdownMenuPrimitive.SubTrigger>
     );
 }

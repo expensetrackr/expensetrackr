@@ -15,6 +15,7 @@ export default defineConfig({
             autoInstall: true,
             customCollections: {
                 untitled: FileSystemIconLoader("./public/untitled"),
+                hugeicons: FileSystemIconLoader("./public/icons/hugeicons"),
             },
             iconCustomizer(_collection, _icon, props) {
                 props.width = "1em";

@@ -1,6 +1,6 @@
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import * as React from "react";
-import CloseIcon from "virtual:icons/ri/close-line";
+import Cancel01Icon from "virtual:icons/hugeicons/cancel-01";
 
 import * as CompactButton from "#/components/ui/compact-button.tsx";
 import { cn } from "#/utils/cn.ts";
@@ -78,7 +78,7 @@ function DrawerHeader({
             {showCloseButton && (
                 <DrawerClose asChild>
                     <CompactButton.Root $size="lg" $style="ghost">
-                        <CompactButton.Icon as={CloseIcon} />
+                        <CompactButton.Icon as={Cancel01Icon} />
                     </CompactButton.Root>
                 </DrawerClose>
             )}

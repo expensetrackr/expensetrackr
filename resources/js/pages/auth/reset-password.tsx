@@ -1,5 +1,5 @@
 import { Head, useForm } from "@inertiajs/react";
-import DoorLockIcon from "virtual:icons/ri/door-lock-fill";
+import ResetPasswordSolidIcon from "virtual:icons/hugeicons/reset-password-solid";
 
 import * as FancyButton from "#/components/ui/fancy-button.tsx";
 import { TextField } from "#/components/ui/form/text-field.tsx";
@@ -30,7 +30,7 @@ export default function ResetPasswordPage({ token, email }: { token: string; ema
 
     return (
         <AuthCard
-            cardIcon={DoorLockIcon}
+            cardIcon={ResetPasswordSolidIcon}
             description={t("auth.reset_password.description")}
             title={t("auth.reset_password.title")}
         >

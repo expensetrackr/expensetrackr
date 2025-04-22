@@ -2,7 +2,7 @@ import { router } from "@inertiajs/react";
 import { flexRender, getCoreRowModel, useReactTable, type ColumnDef } from "@tanstack/react-table";
 import { parseAsStringEnum, useQueryState } from "nuqs";
 import * as React from "react";
-import MailCloseIcon from "virtual:icons/ri/mail-close-line";
+import MailRemove01Icon from "virtual:icons/hugeicons/mail-remove-01";
 
 import { ActionSection } from "#/components/action-section.tsx";
 import * as Button from "#/components/ui/button.tsx";
@@ -184,7 +184,7 @@ function CancelInvitation({ invitation }: { invitation: App.Data.Workspace.Works
             <Modal.Content className="max-w-[440px]">
                 <Modal.Header
                     description="Are you sure you want to cancel this invitation?"
-                    icon={MailCloseIcon}
+                    icon={MailRemove01Icon}
                     title="Cancel invitation"
                 />
 

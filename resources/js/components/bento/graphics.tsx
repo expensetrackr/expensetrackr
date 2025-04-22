@@ -1,8 +1,8 @@
 import * as React from "react";
-import ArrowLeftDownFillIcon from "virtual:icons/ri/arrow-left-down-fill";
-import ArrowRightUpFillIcon from "virtual:icons/ri/arrow-right-up-fill";
-import CalendarCheckFillIcon from "virtual:icons/ri/calendar-check-fill";
-import FileChartIcon from "virtual:icons/ri/file-chart-line";
+import Analytics01Icon from "virtual:icons/hugeicons/analytics-01";
+import Appointment02SolidIcon from "virtual:icons/hugeicons/appointment-02-solid";
+import ArrowDownLeft02SolidIcon from "virtual:icons/hugeicons/arrow-down-left-02-solid";
+import ArrowUpRight02SolidIcon from "virtual:icons/hugeicons/arrow-up-right-02-solid";
 
 import { BudgetOverviewChart, chartConfig } from "../budget-overview-stack-bar-chart.tsx";
 import { ChartLegend } from "../chart.tsx";
@@ -49,7 +49,7 @@ export function BentoHistoricalGraphics({ ...rest }: React.CustomComponentPropsW
     return (
         <WidgetBox.Root {...rest}>
             <WidgetBox.Header>
-                <WidgetBox.HeaderIcon as={FileChartIcon} />
+                <WidgetBox.HeaderIcon as={Analytics01Icon} />
                 Budget Overview
                 <div className="flex items-center gap-6">
                     <div className="hidden items-center gap-6 lg:flex">
@@ -77,7 +77,7 @@ export function BentoHistoricalGraphics({ ...rest }: React.CustomComponentPropsW
                 <div className="-my-1 flex flex-col divide-y divide-(--stroke-soft-200) lg:my-0 lg:flex-row lg:divide-x lg:divide-y-0">
                     <div className="flex w-full min-w-0 gap-3 py-3 first:pt-0 last:pb-0 lg:px-8 lg:py-0 lg:first:pl-0">
                         <div className="flex size-10 shrink-0 items-center justify-center rounded-full shadow-xs ring-1 ring-(--stroke-soft-200) ring-inset">
-                            <ArrowLeftDownFillIcon className="text-information-base size-5" />
+                            <ArrowDownLeft02SolidIcon className="size-5 text-state-information-base" />
                         </div>
                         <div className="space-y-1">
                             <div className="text-subheading-2xs text-(--text-soft-400) uppercase">INCOME</div>
@@ -92,7 +92,7 @@ export function BentoHistoricalGraphics({ ...rest }: React.CustomComponentPropsW
 
                     <div className="flex w-full min-w-0 gap-3 py-3 first:pt-0 last:pb-0 lg:px-8 lg:py-0 lg:first:pl-0">
                         <div className="flex size-10 shrink-0 items-center justify-center rounded-full shadow-xs ring-1 ring-(--stroke-soft-200) ring-inset">
-                            <ArrowRightUpFillIcon className="size-5 text-state-verified-base" />
+                            <ArrowUpRight02SolidIcon className="size-5 text-state-verified-base" />
                         </div>
                         <div className="space-y-1">
                             <div className="text-subheading-2xs text-(--text-soft-400) uppercase">EXPENSES</div>
@@ -107,7 +107,7 @@ export function BentoHistoricalGraphics({ ...rest }: React.CustomComponentPropsW
 
                     <div className="flex w-full min-w-0 gap-3 py-3 first:pt-0 last:pb-0 lg:px-8 lg:py-0 lg:first:pl-0">
                         <div className="flex size-10 shrink-0 items-center justify-center rounded-full shadow-xs ring-1 ring-(--stroke-soft-200) ring-inset">
-                            <CalendarCheckFillIcon className="size-5 text-state-feature-base" />
+                            <Appointment02SolidIcon className="size-5 text-state-feature-base" />
                         </div>
                         <div className="space-y-1">
                             <div className="text-subheading-2xs text-(--text-soft-400) uppercase">scheduled</div>

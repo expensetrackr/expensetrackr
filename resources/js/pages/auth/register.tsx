@@ -1,5 +1,5 @@
 import { Head, Link, useForm } from "@inertiajs/react";
-import UserAddLineIcon from "virtual:icons/ri/user-add-fill";
+import UserAdd01SolidIcon from "virtual:icons/hugeicons/user-add-01-solid";
 
 import { Socialstream } from "#/components/socialstream.tsx";
 import * as FancyButton from "#/components/ui/fancy-button.tsx";
@@ -44,7 +44,7 @@ export default function RegisterPage({ socialstream }: PageProps) {
 
     return (
         <AuthCard
-            cardIcon={UserAddLineIcon}
+            cardIcon={UserAdd01SolidIcon}
             description={t("auth.register.description")}
             title={t("auth.register.title")}
         >

@@ -1,7 +1,7 @@
 import { useForm } from "@inertiajs/react";
 import { parseAsStringEnum, useQueryState } from "nuqs";
 import * as React from "react";
-import LockPasswordIcon from "virtual:icons/ri/lock-password-line";
+import LockPasswordIcon from "virtual:icons/hugeicons/lock-password";
 
 import { ActionSection } from "#/components/action-section.tsx";
 import * as Button from "#/components/ui/button.tsx";
