@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Route;
 Route::post('teller/webhook', WebhookTellerController::class)
     ->name('teller.webhook');
 
-// TODO: Secure API routes
 Route::prefix('finance')->group(function () {
     Route::get('/currencies', CurrencyController::class)
         ->name('api.finance.currencies.index');

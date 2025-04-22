@@ -35,7 +35,6 @@ final class AccountController extends Controller
             ->allowedSorts(['name', '-name', 'created_at', '-created_at'])
             ->allowedIncludes(['bankConnection'])
             ->defaultSort('-created_at')
-            ->where('workspace_id', $request->user()->currentWorkspace->id)
             ->paginate($perPage)
             ->withQueryString()
             ->toResourceCollection();

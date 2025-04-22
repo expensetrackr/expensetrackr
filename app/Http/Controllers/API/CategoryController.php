@@ -35,7 +35,6 @@ final class CategoryController extends Controller
             ->allowedSorts(['created_at', '-created_at'])
             ->allowedIncludes(['parent'])
             ->defaultSort('-created_at')
-            ->where('workspace_id', $request->user()->currentWorkspace->id)
             ->paginate($perPage)
             ->withQueryString()
             ->toResourceCollection();
