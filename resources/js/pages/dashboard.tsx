@@ -8,6 +8,7 @@ import * as Button from "#/components/ui/button.tsx";
 import { TotalBalanceWidget } from "#/components/widgets/total-balance.tsx";
 import { TransactionsTableWidget } from "#/components/widgets/transactions-table-widget.tsx";
 import { useActionsParams } from "#/hooks/use-actions-params.ts";
+import { useTranslation } from "#/hooks/use-translation.ts";
 import { AppLayout } from "#/layouts/app-layout.tsx";
 import { type PageProps } from "#/types/globals.js";
 import { type Trend } from "#/types/index.js";
@@ -35,11 +36,12 @@ type DashboardProps = {
 
 export default function Dashboard(props: PageProps<DashboardProps>) {
     const actions = useActionsParams();
+    const { t } = useTranslation();
 
     return (
         <>
             <Header
-                description="Welcome back to ExpenseTracker 👋🏻"
+                description={t("dashboard.description")}
                 icon={
                     <Avatar.Root $color="blue" $size="48">
                         {props.auth?.user?.profilePhotoUrl ? (
@@ -53,7 +55,7 @@ export default function Dashboard(props: PageProps<DashboardProps>) {
             >
                 <Button.Root onClick={() => actions.setParams({ action: "create", resource: "transactions" })}>
                     <Button.Icon as={Add01Icon} className="size-4" />
-                    Create transaction
+                    {t("dashboard.actions.createTransaction")}
                 </Button.Root>
             </Header>
 
@@ -78,7 +80,7 @@ export default function Dashboard(props: PageProps<DashboardProps>) {
 
 Dashboard.layout = (page: React.ReactNode & { props: PageProps }) => (
     <AppLayout {...page.props}>
-        <Head title="Dashboard" />
+        <Head title={page.props.translations["dashboard.seo.title"]} />
         {page}
     </AppLayout>
 );
