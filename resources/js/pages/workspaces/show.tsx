@@ -1,13 +1,13 @@
 import { Head } from "@inertiajs/react";
 import UserGroupSolidIcon from "virtual:icons/hugeicons/user-group-solid";
 
+import { UpdateWorkspaceNameForm } from "#/components/forms/update-workspace-name-form.tsx";
+import { WorkspaceSettingsForm } from "#/components/forms/workspace-settings-form.tsx";
 import { Header } from "#/components/header.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
+import { WorkspaceMemberInvitations } from "#/components/workspace-member-invitations.tsx";
+import { WorkspaceMemberManager } from "#/components/workspace-member-manager.tsx";
 import { SettingsLayout } from "#/layouts/settings-layout.tsx";
-import { WorkspaceMemberInvitations } from "#/pages/workspaces/partials/workspace-member-invitations.tsx";
-import { WorkspaceSettingsForm } from "./__components/workspace-settings-form.tsx";
-import { UpdateWorkspaceNameForm } from "./partials/update-workspace-name-form.tsx";
-import { WorkspaceMemberManager } from "./partials/workspace-member-manager.tsx";
 
 type WorkspacesShowProps = {
     workspace: App.Data.Workspace.WorkspaceData;

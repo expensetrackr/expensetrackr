@@ -1,10 +1,10 @@
 import { Head } from "@inertiajs/react";
 import Share08SolidIcon from "virtual:icons/hugeicons/share-08-solid";
 
+import ConnectedAccountsForm from "#/components/forms/connected-accounts-form.tsx";
 import { Header } from "#/components/header.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
 import { SettingsLayout } from "#/layouts/settings-layout.tsx";
-import ConnectedAccountsForm from "./partials/connected-accounts-form.tsx";
 
 export default function ConnectedAccountsShow() {
     return (

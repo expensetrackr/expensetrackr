@@ -4,12 +4,12 @@ import { parseAsStringEnum, useQueryState } from "nuqs";
 import * as React from "react";
 import MailRemove01Icon from "virtual:icons/hugeicons/mail-remove-01";
 
-import { ActionSection } from "#/components/action-section.tsx";
-import * as Button from "#/components/ui/button.tsx";
-import * as Modal from "#/components/ui/modal.tsx";
-import * as Table from "#/components/ui/table.tsx";
 import { routes } from "#/routes.ts";
 import { Action, getAction } from "#/utils/action.ts";
+import { ActionSection } from "./action-section.tsx";
+import * as Button from "./ui/button.tsx";
+import * as Modal from "./ui/modal.tsx";
+import * as Table from "./ui/table.tsx";
 
 interface WorkspaceMemberInvitationsProps {
     workspace: App.Data.Workspace.WorkspaceData;
@@ -108,42 +108,6 @@ export function WorkspaceMemberInvitations({ workspace, permissions }: Workspace
                     )}
                 </Table.Body>
             </Table.Root>
-            {/* <Table bleed>
-                <TableHead>
-                    <TableRow>
-                        <TableHeader>Email address</TableHeader>
-                        {permissions.canRemoveWorkspaceMembers ? (
-                            <TableHeader className="relative w-0">
-                                <span className="sr-only">Actions</span>
-                            </TableHeader>
-                        ) : null}
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {workspace.invitations.length > 0 ? (
-                        workspace.invitations?.map((invitation) => (
-                            <TableRow key={invitation.id}>
-                                <TableCell>{invitation.email}</TableCell>
-                                {permissions.canRemoveWorkspaceMembers ? (
-                                    <TableCell>
-                                        <CancelInvitation invitation={invitation} />
-                                    </TableCell>
-                                ) : null}
-                            </TableRow>
-                        ))
-                    ) : (
-                        <TableRow>
-                            <TableCell colSpan={3}>
-                                <div className="flex justify-center py-12">
-                                    <p className="text-paragraph-sm text-(--text-sub-600)">
-                                        There are no pending invitations.
-                                    </p>
-                                </div>
-                            </TableCell>
-                        </TableRow>
-                    )}
-                </TableBody>
-            </Table> */}
         </ActionSection>
     );
 }

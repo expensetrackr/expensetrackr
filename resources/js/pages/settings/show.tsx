@@ -1,13 +1,13 @@
 import { Head } from "@inertiajs/react";
 import UserCircleSolidIcon from "virtual:icons/hugeicons/user-circle-solid";
 
+import { UpdateEmailForm } from "#/components/forms/update-email-form.tsx";
+import { UpdateNameForm } from "#/components/forms/update-name-form.tsx";
+import { UpdateProfilePictureForm } from "#/components/forms/update-profile-picture-form.tsx";
 import { Header } from "#/components/header.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
 import { SettingsLayout } from "#/layouts/settings-layout.tsx";
 import { type PageProps } from "#/types/globals.js";
-import { UpdateEmailForm } from "./partials/update-email-form.tsx";
-import { UpdateNameForm } from "./partials/update-name-form.tsx";
-import { UpdateProfilePictureForm } from "./partials/update-profile-picture-form.tsx";
 
 export default function SettingsShow() {
     return (

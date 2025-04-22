@@ -9,17 +9,17 @@ import MoreVerticalCircle01Icon from "virtual:icons/hugeicons/more-vertical-circ
 import ShieldUserIcon from "virtual:icons/hugeicons/shield-user";
 import UserRemove02Icon from "virtual:icons/hugeicons/user-remove-02";
 
-import { ActionSection } from "#/components/action-section.tsx";
-import * as Avatar from "#/components/ui/avatar.tsx";
-import * as Button from "#/components/ui/button.tsx";
-import * as Dropdown from "#/components/ui/dropdown.tsx";
-import { SelectField } from "#/components/ui/form/select-field.tsx";
-import * as Modal from "#/components/ui/modal.tsx";
-import * as Table from "#/components/ui/table.tsx";
 import { useUser } from "#/hooks/use-user.ts";
 import { routes } from "#/routes.ts";
 import { Action, getAction } from "#/utils/action.ts";
-import { AddWorkspaceMemberForm } from "./add-workspace-member-form.tsx";
+import { ActionSection } from "./action-section.tsx";
+import { AddWorkspaceMemberForm } from "./forms/add-workspace-member-form.tsx";
+import * as Avatar from "./ui/avatar.tsx";
+import * as Button from "./ui/button.tsx";
+import * as Dropdown from "./ui/dropdown.tsx";
+import { SelectField } from "./ui/form/select-field.tsx";
+import * as Modal from "./ui/modal.tsx";
+import * as Table from "./ui/table.tsx";
 
 interface UserMembership extends App.Data.Auth.UserData {
     membership: {
