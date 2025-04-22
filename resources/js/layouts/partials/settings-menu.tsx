@@ -17,12 +17,12 @@ import { Link } from "#/components/link.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
 import * as TabMenuHorizontal from "#/components/ui/tab-menu-horizontal.tsx";
 import * as TabMenuVertical from "#/components/ui/tab-menu-vertical.tsx";
-import { useCurrentWorkspace } from "#/hooks/use-current-workspace.ts";
+import { useAuth } from "#/hooks/use-auth.ts";
 import { usePageProps } from "#/hooks/use-page-props.ts";
 
 export function SettingsVerticalMenu() {
     const { url } = usePageProps();
-    const currentWorkspace = useCurrentWorkspace();
+    const currentWorkspace = useAuth().currentWorkspace;
 
     const links = [
         {

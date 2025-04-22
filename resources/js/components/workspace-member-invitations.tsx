@@ -1,14 +1,8 @@
-import { router } from "@inertiajs/react";
 import { flexRender, getCoreRowModel, useReactTable, type ColumnDef } from "@tanstack/react-table";
-import { parseAsStringEnum, useQueryState } from "nuqs";
 import * as React from "react";
-import MailRemove01Icon from "virtual:icons/hugeicons/mail-remove-01";
 
-import { routes } from "#/routes.ts";
-import { Action, getAction } from "#/utils/action.ts";
 import { ActionSection } from "./action-section.tsx";
-import * as Button from "./ui/button.tsx";
-import * as Modal from "./ui/modal.tsx";
+import { CancelWorkspaceInvitation } from "./modals/cancel-workspace-invitation-modal.tsx";
 import * as Table from "./ui/table.tsx";
 
 interface WorkspaceMemberInvitationsProps {
@@ -33,7 +27,7 @@ export function WorkspaceMemberInvitations({ workspace, permissions }: Workspace
                               return <div className="sr-only">Actions</div>;
                           },
                           cell({ row }) {
-                              return <CancelInvitation invitation={row.original} />;
+                              return <CancelWorkspaceInvitation invitation={row.original} />;
                           },
                           meta: {
                               className: "px-5 w-0",
@@ -109,73 +103,5 @@ export function WorkspaceMemberInvitations({ workspace, permissions }: Workspace
                 </Table.Body>
             </Table.Root>
         </ActionSection>
-    );
-}
-
-function CancelInvitation({ invitation }: { invitation: App.Data.Workspace.WorkspaceInvitationData }) {
-    const [action, setAction] = useQueryState("action", parseAsStringEnum<Action>(Object.values(Action)));
-    const [isCancelling, setCancelling] = React.useState(false);
-
-    function cancelWorkspaceInvitation(invitation: App.Data.Workspace.WorkspaceInvitationData) {
-        setCancelling(true);
-
-        router.delete(routes.workspaceInvitations.destroy.url({ invitation: invitation.id.toString() }), {
-            preserveScroll: true,
-            onSuccess: async () => {
-                await setAction(null);
-            },
-        });
-
-        setCancelling(false);
-    }
-
-    return (
-        <Modal.Root
-            onOpenChange={(open) => setAction(open ? getAction("WorkspaceInvitationsDestroy", invitation.id) : null)}
-            open={action === getAction("WorkspaceInvitationsDestroy", invitation.id)}
-        >
-            <Modal.Trigger asChild>
-                <Button.Root
-                    $size="sm"
-                    $style="stroke"
-                    $type="error"
-                    onClick={() => setAction(getAction("WorkspaceInvitationsDestroy", invitation.id))}
-                >
-                    Cancel invitation
-                </Button.Root>
-            </Modal.Trigger>
-
-            <Modal.Content className="max-w-[440px]">
-                <Modal.Header
-                    description="Are you sure you want to cancel this invitation?"
-                    icon={MailRemove01Icon}
-                    title="Cancel invitation"
-                />
-
-                <Modal.Footer>
-                    <Modal.Close asChild>
-                        <Button.Root
-                            $size="sm"
-                            $style="stroke"
-                            $type="neutral"
-                            className="w-full"
-                            disabled={isCancelling}
-                            onClick={() => setAction(null)}
-                        >
-                            Cancel
-                        </Button.Root>
-                    </Modal.Close>
-                    <Button.Root
-                        $size="sm"
-                        $type="error"
-                        className="w-full"
-                        disabled={isCancelling}
-                        onClick={() => cancelWorkspaceInvitation(invitation)}
-                    >
-                        {isCancelling ? "Cancelling..." : "Yes, cancel it"}
-                    </Button.Root>
-                </Modal.Footer>
-            </Modal.Content>
-        </Modal.Root>
     );
 }

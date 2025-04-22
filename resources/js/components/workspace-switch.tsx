@@ -5,7 +5,6 @@ import Tick01Icon from "virtual:icons/hugeicons/tick-01";
 import UnfoldMoreIcon from "virtual:icons/hugeicons/unfold-more";
 
 import { useAuth } from "#/hooks/use-auth.ts";
-import { useCurrentWorkspace } from "#/hooks/use-current-workspace.ts";
 import { useFeaturesAndPermissions } from "#/hooks/use-features-and-permissions.ts";
 import { routes } from "#/routes.ts";
 import { cn } from "#/utils/cn.ts";
@@ -15,7 +14,7 @@ import * as Divider from "./ui/divider.tsx";
 import * as Dropdown from "./ui/dropdown.tsx";
 
 function WorkspaceItem({ workspace }: { workspace: App.Data.Workspace.WorkspaceData }) {
-    const currentWorkspace = useCurrentWorkspace();
+    const currentWorkspace = useAuth().currentWorkspace;
 
     function switchToWorkspace(workspace: App.Data.Workspace.WorkspaceData) {
         router.put(
