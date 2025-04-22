@@ -6,19 +6,27 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Spatie\QueryBuilder\QueryBuilder;
 
 final class CategoryController extends Controller
 {
+    use AuthorizesRequests;
+
     /**
      * Display a listing of the resource.
      *
      * @return ResourceCollection<Category>
      */
-    public function index(): ResourceCollection
+    public function index(Request $request): JsonResponse|ResourceCollection
     {
+        if (! $request->user()?->currentWorkspace) {
+            return response()->json(['message' => 'No workspace selected'], 400);
+        }
+
         /** @var int */
         $perPage = request()->get('per_page', 10);
 
@@ -27,6 +35,7 @@ final class CategoryController extends Controller
             ->allowedSorts(['created_at', '-created_at'])
             ->allowedIncludes(['parent'])
             ->defaultSort('-created_at')
+            ->where('workspace_id', $request->user()->currentWorkspace->id)
             ->paginate($perPage)
             ->withQueryString()
             ->toResourceCollection();

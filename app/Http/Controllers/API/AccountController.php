@@ -7,6 +7,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Account;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -20,16 +21,21 @@ final class AccountController extends Controller
      *
      * @return ResourceCollection<Account>
      */
-    public function index(): ResourceCollection
+    public function index(Request $request): ResourceCollection|JsonResponse
     {
         /** @var int */
-        $perPage = request()->get('per_page', 10);
+        $perPage = $request->get('per_page', 10);
+
+        if (! $request->user()?->currentWorkspace) {
+            return response()->json(['message' => 'No workspace selected'], 400);
+        }
 
         return QueryBuilder::for(Account::class)
             ->allowedFilters(['name'])
             ->allowedSorts(['name', '-name', 'created_at', '-created_at'])
             ->allowedIncludes(['bankConnection'])
             ->defaultSort('-created_at')
+            ->where('workspace_id', $request->user()->currentWorkspace->id)
             ->paginate($perPage)
             ->withQueryString()
             ->toResourceCollection();
