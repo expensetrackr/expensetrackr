@@ -89,10 +89,12 @@ export function UpdateProfilePictureForm() {
                         <div className="flex items-center gap-5">
                             <div className="relative size-24">
                                 <Avatar.Root>
-                                    <Avatar.Image
-                                        alt={user?.name}
-                                        src={(photoPreview || user?.profilePhotoUrl) ?? undefined}
-                                    />
+                                    {photoPreview || user?.profilePhotoUrl ? (
+                                        <Avatar.Image
+                                            alt={user?.name}
+                                            src={(photoPreview || user?.profilePhotoUrl) ?? undefined}
+                                        />
+                                    ) : null}
                                 </Avatar.Root>
 
                                 <Dropdown.Root>
