@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Middleware;
 
 use App\Data\Auth\UserData;
-use App\Data\Shared\SharedInertiaData;
 use App\Data\Shared\ToastData;
 use App\Data\Workspace\WorkspaceData;
 use App\Enums\Shared\Language;
@@ -55,89 +54,68 @@ final class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
-        return SharedInertiaData::from(
-            array_merge(
-                parent::share($request),
-                $this->authData($request),
-                [
-                    'socialstream' => [
-                        'show' => Socialstream::show(),
-                        'prompt' => config('socialstream.prompt', 'Or Login Via'),
-                        'providers' => Socialstream::providers(),
-                        'hasPassword' => $request->user()?->getAuthPassword() !== null,
-                        'connectedAccounts' => $request->user() ? $request->user()->connectedAccounts
-                            ->map(fn (ConnectedAccount $account): stdClass => (object) $account->getSharedInertiaData()) : [],
-                    ],
-                    'toast' => ToastData::fromSession($request->session()->all()),
-                    'language' => session()->get('language', app()->getLocale()),
-                    'languages' => LanguageResource::collection(Language::cases())->toArray($request),
-                    'translations' => function () {
-                        $locale = app()->getLocale();
-                        $files = File::allFiles(base_path("lang/$locale"));
+        $user = $request->user();
 
-                        // Get last modified time of all translation files
-                        $lastModified = collect($files)->max(fn ($file) => $file->getMTime());
+        return [
+            ...parent::share($request),
+            'auth' => $user ? [
+                'user' => UserData::fromModel($user),
+                'currentWorkspace' => WorkspaceData::optional($user->currentWorkspace),
+                'workspaces' => WorkspaceData::collect($user->workspaces),
+            ] : null,
+            'socialstream' => [
+                'show' => Socialstream::show(),
+                'prompt' => config('socialstream.prompt', 'Or Login Via'),
+                'providers' => Socialstream::providers(),
+                'hasPassword' => $request->user()?->getAuthPassword() !== null,
+                'connectedAccounts' => $request->user() ? $request->user()->connectedAccounts
+                    ->map(fn (ConnectedAccount $account): stdClass => (object) $account->getSharedInertiaData()) : [],
+            ],
+            'toast' => ToastData::fromSession($request->session()->all()),
+            'language' => session()->get('language', app()->getLocale()),
+            'languages' => LanguageResource::collection(Language::cases())->toArray($request),
+            'translations' => function () {
+                $locale = app()->getLocale();
+                $files = File::allFiles(base_path("lang/$locale"));
 
-                        $cacheKey = "translations.$locale";
-                        $lastModifiedKey = "translations_modified.$locale";
+                // Get last modified time of all translation files
+                $lastModified = collect($files)->max(fn ($file) => $file->getMTime());
 
-                        // If cached last modified time differs, invalidate cache
-                        if (cache()->get($lastModifiedKey) !== $lastModified) {
-                            cache()->forget($cacheKey);
-                        }
+                $cacheKey = "translations.$locale";
+                $lastModifiedKey = "translations_modified.$locale";
 
-                        return cache()->remember($cacheKey, now()->addYear(), function () use ($files, $lastModified, $lastModifiedKey) {
-                            cache()->forever($lastModifiedKey, $lastModified);
+                // If cached last modified time differs, invalidate cache
+                if (cache()->get($lastModifiedKey) !== $lastModified) {
+                    cache()->forget($cacheKey);
+                }
 
-                            return collect($files)->flatMap(function ($file) {
-                                $fileContents = File::getRequire($file->getRealPath());
+                return cache()->remember($cacheKey, now()->addYear(), function () use ($files, $lastModified, $lastModifiedKey) {
+                    cache()->forever($lastModifiedKey, $lastModified);
 
-                                return is_array($fileContents) ? Arr::dot($fileContents, $file->getBasename('.'.$file->getExtension()).'.') : [];
-                            });
-                        });
-                    },
-                    'permissions' => [
-                        'canCreateAccounts' => Gate::forUser($request->user())->check('create', Account::class),
-                        'canCreateCategories' => Gate::forUser($request->user())->check('create', Category::class),
-                        'canCreateTransactions' => Gate::forUser($request->user())->check('create', Transaction::class),
-                        'canCreateWorkspaces' => Gate::forUser($request->user())->check('create', Workspace::class),
-                        'canManageTwoFactorAuthentication' => Features::canManageTwoFactorAuthentication(),
-                        'canUpdatePassword' => Features::enabled(Features::updatePasswords()),
-                        'canUpdateProfileInformation' => Features::canUpdateProfileInformation(),
-                    ],
-                    'features' => [
-                        'hasEmailVerification' => Features::enabled(Features::emailVerification()),
-                        'hasAccountDeletionFeatures' => WorkspaceFeatures::hasAccountDeletionFeatures(),
-                        'hasApiFeatures' => WorkspaceFeatures::hasApiFeatures(),
-                        'hasWorkspaceFeatures' => WorkspaceFeatures::hasWorkspaceFeatures(),
-                        'hasTermsAndPrivacyPolicyFeature' => WorkspaceFeatures::hasTermsAndPrivacyPolicyFeature(),
-                        'managesProfilePhotos' => WorkspaceFeatures::managesProfilePhotos(),
-                    ],
-                ]
-            )
-        )->toArray();
-    }
+                    return collect($files)->flatMap(function ($file) {
+                        $fileContents = File::getRequire($file->getRealPath());
 
-    /**
-     * Get the authentication data for the current user.
-     *
-     * @param  Request  $request  The current request
-     * @return array<string, mixed> The authentication data
-     */
-    private function authData(Request $request): array
-    {
-        if ($user = $request->user()) {
-            $user->loadMissing(['workspaces']);
-
-            return [
-                'auth' => [
-                    'user' => UserData::fromModel($user),
-                    'currentWorkspace' => WorkspaceData::optional($user->currentWorkspace),
-                    'workspaces' => WorkspaceData::collect($user->workspaces),
-                ],
-            ];
-        }
-
-        return ['auth' => null];
+                        return is_array($fileContents) ? Arr::dot($fileContents, $file->getBasename('.'.$file->getExtension()).'.') : [];
+                    });
+                });
+            },
+            'permissions' => [
+                'canCreateAccounts' => Gate::forUser($request->user())->check('create', Account::class),
+                'canCreateCategories' => Gate::forUser($request->user())->check('create', Category::class),
+                'canCreateTransactions' => Gate::forUser($request->user())->check('create', Transaction::class),
+                'canCreateWorkspaces' => Gate::forUser($request->user())->check('create', Workspace::class),
+                'canManageTwoFactorAuthentication' => Features::canManageTwoFactorAuthentication(),
+                'canUpdatePassword' => Features::enabled(Features::updatePasswords()),
+                'canUpdateProfileInformation' => Features::canUpdateProfileInformation(),
+            ],
+            'features' => [
+                'hasEmailVerification' => Features::enabled(Features::emailVerification()),
+                'hasAccountDeletionFeatures' => WorkspaceFeatures::hasAccountDeletionFeatures(),
+                'hasApiFeatures' => WorkspaceFeatures::hasApiFeatures(),
+                'hasWorkspaceFeatures' => WorkspaceFeatures::hasWorkspaceFeatures(),
+                'hasTermsAndPrivacyPolicyFeature' => WorkspaceFeatures::hasTermsAndPrivacyPolicyFeature(),
+                'managesProfilePhotos' => WorkspaceFeatures::managesProfilePhotos(),
+            ],
+        ];
     }
 }
