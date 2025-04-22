@@ -67,7 +67,6 @@ export default function TransactionsPage({ transactions, transaction, categories
                     <TablePagination
                         links={transactions.links}
                         meta={transactions.meta}
-                        onPageChange={(page) => setPagination({ pageIndex: page })}
                         onPerPageChange={(perPage) => setPagination({ pageSize: perPage })}
                     />
                 </div>

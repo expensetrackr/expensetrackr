@@ -12,18 +12,12 @@ import * as Select from "./ui/select.tsx";
 export function TablePagination({
     meta,
     links,
-    onPageChange,
     onPerPageChange,
 }: {
     meta: PaginationMeta;
     links: PaginationLinks;
-    onPageChange?: (page: number) => void;
     onPerPageChange?: (perPage: number) => void;
 }) {
-    const handlePageChange = (page: number) => {
-        onPageChange?.(page);
-    };
-
     const handlePerPageChange = (value: string) => {
         onPerPageChange?.(parseInt(value));
     };
@@ -44,7 +38,13 @@ export function TablePagination({
                     className="w-28"
                     disabled={links.prev === null}
                 >
-                    {links.prev !== null ? <a href={links.prev}>Previous</a> : <span>Previous</span>}
+                    {links.prev !== null ? (
+                        <Link href={links.prev} preserveScroll>
+                            Previous
+                        </Link>
+                    ) : (
+                        <span>Previous</span>
+                    )}
                 </Button.Root>
                 <span className="text-center text-paragraph-sm whitespace-nowrap text-(--text-sub-600)">
                     Page {meta.current_page} of {meta.last_page}
@@ -57,7 +57,13 @@ export function TablePagination({
                     className="w-28"
                     disabled={links.next === null}
                 >
-                    {links.next !== null ? <a href={links.next}>Next</a> : <span>Next</span>}
+                    {links.next !== null ? (
+                        <Link href={links.next} preserveScroll>
+                            Next
+                        </Link>
+                    ) : (
+                        <span>Next</span>
+                    )}
                 </Button.Root>
             </div>
             <div className="mt-10 hidden items-center gap-3 lg:flex">
@@ -66,19 +72,23 @@ export function TablePagination({
                 </span>
 
                 <Pagination.Root>
-                    <Pagination.NavButton
-                        asChild={meta.current_page !== 1}
-                        disabled={meta.current_page === 1}
-                        onClick={() => handlePageChange(1)}
-                    >
-                        <Pagination.NavIcon as={ArrowLeftDoubleIcon} />
+                    <Pagination.NavButton asChild={meta.current_page !== 1} disabled={meta.current_page === 1}>
+                        {meta.current_page !== 1 ? (
+                            <Link href={links.first}>
+                                <Pagination.NavIcon as={ArrowLeftDoubleIcon} />
+                            </Link>
+                        ) : (
+                            <Pagination.NavIcon as={ArrowLeftDoubleIcon} />
+                        )}
                     </Pagination.NavButton>
-                    <Pagination.NavButton
-                        asChild={links.prev !== null}
-                        disabled={links.prev === null}
-                        onClick={() => handlePageChange(meta.current_page - 1)}
-                    >
-                        <Pagination.NavIcon as={ArrowLeft01Icon} />
+                    <Pagination.NavButton asChild={links.prev !== null}>
+                        {links.prev !== null ? (
+                            <Link href={links.prev}>
+                                <Pagination.NavIcon as={ArrowLeft01Icon} />
+                            </Link>
+                        ) : (
+                            <Pagination.NavIcon as={ArrowLeft01Icon} />
+                        )}
                     </Pagination.NavButton>
                     {filteredLinks.map((link) => {
                         if (link.url) {
@@ -98,16 +108,23 @@ export function TablePagination({
                     <Pagination.NavButton
                         asChild={meta.current_page !== meta.last_page}
                         disabled={meta.current_page === meta.last_page}
-                        onClick={() => handlePageChange(meta.last_page)}
                     >
-                        <Pagination.NavIcon as={ArrowRightDoubleIcon} />
+                        {meta.current_page !== meta.last_page ? (
+                            <Link href={links.last}>
+                                <Pagination.NavIcon as={ArrowRightDoubleIcon} />
+                            </Link>
+                        ) : (
+                            <Pagination.NavIcon as={ArrowRightDoubleIcon} />
+                        )}
                     </Pagination.NavButton>
-                    <Pagination.NavButton
-                        asChild={links.next !== null}
-                        disabled={links.next === null}
-                        onClick={() => handlePageChange(meta.current_page + 1)}
-                    >
-                        <Pagination.NavIcon as={ArrowRight01Icon} />
+                    <Pagination.NavButton asChild={links.next !== null}>
+                        {links.next !== null ? (
+                            <Link href={links.next}>
+                                <Pagination.NavIcon as={ArrowRight01Icon} />
+                            </Link>
+                        ) : (
+                            <Pagination.NavIcon as={ArrowRight01Icon} />
+                        )}
                     </Pagination.NavButton>
                 </Pagination.Root>
 
