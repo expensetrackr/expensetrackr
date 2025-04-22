@@ -73,12 +73,12 @@ export function CreateTransactionDrawer() {
         ],
     });
     const form = useForm<CreateTransactionFormData>({
-        account_id: accounts?.data[0]?.id ?? "",
+        account_id: accounts?.data?.[0]?.id ?? "",
         name: "",
         note: null,
         type: "expense",
         amount: "0.00",
-        currency: accounts?.data[0]?.currencyCode ?? "USD",
+        currency: accounts?.data?.[0]?.currencyCode ?? "USD",
         is_recurring: false,
         recurring_interval: null,
         category_id: "",
@@ -92,8 +92,8 @@ export function CreateTransactionDrawer() {
      */
     const formRef = React.useRef(form);
     React.useEffect(() => {
-        if (isOpen && accounts?.data.length) {
-            formRef.current.setData("account_id", accounts?.data[0]?.id ?? "");
+        if (isOpen && accounts?.data?.length) {
+            formRef.current.setData("account_id", accounts?.data?.[0]?.id ?? "");
         }
     }, [isOpen, accounts?.data]);
 
@@ -144,7 +144,7 @@ export function CreateTransactionDrawer() {
                                     name="accountId"
                                     onValueChange={(value) => form.setData("account_id", value)}
                                     options={
-                                        accounts?.data.map((account) => ({
+                                        accounts?.data?.map((account) => ({
                                             label: (
                                                 <div className="flex items-center gap-3.5">
                                                     {account?.connection?.institutionLogoUrl ? (
@@ -243,7 +243,7 @@ export function CreateTransactionDrawer() {
                                     name="categoryId"
                                     onValueChange={(value) => form.setData("category_id", value)}
                                     options={
-                                        categories?.data.map((category) => ({
+                                        categories?.data?.map((category) => ({
                                             label: category.name,
                                             value: category.id,
                                         })) || []
