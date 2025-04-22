@@ -43,7 +43,6 @@ final class DashboardController extends Controller
             'last-year' => ['period' => Period::lastYear(), 'interval' => 'month'],
             default => ['period' => Period::lastMonth(), 'interval' => 'day'],
         };
-        dump($totalBalancePeriod, $totalBalanceParams);
 
         return Inertia::render('dashboard', [
             'netWorth' => $balanceSheet->netWorth(),
