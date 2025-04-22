@@ -3,16 +3,15 @@ import "../css/app.css";
 
 import { createInertiaApp } from "@inertiajs/react";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClientProvider } from "@tanstack/react-query";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { ThemeProvider } from "next-themes";
 import { createRoot, hydrateRoot } from "react-dom/client";
 
 import { NuqsAdapter } from "#/utils/nuqs-adapter.ts";
+import { queryClient } from "./utils/query-client.ts";
 
 const appName = import.meta.env.VITE_APP_NAME || "ExpenseTrackr";
-
-const queryClient = new QueryClient();
 
 void createInertiaApp({
     title: (title) => (title ? `${title} - ${appName}` : `${appName} - Manage your expenses effortlessly`),
