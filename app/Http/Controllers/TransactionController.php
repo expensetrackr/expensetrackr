@@ -33,9 +33,8 @@ final class TransactionController extends Controller
     public function index(Request $request, #[CurrentUser] User $user): Response
     {
         $perPage = $request->integer('per_page', default: 12);
-        /** @var array<string, string> */
-        $filters = $request->query('filters', default: []);
-        $transactionId = $filters['transaction_id'] ?? null;
+        /** @var string|null $transactionId */
+        $transactionId = $request->query('transaction_id');
 
         $transaction = $transactionId
             ? Transaction::query()

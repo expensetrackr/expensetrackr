@@ -19,7 +19,7 @@ export function useTransactionsParams() {
             clearOnDefault: true,
             urlKeys: {
                 accountId: "filter[account_id]",
-                transactionId: "filter[transaction_id]",
+                transactionId: "transaction_id",
                 name: "filter[name]",
                 type: "filter[type]",
             },
