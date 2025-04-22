@@ -122,11 +122,6 @@ pm.min_spare_servers = 4
 pm.max_spare_servers = 32
 pm.start_servers = 18
 clear_env = no
-php_admin_value[post_max_size] = 35M
-php_admin_value[upload_max_filesize] = 30M
-php_admin_value[memory_limit] = 2048M
-php_admin_value[max_execution_time] = 60
-php_admin_value[max_input_time] = 60
 '''
 
 "nginx.template.conf" = '''
@@ -193,11 +188,13 @@ http {
 
         location ~ \.php$ {
             fastcgi_pass 127.0.0.1:9000;
+            fastcgi_buffers 16 512k;
+            fastcgi_buffer_size 512k;
             fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
             include $!{nginx}/conf/fastcgi_params;
             include $!{nginx}/conf/fastcgi.conf;
-            fastcgi_buffers 16 512k;
-            fastcgi_buffer_size 512k;
+
+            fastcgi_param PHP_VALUE "upload_max_filesize=30M \n post_max_size=35M";
         }
 
         location ~ /\.(?!well-known).* {
