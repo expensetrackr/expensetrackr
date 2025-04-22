@@ -192,7 +192,8 @@ http {
         ) else ()
 
         location ~ \.php$ {
-            fastcgi_buffer_size 8k;
+            fastcgi_buffers 16 16k;
+            fastcgi_buffer_size 32k;
             fastcgi_pass 127.0.0.1:9000;
             fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
             include $!{nginx}/conf/fastcgi_params;
