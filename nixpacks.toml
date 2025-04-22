@@ -77,7 +77,7 @@ autostart=true
 autorestart=true
 stopasgroup=true
 killasgroup=true
-numprocs=4 # To reduce memory/CPU usage, change to 2.
+numprocs=12
 startsecs=0
 stopwaitsecs=3600
 stdout_logfile=/var/log/worker-laravel.log
@@ -92,7 +92,7 @@ autostart=true
 autorestart=true
 stopasgroup=true
 killasgroup=true
-numprocs=8 # To reduce memory/CPU usage, change to 2.
+numprocs=8
 startsecs=0
 stopwaitsecs=3600
 stdout_logfile=/var/log/worker-finance.log
@@ -192,8 +192,8 @@ http {
         ) else ()
 
         location ~ \.php$ {
-            fastcgi_pass 127.0.0.1:9000;
             fastcgi_buffer_size 8k;
+            fastcgi_pass 127.0.0.1:9000;
             fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
             include $!{nginx}/conf/fastcgi_params;
             include $!{nginx}/conf/fastcgi.conf;
