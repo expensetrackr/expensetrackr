@@ -113,7 +113,11 @@ export function CreateTransactionDrawer() {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        form.post(routes.transactions.store.url());
+        form.post(routes.transactions.store.url(), {
+            onSuccess: async () => {
+                await actions.resetParams({ shallow: false });
+            },
+        });
     };
 
     return (
