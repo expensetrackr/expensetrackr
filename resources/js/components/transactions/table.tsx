@@ -184,19 +184,13 @@ export function TransactionsTable({ data: initialData, total }: TransactionsTabl
         columns,
         getCoreRowModel: getCoreRowModel(),
         rowCount: total,
+        manualFiltering: true,
         manualSorting: true,
         manualPagination: true,
         onPaginationChange: setPagination,
+        enableGlobalFilter: true,
         state: {
             pagination,
-        },
-        initialState: {
-            sorting: [
-                {
-                    id: "name",
-                    desc: true,
-                },
-            ],
         },
     });
 

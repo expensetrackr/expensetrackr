@@ -39,7 +39,7 @@ export function TablePagination({
                     disabled={links.prev === null}
                 >
                     {links.prev !== null ? (
-                        <Link href={links.prev} preserveScroll>
+                        <Link href={links.prev} prefetch preserveScroll>
                             Previous
                         </Link>
                     ) : (
@@ -58,7 +58,7 @@ export function TablePagination({
                     disabled={links.next === null}
                 >
                     {links.next !== null ? (
-                        <Link href={links.next} preserveScroll>
+                        <Link href={links.next} prefetch preserveScroll>
                             Next
                         </Link>
                     ) : (
@@ -74,7 +74,7 @@ export function TablePagination({
                 <Pagination.Root>
                     <Pagination.NavButton asChild={meta.current_page !== 1} disabled={meta.current_page === 1}>
                         {meta.current_page !== 1 ? (
-                            <Link href={links.first}>
+                            <Link href={links.first} prefetch>
                                 <Pagination.NavIcon as={ArrowLeftDoubleIcon} />
                             </Link>
                         ) : (
@@ -83,7 +83,7 @@ export function TablePagination({
                     </Pagination.NavButton>
                     <Pagination.NavButton asChild={links.prev !== null}>
                         {links.prev !== null ? (
-                            <Link href={links.prev}>
+                            <Link href={links.prev} prefetch>
                                 <Pagination.NavIcon as={ArrowLeft01Icon} />
                             </Link>
                         ) : (
@@ -94,7 +94,9 @@ export function TablePagination({
                         if (link.url) {
                             return (
                                 <Pagination.Item asChild current={link.active} key={link.url}>
-                                    <Link href={link.url}>{link.label}</Link>
+                                    <Link href={link.url} prefetch>
+                                        {link.label}
+                                    </Link>
                                 </Pagination.Item>
                             );
                         }
@@ -110,7 +112,7 @@ export function TablePagination({
                         disabled={meta.current_page === meta.last_page}
                     >
                         {meta.current_page !== meta.last_page ? (
-                            <Link href={links.last}>
+                            <Link href={links.last} prefetch>
                                 <Pagination.NavIcon as={ArrowRightDoubleIcon} />
                             </Link>
                         ) : (
@@ -119,7 +121,7 @@ export function TablePagination({
                     </Pagination.NavButton>
                     <Pagination.NavButton asChild={links.next !== null}>
                         {links.next !== null ? (
-                            <Link href={links.next}>
+                            <Link href={links.next} prefetch>
                                 <Pagination.NavIcon as={ArrowRight01Icon} />
                             </Link>
                         ) : (

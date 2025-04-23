@@ -80,7 +80,7 @@ export function AccountDetailsDrawer({ account }: AccountDetailsDrawerProps) {
                             <Link
                                 href={routes.transactions.index.url({
                                     query: {
-                                        "filters[account_id]": account?.id,
+                                        "filter[account_id]": account?.id,
                                     },
                                 })}
                             >

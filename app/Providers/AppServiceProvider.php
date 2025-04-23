@@ -22,5 +22,8 @@ final class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         RateLimiter::for('api', fn (Request $request) => Limit::perMinute(60)->by($request->user()?->id ?: $request->ip()));
+
+        // @phpstan-ignore offsetAccess.nonOffsetAccessible, property.nonObject, method.nonObject
+        $this->app['request']->server->set('HTTPS', 'on');
     }
 }

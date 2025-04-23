@@ -9,7 +9,6 @@ use App\Models\User;
 use App\Services\BalanceSheet;
 use App\ValueObjects\Period;
 use Illuminate\Container\Attributes\CurrentUser;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -49,10 +48,7 @@ final class DashboardController extends Controller
             'series' => [
                 'totalBalance' => $balanceSheet->netWorthSeries($totalBalanceParams['period'], $totalBalanceParams['interval']),
             ],
-            'transactions' => Transaction::search($query)
-                ->query(function (Builder $query): void {
-                    $query->with(['category', 'merchant']);
-                })
+            'transactions' => Transaction::with(['category', 'merchant'])
                 ->latest('dated_at')
                 ->take(5)
                 ->get()

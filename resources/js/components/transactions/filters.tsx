@@ -12,7 +12,7 @@ export function TransactionsFilters() {
     const { setParams, ...params } = useTransactionsParams();
 
     const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        await setParams({ query: e.target.value });
+        await setParams({ name: e.target.value });
     };
 
     return (
@@ -21,7 +21,7 @@ export function TransactionsFilters() {
                 leadingIcon={Search01Icon}
                 onChange={handleSearch}
                 placeholder="Search..."
-                value={params.query}
+                value={params.name}
                 wrapperClassName="lg:hidden"
             />
 
@@ -49,30 +49,29 @@ export function TransactionsFilters() {
                     leadingIcon={Search01Icon}
                     onChange={handleSearch}
                     placeholder="Search..."
-                    value={params.query}
+                    value={params.name}
                 />
 
                 <SelectField
                     $size="sm"
                     onValueChange={(value) =>
                         setParams({
-                            sort: "dated_at",
-                            sortDirection: value as NonNullable<(typeof params)["sortDirection"]>,
+                            sort: value as NonNullable<(typeof params)["sort"]>,
                         })
                     }
                     options={[
                         {
-                            value: "asc",
+                            value: "dated_at",
                             label: "ASC",
                         },
                         {
-                            value: "desc",
+                            value: "-dated_at",
                             label: "DESC",
                         },
                     ]}
                     placeholder="Sort by"
                     triggerIcon={Sorting01Icon}
-                    value={params.sortDirection || undefined}
+                    value={params.sort || undefined}
                     wrapperClassName="w-auto flex-1 min-[560px]:flex-none"
                 />
             </div>
