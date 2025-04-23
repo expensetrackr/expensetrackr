@@ -3,13 +3,12 @@ import * as React from "react";
 import { toast } from "sonner";
 import UserCircleSolidIcon from "virtual:icons/hugeicons/user-circle-solid";
 
-import { Button } from "#/components/button.tsx";
 import { FormSection } from "#/components/form-section.tsx";
 import { UpdateProfilePictureForm } from "#/components/forms/update-profile-picture-form.tsx";
 import { Header } from "#/components/header.tsx";
-import { SubmitButton } from "#/components/submit-button.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
 import { TextField } from "#/components/ui/form/text-field.tsx";
+import { useUnsavedChanges } from "#/hooks/use-unsaved-changes.ts";
 import { useUser } from "#/hooks/use-user.ts";
 import { SettingsLayout } from "#/layouts/settings-layout.tsx";
 import { routes } from "#/routes.ts";
@@ -29,6 +28,11 @@ export default function SettingsShow() {
         email: user?.email,
     });
 
+    const { dismissUnsavedChanges } = useUnsavedChanges({
+        form,
+        formId: "update-profile-settings-form",
+    });
+
     function onSubmit(e: React.FormEvent) {
         e.preventDefault();
 
@@ -40,53 +44,10 @@ export default function SettingsShow() {
                     id: "profile-updated",
                     className: "filled",
                 });
-                toast.dismiss("unsaved-changes");
+                dismissUnsavedChanges();
             },
         });
     }
-
-    /**
-     * With this ref, we can access the form state from the previous render.
-     */
-    const formRef = React.useRef(form);
-    React.useEffect(() => {
-        if (formRef.current && form.isDirty) {
-            toast.info("Unsaved changes", {
-                id: "unsaved-changes",
-                duration: Infinity,
-                position: "bottom-center",
-                className: "stroke",
-                cancel: (
-                    <Button
-                        $size="xs"
-                        $style="stroke"
-                        $type="neutral"
-                        className="h-7 text-paragraph-xs lg:text-paragraph-sm"
-                        onClick={() => {
-                            toast.dismiss("unsaved-changes");
-                            formRef.current.reset();
-                        }}
-                    >
-                        Cancel
-                    </Button>
-                ),
-                action: (
-                    <SubmitButton
-                        $size="xs"
-                        className="h-7 text-paragraph-xs lg:text-paragraph-sm"
-                        form="update-profile-settings-form"
-                        isSubmitting={form.processing}
-                        type="submit"
-                    >
-                        Save
-                    </SubmitButton>
-                ),
-                style: {
-                    "--width": "512px",
-                },
-            });
-        }
-    }, [form.isDirty, form.processing]);
 
     return (
         <>
