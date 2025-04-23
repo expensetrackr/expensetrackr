@@ -3,8 +3,10 @@ import * as React from "react";
 import { toast } from "sonner";
 
 import { FormSection } from "#/components/form-section.tsx";
-import { TextField } from "#/components/ui/form/text-field.tsx";
 import { routes } from "#/routes.ts";
+import { Button } from "../button.tsx";
+import { SubmitButton } from "../submit-button.tsx";
+import { TextField } from "../ui/form/text-field.tsx";
 
 interface UpdateWorkspaceNameFormProps {
     defaultValues: Pick<App.Data.Workspace.WorkspaceData, "id" | "name">;
@@ -23,13 +25,63 @@ export function UpdateWorkspaceNameForm({ defaultValues, permissions }: UpdateWo
             errorBag: "updateWorkspace",
             preserveScroll: true,
             onSuccess: () => {
-                toast.success("Workspace name updated.");
+                toast.success("Workspace name updated.", {
+                    id: "workspace-name-update-success",
+                    className: "filled",
+                });
             },
             onError: () => {
-                toast.error("Failed to update workspace name.");
+                toast.error("Failed to update workspace name.", {
+                    id: "workspace-name-update-error",
+                    className: "filled",
+                });
+                form.reset();
             },
         });
     };
+
+    /**
+     * With this ref, we can access the form state from the previous render.
+     */
+    const formRef = React.useRef(form);
+    React.useEffect(() => {
+        if (formRef.current && form.isDirty) {
+            toast.info("Unsaved changes", {
+                id: "unsaved-changes",
+                duration: Infinity,
+                position: "bottom-center",
+                className: "stroke",
+                cancel: (
+                    <Button
+                        $size="xs"
+                        $style="stroke"
+                        $type="neutral"
+                        className="h-7 text-paragraph-xs lg:text-paragraph-sm"
+                        onClick={() => {
+                            toast.dismiss("unsaved-changes");
+                            formRef.current.reset();
+                        }}
+                    >
+                        Cancel
+                    </Button>
+                ),
+                action: (
+                    <SubmitButton
+                        $size="xs"
+                        className="h-7 text-paragraph-xs lg:text-paragraph-sm"
+                        form="update-profile-settings-form"
+                        isSubmitting={form.processing}
+                        type="submit"
+                    >
+                        Save
+                    </SubmitButton>
+                ),
+                style: {
+                    "--width": "512px",
+                },
+            });
+        }
+    }, [form.isDirty, form.processing]);
 
     return (
         <FormSection description="Your workspace name is how others will recognize you on the platform." title="Name">
@@ -39,19 +91,16 @@ export function UpdateWorkspaceNameForm({ defaultValues, permissions }: UpdateWo
                 id="update-workspace-name-form"
                 onSubmit={onSubmit}
             >
-                <input name="_method" type="hidden" value="PUT" />
-
                 <TextField
-                    $error={!!form.errors.name}
                     autoComplete="off"
-                    autoFocus
-                    data-auto-submit
-                    hint={form.errors.name}
+                    disabled={!permissions.canUpdateWorkspace || form.processing}
+                    error={form.errors.name}
+                    id="name"
                     label="Workspace name"
+                    labelClassName="sr-only"
                     name="name"
                     onChange={(e) => form.setData("name", e.target.value)}
                     placeholder="e.g. Apple"
-                    readOnly={!permissions.canUpdateWorkspace}
                     value={form.data.name}
                 />
             </form>

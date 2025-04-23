@@ -53,7 +53,7 @@ Route::middleware([
     Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
 
     Route::prefix('settings')->group(function () {
-        Route::get('/', fn () => Inertia::render('settings/show'))->name('settings.show');
+        Route::get('/', fn () => Inertia::render('settings/page'))->name('settings.show');
         Route::get('/billing', [BillingController::class, 'show'])->name('settings.billing.show');
         Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
 

@@ -22,10 +22,16 @@ export function WorkspaceSettingsForm({ workspaceId, defaultValues }: WorkspaceS
             errorBag: "updateWorkspaceSettings",
             preserveScroll: true,
             onSuccess: () => {
-                toast.success("Workspace settings updated.");
+                toast.success("Workspace settings updated.", {
+                    id: "workspace-settings-update-success",
+                    className: "filled",
+                });
             },
             onError: () => {
-                toast.error("Failed to update workspace settings.");
+                toast.error("Failed to update workspace settings.", {
+                    id: "workspace-settings-update-error",
+                    className: "filled",
+                });
                 form.reset();
             },
         });

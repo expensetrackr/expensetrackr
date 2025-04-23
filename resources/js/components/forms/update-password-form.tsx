@@ -78,7 +78,6 @@ export function UpdatePasswordForm() {
                                 <TextField
                                     $error={!!errors.current_password}
                                     autoComplete="current-password"
-                                    autoFocus
                                     hint={errors.current_password}
                                     label="Current password"
                                     name="current_password"
@@ -91,7 +90,6 @@ export function UpdatePasswordForm() {
                                 <TextField
                                     $error={!!errors.password}
                                     autoComplete="new-password"
-                                    autoFocus
                                     hint={errors.password}
                                     label="New password"
                                     name="password"
@@ -104,7 +102,6 @@ export function UpdatePasswordForm() {
                                 <TextField
                                     $error={!!errors.password_confirmation}
                                     autoComplete="new-password"
-                                    autoFocus
                                     hint={errors.password_confirmation}
                                     label="Confirm password"
                                     name="password"
