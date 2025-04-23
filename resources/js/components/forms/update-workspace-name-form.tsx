@@ -29,6 +29,7 @@ export function UpdateWorkspaceNameForm({ defaultValues, permissions }: UpdateWo
                     id: "workspace-name-update-success",
                     className: "filled",
                 });
+                toast.dismiss("unsaved-changes");
             },
             onError: () => {
                 toast.error("Failed to update workspace name.", {
@@ -69,7 +70,7 @@ export function UpdateWorkspaceNameForm({ defaultValues, permissions }: UpdateWo
                     <SubmitButton
                         $size="xs"
                         className="h-7 text-paragraph-xs lg:text-paragraph-sm"
-                        form="update-profile-settings-form"
+                        form="update-workspace-name-form"
                         isSubmitting={form.processing}
                         type="submit"
                     >

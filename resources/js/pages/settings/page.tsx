@@ -37,6 +37,7 @@ export default function SettingsShow() {
             preserveScroll: true,
             onSuccess: () => {
                 toast.success("Profile updated.", {
+                    id: "profile-updated",
                     className: "filled",
                 });
                 toast.dismiss("unsaved-changes");
