@@ -22,6 +22,18 @@ export function UpdateProfilePictureForm({ form }: UpdateProfilePictureFormProps
 
         if (!file) return;
 
+        const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
+        if (!allowedTypes.includes(file.type)) {
+            form.setError("photo", "File must be JPEG, PNG, or GIF");
+            return;
+        }
+
+        const maxSize = 5 * 1024 * 1024; // 5MB in bytes
+        if (file.size > maxSize) {
+            form.setError("photo", "File size must not exceed 5MB");
+            return;
+        }
+
         form.setData("photo", file);
     }
 
