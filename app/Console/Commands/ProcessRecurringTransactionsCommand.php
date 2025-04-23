@@ -57,11 +57,7 @@ final class ProcessRecurringTransactionsCommand extends Command
         $lastDate = $transaction->recurring_start_at ?? $transaction->dated_at;
 
         // If this is the first occurrence and we have a start date
-        if ($transaction->recurring_start_at && $transaction->recurringChildren->isEmpty()) {
-            $nextDate = $transaction->recurring_start_at;
-        } else {
-            $nextDate = $this->calculateNextDate($lastDate, $transaction->recurring_interval);
-        }
+        $nextDate = ($transaction->recurring_start_at && $transaction->recurringChildren->isEmpty()) ? $transaction->recurring_start_at : $this->calculateNextDate($lastDate, $transaction->recurring_interval);
 
         // If next date is in the future, skip
         if ($nextDate->isAfter($now)) {
