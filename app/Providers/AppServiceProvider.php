@@ -7,7 +7,6 @@ namespace App\Providers;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
-use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
 final class AppServiceProvider extends ServiceProvider
@@ -24,6 +23,7 @@ final class AppServiceProvider extends ServiceProvider
     {
         RateLimiter::for('api', fn (Request $request) => Limit::perMinute(60)->by($request->user()?->id ?: $request->ip()));
 
-        URL::forceScheme('https');
+        // @phpstan-ignore offsetAccess.nonOffsetAccessible, property.nonObject, method.nonObject
+        $this->app['request']->server->set('HTTPS', 'on');
     }
 }
