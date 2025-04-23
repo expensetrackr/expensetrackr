@@ -8,10 +8,9 @@ import * as Button from "#/components/ui/button.tsx";
 import * as Hint from "#/components/ui/hint.tsx";
 import * as Label from "#/components/ui/label.tsx";
 import { useUser } from "#/hooks/use-user.ts";
-import { type UpdateProfileInformationForm } from "#/pages/settings/page.tsx";
 
 type UpdateProfilePictureFormProps = {
-    form: InertiaFormProps<UpdateProfileInformationForm>;
+    form: InertiaFormProps<Forms.UpdateProfileInformationForm>;
 };
 
 export function UpdateProfilePictureForm({ form }: UpdateProfilePictureFormProps) {

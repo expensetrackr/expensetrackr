@@ -14,15 +14,9 @@ import { SettingsLayout } from "#/layouts/settings-layout.tsx";
 import { routes } from "#/routes.ts";
 import { type PageProps } from "#/types/globals.js";
 
-export type UpdateProfileInformationForm = {
-    photo: File | null;
-    name: string;
-    email: string;
-};
-
 export default function SettingsShow() {
     const user = useUser();
-    const form = useForm<UpdateProfileInformationForm>({
+    const form = useForm<Forms.UpdateProfileInformationForm>({
         photo: null as File | null,
         name: user?.name,
         email: user?.email,
