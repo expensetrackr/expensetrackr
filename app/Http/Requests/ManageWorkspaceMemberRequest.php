@@ -88,6 +88,14 @@ final class ManageWorkspaceMemberRequest extends FormRequest
     }
 
     /**
+     * Prepare the data for validation.
+     */
+    protected function prepareForValidation(): void
+    {
+        $this->workspace = type($this->route('workspace'))->as(Workspace::class);
+    }
+
+    /**
      * Handle a failed authorization attempt.
      */
     protected function failedAuthorization(): RedirectResponse
