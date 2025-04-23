@@ -1,4 +1,4 @@
-import { Link, useForm } from "@inertiajs/react";
+import { useForm } from "@inertiajs/react";
 import { parseAsStringEnum, useQueryState } from "nuqs";
 import Share08Icon from "virtual:icons/hugeicons/share-08";
 
@@ -16,7 +16,7 @@ export default function ConnectedAccountsForm() {
         _method: "DELETE",
         bag: "removeConnectedAccount",
     });
-    const socialStream = useSocialstream();
+    const socialstream = useSocialstream();
 
     function onSubmit(e: React.FormEvent) {
         e.preventDefault();
@@ -33,12 +33,12 @@ export default function ConnectedAccountsForm() {
     }
 
     function hasAccountForProvider(provider: string) {
-        return socialStream.connectedAccounts.some((account) => account.provider === provider);
+        return socialstream.connectedAccounts.some((account) => account.provider === provider);
     }
 
     function getAccountForProvider(provider: string) {
         if (hasAccountForProvider(provider)) {
-            return socialStream.connectedAccounts.find((account) => account.provider === provider);
+            return socialstream.connectedAccounts.find((account) => account.provider === provider);
         }
     }
 
@@ -49,16 +49,19 @@ export default function ConnectedAccountsForm() {
             return setAction(getAction("ConnectedAccountsDestroy", account.id));
         }
     }
+
+    console.info(socialstream);
+
     return (
         <ActionSection>
             <div className="flex flex-col gap-5 divide-y divide-[--stroke-soft-200]">
-                {socialStream.providers?.map((provider) => {
-                    const connectedAccount = socialStream.connectedAccounts.find((account) => {
+                {socialstream.providers?.map((provider) => {
+                    const connectedAccount = socialstream.connectedAccounts.find((account) => {
                         return account.provider === provider.id;
                     });
 
                     const canRemoveConnectedAccount =
-                        socialStream.connectedAccounts.length > 1 || socialStream.hasPassword;
+                        socialstream.connectedAccounts.length > 1 || socialstream.hasPassword;
 
                     return (
                         <ConnectedAccount connectedAccount={connectedAccount} key={provider.id} provider={provider}>
@@ -78,13 +81,13 @@ export default function ConnectedAccountsForm() {
                                 </>
                             ) : (
                                 <Button.Root $size="sm" $style="stroke" asChild className="px-4">
-                                    <Link
+                                    <a
                                         href={routes.oauth.redirect.url({
                                             provider: provider.id,
                                         })}
                                     >
                                         Connect account
-                                    </Link>
+                                    </a>
                                 </Button.Root>
                             )}
 

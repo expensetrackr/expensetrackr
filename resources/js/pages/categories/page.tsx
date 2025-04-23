@@ -4,12 +4,12 @@ import GeometricShapes01SolidIcon from "virtual:icons/hugeicons/geometric-shapes
 import ResourcesAddIcon from "virtual:icons/hugeicons/resources-add";
 
 import { Header } from "#/components/header.tsx";
+import { CreateCategoryModal } from "#/components/modals/create-category-modal.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
 import { SettingsLayout } from "#/layouts/settings-layout.tsx";
 import { type PageProps } from "#/types/globals.ts";
 import { CategoryCard } from "./__components/category-card.tsx";
-import { CreateCategoryModal } from "./__components/create-category-modal.tsx";
 
 type CategoriesPageProps = {
     categories: {

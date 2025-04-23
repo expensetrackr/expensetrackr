@@ -12,7 +12,7 @@ export function SettingsLayout({
 }>) {
     return (
         <AppLayout
-            childrenWrapperClassName="self-stretch lg:grid lg:grid-cols-[auto_minmax(0,1fr)]"
+            childrenWrapperClassName="flex-1 max-w-full self-stretch lg:grid lg:grid-cols-[auto_minmax(0,1fr)]"
             defaultCollapsed
             {...props}
         >

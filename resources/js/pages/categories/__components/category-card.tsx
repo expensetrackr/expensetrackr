@@ -6,14 +6,14 @@ import InformationCircleIcon from "virtual:icons/hugeicons/information-circle";
 import MoreVerticalIcon from "virtual:icons/hugeicons/more-vertical";
 
 import { CategoryIcon } from "#/components/category-icon.tsx";
+import { DeleteCategoryModal } from "#/components/modals/delete-category-modal.tsx";
+import { UpdateCategoryModal } from "#/components/modals/update-category-modal.tsx";
 import * as Badge from "#/components/ui/badge.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import * as Dropdown from "#/components/ui/dropdown.tsx";
 import * as Tooltip from "#/components/ui/tooltip.tsx";
 import { useCategoriesParams } from "#/hooks/use-categories-params.ts";
 import { cn } from "#/utils/cn.ts";
-import { DeleteCategoryModal } from "./delete-category-modal.tsx";
-import { UpdateCategoryModal } from "./update-category-modal.tsx";
 
 type CategoryCardProps = {
     category: Resources.Category;
@@ -25,6 +25,7 @@ type CategoryCardProps = {
 
 export function CategoryCard({ category, categories, isChild = false }: CategoryCardProps) {
     const { setParams } = useCategoriesParams();
+
     return (
         <React.Fragment>
             <div

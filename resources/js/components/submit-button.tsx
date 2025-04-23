@@ -1,15 +1,15 @@
 import Loading03Icon from "virtual:icons/hugeicons/loading-03";
 
 import { cn } from "#/utils/cn.ts";
-import * as Button from "./ui/button.tsx";
+import { Button, type ButtonProps } from "./button.tsx";
 
-type SubmitButtonProps = Button.ButtonRootProps & {
+type SubmitButtonProps = ButtonProps & {
     isSubmitting?: boolean;
 };
 
 export function SubmitButton({ children, isSubmitting, ...props }: SubmitButtonProps) {
     return (
-        <Button.Root disabled={props.disabled || isSubmitting} {...props}>
+        <Button disabled={props.disabled || isSubmitting} {...props}>
             <span className={cn(isSubmitting && "invisible")}>{children}</span>
 
             {isSubmitting ? (
@@ -17,6 +17,6 @@ export function SubmitButton({ children, isSubmitting, ...props }: SubmitButtonP
                     <Loading03Icon className="size-5 animate-spin" />
                 </div>
             ) : null}
-        </Button.Root>
+        </Button>
     );
 }

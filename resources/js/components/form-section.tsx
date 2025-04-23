@@ -6,19 +6,17 @@ interface FormSectionProps {
 
 export function FormSection({ title, description, children }: FormSectionProps) {
     return (
-        <div className="grid grid-cols-12 gap-4">
-            <div className="col-span-12 md:col-span-5">
+        <div className="grid gap-6 md:grid-cols-[minmax(0,26fr)_minmax(0,37fr)]">
+            <div>
                 {(title || description) && (
                     <div className="flex flex-col gap-1">
-                        <h2 className="text-label-sm">{title}</h2>
+                        <h2 className="text-label-sm text-(--text-strong-950)">{title}</h2>
                         {description && <p className="text-paragraph-xs text-(--text-sub-600)">{description}</p>}
                     </div>
                 )}
             </div>
 
-            <div className="col-span-12 md:col-span-7">
-                <div className="flex flex-col items-start gap-2">{children}</div>
-            </div>
+            {children}
         </div>
     );
 }

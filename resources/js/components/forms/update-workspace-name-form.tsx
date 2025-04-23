@@ -3,8 +3,9 @@ import * as React from "react";
 import { toast } from "sonner";
 
 import { FormSection } from "#/components/form-section.tsx";
-import { TextField } from "#/components/ui/form/text-field.tsx";
+import { useUnsavedChanges } from "#/hooks/use-unsaved-changes.ts";
 import { routes } from "#/routes.ts";
+import { TextField } from "../ui/form/text-field.tsx";
 
 interface UpdateWorkspaceNameFormProps {
     defaultValues: Pick<App.Data.Workspace.WorkspaceData, "id" | "name">;
@@ -13,6 +14,10 @@ interface UpdateWorkspaceNameFormProps {
 
 export function UpdateWorkspaceNameForm({ defaultValues, permissions }: UpdateWorkspaceNameFormProps) {
     const form = useForm(defaultValues);
+    const { dismissUnsavedChanges } = useUnsavedChanges({
+        form,
+        formId: "update-workspace-name-form",
+    });
 
     const onSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -23,10 +28,18 @@ export function UpdateWorkspaceNameForm({ defaultValues, permissions }: UpdateWo
             errorBag: "updateWorkspace",
             preserveScroll: true,
             onSuccess: () => {
-                toast.success("Workspace name updated.");
+                toast.success("Workspace name updated.", {
+                    id: "workspace-name-update-success",
+                    className: "filled",
+                });
+                dismissUnsavedChanges();
             },
             onError: () => {
-                toast.error("Failed to update workspace name.");
+                toast.error("Failed to update workspace name.", {
+                    id: "workspace-name-update-error",
+                    className: "filled",
+                });
+                form.reset();
             },
         });
     };
@@ -39,19 +52,16 @@ export function UpdateWorkspaceNameForm({ defaultValues, permissions }: UpdateWo
                 id="update-workspace-name-form"
                 onSubmit={onSubmit}
             >
-                <input name="_method" type="hidden" value="PUT" />
-
                 <TextField
-                    $error={!!form.errors.name}
                     autoComplete="off"
-                    autoFocus
-                    data-auto-submit
-                    hint={form.errors.name}
+                    disabled={!permissions.canUpdateWorkspace || form.processing}
+                    error={form.errors.name}
+                    id="name"
                     label="Workspace name"
+                    labelClassName="sr-only"
                     name="name"
                     onChange={(e) => form.setData("name", e.target.value)}
                     placeholder="e.g. Apple"
-                    readOnly={!permissions.canUpdateWorkspace}
                     value={form.data.name}
                 />
             </form>

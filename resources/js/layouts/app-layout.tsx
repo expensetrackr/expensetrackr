@@ -21,7 +21,8 @@ export function AppLayout({ children, defaultCollapsed = false, childrenWrapperC
         if (props.toast?.type) {
             toast[props.toast.type](props.toast.title, {
                 description: props.toast.description,
-                duration: props.toast.duration ?? 5000,
+                duration: props.toast.duration ?? 5000,  // e.g. 5 s default or adjust as needed
+                className: "filled",
             });
         }
     }, [props.toast]);
@@ -33,7 +34,7 @@ export function AppLayout({ children, defaultCollapsed = false, childrenWrapperC
                 <HeaderMobile />
                 <div
                     className={cn(
-                        "mx-auto flex w-full max-w-[1360px] flex-1 flex-col self-stretch",
+                        "mx-auto flex w-full max-w-[1360px] flex-1 flex-col self-stretch pb-16 lg:pb-0",
                         childrenWrapperClassName,
                     )}
                 >

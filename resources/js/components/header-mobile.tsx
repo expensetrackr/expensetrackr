@@ -1,11 +1,16 @@
 import { Head } from "@inertiajs/react";
+import Search01Icon from "virtual:icons/hugeicons/search-01";
 
 import { MobileMenu } from "#/layouts/partials/mobile-menu.tsx";
+import { useCommandMenuStore } from "#/store/command-menu.ts";
 import { Image } from "./image.tsx";
 import { Link } from "./link.tsx";
 import { Source } from "./source.tsx";
+import * as TopbarItemButton from "./topbar-item-button.tsx";
 
 export function HeaderMobile() {
+    const { toggleOpen } = useCommandMenuStore();
+
     return (
         <>
             <Head>
@@ -34,6 +39,10 @@ export function HeaderMobile() {
                 </Link>
 
                 <div className="flex gap-3">
+                    <TopbarItemButton.Root onClick={() => toggleOpen()}>
+                        <TopbarItemButton.Icon as={Search01Icon} />
+                    </TopbarItemButton.Root>
+
                     <div className="flex w-1 shrink-0 items-center before:h-full before:w-px before:bg-(--stroke-soft-200)" />
 
                     <MobileMenu />
