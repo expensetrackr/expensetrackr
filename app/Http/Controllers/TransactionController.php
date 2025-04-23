@@ -25,7 +25,7 @@ use Inertia\Response;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
-final class TransactionController extends Controller
+final class TransactionController
 {
     /**
      * Display all transactions.
@@ -66,7 +66,7 @@ final class TransactionController extends Controller
                 ->defaultSort('-dated_at')
                 ->with(['category', 'merchant'])
                 ->paginate($perPage)
-                ->withQueryString()
+                ->appends(request()->query())
                 ->toResourceCollection(),
             'transaction' => $transaction,
             'categories' => $categories,

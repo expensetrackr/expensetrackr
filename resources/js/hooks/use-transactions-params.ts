@@ -6,7 +6,7 @@ export function useTransactionsParams() {
             accountId: parseAsString,
             transactionId: parseAsString,
             name: parseAsString.withDefault("").withOptions({
-                throttleMs: 1000,
+                throttleMs: 500,
             }),
             type: parseAsStringEnum(["", "income", "expense"]).withDefault("").withOptions({
                 throttleMs: 500,
