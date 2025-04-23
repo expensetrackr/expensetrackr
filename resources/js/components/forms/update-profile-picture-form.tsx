@@ -51,6 +51,7 @@ export function UpdateProfilePictureForm({ form }: UpdateProfilePictureFormProps
                             $size="sm"
                             $style="stroke"
                             $type="neutral"
+                            disabled={form.processing}
                             onClick={() => photoRef.current?.click()}
                             onFocus={() => photoRef.current?.focus()}
                         >
