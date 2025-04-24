@@ -14,7 +14,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('transactions', function (Blueprint $table) {
-            $table->index(['recurring_parent_id', 'dated_at']);
+            $table->index(['recurring_parent_id', 'dated_at'], 'idx_transactions_recurring_date');
         });
     }
 
@@ -24,7 +24,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('transactions', function (Blueprint $table) {
-            $table->dropIndex(['recurring_parent_id', 'dated_at']);
+            $table->dropIndex('idx_transactions_recurring_date');
         });
     }
 };
