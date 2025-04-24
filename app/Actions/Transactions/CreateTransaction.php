@@ -60,11 +60,17 @@ final class CreateTransaction
                     throw new Exception('Failed to fetch exchange rate from the API.');
                 }
 
-                $input['base_amount'] = $input['amount'];
+                /**
+                 * We need to do this so PHPStan doesn't complain about the type of the amount.
+                 *
+                 * @var numeric-string $amount
+                 */
+                $amount = $input['amount'];
+                $input['base_amount'] = $amount;
                 $input['base_currency'] = $currency;
                 $input['currency_rate'] = $exchangeRate;
                 $input['amount'] = bcdiv(
-                    type($input['amount'])->asString(),
+                    $amount,
                     $exchangeRate,
                     4,
                 );
