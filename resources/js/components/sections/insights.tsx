@@ -50,7 +50,7 @@ const insights = [
 export function InsightsSection() {
     return (
         <section id="insights">
-            <div className="container border-x border-t bg-(--bg-white-0) py-12">
+            <div className="container border-x border-t bg-(--bg-white-0) py-12 lg:px-12">
                 <div className="lg:w-1/2">
                     <p className="flex items-center gap-2">
                         <Link06Icon className="size-4 text-primary" />

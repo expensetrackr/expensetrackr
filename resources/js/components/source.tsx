@@ -5,6 +5,8 @@ type SourceProps = UnpicSourceProps & {
 };
 
 export function Source({ isCdn, ...props }: SourceProps) {
+    const src = props.src.startsWith("http") ? `${ENV.APP_URL}/${props.src}` : `${ENV.APP_URL}${props.src}`;
+
     return (
         <UnpicSource
             background="auto"
@@ -15,7 +17,7 @@ export function Source({ isCdn, ...props }: SourceProps) {
                     domain: "expensetrackr.app",
                 },
             }}
-            src={isCdn && import.meta.env.PROD ? `${ENV.APP_URL}${props.src}` : props.src}
+            src={isCdn && import.meta.env.PROD ? src : props.src}
         />
     );
 }
