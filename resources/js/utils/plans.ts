@@ -1,39 +1,67 @@
-import Medal06Icon from "virtual:icons/hugeicons/medal-06";
-import PieChart02Icon from "virtual:icons/hugeicons/pie-chart-02";
-import PiggyBankIcon from "virtual:icons/hugeicons/piggy-bank";
+import { type ButtonRootProps } from "#/components/ui/button.tsx";
 
-export const plans = [
-    {
-        code: "free",
-        icon: Medal06Icon,
-        iconBg: "bg-state-faded-base",
-        glowColor: "var(--color-state-faded-base)",
-    },
+type Plan = {
+    code: string;
+    img: string;
+    isFeatured?: boolean;
+    price: {
+        monthly: number | null;
+        yearly: number | null;
+        onetime: number | null;
+    };
+    productPriceId: {
+        monthly: string | null;
+        yearly: string | null;
+        onetime: string | null;
+    };
+    buttonStyle: ButtonRootProps["$style"];
+};
+
+export const plans: Plan[] = [
     {
         code: "personal",
-        icon: PieChart02Icon,
-        iconBg: "bg-primary",
-        isFeatured: true,
-        isSubscription: true,
+        img: "/img/personal-plan.png",
         price: {
             monthly: 14.99,
-            yearly: 12.99,
+            yearly: 8.33,
+            onetime: null,
         },
         productPriceId: {
             monthly: "42d54e49-6f94-4e90-a137-e850d38ee5c7",
             yearly: "88978e70-3cae-479f-a6f9-d6864205b020",
+            onetime: null,
         },
-        buttonLabel: "Subscribe now",
-        glowColor: "var(--color-primary)",
+        buttonStyle: "stroke",
     },
     {
         code: "lifetime",
-        icon: PiggyBankIcon,
-        iconBg: "bg-state-feature-base",
+        img: "/img/lifetime-plan.png",
+        isFeatured: true,
         price: {
+            monthly: null,
+            yearly: null,
             onetime: 269.99,
         },
-        productPriceId: "c969cccd-95cc-4c0c-b7a4-721a61d63e4b",
-        glowColor: "var(--color-state-feature-base)",
+        productPriceId: {
+            monthly: null,
+            yearly: null,
+            onetime: "c969cccd-95cc-4c0c-b7a4-721a61d63e4b",
+        },
+        buttonStyle: "filled",
+    },
+    {
+        code: "enterprise",
+        img: "/img/enterprise-plan.png",
+        price: {
+            monthly: null,
+            yearly: null,
+            onetime: null,
+        },
+        productPriceId: {
+            monthly: null,
+            yearly: null,
+            onetime: null,
+        },
+        buttonStyle: "lighter",
     },
 ];

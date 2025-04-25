@@ -4,7 +4,7 @@ import { Image } from "../image.tsx";
 export function ViewFinancialDataSection() {
     return (
         <section id="view-financial-data">
-            <div className="container border-x border-t bg-(--bg-white-0) py-12 lg:px-12">
+            <div className="container overflow-hidden border-x border-t bg-(--bg-white-0) py-12 lg:px-12">
                 <div className="mx-auto max-w-xl text-center">
                     <p className="flex items-center justify-center gap-2">
                         <TableIcon className="size-4 text-primary" />
