@@ -8,7 +8,7 @@ import * as Button from "../ui/button.tsx";
 export function HeroSection() {
     return (
         <section className="pt-16 lg:pt-0" id="hero">
-            <div className="relative isolate container overflow-hidden border-x border-b border-(--stroke-soft-200) bg-(--bg-white-0)">
+            <div className="relative isolate container overflow-hidden border-x bg-(--bg-white-0)">
                 <svg
                     aria-hidden="true"
                     className="absolute inset-0 -z-10 size-full [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)] stroke-(--stroke-soft-200)"

@@ -69,11 +69,11 @@ const features = [
 export function FeaturesSection() {
     return (
         <section id="features">
-            <div className="container border-x bg-(--bg-white-0) py-12">
+            <div className="container border-x border-t bg-(--bg-white-0) py-12">
                 <div className="grid grid-cols-1 gap-8 lg:grid-cols-3 lg:items-end">
                     <div className="lg:col-span-2">
                         <p className="flex items-center gap-2">
-                            <ToolsIcon className="size-5 text-yellow-600" />
+                            <ToolsIcon className="size-4 text-primary" />
                             <span className="text-paragraph-sm font-medium text-(--text-sub-600) uppercase">
                                 YOUR PERSONAL FINANCE POWERHOUSE
                             </span>
@@ -112,7 +112,7 @@ export function FeaturesSection() {
                     {features.map((feature) => (
                         <div key={feature.id}>
                             <dt className="flex items-center gap-2">
-                                <feature.icon className="size-6 text-(--text-sub-600)" />
+                                <feature.icon className="size-6 text-primary" />
                                 <h3 className="text-paragraph-sm font-medium">{feature.title}</h3>
                             </dt>
                             <dd>

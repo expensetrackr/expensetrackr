@@ -1,5 +1,6 @@
 import { FeaturesSection } from "#/components/sections/features.tsx";
 import { HeroSection } from "#/components/sections/hero.tsx";
+import { InsightsSection } from "#/components/sections/insights.tsx";
 import { GuestLayout } from "#/layouts/guest-layout.tsx";
 import { type PageProps } from "#/types/globals.js";
 
@@ -8,6 +9,7 @@ export default function WelcomePage() {
         <>
             <HeroSection />
             <FeaturesSection />
+            <InsightsSection />
         </>
     );
 }
