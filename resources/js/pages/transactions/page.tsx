@@ -2,7 +2,7 @@ import { Head } from "@inertiajs/react";
 import PlusSignIcon from "virtual:icons/hugeicons/plus-sign";
 import TransactionIcon from "virtual:icons/hugeicons/transaction";
 
-import { Header } from "#/components/header.tsx";
+import { Header } from "#/components/page-header.tsx";
 import { TablePagination } from "#/components/table-pagination.tsx";
 import { TransactionDetailsDrawer } from "#/components/transactions/details-drawer.tsx";
 import { TransactionsFilters } from "#/components/transactions/filters.tsx";

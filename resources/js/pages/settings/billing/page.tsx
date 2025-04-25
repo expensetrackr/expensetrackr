@@ -1,7 +1,7 @@
 import { Head } from "@inertiajs/react";
 import CreditCardSolidIcon from "virtual:icons/hugeicons/credit-card-solid";
 
-import { Header } from "#/components/header.tsx";
+import { Header } from "#/components/page-header.tsx";
 import { PricingTables } from "#/components/pricing-tables.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
 import { SettingsLayout } from "#/layouts/settings-layout.tsx";

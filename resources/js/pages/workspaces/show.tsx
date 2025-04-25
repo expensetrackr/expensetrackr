@@ -3,7 +3,7 @@ import UserGroupSolidIcon from "virtual:icons/hugeicons/user-group-solid";
 
 import { UpdateWorkspaceNameForm } from "#/components/forms/update-workspace-name-form.tsx";
 import { WorkspaceSettingsForm } from "#/components/forms/workspace-settings-form.tsx";
-import { Header } from "#/components/header.tsx";
+import { Header } from "#/components/page-header.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
 import { WorkspaceMemberInvitations } from "#/components/workspace-member-invitations.tsx";
 import { WorkspaceMemberManager } from "#/components/workspace-member-manager.tsx";

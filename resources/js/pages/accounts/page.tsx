@@ -6,7 +6,7 @@ import { AccountsList } from "#/components/accounts/accounts-lists.tsx";
 import { AccountDetailsDrawer } from "#/components/accounts/details-drawer.tsx";
 import { AccountsFilters } from "#/components/accounts/filters.tsx";
 import { IllustrationEmptyAccounts } from "#/components/empty-illustrations/accounts.tsx";
-import { Header } from "#/components/header.tsx";
+import { Header } from "#/components/page-header.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
 import { useActionsParams } from "#/hooks/use-actions-params.ts";

@@ -2,7 +2,7 @@ import { Head } from "@inertiajs/react";
 import type Decimal from "decimal.js";
 import Add01Icon from "virtual:icons/hugeicons/add-01";
 
-import { Header } from "#/components/header.tsx";
+import { Header } from "#/components/page-header.tsx";
 import * as Avatar from "#/components/ui/avatar.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import { TotalBalanceWidget } from "#/components/widgets/total-balance.tsx";

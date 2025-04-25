@@ -1,46 +1,64 @@
-import Search01Icon from "virtual:icons/hugeicons/search-01";
-import { useCommandMenuStore } from "#/store/command-menu.ts";
+import { useScroll } from "#/hooks/use-scroll.ts";
+import { routes } from "#/routes.ts";
 import { cn } from "#/utils/cn.ts";
-import * as TopbarItemButton from "./topbar-item-button.tsx";
+import { Link } from "./link.tsx";
+import Logo from "./logo.tsx";
+import * as Button from "./ui/button.tsx";
+import * as LinkButton from "./ui/link-button.tsx";
 
-export function Header({
-    children,
-    className,
-    icon,
-    title,
-    description,
-    contentClassName,
-    ...rest
-}: React.HTMLAttributes<HTMLDivElement> & {
-    icon?: React.ReactNode;
-    title?: string;
-    description?: string;
-    contentClassName?: string;
-}) {
-    const { toggleOpen } = useCommandMenuStore();
+const navItems = [
+    {
+        label: "Home",
+        href: routes.home.url(),
+    },
+    {
+        label: "Features",
+        href: "/#features",
+    },
+    {
+        label: "Pricing",
+        href: "/#pricing",
+    },
+];
 
+export function Header() {
+    const { scrollY } = useScroll();
     return (
-        <header
+        <div
             className={cn(
-                "flex min-h-[88px] flex-col gap-4 px-4 py-5 md:flex-row md:items-center md:justify-between md:gap-3 lg:px-8",
-                className,
+                "fixed top-0 left-0 z-50 flex w-full items-center justify-center px-2 transition-all duration-300 lg:inset-x-0 lg:px-0",
+                scrollY > 64 ? "h-16 lg:bg-(--bg-white-0)/80 lg:shadow-sm lg:backdrop-blur-sm" : "h-16 lg:h-20",
             )}
-            {...rest}
         >
-            <div className="flex flex-1 gap-4 lg:gap-3.5">
-                {icon}
-                <div className="space-y-1">
-                    <div className="text-label-md lg:text-label-lg">{title}</div>
-                    <div className="text-paragraph-sm text-(--text-sub-600)">{description}</div>
+            <div
+                className={cn(
+                    "container mx-px flex items-center justify-between border border-t-0 bg-(--bg-white-0) transition-all duration-300 ring-inset lg:mx-0 lg:border-0 lg:bg-transparent",
+                    scrollY > 64 ? "h-16" : "h-16 lg:h-20",
+                )}
+            >
+                <div className="flex flex-row items-center justify-between">
+                    <Link href="/">
+                        <span className="sr-only">Go to homepage</span>
+                        <Logo className="h-8 w-auto" />
+                    </Link>
+                </div>
+
+                <div className="flex items-center gap-10">
+                    <ul className="hidden items-center gap-10 lg:flex">
+                        {navItems.map((item) => (
+                            <li key={item.href}>
+                                <LinkButton.Root asChild>
+                                    <Link href={item.href}>{item.label}</Link>
+                                </LinkButton.Root>
+                            </li>
+                        ))}
+                    </ul>
+
+                    <Button.Root asChild>
+                        <Link href={routes.register.url()}>Get started now</Link>
+                    </Button.Root>
                 </div>
             </div>
-            <div className={cn("flex items-center gap-3", contentClassName)}>
-                <TopbarItemButton.Root className="hidden lg:flex" onClick={() => toggleOpen()}>
-                    <TopbarItemButton.Icon as={Search01Icon} />
-                </TopbarItemButton.Root>
-
-                {children}
-            </div>
-        </header>
+        </div>
     );
 }
