@@ -1,6 +1,4 @@
-# Terms and Conditions
-
-Last updated: April 8, 2025
+## Introduction
 
 These Terms and Conditions ("**Terms**") govern your relationship with ExpenseTrackr application (the "**Service**") operated by danestves, LLC ("**us**", "**we**", or "**our**").
 

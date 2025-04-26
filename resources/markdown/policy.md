@@ -1,6 +1,4 @@
-# Privacy Policy
-
-Last updated: April 8, 2025
+## Introduction
 
 danestves, LLC ("**us**", "**we**", or "**our**") operates the ExpenseTrackr application (the "**Service**"). This page informs you of our policies regarding the collection, use, and disclosure of personal data when you use our Service and the choices you have associated with that data.
 

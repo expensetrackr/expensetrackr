@@ -1,7 +1,8 @@
 import { Head } from "@inertiajs/react";
+import LegalDocument01Icon from "virtual:icons/hugeicons/legal-document-01";
 
-import { Image } from "#/components/image.tsx";
-import { Source } from "#/components/source.tsx";
+import { GuestLayout } from "#/layouts/guest-layout.tsx";
+import { type PageProps } from "#/types/globals.js";
 
 interface Props {
     terms: string;
@@ -9,7 +10,7 @@ interface Props {
 
 export default function TermsOfService({ terms }: Props) {
     return (
-        <div className="font-sans antialiased">
+        <>
             <Head title="Terms of Service">
                 <script
                     dangerouslySetInnerHTML={{
@@ -25,41 +26,45 @@ export default function TermsOfService({ terms }: Props) {
                 />
             </Head>
 
-            <div className="py-4">
-                <div className="flex min-h-screen flex-col items-center pt-6 sm:pt-0">
-                    <picture>
-                        <Source
-                            height={64}
-                            media="(prefers-color-scheme: dark)"
-                            priority
-                            src="/img/isotype-dark.svg"
-                            width={64}
-                        />
-                        <Source
-                            height={64}
-                            media="(prefers-color-scheme: light)"
-                            priority
-                            src="/img/isotype-light.svg"
-                            width={64}
-                        />
-                        <Image
-                            alt="ExpenseTrackr"
-                            className="size-16"
-                            height={64}
-                            objectFit="contain"
-                            priority
-                            src="/img/isotype-light.svg"
-                            width={64}
-                        />
-                    </picture>
+            <section>
+                <div className="container border-x bg-(--bg-white-0) pt-32 pb-12 lg:px-12">
+                    <div className="mx-auto max-w-xl">
+                        <p className="inline-flex items-center gap-2 text-paragraph-xs font-medium uppercase">
+                            <LegalDocument01Icon className="size-4 text-primary" />
+                            <time
+                                dateTime={new Date("2025-04-08").toLocaleDateString("en-US", {
+                                    day: "numeric",
+                                    year: "numeric",
+                                    month: "long",
+                                })}
+                            >
+                                {new Date("2025-04-08").toLocaleDateString("en-US", {
+                                    day: "numeric",
+                                    year: "numeric",
+                                    month: "long",
+                                })}
+                            </time>
+                        </p>
 
+                        <h3 className="mt-8 text-h5 font-bold tracking-tight lg:text-h4">Terms of Service</h3>
+                        <p className="mt-2 text-(--text-sub-600)">
+                            Contact us with any questions about these agreements.
+                        </p>
+                    </div>
+                </div>
+
+                <div className="container border-x border-t bg-(--bg-white-0) py-12 lg:px-12">
                     <div
-                        className="prose mt-6 w-full overflow-hidden p-6 shadow-md sm:max-w-2xl sm:rounded-8 dark:prose-invert"
+                        className="mx-auto prose mt-6 w-full max-w-xl overflow-hidden text-(--text-sub-600) dark:prose-invert prose-headings:font-semibold prose-a:border-b prose-a:border-dashed prose-a:border-primary prose-a:no-underline prose-a:transition-colors prose-a:duration-200 prose-a:hover:border-solid prose-a:hover:bg-brand-primary-200 prose-blockquote:text-(--text-sub-600) prose-pre:rounded-12 prose-pre:border prose-ul:[list-style-type:'○'] prose-li:marker:text-brand-primary-600"
                         // biome-ignore lint/security/noDangerouslySetInnerHtml: we are the ones who set the content
                         dangerouslySetInnerHTML={{ __html: terms }}
                     />
                 </div>
-            </div>
-        </div>
+            </section>
+        </>
     );
 }
+
+TermsOfService.layout = (page: React.ReactNode & { props: PageProps }) => (
+    <GuestLayout {...page.props}>{page}</GuestLayout>
+);
