@@ -6,6 +6,7 @@ import CheckmarkCircle02SolidIcon from "virtual:icons/hugeicons/checkmark-circle
 import CreditCardIcon from "virtual:icons/hugeicons/credit-card";
 
 import { useTranslation } from "#/hooks/use-translation.ts";
+import { routes } from "#/routes.ts";
 import { cn } from "#/utils/cn.ts";
 import { plans } from "#/utils/plans.ts";
 import { Image } from "../image.tsx";
@@ -167,13 +168,16 @@ export function PricingSection() {
                                         <Button.Root
                                             $style={plan.buttonStyle}
                                             $type={plan.buttonType}
+                                            asChild
                                             className={cn(
                                                 "w-full",
                                                 plan.isFeatured &&
                                                     "bg-white text-primary hover:bg-brand-primary-600 hover:text-white",
                                             )}
                                         >
-                                            {t(`pricing.${plan.code}.button_label`)}
+                                            <Link href={routes.register.url()}>
+                                                {t(`pricing.${plan.code}.button_label`)}
+                                            </Link>
                                         </Button.Root>
                                     </div>
 
@@ -210,7 +214,9 @@ export function PricingSection() {
                                 <p className="font-medium">{t("pricing.free.title")}</p>
                             </div>
 
-                            <Button.Root $style="lighter">{t("pricing.free.button_label")}</Button.Root>
+                            <Button.Root $style="lighter" asChild>
+                                <Link href={routes.register.url()}>{t("pricing.free.button_label")}</Link>
+                            </Button.Root>
                         </div>
 
                         <div className="mt-6">
