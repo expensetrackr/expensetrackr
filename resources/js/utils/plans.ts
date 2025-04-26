@@ -15,6 +15,7 @@ type Plan = {
         onetime: string | null;
     };
     buttonStyle: ButtonRootProps["$style"];
+    buttonType: ButtonRootProps["$type"];
 };
 
 export const plans: Plan[] = [
@@ -32,6 +33,7 @@ export const plans: Plan[] = [
             onetime: null,
         },
         buttonStyle: "stroke",
+        buttonType: "primary",
     },
     {
         code: "lifetime",
@@ -48,6 +50,7 @@ export const plans: Plan[] = [
             onetime: "c969cccd-95cc-4c0c-b7a4-721a61d63e4b",
         },
         buttonStyle: "filled",
+        buttonType: "neutral",
     },
     {
         code: "enterprise",
@@ -63,5 +66,6 @@ export const plans: Plan[] = [
             onetime: null,
         },
         buttonStyle: "lighter",
+        buttonType: "primary",
     },
 ];

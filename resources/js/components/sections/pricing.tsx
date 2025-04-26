@@ -92,7 +92,7 @@ export function PricingSection() {
                                     className={cn(
                                         "rounded-24 p-8 shadow-sm",
                                         plan.isFeatured
-                                            ? "bg-gradient-to-t from-brand-primary-800 via-brand-primary-700 to-brand-primary-500"
+                                            ? "bg-brand-primary-500"
                                             : "bg-(--bg-white-0) ring-1 ring-(--stroke-soft-200)/40 ring-inset",
                                     )}
                                     key={plan.code}
@@ -164,7 +164,15 @@ export function PricingSection() {
                                     </div>
 
                                     <div className="mt-8">
-                                        <Button.Root $style={plan.buttonStyle} className="w-full">
+                                        <Button.Root
+                                            $style={plan.buttonStyle}
+                                            $type={plan.buttonType}
+                                            className={cn(
+                                                "w-full",
+                                                plan.isFeatured &&
+                                                    "bg-white text-primary hover:bg-brand-primary-600 hover:text-white",
+                                            )}
+                                        >
                                             {t(`pricing.${plan.code}.button_label`)}
                                         </Button.Root>
                                     </div>

@@ -1,6 +1,7 @@
 import * as React from "react";
 import { toast } from "sonner";
 
+import { Footer } from "#/components/footer.tsx";
 import { Header } from "#/components/header.tsx";
 import { Toaster } from "#/components/toaster.tsx";
 import { type PageProps } from "#/types/globals.js";
@@ -28,6 +29,8 @@ export function GuestLayout({
                     <Header />
 
                     <main className="grow">{children}</main>
+
+                    <Footer />
                 </div>
             </div>
 
