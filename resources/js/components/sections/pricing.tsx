@@ -1,5 +1,6 @@
 import NumberFlow, { type Format } from "@number-flow/react";
 import { resolveCurrencyFormat } from "@sumup/intl";
+import * as m from "motion/react-m";
 import * as React from "react";
 import ArrowRight01Icon from "virtual:icons/hugeicons/arrow-right-01";
 import CheckmarkCircle02SolidIcon from "virtual:icons/hugeicons/checkmark-circle-02-solid";
@@ -42,19 +43,36 @@ export function PricingSection({ containerClassName, isInternal, ...props }: Pri
                 {!isInternal && (
                     <div className="grid grid-cols-1 items-end gap-8 lg:grid-cols-3">
                         <div className="lg:col-span-2">
-                            <p className="flex items-center gap-2">
+                            <m.p
+                                animate={{ opacity: 1, y: 0 }}
+                                className="flex items-center gap-2"
+                                initial={{ opacity: 0, y: -100 }}
+                                transition={{ duration: 1 }}
+                            >
                                 <CreditCardIcon className="size-4 text-primary" />
                                 <span className="text-paragraph-sm font-medium text-(--text-sub-600) uppercase">
                                     pricing
                                 </span>
-                            </p>
+                            </m.p>
 
-                            <h3 className="mt-8 text-h4 font-bold tracking-tight">Simple Pricing</h3>
-                            <p className="mt-2 text-paragraph-lg text-(--text-sub-600)">
+                            <m.h3
+                                animate={{ opacity: 1, y: 0 }}
+                                className="mt-8 text-h4 font-bold tracking-tight"
+                                initial={{ opacity: 0, y: 100 }}
+                                transition={{ duration: 1 }}
+                            >
+                                Simple Pricing
+                            </m.h3>
+                            <m.p
+                                animate={{ opacity: 1, y: 0 }}
+                                className="mt-2 text-paragraph-lg text-(--text-sub-600)"
+                                initial={{ opacity: 0, y: 100 }}
+                                transition={{ duration: 1.5 }}
+                            >
                                 Get started <span className="font-bold underline decoration-wavy">for free</span>. Then
                                 find a plan that grows with your <strong>financial needs</strong>, from personal
                                 tracking to small business management.
-                            </p>
+                            </m.p>
                         </div>
 
                         <div className="flex lg:ml-auto">

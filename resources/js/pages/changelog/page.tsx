@@ -19,7 +19,6 @@ export default function ChangelogPage({ changelogs }: ChangelogPageProps) {
                         className="inline-flex items-center gap-2 text-paragraph-xs font-medium uppercase"
                         initial={{ opacity: 0, y: -100 }}
                         transition={{ duration: 1 }}
-                        viewport={{ once: true }}
                     >
                         <Clock01Icon className="size-4 text-primary" />
                         Changelog
@@ -30,7 +29,6 @@ export default function ChangelogPage({ changelogs }: ChangelogPageProps) {
                         className="mt-8 text-h3 font-bold tracking-tight md:text-h2 lg:text-h1"
                         initial={{ opacity: 0, y: 100 }}
                         transition={{ duration: 1 }}
-                        viewport={{ once: true }}
                     >
                         Follow our journey and keep track of us.
                     </m.h3>

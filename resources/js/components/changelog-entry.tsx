@@ -17,7 +17,6 @@ export function ChangelogEntry({ changelog }: ChangelogEntryProps) {
             className="group/changelog-entry relative overflow-hidden rounded-12 bg-(--bg-white-0) pt-8 shadow lg:pt-24"
             initial={{ opacity: 0, y: 100 }}
             transition={{ duration: 1.5 }}
-            viewport={{ once: true }}
         >
             <Link
                 aria-label={changelog.title}
@@ -36,7 +35,6 @@ export function ChangelogEntry({ changelog }: ChangelogEntryProps) {
                         className="flex items-center gap-2 text-paragraph-xs font-medium text-(--text-sub-600) uppercase"
                         initial={{ opacity: 0, y: -100 }}
                         transition={{ duration: 1 }}
-                        viewport={{ once: true }}
                     >
                         {format(changelog.publishedAt, "MMMM d, yyyy")}
                     </m.p>
@@ -45,7 +43,6 @@ export function ChangelogEntry({ changelog }: ChangelogEntryProps) {
                         className="mt-8 text-h5 font-bold tracking-tight"
                         initial={{ opacity: 0, y: 100 }}
                         transition={{ duration: 1 }}
-                        viewport={{ once: true }}
                     >
                         {changelog.title}
                     </m.h3>
@@ -54,7 +51,6 @@ export function ChangelogEntry({ changelog }: ChangelogEntryProps) {
                         className="mt-8"
                         initial={{ opacity: 0, y: 100 }}
                         transition={{ duration: 1.5 }}
-                        viewport={{ once: true }}
                     >
                         {changelog.excerpt}
                     </m.p>

@@ -1,3 +1,4 @@
+import * as m from "motion/react-m";
 import Analytics01Icon from "virtual:icons/hugeicons/analytics-01";
 import ArrowRight01Icon from "virtual:icons/hugeicons/arrow-right-01";
 import BalanceScaleIcon from "virtual:icons/hugeicons/balance-scale";
@@ -72,20 +73,42 @@ export function FeaturesSection() {
             <div className="container border-x border-t bg-(--bg-white-0) py-12 lg:px-12">
                 <div className="grid grid-cols-1 gap-8 lg:grid-cols-3 lg:items-end">
                     <div className="lg:col-span-2">
-                        <p className="flex items-center gap-2">
+                        <m.p
+                            animate={{ opacity: 1, y: 0 }}
+                            className="flex items-center gap-2"
+                            initial={{ opacity: 0, y: -100 }}
+                            transition={{ duration: 1 }}
+                        >
                             <ToolsIcon className="size-4 text-primary" />
                             <span className="text-paragraph-sm font-medium text-(--text-sub-600) uppercase">
                                 YOUR PERSONAL FINANCE POWERHOUSE
                             </span>
-                        </p>
+                        </m.p>
 
-                        <h2 className="mt-8 text-h4 font-semibold tracking-tight">Your finances, clearly managed</h2>
-                        <p className="mt-2 text-paragraph-lg text-(--text-sub-600)">
+                        <m.h3
+                            animate={{ opacity: 1, y: 0 }}
+                            className="mt-8 text-h4 font-semibold tracking-tight"
+                            initial={{ opacity: 0, y: 100 }}
+                            transition={{ duration: 1 }}
+                        >
+                            Your finances, clearly managed
+                        </m.h3>
+                        <m.p
+                            animate={{ opacity: 1, y: 0 }}
+                            className="mt-2 text-paragraph-lg text-(--text-sub-600)"
+                            initial={{ opacity: 0, y: 100 }}
+                            transition={{ duration: 1.5 }}
+                        >
                             Track every expense, manage budgets, monitor investments, and oversee assets with our
                             intuitive, all-in-one platform—no more financial guesswork or scattered spreadsheets.
-                        </p>
+                        </m.p>
 
-                        <div className="mt-8 flex items-center gap-2">
+                        <m.div
+                            animate={{ opacity: 1, y: 0 }}
+                            className="mt-8 flex items-center gap-2"
+                            initial={{ opacity: 0, y: 100 }}
+                            transition={{ duration: 2 }}
+                        >
                             <Button.Root asChild className="gap-2">
                                 <Link href={routes.register.url()}>
                                     Get started now
@@ -104,7 +127,7 @@ export function FeaturesSection() {
                                     />
                                 </Link>
                             </Button.Root>
-                        </div>
+                        </m.div>
                     </div>
                 </div>
 

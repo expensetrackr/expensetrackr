@@ -1,3 +1,4 @@
+import * as m from "motion/react-m";
 import CancelCircleSolidIcon from "virtual:icons/hugeicons/cancel-circle-solid";
 import CheckmarkCircle02SolidIcon from "virtual:icons/hugeicons/checkmark-circle-02-solid";
 import Link06Icon from "virtual:icons/hugeicons/link-06";
@@ -52,17 +53,34 @@ export function InsightsSection() {
         <section id="insights">
             <div className="container border-x border-t bg-(--bg-white-0) py-12 lg:px-12">
                 <div className="lg:w-1/2">
-                    <p className="flex items-center gap-2">
+                    <m.p
+                        animate={{ opacity: 1, y: 0 }}
+                        className="flex items-center gap-2"
+                        initial={{ opacity: 0, y: -100 }}
+                        transition={{ duration: 1 }}
+                    >
                         <Link06Icon className="size-4 text-primary" />
                         <span className="text-paragraph-sm font-medium text-(--text-sub-600) uppercase">
                             Straightforward
                         </span>
-                    </p>
+                    </m.p>
 
-                    <h3 className="mt-8 text-h4 font-semibold tracking-tight">Unlock your financial data</h3>
-                    <p className="mt-2 text-paragraph-lg text-(--text-sub-600)">
+                    <m.h3
+                        animate={{ opacity: 1, y: 0 }}
+                        className="mt-8 text-h4 font-semibold tracking-tight"
+                        initial={{ opacity: 0, y: 100 }}
+                        transition={{ duration: 1 }}
+                    >
+                        Unlock your financial data
+                    </m.h3>
+                    <m.p
+                        animate={{ opacity: 1, y: 0 }}
+                        className="mt-2 text-paragraph-lg text-(--text-sub-600)"
+                        initial={{ opacity: 0, y: 100 }}
+                        transition={{ duration: 1.5 }}
+                    >
                         Access all your financial data in one place for complete clarity and informed decisions.
-                    </p>
+                    </m.p>
                 </div>
 
                 <div className="mt-2 grid grid-cols-4 pb-8">
