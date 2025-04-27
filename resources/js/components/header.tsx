@@ -32,8 +32,8 @@ export function Header() {
         >
             <div
                 className={cn(
-                    "container mx-px flex items-center justify-between border border-t-0 bg-(--bg-white-0) transition-all duration-300 ring-inset lg:mx-0 lg:border-0 lg:bg-transparent",
-                    scrollY > 64 ? "h-16" : "h-16 lg:h-20",
+                    "container mx-px flex items-center justify-between border border-t-0 transition-all duration-300 ring-inset lg:mx-0",
+                    scrollY > 64 ? "h-16 lg:border-0" : "h-16 border-x bg-(--bg-white-0) lg:h-20",
                 )}
             >
                 <div className="flex flex-row items-center justify-between">

@@ -6,7 +6,7 @@ import { type PageProps } from "#/types/globals.js";
 export default function PricingPage() {
     return (
         <>
-            <PricingSection containerClassName="lg:pt-24" />
+            <PricingSection containerClassName="pt-24 lg:pt-32" />
 
             <div className="container border-x border-t bg-(--bg-white-0) py-12 lg:px-12">
                 <PricingTable />

@@ -2,6 +2,7 @@ import accounts from "./routes/accounts/index.ts";
 import api from "./routes/api/index.ts";
 import bankConnections from "./routes/bank-connections/index.ts";
 import categories from "./routes/categories/index.ts";
+import changelog from "./routes/changelog/index.ts";
 import connectedAccounts from "./routes/connected-accounts/index.ts";
 import currentUser from "./routes/current-user/index.ts";
 import currentUserPhoto from "./routes/current-user-photo/index.ts";
@@ -36,6 +37,7 @@ export const routes = {
     bankConnections,
     billing,
     categories,
+    changelog,
     connectedAccounts,
     currentUser,
     currentUserPhoto,

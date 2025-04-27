@@ -51,6 +51,8 @@
         <meta content="#ffffff" name="theme-color" />
         <meta content="light" name="color-scheme" />
 
+        <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.min.css" rel="stylesheet" />
+
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -103,6 +105,11 @@
             data-exclude-search="true"
             data-do-not-track="true"
         ></script>
-        <script defer src="https://cdn.paritydeals.com/banner.js"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.min.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                AOS.init();
+            });
+        </script>
     </body>
 </html>

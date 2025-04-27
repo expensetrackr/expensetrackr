@@ -8,7 +8,7 @@ const links = [
         title: "Resources",
         links: [
             { label: "Help", href: "/help" },
-            { label: "Changelog", href: "/changelog" },
+            { label: "Changelog", href: routes.changelog.index.url() },
             { label: "Contact", href: "/contact" },
         ],
     },

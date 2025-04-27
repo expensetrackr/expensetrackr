@@ -5,6 +5,7 @@ import { createInertiaApp } from "@inertiajs/react";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
+import { domAnimation, LazyMotion } from "motion/react";
 import { ThemeProvider } from "next-themes";
 import { createRoot, hydrateRoot } from "react-dom/client";
 
@@ -28,7 +29,9 @@ void createInertiaApp({
                                 disableTransitionOnChange
                                 enableSystem
                             >
-                                <App {...props} />
+                                <LazyMotion features={domAnimation}>
+                                    <App {...props} />
+                                </LazyMotion>
                             </ThemeProvider>
                         </TooltipProvider>
                     </NuqsAdapter>
