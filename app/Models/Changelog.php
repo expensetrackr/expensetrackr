@@ -8,7 +8,10 @@ use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
+use Spatie\Sitemap\Contracts\Sitemapable;
+use Spatie\Sitemap\Tags\Url;
 
 /**
  * @property int $id
@@ -37,7 +40,7 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  *
  * @mixin \Eloquent
  */
-final class Changelog extends Model
+final class Changelog extends Model implements Sitemapable
 {
     /** @use HasFactory<\Database\Factories\ChangelogFactory> */
     use HasFactory, HasPrefixedId;
@@ -50,6 +53,14 @@ final class Changelog extends Model
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+
+    public function toSitemapTag(): Url
+    {
+        return Url::create(route('changelog.show', $this))
+            ->setLastModificationDate(
+                Carbon::create($this->updated_at) ?? Carbon::now()
+            );
     }
 
     /**
