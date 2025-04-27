@@ -5,6 +5,7 @@ declare(strict_types=1);
 return [
     'filament' => [
         'title' => 'Title',
+        'slug' => 'Slug',
         'excerpt' => 'Excerpt',
         'content' => 'Content',
         'published_at' => 'Published at',

@@ -16,9 +16,10 @@ return new class extends Migration
         Schema::create('changelogs', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('public_id')->unique();
+            $table->string('slug')->unique();
             $table->text('content');
             $table->text('excerpt')->nullable();
+            $table->string('public_id')->unique();
             $table->timestamp('published_at')->nullable();
             $table->timestamps();
         });

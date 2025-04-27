@@ -8,10 +8,13 @@ use App\Filament\Resources\ChangelogResource\Pages;
 use App\Models\Changelog;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Str;
 
 final class ChangelogResource extends Resource
 {
@@ -33,9 +36,18 @@ final class ChangelogResource extends Resource
                             ->label(__('changelog.filament.title'))
                             ->maxLength(255)
                             ->required()
-                            ->columnSpan([
-                                'sm' => 2,
-                            ]),
+                            ->live(debounce: 500)
+                            ->afterStateUpdated(function (Get $get, Set $set, ?string $old, ?string $state) {
+                                if (($get('slug') ?? '') !== Str::slug((string) $old)) {
+                                    return;
+                                }
+
+                                $set('slug', Str::slug((string) $state));
+                            }),
+                        Forms\Components\TextInput::make('slug')
+                            ->label(__('changelog.filament.slug'))
+                            ->required()
+                            ->unique(Changelog::class, 'slug', fn ($record) => $record),
                         Forms\Components\Textarea::make('excerpt')
                             ->label(__('changelog.filament.excerpt'))
                             ->minLength(50)

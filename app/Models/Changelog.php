@@ -10,9 +10,10 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property int $id
  * @property string $title
- * @property string $public_id
+ * @property string $slug
  * @property string $content
  * @property string|null $excerpt
+ * @property string $public_id
  * @property \Carbon\CarbonImmutable|null $published_at
  * @property \Carbon\CarbonImmutable|null $created_at
  * @property \Carbon\CarbonImmutable|null $updated_at
@@ -27,6 +28,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Changelog whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Changelog wherePublicId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Changelog wherePublishedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Changelog whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Changelog whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Changelog whereUpdatedAt($value)
  *
