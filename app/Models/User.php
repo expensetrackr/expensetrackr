@@ -8,6 +8,9 @@ use App\Concerns\HasProfilePhoto;
 use App\Concerns\HasWorkspaces;
 use App\Observers\UserObserver;
 use Danestves\LaravelPolar\Billable;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Models\Contracts\HasAvatar;
+use Filament\Panel;
 use Illuminate\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -87,7 +90,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @mixin \Eloquent
  */
 #[ObservedBy([UserObserver::class])]
-final class User extends Authenticatable
+final class User extends Authenticatable implements FilamentUser, HasAvatar
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use Billable, HasApiTokens, HasConnectedAccounts, HasFactory, HasRoles, HasWorkspaces, MustVerifyEmail, Notifiable, SetsProfilePhotoFromUrl, TwoFactorAuthenticatable;
@@ -143,6 +146,16 @@ final class User extends Authenticatable
             is_string($productId) && $productId !== '' => $this->hasPurchasedProduct($productId),
             default => $this->subscribed(),
         };
+    }
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return $this->is_admin;
+    }
+
+    public function getFilamentAvatarUrl(): ?string
+    {
+        return $this->profile_photo_url;
     }
 
     /**

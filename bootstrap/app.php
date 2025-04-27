@@ -32,7 +32,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->api(append: [
             EnsureFrontendRequestsAreStateful::class,
             ThrottleRequests::class.':api',
-        HandleWorkspacesPermissionMiddleware::class,
+            HandleWorkspacesPermissionMiddleware::class,
             AddWorkspaceToRequest::class,
         ]);
         $middleware->validateCsrfTokens(except: [

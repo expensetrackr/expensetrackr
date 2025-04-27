@@ -15,6 +15,6 @@ return [
         'last-3-months' => 'Últimos 3 Meses',
         'last-6-months' => 'Últimos 6 Meses',
         'last-year' => 'Último Año',
-        'all-time' => 'Todo el Tiempo'
-    ]
+        'all-time' => 'Todo el Tiempo',
+    ],
 ];

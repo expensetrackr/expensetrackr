@@ -7,6 +7,7 @@ namespace App\Providers;
 use App\Models\Account;
 use App\Models\BankConnection;
 use App\Models\Category;
+use App\Models\Changelog;
 use App\Models\Merchant;
 use App\Models\Transaction;
 use App\Models\Workspace;
@@ -25,6 +26,7 @@ final class PrefixedIdsServiceProvider extends ServiceProvider
             'acct_' => Account::class,
             'bnc_' => BankConnection::class,
             'cat_' => Category::class,
+            'chg_' => Changelog::class,
             'mch_' => Merchant::class,
             'txn_' => Transaction::class,
             'ws_' => Workspace::class,
