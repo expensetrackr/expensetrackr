@@ -8,6 +8,7 @@ use App\Http\Controllers\BillingController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\PricingController;
 use App\Http\Controllers\TransactionController;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
@@ -26,6 +27,8 @@ Route::get('/', function (Request $request) {
         'phpVersion' => PHP_VERSION,
     ]);
 })->name('home');
+
+Route::get('/pricing', PricingController::class)->name('pricing');
 
 Route::middleware([
     'auth:sanctum',

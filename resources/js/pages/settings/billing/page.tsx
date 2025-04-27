@@ -2,16 +2,16 @@ import { Head } from "@inertiajs/react";
 import CreditCardSolidIcon from "virtual:icons/hugeicons/credit-card-solid";
 
 import { Header } from "#/components/page-header.tsx";
-import { PricingTables } from "#/components/pricing-tables.tsx";
+import { PricingSection } from "#/components/sections/pricing.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
 import { SettingsLayout } from "#/layouts/settings-layout.tsx";
 import { type PageProps } from "#/types/globals.js";
 
 export default function SettingsBillingPage() {
     return (
-        <div className="flex w-full flex-col gap-5 px-4 py-6 lg:px-8">
-            <PricingTables />
-        </div>
+        <>
+            <PricingSection containerClassName="pt-0 pb-12" isInternal />
+        </>
     );
 }
 

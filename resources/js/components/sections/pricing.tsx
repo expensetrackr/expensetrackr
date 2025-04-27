@@ -6,16 +6,22 @@ import CheckmarkCircle02SolidIcon from "virtual:icons/hugeicons/checkmark-circle
 import CreditCardIcon from "virtual:icons/hugeicons/credit-card";
 
 import { useTranslation } from "#/hooks/use-translation.ts";
+import { useUser } from "#/hooks/use-user.ts";
 import { routes } from "#/routes.ts";
 import { cn } from "#/utils/cn.ts";
-import { plans } from "#/utils/plans.ts";
+import { type Plan, plans } from "#/utils/plans.ts";
 import { Image } from "../image.tsx";
 import { Link } from "../link.tsx";
 import * as Button from "../ui/button.tsx";
 import * as Divider from "../ui/divider.tsx";
 import * as SegmentedControl from "../ui/segmented-control.tsx";
 
-export function PricingSection() {
+type PricingSectionProps = React.ComponentPropsWithRef<"section"> & {
+    containerClassName?: string;
+    isInternal?: boolean;
+};
+
+export function PricingSection({ containerClassName, isInternal, ...props }: PricingSectionProps) {
     const [interval, setInterval] = React.useState("yearly");
     const { language, t } = useTranslation();
     const currencyFormat = resolveCurrencyFormat(language, "USD");
@@ -31,37 +37,39 @@ export function PricingSection() {
     );
 
     return (
-        <section id="pricing">
-            <div className="container border-x border-t bg-(--bg-white-0) py-12 lg:px-12">
-                <div className="grid grid-cols-1 items-end gap-8 lg:grid-cols-3">
-                    <div className="lg:col-span-2">
-                        <p className="flex items-center gap-2">
-                            <CreditCardIcon className="size-4 text-primary" />
-                            <span className="text-paragraph-sm font-medium text-(--text-sub-600) uppercase">
-                                pricing
-                            </span>
-                        </p>
+        <section id="pricing" {...props}>
+            <div className={cn("container border-x border-t bg-(--bg-white-0) py-12 lg:px-12", containerClassName)}>
+                {!isInternal && (
+                    <div className="grid grid-cols-1 items-end gap-8 lg:grid-cols-3">
+                        <div className="lg:col-span-2">
+                            <p className="flex items-center gap-2">
+                                <CreditCardIcon className="size-4 text-primary" />
+                                <span className="text-paragraph-sm font-medium text-(--text-sub-600) uppercase">
+                                    pricing
+                                </span>
+                            </p>
 
-                        <h3 className="mt-8 text-h4 font-bold tracking-tight">Simple Pricing</h3>
-                        <p className="mt-2 text-paragraph-lg text-(--text-sub-600)">
-                            Get started <span className="font-bold underline decoration-wavy">for free</span>. Then find
-                            a plan that grows with your <strong>financial needs</strong>, from personal tracking to
-                            small business management.
-                        </p>
-                    </div>
+                            <h3 className="mt-8 text-h4 font-bold tracking-tight">Simple Pricing</h3>
+                            <p className="mt-2 text-paragraph-lg text-(--text-sub-600)">
+                                Get started <span className="font-bold underline decoration-wavy">for free</span>. Then
+                                find a plan that grows with your <strong>financial needs</strong>, from personal
+                                tracking to small business management.
+                            </p>
+                        </div>
 
-                    <div className="flex lg:ml-auto">
-                        <Button.Root asChild className="w-full gap-2 lg:w-auto">
-                            <Link href="/">
-                                Contact sales
-                                <Button.Icon
-                                    as={ArrowRight01Icon}
-                                    className="easy-out-in duration-300 group-hover:translate-x-1"
-                                />
-                            </Link>
-                        </Button.Root>
+                        <div className="flex lg:ml-auto">
+                            <Button.Root asChild className="w-full gap-2 lg:w-auto">
+                                <Link href="/">
+                                    Contact sales
+                                    <Button.Icon
+                                        as={ArrowRight01Icon}
+                                        className="easy-out-in duration-300 group-hover:translate-x-1"
+                                    />
+                                </Link>
+                            </Button.Root>
+                        </div>
                     </div>
-                </div>
+                )}
 
                 <div className="mx-auto mt-12 flex flex-col items-center">
                     <SegmentedControl.Root defaultValue={interval} onValueChange={setInterval}>
@@ -165,20 +173,7 @@ export function PricingSection() {
                                     </div>
 
                                     <div className="mt-8">
-                                        <Button.Root
-                                            $style={plan.buttonStyle}
-                                            $type={plan.buttonType}
-                                            asChild
-                                            className={cn(
-                                                "w-full",
-                                                plan.isFeatured &&
-                                                    "bg-white text-primary hover:bg-brand-primary-600 hover:text-white",
-                                            )}
-                                        >
-                                            <Link href={routes.register.url()}>
-                                                {t(`pricing.${plan.code}.button_label`)}
-                                            </Link>
-                                        </Button.Root>
+                                        <PlanButton interval={interval} plan={plan} />
                                     </div>
 
                                     <ul className="order-last mt-10 flex flex-col gap-y-3" role="list">
@@ -205,38 +200,78 @@ export function PricingSection() {
                         })}
                     </div>
 
-                    <div className="mt-4 w-full rounded-24 bg-(--bg-white-0) p-8 shadow-sm ring-1 ring-(--stroke-soft-200)/40 ring-inset">
-                        <div className="flex items-center justify-between">
-                            <div>
-                                <p className="text-paragraph-xs font-medium text-(--text-sub-600)">
-                                    {t("pricing.free.target_audience")}
-                                </p>
-                                <p className="font-medium">{t("pricing.free.title")}</p>
+                    {!isInternal && (
+                        <div className="mt-4 w-full rounded-24 bg-(--bg-white-0) p-8 shadow-sm ring-1 ring-(--stroke-soft-200)/40 ring-inset">
+                            <div className="flex items-center justify-between">
+                                <div>
+                                    <p className="text-paragraph-xs font-medium text-(--text-sub-600)">
+                                        {t("pricing.free.target_audience")}
+                                    </p>
+                                    <p className="font-medium">{t("pricing.free.title")}</p>
+                                </div>
+
+                                <Button.Root $style="lighter" asChild>
+                                    <Link href={routes.register.url()}>{t("pricing.free.button_label")}</Link>
+                                </Button.Root>
                             </div>
 
-                            <Button.Root $style="lighter" asChild>
-                                <Link href={routes.register.url()}>{t("pricing.free.button_label")}</Link>
-                            </Button.Root>
-                        </div>
+                            <div className="mt-6">
+                                <p className="text-paragraph-sm text-(--text-sub-600)">
+                                    {t("pricing.free.description")}
+                                </p>
+                            </div>
 
-                        <div className="mt-6">
-                            <p className="text-paragraph-sm text-(--text-sub-600)">{t("pricing.free.description")}</p>
-                        </div>
+                            <Divider.Root className="my-6" />
 
-                        <Divider.Root className="my-6" />
-
-                        <div className="grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2 md:grid-cols-4">
-                            {t("pricing.free.features")
-                                .split(",")
-                                .map((feature, index) => (
-                                    <div key={index}>
-                                        <p className="text-paragraph-sm text-(--text-sub-600)">{feature}</p>
-                                    </div>
-                                ))}
+                            <div className="grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2 md:grid-cols-4">
+                                {t("pricing.free.features")
+                                    .split(",")
+                                    .map((feature, index) => (
+                                        <div key={index}>
+                                            <p className="text-paragraph-sm text-(--text-sub-600)">{feature}</p>
+                                        </div>
+                                    ))}
+                            </div>
                         </div>
-                    </div>
+                    )}
                 </div>
             </div>
         </section>
+    );
+}
+
+function PlanButton({ interval, plan }: { interval: string; plan: Plan }) {
+    const { t } = useTranslation();
+    const user = useUser();
+
+    return (
+        <Button.Root
+            $style={plan.buttonStyle}
+            $type={plan.buttonType}
+            asChild
+            className={cn(
+                "w-full",
+                plan.isFeatured && "bg-white text-primary hover:bg-brand-primary-600 hover:text-white",
+            )}
+        >
+            <Link
+                href={
+                    plan.code === "enterprise"
+                        ? "mailto:sales@expensetrackr.app"
+                        : !user
+                          ? routes.register.url()
+                          : routes.subscribe.url({
+                                query: {
+                                    product_id:
+                                        plan.productPriceId.onetime ||
+                                        plan.productPriceId[interval as keyof typeof plan.productPriceId],
+                                    code: plan.code,
+                                },
+                            })
+                }
+            >
+                {t(`pricing.${plan.code}.button_label`)}
+            </Link>
+        </Button.Root>
     );
 }

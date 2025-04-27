@@ -15,7 +15,9 @@ import oauth from "./routes/oauth/index.ts";
 import otherBrowserSessions from "./routes/other-browser-sessions/index.ts";
 import password from "./routes/password/index.ts";
 import policy from "./routes/policy/index.ts";
+import pricing from "./routes/pricing.ts";
 import register from "./routes/register.ts";
+import billing from "./routes/settings/billing/index.ts";
 import settings from "./routes/settings/index.ts";
 import subscribe from "./routes/subscribe.ts";
 import terms from "./routes/terms/index.ts";
@@ -32,6 +34,7 @@ export const routes = {
     accounts,
     api,
     bankConnections,
+    billing,
     categories,
     connectedAccounts,
     currentUser,
@@ -46,6 +49,7 @@ export const routes = {
     otherBrowserSessions,
     password,
     policy,
+    pricing,
     register,
     settings,
     subscribe,

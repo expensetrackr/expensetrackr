@@ -17,7 +17,7 @@ const navItems = [
     },
     {
         label: "Pricing",
-        href: "/#pricing",
+        href: routes.pricing.url(),
     },
 ];
 
@@ -47,7 +47,7 @@ export function Header() {
                     <ul className="hidden items-center gap-10 lg:flex">
                         {navItems.map((item) => (
                             <li key={item.href}>
-                                <LinkButton.Root asChild>
+                                <LinkButton.Root asChild className="aria-[current=page]:decoration-current">
                                     <Link href={item.href}>{item.label}</Link>
                                 </LinkButton.Root>
                             </li>
