@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
+use App\Models\Changelog;
 use Illuminate\Console\Command;
+use Illuminate\Support\Carbon;
 use Spatie\Sitemap\Sitemap;
+use Spatie\Sitemap\Tags\Url;
 use Throwable;
 
 final class MakeSitemap extends Command
@@ -31,11 +34,13 @@ final class MakeSitemap extends Command
     {
         try {
             Sitemap::create()
-                ->add('/')
-                ->add('/terms-of-service')
-                ->add('/privacy-policy')
-                ->add('/login')
-                ->add('/register')
+                ->add(Url::create('/')->setLastModificationDate(Carbon::now()))
+                ->add(Url::create('/login')->setLastModificationDate(Carbon::now()))
+                ->add(Url::create('/register')->setLastModificationDate(Carbon::now()))
+                ->add(Url::create('/changelog')->setLastModificationDate(Carbon::now()))
+                ->add(Changelog::published()->get())
+                ->add(Url::create('/terms-of-service')->setLastModificationDate(Carbon::now()))
+                ->add(Url::create('/privacy-policy')->setLastModificationDate(Carbon::now()))
                 ->writeToFile(public_path('sitemap.xml'));
 
             $this->info('Sitemap generated successfully.');

@@ -6,8 +6,10 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\BankConnectionController;
 use App\Http\Controllers\BillingController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ChangelogController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\PricingController;
 use App\Http\Controllers\TransactionController;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
@@ -26,6 +28,10 @@ Route::get('/', function (Request $request) {
         'phpVersion' => PHP_VERSION,
     ]);
 })->name('home');
+
+Route::get('/pricing', PricingController::class)->name('pricing');
+Route::get('/changelog', [ChangelogController::class, 'index'])->name('changelog.index');
+Route::get('/changelog/{changelog}', [ChangelogController::class, 'show'])->name('changelog.show');
 
 Route::middleware([
     'auth:sanctum',

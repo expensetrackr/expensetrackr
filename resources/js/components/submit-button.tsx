@@ -7,9 +7,9 @@ type SubmitButtonProps = ButtonProps & {
     isSubmitting?: boolean;
 };
 
-export function SubmitButton({ children, isSubmitting, ...props }: SubmitButtonProps) {
+export function SubmitButton({ children, isSubmitting, type = "submit", ...props }: SubmitButtonProps) {
     return (
-        <Button disabled={props.disabled || isSubmitting} {...props}>
+        <Button disabled={props.disabled || isSubmitting} type={type} {...props}>
             <span className={cn(isSubmitting && "invisible")}>{children}</span>
 
             {isSubmitting ? (

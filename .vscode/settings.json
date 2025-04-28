@@ -41,5 +41,5 @@
         "node:test",
         "node:console"
     ],
-    "typescript.preferences.importModuleSpecifierEnding": "js"
+    "typescript.preferences.importModuleSpecifierEnding": "js",
 }

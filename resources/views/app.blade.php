@@ -12,31 +12,39 @@
         <link href="{{ url()->current() }}" rel="canonical" />
 
         <!-- Primary Meta Tags -->
-        <meta content="{{ config('app.name') }} - Manage your expenses effortlessly" name="title" />
         <meta
-            content="Manage your expenses effortlessly with ExpenseTrackr, the all-in-one web app designed for both personal and business finance tracking. Organize accounts, categorize transactions, and collaborate with workspaces to gain insightful graphics and reports on your financial activities. Stay in control of your finances with ExpenseTrackr's intuitive features and user-friendly interface."
+            name="title"
+            content="{{ config('app.name') }} - Manage your expenses effortlessly"
+            head-key="title"
+            inertia="title"
+        />
+        <meta
             name="description"
+            content="Manage your expenses effortlessly with ExpenseTrackr, the all-in-one web app designed for both personal and business finance tracking. Organize accounts, categorize transactions, and collaborate with workspaces to gain insightful graphics and reports on your financial activities. Stay in control of your finances with ExpenseTrackr's intuitive features and user-friendly interface."
+            head-key="description"
+            inertia="description"
         />
 
         <!-- Open Graph / Facebook -->
         <meta content="website" property="og:type" />
         <meta content="{{ url()->current() }}" property="og:url" />
-        <meta content="{{ config('app.name') }} - Manage your expenses effortlessly" property="og:title" />
         <meta
-            content="Manage your expenses effortlessly with ExpenseTrackr, the all-in-one web app designed for both personal and business finance tracking. Organize accounts, categorize transactions, and collaborate with workspaces to gain insightful graphics and reports on your financial activities. Stay in control of your finances with ExpenseTrackr's intuitive features and user-friendly interface."
-            property="og:description"
+            property="og:title"
+            content="{{ config('app.name') }} - Manage your expenses effortlessly"
+            head-key="og:title"
+            inertia="og:title"
         />
-        <meta content="https://expensetrackr.app/og.png" property="og:image" />
+        <meta
+            property="og:description"
+            content="Manage your expenses effortlessly with ExpenseTrackr, the all-in-one web app designed for both personal and business finance tracking. Organize accounts, categorize transactions, and collaborate with workspaces to gain insightful graphics and reports on your financial activities. Stay in control of your finances with ExpenseTrackr's intuitive features and user-friendly interface."
+            head-key="og:description"
+            inertia="og:description"
+        />
+        <meta content="https://expensetrackr.app/og.png" property="og:image" head-key="og:image" inertia="og:image" />
 
         <!-- Twitter -->
         <meta content="summary_large_image" property="twitter:card" />
         <meta content="{{ url()->current() }}" property="twitter:url" />
-        <meta content="{{ config('app.name') }} - Manage your expenses effortlessly" property="twitter:title" />
-        <meta
-            content="Manage your expenses effortlessly with ExpenseTrackr, the all-in-one web app designed for both personal and business finance tracking. Organize accounts, categorize transactions, and collaborate with workspaces to gain insightful graphics and reports on your financial activities. Stay in control of your finances with ExpenseTrackr's intuitive features and user-friendly interface."
-            property="twitter:description"
-        />
-        <meta content="https://expensetrackr.app/og.png" property="twitter:image" />
 
         <!-- Favicon -->
         <link href="/favicons/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180" />
@@ -66,21 +74,12 @@
         <script type="application/ld+json">
             {
                 "@context": "https://schema.org",
-                "@type": "SoftwareApplication",
+                "@type": "Organization",
+                "@id": "{{ config('app.url') }}",
                 "name": "ExpenseTrackr",
-                "offers": {
-                    "@type": "Offer",
-                    "price": "12.99",
-                    "priceCurrency": "USD",
-                    "availability": "https://schema.org/InStock",
-                    "seller": {
-                        "@type": "Organization",
-                        "name": "ExpenseTrackr"
-                    },
-                    "category": "Finance",
-                    "description": "ExpenseTrackr is the best financial management app that helps you track your expenses, budgets, investments, and assets effortlessly. Get started for free and manage your finances with confidence.",
-                    "url": "https://expensetrackr.app"
-                }
+                "url": "{{ config('app.url') }}",
+                "logo": "{{ config('app.url') }}/favicons/android-chrome-512x512.png",
+                "sameAs": ["https://x.com/expensetrackapp", "https://github.com/expensetrackr"]
             }
         </script>
     </head>
@@ -90,6 +89,7 @@
 
         <script>
             window.ENV = {
+                APP_NAME: '{{ config('app.name') }}',
                 APP_URL: '{{ config('app.url') }}',
                 IMAGE_URL: 'https://image.danestves.com',
                 TELLER_APP_ID: '{{ config('services.teller.app_id') }}',
@@ -103,6 +103,5 @@
             data-exclude-search="true"
             data-do-not-track="true"
         ></script>
-        <script defer src="https://cdn.paritydeals.com/banner.js"></script>
     </body>
 </html>

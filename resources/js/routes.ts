@@ -2,6 +2,7 @@ import accounts from "./routes/accounts/index.ts";
 import api from "./routes/api/index.ts";
 import bankConnections from "./routes/bank-connections/index.ts";
 import categories from "./routes/categories/index.ts";
+import changelog from "./routes/changelog/index.ts";
 import connectedAccounts from "./routes/connected-accounts/index.ts";
 import currentUser from "./routes/current-user/index.ts";
 import currentUserPhoto from "./routes/current-user-photo/index.ts";
@@ -15,7 +16,9 @@ import oauth from "./routes/oauth/index.ts";
 import otherBrowserSessions from "./routes/other-browser-sessions/index.ts";
 import password from "./routes/password/index.ts";
 import policy from "./routes/policy/index.ts";
+import pricing from "./routes/pricing.ts";
 import register from "./routes/register.ts";
+import billing from "./routes/settings/billing/index.ts";
 import settings from "./routes/settings/index.ts";
 import subscribe from "./routes/subscribe.ts";
 import terms from "./routes/terms/index.ts";
@@ -32,7 +35,9 @@ export const routes = {
     accounts,
     api,
     bankConnections,
+    billing,
     categories,
+    changelog,
     connectedAccounts,
     currentUser,
     currentUserPhoto,
@@ -46,6 +51,7 @@ export const routes = {
     otherBrowserSessions,
     password,
     policy,
+    pricing,
     register,
     settings,
     subscribe,

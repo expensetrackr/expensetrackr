@@ -72,13 +72,16 @@ function DrawerHeader({
     showCloseButton?: boolean;
 }) {
     return (
-        <div className={cn("flex items-center gap-3 border-(--stroke-soft-200) p-5", className)} {...rest}>
-            {children}
+        <div
+            className={cn("flex items-center justify-between gap-3 border-(--stroke-soft-200) p-5", className)}
+            {...rest}
+        >
+            <div className="flex flex-col gap-1">{children}</div>
 
             {showCloseButton && (
                 <DrawerClose asChild>
                     <CompactButton.Root $size="lg" $style="ghost">
-                        <CompactButton.Icon as={Cancel01Icon} />
+                        <CompactButton.Icon as={Cancel01Icon} className="size-4" />
                     </CompactButton.Root>
                 </DrawerClose>
             )}
@@ -93,6 +96,14 @@ function DrawerTitle({ className, ...rest }: React.CustomComponentPropsWithRef<t
     );
 }
 DrawerTitle.displayName = "DrawerTitle";
+
+function DrawerDescription({
+    className,
+    ...rest
+}: React.CustomComponentPropsWithRef<typeof DialogPrimitive.Description>) {
+    return <DialogPrimitive.Description className={cn("text-label-sm text-(--text-sub-600)", className)} {...rest} />;
+}
+DrawerDescription.displayName = "DrawerDescription";
 
 function DrawerBody({ className, children, ...rest }: React.HTMLAttributes<HTMLDivElement>) {
     return (
@@ -115,6 +126,7 @@ export {
     DrawerContent as Content,
     DrawerHeader as Header,
     DrawerTitle as Title,
+    DrawerDescription as Description,
     DrawerBody as Body,
     DrawerFooter as Footer,
 };

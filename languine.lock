@@ -45,6 +45,11 @@ files:
     or: e81c4e4f2b7b93b481e13a8553c2ae1b
     active: 4d3d769b812b6faa6b76e1a8abaece2d
     inactive: 3cab03c00dbd11bc3569afa0748013f0
+    periods.last-month: 8dce9a09517e227ca7bb21da16be36a2
+    periods.last-3-months: 3a4aa14653e662595d3609c7296b288a
+    periods.last-6-months: c4d0ea932eaf761be13eceb3175a485b
+    periods.last-year: f39badf6368ffff141d51c39f45a09d9
+    periods.all-time: 85fb1a46f605ba9e7738df38315e6513
   lang/en/home.php:
     sections.hero.title: 851e524ab6702d2603c94c5103e99439
     sections.hero.description: 5e7be62ffc7a261f2211dd534e41406d
@@ -68,14 +73,14 @@ files:
     sections.pricing.title: 185877b46bf79849e937de72ef2d1c9a
     sections.pricing.description: 5a880150604f1e2a804f780200f79785
     sections.pricing.coming_soon: 713cbd93b2ba47b4561b53a841624b51
-    sections.pricing.plans.free.title: b24ce0cd392a5b0b8dedc66c25213594
+    sections.pricing.plans.free.title: ee6085db6c9b85f45fd9b9b31b020f8d
     sections.pricing.plans.free.description: de6b11f3c495e01af66ad72818f8ee68
-    sections.pricing.plans.free.features: 1ab7e3999f43a8ff2f88e2dd6b1436f2
+    sections.pricing.plans.free.features: 0d77f03bbb2b4c38a8e290801a2a6ca4
     sections.pricing.plans.free.button_label: 54f742623dc735530ef5c2d581f34130
-    sections.pricing.plans.analyst.title: 66e64a1b4ca1259a31ebc747770c446d
-    sections.pricing.plans.analyst.description: 54f4e96d43097bbdfb4189522175315e
-    sections.pricing.plans.analyst.features: 81ce4193277bf2926985151adc0642be
-    sections.pricing.plans.analyst.button_label: dfa592421ec2584a960f077610eb19bd
+    sections.pricing.plans.personal.title: 184daff620aca4ad23fd2bf70d0b76af
+    sections.pricing.plans.personal.description: 54f4e96d43097bbdfb4189522175315e
+    sections.pricing.plans.personal.features: 00d1f7e89b685f643d760717d2834670
+    sections.pricing.plans.personal.button_label: dfa592421ec2584a960f077610eb19bd
     sections.pricing.plans.lifetime.title: 1a10be3692cec335c74387f33221a6fa
     sections.pricing.plans.lifetime.description: 231310d537335eaa2862015d5ae3119d
     sections.pricing.plans.lifetime.features: ba0d964f096a2b4a8b7373540735d76d
@@ -276,3 +281,46 @@ files:
     transaction.type.income: 1f08d08fd864b99cbeebd88b9a0784a7
     transaction.type.expense: 7bf48cb939975c27a0d9cfa99c6f3461
     transaction.type.transfer: 6950810f0d2bba97a6f710c7b965b84e
+  lang/en/account.php:
+    type.depository: 24454064685465183cc6492ca196a5ba
+    type.investment: b7380bf31920c1bb03ff97198a95bde8
+    type.crypto: 79ad4e0522a0a67a6e196be52357e60b
+    type.credit_card: 73a61696f100b3858511e212a3feea6b
+    type.loan: 9ad81a8f8a5c7a6ce9e1ba9bb4759391
+    type.other_asset: 51b5ff3213e0f50897c1aa3aed586365
+    type.other_liability: 84535bd64202709d38e235620b495a3e
+  lang/en/dashboard.php:
+    description: feef71f198fc7c8954357c0ffcd33c9c
+    seo.title: 2938c7f7e560ed972f8a4f68e80ff834
+    seo.description: feef71f198fc7c8954357c0ffcd33c9c
+    actions.createTransaction: 33d8f4cb086666ec43197876e39c6874
+  lang/en/pages.php:
+    accounts.title: 9b945efebb006547a94415eadaa12921
+    accounts.description: 83d422fa0e0a4688f058722a17ac2c7d
+    accounts.actions.createAccount: 42369faa6a6b243aac58683f3874bf99
+    accounts.noAccounts.title: 8f810166042264eae0efa02e324012ed
+    accounts.noAccounts.description: da11e1c1f89544969ce3f2ccad8e7dfd
+    accounts.detailsDrawer.title: 3771bf858c98d52dbc5d250dd1f4e72f
+    accounts.detailsDrawer.actions.seeAllTransactions: 6e4af4b20939a2d46041d12c3d75dc8a
+    accounts.detailsDrawer.actions.deleteAccount: e6e049c44a797fda2a175d07df838e49
+  lang/en/pricing.php:
+    free.target_audience: e72bf2c6ad0d87fa0db910c62b03da83
+    free.title: b24ce0cd392a5b0b8dedc66c25213594
+    free.description: 3a01dedbc11a95a7e7f3d764f0a18925
+    free.features: 3c7ff2f7bd298f4a1e8b95095f606d52
+    free.button_label: 3ab75d052b7cfe0276ebb4ea92d6ccc8
+    personal.target_audience: 3a0f8b453193c54878ef1a3583a609eb
+    personal.title: 184daff620aca4ad23fd2bf70d0b76af
+    personal.description: 3076129fab1120c13365df628b66e3a6
+    personal.features: daedf8973212f57f94594aa4e4913b61
+    personal.button_label: dfa592421ec2584a960f077610eb19bd
+    lifetime.target_audience: ea3e55eff3ac60e03a25f8160a247334
+    lifetime.title: 1a10be3692cec335c74387f33221a6fa
+    lifetime.description: ac00e29a22557023432e221e98218c66
+    lifetime.features: 612d0822d70cbd400d49bf245ef96351
+    lifetime.button_label: 98e904a0cf6a12b13d88c8e971cbeffc
+    enterprise.target_audience: 8d80b2cd7bb66616acd9b5a382ece66f
+    enterprise.title: a0f27638260642afb474516cc918407e
+    enterprise.description: f0281b1c143c22d13d8600a4bedd998c
+    enterprise.features: 1b735e8b9a81723603c2abf2e9d0a36b
+    enterprise.button_label: 0fb8dd59a0bef75c0f2ec966582f227b

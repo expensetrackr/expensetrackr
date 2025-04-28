@@ -9,6 +9,7 @@ use Exception;
 use Illuminate\Container\Attributes\CurrentUser;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
 use Throwable;
@@ -21,7 +22,7 @@ final class BillingController
     public function show(
         #[CurrentUser] User $user,
     ): RedirectResponse|Response {
-        if ($user->isSubscribed()) {
+        if ($user->subscribed()) {
             return $user->redirectToCustomerPortal();
         }
 
@@ -36,6 +37,7 @@ final class BillingController
         #[CurrentUser] User $user,
     ): RedirectResponse {
         $productId = $request->query('product_id');
+        $code = $request->query('code', 'default');
         $isSinglePurchase = $request->query('single_purchase') === 'true';
 
         if (! $productId) {
@@ -45,10 +47,14 @@ final class BillingController
         if ($isSinglePurchase) {
             try {
                 return $user
-                    ->checkout([type($productId)->asString()])
+                    ->checkout([$productId])
                     ->withSuccessUrl('https://expensetrackr.app/thank-you')
                     ->redirect();
-            } catch (Throwable) {
+            } catch (Throwable $e) {
+                Log::error('Error while checking out', [
+                    'message' => $e->getMessage(),
+                ]);
+
                 return back()->with('toast', [
                     'title' => 'Error',
                     'description' => 'There was an error while checking out. Please try again.',
@@ -59,10 +65,14 @@ final class BillingController
 
         try {
             return $user
-                ->subscribe(type($productId)->asString())
+                ->subscribe($productId, $code)
                 ->withSuccessUrl('https://expensetrackr.app/thank-you')
                 ->redirect();
-        } catch (Throwable) {
+        } catch (Throwable $e) {
+            Log::error('Error while subscribing', [
+                'message' => $e->getMessage(),
+            ]);
+
             return back()->with('toast', [
                 'title' => 'Error',
                 'description' => 'There was an error while subscribing. Please try again.',

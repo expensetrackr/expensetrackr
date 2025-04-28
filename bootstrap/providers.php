@@ -7,6 +7,7 @@ return [
     App\Providers\BankSyncServiceProvider::class,
     App\Providers\CurrencyServiceProvider::class,
     App\Providers\EventServiceProvider::class,
+    App\Providers\Filament\AdminPanelProvider::class,
     App\Providers\FortifyServiceProvider::class,
     App\Providers\JsonResourceProvider::class,
     App\Providers\MacroServiceProvider::class,

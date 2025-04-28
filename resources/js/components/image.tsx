@@ -5,6 +5,8 @@ type ImageProps = UnpicImageProps & {
 };
 
 export function Image({ isCdn, ...props }: ImageProps) {
+    const src = props.src.startsWith("http") ? `${ENV.APP_URL}/${props.src}` : `${ENV.APP_URL}${props.src}`;
+
     return (
         <UnpicImage
             background="auto"
@@ -15,7 +17,7 @@ export function Image({ isCdn, ...props }: ImageProps) {
                     domain: "expensetrackr.app",
                 },
             }}
-            src={isCdn && import.meta.env.PROD ? `${ENV.APP_URL}${props.src}` : props.src}
+            src={isCdn && import.meta.env.PROD ? src : props.src}
         />
     );
 }

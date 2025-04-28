@@ -6,7 +6,7 @@ import { LogoutOtherBrowserSessionsForm } from "#/components/forms/logout-other-
 import { SetPasswordForm } from "#/components/forms/set-password-form.tsx";
 import { TwoFactorAuthenticationForm } from "#/components/forms/two-factor-authentication-form.tsx";
 import { UpdatePasswordForm } from "#/components/forms/update-password-form.tsx";
-import { Header } from "#/components/header.tsx";
+import { Header } from "#/components/page-header.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
 import { SettingsLayout } from "#/layouts/settings-layout.tsx";
 import { type PageProps } from "#/types/globals.js";

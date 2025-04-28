@@ -5,7 +5,7 @@ import UserCircleSolidIcon from "virtual:icons/hugeicons/user-circle-solid";
 
 import { FormSection } from "#/components/form-section.tsx";
 import { UpdateProfilePictureForm } from "#/components/forms/update-profile-picture-form.tsx";
-import { Header } from "#/components/header.tsx";
+import { Header } from "#/components/page-header.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
 import { TextField } from "#/components/ui/form/text-field.tsx";
 import { useUnsavedChanges } from "#/hooks/use-unsaved-changes.ts";

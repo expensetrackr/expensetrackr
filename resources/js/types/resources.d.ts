@@ -12,6 +12,7 @@ declare namespace Resources {
         connection?: BankConnection;
         transactions?: Array<Transaction>;
     };
+    // App\Http\Resources\BankConnectionResource
     export type BankConnection = {
         id: string;
         institutionName: string;
@@ -35,6 +36,16 @@ declare namespace Resources {
         };
         hasParent?: boolean;
         children?: Array<Category>;
+    };
+    // App\Http\Resources\ChangelogResource
+    export type Changelog = {
+        id: string;
+        title: string;
+        slug: string;
+        excerpt: string;
+        content: string;
+        publishedAt: string;
+        imageUrl: string;
     };
     // App\Http\Resources\LanguageResource
     export type Language = any;

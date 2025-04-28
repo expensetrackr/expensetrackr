@@ -3,8 +3,8 @@ import * as React from "react";
 import GeometricShapes01SolidIcon from "virtual:icons/hugeicons/geometric-shapes-01-solid";
 import ResourcesAddIcon from "virtual:icons/hugeicons/resources-add";
 
-import { Header } from "#/components/header.tsx";
 import { CreateCategoryModal } from "#/components/modals/create-category-modal.tsx";
+import { Header } from "#/components/page-header.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
 import { SettingsLayout } from "#/layouts/settings-layout.tsx";
