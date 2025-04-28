@@ -1,4 +1,5 @@
 import { useScroll } from "#/hooks/use-scroll.ts";
+import { useUser } from "#/hooks/use-user.ts";
 import { routes } from "#/routes.ts";
 import { cn } from "#/utils/cn.ts";
 import { Link } from "./link.tsx";
@@ -22,7 +23,9 @@ const navItems = [
 ];
 
 export function Header() {
+    const user = useUser();
     const { scrollY } = useScroll();
+
     return (
         <div
             className={cn(
@@ -55,7 +58,9 @@ export function Header() {
                     </ul>
 
                     <Button.Root asChild>
-                        <Link href={routes.register.url()}>Get started now</Link>
+                        <Link href={user ? routes.dashboard.url() : routes.register.url()}>
+                            {user ? "Dashboard" : "Get started now"}
+                        </Link>
                     </Button.Root>
                 </div>
             </div>

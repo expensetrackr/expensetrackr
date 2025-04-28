@@ -7,4 +7,4 @@ node_modules
 /resources/js/routes
 /resources/js/wayfinder
 
-resources/views/**/*.blade.php
+resources/views/mails/**/*.blade.php
