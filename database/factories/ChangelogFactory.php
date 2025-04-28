@@ -16,10 +16,19 @@ final class ChangelogFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public function definition(): array
-    {
-        return [
-            //
-        ];
+// File: database/factories/ChangelogFactory.php
+
+public function definition(): array
+{
+    return [
+        'image_path'   => fake()->imageUrl(),
+        'title'        => fake()->sentence(),
+        'slug'         => fake()->unique()->slug(),
+        'content'      => fake()->paragraphs(3, true),
+        'public_id'    => 'clog_' . fake()->unique()->regexify('[A-Za-z0-9]{10}'),
+        'published_at' => fake()->boolean(80) ? fake()->dateTimeBetween('-1 year') : null,
+        'excerpt'      => fake()->optional()->paragraph(),
+    ];
+}
     }
 }

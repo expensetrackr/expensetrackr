@@ -38,7 +38,7 @@ final class MakeSitemap extends Command
                 ->add(Url::create('/login')->setLastModificationDate(Carbon::now()))
                 ->add(Url::create('/register')->setLastModificationDate(Carbon::now()))
                 ->add(Url::create('/changelog')->setLastModificationDate(Carbon::now()))
-                ->add(Changelog::all())
+                ->add(Changelog::published()->get())
                 ->add(Url::create('/terms-of-service')->setLastModificationDate(Carbon::now()))
                 ->add(Url::create('/privacy-policy')->setLastModificationDate(Carbon::now()))
                 ->writeToFile(public_path('sitemap.xml'));
