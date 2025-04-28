@@ -28,6 +28,7 @@ return [
         'target_audience' => 'For Growing Businesses',
         'title' => 'Enterprise',
         'description' => 'Advanced features, collaboration tools, and dedicated support for teams.',
+        'custom_price' => 'Custom',
         'features' => 'Unlimited Financial Management, Dedicated Workspaces, Multiple User Seats, Customizable Reporting, Priority Support, <strong>SSO/SAML Support</strong>, <strong>Custom SLA</strong>',
         'button_label' => 'Contact sales',
     ],

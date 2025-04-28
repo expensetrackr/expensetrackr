@@ -171,7 +171,9 @@ export function PricingSection({ containerClassName, isInternal, ...props }: Pri
                                         </p>
                                         <p className="mt-8 h-15 font-semibold tracking-tight">
                                             {plan.code === "enterprise" ? (
-                                                <span className="text-h4 font-semibold lg:text-h3">Custom</span>
+                                                <span className="text-h4 font-semibold lg:text-h3">
+                                                    {t("pricing.enterprise.custom_price")}
+                                                </span>
                                             ) : (
                                                 <NumberFlow
                                                     className={cn(
