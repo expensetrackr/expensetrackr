@@ -66,9 +66,10 @@ export function PricingSection({ containerClassName, isInternal, ...props }: Pri
                                     initial: { opacity: 0, y: 100 },
                                     transition: { duration: 1 },
                                 })}
+                                aria-label={t("pricing.simple_pricing")}
                                 className="mt-8 text-h4 font-bold tracking-tight"
                             >
-                                Simple Pricing
+                                {t("pricing.simple_pricing")}
                             </m.h3>
                             <m.p
                                 {...(!isReducedMotion && {
@@ -99,7 +100,11 @@ export function PricingSection({ containerClassName, isInternal, ...props }: Pri
                 )}
 
                 <div className="mx-auto mt-12 flex flex-col items-center">
-                    <SegmentedControl.Root defaultValue={interval} onValueChange={setInterval}>
+                    <SegmentedControl.Root
+                        aria-label={t("pricing.interval_label")}
+                        defaultValue={interval}
+                        onValueChange={setInterval}
+                    >
                         <SegmentedControl.List
                             className="w-fit gap-2 rounded-full"
                             floatingBgClassName="rounded-full bg-primary"

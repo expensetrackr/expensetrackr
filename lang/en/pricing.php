@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 return [
+    'simple_pricing' => 'Simple Pricing',
+    'interval_label' => 'Billing interval selection',
     'suffix' => [
         'monthly' => '/monthly',
         'yearly' => '/billed yearly',
