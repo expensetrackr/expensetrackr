@@ -40,8 +40,9 @@ final class TranslationManager
 
             return collect($files)->flatMap(function ($file) {
                 $fileContents = File::getRequire($file->getRealPath());
+                $prefix = pathinfo($file->getFilename(), PATHINFO_FILENAME).'.';
 
-                return is_array($fileContents) ? Arr::dot($fileContents, $file->getBasename('.'.$file->getExtension()).'.') : [];
+                return is_array($fileContents) ? Arr::dot($fileContents, $prefix) : [];
             })->toArray();
         });
     }
