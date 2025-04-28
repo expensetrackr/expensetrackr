@@ -30,10 +30,6 @@ export default function ErrorPage({ status }: ErrorPageProps) {
                 {/* Open Graph */}
                 <meta content={title} head-key="og:title" property="og:title" />
                 <meta content={description} head-key="og:description" property="og:description" />
-
-                {/* Twitter */}
-                <meta content={title} head-key="twitter:title" property="twitter:title" />
-                <meta content={description} head-key="twitter:description" property="twitter:description" />
             </Head>
 
             <section className="relative">

@@ -45,19 +45,6 @@
         <!-- Twitter -->
         <meta content="summary_large_image" property="twitter:card" />
         <meta content="{{ url()->current() }}" property="twitter:url" />
-        <meta
-            property="twitter:title"
-            content="{{ config('app.name') }} - Manage your expenses effortlessly"
-            head-key="twitter:title"
-            inertia="twitter:title"
-        />
-        <meta
-            property="twitter:description"
-            content="Manage your expenses effortlessly with ExpenseTrackr, the all-in-one web app designed for both personal and business finance tracking. Organize accounts, categorize transactions, and collaborate with workspaces to gain insightful graphics and reports on your financial activities. Stay in control of your finances with ExpenseTrackr's intuitive features and user-friendly interface."
-            head-key="twitter:description"
-            inertia="twitter:description"
-        />
-        <meta content="https://expensetrackr.app/og.png" property="twitter:image" head-key="twitter:image" inertia="twitter:image" />
 
         <!-- Favicon -->
         <link href="/favicons/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180" />

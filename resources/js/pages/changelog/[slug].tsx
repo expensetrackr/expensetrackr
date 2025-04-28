@@ -36,11 +36,6 @@ export default function ChangelogPage({ changelog }: ChangelogPageProps) {
                 <meta content={changelog.imageUrl} head-key="og:image" property="og:image" />
                 <meta content={changelog.title} head-key="og:title" property="og:title" />
                 <meta content={changelog.excerpt} head-key="og:description" property="og:description" />
-
-                {/* Twitter */}
-                <meta content={changelog.imageUrl} head-key="twitter:image" property="twitter:image" />
-                <meta content={changelog.title} head-key="twitter:title" property="twitter:title" />
-                <meta content={changelog.excerpt} head-key="twitter:description" property="twitter:description" />
             </Head>
 
             <section>
