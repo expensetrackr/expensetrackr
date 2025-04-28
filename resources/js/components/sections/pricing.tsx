@@ -186,8 +186,8 @@ export function PricingSection({ containerClassName, isInternal, ...props }: Pri
                                                     suffix={
                                                         !plan.price.onetime
                                                             ? interval === "yearly"
-                                                                ? "/billed yearly"
-                                                                : "/monthly"
+                                                                ? t("pricing.suffix.yearly")
+                                                                : t("pricing.suffix.monthly")
                                                             : undefined
                                                     }
                                                     value={

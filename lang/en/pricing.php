@@ -3,6 +3,10 @@
 declare(strict_types=1);
 
 return [
+    'suffix' => [
+        'monthly' => '/monthly',
+        'yearly' => '/billed yearly',
+    ],
     'free' => [
         'target_audience' => 'For Everyone',
         'title' => 'Free',
