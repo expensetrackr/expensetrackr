@@ -1,4 +1,5 @@
 import { Head } from "@inertiajs/react";
+import DOMPurify from "dompurify";
 import * as React from "react";
 import ArrowRight01Icon from "virtual:icons/hugeicons/arrow-right-01";
 
@@ -86,7 +87,7 @@ export default function ChangelogPage({ changelog }: ChangelogPageProps) {
 
                         <div
                             className="prose mt-5 w-full overflow-hidden text-(--text-sub-600) dark:prose-invert prose-headings:font-semibold prose-a:border-b prose-a:border-dashed prose-a:border-primary prose-a:no-underline prose-a:transition-colors prose-a:duration-200 prose-a:hover:border-solid prose-a:hover:bg-brand-primary-200 prose-blockquote:text-(--text-sub-600) prose-pre:rounded-12 prose-pre:border prose-ul:[list-style-type:'○'] prose-li:marker:text-brand-primary-600"
-                            dangerouslySetInnerHTML={{ __html: changelog.content }}
+                            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(changelog.content) }}
                         />
                     </div>
                 </div>

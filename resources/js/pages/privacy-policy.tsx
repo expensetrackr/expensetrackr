@@ -1,4 +1,5 @@
 import { Head } from "@inertiajs/react";
+import DOMPurify from "dompurify";
 import LegalDocument01Icon from "virtual:icons/hugeicons/legal-document-01";
 
 import { GuestLayout } from "#/layouts/guest-layout.tsx";
@@ -56,8 +57,7 @@ export default function PrivacyPolicy({ policy }: Props) {
                 <div className="container border-x border-t bg-(--bg-white-0) py-12 lg:px-12">
                     <div
                         className="mx-auto prose mt-6 w-full max-w-xl overflow-hidden text-(--text-sub-600) dark:prose-invert prose-headings:font-semibold prose-a:border-b prose-a:border-dashed prose-a:border-primary prose-a:no-underline prose-a:transition-colors prose-a:duration-200 prose-a:hover:border-solid prose-a:hover:bg-brand-primary-200 prose-blockquote:text-(--text-sub-600) prose-pre:rounded-12 prose-pre:border prose-ul:[list-style-type:'○'] prose-li:marker:text-brand-primary-600"
-                        // biome-ignore lint/security/noDangerouslySetInnerHtml: we are the ones who set the content
-                        dangerouslySetInnerHTML={{ __html: policy }}
+                        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(policy) }}
                     />
                 </div>
             </section>
