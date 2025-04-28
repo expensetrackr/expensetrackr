@@ -15,7 +15,7 @@ const links = [
     {
         title: "Socials",
         links: [
-            { label: "Discord", href: "https://discord.gg/" },
+            { label: "Discord", href: "https://discord.gg/zDVy7RK4Z6" },
             { label: "X", href: "https://x.com/expensetrackapp" },
         ],
     },

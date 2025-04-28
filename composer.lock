@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6b52f573364317471bf6f3f6b791fa48",
+    "content-hash": "03715a432fe6d5d3bb827aa288708aa0",
     "packages": [
         {
             "name": "afatmustafa/blade-hugeicons",
@@ -9066,16 +9066,16 @@
         },
         {
             "name": "spatie/browsershot",
-            "version": "5.0.8",
+            "version": "5.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/browsershot.git",
-                "reference": "0102971ae974022ec4a7a149e8924ea355b52cc3"
+                "reference": "667b40b2a283486a7a1fc9208221e0d0471ac3e6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/browsershot/zipball/0102971ae974022ec4a7a149e8924ea355b52cc3",
-                "reference": "0102971ae974022ec4a7a149e8924ea355b52cc3",
+                "url": "https://api.github.com/repos/spatie/browsershot/zipball/667b40b2a283486a7a1fc9208221e0d0471ac3e6",
+                "reference": "667b40b2a283486a7a1fc9208221e0d0471ac3e6",
                 "shasum": ""
             },
             "require": {
@@ -9122,7 +9122,7 @@
                 "webpage"
             ],
             "support": {
-                "source": "https://github.com/spatie/browsershot/tree/5.0.8"
+                "source": "https://github.com/spatie/browsershot/tree/5.0.9"
             },
             "funding": [
                 {
@@ -9130,7 +9130,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-02-17T09:56:12+00:00"
+            "time": "2025-04-28T08:54:51+00:00"
         },
         {
             "name": "spatie/color",
@@ -9836,16 +9836,16 @@
         },
         {
             "name": "spatie/laravel-typescript-transformer",
-            "version": "2.5.1",
+            "version": "2.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-typescript-transformer.git",
-                "reference": "8b91230e4b0aa568b798822a8ff66fd936134a40"
+                "reference": "a268a08341f5a5d8f80a79493642a43275d219a5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-typescript-transformer/zipball/8b91230e4b0aa568b798822a8ff66fd936134a40",
-                "reference": "8b91230e4b0aa568b798822a8ff66fd936134a40",
+                "url": "https://api.github.com/repos/spatie/laravel-typescript-transformer/zipball/a268a08341f5a5d8f80a79493642a43275d219a5",
+                "reference": "a268a08341f5a5d8f80a79493642a43275d219a5",
                 "shasum": ""
             },
             "require": {
@@ -9901,7 +9901,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-typescript-transformer/issues",
-                "source": "https://github.com/spatie/laravel-typescript-transformer/tree/2.5.1"
+                "source": "https://github.com/spatie/laravel-typescript-transformer/tree/2.5.2"
             },
             "funding": [
                 {
@@ -9913,7 +9913,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-02-14T14:18:08+00:00"
+            "time": "2025-04-25T14:09:28+00:00"
         },
         {
             "name": "spatie/laravel-webhook-client",
@@ -15081,16 +15081,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "2.1.12",
+            "version": "2.1.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "96dde49e967c0c22812bcfa7bda4ff82c09f3b0c"
+                "reference": "e55e03e6d4ac49cd1240907e5b08e5cd378572a9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/96dde49e967c0c22812bcfa7bda4ff82c09f3b0c",
-                "reference": "96dde49e967c0c22812bcfa7bda4ff82c09f3b0c",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/e55e03e6d4ac49cd1240907e5b08e5cd378572a9",
+                "reference": "e55e03e6d4ac49cd1240907e5b08e5cd378572a9",
                 "shasum": ""
             },
             "require": {
@@ -15135,7 +15135,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-04-16T13:19:18+00:00"
+            "time": "2025-04-27T12:28:25+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -15563,16 +15563,16 @@
         },
         {
             "name": "rector/rector",
-            "version": "2.0.12",
+            "version": "2.0.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rectorphp/rector.git",
-                "reference": "a7f9b968f6c15abfd0d2a1442c9dcd9ade677192"
+                "reference": "63923bc9383c1212476c41d8cebf58a425e6f98d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rectorphp/rector/zipball/a7f9b968f6c15abfd0d2a1442c9dcd9ade677192",
-                "reference": "a7f9b968f6c15abfd0d2a1442c9dcd9ade677192",
+                "url": "https://api.github.com/repos/rectorphp/rector/zipball/63923bc9383c1212476c41d8cebf58a425e6f98d",
+                "reference": "63923bc9383c1212476c41d8cebf58a425e6f98d",
                 "shasum": ""
             },
             "require": {
@@ -15610,7 +15610,7 @@
             ],
             "support": {
                 "issues": "https://github.com/rectorphp/rector/issues",
-                "source": "https://github.com/rectorphp/rector/tree/2.0.12"
+                "source": "https://github.com/rectorphp/rector/tree/2.0.14"
             },
             "funding": [
                 {
@@ -15618,7 +15618,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-04-22T12:47:33+00:00"
+            "time": "2025-04-28T00:03:14+00:00"
         },
         {
             "name": "sebastian/cli-parser",

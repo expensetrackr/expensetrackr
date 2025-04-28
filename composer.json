@@ -48,7 +48,7 @@
         "spatie/laravel-prefixed-ids": "1.4.1",
         "spatie/laravel-query-builder": "6.3.2",
         "spatie/laravel-sitemap": "7.3.6",
-        "spatie/laravel-typescript-transformer": "2.5.1"
+        "spatie/laravel-typescript-transformer": "2.5.2"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "3.5.5",
@@ -64,7 +64,7 @@
         "pestphp/pest-plugin-drift": "3.0.0",
         "pestphp/pest-plugin-laravel": "3.2.0",
         "pestphp/pest-plugin-type-coverage": "3.5.1",
-        "rector/rector": "2.0.12",
+        "rector/rector": "2.0.14",
         "soloterm/solo": "0.5.0"
     },
     "autoload": {
