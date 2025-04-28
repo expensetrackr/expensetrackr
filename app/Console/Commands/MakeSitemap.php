@@ -35,6 +35,7 @@ final class MakeSitemap extends Command
         try {
             Sitemap::create()
                 ->add(Url::create('/')->setLastModificationDate(Carbon::now()))
+                ->add(Url::create('/pricing')->setLastModificationDate(Carbon::now()))
                 ->add(Url::create('/login')->setLastModificationDate(Carbon::now()))
                 ->add(Url::create('/register')->setLastModificationDate(Carbon::now()))
                 ->add(Url::create('/changelog')->setLastModificationDate(Carbon::now()))
