@@ -103,12 +103,20 @@ export function InsightsSection() {
                             </p>
                             <div className="order-2 justify-self-center lg:order-3">
                                 <div className="flex items-center justify-center rounded-8 p-2">
-                                    <CheckmarkCircle02SolidIcon className="size-5 text-state-success-base" />
+                                    {insight.expenseTrackr ? (
+                                        <CheckmarkCircle02SolidIcon className="size-5 text-state-success-base" />
+                                    ) : (
+                                        <CancelCircleSolidIcon className="size-5 text-state-error-base" />
+                                    )}
                                 </div>
                             </div>
                             <div className="order-3 hidden justify-self-center md:block lg:order-4">
                                 <div className="flex items-center justify-center rounded-8 p-2">
-                                    <CancelCircleSolidIcon className="size-5 text-state-error-base" />
+                                    {insight.manualMethods ? (
+                                        <CheckmarkCircle02SolidIcon className="size-5 text-state-success-base" />
+                                    ) : (
+                                        <CancelCircleSolidIcon className="size-5 text-state-error-base" />
+                                    )}
                                 </div>
                             </div>
                         </div>
