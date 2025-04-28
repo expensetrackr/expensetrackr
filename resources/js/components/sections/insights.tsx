@@ -92,12 +92,21 @@ export function InsightsSection() {
                     </m.p>
                 </div>
 
-                <div className="mt-2 grid grid-cols-4 pb-8">
-                    <p className="col-span-1 col-start-3 hidden text-center font-medium md:block lg:-ml-4">
-                        ExpenseTrackr
-                    </p>
-                    <p className="col-span-1 hidden text-center font-medium md:block lg:-ml-8">Manual methods</p>
+                <div className="mt-2 grid grid-cols-4 pb-8" role="rowgroup">
+                    <div className="col-span-4 grid grid-cols-4" role="row">
+                        <div className="col-span-2 lg:col-span-2" role="columnheader"></div>
+                        <p
+                            className="col-span-1 col-start-3 hidden text-center font-medium md:block lg:-ml-4"
+                            role="columnheader"
+                        >
+                            ExpenseTrackr
+                        </p>
+                        <p className="col-span-1 hidden text-center font-medium md:block lg:-ml-8" role="columnheader">
+                            Manual methods
+                        </p>
+                    </div>
                 </div>
+
                 <div className="divide-y divide-(--stroke-soft-200) overflow-hidden rounded-12 shadow-xl outline outline-(--stroke-soft-200)">
                     {insights.map((insight) => (
                         <div
