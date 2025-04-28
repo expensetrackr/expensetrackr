@@ -29,8 +29,8 @@ export default function ChangelogPage({ changelog }: ChangelogPageProps) {
         <>
             <Head title={changelog.title}>
                 {/* Primary Tags */}
-                <meta content={`${changelog.title} - ${ENV.APP_NAME}`} head-key="title" property="og:title" />
-                <meta content={changelog.excerpt} head-key="description" property="og:description" />
+                <meta content={`${changelog.title} - ${ENV.APP_NAME}`} head-key="title" name="title" />
+                <meta content={changelog.excerpt} head-key="description" name="description" />
 
                 {/* Open Graph */}
                 <meta content={changelog.imageUrl} head-key="og:image" property="og:image" />
