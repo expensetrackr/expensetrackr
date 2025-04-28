@@ -1,5 +1,6 @@
 import NumberFlow, { type Format } from "@number-flow/react";
 import { resolveCurrencyFormat } from "@sumup/intl";
+import { useReducedMotion } from "motion/react";
 import * as m from "motion/react-m";
 import * as React from "react";
 import ArrowRight01Icon from "virtual:icons/hugeicons/arrow-right-01";
@@ -25,6 +26,7 @@ type PricingSectionProps = React.ComponentPropsWithRef<"section"> & {
 export function PricingSection({ containerClassName, isInternal, ...props }: PricingSectionProps) {
     const [interval, setInterval] = React.useState("yearly");
     const { language, t } = useTranslation();
+    const isReducedMotion = useReducedMotion();
     const currencyFormat = resolveCurrencyFormat(language, "USD");
 
     const format: Format = React.useMemo(
@@ -44,10 +46,12 @@ export function PricingSection({ containerClassName, isInternal, ...props }: Pri
                     <div className="grid grid-cols-1 items-end gap-8 lg:grid-cols-3">
                         <div className="lg:col-span-2">
                             <m.p
-                                animate={{ opacity: 1, y: 0 }}
+                                {...(!isReducedMotion && {
+                                    animate: { opacity: 1, y: 0 },
+                                    initial: { opacity: 0, y: -100 },
+                                    transition: { duration: 1 },
+                                })}
                                 className="flex items-center gap-2"
-                                initial={{ opacity: 0, y: -100 }}
-                                transition={{ duration: 1 }}
                             >
                                 <CreditCardIcon className="size-4 text-primary" />
                                 <span className="text-paragraph-sm font-medium text-(--text-sub-600) uppercase">
@@ -56,18 +60,22 @@ export function PricingSection({ containerClassName, isInternal, ...props }: Pri
                             </m.p>
 
                             <m.h3
-                                animate={{ opacity: 1, y: 0 }}
+                                {...(!isReducedMotion && {
+                                    animate: { opacity: 1, y: 0 },
+                                    initial: { opacity: 0, y: 100 },
+                                    transition: { duration: 1 },
+                                })}
                                 className="mt-8 text-h4 font-bold tracking-tight"
-                                initial={{ opacity: 0, y: 100 }}
-                                transition={{ duration: 1 }}
                             >
                                 Simple Pricing
                             </m.h3>
                             <m.p
-                                animate={{ opacity: 1, y: 0 }}
+                                {...(!isReducedMotion && {
+                                    animate: { opacity: 1, y: 0 },
+                                    initial: { opacity: 0, y: 100 },
+                                    transition: { duration: 1.5 },
+                                })}
                                 className="mt-2 text-paragraph-lg text-(--text-sub-600)"
-                                initial={{ opacity: 0, y: 100 }}
-                                transition={{ duration: 1.5 }}
                             >
                                 Get started <span className="font-bold underline decoration-wavy">for free</span>. Then
                                 find a plan that grows with your <strong>financial needs</strong>, from personal

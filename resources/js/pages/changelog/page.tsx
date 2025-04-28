@@ -1,3 +1,4 @@
+import { useReducedMotion } from "motion/react";
 import * as m from "motion/react-m";
 import Clock01Icon from "virtual:icons/hugeicons/clock-01";
 
@@ -10,25 +11,31 @@ interface ChangelogPageProps {
 }
 
 export default function ChangelogPage({ changelogs }: ChangelogPageProps) {
+    const isReducedMotion = useReducedMotion();
+
     return (
         <>
             <section>
                 <div className="container border-x bg-(--bg-white-0) pt-32 pb-12 lg:px-12">
                     <m.p
-                        animate={{ opacity: 1, y: 0 }}
+                        {...(!isReducedMotion && {
+                            animate: { opacity: 1, y: 0 },
+                            initial: { opacity: 0, y: -100 },
+                            transition: { duration: 1 },
+                        })}
                         className="inline-flex items-center gap-2 text-paragraph-xs font-medium uppercase"
-                        initial={{ opacity: 0, y: -100 }}
-                        transition={{ duration: 1 }}
                     >
                         <Clock01Icon className="size-4 text-primary" />
                         Changelog
                     </m.p>
 
                     <m.h3
-                        animate={{ opacity: 1, y: 0 }}
+                        {...(!isReducedMotion && {
+                            animate: { opacity: 1, y: 0 },
+                            initial: { opacity: 0, y: 100 },
+                            transition: { duration: 1 },
+                        })}
                         className="mt-8 text-h3 font-bold tracking-tight md:text-h2 lg:text-h1"
-                        initial={{ opacity: 0, y: 100 }}
-                        transition={{ duration: 1 }}
                     >
                         Follow our journey and keep track of us.
                     </m.h3>

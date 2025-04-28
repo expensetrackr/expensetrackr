@@ -1,3 +1,4 @@
+import { useReducedMotion } from "motion/react";
 import * as m from "motion/react-m";
 import ArrowRight01Icon from "virtual:icons/hugeicons/arrow-right-01";
 
@@ -7,15 +8,19 @@ import { Link } from "../link.tsx";
 import * as Button from "../ui/button.tsx";
 
 export function HeroSection() {
+    const isReducedMotion = useReducedMotion();
+
     return (
         <section className="pt-16 lg:pt-0" id="hero">
             <div className="relative isolate container overflow-hidden border-x bg-(--bg-white-0)">
                 <m.svg
-                    animate={{ opacity: 1 }}
+                    {...(!isReducedMotion && {
+                        animate: { opacity: 1 },
+                        initial: { opacity: 0 },
+                        transition: { duration: 1 },
+                    })}
                     aria-hidden="true"
                     className="absolute inset-0 -z-10 size-full [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)] stroke-(--stroke-soft-200)"
-                    initial={{ opacity: 0 }}
-                    transition={{ duration: 1 }}
                 >
                     <defs>
                         <pattern
@@ -35,27 +40,33 @@ export function HeroSection() {
                 <div className="mx-auto max-w-7xl px-6 pt-10 pb-24 sm:pb-32 lg:flex lg:items-center lg:px-8 lg:py-40">
                     <div className="mx-auto max-w-2xl lg:mx-0 lg:shrink-0 lg:pt-8">
                         <m.h1
-                            animate={{ opacity: 1, y: 0 }}
+                            {...(!isReducedMotion && {
+                                animate: { opacity: 1, y: 0 },
+                                initial: { opacity: 0, y: 100 },
+                                transition: { duration: 1 },
+                            })}
                             className="text-h2 font-semibold tracking-tight text-pretty lg:text-h1"
-                            initial={{ opacity: 0, y: 100 }}
-                            transition={{ duration: 1 }}
                         >
                             Tracking your finances? It just got <span className="text-primary">simpler.</span>
                         </m.h1>
                         <m.p
-                            animate={{ opacity: 1, y: 0 }}
+                            {...(!isReducedMotion && {
+                                animate: { opacity: 1, y: 0 },
+                                initial: { opacity: 0, y: 100 },
+                                transition: { duration: 1.5 },
+                            })}
                             className="mt-4 text-pretty text-(--text-sub-600) lg:text-paragraph-lg"
-                            initial={{ opacity: 0, y: 100 }}
-                            transition={{ duration: 1.5 }}
                         >
                             Track <strong>expenses</strong>, <strong>budgets</strong>, <strong>investments</strong>, and{" "}
                             <strong>assets</strong> effortlessly, managing your money confidently.
                         </m.p>
                         <m.div
-                            animate={{ opacity: 1, y: 0 }}
+                            {...(!isReducedMotion && {
+                                animate: { opacity: 1, y: 0 },
+                                initial: { opacity: 0, y: 100 },
+                                transition: { duration: 2 },
+                            })}
                             className="mt-8 flex flex-col items-center gap-2 lg:flex-row lg:gap-3"
-                            initial={{ opacity: 0, y: 100 }}
-                            transition={{ duration: 2 }}
                         >
                             <Button.Root asChild className="w-full gap-2 lg:w-auto">
                                 <Link href={routes.register.url()}>
@@ -79,10 +90,12 @@ export function HeroSection() {
                     </div>
 
                     <m.div
-                        animate={{ opacity: 1, x: 0 }}
+                        {...(!isReducedMotion && {
+                            animate: { opacity: 1, x: 0 },
+                            initial: { opacity: 0, x: 100 },
+                            transition: { duration: 1 },
+                        })}
                         className="mx-auto mt-16 flex max-w-2xl sm:mt-24 lg:mt-0 lg:mr-0 lg:ml-10 lg:max-w-none lg:flex-none xl:ml-4"
-                        initial={{ opacity: 0, x: 100 }}
-                        transition={{ duration: 1 }}
                     >
                         <div className="max-w-3xl flex-none sm:max-w-5xl lg:max-w-none">
                             <div className="-m-2 rounded-12 bg-(--bg-weak-50) p-2 ring-1 ring-(--stroke-soft-200) ring-inset lg:-m-4 lg:rounded-16 lg:p-4">

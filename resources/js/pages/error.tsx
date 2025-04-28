@@ -1,4 +1,5 @@
 import { Head } from "@inertiajs/react";
+import { useReducedMotion } from "motion/react";
 import * as m from "motion/react-m";
 import ArrowLeft01Icon from "virtual:icons/hugeicons/arrow-left-01";
 import ArrowRight01Icon from "virtual:icons/hugeicons/arrow-right-01";
@@ -16,6 +17,7 @@ interface ErrorPageProps {
 
 export default function ErrorPage({ status }: ErrorPageProps) {
     const { t } = useTranslation();
+    const isReducedMotion = useReducedMotion();
 
     const title = t(`errors.${status}.title`);
     const description = t(`errors.${status}.description`);
@@ -36,28 +38,34 @@ export default function ErrorPage({ status }: ErrorPageProps) {
                 <div className="container flex min-h-dvh flex-col items-center justify-center border-x bg-(--bg-white-0) py-32 lg:px-12">
                     <div className="mx-auto text-center">
                         <m.h1
-                            animate={{ opacity: 1, y: 0 }}
+                            {...(!isReducedMotion && {
+                                animate: { opacity: 1, y: 0 },
+                                initial: { opacity: 0, y: 100 },
+                                transition: { duration: 1 },
+                            })}
                             className="text-h2 font-bold tracking-tight lg:text-h1"
-                            initial={{ opacity: 0, y: 100 }}
-                            transition={{ duration: 1 }}
                         >
                             {title}
                         </m.h1>
 
                         <m.p
-                            animate={{ opacity: 1, y: 0 }}
+                            {...(!isReducedMotion && {
+                                animate: { opacity: 1, y: 0 },
+                                initial: { opacity: 0, y: 100 },
+                                transition: { duration: 1.5 },
+                            })}
                             className="mt-4 text-paragraph-lg text-(--text-sub-600)"
-                            initial={{ opacity: 0, y: 100 }}
-                            transition={{ duration: 1.5 }}
                         >
                             {description}
                         </m.p>
 
                         <m.div
-                            animate={{ opacity: 1, y: 0 }}
+                            {...(!isReducedMotion && {
+                                animate: { opacity: 1, y: 0 },
+                                initial: { opacity: 0, y: 100 },
+                                transition: { duration: 2 },
+                            })}
                             className="mx-auto mt-12 flex max-w-xs flex-col items-center justify-center gap-2"
-                            initial={{ opacity: 0, y: 100 }}
-                            transition={{ duration: 2 }}
                         >
                             <Button.Root asChild className="w-full">
                                 <Link href={routes.home.url()}>

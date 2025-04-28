@@ -1,4 +1,5 @@
 import { format } from "date-fns";
+import { useReducedMotion } from "motion/react";
 import * as m from "motion/react-m";
 import ArrowRight01Icon from "virtual:icons/hugeicons/arrow-right-01";
 
@@ -11,12 +12,16 @@ interface ChangelogEntryProps {
 }
 
 export function ChangelogEntry({ changelog }: ChangelogEntryProps) {
+    const isReducedMotion = useReducedMotion();
+
     return (
         <m.div
-            animate={{ opacity: 1, y: 0 }}
+            {...(!isReducedMotion && {
+                animate: { opacity: 1, y: 0 },
+                initial: { opacity: 0, y: 100 },
+                transition: { duration: 1.5 },
+            })}
             className="group/changelog-entry relative overflow-hidden rounded-12 bg-(--bg-white-0) pt-8 shadow lg:pt-24"
-            initial={{ opacity: 0, y: 100 }}
-            transition={{ duration: 1.5 }}
         >
             <Link
                 aria-label={changelog.title}
@@ -31,26 +36,32 @@ export function ChangelogEntry({ changelog }: ChangelogEntryProps) {
             <div className="pointer-events-none relative grid grid-cols-1 gap-8 lg:grid-cols-2">
                 <div className="p-8 pt-0 lg:p-12 lg:pt-0">
                     <m.p
-                        animate={{ opacity: 1, y: 0 }}
+                        {...(!isReducedMotion && {
+                            animate: { opacity: 1, y: 0 },
+                            initial: { opacity: 0, y: -100 },
+                            transition: { duration: 1 },
+                        })}
                         className="flex items-center gap-2 text-paragraph-xs font-medium text-(--text-sub-600) uppercase"
-                        initial={{ opacity: 0, y: -100 }}
-                        transition={{ duration: 1 }}
                     >
                         {format(changelog.publishedAt, "MMMM d, yyyy")}
                     </m.p>
                     <m.h3
-                        animate={{ opacity: 1, y: 0 }}
+                        {...(!isReducedMotion && {
+                            animate: { opacity: 1, y: 0 },
+                            initial: { opacity: 0, y: 100 },
+                            transition: { duration: 1 },
+                        })}
                         className="mt-8 text-h5 font-bold tracking-tight"
-                        initial={{ opacity: 0, y: 100 }}
-                        transition={{ duration: 1 }}
                     >
                         {changelog.title}
                     </m.h3>
                     <m.p
-                        animate={{ opacity: 1, y: 0 }}
+                        {...(!isReducedMotion && {
+                            animate: { opacity: 1, y: 0 },
+                            initial: { opacity: 0, y: 100 },
+                            transition: { duration: 1.5 },
+                        })}
                         className="mt-8"
-                        initial={{ opacity: 0, y: 100 }}
-                        transition={{ duration: 1.5 }}
                     >
                         {changelog.excerpt}
                     </m.p>
