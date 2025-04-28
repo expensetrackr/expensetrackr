@@ -97,7 +97,7 @@ function MobileMenu() {
     return (
         <Drawer.Root onOpenChange={setOpen} open={isOpen}>
             <Drawer.Trigger asChild>
-                <Button.Root $style="ghost" $type="neutral" onClick={() => setOpen(!isOpen)}>
+                <Button.Root $style="ghost" $type="neutral" className="lg:hidden" onClick={() => setOpen(!isOpen)}>
                     <Button.Icon as={Menu02Icon} className="scale-x-[-1]" />
                 </Button.Root>
             </Drawer.Trigger>
