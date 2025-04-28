@@ -12,17 +12,11 @@
         <link href="{{ url()->current() }}" rel="canonical" />
 
         <!-- Primary Meta Tags -->
-        <meta
-            name="title"
-            content="{{ config('app.name') }} - Manage your expenses effortlessly"
-            head-key="title"
-            inertia="title"
-        />
+        <meta name="title" content="{{ config('app.name') }} - Manage your expenses effortlessly" head-key="title" />
         <meta
             name="description"
             content="Manage your expenses effortlessly with ExpenseTrackr, the all-in-one web app designed for both personal and business finance tracking. Organize accounts, categorize transactions, and collaborate with workspaces to gain insightful graphics and reports on your financial activities. Stay in control of your finances with ExpenseTrackr's intuitive features and user-friendly interface."
             head-key="description"
-            inertia="description"
         />
 
         <!-- Open Graph / Facebook -->
@@ -32,15 +26,13 @@
             property="og:title"
             content="{{ config('app.name') }} - Manage your expenses effortlessly"
             head-key="og:title"
-            inertia="og:title"
         />
         <meta
             property="og:description"
             content="Manage your expenses effortlessly with ExpenseTrackr, the all-in-one web app designed for both personal and business finance tracking. Organize accounts, categorize transactions, and collaborate with workspaces to gain insightful graphics and reports on your financial activities. Stay in control of your finances with ExpenseTrackr's intuitive features and user-friendly interface."
             head-key="og:description"
-            inertia="og:description"
         />
-        <meta content="https://expensetrackr.app/og.jpg" property="og:image" head-key="og:image" inertia="og:image" />
+        <meta content="https://expensetrackr.app/og.jpg" property="og:image" head-key="og:image" />
 
         <!-- Twitter -->
         <meta content="summary_large_image" property="twitter:card" />
@@ -49,20 +41,13 @@
             content="{{ config('app.name') }} - Manage your expenses effortlessly"
             property="twitter:title"
             head-key="twitter:title"
-            inertia="twitter:title"
         />
         <meta
             content="Manage your expenses effortlessly with ExpenseTrackr, the all-in-one web app designed for both personal and business finance tracking. Organize accounts, categorize transactions, and collaborate with workspaces to gain insightful graphics and reports on your financial activities. Stay in control of your finances with ExpenseTrackr's intuitive features and user-friendly interface."
             property="twitter:description"
             head-key="twitter:description"
-            inertia="twitter:description"
         />
-        <meta
-            content="https://expensetrackr.app/og.jpg"
-            property="twitter:image"
-            head-key="twitter:image"
-            inertia="twitter:image"
-        />
+        <meta content="https://expensetrackr.app/og.jpg" property="twitter:image" head-key="twitter:image" />
 
         <!-- Favicon -->
         <link href="/favicons/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180" />
