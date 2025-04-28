@@ -85,7 +85,7 @@ export function PricingSection({ containerClassName, isInternal, ...props }: Pri
 
                         <div className="flex lg:ml-auto">
                             <Button.Root asChild className="w-full gap-2 lg:w-auto">
-                                <Link href="/">
+                                <Link href="mailto:sales@expensetrackr.app">
                                     Contact sales
                                     <Button.Icon
                                         as={ArrowRight01Icon}
