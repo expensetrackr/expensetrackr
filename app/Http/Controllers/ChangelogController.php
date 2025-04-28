@@ -27,7 +27,7 @@ final class ChangelogController extends Controller
      */
     public function show(Changelog $changelog): Response
     {
-        return Inertia::render('changelog/$slug', [
+        return Inertia::render('changelog/[slug]', [
             // @phpstan-ignore-next-line method.notFound -- method exists but PHPStan can't read this magic method
             'changelog' => $changelog->toResource()->withContent(),
         ]);
