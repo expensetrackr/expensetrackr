@@ -6,3 +6,5 @@ node_modules
 /resources/js/actions
 /resources/js/routes
 /resources/js/wayfinder
+
+resources/views/**/*.blade.php

@@ -12,29 +12,50 @@
         <link href="{{ url()->current() }}" rel="canonical" />
 
         <!-- Primary Meta Tags -->
-        <meta content="{{ config('app.name') }} - Manage your expenses effortlessly" name="title" />
         <meta
-            content="Manage your expenses effortlessly with ExpenseTrackr, the all-in-one web app designed for both personal and business finance tracking. Organize accounts, categorize transactions, and collaborate with workspaces to gain insightful graphics and reports on your financial activities. Stay in control of your finances with ExpenseTrackr's intuitive features and user-friendly interface."
+            name="title"
+            content="{{ config('app.name') }} - Manage your expenses effortlessly"
+            head-key="title"
+            inertia="title"
+        />
+        <meta
             name="description"
+            content="Manage your expenses effortlessly with ExpenseTrackr, the all-in-one web app designed for both personal and business finance tracking. Organize accounts, categorize transactions, and collaborate with workspaces to gain insightful graphics and reports on your financial activities. Stay in control of your finances with ExpenseTrackr's intuitive features and user-friendly interface."
+            head-key="description"
+            inertia="description"
         />
 
         <!-- Open Graph / Facebook -->
         <meta content="website" property="og:type" />
         <meta content="{{ url()->current() }}" property="og:url" />
-        <meta content="{{ config('app.name') }} - Manage your expenses effortlessly" property="og:title" />
         <meta
-            content="Manage your expenses effortlessly with ExpenseTrackr, the all-in-one web app designed for both personal and business finance tracking. Organize accounts, categorize transactions, and collaborate with workspaces to gain insightful graphics and reports on your financial activities. Stay in control of your finances with ExpenseTrackr's intuitive features and user-friendly interface."
+            property="og:title"
+            content="{{ config('app.name') }} - Manage your expenses effortlessly"
+            head-key="og:title"
+            inertia="og:title"
+        />
+        <meta
             property="og:description"
+            content="Manage your expenses effortlessly with ExpenseTrackr, the all-in-one web app designed for both personal and business finance tracking. Organize accounts, categorize transactions, and collaborate with workspaces to gain insightful graphics and reports on your financial activities. Stay in control of your finances with ExpenseTrackr's intuitive features and user-friendly interface."
+            head-key="og:description"
+            inertia="og:description"
         />
         <meta content="https://expensetrackr.app/og.png" property="og:image" />
 
         <!-- Twitter -->
         <meta content="summary_large_image" property="twitter:card" />
         <meta content="{{ url()->current() }}" property="twitter:url" />
-        <meta content="{{ config('app.name') }} - Manage your expenses effortlessly" property="twitter:title" />
         <meta
-            content="Manage your expenses effortlessly with ExpenseTrackr, the all-in-one web app designed for both personal and business finance tracking. Organize accounts, categorize transactions, and collaborate with workspaces to gain insightful graphics and reports on your financial activities. Stay in control of your finances with ExpenseTrackr's intuitive features and user-friendly interface."
+            property="twitter:title"
+            content="{{ config('app.name') }} - Manage your expenses effortlessly"
+            head-key="twitter:title"
+            inertia="twitter:title"
+        />
+        <meta
             property="twitter:description"
+            content="Manage your expenses effortlessly with ExpenseTrackr, the all-in-one web app designed for both personal and business finance tracking. Organize accounts, categorize transactions, and collaborate with workspaces to gain insightful graphics and reports on your financial activities. Stay in control of your finances with ExpenseTrackr's intuitive features and user-friendly interface."
+            head-key="twitter:description"
+            inertia="twitter:description"
         />
         <meta content="https://expensetrackr.app/og.png" property="twitter:image" />
 
@@ -51,8 +72,6 @@
         <meta content="#ffffff" name="theme-color" />
         <meta content="light" name="color-scheme" />
 
-        <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.min.css" rel="stylesheet" />
-
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -68,21 +87,12 @@
         <script type="application/ld+json">
             {
                 "@context": "https://schema.org",
-                "@type": "SoftwareApplication",
+                "@type": "Organization",
+                "@id": "{{ config('app.url') }}",
                 "name": "ExpenseTrackr",
-                "offers": {
-                    "@type": "Offer",
-                    "price": "12.99",
-                    "priceCurrency": "USD",
-                    "availability": "https://schema.org/InStock",
-                    "seller": {
-                        "@type": "Organization",
-                        "name": "ExpenseTrackr"
-                    },
-                    "category": "Finance",
-                    "description": "ExpenseTrackr is the best financial management app that helps you track your expenses, budgets, investments, and assets effortlessly. Get started for free and manage your finances with confidence.",
-                    "url": "https://expensetrackr.app"
-                }
+                "url": "{{ config('app.url') }}",
+                "logo": "{{ config('app.url') }}/favicons/android-chrome-512x512.png",
+                "sameAs": ["https://x.com/expensetrackapp", "https://github.com/expensetrackr"]
             }
         </script>
     </head>
@@ -105,11 +115,5 @@
             data-exclude-search="true"
             data-do-not-track="true"
         ></script>
-        <script defer src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.min.js"></script>
-        <script>
-            document.addEventListener('DOMContentLoaded', () => {
-                AOS.init();
-            });
-        </script>
     </body>
 </html>

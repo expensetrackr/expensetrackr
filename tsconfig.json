@@ -13,6 +13,7 @@
         "@epic-web/config/typescript"
     ],
     "compilerOptions": {
+        "rewriteRelativeImportExtensions": false,
         "paths": {
             "#/*": [
                 "./resources/js/*"
