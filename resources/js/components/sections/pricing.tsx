@@ -1,5 +1,6 @@
 import NumberFlow, { type Format } from "@number-flow/react";
 import { resolveCurrencyFormat } from "@sumup/intl";
+import DOMPurify from "dompurify";
 import { useReducedMotion } from "motion/react";
 import * as m from "motion/react-m";
 import * as React from "react";
@@ -218,7 +219,7 @@ export function PricingSection({ containerClassName, isInternal, ...props }: Pri
                                                         "text-paragraph-sm",
                                                         plan.isFeatured ? "text-white" : "text-(--text-sub-600)",
                                                     )}
-                                                    dangerouslySetInnerHTML={{ __html: feature }}
+                                                    dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(feature) }}
                                                 />
                                             </li>
                                         ))}
