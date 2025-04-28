@@ -26,8 +26,8 @@ export default function ErrorPage({ status }: ErrorPageProps) {
         <>
             <Head title={title}>
                 {/* Primary Tags */}
-                <meta content={`${title} - ${ENV.APP_NAME}`} head-key="title" property="og:title" />
-                <meta content={description} head-key="description" property="og:description" />
+                <meta content={`${title} - ${ENV.APP_NAME}`} head-key="title" name="title" />
+                <meta content={description} head-key="description" name="description" />
 
                 {/* Open Graph */}
                 <meta content={title} head-key="og:title" property="og:title" />
