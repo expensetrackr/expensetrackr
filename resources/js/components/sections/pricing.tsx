@@ -255,7 +255,8 @@ export function PricingSection({ containerClassName, isInternal, ...props }: Pri
                                 {t("pricing.free.features")
                                     .split(",")
                                     .map((feature, index) => (
-                                        <div key={index}>
+                                        <div className="flex items-center gap-2" key={index}>
+                                            <CheckmarkCircle02SolidIcon className="size-4 text-(--text-sub-600)" />
                                             <p className="text-paragraph-sm text-(--text-sub-600)">{feature}</p>
                                         </div>
                                     ))}
