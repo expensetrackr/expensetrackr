@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
 use Spatie\Sitemap\Contracts\Sitemapable;
@@ -73,7 +72,7 @@ final class Changelog extends Model implements Sitemapable
     {
         return Url::create(route('changelog.show', $this))
             ->setLastModificationDate(
-                Carbon::create($this->updated_at) ?? Carbon::now()
+                $this->published_at ?? now()
             );
     }
 
