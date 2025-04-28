@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 return [
     'filament' => [
+        'image' => 'Image',
         'title' => 'Title',
         'slug' => 'Slug',
         'excerpt' => 'Excerpt',

@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('changelogs', function (Blueprint $table) {
             $table->id();
+            $table->string('image_path', 2048);
             $table->string('title');
             $table->string('slug')->unique();
             $table->text('content');

@@ -40,7 +40,7 @@
             head-key="og:description"
             inertia="og:description"
         />
-        <meta content="https://expensetrackr.app/og.png" property="og:image" />
+        <meta content="https://expensetrackr.app/og.png" property="og:image" head-key="og:image" inertia="og:image" />
 
         <!-- Twitter -->
         <meta content="summary_large_image" property="twitter:card" />
@@ -57,7 +57,7 @@
             head-key="twitter:description"
             inertia="twitter:description"
         />
-        <meta content="https://expensetrackr.app/og.png" property="twitter:image" />
+        <meta content="https://expensetrackr.app/og.png" property="twitter:image" head-key="twitter:image" inertia="twitter:image" />
 
         <!-- Favicon -->
         <link href="/favicons/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180" />
@@ -102,6 +102,7 @@
 
         <script>
             window.ENV = {
+                APP_NAME: '{{ config('app.name') }}',
                 APP_URL: '{{ config('app.url') }}',
                 IMAGE_URL: 'https://image.danestves.com',
                 TELLER_APP_ID: '{{ config('services.teller.app_id') }}',

@@ -32,6 +32,20 @@ final class ChangelogResource extends Resource
             ->schema([
                 Forms\Components\Section::make()
                     ->schema([
+                        Forms\Components\FileUpload::make('image_path')
+                            ->label(__('changelog.filament.image'))
+                            ->image()
+                            ->imageEditor()
+                            ->imageEditorAspectRatios([
+                                '16:9',
+                            ])
+                            ->imageEditorAspectRatios([
+                                '16:9',
+                            ])
+                            ->required()
+                            ->columnSpan([
+                                'sm' => 2,
+                            ]),
                         Forms\Components\TextInput::make('title')
                             ->label(__('changelog.filament.title'))
                             ->maxLength(255)

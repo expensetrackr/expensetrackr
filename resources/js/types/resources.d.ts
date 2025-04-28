@@ -45,6 +45,7 @@ declare namespace Resources {
         excerpt: string;
         content: string;
         publishedAt: string;
+        imageUrl: string;
     };
     // App\Http\Resources\LanguageResource
     export type Language = any;

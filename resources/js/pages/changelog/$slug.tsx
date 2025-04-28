@@ -1,5 +1,7 @@
+import { Head } from "@inertiajs/react";
 import * as React from "react";
 import ArrowRight01Icon from "virtual:icons/hugeicons/arrow-right-01";
+
 import { Link } from "#/components/link.tsx";
 import { useTranslation } from "#/hooks/use-translation.ts";
 import { GuestLayout } from "#/layouts/guest-layout.tsx";
@@ -25,6 +27,22 @@ export default function ChangelogPage({ changelog }: ChangelogPageProps) {
 
     return (
         <>
+            <Head title={changelog.title}>
+                {/* Primary Tags */}
+                <meta content={`${changelog.title} - ${ENV.APP_NAME}`} head-key="title" property="og:title" />
+                <meta content={changelog.excerpt} head-key="description" property="og:description" />
+
+                {/* Open Graph */}
+                <meta content={changelog.imageUrl} head-key="og:image" property="og:image" />
+                <meta content={changelog.title} head-key="og:title" property="og:title" />
+                <meta content={changelog.excerpt} head-key="og:description" property="og:description" />
+
+                {/* Twitter */}
+                <meta content={changelog.imageUrl} head-key="twitter:image" property="twitter:image" />
+                <meta content={changelog.title} head-key="twitter:title" property="twitter:title" />
+                <meta content={changelog.excerpt} head-key="twitter:description" property="twitter:description" />
+            </Head>
+
             <section>
                 <div className="container border-x bg-(--bg-white-0) pt-32 pb-12 lg:px-12">
                     <div className="mx-auto max-w-2xl">

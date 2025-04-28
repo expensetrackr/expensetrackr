@@ -27,6 +27,7 @@ final class ChangelogResource extends JsonResource
             'excerpt' => $this->excerpt ?? Str::excerpt($this->content),
             'content' => $this->when($this->appendContent, fn () => Str::markdown($this->content)),
             'publishedAt' => $this->published_at,
+            'imageUrl' => $this->image_url,
         ];
     }
 

@@ -65,7 +65,8 @@ export function ChangelogEntry({ changelog }: ChangelogEntryProps) {
                         alt={changelog.title}
                         className="object-cover object-center"
                         height={600}
-                        src=""
+                        isCdn
+                        src={changelog.imageUrl}
                         width={600}
                     />
                 </div>
