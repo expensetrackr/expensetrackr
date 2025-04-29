@@ -7,6 +7,7 @@ namespace App\Mail;
 use App\Models\WorkspaceInvitation;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
@@ -29,6 +30,7 @@ final class WorkspaceInvitationMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
+            from: new Address('no-reply@expensetrackr.app', 'ExpenseTrackr'),
             subject: 'Workspace Invitation',
         );
     }
