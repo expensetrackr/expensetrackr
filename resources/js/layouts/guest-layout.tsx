@@ -6,6 +6,11 @@ import { Header } from "#/components/header.tsx";
 import { Toaster } from "#/components/toaster.tsx";
 import { type PageProps } from "#/types/globals.js";
 
+/**
+ * Provides a layout wrapper for guest-facing pages, including header, footer, and optional toast notifications.
+ *
+ * Renders its children within a styled container and displays a toast notification if the {@link props.toast} prop is set.
+ */
 export function GuestLayout({
     children,
     ...props
@@ -17,7 +22,6 @@ export function GuestLayout({
             toast[props.toast.type](props.toast.title, {
                 description: props.toast.description,
                 duration: props.toast.duration ?? 5000,
-                className: "filled",
             });
         }
     }, [props.toast]);

@@ -14,6 +14,11 @@ import { SettingsLayout } from "#/layouts/settings-layout.tsx";
 import { routes } from "#/routes.ts";
 import { type PageProps } from "#/types/globals.js";
 
+/**
+ * Renders the user profile settings page with editable fields for profile picture, full name, and email address.
+ *
+ * Displays the current user's information and allows updates to profile details. Submits changes via Inertia.js and shows a success notification on completion.
+ */
 export default function SettingsShow() {
     const user = useUser();
     const form = useForm<Forms.UpdateProfileInformationForm>({
@@ -36,7 +41,6 @@ export default function SettingsShow() {
             onSuccess: () => {
                 toast.success("Profile updated.", {
                     id: "profile-updated",
-                    className: "filled",
                 });
                 dismissUnsavedChanges();
             },

@@ -12,6 +12,14 @@ interface UpdateWorkspaceNameFormProps {
     permissions: App.Data.Workspace.WorkspacePermissionsData;
 }
 
+/**
+ * Renders a form for updating the name of a workspace.
+ *
+ * Displays a single text field for the workspace name, handles form submission, and provides user feedback on success or failure. The form is disabled if the user lacks permission to update the workspace.
+ *
+ * @param defaultValues - Initial values for the workspace's ID and name.
+ * @param permissions - User permissions related to workspace updates.
+ */
 export function UpdateWorkspaceNameForm({ defaultValues, permissions }: UpdateWorkspaceNameFormProps) {
     const form = useForm(defaultValues);
     const { dismissUnsavedChanges } = useUnsavedChanges({
@@ -30,14 +38,12 @@ export function UpdateWorkspaceNameForm({ defaultValues, permissions }: UpdateWo
             onSuccess: () => {
                 toast.success("Workspace name updated.", {
                     id: "workspace-name-update-success",
-                    className: "filled",
                 });
                 dismissUnsavedChanges();
             },
             onError: () => {
                 toast.error("Failed to update workspace name.", {
                     id: "workspace-name-update-error",
-                    className: "filled",
                 });
                 form.reset();
             },
