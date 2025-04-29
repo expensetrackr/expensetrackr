@@ -45,10 +45,11 @@ final class SyncUsersWithResend extends Command
                 CreateResendContactJob::dispatch($user->id);
 
                 Log::info("Created Resend user: {$user->email}");
+
+                $syncedCount++;
             }
 
             $this->output->progressAdvance();
-            $syncedCount++;
         }
 
         $this->output->progressFinish();
