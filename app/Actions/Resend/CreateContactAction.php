@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\RateLimiter;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Resend;
+use RuntimeException;
 
 final readonly class CreateContactAction
 {
@@ -39,7 +40,7 @@ final readonly class CreateContactAction
     /**
      * Execute the action.
      */
-    public function handle(User $user): bool
+    public function handle(User $user): void
     {
         try {
             [$firstName, $lastName] = $this->parseNameComponents($user->name);
@@ -51,10 +52,7 @@ final readonly class CreateContactAction
                 'unsubscribed' => false,
                 'created_at' => now()->toString(),
             ]);
-
-            return true;
         } catch (Resend\Exceptions\ErrorException $e) {
-            // Handle specific API errors like rate limits
             $message = $e->getMessage();
             $isRateLimit = str_contains($message, 'rate limit') || $e->getCode() === 429;
 
@@ -64,8 +62,7 @@ final readonly class CreateContactAction
                     'error' => $message,
                 ]);
 
-                // Could retry after a delay or queue for later
-                return false;
+                throw new RuntimeException("Rate limit reached when creating Resend contact: $message", 429, $e);
             }
 
             Log::error('Failed to create Resend contact for user', [
@@ -73,14 +70,14 @@ final readonly class CreateContactAction
                 'error' => $message,
             ]);
 
-            return false;
+            throw new RuntimeException("Failed to create Resend contact for user: $message", $e->getCode(), $e);
         } catch (Exception $e) {
             Log::error('Unexpected error creating Resend contact', [
                 'user_id' => $user->id,
                 'error' => $e->getMessage(),
             ]);
 
-            return false;
+            throw new RuntimeException("Unexpected error creating Resend contact: {$e->getMessage()}", $e->getCode(), $e);
         }
     }
 

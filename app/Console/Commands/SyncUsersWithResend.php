@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Console\Commands;
 
 use App\Actions\Resend\CreateContactAction;
+use App\Jobs\CreateResendContactJob;
 use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
@@ -42,8 +43,7 @@ final class SyncUsersWithResend extends Command
             $existingUser = $resendUsers->firstWhere('email', $user->email);
 
             if (empty($existingUser)) {
-                $action->rateLimit();
-                $action->handle($user);
+                CreateResendContactJob::dispatch($user->id);
 
                 Log::info("Created Resend user: {$user->email}");
             }

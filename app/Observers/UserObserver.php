@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Observers;
 
 use App\Actions\Resend\CreateContactAction;
+use App\Jobs\CreateResendContactJob;
 use App\Models\User;
 use App\Utilities\Workspaces\WorkspaceFeatures;
 
@@ -36,7 +37,6 @@ final class UserObserver
             $user->assignRole('workspace admin');
         }
 
-        $this->createContactAction->rateLimit();
-        $this->createContactAction->handle($user);
+        CreateResendContactJob::dispatch($user->id);
     }
 }
