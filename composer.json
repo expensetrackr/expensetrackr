@@ -38,6 +38,7 @@
         "laravel/tinker": "2.10.1",
         "laravel/wayfinder": "0.1.4",
         "league/flysystem-aws-s3-v3": "3.29.0",
+        "lorisleiva/laravel-actions": "2.9.0",
         "meilisearch/meilisearch-php": "1.14.0",
         "nunomaduro/essentials": "@dev",
         "pinkary-project/type-guard": "0.1.0",
@@ -66,7 +67,8 @@
         "pestphp/pest-plugin-laravel": "3.2.0",
         "pestphp/pest-plugin-type-coverage": "3.5.1",
         "rector/rector": "2.0.14",
-        "soloterm/solo": "0.5.0"
+        "soloterm/solo": "0.5.0",
+        "wulfheart/laravel-actions-ide-helper": "0.10.0"
     },
     "autoload": {
         "files": [
