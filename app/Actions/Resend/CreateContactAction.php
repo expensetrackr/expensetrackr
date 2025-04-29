@@ -27,11 +27,12 @@ final readonly class CreateContactAction
     public function handle(User $user): void
     {
         try {
+            [$firstName, $lastName] = $this->parseNameComponents($user->name);
             $this->resend->contacts->create(type(config('services.resend.audience_id'))->asString(), [
                 'id' => $user->id,
                 'email' => $user->email,
-                'first_name' => $user->name ? trim(strtok($user->name, ' ')) : '',
-                'last_name' => $user->name ? trim(mb_substr($user->name, mb_strlen(strtok($user->name, ' ')))) : '',
+                'first_name' => $firstName,
+                'last_name' => $lastName,
                 'unsubscribed' => false,
                 'created_at' => now()->toString(),
             ]);
@@ -41,5 +42,21 @@ final readonly class CreateContactAction
                 'error' => $e->getMessage(),
             ]);
         }
+    }
+
+    /**
+     * Parse full name into first and last components.
+     */
+    private function parseNameComponents(?string $fullName): array
+    {
+        if (! $fullName) {
+            return ['', ''];
+        }
+
+        $nameParts = explode(' ', $fullName, 2);
+        $firstName = trim($nameParts[0]);
+        $lastName = isset($nameParts[1]) ? trim($nameParts[1]) : '';
+
+        return [$firstName, $lastName];
     }
 }
