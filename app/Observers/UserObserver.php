@@ -6,6 +6,8 @@ namespace App\Observers;
 
 use App\Models\User;
 use App\Utilities\Workspaces\WorkspaceFeatures;
+use Exception;
+use Illuminate\Support\Facades\Log;
 use Resend;
 
 final class UserObserver
@@ -32,29 +34,21 @@ final class UserObserver
         }
 
         $resend = Resend::client(type(config('services.resend.key'))->asString());
--       $resend->contacts->create(type(config('services.resend.audience_id'))->asString(), [
--           'id' => $user->id,
--           'email' => $user->email,
--           'first_name' => explode(' ', $user->name ?? '')[0] ?? '',
--           'last_name' => explode(' ', $user->name ?? '')[1] ?? '',
--           'unsubscribed' => false,
--           'created_at' => now()->toString(),
--       ]);
-+       try {
-+           $resend->contacts->create(type(config('services.resend.audience_id'))->asString(), [
-+               'id' => $user->id,
-+               'email' => $user->email,
-+               'first_name' => explode(' ', $user->name ?? '')[0] ?? '',
-+               'last_name' => explode(' ', $user->name ?? '')[1] ?? '',
-+               'unsubscribed' => false,
-+               'created_at' => now()->toString(),
-+           ]);
-+       } catch (\Exception $e) {
-+           // Log error but don't disrupt user creation
-+           logger()->error('Failed to create Resend contact for user', [
-+               'user_id' => $user->id,
-+               'error' => $e->getMessage(),
-+           ]);
-+       }
+
+        try {
+            $resend->contacts->create(type(config('services.resend.audience_id'))->asString(), [
+                'id' => $user->id,
+                'email' => $user->email,
+                'first_name' => explode(' ', $user->name ?? '')[0] ?? '',
+                'last_name' => explode(' ', $user->name ?? '')[1] ?? '',
+                'unsubscribed' => false,
+                'created_at' => now()->toString(),
+            ]);
+        } catch (Exception $e) {
+            Log::error('Failed to create Resend contact for user', [
+                'user_id' => $user->id,
+                'error' => $e->getMessage(),
+            ]);
+        }
     }
 }
