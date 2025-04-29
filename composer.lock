@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a821ee591f9edc5fcc996a79759c93ba",
+    "content-hash": "a16f1c2f939a8589a93d0d025985ab81",
     "packages": [
         {
             "name": "afatmustafa/blade-hugeicons",
@@ -6120,6 +6120,154 @@
                 }
             ],
             "time": "2025-04-12T22:26:52+00:00"
+        },
+        {
+            "name": "lorisleiva/laravel-actions",
+            "version": "v2.9.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lorisleiva/laravel-actions.git",
+                "reference": "807f9cbd8fdb60713dfd9b2175861052f933c6e5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lorisleiva/laravel-actions/zipball/807f9cbd8fdb60713dfd9b2175861052f933c6e5",
+                "reference": "807f9cbd8fdb60713dfd9b2175861052f933c6e5",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^10.0|^11.0|^12.0",
+                "lorisleiva/lody": "^0.6",
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^10.0",
+                "pestphp/pest": "^2.34|^3.0",
+                "phpunit/phpunit": "^10.5|^11.5"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "aliases": {
+                        "Action": "Lorisleiva\\Actions\\Facades\\Actions"
+                    },
+                    "providers": [
+                        "Lorisleiva\\Actions\\ActionServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Lorisleiva\\Actions\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Loris Leiva",
+                    "email": "loris.leiva@gmail.com",
+                    "homepage": "https://lorisleiva.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Laravel components that take care of one specific task",
+            "homepage": "https://github.com/lorisleiva/laravel-actions",
+            "keywords": [
+                "action",
+                "command",
+                "component",
+                "controller",
+                "job",
+                "laravel",
+                "listener",
+                "object"
+            ],
+            "support": {
+                "issues": "https://github.com/lorisleiva/laravel-actions/issues",
+                "source": "https://github.com/lorisleiva/laravel-actions/tree/v2.9.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sponsors/lorisleiva",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-03-01T19:32:31+00:00"
+        },
+        {
+            "name": "lorisleiva/lody",
+            "version": "v0.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lorisleiva/lody.git",
+                "reference": "6bada710ebc75f06fdf62db26327be1592c4f014"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lorisleiva/lody/zipball/6bada710ebc75f06fdf62db26327be1592c4f014",
+                "reference": "6bada710ebc75f06fdf62db26327be1592c4f014",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^10.0|^11.0|^12.0",
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^10.0",
+                "pestphp/pest": "^2.34|^3.0",
+                "phpunit/phpunit": "^10.5|^11.5"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "aliases": {
+                        "Lody": "Lorisleiva\\Lody\\Lody"
+                    },
+                    "providers": [
+                        "Lorisleiva\\Lody\\LodyServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Lorisleiva\\Lody\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Loris Leiva",
+                    "email": "loris.leiva@gmail.com",
+                    "homepage": "https://lorisleiva.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Load files and classes as lazy collections in Laravel.",
+            "homepage": "https://github.com/lorisleiva/lody",
+            "keywords": [
+                "classes",
+                "collection",
+                "files",
+                "laravel",
+                "load"
+            ],
+            "support": {
+                "issues": "https://github.com/lorisleiva/lody/issues",
+                "source": "https://github.com/lorisleiva/lody/tree/v0.6.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sponsors/lorisleiva",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-03-01T19:21:17+00:00"
         },
         {
             "name": "masterminds/html5",
@@ -15747,6 +15895,60 @@
             "time": "2025-04-28T00:03:14+00:00"
         },
         {
+            "name": "riimu/kit-pathjoin",
+            "version": "v1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Riimu/Kit-PathJoin.git",
+                "reference": "8ad2656c79527dba9f7f20e1229dcd38abfe8cee"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Riimu/Kit-PathJoin/zipball/8ad2656c79527dba9f7f20e1229dcd38abfe8cee",
+                "reference": "8ad2656c79527dba9f7f20e1229dcd38abfe8cee",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.3",
+                "phpunit/phpunit": "^5.7 || ^6.2",
+                "squizlabs/php_codesniffer": "^3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Riimu\\Kit\\PathJoin\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Riikka Kalliomäki",
+                    "email": "riikka.kalliomaki@gmail.com",
+                    "homepage": "http://riimu.net"
+                }
+            ],
+            "description": "Cross-platform library for normalizing and joining file system paths",
+            "homepage": "http://kit.riimu.net",
+            "keywords": [
+                "file",
+                "join",
+                "normalize",
+                "path",
+                "system"
+            ],
+            "support": {
+                "issues": "https://github.com/Riimu/Kit-PathJoin/issues",
+                "source": "https://github.com/Riimu/Kit-PathJoin/tree/master"
+            },
+            "time": "2017-07-09T14:41:04+00:00"
+        },
+        {
             "name": "sebastian/cli-parser",
             "version": "3.0.2",
             "source": {
@@ -17154,6 +17356,81 @@
                 }
             ],
             "time": "2025-01-07T00:10:26+00:00"
+        },
+        {
+            "name": "wulfheart/laravel-actions-ide-helper",
+            "version": "v0.10.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Wulfheart/laravel-actions-ide-helper.git",
+                "reference": "fe8965069225e6c9674c1763dd897189098526f2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Wulfheart/laravel-actions-ide-helper/zipball/fe8965069225e6c9674c1763dd897189098526f2",
+                "reference": "fe8965069225e6c9674c1763dd897189098526f2",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^10.0|^11.0|^12.0",
+                "lorisleiva/laravel-actions": "^2.3",
+                "lorisleiva/lody": "^0.5.0|^0.6.0",
+                "php": "^8.1|^8.2",
+                "phpdocumentor/reflection": "^5.1|^6.0",
+                "riimu/kit-pathjoin": "^1.2",
+                "spatie/laravel-package-tools": "^1.14"
+            },
+            "require-dev": {
+                "brianium/paratest": "^6.8|^7.4",
+                "nunomaduro/collision": "^6.1|^8.0",
+                "orchestra/testbench": "^8.0|^9.0|^10.0",
+                "pestphp/pest": "^1.22|^2.34|^3.7",
+                "phpunit/phpunit": "^9.5.10|^10.5|^11.5.3",
+                "spatie/invade": "^1.1|^2.0",
+                "spatie/laravel-ray": "^1.32",
+                "spatie/pest-plugin-snapshots": "^1.1|^2.1",
+                "vimeo/psalm": "^5.6|^6.6"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "aliases": {
+                        "LaravelActionsIdeHelper": "Wulfheart\\LaravelActionsIdeHelper\\LaravelActionsIdeHelperFacade"
+                    },
+                    "providers": [
+                        "Wulfheart\\LaravelActionsIdeHelper\\LaravelActionsIdeHelperServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Wulfheart\\LaravelActionsIdeHelper\\": "src",
+                    "Wulfheart\\LaravelActionsIdeHelper\\Database\\Factories\\": "database/factories"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alexander Wulf",
+                    "email": "dev@alexfwulf.de",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Generate a new IDE Helper file for Laravel Actions.",
+            "homepage": "https://github.com/wulfheart/laravel-actions-ide-helper",
+            "keywords": [
+                "laravel",
+                "laravel-actions-ide-helper",
+                "wulfheart"
+            ],
+            "support": {
+                "issues": "https://github.com/Wulfheart/laravel-actions-ide-helper/issues",
+                "source": "https://github.com/Wulfheart/laravel-actions-ide-helper/tree/v0.10.0"
+            },
+            "time": "2025-03-04T08:42:27+00:00"
         }
     ],
     "aliases": [],
