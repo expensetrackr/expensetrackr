@@ -42,6 +42,8 @@ final readonly class CreateContactAction
      */
     public function handle(User $user): void
     {
+        self::rateLimit();
+
         try {
             [$firstName, $lastName] = $this->parseNameComponents($user->name);
             $this->resend->contacts->create(type(config('services.resend.audience_id'))->asString(), [
