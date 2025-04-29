@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "03715a432fe6d5d3bb827aa288708aa0",
+    "content-hash": "b06e0438fb6aaf919af3ee8d7c646f1d",
     "packages": [
         {
             "name": "afatmustafa/blade-hugeicons",
@@ -1066,16 +1066,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.342.35",
+            "version": "3.342.36",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "3fdb88961cf80775dbaf48a5641c9790d63d1d66"
+                "reference": "9a0ec6b6d503409ae15e090467d3bd6d723b6c6a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/3fdb88961cf80775dbaf48a5641c9790d63d1d66",
-                "reference": "3fdb88961cf80775dbaf48a5641c9790d63d1d66",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/9a0ec6b6d503409ae15e090467d3bd6d723b6c6a",
+                "reference": "9a0ec6b6d503409ae15e090467d3bd6d723b6c6a",
                 "shasum": ""
             },
             "require": {
@@ -1157,9 +1157,9 @@
             "support": {
                 "forum": "https://github.com/aws/aws-sdk-php/discussions",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.342.35"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.342.36"
             },
-            "time": "2025-04-25T18:09:39+00:00"
+            "time": "2025-04-28T18:01:39+00:00"
         },
         {
             "name": "bacon/bacon-qr-code",
@@ -6858,12 +6858,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nunomaduro/essentials.git",
-                "reference": "6b58123cf0d0e8717e6ccde9ee9f841e472c4091"
+                "reference": "1bd3e89209ed6714dfadc76fbc99f4a1e2211973"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nunomaduro/essentials/zipball/6b58123cf0d0e8717e6ccde9ee9f841e472c4091",
-                "reference": "6b58123cf0d0e8717e6ccde9ee9f841e472c4091",
+                "url": "https://api.github.com/repos/nunomaduro/essentials/zipball/1bd3e89209ed6714dfadc76fbc99f4a1e2211973",
+                "reference": "1bd3e89209ed6714dfadc76fbc99f4a1e2211973",
                 "shasum": ""
             },
             "require": {
@@ -6929,7 +6929,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2025-04-24T20:13:10+00:00"
+            "time": "2025-04-29T10:54:37+00:00"
         },
         {
             "name": "nunomaduro/termwind",
@@ -8735,6 +8735,63 @@
                 }
             ],
             "time": "2024-04-27T21:32:50+00:00"
+        },
+        {
+            "name": "resend/resend-php",
+            "version": "v0.17.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/resend/resend-php.git",
+                "reference": "e772153ac74b05ba72ce4d0f96d61418f48ebb3d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/resend/resend-php/zipball/e772153ac74b05ba72ce4d0f96d61418f48ebb3d",
+                "reference": "e772153ac74b05ba72ce4d0f96d61418f48ebb3d",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^7.5",
+                "php": "^8.1.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.13",
+                "mockery/mockery": "^1.6",
+                "pestphp/pest": "^2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/Resend.php"
+                ],
+                "psr-4": {
+                    "Resend\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Resend and contributors",
+                    "homepage": "https://github.com/resend/resend-php/contributors"
+                }
+            ],
+            "description": "Resend PHP library.",
+            "homepage": "https://resend.com/",
+            "keywords": [
+                "api",
+                "client",
+                "php",
+                "resend",
+                "sdk"
+            ],
+            "support": {
+                "issues": "https://github.com/resend/resend-php/issues",
+                "source": "https://github.com/resend/resend-php/tree/v0.17.0"
+            },
+            "time": "2025-04-23T20:24:02+00:00"
         },
         {
             "name": "revolt/event-loop",
@@ -14195,16 +14252,16 @@
         },
         {
             "name": "myclabs/deep-copy",
-            "version": "1.13.0",
+            "version": "1.13.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/DeepCopy.git",
-                "reference": "024473a478be9df5fdaca2c793f2232fe788e414"
+                "reference": "1720ddd719e16cf0db4eb1c6eca108031636d46c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/024473a478be9df5fdaca2c793f2232fe788e414",
-                "reference": "024473a478be9df5fdaca2c793f2232fe788e414",
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/1720ddd719e16cf0db4eb1c6eca108031636d46c",
+                "reference": "1720ddd719e16cf0db4eb1c6eca108031636d46c",
                 "shasum": ""
             },
             "require": {
@@ -14243,7 +14300,7 @@
             ],
             "support": {
                 "issues": "https://github.com/myclabs/DeepCopy/issues",
-                "source": "https://github.com/myclabs/DeepCopy/tree/1.13.0"
+                "source": "https://github.com/myclabs/DeepCopy/tree/1.13.1"
             },
             "funding": [
                 {
@@ -14251,7 +14308,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-02-12T12:17:51+00:00"
+            "time": "2025-04-29T12:36:36+00:00"
         },
         {
             "name": "nunomaduro/collision",
