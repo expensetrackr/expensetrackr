@@ -16,6 +16,16 @@ type AppLayoutProps = PageProps<{
     childrenWrapperClassName?: string;
 }>;
 
+/**
+ * Provides the main application layout with sidebar, header, and content area, handling toast notifications and conditional UI elements based on permissions.
+ *
+ * @param children - The content to render within the layout.
+ * @param defaultCollapsed - Whether the sidebar should be collapsed by default.
+ * @param childrenWrapperClassName - Additional CSS classes for the content wrapper.
+ *
+ * @remark
+ * Displays toast notifications when the {@link props.toast} prop changes. Conditionally renders account and transaction drawers based on user permissions.
+ */
 export function AppLayout({ children, defaultCollapsed = false, childrenWrapperClassName, ...props }: AppLayoutProps) {
     React.useEffect(() => {
         if (props.toast?.type) {

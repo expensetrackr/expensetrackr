@@ -11,6 +11,16 @@ type WorkspaceSettingsFormProps = {
     defaultValues: App.Data.Workspace.WorkspaceSettingsData;
 };
 
+/**
+ * Renders a form for updating workspace settings, including toggling transaction enrichment.
+ *
+ * Displays current workspace settings and allows users with an active subscription to enable or disable transaction enrichment. Submits changes via Inertia.js and provides success or error notifications.
+ *
+ * @param workspaceId - The unique identifier of the workspace being updated.
+ * @param defaultValues - The initial settings data for the workspace.
+ *
+ * @remark The transaction enrichment option is only available to subscribed users. All enrichment is performed in English.
+ */
 export function WorkspaceSettingsForm({ workspaceId, defaultValues }: WorkspaceSettingsFormProps) {
     const form = useForm(defaultValues);
     const user = useUser();

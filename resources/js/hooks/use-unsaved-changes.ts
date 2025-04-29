@@ -12,6 +12,15 @@ interface UseUnsavedChangesProps<TForm extends Record<string, FormDataConvertibl
     onCancel?: () => void;
 }
 
+/**
+ * Displays a persistent toast notification when the form has unsaved changes, allowing users to cancel or save their changes.
+ *
+ * @param form - The Inertia form object being monitored for unsaved changes.
+ * @param formId - The unique identifier for the form, used to associate the save action.
+ * @param onCancel - Optional callback invoked when the user cancels unsaved changes.
+ *
+ * @returns An object with a `dismissUnsavedChanges` function to programmatically close the unsaved changes notification.
+ */
 export function useUnsavedChanges<TForm extends Record<string, FormDataConvertible>>({
     form,
     formId,
