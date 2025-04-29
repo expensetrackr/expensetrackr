@@ -6,6 +6,9 @@ namespace App\Observers;
 
 use App\Models\User;
 use App\Utilities\Workspaces\WorkspaceFeatures;
+use Exception;
+use Illuminate\Support\Facades\Log;
+use Resend;
 
 final class UserObserver
 {
@@ -28,6 +31,24 @@ final class UserObserver
             ]);
 
             $user->assignRole('workspace admin');
+        }
+
+        $resend = Resend::client(type(config('services.resend.key'))->asString());
+
+        try {
+            $resend->contacts->create(type(config('services.resend.audience_id'))->asString(), [
+                'id' => $user->id,
+                'email' => $user->email,
+                'first_name' => $user->name ? trim(strtok($user->name, ' ')) : '', ,
+                'last_name' => $user->name ? trim(mb_substr($user->name, mb_strlen(strtok($user->name, ' ')))) : '',
+                'unsubscribed' => false,
+                'created_at' => now()->toString(),
+            ]);
+        } catch (Exception $e) {
+            Log::error('Failed to create Resend contact for user', [
+                'user_id' => $user->id,
+                'error' => $e->getMessage(),
+            ]);
         }
     }
 }
