@@ -41,7 +41,7 @@
         "meilisearch/meilisearch-php": "1.14.0",
         "nunomaduro/essentials": "@dev",
         "pinkary-project/type-guard": "0.1.0",
-        "resend/resend-php": "0.17.0",
+        "resend/resend-laravel": "0.18.0",
         "sentry/sentry-laravel": "4.13.0",
         "spatie/enum": "3.13.0",
         "spatie/laravel-data": "4.15.1",

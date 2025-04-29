@@ -6,6 +6,7 @@ namespace App\Observers;
 
 use App\Models\User;
 use App\Utilities\Workspaces\WorkspaceFeatures;
+use Resend;
 
 final class UserObserver
 {
@@ -29,5 +30,15 @@ final class UserObserver
 
             $user->assignRole('workspace admin');
         }
+
+        $resend = Resend::client(type(config('services.resend.key'))->asString());
+        $resend->contacts->create(type(config('services.resend.audience_id'))->asString(), [
+            'id' => $user->id,
+            'email' => $user->email,
+            'first_name' => explode(' ', $user->name ?? '')[0] ?? '',
+            'last_name' => explode(' ', $user->name ?? '')[1] ?? '',
+            'unsubscribed' => false,
+            'created_at' => now()->toString(),
+        ]);
     }
 }
