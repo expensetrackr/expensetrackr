@@ -5,7 +5,7 @@ type SourceProps = UnpicSourceProps & {
 };
 
 export function Source({ isCdn, ...props }: SourceProps) {
-    const src = props.src.startsWith("http") ? `${ENV.APP_URL}/${props.src}` : `${ENV.APP_URL}${props.src}`;
+    const src = props.src.startsWith("http") ? props.src : `${ENV.APP_URL}${props.src}`;
 
     return (
         <UnpicSource
