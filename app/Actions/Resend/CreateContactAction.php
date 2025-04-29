@@ -38,8 +38,15 @@ final readonly class CreateContactAction
             ]);
 
             return true;
-        } catch (Exception $e) {
+        } catch (Resend\Exceptions\ErrorException $e) {
             Log::error('Failed to create Resend contact for user', [
+                'user_id' => $user->id,
+                'error' => $e->getMessage(),
+            ]);
+
+            return false;
+        } catch (Exception $e) {
+            Log::error('Unexpected error creating Resend contact', [
                 'user_id' => $user->id,
                 'error' => $e->getMessage(),
             ]);
