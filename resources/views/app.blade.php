@@ -5,7 +5,7 @@
 >
     <head>
         <meta charset="utf-8" />
-        <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport" />
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" name="viewport" />
 
         <title inertia>{{ config('app.name') }} - Manage your expenses effortlessly</title>
 
