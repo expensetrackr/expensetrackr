@@ -69,13 +69,20 @@ final class ProcessRecurringTransactionsCommand extends Command
         // Convert to CarbonImmutable since calculateNextDate expects it
         $lastDate = CarbonImmutable::parse($lastDate);
 
-        // If this is the first occurrence and we have a start date
-        $nextDate = ($transaction->recurring_start_at && $transaction->recurringChildren->isEmpty())
-            ? CarbonImmutable::parse($transaction->recurring_start_at)
-            : $this->calculateNextDate($lastDate, $transaction->recurring_interval);
+        // Calculate the next date based on the interval
+        $nextDate = $this->calculateNextDate($lastDate, $transaction->recurring_interval);
 
         // If next date is in the future, skip
         if ($nextDate->isAfter($now)) {
+            return;
+        }
+
+        // Check if a transaction already exists for this date
+        $existingTransaction = $transaction->recurringChildren()
+            ->where('dated_at', $nextDate)
+            ->exists();
+
+        if ($existingTransaction) {
             return;
         }
 
@@ -93,8 +100,12 @@ final class ProcessRecurringTransactionsCommand extends Command
 
         // Clear the recurring_start_date as it's only needed on the parent
         $newTransaction->recurring_start_at = null;
+        $newTransaction->is_recurring = false; // Child transactions should not be recurring themselves
 
         $newTransaction->save();
+
+        // Process next occurrence if needed (for cases where multiple occurrences are due)
+        $this->processRecurringTransaction($transaction);
     }
 
     /**
