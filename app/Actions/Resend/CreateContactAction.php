@@ -54,9 +54,23 @@ final readonly class CreateContactAction
 
             return true;
         } catch (Resend\Exceptions\ErrorException $e) {
+            // Handle specific API errors like rate limits
+            $message = $e->getMessage();
+            $isRateLimit = str_contains($message, 'rate limit') || $e->getCode() === 429;
+
+            if ($isRateLimit) {
+                Log::warning('Rate limit reached when creating Resend contact', [
+                    'user_id' => $user->id,
+                    'error' => $message,
+                ]);
+
+                // Could retry after a delay or queue for later
+                return false;
+            }
+
             Log::error('Failed to create Resend contact for user', [
                 'user_id' => $user->id,
-                'error' => $e->getMessage(),
+                'error' => $message,
             ]);
 
             return false;
