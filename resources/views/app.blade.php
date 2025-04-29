@@ -101,10 +101,15 @@
         </script>
         <script
             defer
-            src="https://events.danestves.com/script.js"
-            data-website-id="cede84d1-d5d3-4195-be43-8041e8eb0547"
-            data-exclude-search="true"
-            data-do-not-track="true"
+            data-domain="expensetrackr.app"
+            src="https://athena.danestves.com/js/script.file-downloads.hash.outbound-links.pageview-props.tagged-events.js"
         ></script>
+        <script>
+            window.plausible =
+                window.plausible ||
+                function () {
+                    (window.plausible.q = window.plausible.q || []).push(arguments);
+                };
+        </script>
     </body>
 </html>
