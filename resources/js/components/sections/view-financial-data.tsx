@@ -57,10 +57,10 @@ export function ViewFinancialDataSection() {
                     })}
                     className="relative pt-16"
                 >
-                    <div className="mx-auto max-w-7xl px-6 lg:px-8">
+                    <div className="mx-auto max-w-7xl px-6 pt-4 lg:px-8">
                         <Image
                             alt="Dashboard Transactions"
-                            className="mb-[-12%] rounded-12 pt-4 shadow-2xl outline outline-(--stroke-soft-200)"
+                            className="mb-[-12%] rounded-12 shadow-2xl outline outline-(--stroke-soft-200)"
                             height={2118}
                             isCdn
                             src="/img/transactions-showcase.png"
