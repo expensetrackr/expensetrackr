@@ -7,6 +7,7 @@ namespace App\Actions\Resend;
 use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\RateLimiter;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Resend;
 
@@ -19,6 +20,20 @@ final readonly class CreateContactAction
     public function __construct(?Resend\Client $resend = null)
     {
         $this->resend = $resend ?? resolve(Resend\Client::class);
+    }
+
+    /**
+     * Rate limit Resend contact creation (1 call per second).
+     */
+    public static function rateLimit(): void
+    {
+        $key = 'resend-contact-create';
+        $maxAttempts = 1;
+        $decaySeconds = 1;
+        while (RateLimiter::tooManyAttempts($key, $maxAttempts)) {
+            usleep(250000); // Sleep for 250ms before checking again
+        }
+        RateLimiter::hit($key, $decaySeconds);
     }
 
     /**

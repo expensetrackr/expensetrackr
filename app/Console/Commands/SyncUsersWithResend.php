@@ -42,10 +42,10 @@ final class SyncUsersWithResend extends Command
             $existingUser = $resendUsers->firstWhere('email', $user->email);
 
             if (empty($existingUser)) {
+                $action->rateLimit();
                 $action->handle($user);
 
                 Log::info("Created Resend user: {$user->email}");
-                sleep(1);
             }
 
             $this->output->progressAdvance();

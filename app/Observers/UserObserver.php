@@ -36,6 +36,7 @@ final class UserObserver
             $user->assignRole('workspace admin');
         }
 
+        $this->createContactAction->rateLimit();
         $this->createContactAction->handle($user);
     }
 }
