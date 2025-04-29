@@ -23,8 +23,10 @@ final class CreateResendContactJob implements ShouldQueue
 
     /**
      * The number of seconds to wait before retrying the job.
+     *
+     * @var int|array<int>
      */
-    public int $backoff = 60;
+    public int|array $backoff = [10, 30, 60];
 
     public function __construct(public int $userId) {}
 
