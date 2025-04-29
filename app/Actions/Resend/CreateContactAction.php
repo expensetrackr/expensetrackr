@@ -24,7 +24,7 @@ final readonly class CreateContactAction
     /**
      * Execute the action.
      */
-    public function handle(User $user): void
+    public function handle(User $user): bool
     {
         try {
             [$firstName, $lastName] = $this->parseNameComponents($user->name);
@@ -36,11 +36,15 @@ final readonly class CreateContactAction
                 'unsubscribed' => false,
                 'created_at' => now()->toString(),
             ]);
+
+            return true;
         } catch (Exception $e) {
             Log::error('Failed to create Resend contact for user', [
                 'user_id' => $user->id,
                 'error' => $e->getMessage(),
             ]);
+
+            return false;
         }
     }
 
