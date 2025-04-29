@@ -12,6 +12,7 @@ interface Props {
 
 export default function TermsOfService({ terms, excerpt }: Props) {
     const title = "Terms of Service";
+
     return (
         <>
             <Head title={title}>
