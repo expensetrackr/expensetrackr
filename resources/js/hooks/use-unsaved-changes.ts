@@ -28,7 +28,7 @@ export function useUnsavedChanges<TForm extends Record<string, FormDataConvertib
                 id: "unsaved-changes",
                 duration: Infinity,
                 position: "bottom-center",
-                className: "stroke",
+                richColors: false,
                 cancel: React.createElement(Button, {
                     $size: "xs",
                     $style: "stroke",

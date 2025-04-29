@@ -17,7 +17,6 @@ export function GuestLayout({
             toast[props.toast.type](props.toast.title, {
                 description: props.toast.description,
                 duration: props.toast.duration ?? 5000,
-                className: "filled",
             });
         }
     }, [props.toast]);

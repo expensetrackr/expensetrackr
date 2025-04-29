@@ -21,8 +21,7 @@ export function AppLayout({ children, defaultCollapsed = false, childrenWrapperC
         if (props.toast?.type) {
             toast[props.toast.type](props.toast.title, {
                 description: props.toast.description,
-                duration: props.toast.duration ?? 5000,  // e.g. 5 s default or adjust as needed
-                className: "filled",
+                duration: props.toast.duration ?? 5000,
             });
         }
     }, [props.toast]);

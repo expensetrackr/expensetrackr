@@ -36,7 +36,6 @@ export default function SettingsShow() {
             onSuccess: () => {
                 toast.success("Profile updated.", {
                     id: "profile-updated",
-                    className: "filled",
                 });
                 dismissUnsavedChanges();
             },

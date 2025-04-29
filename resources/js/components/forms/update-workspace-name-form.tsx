@@ -30,14 +30,12 @@ export function UpdateWorkspaceNameForm({ defaultValues, permissions }: UpdateWo
             onSuccess: () => {
                 toast.success("Workspace name updated.", {
                     id: "workspace-name-update-success",
-                    className: "filled",
                 });
                 dismissUnsavedChanges();
             },
             onError: () => {
                 toast.error("Failed to update workspace name.", {
                     id: "workspace-name-update-error",
-                    className: "filled",
                 });
                 form.reset();
             },
