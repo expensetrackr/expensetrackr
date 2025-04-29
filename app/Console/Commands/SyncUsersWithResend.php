@@ -31,9 +31,12 @@ final class SyncUsersWithResend extends Command
      */
     public function handle(CreateContactAction $action)
     {
+        $syncedCount = 0;
         $users = User::all();
         $resend = Resend::client(type(config('services.resend.key'))->asString());
         $resendUsers = collect($resend->contacts->list(type(config('services.resend.audience_id'))->asString()));
+
+        $this->output->progressStart(count($users));
 
         foreach ($users as $user) {
             $existingUser = $resendUsers->firstWhere('email', $user->email);
@@ -45,8 +48,12 @@ final class SyncUsersWithResend extends Command
                 sleep(1);
             }
 
+            $this->output->progressAdvance();
+            $syncedCount++;
         }
 
-        Log::info('Users synced with Resend');
+        $this->output->progressFinish();
+
+        $this->info("{$syncedCount} users synced with Resend");
     }
 }
