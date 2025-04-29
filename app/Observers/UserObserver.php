@@ -32,13 +32,29 @@ final class UserObserver
         }
 
         $resend = Resend::client(type(config('services.resend.key'))->asString());
-        $resend->contacts->create(type(config('services.resend.audience_id'))->asString(), [
-            'id' => $user->id,
-            'email' => $user->email,
-            'first_name' => explode(' ', $user->name ?? '')[0] ?? '',
-            'last_name' => explode(' ', $user->name ?? '')[1] ?? '',
-            'unsubscribed' => false,
-            'created_at' => now()->toString(),
-        ]);
+-       $resend->contacts->create(type(config('services.resend.audience_id'))->asString(), [
+-           'id' => $user->id,
+-           'email' => $user->email,
+-           'first_name' => explode(' ', $user->name ?? '')[0] ?? '',
+-           'last_name' => explode(' ', $user->name ?? '')[1] ?? '',
+-           'unsubscribed' => false,
+-           'created_at' => now()->toString(),
+-       ]);
++       try {
++           $resend->contacts->create(type(config('services.resend.audience_id'))->asString(), [
++               'id' => $user->id,
++               'email' => $user->email,
++               'first_name' => explode(' ', $user->name ?? '')[0] ?? '',
++               'last_name' => explode(' ', $user->name ?? '')[1] ?? '',
++               'unsubscribed' => false,
++               'created_at' => now()->toString(),
++           ]);
++       } catch (\Exception $e) {
++           // Log error but don't disrupt user creation
++           logger()->error('Failed to create Resend contact for user', [
++               'user_id' => $user->id,
++               'error' => $e->getMessage(),
++           ]);
++       }
     }
 }
