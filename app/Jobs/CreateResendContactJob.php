@@ -30,9 +30,9 @@ final class CreateResendContactJob implements ShouldQueue
 
     public function handle(CreateContactAction $action): void
     {
-        $user = User::find($this->userId)->first();
+        $user = User::find($this->userId);
 
-        if ($user) {
+        if ($user instanceof User) {
             $action->handle($user);
         }
     }

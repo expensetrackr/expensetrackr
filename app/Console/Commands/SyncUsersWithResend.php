@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
-use App\Actions\Resend\CreateContactAction;
 use App\Jobs\CreateResendContactJob;
 use App\Models\User;
 use Illuminate\Console\Command;
@@ -30,7 +29,7 @@ final class SyncUsersWithResend extends Command
     /**
      * Execute the console command.
      */
-    public function handle(CreateContactAction $action)
+    public function handle()
     {
         $syncedCount = 0;
         $users = User::all();
