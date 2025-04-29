@@ -289,24 +289,26 @@ function PlanButton({ interval, plan }: { interval: string; plan: Plan }) {
                 plan.isFeatured && "bg-white text-primary hover:bg-brand-primary-600 hover:text-white",
             )}
         >
-            <Link
-                href={
-                    plan.code === "enterprise"
-                        ? "mailto:sales@expensetrackr.app"
-                        : !user
-                          ? routes.register.url()
-                          : routes.subscribe.url({
-                                query: {
-                                    product_id:
-                                        plan.productPriceId.onetime ||
-                                        plan.productPriceId[interval as keyof typeof plan.productPriceId],
-                                    code: plan.code,
-                                },
-                            })
-                }
-            >
-                {t(`pricing.${plan.code}.button_label`)}
-            </Link>
+            {plan.code === "enterprise" || user ? (
+                <a
+                    href={
+                        plan.code === "enterprise"
+                            ? "mailto:sales@expensetrackr.app"
+                            : routes.subscribe.url({
+                                  query: {
+                                      product_id:
+                                          plan.productPriceId.onetime ||
+                                          plan.productPriceId[interval as keyof typeof plan.productPriceId],
+                                      code: plan.code,
+                                  },
+                              })
+                    }
+                >
+                    {t(`pricing.${plan.code}.button_label`)}
+                </a>
+            ) : (
+                <Link href={routes.register.url()}>{t(`pricing.${plan.code}.button_label`)}</Link>
+            )}
         </Button.Root>
     );
 }
