@@ -7,12 +7,26 @@ import { type PageProps } from "#/types/globals.js";
 
 interface Props {
     terms: string;
+    excerpt: string;
 }
 
-export default function TermsOfService({ terms }: Props) {
+export default function TermsOfService({ terms, excerpt }: Props) {
+    const title = "Terms of Service";
     return (
         <>
-            <Head title="Terms of Service">
+            <Head title={title}>
+                {/* Primary Tags */}
+                <meta content={`${title} - ${ENV.APP_NAME}`} head-key="title" name="title" />
+                <meta content={excerpt} head-key="description" name="description" />
+
+                {/* Open Graph */}
+                <meta content={title} head-key="og:title" property="og:title" />
+                <meta content={excerpt} head-key="og:description" property="og:description" />
+
+                {/* Twitter */}
+                <meta content={title} head-key="twitter:title" property="twitter:title" />
+                <meta content={excerpt} head-key="twitter:description" property="twitter:description" />
+
                 <script
                     dangerouslySetInnerHTML={{
                         __html: JSON.stringify({

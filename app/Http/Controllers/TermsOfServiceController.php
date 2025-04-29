@@ -16,9 +16,12 @@ final class TermsOfServiceController extends Controller
     public function show(): Response
     {
         $termsFile = type(localizedMarkdownPath('terms.md'))->asString();
+        $content = Str::markdown(type(file_get_contents($termsFile))->asString());
+        $excerpt = Str::excerpt($content);
 
         return Inertia::render('terms-of-service', [
-            'terms' => Str::markdown(type(file_get_contents($termsFile))->asString()),
+            'terms' => $content,
+            'excerpt' => $excerpt,
         ]);
     }
 }

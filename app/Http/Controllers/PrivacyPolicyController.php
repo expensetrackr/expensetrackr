@@ -16,9 +16,12 @@ final class PrivacyPolicyController extends Controller
     public function show(): Response
     {
         $policyFile = type(localizedMarkdownPath('policy.md'))->asString();
+        $content = Str::markdown(type(file_get_contents($policyFile))->asString());
+        $excerpt = Str::excerpt($content);
 
         return Inertia::render('privacy-policy', [
-            'policy' => Str::markdown(type(file_get_contents($policyFile))->asString()),
+            'policy' => $content,
+            'excerpt' => $excerpt,
         ]);
     }
 }

@@ -7,12 +7,28 @@ import { type PageProps } from "#/types/globals.js";
 
 interface Props {
     policy: string;
+    excerpt: string;
 }
 
-export default function PrivacyPolicy({ policy }: Props) {
+export default function PrivacyPolicy({ policy, excerpt }: Props) {
+    const title = "Privacy Policy";
     return (
         <>
-            <Head title="Privacy Policy">
+            <Head title={title}>
+                <Head title={title}>
+                    {/* Primary Tags */}
+                    <meta content={`${title} - ${ENV.APP_NAME}`} head-key="title" name="title" />
+                    <meta content={excerpt} head-key="description" name="description" />
+
+                    {/* Open Graph */}
+                    <meta content={title} head-key="og:title" property="og:title" />
+                    <meta content={excerpt} head-key="og:description" property="og:description" />
+
+                    {/* Twitter */}
+                    <meta content={title} head-key="twitter:title" property="twitter:title" />
+                    <meta content={excerpt} head-key="twitter:description" property="twitter:description" />
+                </Head>
+
                 <script
                     dangerouslySetInnerHTML={{
                         __html: JSON.stringify({
