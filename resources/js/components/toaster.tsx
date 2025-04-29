@@ -6,6 +6,12 @@ import InformationCircleSolidIcon from "virtual:icons/hugeicons/information-circ
 
 import { cn } from "#/utils/cn.ts";
 
+/**
+ * Renders a customized toast notification system using the Sonner component with tailored icons and styles for different toast types.
+ *
+ * @remarks
+ * Applies conditional styling based on the `richColors` mode and toast type using data attributes, enabling distinct visual themes for error, warning, success, and info toasts.
+ */
 export function Toaster(props: SonnerProps) {
     return (
         <Sonner
