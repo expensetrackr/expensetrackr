@@ -8,6 +8,7 @@ use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
+use Resend;
 
 final class AppServiceProvider extends ServiceProvider
 {
@@ -25,5 +26,7 @@ final class AppServiceProvider extends ServiceProvider
 
         // @phpstan-ignore offsetAccess.nonOffsetAccessible, property.nonObject, method.nonObject
         $this->app['request']->server->set('HTTPS', 'on');
+
+        $this->app->singleton(Resend\Client::class, fn ($app) => Resend::client(type(config('services.resend.key'))->asString()));
     }
 }

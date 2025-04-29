@@ -18,7 +18,7 @@ final readonly class CreateContactAction
 
     public function __construct(?Resend\Client $resend = null)
     {
-        $this->resend = $resend ?? Resend::client(type(config('services.resend.key'))->asString());
+        $this->resend = $resend ?? resolve(Resend\Client::class);
     }
 
     /**
