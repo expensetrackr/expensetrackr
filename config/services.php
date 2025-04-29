@@ -63,4 +63,12 @@ return [
         'access_token' => env('SYNTH_ACCESS_TOKEN'),
         'base_url' => 'https://api.synthfinance.com',
     ],
+
+    'polar' => [
+        'products' => [
+            'monthly' => '42d54e49-6f94-4e90-a137-e850d38ee5c7',
+            'yearly' => '88978e70-3cae-479f-a6f9-d6864205b020',
+            'lifetime' => 'c969cccd-95cc-4c0c-b7a4-721a61d63e4b',
+        ],
+    ],
 ];

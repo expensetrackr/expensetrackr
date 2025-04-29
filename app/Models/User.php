@@ -143,7 +143,7 @@ final class User extends Authenticatable implements FilamentUser, HasAvatar
         }
 
         return match (true) {
-            is_string($productId) && $productId !== '' => $this->hasPurchasedProduct($productId),
+            $this->hasPurchasedProduct($productId ?? config('services.polar.products.lifetime')) => true,
             default => $this->subscribed(),
         };
     }
