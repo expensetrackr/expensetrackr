@@ -1,5 +1,4 @@
 import { useForm } from "@inertiajs/react";
-import { resolveCurrencyFormat } from "@sumup/intl";
 import { useQueries } from "@tanstack/react-query";
 import { CurrencyInput } from "headless-currency-input";
 import * as React from "react";
@@ -24,7 +23,6 @@ import { DatePicker } from "../ui/form/date-picker.tsx";
 import { SelectField } from "../ui/form/select-field.tsx";
 import { TextField } from "../ui/form/text-field.tsx";
 import { Textarea } from "../ui/form/textarea.tsx";
-import * as Input from "../ui/input.tsx";
 import * as Label from "../ui/label.tsx";
 import * as Switch from "../ui/switch.tsx";
 
@@ -84,7 +82,6 @@ export function CreateTransactionDrawer() {
         category_id: "",
     });
     const { t, language } = useTranslation();
-    const currencyFormat = resolveCurrencyFormat(language, form.data.currency || "USD");
 
     /**
      * This is a workaround to update the form data when the accounts are fetched.
@@ -200,10 +197,14 @@ export function CreateTransactionDrawer() {
                                     currency={form.data.currency}
                                     customInput={TextField}
                                     error={form.errors.amount}
-                                    inlineLeadingNode={
-                                        <Input.InlineAffix>{currencyFormat?.currencySymbol}</Input.InlineAffix>
-                                    }
                                     label="Amount"
+                                    leadingNode={
+                                        <CurrencySelect
+                                            currencies={currencies ?? []}
+                                            onValueChange={(value) => form.setData("currency", value)}
+                                            value={form.data.currency}
+                                        />
+                                    }
                                     name="amount"
                                     onValueChange={(values) =>
                                         form.setData(
@@ -212,13 +213,6 @@ export function CreateTransactionDrawer() {
                                         )
                                     }
                                     placeholder="e.g. 1.00"
-                                    trailingNode={
-                                        <CurrencySelect
-                                            currencies={currencies ?? []}
-                                            onValueChange={(value) => form.setData("currency", value)}
-                                            value={form.data.currency}
-                                        />
-                                    }
                                     value={form.data.amount}
                                     withCurrencySymbol={false}
                                 />
