@@ -30,8 +30,8 @@ export const plans: Array<Plan> = [
         code: "personal",
         img: "/img/personal-plan.png",
         price: {
-            monthly: 14.99,
-            yearly: 8.33,
+            monthly: 29.99,
+            yearly: 249.99 / 12,
             onetime: null,
         },
         productPriceId: {
@@ -49,7 +49,7 @@ export const plans: Array<Plan> = [
         price: {
             monthly: null,
             yearly: null,
-            onetime: 269.99,
+            onetime: 629.99,
         },
         productPriceId: {
             monthly: null,
