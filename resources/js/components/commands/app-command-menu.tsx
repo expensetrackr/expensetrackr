@@ -17,7 +17,9 @@ import * as CompactButton from "#/components/ui/compact-button.tsx";
 import { useActionsParams } from "#/hooks/use-actions-params.ts";
 import { useBankProvider } from "#/hooks/use-bank-provider.ts";
 import { useCommandMenuParams } from "#/hooks/use-command-menu-params.ts";
+import { useFeaturesAndPermissions } from "#/hooks/use-features-and-permissions.ts";
 import { useTranslation } from "#/hooks/use-translation.ts";
+import { useUser } from "#/hooks/use-user.ts";
 import { routes } from "#/routes.ts";
 import { AccountTypeEnum } from "#/schemas/account.ts";
 import { useCommandMenuStore } from "#/store/command-menu.ts";
@@ -126,6 +128,8 @@ function Home() {
     const actions = useActionsParams();
     const { toggleOpen } = useCommandMenuStore();
     const { t } = useTranslation();
+    const user = useUser();
+    const { permissions } = useFeaturesAndPermissions();
 
     const handleSelectAction = async (action: string, resource: string, params?: Record<string, string>) => {
         await actions.setParams({ action, resource, ...params });
@@ -135,36 +139,44 @@ function Home() {
     return (
         <>
             <CommandMenu.Group heading="Quick Actions">
-                <CommandMenu.Item onSelect={() => setParams({ commandPage: "institution" })}>
-                    <CommandMenu.ItemIcon as={ConnectIcon} />
-                    Connect your bank account
-                </CommandMenu.Item>
-                <CommandMenu.Item onSelect={() => handleSelectAction("create", "accounts")}>
-                    <CommandMenu.ItemIcon as={LicenseDraftIcon} />
-                    Create a new account
-                </CommandMenu.Item>
-                <CommandMenu.Item onSelect={() => handleSelectAction("create", "transactions")}>
-                    <CommandMenu.ItemIcon as={ArrowLeftRightIcon} />
-                    Create a transaction
-                </CommandMenu.Item>
+                {user?.isSubscribed && (
+                    <CommandMenu.Item onSelect={() => setParams({ commandPage: "institution" })}>
+                        <CommandMenu.ItemIcon as={ConnectIcon} />
+                        Connect your bank account
+                    </CommandMenu.Item>
+                )}
+                {permissions.canCreateAccounts && (
+                    <CommandMenu.Item onSelect={() => handleSelectAction("create", "accounts")}>
+                        <CommandMenu.ItemIcon as={LicenseDraftIcon} />
+                        Create a new account
+                    </CommandMenu.Item>
+                )}
+                {permissions.canCreateTransactions && (
+                    <CommandMenu.Item onSelect={() => handleSelectAction("create", "transactions")}>
+                        <CommandMenu.ItemIcon as={ArrowLeftRightIcon} />
+                        Create a transaction
+                    </CommandMenu.Item>
+                )}
             </CommandMenu.Group>
 
-            <CommandMenu.Group heading="Manually create an account">
-                {AccountTypeEnum.options.map((option) => (
-                    <CommandMenu.Item
-                        key={option}
-                        onSelect={async () => handleSelectAction("create", "accounts", { accountType: option })}
-                    >
-                        <CommandMenu.ItemIcon
-                            accountType={option}
-                            as={AccountTypeIcon}
-                            className="text-(--color-account-type)"
-                            style={{ "--color-account-type": accountTypeColors[option] }}
-                        />
-                        {t(`account.type.${option}`)}
-                    </CommandMenu.Item>
-                ))}
-            </CommandMenu.Group>
+            {permissions.canCreateAccounts && (
+                <CommandMenu.Group heading="Manually create an account">
+                    {AccountTypeEnum.options.map((option) => (
+                        <CommandMenu.Item
+                            key={option}
+                            onSelect={async () => handleSelectAction("create", "accounts", { accountType: option })}
+                        >
+                            <CommandMenu.ItemIcon
+                                accountType={option}
+                                as={AccountTypeIcon}
+                                className="text-(--color-account-type)"
+                                style={{ "--color-account-type": accountTypeColors[option] }}
+                            />
+                            {t(`accounts.type.${option}`)}
+                        </CommandMenu.Item>
+                    ))}
+                </CommandMenu.Group>
+            )}
         </>
     );
 }
