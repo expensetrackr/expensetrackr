@@ -142,7 +142,6 @@ export function CreateAccountDrawer() {
                                         value: type,
                                     }))}
                                     placeholder="Select a type"
-                                    position="item-aligned"
                                     value={typeControl.value}
                                 />
 

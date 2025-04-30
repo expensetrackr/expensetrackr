@@ -48,6 +48,10 @@ export const BalanceSchema = v.variant("type", [
         ...BaseBalanceSchema.entries,
     }),
     v.object({
+        type: v.literal(AccountTypeEnum.enum.Crypto),
+        ...BaseBalanceSchema.entries,
+    }),
+    v.object({
         type: v.literal(AccountTypeEnum.enum.CreditCard),
         ...BaseBalanceSchema.entries,
         ...CreditCardDetailsSchema.entries,
@@ -56,6 +60,14 @@ export const BalanceSchema = v.variant("type", [
         type: v.literal(AccountTypeEnum.enum.Loan),
         ...BaseBalanceSchema.entries,
         ...LoanDetailsSchema.entries,
+    }),
+    v.object({
+        type: v.literal(AccountTypeEnum.enum.OtherAsset),
+        ...BaseBalanceSchema.entries,
+    }),
+    v.object({
+        type: v.literal(AccountTypeEnum.enum.OtherLiability),
+        ...BaseBalanceSchema.entries,
     }),
 ]);
 
