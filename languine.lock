@@ -289,6 +289,44 @@ files:
     type.loan: 9ad81a8f8a5c7a6ce9e1ba9bb4759391
     type.other_asset: 51b5ff3213e0f50897c1aa3aed586365
     type.other_liability: 84535bd64202709d38e235620b495a3e
+    form.name.label: 49ee3087348e8d44e1feda1917443987
+    form.name.placeholder: 1d8a73a53703905f53905f4302d3eaf8
+    form.description.label: b5a7adde1af5c87d7fd797b6245c2a39
+    form.description.placeholder: 926d7f903891cbc944f11890c95dc995
+    form.description.hint: 36df7911c1f920049684ce0042cc070e
+    form.description.labelSub: d9e6f34474be555a43262cfc6e2c1a8f
+    form.type.label: a1fa27779242b4902f7ae3bdd5c6d508
+    form.type.placeholder: 6cb57689f4bb0029f26938bdcd44c99f
+    form.subtype.label: 071b8782129749bf39aad727ecb26d79
+    form.subtype.labelSub: d9e6f34474be555a43262cfc6e2c1a8f
+    form.subtype.placeholder: 7a2acce088240f59bc0d3099b392c8c2
+    form.initial_balance.label: 3952bc855a33594bd0371fa31580e0ef
+    form.initial_balance.placeholder: 4571457f2443b28ab9d2cea5c0d4bdf4
+    form.available_balance.label: 16ad069644e4d2beb3a554007a0ebf7d
+    form.available_balance.placeholder: 4571457f2443b28ab9d2cea5c0d4bdf4
+    form.minimum_payment.label: f7b2f13820aabb7248ce58177b279305
+    form.minimum_payment.placeholder: 4571457f2443b28ab9d2cea5c0d4bdf4
+    form.apr.label: 400b07623925470b21ca55c3ce9913f4
+    form.apr.placeholder: d3d9446802a44259755d38e6d163e820
+    form.expires_at.label: 8d7f12bd0dc53389421144669ff4ee63
+    form.expires_at.labelSub: d9e6f34474be555a43262cfc6e2c1a8f
+    form.expires_at.placeholder: 64de260a0ad2c3d96dece47bb581b78e
+    form.annual_fee.label: 0d7d715d6bbc03a995a45d105a1797f6
+    form.annual_fee.placeholder: 4571457f2443b28ab9d2cea5c0d4bdf4
+    form.interest_rate.label: 7dfa44aee8e21e5967e2fde5a6b0cfa8
+    form.interest_rate.placeholder: 4571457f2443b28ab9d2cea5c0d4bdf4
+    form.interest_rate_type.label: c4f728963b6642da147d9753843ba035
+    form.interest_rate_type.placeholder: 131e62456d58b26683580f4f2ac12c93
+    form.term_months.label: a92ac988e36fc291cfc32fbf6243583f
+    form.term_months.placeholder: 642e92efb79421734881b53e1e1b18b6
+    create.title: 739405e73cc9f2e323506440d0883734
+    create.information: a82be0f551b8708bc08eb33cd9ded0cf
+    create.details: 3ec365dd533ddb7ef3d1c111186ce872
+    create.balance: 99a808d8d16122d70e44bd7f709d30fb
+    create.currency: 386c339d37e737a436499d423a77df0c
+    create.discard: d94b42030b9785fd754d5c1754961269
+    create.submit: 42369faa6a6b243aac58683f3874bf99
+    create.submit_loading: 29dfe0f071ce461d8f9d671d1864351b
   lang/en/dashboard.php:
     description: feef71f198fc7c8954357c0ffcd33c9c
     seo.title: 2938c7f7e560ed972f8a4f68e80ff834
@@ -304,6 +342,10 @@ files:
     accounts.detailsDrawer.actions.seeAllTransactions: 6e4af4b20939a2d46041d12c3d75dc8a
     accounts.detailsDrawer.actions.deleteAccount: e6e049c44a797fda2a175d07df838e49
   lang/en/pricing.php:
+    simple_pricing: 8a114627a3b13e5fc4a75258cd1e53ff
+    interval_label: 9ff27706bb71711200111b2df4ad63ca
+    suffix.monthly: e7aa5e6c37f5cabbb96b721ff5a15a28
+    suffix.yearly: 4d56d140f0f2f175783f3bc2ebe4c66b
     free.target_audience: e72bf2c6ad0d87fa0db910c62b03da83
     free.title: b24ce0cd392a5b0b8dedc66c25213594
     free.description: 3a01dedbc11a95a7e7f3d764f0a18925
@@ -322,5 +364,66 @@ files:
     enterprise.target_audience: 8d80b2cd7bb66616acd9b5a382ece66f
     enterprise.title: a0f27638260642afb474516cc918407e
     enterprise.description: f0281b1c143c22d13d8600a4bedd998c
+    enterprise.custom_price: 90589c47f06eb971d548591f23c285af
     enterprise.features: 1b735e8b9a81723603c2abf2e9d0a36b
     enterprise.button_label: 0fb8dd59a0bef75c0f2ec966582f227b
+    categories.connectivity-integrations.title: 3850ef8e231307b3e60e9846ceab71db
+    categories.connectivity-integrations.features.bank-account-connections: 6765d25649b70b0d81fac298f58965cd
+    categories.connectivity-integrations.features.automated-receipt-data-extraction: 7bbc113a6501f2c1ac6d4544681d8bd5
+    categories.connectivity-integrations.features.developer-api-access: 2495b5015b119a54d9a03b46cc2843ee
+    categories.comprehensive-tracking-management.title: 39257a6690698b64b948899ef16ac44b
+    categories.comprehensive-tracking-management.features.unlimited-expense-income-entries: c0b913dceebdf9b1a600ca923e8d37f2
+    categories.comprehensive-tracking-management.features.robust-budget-creation-tracking: 4828ae122e8e59035562726a607af31e
+    categories.comprehensive-tracking-management.features.effortless-investment-monitoring: c9b77930e7eac932bda13d2ae2577c3d
+    categories.comprehensive-tracking-management.features.complete-asset-management: 3213ddd14f99df991408371fe6c8a9ac
+    categories.comprehensive-tracking-management.features.smart-categorization-flexible-tagging: d720af07f617001011c55967365f1215
+    categories.comprehensive-tracking-management.features.automated-recurring-transactions: 7b7e434139bd22bf269f6529fb377aec
+    categories.comprehensive-tracking-management.features.multiple-currency-support: 2ab001ff3814d48eb7a27c4730e1c6f7
+    categories.data-insights.title: 2e8363bd75f025b66118a8bf4413194b
+    categories.data-insights.features.interactive-analytics-dashboards: f275714c625da602e1fe280bd153b1f8
+    categories.data-insights.features.advanced-financial-reporting: fc88ced2625eb2bc6d5fe363f3914a67
+    categories.data-insights.features.custom-report-generation: 1d48d0944eeaef57c19b5a06ba9e7b28
+    categories.organization-accessibility.title: 41633c4aba7d697a986f8f812c84d5bb
+    categories.organization-accessibility.features.manage-unlimited-financial-accounts: a33574f4cb85e62509a24ae7f259d5f7
+    categories.organization-accessibility.features.powerful-search-filtering-custom-views: a5ca6923d5699c0542ddef0d54ae7221
+    categories.organization-accessibility.features.secure-cross-device-sync: d5a6b165e9a87ef11d8aeb9fab2da846
+    categories.organization-accessibility.features.receipt-document-storage: 8064e50ab9d482b45136b95f4d778bef
+    categories.team-collaboration.title: 0f35a59a61a3e80f682f40471b75c813
+    categories.team-collaboration.features.dedicated-collaborative-workspaces: 127c3f84633ddeada070c0816c99aaf7
+    categories.team-collaboration.features.included-user-seats: dfd5c8b6f68575b8b079680f7ca97fa1
+    categories.security-enterprise-features.title: fa34a33b1ff6d67162bbc1c4b3597f5b
+    categories.security-enterprise-features.features.robust-security-features: b416ac4cd85e03f8e5557d45afd7ab9d
+    categories.security-enterprise-features.features.sso-authentication-support: 83810e9c4fc3ae7240c5b9f523287c96
+    categories.security-enterprise-features.features.sla: 4df7ec4e294d20e4ef543919fd7dd222
+    categories.support-service.title: cb982d60bfb60299619c4c655655099d
+    categories.support-service.features.comprehensive-help-center-community-access: 02c085d2ebc9de43ec3c1d0ec19c8053
+    categories.support-service.features.dedicated-email-support: 099bf7a5406cbfe58b98a1df861fc189
+    categories.support-service.features.dedicated-account-manager: 7490490d9384ddc15a18f740bdff6741
+    categories.billing-options.title: d5fe8c1820a49ce1a1c7ba871a52e947
+    categories.billing-options.features.monthly-billing: 82d480985f9abc274dfa0e6e3824b06e
+    categories.billing-options.features.annual-billing-discount: 52fb0133fa8b5a51e0bd198ce16d44ad
+    categories.billing-options.features.one-time-purchase-option: 23bdaa6dd24799dbd5105a62245ef92a
+    categories.billing-options.features.credit-card-payment: b27fa2c9836b0e0aca9dd6e1a27ac044
+    categories.billing-options.features.bank-transfer-payment-option: db6a9021c7dc16d36b630ea494870934
+  lang/en/changelog.php:
+    filament.image: be53a0541a6d36f6ecb879fa2c584b08
+    filament.title: b78a3223503896721cca1303f776159b
+    filament.slug: 0c908588520b3ef787bce443fc2b507c
+    filament.excerpt: 6ca8bf4766b9dc7b1ea8b69562faac3f
+    filament.content: f15c1cae7882448b3fb0404682e17e61
+    filament.published_at: 546c5d32ef08b819e70aa83d14352e44
+    filament.created_at: 5f2b9345f9bbd74079b99d6fcf461408
+    filament.updated_at: 2828427deab693d31b81c2dd7189d73e
+    filament.published_from: 479971f60925427352e324915e5842fb
+    filament.published_until: f1fc1ef2d157cec9f37c75d2363c6a4e
+    filament.model_label: c49182dc0c7a70b9cd2e10853d9ec6c7
+    filament.plural_model_label: 64512d3a39c4a8069f06998f2e63fd64
+  lang/en/errors.php:
+    403.title: 862ccdb877441b4a22a3b785150e6676
+    403.description: a244078081edcc28d3b3e8548d143413
+    404.title: 7ff35c1315ed83a92abb54664f837ea3
+    404.description: c77bd40403c498fb05318114322dc552
+    500.title: 583b73f4aadf91bd057bc7063647ad62
+    500.description: ab52d8783158fd97540c69266bc09f6c
+    503.title: b4458e26471db3f874f8d2010a14f7bb
+    503.description: ff349584817a3072b2ccf447c36e2082

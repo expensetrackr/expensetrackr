@@ -16,6 +16,7 @@ import { useTranslation } from "#/hooks/use-translation.ts";
 import { routes } from "#/routes.ts";
 import { AccountTypeEnum, SubtypeOptions } from "#/schemas/account.ts";
 import { type BalanceSchema, CreateAccountSchema, InterestRateTypeEnum } from "#/utils/steppers/create-account.step.ts";
+import { SubmitButton } from "../submit-button.tsx";
 import * as Button from "../ui/button.tsx";
 import * as Divider from "../ui/divider.tsx";
 import * as Drawer from "../ui/drawer.tsx";
@@ -29,7 +30,7 @@ import * as Select from "../ui/select.tsx";
 export function CreateAccountDrawer() {
     const actions = useActionsParams();
     const isOpen = actions.action === "create" && actions.resource === "accounts";
-    const { transform, post } = useInertiaForm();
+    const { transform, post, processing: isSubmitting } = useInertiaForm();
     const [form, fields] = useForm({
         id: `create-${actions.accountType}-account-form`,
         shouldValidate: "onSubmit",
@@ -66,7 +67,7 @@ export function CreateAccountDrawer() {
             }
         },
     });
-    const { language } = useTranslation();
+    const { language, t } = useTranslation();
     const typeControl = useInputControl(fields.type);
     const subtypeControl = useInputControl(fields.subtype);
     const currencyCodeControl = useInputControl(fields.currency_code);
@@ -91,10 +92,12 @@ export function CreateAccountDrawer() {
             <Drawer.Content className="absolute inset-y-0 mx-2 my-2 max-h-[calc(100%-16px)] w-[min(400px,calc(100%-16px))] rounded-20 bg-(--bg-white-0) shadow-md">
                 <div className="flex h-full flex-col">
                     <Drawer.Header>
-                        <Drawer.Title className="text-label-lg text-(--text-strong-950)">Create Account</Drawer.Title>
+                        <Drawer.Title className="text-label-lg text-(--text-strong-950)">
+                            {t("account.create.title")}
+                        </Drawer.Title>
                     </Drawer.Header>
 
-                    <Divider.Root $type="solid-text">Information</Divider.Root>
+                    <Divider.Root $type="solid-text">{t("account.create.information")}</Divider.Root>
 
                     <Drawer.Body className="flex-1 overflow-y-auto">
                         <form {...getFormProps(form)}>
@@ -106,8 +109,8 @@ export function CreateAccountDrawer() {
                                     {...getInputProps(fields.name, { type: "text" })}
                                     autoFocus
                                     error={fields.name.errors}
-                                    label="Name"
-                                    placeholder="e.g. Personal savings"
+                                    label={t("account.form.name.label")}
+                                    placeholder={t("account.form.name.placeholder")}
                                 />
 
                                 <Textarea
@@ -115,21 +118,21 @@ export function CreateAccountDrawer() {
                                     charCounterCurrent={fields.description.value?.length || 0}
                                     charCounterMax={200}
                                     error={fields.description.errors}
-                                    hint={"This will only be visible to you."}
-                                    label="Description"
-                                    labelSub="(Optional)"
-                                    placeholder="e.g. Savings account for personal expenses"
+                                    hint={t("account.form.description.hint")}
+                                    label={t("account.form.description.label")}
+                                    labelSub={t("account.form.description.labelSub")}
+                                    placeholder={t("account.form.description.placeholder")}
                                 ></Textarea>
                             </div>
 
-                            <Divider.Root $type="solid-text">Details</Divider.Root>
+                            <Divider.Root $type="solid-text">{t("account.create.details")}</Divider.Root>
 
                             <div className="space-y-3 p-5">
                                 <SelectField
                                     defaultValue={fields.type.initialValue}
                                     error={fields.type.errors}
                                     id={fields.type.id}
-                                    label="Type"
+                                    label={t("account.form.type.label")}
                                     name={fields.type.name}
                                     onOpenChange={(open) => {
                                         if (!open) {
@@ -138,10 +141,10 @@ export function CreateAccountDrawer() {
                                     }}
                                     onValueChange={typeControl.change}
                                     options={AccountTypeEnum.options.map((type) => ({
-                                        label: type,
+                                        label: t(`account.type.${type}`),
                                         value: type,
                                     }))}
-                                    placeholder="Select a type"
+                                    placeholder={t("account.form.type.placeholder")}
                                     value={typeControl.value}
                                 />
 
@@ -151,8 +154,8 @@ export function CreateAccountDrawer() {
                                         defaultValue={fields.subtype.initialValue}
                                         error={fields.subtype.errors}
                                         id={fields.subtype.id}
-                                        label="Subtype"
-                                        labelSub="(Optional)"
+                                        label={t("account.form.subtype.label")}
+                                        labelSub={t("account.form.subtype.labelSub")}
                                         name={fields.subtype.name}
                                         onOpenChange={(open) => {
                                             if (!open) {
@@ -166,7 +169,7 @@ export function CreateAccountDrawer() {
                                                 value: subtype,
                                             }),
                                         )}
-                                        placeholder="Select a subtype"
+                                        placeholder={t("account.form.subtype.placeholder")}
                                         position="item-aligned"
                                         value={subtypeControl.value}
                                         wrapperClassName="duration-300 animate-in fade-in-0"
@@ -174,14 +177,14 @@ export function CreateAccountDrawer() {
                                 ) : null}
                             </div>
 
-                            <Divider.Root $type="solid-text">Balance</Divider.Root>
+                            <Divider.Root $type="solid-text">{t("account.create.balance")}</Divider.Root>
 
                             <div className="space-y-3 p-5">
                                 <CurrencyInput
                                     currency={currencyFormat?.currency || "USD"}
                                     customInput={TextField}
                                     error={fields.initial_balance.errors}
-                                    label="Initial balance"
+                                    label={t("account.form.initial_balance.label")}
                                     leadingNode={
                                         <SelectCurrencies
                                             onValueChange={currencyCodeControl.change}
@@ -190,7 +193,7 @@ export function CreateAccountDrawer() {
                                     }
                                     name="initial_balance_currency_input"
                                     onValueChange={(values) => initialBalanceControl.change(handleMoneyChange(values))}
-                                    placeholder="e.g. 1.00"
+                                    placeholder={t("account.form.initial_balance.placeholder")}
                                     value={initialBalanceControl.value}
                                     withCurrencySymbol={false}
                                 />
@@ -220,11 +223,17 @@ export function CreateAccountDrawer() {
                             className="flex-1"
                             onClick={() => actions.resetParams({ shallow: false })}
                         >
-                            Discard
+                            {t("account.create.discard")}
                         </Button.Root>
-                        <Button.Root $size="md" $type="primary" className="flex-1" form={form.id} type="submit">
-                            Create account
-                        </Button.Root>
+                        <SubmitButton
+                            $size="md"
+                            $type="primary"
+                            className="flex-1"
+                            form={form.id}
+                            isSubmitting={isSubmitting}
+                        >
+                            {isSubmitting ? t("account.create.submit_loading") : t("account.create.submit")}
+                        </SubmitButton>
                     </Drawer.Footer>
                 </div>
             </Drawer.Content>
@@ -303,10 +312,10 @@ function CreditCardFields({ fields, currencyFormat, handleMoneyChange }: CreditC
                 customInput={TextField}
                 error={fields.available_balance.errors}
                 inlineLeadingNode={<Input.InlineAffix>{currencyFormat?.currencySymbol}</Input.InlineAffix>}
-                label={t("form.fields.available_balance.label")}
+                label={t("account.form.available_balance.label")}
                 name="available_balance_currency_input"
                 onValueChange={(values) => availableBalanceControl.change(handleMoneyChange(values))}
-                placeholder={t("form.fields.available_balance.placeholder")}
+                placeholder={t("account.form.available_balance.placeholder")}
                 value={availableBalanceControl.value}
                 withCurrencySymbol={false}
             />
@@ -317,10 +326,10 @@ function CreditCardFields({ fields, currencyFormat, handleMoneyChange }: CreditC
                     customInput={TextField}
                     error={fields.minimum_payment.errors}
                     inlineLeadingNode={<Input.InlineAffix>{currencyFormat?.currencySymbol}</Input.InlineAffix>}
-                    label={t("form.fields.minimum_payment.label")}
+                    label={t("account.form.minimum_payment.label")}
                     name="minimum_payment_currency_input"
                     onValueChange={(values) => minimumPaymentControl.change(handleMoneyChange(values))}
-                    placeholder={t("form.fields.minimum_payment.placeholder")}
+                    placeholder={t("account.form.minimum_payment.placeholder")}
                     value={minimumPaymentControl.value}
                     withCurrencySymbol={false}
                 />
@@ -328,8 +337,8 @@ function CreditCardFields({ fields, currencyFormat, handleMoneyChange }: CreditC
                 <TextField
                     error={fields.apr.errors}
                     inlineTrailingNode={<Input.InlineAffix>%</Input.InlineAffix>}
-                    label={t("form.fields.apr.label")}
-                    placeholder={t("form.fields.apr.placeholder")}
+                    label={t("account.form.apr.label")}
+                    placeholder={t("account.form.apr.placeholder")}
                     {...getInputProps(fields.apr, {
                         type: "number",
                     })}
@@ -340,11 +349,11 @@ function CreditCardFields({ fields, currencyFormat, handleMoneyChange }: CreditC
                 <DatePicker
                     error={fields.expires_at.errors}
                     id={fields.expires_at.id}
-                    label={t("form.fields.expires_at.label")}
-                    labelSub="(Optional)"
+                    label={t("account.form.expires_at.label")}
+                    labelSub={t("account.form.expires_at.labelSub")}
                     mode="single"
                     onSelect={(date) => expiresAtControl.change(date?.toISOString())}
-                    placeholder={t("form.fields.expires_at.placeholder")}
+                    placeholder={t("account.form.expires_at.placeholder")}
                     selected={expiresAtControl.value ? new Date(expiresAtControl.value) : undefined}
                     value={expiresAtControl.value}
                 />
@@ -354,10 +363,10 @@ function CreditCardFields({ fields, currencyFormat, handleMoneyChange }: CreditC
                     customInput={TextField}
                     error={fields.annual_fee.errors}
                     inlineLeadingNode={<Input.InlineAffix>{currencyFormat?.currencySymbol}</Input.InlineAffix>}
-                    label={t("form.fields.annual_fee.label")}
+                    label={t("account.form.annual_fee.label")}
                     name="annual_fee_currency_input"
                     onValueChange={(values) => annualFeeControl.change(handleMoneyChange(values))}
-                    placeholder={t("form.fields.annual_fee.placeholder")}
+                    placeholder={t("account.form.annual_fee.placeholder")}
                     value={annualFeeControl.value}
                     withCurrencySymbol={false}
                 />
@@ -382,8 +391,8 @@ function LoanFields({ fields }: LoanFieldsProps) {
                 <TextField
                     error={fields.interest_rate.errors}
                     inlineTrailingNode={<Input.InlineAffix>%</Input.InlineAffix>}
-                    label={t("form.fields.interest_rate.label")}
-                    placeholder={t("form.fields.interest_rate.placeholder")}
+                    label={t("account.form.interest_rate.label")}
+                    placeholder={t("account.form.interest_rate.placeholder")}
                     {...getInputProps(fields.interest_rate, {
                         type: "number",
                     })}
@@ -393,14 +402,14 @@ function LoanFields({ fields }: LoanFieldsProps) {
                     defaultValue={fields.interest_rate_type.initialValue}
                     error={fields.interest_rate_type.errors}
                     id={fields.interest_rate_type.id}
-                    label={t("form.fields.interest_rate_type.label")}
+                    label={t("account.form.interest_rate_type.label")}
                     name={fields.interest_rate_type.name}
                     onValueChange={interestRateTypeControl.change}
                     options={InterestRateTypeEnum.options.map((option) => ({
                         label: option,
                         value: option,
                     }))}
-                    placeholder={t("form.fields.interest_rate_type.placeholder")}
+                    placeholder={t("account.form.interest_rate_type.placeholder")}
                     position="item-aligned"
                     value={interestRateTypeControl.value}
                 />
@@ -408,8 +417,8 @@ function LoanFields({ fields }: LoanFieldsProps) {
 
             <TextField
                 error={fields.term_months.errors}
-                label={t("form.fields.term_months.label")}
-                placeholder={t("form.fields.term_months.placeholder")}
+                label={t("account.form.term_months.label")}
+                placeholder={t("account.form.term_months.placeholder")}
                 {...getInputProps(fields.term_months, {
                     type: "number",
                 })}
