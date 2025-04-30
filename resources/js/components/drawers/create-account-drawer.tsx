@@ -182,19 +182,16 @@ export function CreateAccountDrawer() {
                                     currency={currencyFormat?.currency || "USD"}
                                     customInput={TextField}
                                     error={fields.initial_balance.errors}
-                                    inlineLeadingNode={
-                                        <Input.InlineAffix>{currencyFormat?.currencySymbol}</Input.InlineAffix>
-                                    }
                                     label="Initial balance"
-                                    name="initial_balance_currency_input"
-                                    onValueChange={(values) => initialBalanceControl.change(handleMoneyChange(values))}
-                                    placeholder="e.g. 1.00"
-                                    trailingNode={
+                                    leadingNode={
                                         <SelectCurrencies
                                             onValueChange={currencyCodeControl.change}
                                             value={currencyCodeControl.value}
                                         />
                                     }
+                                    name="initial_balance_currency_input"
+                                    onValueChange={(values) => initialBalanceControl.change(handleMoneyChange(values))}
+                                    placeholder="e.g. 1.00"
                                     value={initialBalanceControl.value}
                                     withCurrencySymbol={false}
                                 />
