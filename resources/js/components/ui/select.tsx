@@ -29,7 +29,7 @@ export const selectVariants = tv({
         ],
         triggerArrow: [
             // base
-            "ml-auto size-5 shrink-0",
+            "ml-auto size-4 shrink-0",
             "transition duration-200 ease-out",
             // placeholder state
             "group-data-[placeholder]/trigger:text-(--text-soft-400)",
@@ -187,7 +187,7 @@ export const selectVariants = tv({
             class: {
                 triggerRoot: "pr-2 pl-2.5",
                 triggerIcon: "mr-2",
-                triggerArrow: "ml-0.5",
+                triggerArrow: "ml-1",
             },
         },
         {
@@ -205,7 +205,7 @@ export const selectVariants = tv({
             class: {
                 triggerRoot: "pr-1.5 pl-2",
                 triggerIcon: "mr-1.5 size-4",
-                triggerArrow: "ml-0.5",
+                triggerArrow: "ml-1",
                 selectItemIcon: "size-4 bg-[length:1rem]",
             },
         },
