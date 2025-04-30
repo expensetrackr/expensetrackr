@@ -80,4 +80,10 @@ return [
         'submit' => 'Create account',
         'submit_loading' => 'Creating account...',
     ],
+    'created' => [
+        'success' => 'Account created successfully',
+    ],
+    'deleted' => [
+        'success' => 'Account deleted successfully',
+    ],
 ];

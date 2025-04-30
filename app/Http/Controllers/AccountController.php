@@ -74,7 +74,7 @@ final class AccountController extends Controller
             ->with('toast',
                 [
                     'type' => 'success',
-                    'title' => __('accounts.created'),
+                    'title' => __('accounts.created.success'),
                 ]
             );
     }
@@ -97,7 +97,7 @@ final class AccountController extends Controller
         return redirect()->route('accounts.index')
             ->with('toast', [
                 'type' => 'success',
-                'title' => __('accounts.deleted'),
+                'title' => __('accounts.deleted.success'),
             ]);
     }
 }

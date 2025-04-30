@@ -7,10 +7,10 @@ return [
         'depository' => 'Depósito',
         'investment' => 'Inversión',
         'crypto' => 'Cripto',
-        'credit_card' => 'Tarjeta de Crédito',
+        'credit_card' => 'Tarjeta de crédito',
         'loan' => 'Préstamo',
-        'other_asset' => 'Otro Activo',
-        'other_liability' => 'Otra Obligación'
+        'other_asset' => 'Otro activo',
+        'other_liability' => 'Otra obligación'
     ],
     'form' => [
         'name' => [
@@ -79,5 +79,11 @@ return [
         'discard' => 'Descartar',
         'submit' => 'Crear cuenta',
         'submit_loading' => 'Creando cuenta...'
+    ],
+    'created' => [
+        'success' => 'Cuenta creada con éxito'
+    ],
+    'deleted' => [
+        'success' => 'Cuenta eliminada con éxito'
     ]
 ];

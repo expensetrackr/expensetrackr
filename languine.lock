@@ -427,3 +427,51 @@ files:
     500.description: ab52d8783158fd97540c69266bc09f6c
     503.title: b4458e26471db3f874f8d2010a14f7bb
     503.description: ff349584817a3072b2ccf447c36e2082
+  lang/en/accounts.php:
+    type.depository: 24454064685465183cc6492ca196a5ba
+    type.investment: b7380bf31920c1bb03ff97198a95bde8
+    type.crypto: 79ad4e0522a0a67a6e196be52357e60b
+    type.credit_card: 73a61696f100b3858511e212a3feea6b
+    type.loan: 9ad81a8f8a5c7a6ce9e1ba9bb4759391
+    type.other_asset: 51b5ff3213e0f50897c1aa3aed586365
+    type.other_liability: 84535bd64202709d38e235620b495a3e
+    form.name.label: 49ee3087348e8d44e1feda1917443987
+    form.name.placeholder: 1d8a73a53703905f53905f4302d3eaf8
+    form.description.label: b5a7adde1af5c87d7fd797b6245c2a39
+    form.description.placeholder: 926d7f903891cbc944f11890c95dc995
+    form.description.hint: 36df7911c1f920049684ce0042cc070e
+    form.description.labelSub: d9e6f34474be555a43262cfc6e2c1a8f
+    form.type.label: a1fa27779242b4902f7ae3bdd5c6d508
+    form.type.placeholder: 6cb57689f4bb0029f26938bdcd44c99f
+    form.subtype.label: 071b8782129749bf39aad727ecb26d79
+    form.subtype.labelSub: d9e6f34474be555a43262cfc6e2c1a8f
+    form.subtype.placeholder: 7a2acce088240f59bc0d3099b392c8c2
+    form.initial_balance.label: 3952bc855a33594bd0371fa31580e0ef
+    form.initial_balance.placeholder: 4571457f2443b28ab9d2cea5c0d4bdf4
+    form.available_balance.label: 16ad069644e4d2beb3a554007a0ebf7d
+    form.available_balance.placeholder: 4571457f2443b28ab9d2cea5c0d4bdf4
+    form.minimum_payment.label: f7b2f13820aabb7248ce58177b279305
+    form.minimum_payment.placeholder: 4571457f2443b28ab9d2cea5c0d4bdf4
+    form.apr.label: 400b07623925470b21ca55c3ce9913f4
+    form.apr.placeholder: d3d9446802a44259755d38e6d163e820
+    form.expires_at.label: 8d7f12bd0dc53389421144669ff4ee63
+    form.expires_at.labelSub: d9e6f34474be555a43262cfc6e2c1a8f
+    form.expires_at.placeholder: 64de260a0ad2c3d96dece47bb581b78e
+    form.annual_fee.label: 0d7d715d6bbc03a995a45d105a1797f6
+    form.annual_fee.placeholder: 4571457f2443b28ab9d2cea5c0d4bdf4
+    form.interest_rate.label: 7dfa44aee8e21e5967e2fde5a6b0cfa8
+    form.interest_rate.placeholder: 4571457f2443b28ab9d2cea5c0d4bdf4
+    form.interest_rate_type.label: c4f728963b6642da147d9753843ba035
+    form.interest_rate_type.placeholder: 131e62456d58b26683580f4f2ac12c93
+    form.term_months.label: a92ac988e36fc291cfc32fbf6243583f
+    form.term_months.placeholder: 642e92efb79421734881b53e1e1b18b6
+    create.title: 739405e73cc9f2e323506440d0883734
+    create.information: a82be0f551b8708bc08eb33cd9ded0cf
+    create.details: 3ec365dd533ddb7ef3d1c111186ce872
+    create.balance: 99a808d8d16122d70e44bd7f709d30fb
+    create.currency: 386c339d37e737a436499d423a77df0c
+    create.discard: d94b42030b9785fd754d5c1754961269
+    create.submit: 42369faa6a6b243aac58683f3874bf99
+    create.submit_loading: 29dfe0f071ce461d8f9d671d1864351b
+    created.success: 2f762114286754e74aaf62ca5bc58dfe
+    deleted.success: a710fe9e787e38c5db9fda7b0e78bc20
