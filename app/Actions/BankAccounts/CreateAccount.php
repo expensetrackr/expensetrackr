@@ -24,7 +24,7 @@ final class CreateAccount
      */
     public function create(array $input, bool $isManual = false): void
     {
-        $isManual = $isManual || $input['externalId'] === null;
+        $isManual = $isManual || $input['external_id'] === null;
 
         // Determine the account model class based on the account type
         $type = match ($input['type']) {
