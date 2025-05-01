@@ -7,9 +7,7 @@ import { useUser } from "#/hooks/use-user.ts";
 import { routes } from "#/routes.ts";
 import { cn } from "#/utils/cn.ts";
 import { type Plan, planFeatures, plans } from "#/utils/plans.ts";
-import { Image } from "./image.tsx";
 import { Link } from "./link.tsx";
-import * as Avatar from "./ui/avatar.tsx";
 import * as Button from "./ui/button.tsx";
 import * as SegmentedControl from "./ui/segmented-control.tsx";
 
@@ -55,40 +53,17 @@ export function PricingTable() {
                     <thead>
                         <tr className="text-left align-top">
                             <th className="w-1/5 px-2"></th>
-                            <th className="w-1/5 px-2">
-                                <div className="block flex-shrink-0">
-                                    <div className="flex items-center">
-                                        <Avatar.Root className="size-12">
-                                            <></>
-                                        </Avatar.Root>
-                                        <div className="ml-3">
-                                            <p className="text-paragraph-xs font-medium text-(--text-sub-600)">
-                                                {t("pricing.free.target_audience")}
-                                            </p>
-                                            <p className="font-medium">{t("pricing.free.title")}</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="mt-6">
-                                    <p className="h-15 font-semibold tracking-tight">
-                                        <span className="text-h5 font-semibold lg:text-h4">Free</span>
-                                    </p>
-                                </div>
-                            </th>
                             {plans.map((plan) => (
                                 <th className="w-1/5 px-2" key={plan.code}>
                                     <div className="block flex-shrink-0">
                                         <div className="flex items-center">
-                                            <div>
-                                                <Image
-                                                    alt={t(`pricing.${plan.code}.title`)}
-                                                    className="inline-block size-12 rounded-full"
-                                                    height={48}
-                                                    isCdn
-                                                    src={plan.img}
-                                                    width={48}
-                                                />
+                                            <div
+                                                className="flex size-12 shrink-0 items-center justify-center rounded-full bg-(--color-plan-color)/20 shadow-xs ring-(--stroke-soft-200)"
+                                                style={{
+                                                    "--color-plan-color": plan.iconColor,
+                                                }}
+                                            >
+                                                <plan.icon className="size-6 text-(--color-plan-color)" />
                                             </div>
                                             <div className="ml-3">
                                                 <p className="text-paragraph-xs font-medium text-(--text-sub-600)">
@@ -129,13 +104,6 @@ export function PricingTable() {
 
                         <tr className="text-left align-top">
                             <td className="w-1/5 px-2"></td>
-                            <td className="w-1/5 px-2">
-                                <div className="mt-4 mb-4 w-full py-2">
-                                    <Button.Root $style="ghost" $type="primary" asChild className="w-full">
-                                        <Link href={routes.register.url()}>{t("pricing.free.button_label")}</Link>
-                                    </Button.Root>
-                                </div>
-                            </td>
                             {plans.map((plan) => (
                                 <th className="w-1/5 px-2" key={plan.code}>
                                     <div className="mt-4 mb-4 w-full py-2">
@@ -166,11 +134,8 @@ export function PricingTable() {
                                             <p className="inline"></p>
                                         </th>
 
-                                        {feature.free && (
-                                            <td className="px-2 text-paragraph-sm font-normal">{feature.free}</td>
-                                        )}
                                         <td className="px-2 text-paragraph-sm font-normal">{feature.personal}</td>
-                                        <td className="px-2 text-paragraph-sm font-normal">{feature.lifetime}</td>
+                                        <td className="px-2 text-paragraph-sm font-normal">{feature.business}</td>
                                         <td className="px-2 text-paragraph-sm font-normal">{feature.enterprise}</td>
                                     </tr>
                                 ))}
@@ -179,13 +144,6 @@ export function PricingTable() {
 
                         <tr className="text-left align-top">
                             <td className="w-1/5 px-2"></td>
-                            <td className="w-1/5 px-2">
-                                <div className="mt-4 mb-4 w-full py-2">
-                                    <Button.Root $style="ghost" $type="primary" asChild className="w-full">
-                                        <Link href={routes.register.url()}>{t("pricing.free.button_label")}</Link>
-                                    </Button.Root>
-                                </div>
-                            </td>
                             {plans.map((plan) => (
                                 <th className="w-1/5 px-2" key={plan.code}>
                                     <div className="mt-4 mb-4 w-full py-2">

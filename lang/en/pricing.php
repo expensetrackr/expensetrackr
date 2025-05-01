@@ -19,29 +19,30 @@ return [
     'personal' => [
         'target_audience' => 'For Individuals',
         'title' => 'Personal',
-        'description' => 'Unlock full tracking, powerful budgeting, and insightful analytics for personal finance mastery.',
-        'features' => 'Unlimited Expense Tracking, Comprehensive Budgeting Tools, Investment & Asset Management, Detailed Analytics, 5 GB Receipt Storage',
-        'button_label' => 'Subscribe now',
+        'description' => 'Full access to tracking, budgeting, investments, and insights for personal finance mastery. Take control of your finances.',
+        'features' => '3 Accounts, 1 Bank Connection, 1 Budget Creation, Basic Expense Tracking, Detailed Analytics, 5 GB Receipt Storage',
+        'button_label' => 'Get started',
     ],
-    'lifetime' => [
-        'target_audience' => 'Ultimate Value',
-        'title' => 'Lifetime',
-        'description' => 'Get unlimited, lifelong access to all Personal plan features with a single one-time payment.',
-        'features' => 'Unlimited Expense Tracking, Comprehensive Budgeting Tools, Investment & Asset Management, Unlimited Receipt Storage, Detailed Analytics, One-Time Payment',
-        'button_label' => 'Get lifetime access',
+    'business' => [
+        'target_audience' => 'For Growing Businesses',
+        'title' => 'Business',
+        'description' => 'Powerful tools, collaboration features, and advanced reporting for managing business finances.',
+        'features' => 'Unlimited Accounts & Bank Connections, Advanced Reporting, Smart Categorization, Investment Monitoring, Unlimited Receipt Storage, 3 Workspaces, 5 User Seats',
+        'button_label' => 'Get started',
     ],
     'enterprise' => [
-        'target_audience' => 'For Growing Businesses',
+        'target_audience' => 'For Large Organizations',
         'title' => 'Enterprise',
-        'description' => 'Advanced features, collaboration tools, and dedicated support for teams.',
+        'description' => 'Tailored solution with advanced security, dedicated support, and custom options for complex needs.',
         'custom_price' => 'Custom',
-        'features' => 'Unlimited Financial Management, Dedicated Workspaces, Multiple User Seats, Customizable Reporting, Priority Support, <strong>SSO/SAML Support</strong>, <strong>Custom SLA</strong>',
+        'features' => 'Everything in Business, Plus: Unlimited Workspaces, 25 User Seats (Scalable), Custom Reporting, Priority Support, <strong>SSO/SAML Support</strong>, <strong>Custom SLA</strong>',
         'button_label' => 'Contact sales',
     ],
     'categories' => [
         'connectivity-integrations' => [
             'title' => 'Connectivity & Integrations',
             'features' => [
+                'accounts' => 'Accounts',
                 'bank-account-connections' => 'Secure Bank Account Connections (via APIs)',
                 'automated-receipt-data-extraction' => 'Automated Receipt Data Extraction',
                 'developer-api-access' => 'Developer API Access',
@@ -104,7 +105,6 @@ return [
             'features' => [
                 'monthly-billing' => 'Monthly Billing',
                 'annual-billing-discount' => 'Annual Billing Discount',
-                'one-time-purchase-option' => 'One-Time Purchase Option',
                 'credit-card-payment' => 'Credit Card Payment',
                 'bank-transfer-payment-option' => 'Bank Transfer Payment Option',
             ],
