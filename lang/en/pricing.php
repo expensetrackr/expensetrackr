@@ -9,13 +9,6 @@ return [
         'monthly' => '/monthly',
         'yearly' => '/billed yearly',
     ],
-    'free' => [
-        'target_audience' => 'For Everyone',
-        'title' => 'Free',
-        'description' => 'Get started with our free plan and see how it works for you.',
-        'features' => 'Single Financial Account, Up to 50 Transactions/Month, Personal Workspace, Basic Spending Overview, 100 MB Receipt Storage, Limited Budget Creation, Expense Categorization',
-        'button_label' => 'Get started now',
-    ],
     'personal' => [
         'target_audience' => 'For Individuals',
         'title' => 'Personal',
