@@ -46,13 +46,11 @@
         "react-day-picker": "8.10.1",
         "react-dom": "19.1.0",
         "react-hotkeys-hook": "5.0.1",
-        "react-twc": "1.4.2",
         "recharts": "2.15.3",
         "sonner": "2.0.3",
         "tailwind-merge": "3.2.0",
         "tailwind-variants": "1.0.0",
         "teller-connect-react": "0.2.3",
-        "ts-key-enum": "3.0.13",
         "usehooks-ts": "3.1.1",
         "valibot": "1.0.0",
         "zustand": "5.0.3"
