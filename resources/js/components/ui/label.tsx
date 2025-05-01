@@ -24,7 +24,11 @@ function LabelRoot({ className, ...props }: LabelRootProps) {
 
 function LabelAsterisk({ className, ...props }: React.ComponentPropsWithRef<"span">) {
     return (
-        <span className={cn("text-primary group-aria-disabled:text-(--text-disabled-300)", className)} {...props}>
+        <span
+            aria-hidden="true"
+            className={cn("text-primary group-aria-disabled:text-(--text-disabled-300)", className)}
+            {...props}
+        >
             *
         </span>
     );
