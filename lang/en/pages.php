@@ -7,6 +7,10 @@ return [
         'title' => 'Pricing',
         'description' => 'Transparent pricing for ExpenseTrackr\'s financial management software. Compare our Personal, Business, and Enterprise plans to find the best fit for your personal or business finances.',
     ],
+    'changelog' => [
+        'title' => 'Changelog',
+        'description' => 'Track the evolution of ExpenseTrackr. Our changelog details new features, performance improvements, and bug fixes as we continuously enhance our financial management application.',
+    ],
     'accounts' => [
         'title' => 'Accounts',
         'description' => 'Manage your accounts and add new ones.',

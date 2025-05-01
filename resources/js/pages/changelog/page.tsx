@@ -1,8 +1,10 @@
+import { Head } from "@inertiajs/react";
 import { useReducedMotion } from "motion/react";
 import * as m from "motion/react-m";
 import Clock01Icon from "virtual:icons/hugeicons/clock-01";
 
 import { ChangelogEntry } from "#/components/changelog-entry.tsx";
+import { useTranslation } from "#/hooks/use-translation.ts";
 import { GuestLayout } from "#/layouts/guest-layout.tsx";
 import { type PageProps } from "#/types/globals.js";
 
@@ -12,9 +14,26 @@ interface ChangelogPageProps {
 
 export default function ChangelogPage({ changelogs }: ChangelogPageProps) {
     const isReducedMotion = useReducedMotion();
+    const { t } = useTranslation();
+    const title = t("pages.changelog.title");
+    const description = t("pages.changelog.description");
 
     return (
         <>
+            <Head title={title}>
+                {/* Primary Tags */}
+                <meta content={`${title} - ${ENV.APP_NAME}`} head-key="title" name="title" />
+                <meta content={description} head-key="description" name="description" />
+
+                {/* Open Graph */}
+                <meta content={`${title} - ${ENV.APP_NAME}`} head-key="og:title" property="og:title" />
+                <meta content={description} head-key="og:description" property="og:description" />
+
+                {/* Twitter */}
+                <meta content={`${title} - ${ENV.APP_NAME}`} head-key="twitter:title" property="twitter:title" />
+                <meta content={description} head-key="twitter:description" property="twitter:description" />
+            </Head>
+
             <section>
                 <div className="container border-x bg-(--bg-white-0) pt-32 pb-12 lg:px-12">
                     <m.p
