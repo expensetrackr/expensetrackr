@@ -1,10 +1,14 @@
+import Briefcase01SolidIcon from "virtual:icons/hugeicons/briefcase-01-solid";
+import Building04SolidIcon from "virtual:icons/hugeicons/building-04-solid";
+import UserSolidIcon from "virtual:icons/hugeicons/user-solid";
 import { type ButtonRootProps } from "#/components/ui/button.tsx";
 
-type PlanCode = "free" | "personal" | "lifetime" | "enterprise";
+type PlanCode = "personal" | "business" | "enterprise";
 
 export type Plan = {
     code: PlanCode;
-    img: string;
+    icon: React.ForwardRefExoticComponent<React.SVGProps<SVGSVGElement>>;
+    iconColor: string;
     isFeatured?: boolean;
     price: {
         monthly: number | null;
@@ -28,10 +32,11 @@ type FeaturedCategory = {
 export const plans: Array<Plan> = [
     {
         code: "personal",
-        img: "/img/personal-plan.png",
+        icon: UserSolidIcon,
+        iconColor: "var(--state-information-base)",
         price: {
-            monthly: 29.99,
-            yearly: 19.99,
+            monthly: 9.99,
+            yearly: 8,
             onetime: null,
         },
         productPriceId: {
@@ -43,25 +48,27 @@ export const plans: Array<Plan> = [
         buttonType: "primary",
     },
     {
-        code: "lifetime",
-        img: "/img/lifetime-plan.png",
+        code: "business",
         isFeatured: true,
+        icon: Briefcase01SolidIcon,
+        iconColor: "var(--state-feature-base)",
         price: {
-            monthly: null,
-            yearly: null,
-            onetime: 629.99,
+            monthly: 29.99,
+            yearly: 24,
+            onetime: null,
         },
         productPriceId: {
-            monthly: null,
-            yearly: null,
-            onetime: "c969cccd-95cc-4c0c-b7a4-721a61d63e4b",
+            monthly: "07a13366-e96b-468f-aef7-b087d036f55c",
+            yearly: "05a42537-f417-4aaf-80fe-57f87df6dcf0",
+            onetime: null,
         },
         buttonStyle: "filled",
-        buttonType: "neutral",
+        buttonType: "primary",
     },
     {
         code: "enterprise",
-        img: "/img/enterprise-plan.png",
+        icon: Building04SolidIcon,
+        iconColor: "var(--state-stable-base)",
         price: {
             monthly: null,
             yearly: null,
@@ -82,24 +89,27 @@ export const planFeatures: Array<FeaturedCategory> = [
         id: "connectivity-integrations",
         features: [
             {
+                id: "accounts",
+                personal: "3",
+                business: "Unlimited",
+                enterprise: "Unlimited",
+            },
+            {
                 id: "bank-account-connections",
-                free: "—",
-                personal: "✓",
-                lifetime: "✓",
-                enterprise: "✓",
+                personal: "1",
+                business: "Unlimited",
+                enterprise: "Unlimited",
             },
             {
                 id: "automated-receipt-data-extraction",
-                free: "—",
-                personal: "✓",
-                lifetime: "✓",
+                personal: "—",
+                business: "✓",
                 enterprise: "✓",
             },
             {
                 id: "developer-api-access",
-                free: "—",
-                personal: "✓",
-                lifetime: "✓",
+                personal: "—",
+                business: "✓",
                 enterprise: "✓",
             },
         ],
@@ -109,51 +119,44 @@ export const planFeatures: Array<FeaturedCategory> = [
         features: [
             {
                 id: "unlimited-expense-income-entries",
-                free: "50/month",
                 personal: "✓",
-                lifetime: "✓",
+                business: "✓",
                 enterprise: "✓",
             },
             {
                 id: "robust-budget-creation-tracking",
-                free: "—",
-                personal: "✓",
-                lifetime: "✓",
-                enterprise: "✓",
+                personal: "1",
+                business: "Unlimited",
+                enterprise: "Unlimited",
             },
             {
                 id: "effortless-investment-monitoring",
-                free: "—",
-                personal: "✓",
-                lifetime: "✓",
+                personal: "—",
+                business: "✓",
                 enterprise: "✓",
             },
             {
                 id: "complete-asset-management",
-                free: "—",
                 personal: "✓",
-                lifetime: "✓",
+                business: "✓",
                 enterprise: "✓",
             },
             {
                 id: "smart-categorization-flexible-tagging",
-                free: "Default Categories",
-                personal: "✓",
-                lifetime: "✓",
+                personal: "—",
+                business: "✓",
                 enterprise: "✓",
             },
             {
                 id: "automated-recurring-transactions",
-                free: "—",
                 personal: "✓",
-                lifetime: "✓",
+                business: "✓",
                 enterprise: "✓",
             },
             {
                 id: "multiple-currency-support",
-                free: "—",
-                personal: "✓", // Assuming this is a core feature for paid plans
-                lifetime: "✓",
+                personal: "✓",
+                business: "✓",
                 enterprise: "✓",
             },
         ],
@@ -163,23 +166,20 @@ export const planFeatures: Array<FeaturedCategory> = [
         features: [
             {
                 id: "interactive-analytics-dashboards",
-                free: "—",
                 personal: "✓",
-                lifetime: "✓",
+                business: "✓",
                 enterprise: "✓",
             },
             {
                 id: "advanced-financial-reporting",
-                free: "—",
-                personal: "✓",
-                lifetime: "✓",
+                personal: "—",
+                business: "✓",
                 enterprise: "✓",
             },
             {
                 id: "custom-report-generation",
-                free: "—",
                 personal: "—",
-                lifetime: "—",
+                business: "✓",
                 enterprise: "✓",
             },
         ],
@@ -189,30 +189,26 @@ export const planFeatures: Array<FeaturedCategory> = [
         features: [
             {
                 id: "manage-unlimited-financial-accounts",
-                free: "1",
-                personal: "✓",
-                lifetime: "✓",
-                enterprise: "✓",
+                personal: "1",
+                business: "Unlimited",
+                enterprise: "Unlimited",
             },
             {
                 id: "powerful-search-filtering-custom-views",
-                free: "—",
                 personal: "✓",
-                lifetime: "✓",
+                business: "✓",
                 enterprise: "✓",
             },
             {
                 id: "secure-cross-device-sync",
-                free: "✓",
                 personal: "✓",
-                lifetime: "✓",
+                business: "✓",
                 enterprise: "✓",
             },
             {
                 id: "receipt-document-storage",
-                free: "100 MB",
-                personal: "5 GB Included", // Example limit
-                lifetime: "Unlimited",
+                personal: "5 GB Included",
+                business: "Unlimited",
                 enterprise: "Unlimited",
             },
         ],
@@ -222,17 +218,15 @@ export const planFeatures: Array<FeaturedCategory> = [
         features: [
             {
                 id: "dedicated-collaborative-workspaces",
-                free: "—",
                 personal: "—",
-                lifetime: "—",
+                business: "3",
                 enterprise: "✓",
             },
             {
                 id: "included-user-seats",
-                free: "—",
                 personal: "1",
-                lifetime: "1", // Lifetime typically single-user
-                enterprise: "20 (Scalable)",
+                business: "5",
+                enterprise: "25 (Scalable)",
             },
         ],
     },
@@ -241,23 +235,20 @@ export const planFeatures: Array<FeaturedCategory> = [
         features: [
             {
                 id: "robust-security-features",
-                free: "✓",
                 personal: "✓",
-                lifetime: "✓",
+                business: "✓",
                 enterprise: "✓",
             },
             {
                 id: "sso-authentication-support",
-                free: "—",
                 personal: "—",
-                lifetime: "—",
+                business: "—",
                 enterprise: "✓",
             },
             {
                 id: "sla",
-                free: "—",
                 personal: "—",
-                lifetime: "—",
+                business: "—",
                 enterprise: "✓",
             },
         ],
@@ -267,24 +258,21 @@ export const planFeatures: Array<FeaturedCategory> = [
         features: [
             {
                 id: "comprehensive-help-center-community-access",
-                free: "Community Access",
                 personal: "✓",
-                lifetime: "✓",
+                business: "✓",
                 enterprise: "✓",
             },
             {
                 id: "dedicated-email-support",
-                free: "Standard Response",
                 personal: "Standard Response",
-                lifetime: "Standard Response",
+                business: "Standard Response",
                 enterprise: "Priority Response",
             },
             {
                 id: "dedicated-account-manager",
-                free: "—",
                 personal: "—",
-                lifetime: "—",
-                enterprise: "✓", // Often an Enterprise-only feature
+                business: "—",
+                enterprise: "✓",
             },
         ],
     },
@@ -293,37 +281,26 @@ export const planFeatures: Array<FeaturedCategory> = [
         features: [
             {
                 id: "monthly-billing",
-                free: "—",
                 personal: "✓",
-                lifetime: "—",
+                business: "✓",
                 enterprise: "✓",
             },
             {
                 id: "annual-billing-discount",
-                free: "—",
                 personal: "✓",
-                lifetime: "—",
+                business: "✓",
                 enterprise: "✓",
             },
             {
-                id: "one-time-purchase-option",
-                free: "—",
-                personal: "—",
-                lifetime: "✓",
-                enterprise: "—",
-            },
-            {
                 id: "credit-card-payment",
-                free: "—",
                 personal: "✓",
-                lifetime: "✓",
+                business: "✓",
                 enterprise: "✓",
             },
             {
                 id: "bank-transfer-payment-option",
-                free: "—",
                 personal: "—",
-                lifetime: "—",
+                business: "—",
                 enterprise: "✓",
             },
         ],

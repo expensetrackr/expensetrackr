@@ -13,10 +13,8 @@ import { useUser } from "#/hooks/use-user.ts";
 import { routes } from "#/routes.ts";
 import { cn } from "#/utils/cn.ts";
 import { type Plan, plans } from "#/utils/plans.ts";
-import { Image } from "../image.tsx";
 import { Link } from "../link.tsx";
 import * as Button from "../ui/button.tsx";
-import * as Divider from "../ui/divider.tsx";
 import * as SegmentedControl from "../ui/segmented-control.tsx";
 
 type PricingSectionProps = React.ComponentPropsWithRef<"section"> & {
@@ -79,9 +77,9 @@ export function PricingSection({ containerClassName, isInternal, ...props }: Pri
                                 })}
                                 className="mt-2 text-paragraph-lg text-(--text-sub-600)"
                             >
-                                Get started <span className="font-bold underline decoration-wavy">for free</span>. Then
-                                find a plan that grows with your <strong>financial needs</strong>, from personal
-                                tracking to small business management.
+                                Start with <span className="font-bold underline decoration-wavy">personal</span> plan.
+                                Then upgrade as your <strong>financial needs</strong> grow, from individual budgeting to
+                                enterprise-scale management.
                             </m.p>
                         </div>
 
@@ -140,14 +138,16 @@ export function PricingSection({ containerClassName, isInternal, ...props }: Pri
                                 >
                                     <div className="block flex-shrink-0">
                                         <div className="flex items-center">
-                                            <div>
-                                                <Image
-                                                    alt={t(`pricing.${plan.code}.title`)}
-                                                    className="inline-block size-12 rounded-full"
-                                                    height={48}
-                                                    isCdn
-                                                    src={plan.img}
-                                                    width={48}
+                                            <div
+                                                className="flex size-12 shrink-0 items-center justify-center rounded-full bg-(--color-plan-color)/20 shadow-xs ring-(--stroke-soft-200)"
+                                                style={{
+                                                    "--color-plan-color": plan.iconColor,
+                                                }}
+                                            >
+                                                <plan.icon
+                                                    aria-hidden="true"
+                                                    className="size-6 text-(--color-plan-color)"
+                                                    focusable="false"
                                                 />
                                             </div>
                                             <div className="ml-3">
@@ -233,42 +233,6 @@ export function PricingSection({ containerClassName, isInternal, ...props }: Pri
                             );
                         })}
                     </div>
-
-                    {!isInternal && (
-                        <div className="mt-4 w-full rounded-24 bg-(--bg-white-0) p-8 shadow-sm ring-1 ring-(--stroke-soft-200)/40 ring-inset">
-                            <div className="flex items-center justify-between">
-                                <div>
-                                    <p className="text-paragraph-xs font-medium text-(--text-sub-600)">
-                                        {t("pricing.free.target_audience")}
-                                    </p>
-                                    <p className="font-medium">{t("pricing.free.title")}</p>
-                                </div>
-
-                                <Button.Root $style="lighter" asChild>
-                                    <Link href={routes.register.url()}>{t("pricing.free.button_label")}</Link>
-                                </Button.Root>
-                            </div>
-
-                            <div className="mt-6">
-                                <p className="text-paragraph-sm text-(--text-sub-600)">
-                                    {t("pricing.free.description")}
-                                </p>
-                            </div>
-
-                            <Divider.Root className="my-6" />
-
-                            <div className="grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2 md:grid-cols-4">
-                                {t("pricing.free.features")
-                                    .split(",")
-                                    .map((feature, index) => (
-                                        <div className="flex items-center gap-2" key={index}>
-                                            <CheckmarkCircle02SolidIcon className="size-4 text-(--text-sub-600)" />
-                                            <p className="text-paragraph-sm text-(--text-sub-600)">{feature}</p>
-                                        </div>
-                                    ))}
-                            </div>
-                        </div>
-                    )}
                 </div>
             </div>
         </section>

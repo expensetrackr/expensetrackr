@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SubscribeRequest;
 use App\Models\User;
-use Exception;
 use Illuminate\Container\Attributes\CurrentUser;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -33,16 +32,15 @@ final class BillingController
      * Redirects to the billing page for the given product ID.
      */
     public function subscribe(
-        Request $request,
+        SubscribeRequest $request,
         #[CurrentUser] User $user,
     ): RedirectResponse {
-        $productId = $request->query('product_id');
-        $code = $request->query('code', 'default');
-        $isSinglePurchase = $request->query('single_purchase') === 'true';
-
-        if (! $productId) {
-            throw new Exception('Product ID is required');
-        }
+        /** @var string */
+        $productId = $request->input('product_id');
+        /** @var string */
+        $code = $request->input('code');
+        /** @var bool */
+        $isSinglePurchase = $request->input('single_purchase');
 
         if ($isSinglePurchase) {
             try {
