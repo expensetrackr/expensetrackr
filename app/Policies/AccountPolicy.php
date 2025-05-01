@@ -45,7 +45,7 @@ final class AccountPolicy
             return $user->accounts()->count() < 10;
         }
 
-        return false;
+        return $user->accounts()->count() < 1;
     }
 
     /**
