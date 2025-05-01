@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Actions\BankAccounts\CreateAccount;
-use App\Data\Finance\AccountCreateData;
 use App\Http\Requests\CreateAccountRequest;
 use App\Models\Account;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -65,10 +64,7 @@ final class AccountController extends Controller
      */
     public function store(CreateAccountRequest $request, CreateAccount $action): RedirectResponse
     {
-        $action->create(AccountCreateData::from([
-            ...$request->validated(),
-            'isDefault' => false,
-        ]));
+        $action->create($request->validated());
 
         return redirect()->route('accounts.index')
             ->with('toast',

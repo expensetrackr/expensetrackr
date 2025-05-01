@@ -16,7 +16,7 @@ final readonly class CreateContactAction
 {
     use AsAction;
 
-    protected Resend\Client $resend;
+    private Resend\Client $resend;
 
     public function __construct(?Resend\Client $resend = null)
     {
@@ -88,7 +88,7 @@ final readonly class CreateContactAction
      */
     private function parseNameComponents(?string $fullName): array
     {
-        if (! $fullName) {
+        if ($fullName === null || $fullName === '' || $fullName === '0') {
             return ['', ''];
         }
 
