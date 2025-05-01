@@ -1,6 +1,5 @@
-import { composeRefs } from "@radix-ui/react-compose-refs";
-import { Slottable } from "@radix-ui/react-slot";
-import * as TabsPrimitive from "@radix-ui/react-tabs";
+import { Slot, Tabs as TabsPrimitive } from "radix-ui";
+import { composeRefs } from "radix-ui/internal";
 import * as React from "react";
 
 import { useTabObserver } from "#/hooks/use-tab-observer.ts";
@@ -35,7 +34,7 @@ function SegmentedControlList({
             {...props}
             ref={composeRefs(props.ref, listRef)}
         >
-            <Slottable>{children}</Slottable>
+            <Slot.Slottable>{children}</Slot.Slottable>
 
             {/* floating bg */}
             <div

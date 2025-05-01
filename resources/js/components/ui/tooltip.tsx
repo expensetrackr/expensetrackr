@@ -1,11 +1,11 @@
-import * as TooltipPrimitive from "@radix-ui/react-tooltip";
+import { Tooltip as TooltipPrimitives } from "radix-ui";
 import * as React from "react";
 
 import { tv, type VariantProps } from "#/utils/tv.ts";
 
-const TooltipProvider = TooltipPrimitive.Provider;
-const TooltipRoot = TooltipPrimitive.Root;
-const TooltipTrigger = TooltipPrimitive.Trigger;
+const TooltipProvider = TooltipPrimitives.Provider;
+const TooltipRoot = TooltipPrimitives.Root;
+const TooltipTrigger = TooltipPrimitives.Trigger;
 
 export const tooltipVariants = tv({
     slots: {
@@ -84,23 +84,23 @@ function TooltipContent({
     children,
     sideOffset = 4,
     ...rest
-}: React.CustomComponentPropsWithRef<typeof TooltipPrimitive.Content> & VariantProps<typeof tooltipVariants>) {
+}: React.CustomComponentPropsWithRef<typeof TooltipPrimitives.Content> & VariantProps<typeof tooltipVariants>) {
     const { content, arrow } = tooltipVariants({
         $size,
         $variant,
     });
 
     return (
-        <TooltipPrimitive.Portal>
-            <TooltipPrimitive.Content className={content({ class: className })} sideOffset={sideOffset} {...rest}>
+        <TooltipPrimitives.Portal>
+            <TooltipPrimitives.Content className={content({ class: className })} sideOffset={sideOffset} {...rest}>
                 {children}
-                <TooltipPrimitive.Arrow asChild>
+                <TooltipPrimitives.Arrow asChild>
                     <div className={arrow()} />
-                </TooltipPrimitive.Arrow>
-            </TooltipPrimitive.Content>
-        </TooltipPrimitive.Portal>
+                </TooltipPrimitives.Arrow>
+            </TooltipPrimitives.Content>
+        </TooltipPrimitives.Portal>
     );
 }
-TooltipContent.displayName = TooltipPrimitive.Content.displayName;
+TooltipContent.displayName = TooltipPrimitives.Content.displayName;
 
 export { TooltipProvider as Provider, TooltipRoot as Root, TooltipTrigger as Trigger, TooltipContent as Content };

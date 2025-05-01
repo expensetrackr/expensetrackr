@@ -1,20 +1,19 @@
-import { composeRefs } from "@radix-ui/react-compose-refs";
-import { Slottable } from "@radix-ui/react-slot";
-import * as TabsPrimitive from "@radix-ui/react-tabs";
+import { Slot, Tabs as TabsPrimitives } from "radix-ui";
+import { composeRefs } from "radix-ui/internal";
 import * as React from "react";
 
 import { useTabObserver } from "#/hooks/use-tab-observer.ts";
 import { cn } from "#/utils/cn.ts";
 import { type PolymorphicComponentProps } from "#/utils/polymorphic.ts";
 
-const TabMenuHorizontalContent = TabsPrimitive.Content;
+const TabMenuHorizontalContent = TabsPrimitives.Content;
 TabMenuHorizontalContent.displayName = "TabMenuHorizontalContent";
 
 function TabMenuHorizontalRoot({
     className,
     ...rest
-}: Omit<React.ComponentPropsWithoutRef<typeof TabsPrimitive.Root>, "orientation">) {
-    return <TabsPrimitive.Root className={cn("w-full", className)} orientation="horizontal" {...rest} />;
+}: Omit<React.ComponentPropsWithoutRef<typeof TabsPrimitives.Root>, "orientation">) {
+    return <TabsPrimitives.Root className={cn("w-full", className)} orientation="horizontal" {...rest} />;
 }
 
 function TabMenuHorizontalList({
@@ -22,7 +21,7 @@ function TabMenuHorizontalList({
     className,
     wrapperClassName,
     ...rest
-}: React.CustomComponentPropsWithRef<typeof TabsPrimitive.List> & {
+}: React.CustomComponentPropsWithRef<typeof TabsPrimitives.List> & {
     wrapperClassName?: string;
 }) {
     const [lineStyle, setLineStyle] = React.useState({ width: 0, left: 0 });
@@ -51,7 +50,7 @@ function TabMenuHorizontalList({
             className={cn("relative grid overflow-x-auto overflow-y-hidden overscroll-contain", wrapperClassName)}
             ref={listWrapperRef}
         >
-            <TabsPrimitive.List
+            <TabsPrimitives.List
                 className={cn(
                     "group/tab-list relative flex h-12 min-w-auto items-center gap-6 border-y border-(--stroke-soft-200) whitespace-nowrap",
                     className,
@@ -59,7 +58,7 @@ function TabMenuHorizontalList({
                 ref={composeRefs(rest.ref, listRef)}
                 {...rest}
             >
-                <Slottable>{children}</Slottable>
+                <Slot.Slottable>{children}</Slot.Slottable>
 
                 {/* Floating Bg */}
                 <div
@@ -76,7 +75,7 @@ function TabMenuHorizontalList({
                         transitionTimingFunction: "cubic-bezier(0.65, 0, 0.35, 1)",
                     }}
                 />
-            </TabsPrimitive.List>
+            </TabsPrimitives.List>
         </div>
     );
 }
@@ -84,9 +83,9 @@ function TabMenuHorizontalList({
 function TabMenuHorizontalTrigger({
     className,
     ...rest
-}: React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>) {
+}: React.ComponentPropsWithoutRef<typeof TabsPrimitives.Trigger>) {
     return (
-        <TabsPrimitive.Trigger
+        <TabsPrimitives.Trigger
             className={cn(
                 // base
                 "group/tab-item h-12 py-3.5 text-label-sm text-(--text-sub-600) outline-none",

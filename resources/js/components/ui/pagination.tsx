@@ -1,4 +1,4 @@
-import { Slot } from "@radix-ui/react-slot";
+import { Slot } from "radix-ui";
 import * as React from "react";
 
 import { cn } from "#/utils/cn.ts";
@@ -81,7 +81,7 @@ type PaginationRootProps = React.HTMLAttributes<HTMLDivElement> &
 
 function PaginationRoot({ asChild, children, className, variant, ...rest }: PaginationRootProps) {
     const uniqueId = React.useId();
-    const Component = asChild ? Slot : "div";
+    const Component = asChild ? Slot.Root : "div";
     const { root } = paginationVariants({ variant });
 
     const sharedProps: PaginationSharedProps = {
@@ -112,7 +112,7 @@ type PaginationItemProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
 
 const PaginationItem = React.forwardRef<HTMLButtonElement, PaginationItemProps>(
     ({ asChild, children, className, variant, current, ...rest }, forwardedRef) => {
-        const Component = asChild ? Slot : "button";
+        const Component = asChild ? Slot.Root : "button";
         const { item } = paginationVariants({ variant });
 
         return (
@@ -135,7 +135,7 @@ type PaginationNavButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
 
 const PaginationNavButton = React.forwardRef<HTMLButtonElement, PaginationNavButtonProps>(
     ({ asChild, children, className, variant, ...rest }, forwardedRef) => {
-        const Component = asChild ? Slot : "button";
+        const Component = asChild ? Slot.Root : "button";
         const { navButton } = paginationVariants({ variant });
 
         return (

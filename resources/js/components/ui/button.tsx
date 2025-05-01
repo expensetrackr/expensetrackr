@@ -1,4 +1,4 @@
-import { Slot } from "@radix-ui/react-slot";
+import { Slot } from "radix-ui";
 import * as React from "react";
 
 import { type PolymorphicComponentProps } from "#/utils/polymorphic.ts";
@@ -259,7 +259,7 @@ export type ButtonRootProps = VariantProps<typeof buttonVariants> &
 
 function ButtonRoot({ children, $type, $style, $size, asChild, className, ...rest }: ButtonRootProps) {
     const uniqueId = React.useId();
-    const Component = asChild ? Slot : "button";
+    const Component = asChild ? Slot.Root : "button";
     const { root } = buttonVariants({ $type, $style, $size });
 
     const sharedProps: ButtonSharedProps = {

@@ -1,4 +1,4 @@
-import * as LabelPrimitives from "@radix-ui/react-label";
+import { Label as LabelPrimitives } from "radix-ui";
 
 import { twc } from "#/utils/twc.ts";
 

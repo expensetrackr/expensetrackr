@@ -1,4 +1,4 @@
-import { Slot } from "@radix-ui/react-slot";
+import { Slot } from "radix-ui";
 import * as React from "react";
 import ArrowRight01Icon from "virtual:icons/hugeicons/arrow-right-01";
 
@@ -20,7 +20,7 @@ function VerticalStepperRoot({
 }: React.HTMLAttributes<HTMLDivElement> & {
     asChild?: boolean;
 }) {
-    const Component = asChild ? Slot : "div";
+    const Component = asChild ? Slot.Root : "div";
     return (
         <Component className={cn("w-full space-y-2", className)} {...rest}>
             {children}
@@ -77,7 +77,7 @@ type VerticalStepperItemProps = React.ComponentPropsWithRef<"button"> &
 
 function VerticalStepperItem({ asChild, children, $state, className, ...rest }: VerticalStepperItemProps) {
     const uniqueId = React.useId();
-    const Component = asChild ? Slot : "button";
+    const Component = asChild ? Slot.Root : "button";
     const { root } = verticalStepperItemVariants({ $state });
 
     const sharedProps: VerticalStepperItemSharedProps = {

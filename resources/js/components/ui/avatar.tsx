@@ -1,4 +1,4 @@
-import { Slot } from "@radix-ui/react-slot";
+import { Slot } from "radix-ui";
 import * as React from "react";
 
 import { cn } from "#/utils/cn.ts";
@@ -144,7 +144,7 @@ function AvatarRoot({
     ...rest
 }: AvatarRootProps) {
     const uniqueId = React.useId();
-    const Component = asChild ? Slot : "div";
+    const Component = asChild ? Slot.Root : "div";
     const { root } = avatarVariants({ $size, $color });
 
     const sharedProps: AvatarSharedProps = {
@@ -185,7 +185,7 @@ type AvatarImageProps = AvatarSharedProps &
     };
 
 function AvatarImage({ asChild, className, $size, $color, ...rest }: AvatarImageProps) {
-    const Component = asChild ? Slot : "img";
+    const Component = asChild ? Slot.Root : "img";
     const { image } = avatarVariants({ $size, $color });
 
     return <Component className={image({ className })} {...rest} />;
@@ -245,7 +245,7 @@ type AvatarBrandLogoProps = React.ImgHTMLAttributes<HTMLImageElement> & {
 };
 
 function AvatarBrandLogo({ asChild, className, ...rest }: AvatarBrandLogoProps) {
-    const Component = asChild ? Slot : "img";
+    const Component = asChild ? Slot.Root : "img";
 
     return (
         <Component
