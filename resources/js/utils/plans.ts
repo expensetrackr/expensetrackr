@@ -49,6 +49,7 @@ export const plans: Array<Plan> = [
     },
     {
         code: "business",
+        isFeatured: true,
         icon: Briefcase01SolidIcon,
         iconColor: "var(--state-feature-base)",
         price: {
