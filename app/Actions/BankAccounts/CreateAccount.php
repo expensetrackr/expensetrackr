@@ -40,16 +40,16 @@ final class CreateAccount
         // Create the accountable model based on the account type with default values
         $accountable = match ($input['type']) {
             AccountType::CreditCard => new CreditCard([
-                'available_credit' => $input['available_credit'],
-                'minimum_payment' => $input['minimum_payment'],
-                'apr' => $input['apr'],
-                'annual_fee' => $input['annual_fee'],
-                'expires_at' => $input['expires_at'],
+                'available_credit' => $input['available_credit'] ?? null,
+                'minimum_payment' => $input['minimum_payment'] ?? null,
+                'apr' => $input['apr'] ?? null,
+                'annual_fee' => $input['annual_fee'] ?? null,
+                'expires_at' => $input['expires_at'] ?? null,
             ]),
             AccountType::Loan => new Loan([
-                'interest_rate' => $input['interest_rate'],
-                'rate_type' => $input['rate_type'],
-                'term_months' => $input['term_months'],
+                'interest_rate' => $input['interest_rate'] ?? null,
+                'rate_type' => $input['rate_type'] ?? null,
+                'term_months' => $input['term_months'] ?? null,
             ]),
             default => new $type(),
         };
