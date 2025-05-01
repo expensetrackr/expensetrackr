@@ -21,4 +21,12 @@ return [
             ],
         ],
     ],
+    'pricing' => [
+        'title' => 'Precios',
+        'description' => 'Precios transparentes. Compara nuestros planes Personal, Negocios y Empresarial para encontrar la mejor opción para tus finanzas personales o de negocio.',
+    ],
+    'changelog' => [
+        'title' => 'Registro de cambios',
+        'description' => 'Sigue la evolución de ExpenseTrackr. Nuestro registro de cambios detalla nuevas características, mejoras de rendimiento y correcciones de errores mientras mejoramos continuamente nuestra aplicación de gestión financiera.',
+    ],
 ];
