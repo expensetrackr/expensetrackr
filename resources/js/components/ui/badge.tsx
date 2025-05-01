@@ -1,4 +1,4 @@
-import { Slot } from "@radix-ui/react-slot";
+import { Slot } from "radix-ui";
 import * as React from "react";
 
 import { type PolymorphicComponentProps } from "#/utils/polymorphic.ts";
@@ -441,7 +441,7 @@ function BadgeRoot({
     ...rest
 }: BadgeRootProps) {
     const uniqueId = React.useId();
-    const Component = asChild ? Slot : "div";
+    const Component = asChild ? Slot.Root : "div";
     const { root } = badgeVariants({ $size, $style, $color, disabled, $square });
 
     const sharedProps: BadgeSharedProps = {

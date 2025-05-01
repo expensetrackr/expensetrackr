@@ -1,4 +1,4 @@
-import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";
+import { DropdownMenu as DropdownMenuPrimitive } from "radix-ui";
 import ArrowRight01Icon from "virtual:icons/hugeicons/arrow-right-01";
 
 import { cn } from "#/utils/cn.ts";

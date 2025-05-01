@@ -1,5 +1,4 @@
-import * as PopoverPrimitive from "@radix-ui/react-popover";
-import { Slottable } from "@radix-ui/react-slot";
+import { Popover as PopoverPrimitive, Slot } from "radix-ui";
 
 import { cn } from "#/utils/cn.ts";
 
@@ -43,7 +42,7 @@ function PopoverContent({
                 sideOffset={sideOffset}
                 {...rest}
             >
-                <Slottable>{children}</Slottable>
+                <Slot.Slottable>{children}</Slot.Slottable>
                 {showArrow && (
                     <PopoverPrimitive.Arrow asChild>
                         <div className="size-[11px] -translate-y-[calc(50%+1px)] -rotate-45 rounded-bl-[3px] border border-(--stroke-soft-200) bg-(--bg-white-0) [clip-path:polygon(0_100%,0_0,100%_100%)]"></div>

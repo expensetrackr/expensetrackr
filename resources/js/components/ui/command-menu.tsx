@@ -1,5 +1,5 @@
-import { type DialogProps } from "@radix-ui/react-dialog";
 import { Command } from "cmdk";
+import { type Dialog } from "radix-ui";
 import * as React from "react";
 
 import { cn } from "#/utils/cn.ts";
@@ -17,7 +17,7 @@ const CommandDialog = ({
     overlayClassName,
     shouldFilter = true,
     ...rest
-}: DialogProps & {
+}: Dialog.DialogProps & {
     className?: string;
     overlayClassName?: string;
     shouldFilter?: boolean;

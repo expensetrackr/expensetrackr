@@ -1,4 +1,4 @@
-import * as DialogPrimitive from "@radix-ui/react-dialog";
+import { Dialog as DialogPrimitive } from "radix-ui";
 import * as React from "react";
 import Cancel01Icon from "virtual:icons/hugeicons/cancel-01";
 

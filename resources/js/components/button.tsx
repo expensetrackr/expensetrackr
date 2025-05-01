@@ -1,4 +1,4 @@
-import { Slottable } from "@radix-ui/react-slot";
+import { Slot } from "radix-ui";
 import * as ButtonPrimitives from "./ui/button.tsx";
 
 export type ButtonProps = React.ComponentPropsWithoutRef<typeof ButtonPrimitives.Root> & {
@@ -19,7 +19,7 @@ export function Button({
     return (
         <ButtonPrimitives.Root {...rest}>
             {LeadingIcon && <ButtonPrimitives.Icon as={LeadingIcon} className={leadingIconClassName} />}
-            <Slottable>{children}</Slottable>
+            <Slot.Slottable>{children}</Slot.Slottable>
             {TrailingIcon && <ButtonPrimitives.Icon as={TrailingIcon} className={trailingIconClassName} />}
         </ButtonPrimitives.Root>
     );

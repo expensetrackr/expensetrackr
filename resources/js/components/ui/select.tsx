@@ -1,6 +1,4 @@
-import * as ScrollAreaPrimitives from "@radix-ui/react-scroll-area";
-import * as SelectPrimitives from "@radix-ui/react-select";
-import { Slottable } from "@radix-ui/react-slot";
+import { ScrollArea as ScrollAreaPrimitives, Slot, Select as SelectPrimitives } from "radix-ui";
 import * as React from "react";
 import ArrowDown01Icon from "virtual:icons/hugeicons/arrow-down-01";
 import Tick01Icon from "virtual:icons/hugeicons/tick-01";
@@ -270,7 +268,7 @@ function SelectTrigger({
 
     return (
         <SelectPrimitives.Trigger className={triggerRoot({ class: className })} {...rest}>
-            <Slottable>{children}</Slottable>
+            <Slot.Slottable>{children}</Slot.Slottable>
             <SelectPrimitives.Icon asChild>
                 <ArrowDown01Icon className={triggerArrow()} />
             </SelectPrimitives.Icon>

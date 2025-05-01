@@ -1,4 +1,4 @@
-import { type TooltipArrowProps } from "@radix-ui/react-tooltip";
+import { type Tooltip } from "radix-ui";
 import * as React from "react";
 import { Bar, BarChart, type BarProps, Tooltip as RechartsTooltip, XAxis, YAxis } from "recharts";
 
@@ -74,7 +74,7 @@ const TooltipContent = ({ payload }: { payload: any }) => {
 
 export function BudgetOverviewChart({ data }: { data: any }) {
     const { md, lg } = useBreakpoint();
-    const [tooltipPos, setTooltipPos] = React.useState<TooltipArrowProps>({
+    const [tooltipPos, setTooltipPos] = React.useState<Tooltip.TooltipArrowProps>({
         x: undefined,
         y: undefined,
     });

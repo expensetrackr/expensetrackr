@@ -1,4 +1,4 @@
-import { Slot } from "@radix-ui/react-slot";
+import { Slot } from "radix-ui";
 import * as React from "react";
 
 import { type PolymorphicComponentProps } from "#/utils/polymorphic.ts";
@@ -160,7 +160,7 @@ function InputRoot({
         asChild?: boolean;
     }) {
     const uniqueId = React.useId();
-    const Component = asChild ? Slot : "div";
+    const Component = asChild ? Slot.Root : "div";
 
     const { root } = inputVariants({
         $size,
@@ -199,7 +199,7 @@ function InputWrapper({
     InputSharedProps & {
         asChild?: boolean;
     }) {
-    const Component = asChild ? Slot : "label";
+    const Component = asChild ? Slot.Root : "label";
 
     const { wrapper } = inputVariants({
         $size,
@@ -220,7 +220,7 @@ type InputProps = React.ComponentPropsWithRef<"input"> &
     };
 
 function Input({ className, type = "text", $size, $error, asChild, ...rest }: InputProps) {
-    const Component = asChild ? Slot : "input";
+    const Component = asChild ? Slot.Root : "input";
 
     const { input } = inputVariants({
         $size,

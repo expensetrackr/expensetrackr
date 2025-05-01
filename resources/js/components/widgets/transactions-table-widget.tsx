@@ -50,9 +50,9 @@ export function TransactionsTableWidget({
                         <Input.Wrapper>
                             <Input.Icon as={Search01Icon} />
                             <Input.Input
-                                onChange={(e) => setParams({ query: e.target.value })}
+                                onChange={(e) => setParams({ name: e.target.value })}
                                 placeholder="Search..."
-                                value={params.query}
+                                value={params.name}
                             />
                             <Kbd.Root>
                                 <CommandIcon className="size-2.5" />1

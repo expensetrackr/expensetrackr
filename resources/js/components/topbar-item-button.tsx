@@ -1,4 +1,4 @@
-import { Slot, Slottable } from "@radix-ui/react-slot";
+import { Slot } from "radix-ui";
 import * as React from "react";
 
 import { cn } from "#/utils/cn.ts";
@@ -10,7 +10,7 @@ type TopbarItemButtonProps = {
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 function TopbarItemButton({ children, asChild, hasNotification, className, ...rest }: TopbarItemButtonProps) {
-    const Component = asChild ? Slot : "button";
+    const Component = asChild ? Slot.Root : "button";
 
     return (
         <Component
@@ -25,7 +25,7 @@ function TopbarItemButton({ children, asChild, hasNotification, className, ...re
             )}
             {...rest}
         >
-            <Slottable>{children}</Slottable>
+            <Slot.Slottable>{children}</Slot.Slottable>
             {hasNotification && (
                 <div className="absolute top-2.5 right-2.5 size-2 rounded-full border-2 border-(--stroke-white-0) bg-state-error-base shadow-xs" />
             )}

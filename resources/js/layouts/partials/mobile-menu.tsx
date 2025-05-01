@@ -1,5 +1,5 @@
 import { usePage } from "@inertiajs/react";
-import * as DialogPrimitives from "@radix-ui/react-dialog";
+import { Dialog as DialogPrimitives } from "radix-ui";
 import * as React from "react";
 import Add01Icon from "virtual:icons/hugeicons/add-01";
 import ArrowRight01Icon from "virtual:icons/hugeicons/arrow-right-01";

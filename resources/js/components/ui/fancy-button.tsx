@@ -1,4 +1,4 @@
-import { Slot } from "@radix-ui/react-slot";
+import { Slot } from "radix-ui";
 import * as React from "react";
 
 import { type PolymorphicComponentProps } from "#/utils/polymorphic.ts";
@@ -92,7 +92,7 @@ type FancyButtonProps = VariantProps<typeof fancyButtonVariants> &
 
 function FancyButtonRoot({ asChild, children, $type, $size, className, ...rest }: FancyButtonProps) {
     const uniqueId = React.useId();
-    const Component = asChild ? Slot : "button";
+    const Component = asChild ? Slot.Root : "button";
     const { root } = fancyButtonVariants({ $type, $size });
 
     const sharedProps: FancyButtonSharedProps = {

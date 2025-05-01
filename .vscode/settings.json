@@ -39,7 +39,8 @@
         "@unpic/react/**",
         "node:stream/consumers",
         "node:test",
-        "node:console"
+        "node:console",
+        "radix-ui"
     ],
     "typescript.preferences.importModuleSpecifierEnding": "js",
 }

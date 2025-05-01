@@ -1,5 +1,5 @@
 import { useForm } from "@inertiajs/react";
-import * as LabelPrimitives from "@radix-ui/react-label";
+import { Label as LabelPrimitives } from "radix-ui";
 import { toast } from "sonner";
 
 import * as Switch from "#/components/ui/switch.tsx";
