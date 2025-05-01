@@ -4,9 +4,8 @@ import * as React from "react";
 import { Link } from "#/components/link.tsx";
 import * as DigitInput from "#/components/ui/digit-input.tsx";
 import * as FancyButton from "#/components/ui/fancy-button.tsx";
+import { Field } from "#/components/ui/form/field.tsx";
 import { TextField } from "#/components/ui/form/text-field.tsx";
-import * as Hint from "#/components/ui/hint.tsx";
-import * as Label from "#/components/ui/label.tsx";
 import * as LinkButton from "#/components/ui/link-button.tsx";
 import { useTranslation } from "#/hooks/use-translation.ts";
 import { AuthLayout } from "#/layouts/auth-layout.tsx";
@@ -63,22 +62,19 @@ export default function TwoFactorChallengePage() {
                         value={data.recovery_code}
                     />
                 ) : (
-                    <div className="flex flex-col gap-1">
-                        <Label.Root htmlFor="code">{t("form.fields.code.label")}</Label.Root>
+                    <Field error={errors.code} id="code" label={t("form.fields.code.label")}>
                         <DigitInput.Root
                             $error={!!errors.code}
-                            numInputs={6}
-                            onChange={(value) => setData("code", value)}
-                            shouldAutoFocus
+                            name="code"
+                            onValueChange={(value) => setData("code", value)}
                             value={data.code}
-                        />
-                        {errors.code && (
-                            <Hint.Root $error>
-                                <Hint.Icon />
-                                {errors.code}
-                            </Hint.Root>
-                        )}
-                    </div>
+                        >
+                            {Array.from({ length: 6 }).map((_, index) => (
+                                <DigitInput.Input key={index} />
+                            ))}
+                            <DigitInput.HiddenInput />
+                        </DigitInput.Root>
+                    </Field>
                 )}
 
                 <div className="flex items-center justify-end gap-3 py-2">

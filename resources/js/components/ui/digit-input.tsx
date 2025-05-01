@@ -1,46 +1,46 @@
-import OtpInput, { type OTPInputProps } from "react-otp-input";
+import { unstable_OneTimePasswordField as OneTimePasswordFieldPrimitives } from "radix-ui";
 
-import { type TwcComponentProps } from "react-twc";
 import { cn } from "#/utils/cn.ts";
-import { twc } from "#/utils/twc.ts";
-
-type OtpOptions = Omit<OTPInputProps, "renderInput">;
 
 type DigitInputProps = {
     $error?: boolean;
     className?: string;
     disabled?: boolean;
-} & OtpOptions;
+} & OneTimePasswordFieldPrimitives.OneTimePasswordFieldProps;
 
-function DigitInput({ $error, className, disabled, ...rest }: DigitInputProps) {
+function DigitInputRoot({ $error, className, ...rest }: DigitInputProps) {
     return (
-        <OtpInput
-            containerStyle={cn("flex w-full items-center gap-2.5", className)}
-            renderInput={(inputProps) => <DigitInputSlot $error={$error} disabled={disabled} {...inputProps} />}
-            skipDefaultStyles
-            {...rest}
-        />
+        <OneTimePasswordFieldPrimitives.Root className={cn("flex w-full items-center gap-2.5", className)} {...rest} />
     );
 }
 DigitInput.displayName = "DigitInput";
 
-type DigitInputSlotProps = TwcComponentProps<"input"> & {
+type DigitInputSlotProps = OneTimePasswordFieldPrimitives.OneTimePasswordFieldInputProps & {
     $error?: boolean;
 };
 
-const DigitInputSlot = twc.input<DigitInputSlotProps>(({ $error }) => [
-    "h-16 w-full min-w-0 rounded-10 bg-(--bg-white-0) text-center text-h5 text-(--text-strong-950) ring-1 shadow-xs ring-(--stroke-soft-200) outline-none ring-inset",
-    "transition duration-200 ease-out",
-    // hover
-    "hover:bg-(--bg-weak-50) hover:shadow-none hover:ring-transparent",
-    // focus
-    "focus:shadow-button-important-focus focus:ring-(--stroke-strong-950) focus:outline-none",
-    // selection
-    "selection:bg-none",
-    // disabled
-    "disabled:bg-(--bg-weak-50) disabled:text-(--text-disabled-300) disabled:shadow-none disabled:ring-transparent",
-    $error &&
-        "ring-state-error-base hover:ring-state-error-base focus:shadow-button-error-focus focus:ring-state-error-base",
-]);
+function DigitInput({ $error, className, ...rest }: DigitInputSlotProps) {
+    return (
+        <OneTimePasswordFieldPrimitives.Input
+            className={cn(
+                "h-16 w-full min-w-0 rounded-10 bg-(--bg-white-0) text-center text-h5 text-(--text-strong-950) shadow-xs ring-1 ring-(--stroke-soft-200) outline-none ring-inset",
+                "transition duration-200 ease-out",
+                // hover
+                "hover:bg-(--bg-weak-50) hover:shadow-none hover:ring-transparent",
+                // focus
+                "focus:shadow-button-important-focus focus:ring-(--stroke-strong-950) focus:outline-none",
+                // selection
+                "selection:bg-none",
+                // disabled
+                "disabled:bg-(--bg-weak-50) disabled:text-(--text-disabled-300) disabled:shadow-none disabled:ring-transparent",
+                $error &&
+                    "ring-state-error-base hover:ring-state-error-base focus:shadow-button-error-focus focus:ring-state-error-base",
+            )}
+            {...rest}
+        />
+    );
+}
 
-export { DigitInput as Root };
+const DigitInputHiddenInput = OneTimePasswordFieldPrimitives.OneTimePasswordFieldHiddenInput;
+
+export { DigitInputRoot as Root, DigitInput as Input, DigitInputHiddenInput as HiddenInput };
