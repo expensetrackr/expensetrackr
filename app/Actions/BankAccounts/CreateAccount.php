@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Actions\BankAccounts;
 
-use App\Data\Finance\AccountCreateData;
 use App\Enums\Finance\AccountType;
 use App\Models\Account;
 use App\Models\CreditCard;
@@ -18,12 +17,17 @@ use Illuminate\Support\Facades\Context;
 
 final class CreateAccount
 {
-    public function create(AccountCreateData $payload, bool $isManual = false): void
+    /**
+     * Create an account.
+     *
+     * @param  array<string, mixed>  $input
+     */
+    public function create(array $input, bool $isManual = false): void
     {
-        $isManual = $isManual || $payload->externalId === null;
+        $isManual = $isManual || $input['externalId'] === null;
 
         // Determine the account model class based on the account type
-        $type = match ($payload->type) {
+        $type = match ($input['type']) {
             AccountType::Depository => Depository::class,
             AccountType::Investment => Investment::class,
             AccountType::Loan => Loan::class,
@@ -34,34 +38,34 @@ final class CreateAccount
         };
 
         // Create the accountable model based on the account type with default values
-        $accountable = match ($payload->type) {
+        $accountable = match ($input['type']) {
             AccountType::CreditCard => new CreditCard([
-                'available_credit' => $payload->availableCredit,
-                'minimum_payment' => $payload->minimumPayment,
-                'apr' => $payload->apr,
-                'annual_fee' => $payload->annualFee,
-                'expires_at' => $payload->expiresAt,
+                'available_credit' => $input['available_credit'],
+                'minimum_payment' => $input['minimum_payment'],
+                'apr' => $input['apr'],
+                'annual_fee' => $input['annual_fee'],
+                'expires_at' => $input['expires_at'],
             ]),
             AccountType::Loan => new Loan([
-                'interest_rate' => $payload->interestRate,
-                'rate_type' => $payload->rateType,
-                'term_months' => $payload->termMonths,
+                'interest_rate' => $input['interest_rate'],
+                'rate_type' => $input['rate_type'],
+                'term_months' => $input['term_months'],
             ]),
             default => new $type(),
         };
         $accountable->save();
 
         $values = [
-            'bank_connection_id' => $payload->bankConnectionId,
-            'name' => $payload->name,
-            'currency_code' => $payload->currencyCode,
-            'initial_balance' => $payload->initialBalance,
-            'current_balance' => $payload->initialBalance,
-            'is_default' => $payload->isDefault,
+            'bank_connection_id' => $input['bank_connection_id'],
+            'name' => $input['name'],
+            'currency_code' => $input['currency_code'],
+            'initial_balance' => $input['initial_balance'],
+            'current_balance' => $input['initial_balance'],
+            'is_default' => $input['is_default'],
             'is_manual' => $isManual,
-            'external_id' => $payload->externalId,
+            'external_id' => $input['external_id'],
             'workspace_id' => Context::get('currentWorkspace'),
-            'subtype' => $payload->subtype,
+            'subtype' => $input['subtype'],
             'accountable_id' => $accountable->id,
             'accountable_type' => $accountable->getMorphClass(),
         ];
@@ -74,7 +78,7 @@ final class CreateAccount
 
         Account::updateOrCreate(
             [
-                'external_id' => $payload->externalId,
+                'external_id' => $input['external_id'],
             ],
             $values
         );

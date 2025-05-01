@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Actions\BankAccounts;
 
-use App\Data\Finance\AccountCreateData;
 use App\Data\Finance\BankConnectionCreateData;
 use App\Jobs\SyncBankAccounts;
 use App\Models\BankConnection;
@@ -39,16 +38,16 @@ final readonly class CreateBankConnection
         );
 
         foreach ($payload->accounts as $account) {
-            $this->action->create(AccountCreateData::from([
-                'bankConnectionId' => $bankConnection->id,
+            $this->action->create([
+                'bank_connection_id' => $bankConnection->id,
                 'name' => $account->name,
-                'currencyCode' => $account->currency,
-                'initialBalance' => $account->balance,
-                'isDefault' => false,
-                'externalId' => $account->accountId,
+                'currency_code' => $account->currency,
+                'initial_balance' => $account->balance,
+                'is_default' => false,
+                'external_id' => $account->accountId,
                 'type' => $account->type,
                 'subtype' => $account->subtype,
-            ]));
+            ]);
         }
 
         // Trigger an initial sync of the accounts
