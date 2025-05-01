@@ -33,7 +33,19 @@ final class WorkspacePolicy
      */
     public function create(User $user): bool
     {
-        return $user->isSubscribed();
+        if ($user->is_admin || $user->subscribed('enterprise')) {
+            return true;
+        }
+
+        if ($user->subscribed('personal')) {
+            return $user->workspaces()->count() < 1;
+        }
+
+        if ($user->subscribed('business')) {
+            return $user->workspaces()->count() < 3;
+        }
+
+        return false;
     }
 
     /**

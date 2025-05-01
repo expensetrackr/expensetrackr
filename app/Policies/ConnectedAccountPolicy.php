@@ -31,9 +31,17 @@ final class ConnectedAccountPolicy
     /**
      * Determine whether the user can create models.
      */
-    public function create(): bool
+    public function create(User $user): bool
     {
-        return true;
+        if ($user->is_admin || $user->subscribed('business') || $user->subscribed('enterprise')) {
+            return true;
+        }
+
+        if ($user->subscribed('personal')) {
+            return $user->accounts()->count() < 1;
+        }
+
+        return false;
     }
 
     /**

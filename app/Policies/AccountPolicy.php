@@ -33,7 +33,19 @@ final class AccountPolicy
      */
     public function create(User $user): bool
     {
-        return ! (! $user->isSubscribed() && $user->accounts()->count() >= 3);
+        if ($user->is_admin || $user->subscribed('enterprise')) {
+            return true;
+        }
+
+        if ($user->subscribed('personal')) {
+            return $user->accounts()->count() < 3;
+        }
+
+        if ($user->subscribed('business')) {
+            return $user->accounts()->count() < 10;
+        }
+
+        return false;
     }
 
     /**
