@@ -63,7 +63,11 @@ export function PricingTable() {
                                                     "--color-plan-color": plan.iconColor,
                                                 }}
                                             >
-                                                <plan.icon className="size-6 text-(--color-plan-color)" />
+                                                <plan.icon
+                                                    aria-hidden="true"
+                                                    className="size-6 text-(--color-plan-color)"
+                                                    focusable="false"
+                                                />
                                             </div>
                                             <div className="ml-3">
                                                 <p className="text-paragraph-xs font-medium text-(--text-sub-600)">
