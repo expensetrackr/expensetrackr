@@ -36,7 +36,7 @@ export const plans: Array<Plan> = [
         iconColor: "var(--state-information-base)",
         price: {
             monthly: 9.99,
-            yearly: 8,
+            yearly: 96,
             onetime: null,
         },
         productPriceId: {
@@ -54,7 +54,7 @@ export const plans: Array<Plan> = [
         iconColor: "var(--state-feature-base)",
         price: {
             monthly: 29.99,
-            yearly: 24,
+            yearly: 288,
             onetime: null,
         },
         productPriceId: {
