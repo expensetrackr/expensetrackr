@@ -22,7 +22,7 @@ final class BankConnectionPolicy
      */
     public function view(User $user, BankConnection $bankConnection): bool
     {
-        return $bankConnection->workspace->is($user->currentWorkspace);
+        return $user->currentWorkspace->is($bankConnection->workspace);
     }
 
     /**
