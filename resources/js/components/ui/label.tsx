@@ -12,10 +12,11 @@ function LabelRoot({ className, ...props }: LabelRootProps) {
             className={cn(
                 "group flex cursor-pointer items-center gap-px text-label-sm aria-disabled:text-(--text-disabled-300)",
                 {
-                    "aria-disabled": props.disabled,
+                    "aria-disabled pointer-events-none": props.disabled,
                 },
                 className,
             )}
+            tabIndex={props.disabled ? -1 : undefined}
             {...props}
         />
     );
