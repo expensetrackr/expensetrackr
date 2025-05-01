@@ -40,7 +40,7 @@ final class BillingController
         /** @var string */
         $code = $request->input('code');
         /** @var bool */
-        $isSinglePurchase = $request->input('single_purchase') === 'true';
+        $isSinglePurchase = $request->input('single_purchase');
 
         if ($isSinglePurchase) {
             try {
