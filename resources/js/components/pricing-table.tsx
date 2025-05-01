@@ -12,7 +12,7 @@ import * as Button from "./ui/button.tsx";
 import * as SegmentedControl from "./ui/segmented-control.tsx";
 
 export function PricingTable() {
-    const [interval, setInterval] = React.useState("yearly");
+    const [interval, setInterval] = React.useState("monthly");
     const { language, t } = useTranslation();
     const currencyFormat = resolveCurrencyFormat(language, "USD");
 

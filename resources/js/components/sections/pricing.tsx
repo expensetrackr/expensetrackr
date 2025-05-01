@@ -23,7 +23,7 @@ type PricingSectionProps = React.ComponentPropsWithRef<"section"> & {
 };
 
 export function PricingSection({ containerClassName, isInternal, ...props }: PricingSectionProps) {
-    const [interval, setInterval] = React.useState("yearly");
+    const [interval, setInterval] = React.useState("monthly");
     const { language, t } = useTranslation();
     const isReducedMotion = useReducedMotion();
     const currencyFormat = resolveCurrencyFormat(language, "USD");
