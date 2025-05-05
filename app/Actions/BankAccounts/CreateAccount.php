@@ -24,7 +24,7 @@ final class CreateAccount
      */
     public function create(array $input, bool $isManual = false): void
     {
-        $isManual = $isManual || $input['external_id'] === null;
+        $isManual = $isManual || (array_key_exists('external_id', $input) && $input['external_id'] === null);
 
         // Determine the account model class based on the account type
         $type = match ($input['type']) {
@@ -63,7 +63,7 @@ final class CreateAccount
             'current_balance' => $input['initial_balance'],
             'is_default' => $input['is_default'],
             'is_manual' => $isManual,
-            'external_id' => $input['external_id'],
+            'external_id' => $input['external_id'] ?? null,
             'workspace_id' => Context::get('currentWorkspace'),
             'subtype' => $input['subtype'],
             'accountable_id' => $accountable->id,
@@ -78,7 +78,7 @@ final class CreateAccount
 
         Account::updateOrCreate(
             [
-                'external_id' => $input['external_id'],
+                'external_id' => $input['external_id'] ?? null,
             ],
             $values
         );
