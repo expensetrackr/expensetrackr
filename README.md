@@ -1,5 +1,7 @@
 # ExpenseTrackr
 
+![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/expensetrackr/expensetrackr.app)
+
 ExpenseTrackr is an open-source personal and team finance application built with Laravel and React. It helps you manage your finances by tracking multiple accounts, investments, and expenses in one place, with support for multiple users and workspaces.
 
 ## Features
