@@ -3,28 +3,25 @@ import Delete02Icon from "virtual:icons/hugeicons/delete-02";
 
 import * as Button from "#/components/ui/button.tsx";
 import * as Modal from "#/components/ui/modal.tsx";
-import { useTransactionsParams } from "#/hooks/use-transactions-params.ts";
+import { useActionsParams } from "#/hooks/use-actions-params.ts";
 import { routes } from "#/routes.ts";
 
-type DeleteTransactionModalProps = {
-    transaction: Resources.Transaction;
-};
-
-export function DeleteTransactionModal({ transaction }: DeleteTransactionModalProps) {
-    const { setParams, ...params } = useTransactionsParams();
+export function DeleteTransactionModal() {
+    const actions = useActionsParams();
     const form = useForm();
+    const isOpen = actions.action === "delete" && actions.resource === "transactions" && !!actions.resourceId;
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        if (!params.transactionId) {
+        if (!actions.resourceId) {
             return;
         }
 
-        form.delete(routes.transactions.destroy.url({ transaction: transaction.id }), {
+        form.delete(routes.transactions.destroy.url({ transaction: actions.resourceId }), {
             preserveScroll: true,
             async onSuccess() {
-                await setParams({ action: null });
+                await actions.resetParams();
             },
             onError() {
                 form.reset();
@@ -33,10 +30,7 @@ export function DeleteTransactionModal({ transaction }: DeleteTransactionModalPr
     };
 
     return (
-        <Modal.Root
-            onOpenChange={() => setParams({ action: null, transactionId: null })}
-            open={params.action === "delete" && transaction.id === params.transactionId}
-        >
+        <Modal.Root onOpenChange={() => actions.resetParams()} open={isOpen}>
             <Modal.Content className="max-w-lg">
                 <Modal.Header
                     description="This action cannot be undone."
@@ -46,7 +40,7 @@ export function DeleteTransactionModal({ transaction }: DeleteTransactionModalPr
 
                 <Modal.Body className="p-0">
                     <form
-                        {...routes.transactions.destroy.form({ transaction: transaction.id })}
+                        {...routes.transactions.destroy.form({ transaction: actions.resourceId ?? "" })}
                         id="delete-transaction-form"
                         onSubmit={handleSubmit}
                     >
@@ -61,7 +55,7 @@ export function DeleteTransactionModal({ transaction }: DeleteTransactionModalPr
                             $style="stroke"
                             $type="neutral"
                             className="w-full"
-                            onClick={() => setParams({ action: null })}
+                            onClick={() => actions.resetParams()}
                         >
                             Cancel
                         </Button.Root>

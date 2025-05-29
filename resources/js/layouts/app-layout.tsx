@@ -2,11 +2,13 @@ import * as React from "react";
 import { toast } from "sonner";
 
 import { AppCommandMenu } from "#/components/commands/app-command-menu.tsx";
+import { DeleteTransactionModal } from "#/components/delete-transaction-modal.tsx";
 import { CreateAccountDrawer } from "#/components/drawers/create-account-drawer.tsx";
 import { CreateTransactionDrawer } from "#/components/drawers/create-transaction-drawer.tsx";
 import { HeaderMobile } from "#/components/header-mobile.tsx";
 import { Sidebar } from "#/components/sidebar.tsx";
 import { Toaster } from "#/components/toaster.tsx";
+import { TransactionDetailsDrawer } from "#/components/transactions/details-drawer.tsx";
 import { type PageProps } from "#/types/globals.js";
 import { cn } from "#/utils/cn.ts";
 
@@ -53,8 +55,12 @@ export function AppLayout({ children, defaultCollapsed = false, childrenWrapperC
 
             <Toaster position="top-center" />
             <AppCommandMenu />
+
             {props.permissions.canCreateAccounts && <CreateAccountDrawer />}
+
             {props.permissions.canCreateTransactions && <CreateTransactionDrawer />}
+            <TransactionDetailsDrawer />
+            <DeleteTransactionModal />
         </>
     );
 }
