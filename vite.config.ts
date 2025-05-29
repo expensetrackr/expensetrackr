@@ -6,9 +6,13 @@ import tailwindcss from "@tailwindcss/vite";
 import { run } from "vite-plugin-run";
 import path from "node:path";
 import { FileSystemIconLoader } from "unplugin-icons/loaders";
+import { wayfinder } from "@laravel/vite-plugin-wayfinder";
 
 export default defineConfig({
     plugins: [
+        wayfinder({
+            formVariants: true,
+        }),
         Icons({
             compiler: "jsx",
             jsx: "react",
@@ -35,11 +39,6 @@ export default defineConfig({
         }),
         tailwindcss(),
         run([
-            {
-                name: "wayfinder",
-                run: ["php", "artisan", "wayfinder:generate", "--with-form"],
-                pattern: ["routes/**/*.php", "app/**/Http/**/*.php"],
-            },
             {
                 name: "laravel-data-types",
                 run: ["php", "artisan", "typescript:transform", "--format"],
