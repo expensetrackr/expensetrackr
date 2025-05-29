@@ -59,16 +59,16 @@ final class CreateAccount
         $accountable->save();
 
         $values = [
-            'bank_connection_id' => $input['bank_connection_id'],
+            'bank_connection_id' => $input['bank_connection_id'] ?? null,
             'name' => $input['name'],
             'currency_code' => $input['currency_code'],
             'initial_balance' => $input['initial_balance'],
             'current_balance' => $input['initial_balance'],
-            'is_default' => $input['is_default'],
+            'is_default' => $input['is_default'] ?? false,
             'is_manual' => $isManual,
             'external_id' => $input['external_id'] ?? null,
             'workspace_id' => Context::get('currentWorkspace'),
-            'subtype' => $input['subtype'],
+            'subtype' => $input['subtype'] ?? null,
             'accountable_id' => $accountable->id,
             'accountable_type' => $accountable->getMorphClass(),
         ];
