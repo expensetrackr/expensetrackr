@@ -75,6 +75,10 @@ export function TransactionDetailsDrawer() {
     const onSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
+        if (!transaction || isLoading) {
+            return;
+        }
+
         form.put(routes.transactions.update.url({ transaction: transaction?.id ?? "" }), {
             errorBag: "updateTransaction",
             preserveScroll: true,
