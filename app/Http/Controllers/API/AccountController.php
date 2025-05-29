@@ -55,12 +55,12 @@ final class AccountController extends Controller
      */
     public function show(Account $account): AccountResource
     {
-        return $account->with(['bankConnection', 'transactions' => function (Builder $query): void {
+        return $account->load(['bankConnection', 'transactions' => function (Builder $query): void {
             $query
                 ->latest('dated_at')
                 ->with('category')
                 ->limit(3);
-        }])->firstOrFail()->toResource();
+        }])->toResource();
     }
 
     /**
