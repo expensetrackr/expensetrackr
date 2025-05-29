@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Observers;
 
-use App\Actions\Resend\CreateContactAction;
 use App\Jobs\CreateResendContactJob;
 use App\Models\User;
 use App\Utilities\Workspaces\WorkspaceFeatures;

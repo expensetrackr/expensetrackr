@@ -8,7 +8,6 @@ use App\Actions\BankAccounts\CreateAccount;
 use App\Http\Requests\CreateAccountRequest;
 use App\Models\Account;
 use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -23,26 +22,6 @@ final class AccountController extends Controller
      */
     public function index(Request $request): Response
     {
-        $accountPublicId = $request->query('account_id');
-
-        $account = null;
-        if ($accountPublicId) {
-            $account = Account::with(
-                [
-                    'bankConnection',
-                    'transactions' => function (Builder $query): void {
-                        $query
-                            ->latest('dated_at')
-                            ->with('category')
-                            ->limit(3);
-                    },
-                ]
-            )
-                ->wherePublicId($accountPublicId)
-                ->firstOrFail()
-                ->toResource();
-        }
-
         return Inertia::render('accounts/page', [
             'query' => $request->query(),
             'accounts' => QueryBuilder::for(Account::class)
@@ -53,7 +32,6 @@ final class AccountController extends Controller
                 ->paginate(100)
                 ->withQueryString()
                 ->toResourceCollection(),
-            'account' => $account,
         ]);
     }
 

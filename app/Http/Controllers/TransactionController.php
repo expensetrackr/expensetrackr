@@ -10,8 +10,6 @@ use App\Enums\Finance\TransactionType;
 use App\Filters\FiltersTransactionsByAccount;
 use App\Http\Requests\CreateTransactionRequest;
 use App\Http\Requests\UpdateTransactionRequest;
-use App\Http\Resources\TransactionResource;
-use App\Models\Category;
 use App\Models\Transaction;
 use App\Models\User;
 use Exception;
@@ -33,31 +31,6 @@ final class TransactionController
     public function index(Request $request, #[CurrentUser] User $user): Response
     {
         $perPage = $request->integer('per_page', default: 12);
-        /** @var string|null $transactionId */
-        $transactionId = $request->query('transaction_id');
-
-        $transaction = $transactionId
-            ? Transaction::query()
-                ->with(['category', 'merchant'])
-                ->wherePublicId($transactionId)
-                ->first()
-                ?->toResource()
-            : null;
-        $categories = collect();
-
-        if ($transaction instanceof TransactionResource) {
-            $categories = Category::query()
-                ->where(function ($query) use ($user): void {
-                    $query->where('is_system', true)
-                        ->orWhere(function ($query) use ($user): void {
-                            $query->where('workspace_id', $user->current_workspace_id)
-                                ->where('is_system', false);
-                        });
-                })
-                ->oldest('name')
-                ->get()
-                ->toResourceCollection();
-        }
 
         return Inertia::render('transactions/page', [
             'transactions' => QueryBuilder::for(Transaction::class)
@@ -66,10 +39,9 @@ final class TransactionController
                 ->defaultSort('-dated_at')
                 ->with(['category', 'merchant'])
                 ->paginate($perPage)
+                ->onEachSide(1)
                 ->appends(request()->query())
                 ->toResourceCollection(),
-            'transaction' => $transaction,
-            'categories' => $categories,
             // Handy for updating the table when anything from server side changes
             'requestId' => Str::uuid(),
         ]);

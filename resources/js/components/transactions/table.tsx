@@ -1,4 +1,3 @@
-import { Link } from "@inertiajs/react";
 import { getCoreRowModel, useReactTable, type ColumnDef, flexRender } from "@tanstack/react-table";
 import * as React from "react";
 import MoreVerticalIcon from "virtual:icons/hugeicons/more-vertical";
@@ -9,9 +8,9 @@ import * as Avatar from "#/components/ui/avatar.tsx";
 import * as Badge from "#/components/ui/badge.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import * as Table from "#/components/ui/table.tsx";
+import { useActionsParams } from "#/hooks/use-actions-params.ts";
 import { usePaginationParams } from "#/hooks/use-pagination-params.ts";
 import { useTranslation } from "#/hooks/use-translation.ts";
-import { routes } from "#/routes.ts";
 import { cn } from "#/utils/cn.ts";
 import { formatDate } from "#/utils/date-formatter.ts";
 import { currencyFormatter } from "#/utils/number-formatter.ts";
@@ -24,6 +23,7 @@ type TransactionsTableProps = {
 export function TransactionsTable({ data: initialData, total }: TransactionsTableProps) {
     const [pagination, setPagination] = usePaginationParams();
     const { language } = useTranslation();
+    const actions = useActionsParams();
 
     const columns: ColumnDef<Resources.Transaction>[] = React.useMemo(
         () => [
@@ -158,16 +158,19 @@ export function TransactionsTable({ data: initialData, total }: TransactionsTabl
                 enableHiding: false,
                 cell({ row }) {
                     return (
-                        <Button.Root $size="xs" $style="ghost" $type="neutral" asChild>
-                            <Link
-                                href={routes.transactions.index.url({
-                                    query: {
-                                        transaction_id: row.original.id,
-                                    },
-                                })}
-                            >
-                                <Button.Icon as={MoreVerticalIcon} className="size-6" />
-                            </Link>
+                        <Button.Root
+                            $size="xs"
+                            $style="ghost"
+                            $type="neutral"
+                            onClick={() =>
+                                actions.setParams({
+                                    action: "read",
+                                    resource: "transactions",
+                                    resourceId: row.original.id,
+                                })
+                            }
+                        >
+                            <Button.Icon as={MoreVerticalIcon} className="size-6" />
                         </Button.Root>
                     );
                 },
@@ -176,7 +179,7 @@ export function TransactionsTable({ data: initialData, total }: TransactionsTabl
                 },
             },
         ],
-        [language],
+        [language, actions],
     );
 
     const table = useReactTable({

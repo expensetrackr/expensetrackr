@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\AccountResource;
 use App\Models\Account;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -51,9 +53,14 @@ final class AccountController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Account $account): void
+    public function show(Account $account): AccountResource
     {
-        //
+        return $account->load(['bankConnection', 'transactions' => function (Builder $query): void {
+            $query
+                ->latest('dated_at')
+                ->with('category')
+                ->limit(3);
+        }])->toResource();
     }
 
     /**
