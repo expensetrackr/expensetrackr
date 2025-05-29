@@ -26,8 +26,11 @@ final class CreateAccount
     {
         $isManual = $isManual || (array_key_exists('external_id', $input) && $input['external_id'] === null);
 
+        // Convert string type to enum if needed
+        $accountType = is_string($input['type']) ? AccountType::from($input['type']) : $input['type'];
+
         // Determine the account model class based on the account type
-        $type = match ($input['type']) {
+        $type = match ($accountType) {
             AccountType::Depository => Depository::class,
             AccountType::Investment => Investment::class,
             AccountType::Loan => Loan::class,
@@ -38,7 +41,7 @@ final class CreateAccount
         };
 
         // Create the accountable model based on the account type with default values
-        $accountable = match ($input['type']) {
+        $accountable = match ($accountType) {
             AccountType::CreditCard => new CreditCard([
                 'available_credit' => $input['available_credit'] ?? null,
                 'minimum_payment' => $input['minimum_payment'] ?? null,
