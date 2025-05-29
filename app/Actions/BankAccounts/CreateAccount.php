@@ -25,6 +25,7 @@ final class CreateAccount
     public function create(array $input, bool $isManual = false): void
     {
         $isManual = $isManual || (array_key_exists('external_id', $input) && $input['external_id'] === null);
+        $externalId = $input['external_id'] ?? null;
 
         // Convert string type to enum if needed
         $accountType = is_string($input['type']) ? AccountType::from($input['type']) : $input['type'];
@@ -66,14 +67,16 @@ final class CreateAccount
             'current_balance' => $input['initial_balance'],
             'is_default' => $input['is_default'] ?? false,
             'is_manual' => $isManual,
-            'external_id' => $input['external_id'] ?? null,
+            'external_id' => $externalId,
             'workspace_id' => Context::get('currentWorkspace'),
             'subtype' => $input['subtype'] ?? null,
             'accountable_id' => $accountable->id,
             'accountable_type' => $accountable->getMorphClass(),
         ];
 
-        if ($isManual) {
+        // Always create new accounts when external_id is null (manual accounts)
+        // Only use updateOrCreate for accounts with valid external_id (from external sources)
+        if ($isManual || $externalId === null) {
             Account::create($values);
 
             return;
@@ -81,7 +84,7 @@ final class CreateAccount
 
         Account::updateOrCreate(
             [
-                'external_id' => $input['external_id'] ?? null,
+                'external_id' => $externalId,
             ],
             $values
         );
