@@ -1,4 +1,6 @@
 import { useForm } from "@inertiajs/react";
+import { useQueries } from "@tanstack/react-query";
+import * as React from "react";
 import { toast } from "sonner";
 import Delete02Icon from "virtual:icons/hugeicons/delete-02";
 
@@ -13,24 +15,50 @@ import * as Drawer from "#/components/ui/drawer.tsx";
 import { SelectField } from "#/components/ui/form/select-field.tsx";
 import { TextField } from "#/components/ui/form/text-field.tsx";
 import { Textarea } from "#/components/ui/form/textarea.tsx";
-import { useTransactionsParams } from "#/hooks/use-transactions-params.ts";
+import { useActionsParams } from "#/hooks/use-actions-params.ts";
 import { useTranslation } from "#/hooks/use-translation.ts";
 import { routes } from "#/routes.ts";
+import { type PaginatedResponse } from "#/types/pagination.ts";
 import { currencyFormatter } from "#/utils/number-formatter.ts";
+import { Skeleton } from "../ui/skeleton.tsx";
 
-type TransactionDetailsDrawerProps = {
-    transaction?: Resources.Transaction | null;
-    categories: Array<Resources.Category>;
-};
-
-export function TransactionDetailsDrawer({ transaction, categories }: TransactionDetailsDrawerProps) {
-    const { setParams } = useTransactionsParams();
+export function TransactionDetailsDrawer() {
+    const actions = useActionsParams();
     const { language, t } = useTranslation();
     const form = useForm({
-        name: transaction?.name,
-        note: transaction?.note,
-        type: transaction?.type,
-        categoryId: transaction?.category?.id,
+        name: "",
+        note: "",
+        type: "",
+        categoryId: "",
+    });
+    const isOpen = actions.action === "read" && actions.resource === "transactions" && !!actions.resourceId;
+    const [{ data: transaction, isLoading }, { data: categories }] = useQueries({
+        queries: [
+            {
+                queryKey: ["transactions", actions.resourceId],
+                queryFn: async () => {
+                    const res = await fetch(routes.api.transactions.show.url({ public_id: actions.resourceId ?? "" }));
+                    const data = (await res.json()) as Resources.Transaction;
+
+                    form.setData("name", data.name);
+                    form.setData("note", data.note ?? "");
+                    form.setData("type", data.type ?? "");
+                    form.setData("categoryId", data.category?.id ?? "");
+
+                    return data;
+                },
+                enabled: isOpen,
+            },
+            {
+                queryKey: ["categories"],
+                queryFn: async () => {
+                    const res = await fetch(routes.api.categories.index.url({ query: { per_page: 100 } }));
+                    return (await res.json()) as PaginatedResponse<Resources.Category>;
+                },
+                enabled: isOpen,
+            },
+        ],
+        subscribed: true,
     });
 
     const onSubmit = (e: React.FormEvent) => {
@@ -51,7 +79,7 @@ export function TransactionDetailsDrawer({ transaction, categories }: Transactio
 
     return (
         <>
-            <Drawer.Root onOpenChange={() => setParams({ transactionId: null })} open={!!transaction}>
+            <Drawer.Root onOpenChange={() => actions.resetParams()} open={isOpen}>
                 <Drawer.Content>
                     <Drawer.Header>
                         <Drawer.Title>Transaction Details</Drawer.Title>
@@ -62,15 +90,19 @@ export function TransactionDetailsDrawer({ transaction, categories }: Transactio
 
                         <div className="p-5">
                             <div className="text-h4">
-                                {transaction?.amount &&
+                                {isLoading ? (
+                                    <Skeleton className="h-10 w-full" />
+                                ) : (
+                                    transaction?.amount &&
                                     currencyFormatter({
                                         currency: transaction?.currency,
                                         locale: language,
                                         amount: transaction?.amount,
-                                    })}
+                                    })
+                                )}
                             </div>
                             <div className="mt-1 text-paragraph-sm text-(--text-sub-600)">
-                                {transaction?.account?.name}
+                                {isLoading ? <Skeleton className="h-5 w-full" /> : transaction?.account?.name}
                             </div>
                         </div>
 
@@ -206,10 +238,9 @@ export function TransactionDetailsDrawer({ transaction, categories }: Transactio
                             onSubmit={onSubmit}
                         >
                             <input name="_method" type="hidden" value="PUT" />
-                            <input data-auto-submit name="categoryId" type="hidden" value={form.data.categoryId} />
+                            <input name="categoryId" type="hidden" value={form.data.categoryId} />
 
                             <TextField
-                                data-auto-submit
                                 disabled={form.processing}
                                 error={form.errors.name}
                                 id="name"
@@ -244,28 +275,30 @@ export function TransactionDetailsDrawer({ transaction, categories }: Transactio
                                 labelClassName="text-subheading-xs text-(--text-soft-400) uppercase"
                                 name="categoryId"
                                 onValueChange={(value) => form.setData("categoryId", value)}
-                                options={categories.map((category) => ({
-                                    value: category.id,
-                                    label: (
-                                        <div className="inline-flex items-center gap-1.5 text-paragraph-sm text-(--text-sub-600)">
-                                            <Badge.Root
-                                                className="size-2.5 bg-(--color-category-color) p-0"
-                                                style={
-                                                    {
-                                                        "--color-category-color": category.color,
-                                                    } as React.CSSProperties
-                                                }
-                                            ></Badge.Root>
-                                            <span>{category.name}</span>
-                                        </div>
-                                    ),
-                                }))}
+                                options={
+                                    categories?.data?.map((category) => ({
+                                        value: category.id,
+                                        label: (
+                                            <div className="inline-flex items-center gap-1.5 text-paragraph-sm text-(--text-sub-600)">
+                                                <Badge.Root
+                                                    className="size-2.5 bg-(--color-category-color) p-0"
+                                                    style={
+                                                        {
+                                                            "--color-category-color": category.color,
+                                                        } as React.CSSProperties
+                                                    }
+                                                ></Badge.Root>
+                                                <span>{category.name}</span>
+                                            </div>
+                                        ),
+                                    })) ?? []
+                                }
+                                value={form.data.categoryId}
                             />
 
                             <Divider.Root $type="line-spacing" />
 
                             <Textarea
-                                data-auto-submit
                                 data-autosubmit-debounce-timeout="1000"
                                 disabled={form.processing}
                                 error={form.errors.note}
@@ -286,7 +319,7 @@ export function TransactionDetailsDrawer({ transaction, categories }: Transactio
                             $style="ghost"
                             $type="error"
                             className="w-full"
-                            onClick={() => setParams({ action: "delete" })}
+                            onClick={() => actions.setParams({ action: "delete" })}
                         >
                             <Button.Icon as={Delete02Icon} />
                             Delete Transaction

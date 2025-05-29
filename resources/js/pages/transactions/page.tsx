@@ -17,8 +17,6 @@ import { type PageProps } from "#/types/globals.ts";
 
 type TransactionsPageProps = {
     transactions: Laravel.PaginatedResponse<Resources.Transaction>;
-    transaction?: Resources.Transaction | null;
-    categories: Array<Resources.Category>;
     requestId: string;
     permissions: {
         create: boolean;
@@ -26,7 +24,7 @@ type TransactionsPageProps = {
     };
 };
 
-export default function TransactionsPage({ transactions, transaction, categories, requestId }: TransactionsPageProps) {
+export default function TransactionsPage({ transactions, requestId }: TransactionsPageProps) {
     const [, setPagination] = usePaginationParams();
     const { permissions } = useFeaturesAndPermissions();
     const actions = useActionsParams();
@@ -72,7 +70,7 @@ export default function TransactionsPage({ transactions, transaction, categories
                 </div>
             </div>
 
-            <TransactionDetailsDrawer categories={categories} transaction={transaction} />
+            <TransactionDetailsDrawer />
         </>
     );
 }
