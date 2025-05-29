@@ -29,8 +29,7 @@ final class DashboardController extends Controller
 
         $balanceSheet = new BalanceSheet($user->currentWorkspace);
 
-        /** @var string */
-        $query = $request->query('q', '');
+        $request->query('q', '');
 
         /** @var array{period: string} */
         $totalBalancePeriod = $request->query('total_balance', [

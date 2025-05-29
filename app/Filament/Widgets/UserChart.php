@@ -37,7 +37,7 @@ final class UserChart extends ChartWidget
                     }),
                 ],
             ],
-            'labels' => $trend->map(function ($value) {
+            'labels' => $trend->map(function ($value): ?string {
                 if ($value instanceof TrendValue) {
                     return Carbon::parse($value->date)->format('M');
                 }

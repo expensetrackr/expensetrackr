@@ -11,11 +11,6 @@ use App\Utilities\Workspaces\WorkspaceFeatures;
 
 final class UserObserver
 {
-    /**
-     * Create a new observer instance.
-     */
-    public function __construct(private CreateContactAction $createContactAction) {}
-
     public function created(User $user): void
     {
         if (WorkspaceFeatures::hasWorkspaceFeatures()) {

@@ -27,6 +27,6 @@ final class AppServiceProvider extends ServiceProvider
         // @phpstan-ignore offsetAccess.nonOffsetAccessible, property.nonObject, method.nonObject
         $this->app['request']->server->set('HTTPS', 'on');
 
-        $this->app->singleton(Resend\Client::class, fn ($app) => Resend::client(type(config('services.resend.key'))->asString()));
+        $this->app->singleton(Resend\Client::class, fn ($app): \Resend\Client => Resend::client(type(config('services.resend.key'))->asString()));
     }
 }

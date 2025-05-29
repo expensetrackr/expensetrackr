@@ -37,7 +37,7 @@ final class CategoryController extends Controller
             ->oldest('name')
             ->get()
             ->groupBy('classification')
-            ->map(fn ($group) => CategoryResource::collection($group->map(fn ($category) => (new CategoryResource($category))->withExtraFields()
+            ->map(fn ($group) => CategoryResource::collection($group->map(fn ($category): \App\Http\Resources\CategoryResource => (new CategoryResource($category))->withExtraFields()
             )));
 
         return Inertia::render('categories/page', [

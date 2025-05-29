@@ -29,7 +29,7 @@ final class SyncUsersWithResend extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): void
     {
         $syncedCount = 0;
         $users = User::all();

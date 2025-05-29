@@ -15,6 +15,6 @@ return [
         'published_from' => 'Publicado desde',
         'published_until' => 'Publicado hasta',
         'model_label' => 'Registro de cambios',
-        'plural_model_label' => 'Registros de cambios'
-    ]
+        'plural_model_label' => 'Registros de cambios',
+    ],
 ];

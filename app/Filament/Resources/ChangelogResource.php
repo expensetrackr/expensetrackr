@@ -51,7 +51,7 @@ final class ChangelogResource extends Resource
                             ->maxLength(255)
                             ->required()
                             ->live(debounce: 500)
-                            ->afterStateUpdated(function (Get $get, Set $set, ?string $old, ?string $state) {
+                            ->afterStateUpdated(function (Get $get, Set $set, ?string $old, ?string $state): void {
                                 if (($get('slug') ?? '') !== Str::slug((string) $old)) {
                                     return;
                                 }
