@@ -4,7 +4,6 @@ import TransactionIcon from "virtual:icons/hugeicons/transaction";
 
 import { Header } from "#/components/page-header.tsx";
 import { TablePagination } from "#/components/table-pagination.tsx";
-import { TransactionDetailsDrawer } from "#/components/transactions/details-drawer.tsx";
 import { TransactionsFilters } from "#/components/transactions/filters.tsx";
 import { TransactionsTable } from "#/components/transactions/table.tsx";
 import * as Button from "#/components/ui/button.tsx";
@@ -69,8 +68,6 @@ export default function TransactionsPage({ transactions, requestId }: Transactio
                     />
                 </div>
             </div>
-
-            <TransactionDetailsDrawer />
         </>
     );
 }

@@ -10,6 +10,13 @@ import { Toaster } from "#/components/toaster.tsx";
 import { type PageProps } from "#/types/globals.js";
 import { cn } from "#/utils/cn.ts";
 
+const DeleteTransactionModal = React.lazy(() =>
+    import("#/components/delete-transaction-modal.tsx").then((m) => ({ default: m.DeleteTransactionModal })),
+);
+const TransactionDetailsDrawer = React.lazy(() =>
+    import("#/components/transactions/details-drawer.tsx").then((m) => ({ default: m.TransactionDetailsDrawer })),
+);
+
 type AppLayoutProps = PageProps<{
     children: React.ReactNode;
     defaultCollapsed?: boolean;
@@ -53,8 +60,12 @@ export function AppLayout({ children, defaultCollapsed = false, childrenWrapperC
 
             <Toaster position="top-center" />
             <AppCommandMenu />
+
             {props.permissions.canCreateAccounts && <CreateAccountDrawer />}
+
             {props.permissions.canCreateTransactions && <CreateTransactionDrawer />}
+            <TransactionDetailsDrawer />
+            <DeleteTransactionModal />
         </>
     );
 }
