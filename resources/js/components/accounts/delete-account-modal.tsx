@@ -3,7 +3,7 @@ import Delete02Icon from "virtual:icons/hugeicons/delete-02";
 
 import * as Button from "#/components/ui/button.tsx";
 import * as Modal from "#/components/ui/modal.tsx";
-import { useAccountsParams } from "#/hooks/use-accounts-params.ts";
+import { useActionsParams } from "#/hooks/use-actions-params.ts";
 import { routes } from "#/routes.ts";
 
 type DeleteAccountModalProps = {
@@ -11,20 +11,21 @@ type DeleteAccountModalProps = {
 };
 
 export function DeleteAccountModal({ account }: DeleteAccountModalProps) {
-    const { setParams, ...params } = useAccountsParams();
+    const actions = useActionsParams();
     const form = useForm();
+    const isOpen = actions.action === "delete" && actions.resource === "accounts" && account.id === actions.resourceId;
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        if (!params.accountId) {
+        if (!actions.resourceId) {
             return;
         }
 
         form.delete(routes.accounts.destroy.url({ account: account.id }), {
             preserveScroll: true,
             async onSuccess() {
-                await setParams({ action: null });
+                await actions.resetParams();
             },
             onError() {
                 form.reset();
@@ -33,10 +34,7 @@ export function DeleteAccountModal({ account }: DeleteAccountModalProps) {
     };
 
     return (
-        <Modal.Root
-            onOpenChange={() => setParams({ action: null, accountId: null })}
-            open={params.action === "delete" && account.id === params.accountId}
-        >
+        <Modal.Root onOpenChange={() => actions.resetParams()} open={isOpen}>
             <Modal.Content className="max-w-lg">
                 <Modal.Header
                     description="This action cannot be undone."
@@ -61,7 +59,7 @@ export function DeleteAccountModal({ account }: DeleteAccountModalProps) {
                             $style="stroke"
                             $type="neutral"
                             className="w-full"
-                            onClick={() => setParams({ action: null })}
+                            onClick={() => actions.resetParams()}
                         >
                             Cancel
                         </Button.Root>

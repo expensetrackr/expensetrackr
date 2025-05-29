@@ -3,7 +3,6 @@ import { parseAsString, parseAsStringEnum, parseAsStringLiteral, useQueryStates 
 export function useAccountsParams() {
     const [params, setParams] = useQueryStates(
         {
-            accountId: parseAsString,
             "filter[name]": parseAsString.withDefault("").withOptions({
                 throttleMs: 500,
             }),
@@ -12,9 +11,6 @@ export function useAccountsParams() {
         },
         {
             clearOnDefault: true,
-            urlKeys: {
-                accountId: "account_id",
-            },
         },
     );
 

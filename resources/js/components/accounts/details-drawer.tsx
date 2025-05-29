@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "motion/react";
 import Clock04Icon from "virtual:icons/hugeicons/clock-04";
 import Delete02Icon from "virtual:icons/hugeicons/delete-02";
@@ -7,9 +8,10 @@ import { TransactionItem } from "#/components/transaction-item.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
 import * as Drawer from "#/components/ui/drawer.tsx";
-import { useAccountsParams } from "#/hooks/use-accounts-params.ts";
+import { useActionsParams } from "#/hooks/use-actions-params.ts";
 import { useTranslation } from "#/hooks/use-translation.ts";
 import { routes } from "#/routes.ts";
+import { Skeleton } from "../ui/skeleton.tsx";
 import { AccountBox } from "./account-box.tsx";
 import { DeleteAccountModal } from "./delete-account-modal.tsx";
 
@@ -28,17 +30,22 @@ const recentTransactionItemVariants = (i: number) => ({
     },
 });
 
-type AccountDetailsDrawerProps = {
-    account?: Resources.Account | null;
-};
-
-export function AccountDetailsDrawer({ account }: AccountDetailsDrawerProps) {
-    const { setParams } = useAccountsParams();
+export function AccountDetailsDrawer() {
+    const actions = useActionsParams();
     const { t } = useTranslation();
+    const isOpen = actions.action === "read" && actions.resource === "accounts" && !!actions.resourceId;
+    const { data: account, isLoading } = useQuery({
+        queryKey: ["accounts", actions.resourceId],
+        queryFn: async () => {
+            const res = await fetch(routes.api.accounts.show.url({ public_id: actions.resourceId ?? "" }));
+            return (await res.json()) as Resources.Account;
+        },
+        enabled: isOpen,
+    });
 
     return (
         <>
-            <Drawer.Root onOpenChange={() => setParams({ accountId: null })} open={!!account}>
+            <Drawer.Root onOpenChange={() => actions.resetParams()} open={isOpen}>
                 <Drawer.Content>
                     <Drawer.Header>
                         <Drawer.Title>{t("pages.accounts.detailsDrawer.title")}</Drawer.Title>
@@ -48,29 +55,37 @@ export function AccountDetailsDrawer({ account }: AccountDetailsDrawerProps) {
                         <Divider.Root />
 
                         <div className="flex flex-col gap-4 p-5">
-                            {account ? <AccountBox account={account} /> : null}
+                            {isLoading ? (
+                                <Skeleton className="aspect-video rounded-16" />
+                            ) : account ? (
+                                <AccountBox account={account} />
+                            ) : null}
                         </div>
 
                         <Divider.Root $type="solid-text">Recent Transactions</Divider.Root>
 
                         <div className="flex flex-col gap-2 px-5 py-3">
                             <AnimatePresence mode="wait">
-                                {account?.transactions?.map((trx, i) => (
-                                    <MLink
-                                        animate="animate"
-                                        className="rounded-12 transition duration-200 focus:shadow-button-important-focus focus:outline-none"
-                                        href={routes.transactions.index.url({
-                                            query: {
-                                                transaction_id: trx.id,
-                                            },
-                                        })}
-                                        initial="initial"
-                                        key={trx.id}
-                                        variants={recentTransactionItemVariants(i)}
-                                    >
-                                        <TransactionItem transaction={trx} />
-                                    </MLink>
-                                ))}
+                                {isLoading
+                                    ? Array.from({ length: 3 }).map((_, i) => (
+                                          <Skeleton className="h-14 rounded-12" key={i} />
+                                      ))
+                                    : account?.transactions?.map((trx, i) => (
+                                          <MLink
+                                              animate="animate"
+                                              className="rounded-12 transition duration-200 focus:shadow-button-important-focus focus:outline-none"
+                                              href={routes.transactions.index.url({
+                                                  query: {
+                                                      transaction_id: trx.id,
+                                                  },
+                                              })}
+                                              initial="initial"
+                                              key={trx.id}
+                                              variants={recentTransactionItemVariants(i)}
+                                          >
+                                              <TransactionItem transaction={trx} />
+                                          </MLink>
+                                      ))}
                             </AnimatePresence>
                         </div>
                     </Drawer.Body>
@@ -94,7 +109,7 @@ export function AccountDetailsDrawer({ account }: AccountDetailsDrawerProps) {
                             $style="ghost"
                             $type="error"
                             className="w-full"
-                            onClick={() => setParams({ action: "delete" })}
+                            onClick={() => actions.setParams({ action: "delete" })}
                         >
                             <Button.Icon as={Delete02Icon} />
                             {t("pages.accounts.detailsDrawer.actions.deleteAccount")}

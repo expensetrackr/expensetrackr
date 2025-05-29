@@ -21,7 +21,7 @@ Route::prefix('finance')->group(function () {
 });
 
 Route::apiResource('accounts', AccountController::class)
-    ->only('index')
+    ->only(['index', 'show'])
     ->names('api.accounts');
 
 Route::apiResource('categories', CategoryController::class)

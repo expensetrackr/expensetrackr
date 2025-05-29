@@ -5,7 +5,7 @@ import { AccountTypeEnum } from "#/schemas/account.ts";
 export function useActionsParams() {
     const [params, setParams] = useQueryStates(
         {
-            action: parseAsStringLiteral(["create"]),
+            action: parseAsStringLiteral(["create", "read", "delete"]),
             resource: parseAsStringLiteral(["accounts", "transactions"]),
             resourceId: parseAsString,
             accountType: parseAsStringEnum(AccountTypeEnum.options).withDefault("depository"),
