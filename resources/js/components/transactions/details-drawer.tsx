@@ -38,14 +38,7 @@ export function TransactionDetailsDrawer() {
                 queryKey: ["transactions", actions.resourceId],
                 queryFn: async () => {
                     const res = await fetch(routes.api.transactions.show.url({ public_id: actions.resourceId ?? "" }));
-                    const data = (await res.json()) as Resources.Transaction;
-
-                    form.setData("name", data.name);
-                    form.setData("note", data.note ?? "");
-                    form.setData("type", data.type ?? "");
-                    form.setData("categoryId", data.category?.id ?? "");
-
-                    return data;
+                    return (await res.json()) as Resources.Transaction;
                 },
                 enabled: isOpen,
             },
@@ -60,6 +53,24 @@ export function TransactionDetailsDrawer() {
         ],
         subscribed: true,
     });
+
+    const updateFormData = React.useCallback(
+        (data: Resources.Transaction) => {
+            form.setData({
+                name: data.name,
+                note: data.note ?? "",
+                type: data.type ?? "",
+                categoryId: data.category?.id ?? "",
+            });
+        },
+        [form],
+    );
+
+    React.useEffect(() => {
+        if (transaction) {
+            updateFormData(transaction);
+        }
+    }, [transaction, updateFormData]);
 
     const onSubmit = (e: React.FormEvent) => {
         e.preventDefault();
