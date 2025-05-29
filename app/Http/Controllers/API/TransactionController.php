@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\Account;
 use App\Models\Transaction;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
@@ -44,7 +43,7 @@ final class TransactionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Account $account): void
+    public function update(Request $request, Transaction $transaction): void
     {
         //
     }
@@ -52,7 +51,7 @@ final class TransactionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Account $account): void
+    public function destroy(Transaction $transaction): void
     {
         //
     }
