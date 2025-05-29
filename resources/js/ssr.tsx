@@ -43,7 +43,7 @@ createServer(
             setup: ({ App, props }) => {
                 return (
                     <QueryClientProvider client={queryClient}>
-                        <NuqsAdapter>
+                        <NuqsAdapter fullPageNavigationOnShallowFalseUpdates>
                             <ThemeProvider
                                 attribute={["class", "data-theme"]}
                                 defaultTheme="system"

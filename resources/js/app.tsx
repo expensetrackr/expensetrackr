@@ -21,7 +21,7 @@ void createInertiaApp({
         const AppWithProviders = () => {
             return (
                 <QueryClientProvider client={queryClient}>
-                    <NuqsAdapter>
+                    <NuqsAdapter fullPageNavigationOnShallowFalseUpdates>
                         <Tooltip.Provider>
                             <ThemeProvider
                                 attribute={["class", "data-theme"]}
