@@ -59,6 +59,8 @@ export function CreateAccountDrawer() {
                 post(routes.accounts.store.url(), {
                     onSuccess: async () => {
                         await actions.resetParams();
+
+                        form.reset();
                     },
                     onError() {
                         toast.error("Failed to create account");
@@ -77,6 +79,8 @@ export function CreateAccountDrawer() {
     const handleOpenChange = async (open: boolean) => {
         if (!open) {
             await actions.resetParams();
+            form.reset();
+
             return;
         }
     };
