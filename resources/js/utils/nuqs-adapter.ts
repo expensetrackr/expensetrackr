@@ -17,6 +17,9 @@ function createInertiaBasedAdapter() {
             React.startTransition(() => {
                 emitter.emit("update", search);
             });
+            const prevUrlString = location.href;
+            const prevSearchParams = new URLSearchParams(location.search);
+
             const url = new URL(location.href);
             url.search = renderQueryString(search);
             // First, update the URL locally without triggering a network request,
@@ -25,11 +28,19 @@ function createInertiaBasedAdapter() {
             updateMethod.call(history, history.state, "", url.toString());
 
             if (options.shallow === false) {
-                router.visit(url, {
-                    replace: true,
-                    preserveScroll: !options.scroll,
-                    preserveState: true,
-                });
+                try {
+                    router.visit(url, {
+                        replace: true,
+                        preserveScroll: !options.scroll,
+                        preserveState: true,
+                    });
+                } catch (error) {
+                    console.error("Navigation failed:", error);
+
+                    // Revert the optimistic URL update so the UI reflects the actual state
+                    history.replaceState(history.state, "", prevUrlString);
+                    emitter.emit("update", prevSearchParams);
+                }
             }
 
             if (options.scroll) {
