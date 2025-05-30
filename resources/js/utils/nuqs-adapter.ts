@@ -27,7 +27,7 @@ function createInertiaBasedAdapter() {
             if (options.shallow === false) {
                 router.visit(url, {
                     replace: true,
-                    preserveScroll: true,
+                    preserveScroll: !options.scroll,
                     preserveState: true,
                 });
             }
