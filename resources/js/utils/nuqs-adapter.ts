@@ -1,47 +1,92 @@
 import { router } from "@inertiajs/react";
 import mitt from "mitt";
-import { renderQueryString, type unstable_AdapterOptions, unstable_createAdapterProvider } from "nuqs/adapters/custom";
+import {
+    renderQueryString,
+    type unstable_AdapterOptions as AdapterOptions,
+    unstable_createAdapterProvider as createAdapterProvider,
+    type unstable_AdapterInterface as AdapterInterface,
+} from "nuqs/adapters/custom";
 import * as React from "react";
 
 const emitter = mitt<{ update: URLSearchParams }>();
 
-function updateUrl(search: URLSearchParams, options: unstable_AdapterOptions) {
-    const url = new URL(window.location.href);
-    url.search = renderQueryString(search);
-    router.visit(url, {
-        replace: options.history === "replace",
-        preserveScroll: !options.scroll,
-        preserveState: options.shallow,
-    });
-    emitter.emit("update", search);
-}
+function createInertiaBasedAdapter() {
+    function useNuqsInertiaBasedAdapter(): AdapterInterface {
+        const searchParams = useOptimisticSearchParams();
+        const updateUrl = React.useCallback((search: URLSearchParams, options: AdapterOptions) => {
+            React.startTransition(() => {
+                emitter.emit("update", search);
+            });
+            const prevUrlString = location.href;
+            const prevSearchParams = new URLSearchParams(location.search);
 
-function useNuqsInertiaAdapter() {
-    const [searchParams, setSearchParams] = React.useState(() => {
-        if (typeof location === "undefined") {
-            return new URLSearchParams();
-        }
-        return new URLSearchParams(location.search);
-    });
+            const url = new URL(location.href);
+            url.search = renderQueryString(search);
+            // First, update the URL locally without triggering a network request,
+            // this allows keeping a reactive URL if the network is slow.
+            const updateMethod = options.history === "push" ? history.pushState : history.replaceState;
+            updateMethod.call(history, history.state, "", url.toString());
 
-    React.useEffect(() => {
-        // Popstate event is only fired when the user navigates
-        // via the browser's back/forward buttons.
-        const onPopState = () => {
-            setSearchParams(new URLSearchParams(location.search));
+            if (options.shallow === false) {
+                try {
+                    router.visit(url, {
+                        replace: true,
+                        preserveScroll: !options.scroll,
+                        preserveState: true,
+                    });
+                } catch (error) {
+                    console.error("Navigation failed:", error);
+
+                    // Revert the optimistic URL update so the UI reflects the actual state
+                    history.replaceState(history.state, "", prevUrlString);
+                    emitter.emit("update", prevSearchParams);
+                }
+            }
+
+            if (options.scroll) {
+                window.scrollTo(0, 0);
+            }
+        }, []);
+        return {
+            searchParams,
+            updateUrl,
         };
-        emitter.on("update", setSearchParams);
-        window.addEventListener("popstate", onPopState);
-        return () => {
-            emitter.off("update", setSearchParams);
-            window.removeEventListener("popstate", onPopState);
-        };
-    }, []);
+    }
+
+    function useOptimisticSearchParams() {
+        const [searchParams, setSearchParams] = React.useState(() => {
+            // Since useSearchParams isn't reactive to shallow changes,
+            // it doesn't pick up changes in the URL on mount, so we need to initialise
+            // the reactive state with the current URL instead.
+            if (typeof location === "undefined") {
+                // We use this on the server to SSR with the correct search params.
+                return new URLSearchParams();
+            }
+            return new URLSearchParams(location.search);
+        });
+
+        React.useEffect(() => {
+            function onPopState() {
+                setSearchParams(new URLSearchParams(location.search));
+            }
+            function onEmitterUpdate(search: URLSearchParams) {
+                setSearchParams(search);
+            }
+            emitter.on("update", onEmitterUpdate);
+            window.addEventListener("popstate", onPopState);
+            return () => {
+                emitter.off("update", onEmitterUpdate);
+                window.removeEventListener("popstate", onPopState);
+            };
+        }, []);
+
+        return searchParams;
+    }
 
     return {
-        searchParams,
-        updateUrl,
+        NuqsAdapter: createAdapterProvider(useNuqsInertiaBasedAdapter),
+        useOptimisticSearchParams,
     };
 }
 
-export const NuqsAdapter = unstable_createAdapterProvider(useNuqsInertiaAdapter);
+export const { NuqsAdapter, useOptimisticSearchParams } = createInertiaBasedAdapter();
