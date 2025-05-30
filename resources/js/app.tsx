@@ -6,10 +6,10 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { domAnimation, LazyMotion } from "motion/react";
 import { ThemeProvider } from "next-themes";
-import { NuqsAdapter } from "nuqs/adapters/react";
 import { Tooltip } from "radix-ui";
 import { createRoot, hydrateRoot } from "react-dom/client";
 
+import { NuqsAdapter } from "./utils/nuqs-adapter.ts";
 import { queryClient } from "./utils/query-client.ts";
 
 const appName = import.meta.env.VITE_APP_NAME || "ExpenseTrackr";
@@ -21,7 +21,7 @@ void createInertiaApp({
         const AppWithProviders = () => {
             return (
                 <QueryClientProvider client={queryClient}>
-                    <NuqsAdapter fullPageNavigationOnShallowFalseUpdates>
+                    <NuqsAdapter>
                         <Tooltip.Provider>
                             <ThemeProvider
                                 attribute={["class", "data-theme"]}

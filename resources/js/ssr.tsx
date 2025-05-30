@@ -3,9 +3,9 @@ import createServer from "@inertiajs/react/server";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { ThemeProvider } from "next-themes";
-import { NuqsAdapter } from "nuqs/adapters/react";
 import ReactDOMServer from "react-dom/server";
 
+import { NuqsAdapter } from "./utils/nuqs-adapter.ts";
 import { queryClient } from "./utils/query-client.ts";
 
 const appName = import.meta.env.VITE_APP_NAME || "ExpenseTrackr";
@@ -43,7 +43,7 @@ createServer(
             setup: ({ App, props }) => {
                 return (
                     <QueryClientProvider client={queryClient}>
-                        <NuqsAdapter fullPageNavigationOnShallowFalseUpdates>
+                        <NuqsAdapter>
                             <ThemeProvider
                                 attribute={["class", "data-theme"]}
                                 defaultTheme="system"

@@ -78,7 +78,7 @@ export function TotalBalanceWidget({ title, netWorth, netWorthSeries, className,
                     <Select.Root
                         $size="xs"
                         $variant="compact"
-                        onValueChange={(value) => setParams({ totalBalancePeriod: value })}
+                        onValueChange={(value) => setParams({ totalBalancePeriod: value }, { shallow: false })}
                         value={totalBalancePeriod}
                     >
                         <Select.Trigger>

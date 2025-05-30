@@ -1,5 +1,6 @@
 import { Link } from "@inertiajs/react";
 import * as React from "react";
+import { useDebounceCallback } from "usehooks-ts";
 import CommandIcon from "virtual:icons/hugeicons/command";
 import Search01Icon from "virtual:icons/hugeicons/search-01";
 import TransactionIcon from "virtual:icons/hugeicons/transaction";
@@ -25,6 +26,10 @@ export function TransactionsTableWidget({
 }: TransactionsTableWidgetProps) {
     const { setParams, ...params } = useTransactionsParams();
 
+    const handleSearch = useDebounceCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+        void setParams({ name: event.target.value }, { shallow: false });
+    }, 300);
+
     return (
         <div
             className={cn(
@@ -49,11 +54,7 @@ export function TransactionsTableWidget({
                     <Input.Root $size="sm" className="max-w-lg lg:w-[300px]">
                         <Input.Wrapper>
                             <Input.Icon as={Search01Icon} />
-                            <Input.Input
-                                onChange={(e) => setParams({ name: e.target.value })}
-                                placeholder="Search..."
-                                value={params.name}
-                            />
+                            <Input.Input defaultValue={params.name} onChange={handleSearch} placeholder="Search..." />
                             <Kbd.Root>
                                 <CommandIcon className="size-2.5" />1
                             </Kbd.Root>
