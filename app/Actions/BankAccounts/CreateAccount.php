@@ -90,12 +90,6 @@ final class CreateAccount
                     throw ExchangeRateException::invalidRate($exchangeRate);
                 }
 
-                /**
-                 * We need to do this so PHPStan doesn't complain about the type of the initial_balance.
-                 *
-                 * @var numeric-string $initialBalance
-                 */
-                $initialBalance = (string) $input['initial_balance'];
                 $values['base_initial_balance'] = $initialBalance;
                 $values['base_current_balance'] = $initialBalance;
                 $values['base_currency'] = $currency;
