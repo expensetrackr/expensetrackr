@@ -12,6 +12,7 @@ import { ScrollArea } from "../ui/scroll-sarea.tsx";
 import * as Select from "../ui/select.tsx";
 
 type SpendingByCategoryData = {
+    id: string;
     name: string;
     value: Decimal.Value;
     color: string;

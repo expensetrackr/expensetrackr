@@ -1,5 +1,6 @@
 "use client";
 
+import type Decimal from "decimal.js";
 import { Cell, Pie, PieChart as RechartsPieChart, ResponsiveContainer, Sector, Tooltip } from "recharts";
 
 import { cn } from "#/utils/cn.ts";
@@ -43,15 +44,21 @@ const CustomTooltip = ({ active, payload }: any) => {
     return null;
 };
 
-export default function PieChart({
-    data,
-    className,
-    circleSize,
-}: {
-    data: any[];
+interface PieChartData {
+    id: string;
+    name: string;
+    value: Decimal.Value;
+    color: string;
+    percentage?: number;
+}
+
+interface PieChartProps {
+    data: PieChartData[];
     className?: string;
     circleSize?: number;
-}) {
+}
+
+export default function PieChart({ data, className, circleSize }: PieChartProps) {
     // If circleSize is provided, use fixed size mode (legacy behavior)
     if (circleSize) {
         return (
