@@ -106,7 +106,6 @@ export function CreateAccountDrawer() {
                     <Drawer.Body className="flex-1 overflow-y-auto">
                         <form {...getFormProps(form)}>
                             <input {...getInputProps(fields.initial_balance, { type: "hidden" })} />
-                            <input {...getInputProps(fields.currency_code, { type: "hidden" })} />
 
                             <div className="space-y-3 p-5">
                                 <TextField

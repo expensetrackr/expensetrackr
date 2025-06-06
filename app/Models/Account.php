@@ -27,8 +27,12 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @property string|null $description
  * @property AccountSubtype|null $subtype
  * @property string $currency_code
+ * @property string|null $base_currency
+ * @property numeric|null $currency_rate
  * @property numeric $initial_balance
+ * @property numeric|null $base_initial_balance
  * @property numeric $current_balance
+ * @property numeric|null $base_current_balance
  * @property bool $is_default
  * @property bool $is_manual
  * @property string $public_id
@@ -58,9 +62,13 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereAccountableId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereAccountableType($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereBankConnectionId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereBaseCurrency($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereBaseCurrentBalance($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereBaseInitialBalance($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereCreatedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereCurrencyCode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereCurrencyRate($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereCurrentBalance($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Account whereExternalId($value)
@@ -155,8 +163,11 @@ final class Account extends Model
             'description' => $this->description,
             'type' => $this->type,
             'currency_code' => $this->currency_code,
+            'base_currency' => $this->base_currency,
             'initial_balance' => $this->initial_balance,
+            'base_initial_balance' => $this->base_initial_balance,
             'current_balance' => $this->current_balance,
+            'base_current_balance' => $this->base_current_balance,
             'is_default' => $this->is_default,
             'is_manual' => $this->is_manual,
             'external_id' => $this->external_id,
@@ -194,6 +205,9 @@ final class Account extends Model
         return [
             'current_balance' => 'decimal:4',
             'initial_balance' => 'decimal:4',
+            'base_current_balance' => 'decimal:4',
+            'base_initial_balance' => 'decimal:4',
+            'currency_rate' => 'decimal:6',
             'subtype' => AccountSubtype::class,
         ];
     }
