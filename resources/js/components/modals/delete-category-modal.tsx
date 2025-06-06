@@ -51,9 +51,13 @@ export function DeleteCategoryModal() {
 
                 <Modal.Body className="p-0">
                     <form
-                        action={routes.categories.destroy.url({
-                            category: resourceId ?? "",
-                        })}
+                        action={
+                            resourceId
+                                ? routes.categories.destroy.url({
+                                      category: resourceId,
+                                  })
+                                : undefined
+                        }
                         id="delete-category-form"
                         method="POST"
                         onSubmit={handleSubmit}
