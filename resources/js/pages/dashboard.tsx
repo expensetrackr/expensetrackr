@@ -2,9 +2,11 @@ import { Head } from "@inertiajs/react";
 import type Decimal from "decimal.js";
 import Add01Icon from "virtual:icons/hugeicons/add-01";
 
+import { DashedDivider } from "#/components/dashed-divider.tsx";
 import { Header } from "#/components/page-header.tsx";
 import * as Avatar from "#/components/ui/avatar.tsx";
 import * as Button from "#/components/ui/button.tsx";
+import * as Divider from "#/components/ui/divider.tsx";
 import { SpendingByCategoryWidget } from "#/components/widgets/spending-by-category.tsx";
 import { TotalBalanceWidget } from "#/components/widgets/total-balance.tsx";
 import { TransactionsTableWidget } from "#/components/widgets/transactions-table-widget.tsx";
@@ -69,29 +71,33 @@ export default function Dashboard(props: PageProps<DashboardProps>) {
                 </Button.Root>
             </Header>
 
-            <div className="flex flex-col gap-6 overflow-hidden px-4 pb-6 lg:px-8 lg:pt-1">
-                <div className="mx-auto w-full max-w-7xl">
-                    {/* Top Row - Main Widgets */}
-                    <div className="mb-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
-                        <TotalBalanceWidget
-                            className="lg:h-80"
-                            netWorth={props.netWorth}
-                            netWorthSeries={props.series.totalBalance}
-                            title="Total balance"
-                        />
-                        <SpendingByCategoryWidget
-                            className="lg:h-80"
-                            data={props.spendingByCategory}
-                            title="Spending by category"
+            <div className="px-4 lg:px-8">
+                <Divider.Root />
+            </div>
+
+            <div className="flex flex-1 flex-col gap-6 px-4 py-6 min-[1100px]:flex-row lg:px-8">
+                <div className="min-w-0 flex-1">
+                    <TotalBalanceWidget
+                        netWorth={props.netWorth}
+                        netWorthSeries={props.series.totalBalance}
+                        title="Total balance"
+                    />
+
+                    <DashedDivider className="my-6" />
+
+                    <div className="pt-6">
+                        <TransactionsTableWidget
+                            className="w-full"
+                            requestId={props.requestId}
+                            transactions={props.transactions}
                         />
                     </div>
+                </div>
 
-                    {/* Bottom Row - Transactions Table */}
-                    <TransactionsTableWidget
-                        className="w-full"
-                        requestId={props.requestId}
-                        transactions={props.transactions}
-                    />
+                <div className="w-px bg-(--stroke-soft-200) lg:block" />
+
+                <div className="shrink-0 min-[1100px]:w-[328px]">
+                    <SpendingByCategoryWidget data={props.spendingByCategory} title="Spending by category" />
                 </div>
             </div>
         </>
