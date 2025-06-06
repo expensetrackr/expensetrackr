@@ -52,7 +52,7 @@ export function TotalBalanceWidget({ title, netWorth, netWorthSeries, className,
     return (
         <div
             className={cn(
-                "relative flex flex-col rounded-16 bg-(--bg-white-0) p-5 pb-[18px] shadow-xs ring-1 ring-(--stroke-soft-200) ring-inset",
+                "relative flex h-full flex-col rounded-16 bg-(--bg-white-0) p-5 shadow-xs ring-1 ring-(--stroke-soft-200) ring-inset",
                 className,
             )}
             {...rest}
