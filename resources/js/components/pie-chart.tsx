@@ -2,6 +2,8 @@
 
 import type Decimal from "decimal.js";
 import { Cell, Pie, PieChart as RechartsPieChart, ResponsiveContainer, Sector, Tooltip } from "recharts";
+import { type PieSectorDataItem } from "recharts/types/polar/Pie";
+import { type ActiveShape } from "recharts/types/util/types";
 
 import { cn } from "#/utils/cn.ts";
 import { currencyFormatter } from "#/utils/number-formatter.ts";
@@ -10,8 +12,8 @@ export const CIRCLE_SIZE = 90;
 const INNER_RADIUS = 32;
 const OUTER_RADIUS = 45;
 
-const renderActiveShape = (props: any) => {
-    const { cx, cy, innerRadius, outerRadius, startAngle, endAngle, ...rest } = props;
+const renderActiveShape: ActiveShape<PieSectorDataItem> = (props: PieSectorDataItem) => {
+    const { cx, cy, innerRadius = 0, outerRadius = 0, startAngle, endAngle, ...rest } = props;
 
     return (
         <Sector
@@ -44,19 +46,19 @@ const CustomTooltip = ({ active, payload }: any) => {
     return null;
 };
 
-interface PieChartData {
+type PieChartData = {
     id: string;
     name: string;
     value: Decimal.Value;
     color: string;
     percentage?: number;
-}
+};
 
-interface PieChartProps {
+type PieChartProps = {
     data: PieChartData[];
     className?: string;
     circleSize?: number;
-}
+};
 
 export default function PieChart({ data, className, circleSize }: PieChartProps) {
     // If circleSize is provided, use fixed size mode (legacy behavior)
