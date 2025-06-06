@@ -1,6 +1,6 @@
 export interface Trend {
-    current: string;
-    previous: string | null;
+    current: number;
+    previous: number | null;
     favorableDirection: "up" | "down";
     percentageChange: string;
 }

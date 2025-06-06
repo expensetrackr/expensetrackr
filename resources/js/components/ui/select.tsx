@@ -1,7 +1,7 @@
 import { ScrollArea as ScrollAreaPrimitives, Slot, Select as SelectPrimitives } from "radix-ui";
 import * as React from "react";
 import ArrowDown01Icon from "virtual:icons/hugeicons/arrow-down-01";
-import Tick01Icon from "virtual:icons/hugeicons/tick-01";
+import Tick02Icon from "virtual:icons/hugeicons/tick-02";
 
 import { cn } from "#/utils/cn.ts";
 import { type PolymorphicComponentProps } from "#/utils/polymorphic.ts";
@@ -367,7 +367,7 @@ function SelectItem({ className, children, ...rest }: React.ComponentProps<typeo
                 </span>
             </SelectPrimitives.ItemText>
             <SelectPrimitives.ItemIndicator asChild>
-                <Tick01Icon className="absolute top-1/2 right-2 size-5 shrink-0 -translate-y-1/2 text-(--text-sub-600)" />
+                <Tick02Icon className="absolute top-1/2 right-2 size-4 shrink-0 -translate-y-1/2 text-(--text-sub-600)" />
             </SelectPrimitives.ItemIndicator>
         </SelectPrimitives.Item>
     );
