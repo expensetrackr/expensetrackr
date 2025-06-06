@@ -115,9 +115,11 @@ export function UpdateCategoryModal() {
             <Modal.Content aria-describedby={undefined} className="max-w-[440px]">
                 <Modal.Body className="flex items-start gap-4">
                     <form
-                        {...routes.categories.update.form({
-                            category: category?.id ?? "",
-                        })}
+                        {...(category?.id
+                            ? routes.categories.update.form({
+                                  category: category?.id ?? "",
+                              })
+                            : {})}
                         className="flex w-full flex-col gap-3"
                         id="update-category-form"
                         onSubmit={onSubmit}
