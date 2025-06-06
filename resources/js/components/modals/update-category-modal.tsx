@@ -22,7 +22,7 @@ export function UpdateCategoryModal() {
         useQueries({
             queries: [
                 {
-                    queryKey: ["category"],
+                    queryKey: ["category", actions.resourceId],
                     queryFn: async () => {
                         const res = await fetch(routes.api.categories.show.url({ category: actions.resourceId ?? "" }));
 
