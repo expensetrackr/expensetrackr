@@ -111,7 +111,7 @@ export function UpdateCategoryModal() {
     }, [categories]);
 
     return (
-        <Modal.Root key={category?.id} onOpenChange={handleClose} open={isOpen}>
+        <Modal.Root key={category?.id || "update-category-modal"} onOpenChange={handleClose} open={isOpen}>
             <Modal.Content aria-describedby={undefined} className="max-w-[440px]">
                 <Modal.Body className="flex items-start gap-4">
                     <form
