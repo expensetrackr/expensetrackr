@@ -21,7 +21,7 @@ export function CreateCategoryModal() {
     const { data: categories } = useQuery({
         queryKey: ["categories"],
         queryFn: async () => {
-            const res = await fetch(routes.api.categories.index.url({ query: { per_page: 100 } }));
+            const res = await fetch(routes.api.categories.index.url({ query: { per_page: 1000 } }));
 
             if (!res.ok) {
                 throw new Error(`Failed to fetch categories: ${res.status}`);
