@@ -25,11 +25,19 @@ export function CategoryCard({ category, categories, isChild = false }: Category
     const actions = useActionsParams();
 
     const handleUpdateClick = async () => {
-        await actions.setParams({ action: "update", resource: "categories", resourceId: category.id });
+        try {
+            await actions.setParams({ action: "update", resource: "categories", resourceId: category.id });
+        } catch (error) {
+            console.error("Failed to set update params:", error);
+        }
     };
 
     const handleDeleteClick = async () => {
-        await actions.setParams({ action: "delete", resource: "categories", resourceId: category.id });
+        try {
+            await actions.setParams({ action: "delete", resource: "categories", resourceId: category.id });
+        } catch (error) {
+            console.error("Failed to set delete params:", error);
+        }
     };
 
     return (
