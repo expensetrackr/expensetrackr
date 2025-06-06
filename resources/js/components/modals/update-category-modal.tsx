@@ -2,6 +2,7 @@ import { useForm } from "@inertiajs/react";
 import { useQueries } from "@tanstack/react-query";
 import * as React from "react";
 import { toast } from "sonner";
+import { parse } from "valibot";
 
 import { classificationIcons } from "#/components/category-classification-icon.tsx";
 import { categoryIcons } from "#/components/category-icon.tsx";
@@ -13,6 +14,7 @@ import { Textarea } from "#/components/ui/form/textarea.tsx";
 import * as Modal from "#/components/ui/modal.tsx";
 import { useActionsParams } from "#/hooks/use-actions-params.ts";
 import { routes } from "#/routes.ts";
+import { CategoryClassification } from "#/schemas/enums.ts";
 import { type PaginatedResponse } from "#/types/pagination.ts";
 
 export function UpdateCategoryModal() {
@@ -123,15 +125,7 @@ export function UpdateCategoryModal() {
                     return acc;
                 }
 
-                if (!category.classification || typeof category.classification !== "string") {
-                    if (process.env.NODE_ENV === "development") {
-                        console.warn("Skipping category with invalid classification:", category);
-                    }
-                    return acc;
-                }
-
-                const validClassifications = ["income", "expense", "transfer", "other"];
-                if (!validClassifications.includes(category.classification)) {
+                if (!parse(CategoryClassification, category.classification)) {
                     if (process.env.NODE_ENV === "development") {
                         console.warn("Skipping category with unknown classification:", category.classification);
                     }

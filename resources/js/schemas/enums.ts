@@ -7,3 +7,10 @@ export const TransactionType = v.picklist([
     "income",
     // "transfer", TODO: enable this once we have a transfer feature
 ]);
+
+export const CategoryClassification = v.picklist<App.Enums.Finance.CategoryClassification[]>([
+    "income",
+    "expense",
+    "transfer",
+    "other",
+]);
