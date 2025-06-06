@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace App\Actions\Transactions;
 
 use App\Enums\Finance\TransactionType;
+use App\Exceptions\ExchangeRateException;
 use App\Facades\Forex;
 use App\Models\Account;
 use App\Models\Category;
 use App\Models\Transaction;
 use Exception;
-use Illuminate\Database\QueryException;
 
 final class CreateTransaction
 {
@@ -87,8 +87,8 @@ final class CreateTransaction
                 'category_id' => $category->id,
                 'workspace_id' => $input['workspace_id'] ?? auth()->user()?->current_workspace_id,
             ]);
-        } catch (QueryException $e) {
-            throw new Exception('Failed to create transaction due to database error', $e->getCode(), previous: $e);
+        } catch (ExchangeRateException $e) {
+            throw new Exception('Failed to create transaction due to exchange rate error: '.$e->getMessage(), $e->getCode(), previous: $e);
         } catch (Exception $e) {
             throw new Exception('Failed to create transaction', $e->getCode(), previous: $e);
         }
