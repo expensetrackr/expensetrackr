@@ -1,4 +1,5 @@
 import { useForm } from "@inertiajs/react";
+import { useQueries } from "@tanstack/react-query";
 import * as React from "react";
 
 import { classificationIcons } from "#/components/category-classification-icon.tsx";
@@ -9,38 +10,75 @@ import { SelectField } from "#/components/ui/form/select-field.tsx";
 import { TextField } from "#/components/ui/form/text-field.tsx";
 import { Textarea } from "#/components/ui/form/textarea.tsx";
 import * as Modal from "#/components/ui/modal.tsx";
-import { useCategoriesParams } from "#/hooks/use-categories-params.ts";
+import { useActionsParams } from "#/hooks/use-actions-params.ts";
 import { routes } from "#/routes.ts";
+import { type PaginatedResponse } from "#/types/pagination.ts";
 
-type UpdateCategoryModalProps = {
-    categories: {
-        [key in App.Enums.Finance.CategoryClassification]: Array<Resources.Category>;
-    };
-    category: Resources.Category;
-};
-
-export function UpdateCategoryModal({ categories, category }: UpdateCategoryModalProps) {
-    const { setParams, ...params } = useCategoriesParams();
-    const form = useForm({
-        name: category.name,
-        color: category.color,
-        description: category.description || "",
-        classification: category.classification as App.Enums.Finance.CategoryClassification,
-        parentId: category.parentId,
+export function UpdateCategoryModal() {
+    const actions = useActionsParams();
+    const isOpen = actions.action === "update" && actions.resource === "categories" && !!actions.resourceId;
+    const [{ data: category }, { data: categories }] = useQueries({
+        queries: [
+            {
+                queryKey: ["category"],
+                queryFn: async () => {
+                    const res = await fetch(routes.api.categories.show.url({ category: actions.resourceId ?? "" }));
+                    return (await res.json()) as Resources.Category;
+                },
+                enabled: isOpen,
+            },
+            {
+                queryKey: ["categories"],
+                queryFn: async () => {
+                    const res = await fetch(routes.api.categories.index.url({ query: { per_page: 100 } }));
+                    return (await res.json()) as PaginatedResponse<Resources.Category>;
+                },
+                enabled: isOpen,
+            },
+        ],
     });
+    const form = useForm({
+        name: category?.name,
+        color: category?.color,
+        description: category?.description || "",
+        classification: category?.classification as App.Enums.Finance.CategoryClassification,
+        parentId: category?.parentId,
+    });
+
+    const { setData, reset } = form;
+
+    React.useEffect(() => {
+        if (category) {
+            setData({
+                name: category.name,
+                color: category.color,
+                description: category.description || "",
+                classification: category.classification as App.Enums.Finance.CategoryClassification,
+                parentId: category.parentId,
+            });
+        }
+
+        return () => {
+            reset();
+        };
+    }, [category, setData, reset]);
 
     const onSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
+        if (!category?.id) {
+            return;
+        }
+
         form.put(
             routes.categories.update.url({
-                category: category.id,
+                category: category?.id,
             }),
             {
                 errorBag: "updateCategory",
                 preserveScroll: true,
                 async onSuccess() {
-                    await setParams({ action: null, categoryId: null });
+                    await actions.resetParams();
                 },
                 onError() {
                     form.reset();
@@ -49,17 +87,31 @@ export function UpdateCategoryModal({ categories, category }: UpdateCategoryModa
         );
     };
 
+    const handleClose = async () => {
+        await actions.resetParams();
+    };
+
+    const groupedCategories = React.useMemo(() => {
+        return categories?.data?.reduce(
+            (acc, category) => {
+                const classification = category.classification as App.Enums.Finance.CategoryClassification;
+                if (!acc[classification]) {
+                    acc[classification] = [];
+                }
+                acc[classification].push(category);
+                return acc;
+            },
+            {} as Record<App.Enums.Finance.CategoryClassification, Resources.Category[]>,
+        );
+    }, [categories]);
+
     return (
-        <Modal.Root
-            key={category.id}
-            onOpenChange={() => setParams({ action: null, categoryId: null })}
-            open={params.action === "update" && category.id === params.categoryId}
-        >
+        <Modal.Root key={category?.id} onOpenChange={handleClose} open={isOpen}>
             <Modal.Content aria-describedby={undefined} className="max-w-[440px]">
                 <Modal.Body className="flex items-start gap-4">
                     <form
                         {...routes.categories.update.form({
-                            category: category.id,
+                            category: category?.id ?? "",
                         })}
                         className="flex w-full flex-col gap-3"
                         id="update-category-form"
@@ -133,11 +185,13 @@ export function UpdateCategoryModal({ categories, category }: UpdateCategoryModa
                                 name="parentId"
                                 onValueChange={(value) => form.setData("parentId", value)}
                                 options={
-                                    categories[form.data.classification]?.map((category) => ({
-                                        value: category.id,
-                                        label: category.name,
-                                        icon: categoryIcons[category.slug as keyof typeof categoryIcons],
-                                    })) ?? []
+                                    groupedCategories?.[form.data.classification]?.map(
+                                        (category: Resources.Category) => ({
+                                            value: category.id,
+                                            label: category.name,
+                                            icon: categoryIcons[category.slug as keyof typeof categoryIcons],
+                                        }),
+                                    ) ?? []
                                 }
                                 value={form.data.parentId}
                             />
@@ -153,7 +207,7 @@ export function UpdateCategoryModal({ categories, category }: UpdateCategoryModa
                             $type="neutral"
                             className="w-full"
                             disabled={form.processing}
-                            onClick={() => setParams({ categoryId: null })}
+                            onClick={handleClose}
                         >
                             Cancel
                         </Button.Root>

@@ -2,20 +2,76 @@ import * as React from "react";
 import { toast } from "sonner";
 
 import { AppCommandMenu } from "#/components/commands/app-command-menu.tsx";
-import { CreateAccountDrawer } from "#/components/drawers/create-account-drawer.tsx";
-import { CreateTransactionDrawer } from "#/components/drawers/create-transaction-drawer.tsx";
 import { HeaderMobile } from "#/components/header-mobile.tsx";
 import { Sidebar } from "#/components/sidebar.tsx";
 import { Toaster } from "#/components/toaster.tsx";
 import { type PageProps } from "#/types/globals.js";
 import { cn } from "#/utils/cn.ts";
 
+const CreateAccountDrawer = React.lazy(() =>
+    import("#/components/drawers/create-account-drawer.tsx").then((m) => ({ default: m.CreateAccountDrawer })),
+);
+const CreateTransactionDrawer = React.lazy(() =>
+    import("#/components/drawers/create-transaction-drawer.tsx").then((m) => ({ default: m.CreateTransactionDrawer })),
+);
 const DeleteTransactionModal = React.lazy(() =>
     import("#/components/delete-transaction-modal.tsx").then((m) => ({ default: m.DeleteTransactionModal })),
 );
 const TransactionDetailsDrawer = React.lazy(() =>
     import("#/components/transactions/details-drawer.tsx").then((m) => ({ default: m.TransactionDetailsDrawer })),
 );
+const CreateCategoryModal = React.lazy(() =>
+    import("#/components/modals/create-category-modal.tsx").then((m) => ({ default: m.CreateCategoryModal })),
+);
+const UpdateCategoryModal = React.lazy(() =>
+    import("#/components/modals/update-category-modal.tsx").then((m) => ({ default: m.UpdateCategoryModal })),
+);
+const DeleteCategoryModal = React.lazy(() =>
+    import("#/components/modals/delete-category-modal.tsx").then((m) => ({ default: m.DeleteCategoryModal })),
+);
+
+type ModalConfig = {
+    component: React.ComponentType;
+    permission?: keyof App.Data.Shared.PermissionsData;
+};
+
+const MODALS_CONFIG: Record<string, ModalConfig> = {
+    createAccount: {
+        component: CreateAccountDrawer,
+        permission: "canCreateAccounts",
+    },
+    createTransaction: {
+        component: CreateTransactionDrawer,
+        permission: "canCreateTransactions",
+    },
+    transactionDetails: {
+        component: TransactionDetailsDrawer,
+    },
+    deleteTransaction: {
+        component: DeleteTransactionModal,
+    },
+    createCategory: {
+        component: CreateCategoryModal,
+        permission: "canCreateCategories",
+    },
+    updateCategory: {
+        component: UpdateCategoryModal,
+    },
+    deleteCategory: {
+        component: DeleteCategoryModal,
+    },
+};
+
+const renderModals = (permissions: App.Data.Shared.PermissionsData) => {
+    return Object.entries(MODALS_CONFIG).map(([key, config]) => {
+        if (config.permission && !permissions[config.permission]) {
+            return null;
+        }
+
+        const Component = config.component;
+        return <Component key={key} />;
+    });
+};
 
 type AppLayoutProps = PageProps<{
     children: React.ReactNode;
@@ -61,11 +117,7 @@ export function AppLayout({ children, defaultCollapsed = false, childrenWrapperC
             <Toaster position="top-center" />
             <AppCommandMenu />
 
-            {props.permissions.canCreateAccounts && <CreateAccountDrawer />}
-
-            {props.permissions.canCreateTransactions && <CreateTransactionDrawer />}
-            <TransactionDetailsDrawer />
-            <DeleteTransactionModal />
+            {renderModals(props.permissions)}
         </>
     );
 }

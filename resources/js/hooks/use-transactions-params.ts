@@ -1,4 +1,4 @@
-import { parseAsString, parseAsStringEnum, parseAsStringLiteral, useQueryStates } from "nuqs";
+import { parseAsString, parseAsStringEnum, useQueryStates } from "nuqs";
 
 export function useTransactionsParams() {
     const [params, setParams] = useQueryStates(
@@ -11,7 +11,6 @@ export function useTransactionsParams() {
                 throttleMs: 500,
             }),
             sort: parseAsStringEnum(["dated_at", "-dated_at"]).withDefault("-dated_at"),
-            action: parseAsStringLiteral(["delete"]),
         },
         {
             shallow: true,

@@ -26,7 +26,7 @@ Route::apiResource('accounts', AccountController::class)
     ->names('api.accounts');
 
 Route::apiResource('categories', CategoryController::class)
-    ->only('index')
+    ->only(['index', 'show'])
     ->names('api.categories');
 
 Route::apiResource('transactions', TransactionController::class)
