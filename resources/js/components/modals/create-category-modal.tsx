@@ -22,6 +22,11 @@ export function CreateCategoryModal() {
         queryKey: ["categories"],
         queryFn: async () => {
             const res = await fetch(routes.api.categories.index.url({ query: { per_page: 100 } }));
+
+            if (!res.ok) {
+                throw new Error(`Failed to fetch categories: ${res.status}`);
+            }
+
             return (await res.json()) as PaginatedResponse<Resources.Category>;
         },
         enabled: isOpen,
