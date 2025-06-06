@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Actions\BankAccounts;
 
 use App\Enums\Finance\AccountType;
+use App\Facades\Forex;
 use App\Models\Account;
 use App\Models\CreditCard;
 use App\Models\Crypto;
@@ -13,6 +14,7 @@ use App\Models\Investment;
 use App\Models\Loan;
 use App\Models\OtherAsset;
 use App\Models\OtherLiability;
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Context;
 use Illuminate\Support\Facades\DB;
@@ -53,13 +55,17 @@ final class CreateAccount
             // Create the accountable model first
             $accountable = $this->createAccountable($accountType, $input);
 
+            $currency = $input['currency_code'];
+            /** @var numeric-string $initialBalance */
+            $initialBalance = (string) $input['initial_balance'];
+
             // Prepare account data
             $values = [
                 'bank_connection_id' => $input['bank_connection_id'] ?? null,
                 'name' => $input['name'],
-                'currency_code' => $input['currency_code'],
-                'initial_balance' => $input['initial_balance'],
-                'current_balance' => $input['initial_balance'],
+                'currency_code' => $currency,
+                'initial_balance' => $initialBalance,
+                'current_balance' => $initialBalance,
                 'is_default' => $input['is_default'] ?? false,
                 'is_manual' => $isManual,
                 'external_id' => $externalId,
@@ -68,6 +74,36 @@ final class CreateAccount
                 'accountable_id' => $accountable->id,
                 'accountable_type' => $accountable->getMorphClass(),
             ];
+
+            /**
+             * If currency is !== from USD, then we are going to fetch the exchange rate from the API.
+             */
+            if ($currency !== 'USD') {
+                /** @var numeric-string|null */
+                $exchangeRate = Forex::getCachedExchangeRate('USD', $currency);
+
+                if ($exchangeRate === null) {
+                    throw new Exception('Failed to fetch exchange rate from the API.');
+                }
+
+                /**
+                 * We need to do this so PHPStan doesn't complain about the type of the initial_balance.
+                 *
+                 * @var numeric-string $initialBalance
+                 */
+                $initialBalance = (string) $input['initial_balance'];
+                $values['base_initial_balance'] = $initialBalance;
+                $values['base_current_balance'] = $initialBalance;
+                $values['base_currency'] = $currency;
+                $values['currency_rate'] = $exchangeRate;
+                $values['initial_balance'] = bcdiv(
+                    $initialBalance,
+                    (string) $exchangeRate,
+                    4,
+                );
+                $values['current_balance'] = $values['initial_balance'];
+                $values['currency_code'] = 'USD';
+            }
 
             // Always create new accounts when external_id is null (manual accounts)
             // Only use updateOrCreate for accounts with valid external_id (from external sources)

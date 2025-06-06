@@ -5,8 +5,12 @@ declare namespace Resources {
         name: string;
         description?: string;
         currencyCode: string;
+        baseCurrency?: string;
+        currencyRate?: string;
         initialBalance: string;
+        baseInitialBalance?: string;
         currentBalance: string;
+        baseCurrentBalance?: string;
         isDefault: boolean;
         externalId: string;
         connection?: BankConnection;

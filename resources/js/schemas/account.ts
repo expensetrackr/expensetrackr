@@ -24,9 +24,13 @@ export const AccountSchema = v.object({
     description: v.optional(v.nullable(v.string())),
     subtype: v.optional(v.nullable(AccountSubtypeEnum)),
     currency_code: v.string(),
+    base_currency: v.optional(v.nullable(v.string())),
+    currency_rate: v.optional(v.nullable(v.string())),
     // TODO: properly validate decimals
     initial_balance: v.string(),
+    base_initial_balance: v.optional(v.nullable(v.string())),
     current_balance: v.string(),
+    base_current_balance: v.optional(v.nullable(v.string())),
     is_default: v.boolean(),
     public_id: v.string(),
     workspace_id: v.number(),
