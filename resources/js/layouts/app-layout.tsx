@@ -31,11 +31,20 @@ const DeleteCategoryModal = React.lazy(() =>
 );
 
 type ModalConfig = {
-    component: React.ComponentType;
+    component: React.LazyExoticComponent<() => React.JSX.Element>;
     permission?: keyof App.Data.Shared.PermissionsData;
 };
 
-const MODALS_CONFIG: Record<string, ModalConfig> = {
+type ModalKeys =
+    | "createAccount"
+    | "createTransaction"
+    | "transactionDetails"
+    | "deleteTransaction"
+    | "createCategory"
+    | "updateCategory"
+    | "deleteCategory";
+
+const MODALS_CONFIG: Record<ModalKeys, ModalConfig> = {
     createAccount: {
         component: CreateAccountDrawer,
         permission: "canCreateAccounts",
