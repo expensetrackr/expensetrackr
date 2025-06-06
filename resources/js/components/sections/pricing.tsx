@@ -1,6 +1,5 @@
 import NumberFlow, { type Format } from "@number-flow/react";
 import { resolveCurrencyFormat } from "@sumup/intl";
-import DOMPurify from "dompurify";
 import { useReducedMotion } from "motion/react";
 import * as m from "motion/react-m";
 import * as React from "react";
@@ -13,6 +12,7 @@ import { useUser } from "#/hooks/use-user.ts";
 import { routes } from "#/routes.ts";
 import { cn } from "#/utils/cn.ts";
 import { type Plan, plans } from "#/utils/plans.ts";
+import { purify } from "#/utils/sanitize.ts";
 import { Link } from "../link.tsx";
 import * as Button from "../ui/button.tsx";
 import * as SegmentedControl from "../ui/segmented-control.tsx";
@@ -224,7 +224,7 @@ export function PricingSection({ containerClassName, isInternal, ...props }: Pri
                                                         "text-paragraph-sm",
                                                         plan.isFeatured ? "text-white" : "text-(--text-sub-600)",
                                                     )}
-                                                    dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(feature) }}
+                                                    dangerouslySetInnerHTML={{ __html: purify.sanitize(feature) }}
                                                 />
                                             </li>
                                         ))}
