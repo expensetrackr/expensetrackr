@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Actions\BankAccounts;
 
 use App\Enums\Finance\AccountType;
+use App\Exceptions\ExchangeRateException;
 use App\Facades\Forex;
 use App\Models\Account;
 use App\Models\CreditCard;
@@ -14,7 +15,6 @@ use App\Models\Investment;
 use App\Models\Loan;
 use App\Models\OtherAsset;
 use App\Models\OtherLiability;
-use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Context;
 use Illuminate\Support\Facades\DB;
@@ -83,11 +83,11 @@ final class CreateAccount
                 $exchangeRate = Forex::getCachedExchangeRate('USD', $currency);
 
                 if ($exchangeRate === null) {
-                    throw new Exception('Failed to fetch exchange rate from the API.');
+                    throw ExchangeRateException::failedToFetch('USD', $currency);
                 }
 
                 if (bccomp($exchangeRate, '0', 6) <= 0) {
-                    throw new Exception('Invalid exchange rate: must be positive.');
+                    throw ExchangeRateException::invalidRate($exchangeRate);
                 }
 
                 /**

@@ -57,7 +57,7 @@ final class CreateTransaction
                 $exchangeRate = Forex::getCachedExchangeRate('USD', $currency);
 
                 if ($exchangeRate === null) {
-                    throw new Exception('Failed to fetch exchange rate from the API.');
+                    throw ExchangeRateException::failedToFetch('USD', $currency);
                 }
 
                 /**
