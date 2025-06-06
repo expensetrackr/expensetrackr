@@ -8,7 +8,6 @@ use App\Contracts\CurrencyHandler;
 use App\Data\Currency\ArgentinaResponseData;
 use App\Data\Currency\CodesResponseData;
 use App\Data\Currency\LatestResponseData;
-use App\Data\Currency\VenezuelaResponseData;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
@@ -88,12 +87,7 @@ final class CurrencyService implements CurrencyHandler
                 $responseData = LatestResponseData::from($response->json());
 
                 if ($responseData->result === 'success' && isset($responseData->conversionRates)) {
-                    $venezuelaDollarData = $this->getVenezuelaDollarData();
                     $argentinaDollarData = $this->getArgentinaDollarData();
-
-                    if ($venezuelaDollarData instanceof VenezuelaResponseData) {
-                        $responseData->conversionRates['VES'] = $venezuelaDollarData->result[0]->promEpv;
-                    }
 
                     if ($argentinaDollarData instanceof ArgentinaResponseData) {
                         $responseData->conversionRates['ARS'] = $argentinaDollarData->blue->valueAvg;
@@ -149,31 +143,6 @@ final class CurrencyService implements CurrencyHandler
 
             return null;
         });
-    }
-
-    /**
-     * Get the Venezuela dollar data from the external API.
-     * This is an special case because Venezuela have a lot of different dollar prices.
-     * So, for better rates for the user we use the black market dollar data.
-     *
-     * This is safe to delete it if you don't want to support black market dollar data.
-     */
-    private function getVenezuelaDollarData(): ?VenezuelaResponseData
-    {
-        try {
-            $response = Http::withHeader('Origin', 'https://monitordolarvenezuela.com')
-                ->get('https://api.monitordolarvenezuela.com/dolarhoy')
-                ->json();
-
-            /** @var VenezuelaResponseData|null */
-            return Cache::remember('venezuela_dollar_data', now()->addHours(6), fn (): VenezuelaResponseData => VenezuelaResponseData::from($response));
-        } catch (Throwable $e) {
-            Log::error('Error retrieving Venezuela dollar data', [
-                'message' => $e->getMessage(),
-            ]);
-
-            return null;
-        }
     }
 
     /**
