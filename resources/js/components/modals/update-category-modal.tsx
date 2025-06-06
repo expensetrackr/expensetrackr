@@ -99,6 +99,22 @@ export function UpdateCategoryModal() {
     const groupedCategories = React.useMemo(() => {
         return categories?.data?.reduce(
             (acc, category) => {
+                if (!category || typeof category !== "object") {
+                    console.warn("Skipping malformed category entry:", category);
+                    return acc;
+                }
+
+                if (!category.classification || typeof category.classification !== "string") {
+                    console.warn("Skipping category with invalid classification:", category);
+                    return acc;
+                }
+
+                const validClassifications = ["income", "expense", "transfer", "other"];
+                if (!validClassifications.includes(category.classification)) {
+                    console.warn("Skipping category with unknown classification:", category.classification);
+                    return acc;
+                }
+
                 const classification = category.classification as App.Enums.Finance.CategoryClassification;
                 if (!acc[classification]) {
                     acc[classification] = [];
