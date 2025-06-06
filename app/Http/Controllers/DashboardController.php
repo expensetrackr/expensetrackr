@@ -67,7 +67,7 @@ final class DashboardController extends Controller
         $totalSpending = abs($transactions->sum('amount'));
 
         $spendingByCategory = $grouped
-            ->map(function ($categoryTransactions, $categoryName) use ($totalSpending) {
+            ->map(function ($categoryTransactions, $categoryName) use ($totalSpending): array {
                 $categoryTotal = abs($categoryTransactions->sum('amount'));
 
                 return [

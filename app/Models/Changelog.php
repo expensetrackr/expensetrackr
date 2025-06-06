@@ -77,18 +77,6 @@ final class Changelog extends Model implements Sitemapable
     }
 
     /**
-     * Get the URL to the changelog's image.
-     *
-     * @return Attribute<string|null, never>
-     */
-    protected function imageUrl(): Attribute
-    {
-        return Attribute::get(fn (): ?string => $this->image_path
-            ? Storage::disk('s3')->url($this->image_path)
-            : null);
-    }
-
-    /**
      * Scope a query to only include published changelogs.
      *
      * @param  Builder<static>  $query
@@ -109,5 +97,17 @@ final class Changelog extends Model implements Sitemapable
         return [
             'published_at' => 'datetime',
         ];
+    }
+
+    /**
+     * Get the URL to the changelog's image.
+     *
+     * @return Attribute<string|null, never>
+     */
+    protected function imageUrl(): Attribute
+    {
+        return Attribute::get(fn (): ?string => $this->image_path
+            ? Storage::disk('s3')->url($this->image_path)
+            : null);
     }
 }

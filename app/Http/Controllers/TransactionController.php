@@ -28,7 +28,7 @@ final class TransactionController
     /**
      * Display all transactions.
      */
-    public function index(Request $request, #[CurrentUser] User $user): Response
+    public function index(Request $request): Response
     {
         $perPage = $request->integer('per_page', default: 12);
 
