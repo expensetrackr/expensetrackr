@@ -112,9 +112,11 @@ const CustomTooltip = ({ active, payload, wrapperClassName }: CustomTooltipProps
                                 <span
                                     className={cn({
                                         "text-state-success-base":
-                                            favorableDirection === "up" && parseFloat(percentageChange) > 0,
+                                            (favorableDirection === "up" && parseFloat(percentageChange) > 0) ||
+                                            (favorableDirection === "down" && parseFloat(percentageChange) < 0),
                                         "text-state-error-base":
-                                            favorableDirection === "down" && parseFloat(percentageChange) < 0,
+                                            (favorableDirection === "up" && parseFloat(percentageChange) < 0) ||
+                                            (favorableDirection === "down" && parseFloat(percentageChange) > 0),
                                     })}
                                 >
                                     {parseFloat(percentageChange) > 0 ? "+" : ""}
