@@ -21,6 +21,14 @@ type CategoriesPageProps = {
 export default function CategoriesPage({ permissions, ...pageProps }: PageProps<CategoriesPageProps>) {
     const actions = useActionsParams();
 
+    const handleCreateCategory = async () => {
+        try {
+            await actions.setParams({ action: "create", resource: "categories" });
+        } catch (error) {
+            console.error("Failed to set create params:", error);
+        }
+    };
+
     return (
         <>
             <Header
@@ -34,10 +42,7 @@ export default function CategoriesPage({ permissions, ...pageProps }: PageProps<
                 title="Categories"
             >
                 {permissions.canCreateCategories && (
-                    <Button
-                        leadingIcon={ResourcesAddIcon}
-                        onClick={() => actions.setParams({ action: "create", resource: "categories" })}
-                    >
+                    <Button leadingIcon={ResourcesAddIcon} onClick={handleCreateCategory}>
                         Add category
                     </Button>
                 )}
