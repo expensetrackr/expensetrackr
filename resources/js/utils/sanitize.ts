@@ -1,5 +1,12 @@
 import DOMPurify from "dompurify";
-import { JSDOM } from "jsdom";
 
-const window = new JSDOM("").window;
-export const purify = DOMPurify(window);
+let purify: ReturnType<typeof DOMPurify>;
+
+if (typeof window === "undefined") {
+    const { JSDOM } = await import("jsdom");
+    purify = DOMPurify(new JSDOM("").window);
+} else {
+    purify = DOMPurify(window);
+}
+
+export { purify };
