@@ -13,6 +13,7 @@ import {
 } from "recharts";
 
 import useBreakpoint from "#/hooks/use-breakpoint.ts";
+import { useTranslation } from "#/hooks/use-translation.ts";
 import { type Trend } from "#/types/index.js";
 import { cn } from "#/utils/cn.ts";
 import { currencyFormatter } from "#/utils/number-formatter.ts";
@@ -75,6 +76,8 @@ function useTooltipPosition(chartRef: React.RefObject<HTMLDivElement | null>) {
 type CustomTooltipProps = React.ComponentProps<typeof RechartsTooltip>;
 
 const CustomTooltip = ({ active, payload, wrapperClassName }: CustomTooltipProps) => {
+    const { language } = useTranslation();
+
     if (active && payload && payload.length && payload[0]?.payload) {
         const currentValue = payload[0].payload.trend.current;
         const percentageChange = payload[0].payload.trend.percentageChange;
@@ -101,7 +104,7 @@ const CustomTooltip = ({ active, payload, wrapperClassName }: CustomTooltipProps
                             {currencyFormatter({
                                 amount: currentValue,
                                 currency: "USD",
-                                locale: "en-US",
+                                locale: language,
                             })}
                         </div>
                         {percentageChange && (
