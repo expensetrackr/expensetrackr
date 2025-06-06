@@ -271,7 +271,7 @@ function SelectCurrencies(props: React.CustomComponentPropsWithRef<typeof Select
                 </Select.Value>
             </Select.Trigger>
             <Select.Content>
-                {query.data?.map((item: string) => (
+                {query.data?.map((item) => (
                     <Select.Item key={item} value={item}>
                         <Select.ItemIcon
                             aria-label={`${item} flag`}
