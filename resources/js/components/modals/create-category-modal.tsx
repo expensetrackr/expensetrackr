@@ -69,7 +69,7 @@ export function CreateCategoryModal() {
     }, [categories]);
 
     return (
-        <Modal.Root key={actions.action} onOpenChange={() => actions.resetParams()} open={isOpen}>
+        <Modal.Root onOpenChange={() => actions.resetParams()} open={isOpen}>
             <Modal.Content className="max-w-lg">
                 <Modal.Header
                     description="Create a new category to organize your transactions."
