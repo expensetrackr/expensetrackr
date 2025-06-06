@@ -95,7 +95,15 @@ export function UpdateCategoryModal() {
                     await actions.resetParams();
                 },
                 onError() {
-                    form.reset();
+                    if (category) {
+                        setData({
+                            name: category.name,
+                            color: category.color,
+                            description: category.description || "",
+                            classification: category.classification as App.Enums.Finance.CategoryClassification,
+                            parentId: category.parentId,
+                        });
+                    }
                 },
             },
         );
