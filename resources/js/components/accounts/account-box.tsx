@@ -43,12 +43,10 @@ export function AccountBox({ account, className, ...rest }: CreditCardProps) {
         [account.currencyCode, formatter?.maximumFractionDigits, formatter?.minimumFractionDigits],
     );
 
-    // Check if this account uses a different currency than the base currency
     const hasMultiCurrency = account.baseCurrency && account.baseCurrency !== account.currencyCode;
-
-    // Format for base currency if different
     const baseFormatter =
         hasMultiCurrency && account.baseCurrency ? resolveCurrencyFormat(language, account.baseCurrency) : null;
+
     const baseFormat: Format | null = React.useMemo(() => {
         if (!hasMultiCurrency || !baseFormatter) return null;
         return {
