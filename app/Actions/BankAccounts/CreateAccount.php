@@ -86,6 +86,10 @@ final class CreateAccount
                     throw new Exception('Failed to fetch exchange rate from the API.');
                 }
 
+                if (bccomp($exchangeRate, '0', 6) <= 0) {
+                    throw new Exception('Invalid exchange rate: must be positive.');
+                }
+
                 /**
                  * We need to do this so PHPStan doesn't complain about the type of the initial_balance.
                  *
