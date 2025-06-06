@@ -23,6 +23,11 @@ export function UpdateCategoryModal() {
                 queryKey: ["category"],
                 queryFn: async () => {
                     const res = await fetch(routes.api.categories.show.url({ category: actions.resourceId ?? "" }));
+
+                    if (!res.ok) {
+                        throw new Error(`Failed to fetch category: ${res.statusText}`);
+                    }
+
                     return (await res.json()) as Resources.Category;
                 },
                 enabled: isOpen,
