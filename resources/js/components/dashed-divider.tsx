@@ -21,7 +21,7 @@ export function DashedDivider({ className }: { className?: string }) {
 
 export function DashedDividerVertical({ className }: { className?: string }) {
     return (
-        <div className={cn("relative w-0", className)}>
+        <div aria-hidden="true" aria-orientation="vertical" className={cn("relative w-0", className)} role="separator">
             <div
                 className="absolute top-0 left-1/2 h-full w-px -translate-x-1/2 text-(--stroke-soft-200)"
                 style={{
