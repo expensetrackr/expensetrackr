@@ -52,7 +52,7 @@ export function UpdateCategoryModal() {
         parentId: category?.parentId,
     });
 
-    const { setData, reset } = form;
+    const { setData } = form;
     const isLoading = isCategoryLoading || isCategoriesLoading;
 
     React.useEffect(() => {
@@ -65,11 +65,7 @@ export function UpdateCategoryModal() {
                 parentId: category.parentId,
             });
         }
-
-        return () => {
-            reset();
-        };
-    }, [category, setData, reset]);
+    }, [category, setData]);
 
     const onSubmit = (e: React.FormEvent) => {
         e.preventDefault();
