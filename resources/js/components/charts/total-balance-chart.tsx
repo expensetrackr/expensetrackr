@@ -1,6 +1,5 @@
 "use client";
 
-import { format } from "date-fns";
 import * as React from "react";
 import {
     CartesianGrid,
@@ -16,6 +15,7 @@ import useBreakpoint from "#/hooks/use-breakpoint.ts";
 import { useTranslation } from "#/hooks/use-translation.ts";
 import { type Trend } from "#/types/index.js";
 import { cn } from "#/utils/cn.ts";
+import { formatDate } from "#/utils/date-formatter.ts";
 import { currencyFormatter } from "#/utils/number-formatter.ts";
 
 function useTooltipPosition(chartRef: React.RefObject<HTMLDivElement | null>) {
@@ -97,7 +97,7 @@ const CustomTooltip = ({ active, payload, wrapperClassName }: CustomTooltipProps
                     }}
                 >
                     <div className="text-label-xs text-(--text-soft-400)">
-                        {format(payload[0].payload.date, "E, MMM d")}
+                        {formatDate(payload[0].payload.date, "E, MMM d", language)}
                     </div>
                     <div className="mt-1 flex items-center gap-1.5">
                         <div className="text-label-lg text-(--text-strong-950)">
@@ -164,6 +164,7 @@ export function TotalBalanceChart({
     const { sm } = useBreakpoint();
     const chartRef = React.useRef<HTMLDivElement>(null);
     const { x: tooltipX, y: tooltipY, position } = useTooltipPosition(chartRef);
+    const { language } = useTranslation();
 
     React.useEffect(() => {
         isFirstLoad.current = false;
@@ -177,11 +178,11 @@ export function TotalBalanceChart({
 
         switch (interval) {
             case "day":
-                return format(date, "MM/dd");
+                return formatDate(date, "MM/dd", language);
             case "month":
-                return format(date, "MMM");
+                return formatDate(date, "MMM", language);
             default:
-                return format(date, "MMM");
+                return formatDate(date, "MMM", language);
         }
     };
 
