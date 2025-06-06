@@ -5,6 +5,7 @@ import Add01Icon from "virtual:icons/hugeicons/add-01";
 import { Header } from "#/components/page-header.tsx";
 import * as Avatar from "#/components/ui/avatar.tsx";
 import * as Button from "#/components/ui/button.tsx";
+import { SpendingByCategoryWidget } from "#/components/widgets/spending-by-category.tsx";
 import { TotalBalanceWidget } from "#/components/widgets/total-balance.tsx";
 import { TransactionsTableWidget } from "#/components/widgets/transactions-table-widget.tsx";
 import { useActionsParams } from "#/hooks/use-actions-params.ts";
@@ -25,11 +26,20 @@ type NetWorthSeries = {
     }[];
 };
 
+type SpendingByCategoryData = {
+    id: string;
+    name: string;
+    value: Decimal.Value;
+    color: string;
+    percentage: number;
+};
+
 type DashboardProps = {
     netWorth: Decimal.Value;
     series: {
         totalBalance: NetWorthSeries;
     };
+    spendingByCategory: SpendingByCategoryData[];
     transactions: Resources.Transaction[];
     requestId: string;
 };
@@ -60,15 +70,25 @@ export default function Dashboard(props: PageProps<DashboardProps>) {
             </Header>
 
             <div className="flex flex-col gap-6 overflow-hidden px-4 pb-6 lg:px-8 lg:pt-1">
-                <div className="mx-auto grid w-full max-w-md grid-cols-1 items-start gap-6 min-[1300px]:max-w-4xl min-[1400px]:max-w-full min-[1400px]:grid-cols-3 lg:max-[1300px]:max-w-3xl lg:max-[1300px]:grid-cols-2 lg:max-[1300px]:justify-center">
-                    <TotalBalanceWidget
-                        className="[grid-column:1/-1] h-64"
-                        netWorth={props.netWorth}
-                        netWorthSeries={props.series.totalBalance}
-                        title="Total balance"
-                    />
+                <div className="mx-auto w-full max-w-7xl">
+                    {/* Top Row - Main Widgets */}
+                    <div className="mb-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
+                        <TotalBalanceWidget
+                            className="lg:h-80"
+                            netWorth={props.netWorth}
+                            netWorthSeries={props.series.totalBalance}
+                            title="Total balance"
+                        />
+                        <SpendingByCategoryWidget
+                            className="lg:h-80"
+                            data={props.spendingByCategory}
+                            title="Spending by category"
+                        />
+                    </div>
+
+                    {/* Bottom Row - Transactions Table */}
                     <TransactionsTableWidget
-                        className="[grid-column:1/-1]"
+                        className="w-full"
                         requestId={props.requestId}
                         transactions={props.transactions}
                     />
