@@ -2,7 +2,12 @@ import { cn } from "#/utils/cn.ts";
 
 export function DashedDivider({ className }: { className?: string }) {
     return (
-        <div className={cn("relative h-0 w-full", className)}>
+        <div
+            aria-hidden="true"
+            aria-orientation="horizontal"
+            className={cn("relative h-0 w-full", className)}
+            role="separator"
+        >
             <div
                 className="absolute top-1/2 left-0 h-px w-full -translate-y-1/2 text-(--stroke-soft-200)"
                 style={{
