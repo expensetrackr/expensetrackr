@@ -91,6 +91,8 @@ export function CreateAccountDrawer() {
         return decimalValue.toFixed(currencyFormat?.minimumFractionDigits);
     };
 
+    console.info(form.allErrors);
+
     return (
         <Drawer.Root onOpenChange={handleOpenChange} open={isOpen}>
             <Drawer.Content className="absolute inset-y-0 mx-2 my-2 max-h-[calc(100%-16px)] w-[min(400px,calc(100%-16px))] rounded-20 bg-(--bg-white-0) shadow-md">
@@ -106,6 +108,7 @@ export function CreateAccountDrawer() {
                     <Drawer.Body className="flex-1 overflow-y-auto">
                         <form {...getFormProps(form)}>
                             <input {...getInputProps(fields.initial_balance, { type: "hidden" })} />
+                            <input {...getInputProps(fields.currency_code, { type: "hidden" })} />
 
                             <div className="space-y-3 p-5">
                                 <TextField
