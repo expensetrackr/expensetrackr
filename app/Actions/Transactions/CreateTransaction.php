@@ -54,7 +54,7 @@ final class CreateTransaction
              */
             if ($currency !== 'USD') {
                 /** @var numeric-string|null */
-                $exchangeRate = Forex::getCachedExchangeRate('USD', $currency);
+                $exchangeRate = (string) Forex::getCachedExchangeRate('USD', $currency);
 
                 if ($exchangeRate === null) {
                     throw ExchangeRateException::failedToFetch('USD', $currency);
