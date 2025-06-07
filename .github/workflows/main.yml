@@ -57,6 +57,12 @@ jobs:
               with:
                   node-version: "20.x"
 
+            - name: 🐘 Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: "8.3"
+                  extensions: bcmath, intl, zip, redis
+
             - uses: actions/cache@v4
               with:
                   path: ~/.bun/install/cache
