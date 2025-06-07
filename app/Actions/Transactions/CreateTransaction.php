@@ -42,7 +42,7 @@ final class CreateTransaction
 
             $type = $input['type'];
             /** @var numeric-string $amount */
-            $amount = $input['amount'];
+            $amount = (string) $input['amount'];
             $currency = type($input['currency'])->asString();
 
             if ($type === TransactionType::Expense->value) {
