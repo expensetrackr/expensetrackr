@@ -28,7 +28,7 @@ final class CategoryResource extends JsonResource
             'color' => $this->color,
             'description' => $this->description,
             'isSystem' => $this->is_system,
-            'classification' => $this->when($this->appendExtraFields, fn () => $this->classification),
+            'classification' => $this->classification,
             'parentId' => $this->when($this->appendExtraFields, fn () => $this->parent->public_id ?? null),
             'permissions' => $this->when($this->appendExtraFields, fn (): array => [
                 'canUpdate' => $request->user()?->can('update', $this->resource),

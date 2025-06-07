@@ -1,4 +1,6 @@
 import { useForm } from "@inertiajs/react";
+import { useQuery } from "@tanstack/react-query";
+import * as React from "react";
 import GeometricShapes01Icon from "virtual:icons/hugeicons/geometric-shapes-01";
 
 import { classificationIcons } from "#/components/category-classification-icon.tsx";
@@ -9,17 +11,26 @@ import { SelectField } from "#/components/ui/form/select-field.tsx";
 import { TextField } from "#/components/ui/form/text-field.tsx";
 import { Textarea } from "#/components/ui/form/textarea.tsx";
 import * as Modal from "#/components/ui/modal.tsx";
-import { useCategoriesParams } from "#/hooks/use-categories-params.ts";
+import { useActionsParams } from "#/hooks/use-actions-params.ts";
 import { routes } from "#/routes.ts";
+import { type PaginatedResponse } from "#/types/pagination.ts";
 
-type CreateCategoryModalProps = {
-    categories: {
-        [key in App.Enums.Finance.CategoryClassification]: Array<Resources.Category>;
-    };
-};
+export function CreateCategoryModal() {
+    const actions = useActionsParams();
+    const isOpen = actions.action === "create" && actions.resource === "categories";
+    const { data: categories } = useQuery({
+        queryKey: ["categories"],
+        queryFn: async () => {
+            const res = await fetch(routes.api.categories.index.url({ query: { per_page: 1000 } }));
 
-export function CreateCategoryModal({ categories }: CreateCategoryModalProps) {
-    const { setParams, ...params } = useCategoriesParams();
+            if (!res.ok) {
+                throw new Error(`Failed to fetch categories: ${res.status}`);
+            }
+
+            return (await res.json()) as PaginatedResponse<Resources.Category>;
+        },
+        enabled: isOpen,
+    });
     const form = useForm({
         name: "",
         description: "",
@@ -35,7 +46,7 @@ export function CreateCategoryModal({ categories }: CreateCategoryModalProps) {
             errorBag: "createCategory",
             preserveScroll: true,
             async onSuccess() {
-                await setParams({ action: null });
+                await actions.resetParams();
             },
             onError() {
                 form.reset();
@@ -43,12 +54,22 @@ export function CreateCategoryModal({ categories }: CreateCategoryModalProps) {
         });
     };
 
+    const groupedCategories = React.useMemo(() => {
+        return categories?.data?.reduce(
+            (acc, category) => {
+                const classification = category.classification as App.Enums.Finance.CategoryClassification;
+                if (!acc[classification]) {
+                    acc[classification] = [];
+                }
+                acc[classification].push(category);
+                return acc;
+            },
+            {} as Record<App.Enums.Finance.CategoryClassification, Resources.Category[]>,
+        );
+    }, [categories]);
+
     return (
-        <Modal.Root
-            key={params.action}
-            onOpenChange={() => setParams({ action: null })}
-            open={params.action === "create"}
-        >
+        <Modal.Root onOpenChange={() => actions.resetParams()} open={isOpen}>
             <Modal.Content className="max-w-lg">
                 <Modal.Header
                     description="Create a new category to organize your transactions."
@@ -130,13 +151,15 @@ export function CreateCategoryModal({ categories }: CreateCategoryModalProps) {
                                 labelSub="(optional)"
                                 name="parentId"
                                 onValueChange={(value) => form.setData("parentId", value)}
-                                options={categories[form.data.classification]
-                                    .filter((category) => !category.children?.length)
-                                    .map((category) => ({
-                                        value: category.id,
-                                        label: category.name,
-                                        icon: categoryIcons[category.slug as keyof typeof categoryIcons],
-                                    }))}
+                                options={
+                                    groupedCategories?.[form.data.classification]
+                                        ?.filter((category) => !category.children?.length)
+                                        ?.map((category) => ({
+                                            value: category.id,
+                                            label: category.name,
+                                            icon: categoryIcons[category.slug as keyof typeof categoryIcons],
+                                        })) ?? []
+                                }
                                 value={form.data.parentId}
                             />
                         </div>
@@ -151,7 +174,7 @@ export function CreateCategoryModal({ categories }: CreateCategoryModalProps) {
                             $type="neutral"
                             className="w-full"
                             disabled={form.processing}
-                            onClick={() => setParams({ action: null })}
+                            onClick={() => actions.resetParams()}
                         >
                             Cancel
                         </Button.Root>

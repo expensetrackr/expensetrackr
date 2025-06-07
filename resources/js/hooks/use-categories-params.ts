@@ -1,4 +1,4 @@
-import { parseAsString, parseAsStringLiteral, useQueryStates } from "nuqs";
+import { parseAsString, useQueryStates } from "nuqs";
 
 export function useCategoriesParams() {
     const [params, setParams] = useQueryStates(
@@ -7,7 +7,6 @@ export function useCategoriesParams() {
             "filter[name]": parseAsString.withDefault("").withOptions({
                 throttleMs: 500,
             }),
-            action: parseAsStringLiteral(["create", "update", "delete"]),
         },
         {
             clearOnDefault: true,

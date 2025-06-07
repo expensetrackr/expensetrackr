@@ -6,13 +6,11 @@ import InformationCircleIcon from "virtual:icons/hugeicons/information-circle";
 import MoreVerticalIcon from "virtual:icons/hugeicons/more-vertical";
 
 import { CategoryIcon } from "#/components/category-icon.tsx";
-import { DeleteCategoryModal } from "#/components/modals/delete-category-modal.tsx";
-import { UpdateCategoryModal } from "#/components/modals/update-category-modal.tsx";
 import * as Badge from "#/components/ui/badge.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import * as Dropdown from "#/components/ui/dropdown.tsx";
 import * as Tooltip from "#/components/ui/tooltip.tsx";
-import { useCategoriesParams } from "#/hooks/use-categories-params.ts";
+import { useActionsParams } from "#/hooks/use-actions-params.ts";
 import { cn } from "#/utils/cn.ts";
 
 type CategoryCardProps = {
@@ -24,7 +22,23 @@ type CategoryCardProps = {
 };
 
 export function CategoryCard({ category, categories, isChild = false }: CategoryCardProps) {
-    const { setParams } = useCategoriesParams();
+    const actions = useActionsParams();
+
+    const handleUpdateClick = async () => {
+        try {
+            await actions.setParams({ action: "update", resource: "categories", resourceId: category.id });
+        } catch (error) {
+            console.error("Failed to set update params:", error);
+        }
+    };
+
+    const handleDeleteClick = async () => {
+        try {
+            await actions.setParams({ action: "delete", resource: "categories", resourceId: category.id });
+        } catch (error) {
+            console.error("Failed to set delete params:", error);
+        }
+    };
 
     return (
         <React.Fragment>
@@ -84,27 +98,13 @@ export function CategoryCard({ category, categories, isChild = false }: Category
 
                             <Dropdown.Content align="end" className="w-40">
                                 {category.permissions?.canUpdate ? (
-                                    <Dropdown.Item
-                                        onClick={() =>
-                                            setParams({
-                                                action: "update",
-                                                categoryId: category.id,
-                                            })
-                                        }
-                                    >
+                                    <Dropdown.Item onClick={handleUpdateClick}>
                                         <Dropdown.ItemIcon as={Edit02Icon} />
                                         Edit
                                     </Dropdown.Item>
                                 ) : null}
                                 {category.permissions?.canDelete ? (
-                                    <Dropdown.Item
-                                        onClick={() =>
-                                            setParams({
-                                                action: "delete",
-                                                categoryId: category.id,
-                                            })
-                                        }
-                                    >
+                                    <Dropdown.Item onClick={handleDeleteClick}>
                                         <Dropdown.ItemIcon as={Delete02Icon} />
                                         Delete
                                     </Dropdown.Item>
@@ -132,9 +132,6 @@ export function CategoryCard({ category, categories, isChild = false }: Category
                     </div>
                 ))}
             </div>
-
-            {category.permissions?.canUpdate && <UpdateCategoryModal categories={categories} category={category} />}
-            {category.permissions?.canDelete && <DeleteCategoryModal category={category} />}
         </React.Fragment>
     );
 }

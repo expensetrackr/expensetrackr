@@ -3,32 +3,31 @@ import Delete02Icon from "virtual:icons/hugeicons/delete-02";
 
 import * as Button from "#/components/ui/button.tsx";
 import * as Modal from "#/components/ui/modal.tsx";
-import { useCategoriesParams } from "#/hooks/use-categories-params.ts";
+import { useActionsParams } from "#/hooks/use-actions-params.ts";
 import { routes } from "#/routes.ts";
 
-type DeleteCategoryModalProps = {
-    category: Resources.Category;
-};
-
-export function DeleteCategoryModal({ category }: DeleteCategoryModalProps) {
-    const { setParams, ...params } = useCategoriesParams();
+export function DeleteCategoryModal() {
+    const actions = useActionsParams();
     const form = useForm();
+
+    const isOpen = actions.action === "delete" && actions.resource === "categories" && !!actions.resourceId;
+    const resourceId = actions.resourceId;
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        if (!params.categoryId) {
+        if (!resourceId) {
             return;
         }
 
         form.delete(
             routes.categories.destroy.url({
-                category: category.id,
+                category: resourceId,
             }),
             {
                 preserveScroll: true,
                 async onSuccess() {
-                    await setParams({ action: null });
+                    await actions.resetParams();
                 },
                 onError() {
                     form.reset();
@@ -37,11 +36,12 @@ export function DeleteCategoryModal({ category }: DeleteCategoryModalProps) {
         );
     };
 
+    const handleClose = async () => {
+        await actions.resetParams();
+    };
+
     return (
-        <Modal.Root
-            onOpenChange={() => setParams({ action: null, categoryId: null })}
-            open={params.action === "delete" && category.id === params.categoryId}
-        >
+        <Modal.Root onOpenChange={handleClose} open={isOpen}>
             <Modal.Content className="max-w-lg">
                 <Modal.Header
                     description="This action cannot be undone."
@@ -51,9 +51,13 @@ export function DeleteCategoryModal({ category }: DeleteCategoryModalProps) {
 
                 <Modal.Body className="p-0">
                     <form
-                        action={routes.categories.destroy.url({
-                            category: category.id,
-                        })}
+                        action={
+                            resourceId
+                                ? routes.categories.destroy.url({
+                                      category: resourceId,
+                                  })
+                                : undefined
+                        }
                         id="delete-category-form"
                         method="POST"
                         onSubmit={handleSubmit}
@@ -69,7 +73,7 @@ export function DeleteCategoryModal({ category }: DeleteCategoryModalProps) {
                             $style="stroke"
                             $type="neutral"
                             className="w-full"
-                            onClick={() => setParams({ action: null })}
+                            onClick={handleClose}
                         >
                             Cancel
                         </Button.Root>

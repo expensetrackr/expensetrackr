@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\JsonResponse;
@@ -51,9 +52,9 @@ final class CategoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Category $category): void
+    public function show(Category $category): CategoryResource
     {
-        //
+        return $category->toResource();
     }
 
     /**

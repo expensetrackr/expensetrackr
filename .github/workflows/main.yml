@@ -57,6 +57,12 @@ jobs:
               with:
                   node-version: "20.x"
 
+            - name: 🐘 Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: "8.3"
+                  extensions: bcmath, intl, zip, redis, xdebug
+
             - uses: actions/cache@v4
               with:
                   path: ~/.bun/install/cache
@@ -64,27 +70,27 @@ jobs:
                   restore-keys: |
                       ${{ runner.os }}-bun-
 
-            - name: 💾 Cache composer dependencies
-              uses: actions/cache@v4
+            - uses: actions/cache@v4
               with:
                   path: /tmp/composer-cache
                   key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
 
-            - name: 📦 Install composer dependencies
-              uses: php-actions/composer@v6
+            - id: composer-cache
+              run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+            - uses: actions/cache@v4
               with:
-                  php_extensions: bcmath intl zip redis
-                  dev: no
-                  args: --optimize-autoloader
+                  path: ${{ steps.composer-cache.outputs.dir }}
+                  key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+                  restore-keys: ${{ runner.os }}-composer-
 
-            - name: 🔍 Generate wayfinder types
-              run: |
-                  php -r "file_exists('database/database.sqlite') || touch('database/database.sqlite');"
-                  php artisan wayfinder:generate --with-form
-              env:
-                  LOG_CHANNEL: "stderr"
+            - name: 📥 Install composer dependencies
+              run: composer install --prefer-dist
 
-            - name: 📥 Download deps
+            - name: 📥 Dump autoload
+              run: composer dump-autoload --optimize
+
+            - name: 📥 Install bun dependencies
               run: bun install
 
             - name: 🔨 Build

@@ -16,10 +16,9 @@ import { type PageProps } from "#/types/globals.js";
 
 type AccountsPageProps = {
     accounts: Laravel.PaginatedResponse<Resources.Account>;
-    account?: Resources.Account | null;
 };
 
-export default function AccountsPage({ accounts, account, permissions }: PageProps<AccountsPageProps>) {
+export default function AccountsPage({ accounts, permissions }: PageProps<AccountsPageProps>) {
     const { setParams } = useActionsParams();
     const { t } = useTranslation();
 
@@ -80,7 +79,7 @@ export default function AccountsPage({ accounts, account, permissions }: PagePro
                 )}
             </div>
 
-            <AccountDetailsDrawer account={account} />
+            <AccountDetailsDrawer />
         </>
     );
 }
