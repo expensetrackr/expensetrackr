@@ -42,7 +42,7 @@ final class CreateTransaction
 
             $type = $input['type'];
             /** @var numeric-string $amount */
-            $amount = (string) $input['amount'];
+            $amount = $input['amount'];
             $currency = type($input['currency'])->asString();
 
             if ($type === TransactionType::Expense->value) {
@@ -70,7 +70,7 @@ final class CreateTransaction
                 $input['base_currency'] = $currency;
                 $input['currency_rate'] = $exchangeRate;
                 $input['amount'] = bcdiv(
-                    $amount,
+                    (string) $amount,
                     $exchangeRate,
                     4,
                 );
