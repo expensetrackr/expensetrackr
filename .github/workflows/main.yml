@@ -87,6 +87,9 @@ jobs:
             - name: 📥 Install composer dependencies
               run: composer install --prefer-dist
 
+            - name: 📥 Dump autoload
+              run: composer dump-autoload --optimize
+
             - name: 📥 Install bun dependencies
               run: bun install
 
