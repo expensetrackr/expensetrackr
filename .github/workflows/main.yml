@@ -61,7 +61,7 @@ jobs:
               uses: shivammathur/setup-php@v2
               with:
                   php-version: "8.3"
-                  extensions: bcmath, intl, zip, redis
+                  extensions: bcmath, intl, zip, redis, xdebug
 
             - uses: actions/cache@v4
               with:
