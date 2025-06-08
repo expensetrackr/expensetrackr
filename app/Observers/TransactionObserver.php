@@ -10,6 +10,7 @@ use App\Facades\Forex;
 use App\Jobs\EnrichTransactionJob;
 use App\Models\Transaction;
 use Exception;
+use Illuminate\Support\Facades\DB;
 
 final class TransactionObserver
 {
@@ -46,24 +47,26 @@ final class TransactionObserver
                     throw new Exception('Invalid transaction type');
             }
 
-            $updateData = [
-                'current_balance' => $newCurrentBalance,
-            ];
+            DB::transaction(function () use ($transaction, $newCurrentBalance, $absoluteAmount) {
+                $updateData = [
+                    'current_balance' => $newCurrentBalance,
+                ];
 
-            // Handle multicurrency accounts (accounts with base currency fields)
-            if ($transaction->account->base_currency !== null && $transaction->account->base_current_balance !== null) {
-                $newBaseCurrentBalance = $this->updateBaseBalance(
-                    (string) $transaction->account->base_current_balance,
-                    $absoluteAmount,
-                    $transaction->type,
-                    $transaction->currency,
-                    $transaction->account->base_currency
-                );
+                // Handle multicurrency accounts (accounts with base currency fields)
+                if ($transaction->account->base_currency !== null && $transaction->account->base_current_balance !== null) {
+                    $newBaseCurrentBalance = $this->updateBaseBalance(
+                        (string) $transaction->account->base_current_balance,
+                        $absoluteAmount,
+                        $transaction->type,
+                        $transaction->currency,
+                        $transaction->account->base_currency
+                    );
 
-                $updateData['base_current_balance'] = $newBaseCurrentBalance;
-            }
+                    $updateData['base_current_balance'] = $newBaseCurrentBalance;
+                }
 
-            $transaction->account()->update($updateData);
+                $transaction->account()->update($updateData);
+            });
         }
     }
 
@@ -100,24 +103,26 @@ final class TransactionObserver
                     throw new Exception('Invalid transaction type');
             }
 
-            $updateData = [
-                'current_balance' => $newCurrentBalance,
-            ];
+            DB::transaction(function () use ($transaction, $newCurrentBalance, $absoluteAmount) {
+                $updateData = [
+                    'current_balance' => $newCurrentBalance,
+                ];
 
-            // Handle multicurrency accounts (accounts with base currency fields)
-            if ($transaction->account->base_currency !== null && $transaction->account->base_current_balance !== null) {
-                $newBaseCurrentBalance = $this->updateBaseBalanceOnDelete(
-                    (string) $transaction->account->base_current_balance,
-                    $absoluteAmount,
-                    $transaction->type,
-                    $transaction->currency,
-                    $transaction->account->base_currency
-                );
+                // Handle multicurrency accounts (accounts with base currency fields)
+                if ($transaction->account->base_currency !== null && $transaction->account->base_current_balance !== null) {
+                    $newBaseCurrentBalance = $this->updateBaseBalanceOnDelete(
+                        (string) $transaction->account->base_current_balance,
+                        $absoluteAmount,
+                        $transaction->type,
+                        $transaction->currency,
+                        $transaction->account->base_currency
+                    );
 
-                $updateData['base_current_balance'] = $newBaseCurrentBalance;
-            }
+                    $updateData['base_current_balance'] = $newBaseCurrentBalance;
+                }
 
-            $transaction->account()->update($updateData);
+                $transaction->account()->update($updateData);
+            });
         }
     }
 
