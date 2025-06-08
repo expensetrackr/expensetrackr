@@ -10,8 +10,10 @@ use App\Exceptions\ExchangeRateException;
 use App\Exceptions\InvalidTransactionTypeException;
 use App\Facades\Forex;
 use App\Models\Transaction;
+use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Throwable;
 
 final class BalanceUpdateService implements BalanceUpdateInterface
 {
@@ -170,6 +172,10 @@ final class BalanceUpdateService implements BalanceUpdateInterface
             $logData['is_multicurrency'] = false;
         }
 
-        Log::info('Balance update completed', $logData);
+        try {
+            Log::info('Balance update completed', $logData);
+        } catch (Throwable $e) {
+            throw new Exception('Failed to log balance update: '.$e->getMessage());
+        }
     }
 }
