@@ -6,9 +6,9 @@ namespace App\Services;
 
 use App\Enums\Finance\TransactionType;
 use App\Exceptions\ExchangeRateException;
+use App\Exceptions\InvalidTransactionTypeException;
 use App\Facades\Forex;
 use App\Models\Transaction;
-use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -40,7 +40,7 @@ final class BalanceUpdateService
                 ? bcsub($accountCurrentBalance, $absoluteAmount, 4)
                 : bcadd($accountCurrentBalance, $absoluteAmount, 4),
             TransactionType::Transfer => $accountCurrentBalance,
-            default => throw new Exception('Invalid transaction type'),
+            default => throw InvalidTransactionTypeException::forType($transaction->type->value),
         };
 
         $newBaseCurrentBalance = null;
