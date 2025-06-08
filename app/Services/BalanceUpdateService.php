@@ -10,6 +10,7 @@ use App\Facades\Forex;
 use App\Models\Transaction;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 final class BalanceUpdateService
 {
@@ -22,6 +23,10 @@ final class BalanceUpdateService
         $amount = $transaction->amount;
         /** @var numeric-string $accountCurrentBalance */
         $accountCurrentBalance = $transaction->account->current_balance;
+
+        // Capture old balances for audit logging
+        $oldCurrentBalance = $accountCurrentBalance;
+        $oldBaseCurrentBalance = $transaction->account->base_current_balance;
 
         // Convert negative amount to positive for calculations
         /** @var numeric-string $absoluteAmount */
@@ -38,7 +43,9 @@ final class BalanceUpdateService
             default => throw new Exception('Invalid transaction type'),
         };
 
-        DB::transaction(function () use ($transaction, $newCurrentBalance, $absoluteAmount, $isReversing) {
+        $newBaseCurrentBalance = null;
+
+        DB::transaction(function () use ($transaction, $newCurrentBalance, $absoluteAmount, $isReversing, &$newBaseCurrentBalance) {
             $updateData = [
                 'current_balance' => $newCurrentBalance,
             ];
@@ -59,6 +66,17 @@ final class BalanceUpdateService
 
             $transaction->account()->update($updateData);
         });
+
+        // Audit logging after successful DB transaction
+        $this->logBalanceUpdate(
+            $transaction,
+            $isReversing,
+            $oldCurrentBalance,
+            $newCurrentBalance,
+            $oldBaseCurrentBalance,
+            $newBaseCurrentBalance,
+            $absoluteAmount
+        );
     }
 
     /**
@@ -108,5 +126,49 @@ final class BalanceUpdateService
 
         // Convert amount: amount_in_base = amount_in_from_currency / exchange_rate
         return bcdiv($amount, (string) $exchangeRate, 4);
+    }
+
+    /**
+     * Log balance update details for audit trail.
+     */
+    private function logBalanceUpdate(
+        Transaction $transaction,
+        bool $isReversing,
+        string $oldCurrentBalance,
+        string $newCurrentBalance,
+        float|int|null $oldBaseCurrentBalance,
+        ?string $newBaseCurrentBalance,
+        string $absoluteAmount
+    ): void {
+        $logData = [
+            'transaction_id' => $transaction->id,
+            'transaction_public_id' => $transaction->public_id,
+            'account_id' => $transaction->account->id,
+            'account_public_id' => $transaction->account->public_id,
+            'transaction_type' => $transaction->type->value,
+            'amount' => $absoluteAmount,
+            'currency' => $transaction->currency,
+            'is_reversing' => $isReversing,
+            'operation' => $isReversing ? 'deletion' : 'creation',
+            'old_current_balance' => $oldCurrentBalance,
+            'new_current_balance' => $newCurrentBalance,
+            'current_balance_change' => bcsub($newCurrentBalance, $oldCurrentBalance, 4),
+        ];
+
+        // Add base currency information if available
+        if ($oldBaseCurrentBalance !== null || $newBaseCurrentBalance !== null) {
+            $logData['is_multicurrency'] = true;
+            $logData['base_currency'] = $transaction->account->base_currency;
+            $logData['old_base_current_balance'] = $oldBaseCurrentBalance ? (string) $oldBaseCurrentBalance : null;
+            $logData['new_base_current_balance'] = $newBaseCurrentBalance;
+
+            if ($oldBaseCurrentBalance !== null && $newBaseCurrentBalance !== null) {
+                $logData['base_balance_change'] = bcsub($newBaseCurrentBalance, (string) $oldBaseCurrentBalance, 4);
+            }
+        } else {
+            $logData['is_multicurrency'] = false;
+        }
+
+        Log::info('Balance update completed', $logData);
     }
 }
