@@ -73,8 +73,8 @@ final class TransactionObserver
     public function deleted(Transaction $transaction): void
     {
         /**
-         * 1. If the transaction is manual, we need to detach the amount from the account.
-         * 2. If the transaction is not manual, we need to add the amount to the account.
+         * If the transaction is manual, we need to reverse the balance changes
+         * by applying the opposite operation to the account balance.
          */
         if ($transaction->is_manual) {
             /** @var numeric-string $amount */
