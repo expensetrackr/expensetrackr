@@ -110,7 +110,7 @@ final class TransactionObserver
 
                 // Handle multicurrency accounts (accounts with base currency fields)
                 if ($transaction->account->base_currency !== null && $transaction->account->base_current_balance !== null) {
-                    $newBaseCurrentBalance = $this->updateBaseBalanceOnDelete(
+                    $newBaseCurrentBalance = $this->updateBaseBalance(
                         (string) $transaction->account->base_current_balance,
                         $absoluteAmount,
                         $transaction->type,
@@ -134,32 +134,18 @@ final class TransactionObserver
         string $absoluteAmount,
         TransactionType $transactionType,
         string $transactionCurrency,
-        string $baseCurrency
+        string $baseCurrency,
+        bool $isReversing = false
     ): string {
         $baseAmount = $this->convertToBaseCurrency($absoluteAmount, $transactionCurrency, $baseCurrency);
 
         return match ($transactionType) {
-            TransactionType::Expense => bcsub($currentBaseBalance, $baseAmount, 4),
-            TransactionType::Income => bcadd($currentBaseBalance, $baseAmount, 4),
-            TransactionType::Transfer => $currentBaseBalance,
-        };
-    }
-
-    /**
-     * Update the base currency balance for multicurrency accounts on deletion (reverse operations).
-     */
-    private function updateBaseBalanceOnDelete(
-        string $currentBaseBalance,
-        string $absoluteAmount,
-        TransactionType $transactionType,
-        string $transactionCurrency,
-        string $baseCurrency
-    ): string {
-        $baseAmount = $this->convertToBaseCurrency($absoluteAmount, $transactionCurrency, $baseCurrency);
-
-        return match ($transactionType) {
-            TransactionType::Expense => bcadd($currentBaseBalance, $baseAmount, 4), // Reverse: add back
-            TransactionType::Income => bcsub($currentBaseBalance, $baseAmount, 4),  // Reverse: subtract back
+            TransactionType::Expense => $isReversing
+                ? bcadd($currentBaseBalance, $baseAmount, 4)
+                : bcsub($currentBaseBalance, $baseAmount, 4),
+            TransactionType::Income => $isReversing
+                ? bcsub($currentBaseBalance, $baseAmount, 4)
+                : bcadd($currentBaseBalance, $baseAmount, 4),
             TransactionType::Transfer => $currentBaseBalance,
         };
     }
