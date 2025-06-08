@@ -23,50 +23,8 @@ final class TransactionObserver
             EnrichTransactionJob::dispatch($transaction);
         }
 
-        /** @var numeric-string $amount */
-        $amount = $transaction->amount;
-        /** @var numeric-string $accountCurrentBalance */
-        $accountCurrentBalance = $transaction->account->current_balance;
-
-        // Convert negative amount to positive for calculations
-        /** @var numeric-string $absoluteAmount */
-        $absoluteAmount = ltrim((string) $amount, '-');
-
         if ($transaction->is_manual) {
-            switch ($transaction->type) {
-                case TransactionType::Expense:
-                    $newCurrentBalance = bcsub($accountCurrentBalance, $absoluteAmount, 4);
-                    break;
-                case TransactionType::Income:
-                    $newCurrentBalance = bcadd($accountCurrentBalance, $absoluteAmount, 4);
-                    break;
-                case TransactionType::Transfer:
-                    $newCurrentBalance = $accountCurrentBalance;
-                    break;
-                default:
-                    throw new Exception('Invalid transaction type');
-            }
-
-            DB::transaction(function () use ($transaction, $newCurrentBalance, $absoluteAmount) {
-                $updateData = [
-                    'current_balance' => $newCurrentBalance,
-                ];
-
-                // Handle multicurrency accounts (accounts with base currency fields)
-                if ($transaction->account->base_currency !== null && $transaction->account->base_current_balance !== null) {
-                    $newBaseCurrentBalance = $this->updateBaseBalance(
-                        (string) $transaction->account->base_current_balance,
-                        $absoluteAmount,
-                        $transaction->type,
-                        $transaction->currency,
-                        $transaction->account->base_currency
-                    );
-
-                    $updateData['base_current_balance'] = $newBaseCurrentBalance;
-                }
-
-                $transaction->account()->update($updateData);
-            });
+            $this->updateAccountBalances($transaction, false);
         }
     }
 
@@ -80,50 +38,56 @@ final class TransactionObserver
          * by applying the opposite operation to the account balance.
          */
         if ($transaction->is_manual) {
-            /** @var numeric-string $amount */
-            $amount = $transaction->amount;
-            /** @var numeric-string $accountCurrentBalance */
-            $accountCurrentBalance = $transaction->account->current_balance;
+            $this->updateAccountBalances($transaction, true);
+        }
+    }
 
-            // Convert negative amount to positive for calculations
-            /** @var numeric-string $absoluteAmount */
-            $absoluteAmount = ltrim((string) $amount, '-');
+    /**
+     * Update account balances for both standard and multicurrency accounts.
+     */
+    private function updateAccountBalances(Transaction $transaction, bool $isReversing = false): void
+    {
+        /** @var numeric-string $amount */
+        $amount = $transaction->amount;
+        /** @var numeric-string $accountCurrentBalance */
+        $accountCurrentBalance = $transaction->account->current_balance;
 
-            switch ($transaction->type) {
-                case TransactionType::Expense:
-                    $newCurrentBalance = bcadd($accountCurrentBalance, $absoluteAmount, 4);
-                    break;
-                case TransactionType::Income:
-                    $newCurrentBalance = bcsub($accountCurrentBalance, $absoluteAmount, 4);
-                    break;
-                case TransactionType::Transfer:
-                    $newCurrentBalance = $accountCurrentBalance;
-                    break;
-                default:
-                    throw new Exception('Invalid transaction type');
+        // Convert negative amount to positive for calculations
+        /** @var numeric-string $absoluteAmount */
+        $absoluteAmount = ltrim((string) $amount, '-');
+
+        $newCurrentBalance = match ($transaction->type) {
+            TransactionType::Expense => $isReversing
+                ? bcadd($accountCurrentBalance, $absoluteAmount, 4)
+                : bcsub($accountCurrentBalance, $absoluteAmount, 4),
+            TransactionType::Income => $isReversing
+                ? bcsub($accountCurrentBalance, $absoluteAmount, 4)
+                : bcadd($accountCurrentBalance, $absoluteAmount, 4),
+            TransactionType::Transfer => $accountCurrentBalance,
+            default => throw new Exception('Invalid transaction type'),
+        };
+
+        DB::transaction(function () use ($transaction, $newCurrentBalance, $absoluteAmount, $isReversing) {
+            $updateData = [
+                'current_balance' => $newCurrentBalance,
+            ];
+
+            // Handle multicurrency accounts (accounts with base currency fields)
+            if ($transaction->account->base_currency !== null && $transaction->account->base_current_balance !== null) {
+                $newBaseCurrentBalance = $this->updateBaseBalance(
+                    (string) $transaction->account->base_current_balance,
+                    $absoluteAmount,
+                    $transaction->type,
+                    $transaction->currency,
+                    $transaction->account->base_currency,
+                    $isReversing
+                );
+
+                $updateData['base_current_balance'] = $newBaseCurrentBalance;
             }
 
-            DB::transaction(function () use ($transaction, $newCurrentBalance, $absoluteAmount) {
-                $updateData = [
-                    'current_balance' => $newCurrentBalance,
-                ];
-
-                // Handle multicurrency accounts (accounts with base currency fields)
-                if ($transaction->account->base_currency !== null && $transaction->account->base_current_balance !== null) {
-                    $newBaseCurrentBalance = $this->updateBaseBalance(
-                        (string) $transaction->account->base_current_balance,
-                        $absoluteAmount,
-                        $transaction->type,
-                        $transaction->currency,
-                        $transaction->account->base_currency
-                    );
-
-                    $updateData['base_current_balance'] = $newBaseCurrentBalance;
-                }
-
-                $transaction->account()->update($updateData);
-            });
-        }
+            $transaction->account()->update($updateData);
+        });
     }
 
     /**
