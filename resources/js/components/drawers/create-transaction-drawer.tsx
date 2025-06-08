@@ -112,9 +112,9 @@ export function CreateTransactionDrawer() {
 
         form.post(routes.transactions.store.url(), {
             onSuccess: async () => {
-                await actions.resetParams();
-
                 form.reset();
+
+                await actions.resetParams();
             },
         });
     };
