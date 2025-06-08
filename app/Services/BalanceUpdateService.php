@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Contracts\BalanceUpdateInterface;
 use App\Enums\Finance\TransactionType;
 use App\Exceptions\ExchangeRateException;
 use App\Exceptions\InvalidTransactionTypeException;
@@ -12,7 +13,7 @@ use App\Models\Transaction;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
-final class BalanceUpdateService
+final class BalanceUpdateService implements BalanceUpdateInterface
 {
     /**
      * Update account balances for both standard and multicurrency accounts.

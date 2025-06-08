@@ -4,16 +4,12 @@ declare(strict_types=1);
 
 namespace App\Observers;
 
+use App\Facades\BalanceUpdate;
 use App\Jobs\EnrichTransactionJob;
 use App\Models\Transaction;
-use App\Services\BalanceUpdateService;
 
 final class TransactionObserver
 {
-    public function __construct(
-        private readonly BalanceUpdateService $balanceUpdateService
-    ) {}
-
     /**
      * Handle the Transaction "created" event.
      */
@@ -24,7 +20,7 @@ final class TransactionObserver
         }
 
         if ($transaction->is_manual) {
-            $this->balanceUpdateService->updateBalances($transaction, false);
+            BalanceUpdate::updateBalances($transaction, false);
         }
     }
 
@@ -38,7 +34,7 @@ final class TransactionObserver
          * by applying the opposite operation to the account balance.
          */
         if ($transaction->is_manual) {
-            $this->balanceUpdateService->updateBalances($transaction, true);
+            BalanceUpdate::updateBalances($transaction, true);
         }
     }
 }
