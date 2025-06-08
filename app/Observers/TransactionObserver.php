@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Observers;
 
 use App\Enums\Finance\TransactionType;
+use App\Exceptions\ExchangeRateException;
+use App\Facades\Forex;
 use App\Jobs\EnrichTransactionJob;
 use App\Models\Transaction;
 use Exception;
@@ -44,9 +46,69 @@ final class TransactionObserver
                     throw new Exception('Invalid transaction type');
             }
 
-            $transaction->account()->update([
+            $updateData = [
                 'current_balance' => $newCurrentBalance,
-            ]);
+            ];
+
+            // Handle multicurrency accounts (accounts with base currency fields)
+            if ($transaction->account->base_currency !== null && $transaction->account->base_current_balance !== null) {
+                $newBaseCurrentBalance = $this->updateBaseBalance(
+                    (string) $transaction->account->base_current_balance,
+                    $absoluteAmount,
+                    $transaction->type,
+                    $transaction->currency,
+                    $transaction->account->base_currency
+                );
+
+                $updateData['base_current_balance'] = $newBaseCurrentBalance;
+            }
+
+            $transaction->account()->update($updateData);
         }
+    }
+
+    /**
+     * Update the base currency balance for multicurrency accounts.
+     */
+    private function updateBaseBalance(
+        string $currentBaseBalance,
+        string $absoluteAmount,
+        TransactionType $transactionType,
+        string $transactionCurrency,
+        string $baseCurrency
+    ): string {
+        // Convert transaction amount to base currency
+        $baseAmount = $this->convertToBaseCurrency($absoluteAmount, $transactionCurrency, $baseCurrency);
+
+        return match ($transactionType) {
+            TransactionType::Expense => bcsub($currentBaseBalance, $baseAmount, 4),
+            TransactionType::Income => bcadd($currentBaseBalance, $baseAmount, 4),
+            TransactionType::Transfer => $currentBaseBalance,
+        };
+    }
+
+    /**
+     * Convert an amount from one currency to base currency.
+     */
+    private function convertToBaseCurrency(string $amount, string $fromCurrency, string $baseCurrency): string
+    {
+        // If currencies are the same, no conversion needed
+        if ($fromCurrency === $baseCurrency) {
+            return $amount;
+        }
+
+        // Get exchange rate from transaction currency to base currency
+        $exchangeRate = Forex::getCachedExchangeRate($baseCurrency, $fromCurrency);
+
+        if ($exchangeRate === null) {
+            throw ExchangeRateException::failedToFetch($baseCurrency, $fromCurrency);
+        }
+
+        if (bccomp((string) $exchangeRate, '0', 6) <= 0) {
+            throw ExchangeRateException::invalidRate($exchangeRate);
+        }
+
+        // Convert amount: amount_in_base = amount_in_from_currency / exchange_rate
+        return bcdiv($amount, (string) $exchangeRate, 4);
     }
 }
