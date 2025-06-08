@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace App\Observers;
 
-use App\Enums\Finance\TransactionType;
+use App\Facades\BalanceUpdate;
 use App\Jobs\EnrichTransactionJob;
 use App\Models\Transaction;
-use Exception;
 
 final class TransactionObserver
 {
@@ -20,33 +19,22 @@ final class TransactionObserver
             EnrichTransactionJob::dispatch($transaction);
         }
 
-        /** @var numeric-string $amount */
-        $amount = $transaction->amount;
-        /** @var numeric-string $accountCurrentBalance */
-        $accountCurrentBalance = $transaction->account->current_balance;
-
-        // Convert negative amount to positive for calculations
-        /** @var numeric-string $absoluteAmount */
-        $absoluteAmount = ltrim((string) $amount, '-');
-
         if ($transaction->is_manual) {
-            switch ($transaction->type) {
-                case TransactionType::Expense:
-                    $newCurrentBalance = bcsub($accountCurrentBalance, $absoluteAmount, 4);
-                    break;
-                case TransactionType::Income:
-                    $newCurrentBalance = bcadd($accountCurrentBalance, $absoluteAmount, 4);
-                    break;
-                case TransactionType::Transfer:
-                    $newCurrentBalance = $accountCurrentBalance;
-                    break;
-                default:
-                    throw new Exception('Invalid transaction type');
-            }
+            BalanceUpdate::updateBalances($transaction, false);
+        }
+    }
 
-            $transaction->account()->update([
-                'current_balance' => $newCurrentBalance,
-            ]);
+    /**
+     * Handle the Transaction "deleted" event.
+     */
+    public function deleted(Transaction $transaction): void
+    {
+        /**
+         * If the transaction is manual, we need to reverse the balance changes
+         * by applying the opposite operation to the account balance.
+         */
+        if ($transaction->is_manual) {
+            BalanceUpdate::updateBalances($transaction, true);
         }
     }
 }
