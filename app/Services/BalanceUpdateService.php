@@ -139,7 +139,7 @@ final class BalanceUpdateService implements BalanceUpdateInterface
         bool $isReversing,
         string $oldCurrentBalance,
         string $newCurrentBalance,
-        float|int|null $oldBaseCurrentBalance,
+        ?string $oldBaseCurrentBalance,
         ?string $newBaseCurrentBalance,
         string $absoluteAmount
     ): void {
@@ -162,11 +162,11 @@ final class BalanceUpdateService implements BalanceUpdateInterface
         if ($oldBaseCurrentBalance !== null || $newBaseCurrentBalance !== null) {
             $logData['is_multicurrency'] = true;
             $logData['base_currency'] = $transaction->account->base_currency;
-            $logData['old_base_current_balance'] = $oldBaseCurrentBalance ? (string) $oldBaseCurrentBalance : null;
+            $logData['old_base_current_balance'] = $oldBaseCurrentBalance;
             $logData['new_base_current_balance'] = $newBaseCurrentBalance;
 
             if ($oldBaseCurrentBalance !== null && $newBaseCurrentBalance !== null) {
-                $logData['base_balance_change'] = bcsub($newBaseCurrentBalance, (string) $oldBaseCurrentBalance, 4);
+                $logData['base_balance_change'] = bcsub($newBaseCurrentBalance, $oldBaseCurrentBalance, 4);
             }
         } else {
             $logData['is_multicurrency'] = false;
