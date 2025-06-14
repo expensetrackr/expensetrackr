@@ -1,4 +1,5 @@
-import { getFormProps, getInputProps, getTextareaProps, useForm, useInputControl } from "@conform-to/react";
+import { getFormProps, getInputProps, getTextareaProps, useForm } from "@conform-to/react";
+import { useControl } from "@conform-to/react/future";
 import { getValibotConstraint, parseWithValibot } from "@conform-to/valibot";
 import { useForm as useInertiaForm } from "@inertiajs/react";
 import { resolveCurrencyFormat } from "@sumup/intl";
@@ -70,11 +71,11 @@ export function CreateAccountDrawer() {
         },
     });
     const { language, t } = useTranslation();
-    const typeControl = useInputControl(fields.type);
-    const subtypeControl = useInputControl(fields.subtype);
-    const currencyCodeControl = useInputControl(fields.currency_code);
+    const typeControl = useControl(fields.type);
+    const subtypeControl = useControl(fields.subtype);
+    const currencyCodeControl = useControl(fields.currency_code);
     const currencyFormat = resolveCurrencyFormat(language, currencyCodeControl.value || "USD");
-    const initialBalanceControl = useInputControl(fields.initial_balance);
+    const initialBalanceControl = useControl(fields.initial_balance);
 
     const handleOpenChange = async (open: boolean) => {
         if (!open) {
@@ -105,7 +106,10 @@ export function CreateAccountDrawer() {
 
                     <Drawer.Body className="flex-1 overflow-y-auto">
                         <form {...getFormProps(form)}>
-                            <input {...getInputProps(fields.initial_balance, { type: "hidden" })} />
+                            <input hidden name={fields.type.name} ref={typeControl.register} />
+                            <input hidden name={fields.subtype.name} ref={subtypeControl.register} />
+                            <input hidden name={fields.currency_code.name} ref={currencyCodeControl.register} />
+                            <input hidden name={fields.initial_balance.name} ref={initialBalanceControl.register} />
 
                             <div className="space-y-3 p-5">
                                 <TextField
@@ -303,18 +307,18 @@ type CreditCardFieldsProps = {
 };
 
 function CreditCardFields({ fields, currencyFormat, handleMoneyChange }: CreditCardFieldsProps) {
-    const availableBalanceControl = useInputControl(fields.available_balance);
-    const minimumPaymentControl = useInputControl(fields.minimum_payment);
-    const expiresAtControl = useInputControl(fields.expires_at);
-    const annualFeeControl = useInputControl(fields.annual_fee);
+    const availableBalanceControl = useControl(fields.available_balance);
+    const minimumPaymentControl = useControl(fields.minimum_payment);
+    const expiresAtControl = useControl(fields.expires_at);
+    const annualFeeControl = useControl(fields.annual_fee);
     const { t } = useTranslation();
 
     return (
         <>
-            <input {...getInputProps(fields.available_balance, { type: "hidden" })} />
-            <input {...getInputProps(fields.minimum_payment, { type: "hidden" })} />
-            <input {...getInputProps(fields.expires_at, { type: "hidden" })} />
-            <input {...getInputProps(fields.annual_fee, { type: "hidden" })} />
+            <input hidden name={fields.available_balance.name} ref={availableBalanceControl.register} />
+            <input hidden name={fields.minimum_payment.name} ref={minimumPaymentControl.register} />
+            <input hidden name={fields.expires_at.name} ref={expiresAtControl.register} />
+            <input hidden name={fields.annual_fee.name} ref={annualFeeControl.register} />
 
             <CurrencyInput
                 currency={currencyFormat?.currency || "USD"}
@@ -361,7 +365,7 @@ function CreditCardFields({ fields, currencyFormat, handleMoneyChange }: CreditC
                     label={t("accounts.form.expires_at.label")}
                     labelSub={t("accounts.form.expires_at.labelSub")}
                     mode="single"
-                    onSelect={(date) => expiresAtControl.change(date?.toISOString())}
+                    onSelect={(date) => expiresAtControl.change(date?.toISOString() || "")}
                     placeholder={t("accounts.form.expires_at.placeholder")}
                     selected={expiresAtControl.value ? new Date(expiresAtControl.value) : undefined}
                     value={expiresAtControl.value}
@@ -389,12 +393,12 @@ type LoanFieldsProps = {
 };
 
 function LoanFields({ fields }: LoanFieldsProps) {
-    const interestRateTypeControl = useInputControl(fields.interest_rate_type);
+    const interestRateTypeControl = useControl(fields.interest_rate_type);
     const { t } = useTranslation();
 
     return (
         <>
-            <input {...getInputProps(fields.interest_rate, { type: "hidden" })} />
+            <input hidden name={fields.interest_rate.name} ref={interestRateTypeControl.register} />
 
             <div className="grid grid-cols-2 gap-4">
                 <TextField

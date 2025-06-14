@@ -1,4 +1,5 @@
-import { getFormProps, getInputProps, useForm, useInputControl } from "@conform-to/react";
+import { getFormProps, getInputProps, useForm } from "@conform-to/react";
+import { useControl } from "@conform-to/react/future";
 import { getValibotConstraint, parseWithValibot } from "@conform-to/valibot";
 import { Deferred, useForm as useInertiaForm } from "@inertiajs/react";
 import NumberFlow, { type Format } from "@number-flow/react";
@@ -218,7 +219,7 @@ type BankAccountProps = {
 function BankAccount({ account, fields, children }: BankAccountProps) {
     const { language } = useTranslation();
     const currencyFormat = resolveCurrencyFormat(language, account.currency);
-    const enabledControl = useInputControl(fields.enabled);
+    const enabledControl = useControl(fields.enabled);
 
     const format: Format = React.useMemo(
         () => ({
@@ -233,6 +234,8 @@ function BankAccount({ account, fields, children }: BankAccountProps) {
     return (
         <>
             {children}
+
+            <input hidden name={fields.enabled.name} ref={enabledControl.register} />
 
             <LabelPrimitives.Root className="flex cursor-pointer items-center gap-3.5 rounded-12 bg-(--bg-white-0) px-4 py-2.5 shadow-xs ring-1 ring-(--stroke-soft-200) ring-inset">
                 <Avatar.Root $size="40" className="shadow-xs ring-1 ring-(--stroke-soft-200)">
