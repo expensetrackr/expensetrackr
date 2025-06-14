@@ -56,7 +56,7 @@
                             93: "meta",
                             224: "meta",
                         },
-                        y = {
+                        g = {
                             106: "*",
                             107: "+",
                             109: "-",
@@ -74,7 +74,7 @@
                             221: "]",
                             222: "'",
                         },
-                        g = {
+                        y = {
                             "~": "`",
                             "!": "1",
                             "@": "2",
@@ -124,8 +124,8 @@
                     }
                     return h[e.which]
                         ? h[e.which]
-                        : y[e.which]
-                          ? y[e.which]
+                        : g[e.which]
+                          ? g[e.which]
                           : String.fromCharCode(e.which).toLowerCase();
                 }
                 function V(e, t) {
@@ -181,7 +181,7 @@
                     for (a = X(e), b = 0; b < a.length; ++b)
                         (c = a[b]),
                             q[c] && (c = q[c]),
-                            t && t != "keypress" && g[c] && ((c = g[c]), P.push("shift")),
+                            t && t != "keypress" && y[c] && ((c = y[c]), P.push("shift")),
                             O(c) && P.push(c);
                     return (t = U(c, P, t)), { key: c, modifiers: P, action: t };
                 }
@@ -370,14 +370,14 @@
         if (s) {
             var n = {},
                 p = s.prototype.stopCallback;
-            (s.prototype.stopCallback = function (d, M, h, y) {
-                var g = this;
-                return g.paused ? !0 : n[h] || n[y] ? !1 : p.call(g, d, M, h);
+            (s.prototype.stopCallback = function (d, M, h, g) {
+                var y = this;
+                return y.paused ? !0 : n[h] || n[g] ? !1 : p.call(y, d, M, h);
             }),
                 (s.prototype.bindGlobal = function (d, M, h) {
-                    var y = this;
-                    if ((y.bind(d, M, h), d instanceof Array)) {
-                        for (var g = 0; g < d.length; g++) n[d[g]] = !0;
+                    var g = this;
+                    if ((g.bind(d, M, h), d instanceof Array)) {
+                        for (var y = 0; y < d.length; y++) n[d[y]] = !0;
                         return;
                     }
                     n[d] = !0;
@@ -388,14 +388,19 @@
     var le = (s) => {
             s.directive("mousetrap", (n, { modifiers: p, expression: d }, { evaluate: M }) => {
                 let h = () => (d ? M(d) : n.click());
-                (p = p.map((y) => y.replace(/-/g, "+"))),
+                (p = p.map((g) =>
+                    g
+                        .replace(/--/g, " ")
+                        .replace(/-/g, "+")
+                        .replace(/\bslash\b/g, "/"),
+                )),
                     p.includes("global") &&
-                        ((p = p.filter((y) => y !== "global")),
-                        R.default.bindGlobal(p, (y) => {
-                            y.preventDefault(), h();
+                        ((p = p.filter((g) => g !== "global")),
+                        R.default.bindGlobal(p, (g) => {
+                            g.preventDefault(), h();
                         })),
-                    R.default.bind(p, (y) => {
-                        y.preventDefault(), h();
+                    R.default.bind(p, (g) => {
+                        g.preventDefault(), h();
                     });
             });
         },

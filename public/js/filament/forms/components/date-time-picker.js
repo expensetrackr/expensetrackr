@@ -1,28 +1,28 @@
-var vi = Object.create;
-var fn = Object.defineProperty;
-var gi = Object.getOwnPropertyDescriptor;
-var Si = Object.getOwnPropertyNames;
-var bi = Object.getPrototypeOf,
-    ki = Object.prototype.hasOwnProperty;
-var k = (n, t) => () => (t || n((t = { exports: {} }).exports, t), t.exports);
-var Hi = (n, t, s, i) => {
+var bi = Object.create;
+var mn = Object.defineProperty;
+var ki = Object.getOwnPropertyDescriptor;
+var ji = Object.getOwnPropertyNames;
+var Hi = Object.getPrototypeOf,
+    Ti = Object.prototype.hasOwnProperty;
+var b = (n, t) => () => (t || n((t = { exports: {} }).exports, t), t.exports);
+var wi = (n, t, s, i) => {
     if ((t && typeof t == "object") || typeof t == "function")
-        for (let e of Si(t))
-            !ki.call(n, e) && e !== s && fn(n, e, { get: () => t[e], enumerable: !(i = gi(t, e)) || i.enumerable });
+        for (let e of ji(t))
+            !Ti.call(n, e) && e !== s && mn(n, e, { get: () => t[e], enumerable: !(i = ki(t, e)) || i.enumerable });
     return n;
 };
 var de = (n, t, s) => (
-    (s = n != null ? vi(bi(n)) : {}),
-    Hi(t || !n || !n.__esModule ? fn(s, "default", { value: n, enumerable: !0 }) : s, n)
+    (s = n != null ? bi(Hi(n)) : {}),
+    wi(t || !n || !n.__esModule ? mn(s, "default", { value: n, enumerable: !0 }) : s, n)
 );
-var bn = k((He, je) => {
+var jn = b((je, He) => {
     (function (n, t) {
-        typeof He == "object" && typeof je < "u"
-            ? (je.exports = t())
+        typeof je == "object" && typeof He < "u"
+            ? (He.exports = t())
             : typeof define == "function" && define.amd
               ? define(t)
               : ((n = typeof globalThis < "u" ? globalThis : n || self).dayjs_plugin_advancedFormat = t());
-    })(He, function () {
+    })(je, function () {
         "use strict";
         return function (n, t) {
             var s = t.prototype,
@@ -73,7 +73,7 @@ var bn = k((He, je) => {
         };
     });
 });
-var kn = k((Te, we) => {
+var Hn = b((Te, we) => {
     (function (n, t) {
         typeof Te == "object" && typeof we < "u"
             ? (we.exports = t())
@@ -229,10 +229,10 @@ var kn = k((Te, we) => {
             var Y, L;
             (Y = m), (L = a && a.formats);
             for (
-                var D = (m = Y.replace(/(\[[^\]]+])|(LTS?|l{1,4}|L{1,4})/g, function ($, H, W) {
+                var D = (m = Y.replace(/(\[[^\]]+])|(LTS?|l{1,4}|L{1,4})/g, function ($, j, W) {
                         var U = W && W.toUpperCase();
                         return (
-                            H ||
+                            j ||
                             L[W] ||
                             n[W] ||
                             L[U].replace(/(\[[^\]]+])|(MMMM|MM|DD|dddd)/g, function (v, h, c) {
@@ -252,7 +252,7 @@ var kn = k((Te, we) => {
                 D[g] = x ? { regex: q, parser: x } : C.replace(/^\[|\]$/g, "");
             }
             return function ($) {
-                for (var H = {}, W = 0, U = 0; W < w; W += 1) {
+                for (var j = {}, W = 0, U = 0; W < w; W += 1) {
                     var v = D[W];
                     if (typeof v == "string") U += v.length;
                     else {
@@ -260,18 +260,18 @@ var kn = k((Te, we) => {
                             c = v.parser,
                             p = $.slice(U),
                             M = h.exec(p)[0];
-                        c.call(H, M), ($ = $.replace(M, ""));
+                        c.call(j, M), ($ = $.replace(M, ""));
                     }
                 }
                 return (
                     (function (S) {
-                        var b = S.afternoon;
-                        if (b !== void 0) {
+                        var k = S.afternoon;
+                        if (k !== void 0) {
                             var T = S.hours;
-                            b ? T < 12 && (S.hours += 12) : T === 12 && (S.hours = 0), delete S.afternoon;
+                            k ? T < 12 && (S.hours += 12) : T === 12 && (S.hours = 0), delete S.afternoon;
                         }
-                    })(H),
-                    H
+                    })(j),
+                    j
                 );
             };
         }
@@ -287,13 +287,13 @@ var kn = k((Te, we) => {
                 var x = q[1];
                 if (typeof x == "string") {
                     var $ = q[2] === !0,
-                        H = q[3] === !0,
-                        W = $ || H,
+                        j = q[3] === !0,
+                        W = $ || j,
                         U = q[2];
-                    H && (U = q[2]),
+                    j && (U = q[2]),
                         (a = this.$locale()),
                         !$ && U && (a = L.Ls[U]),
-                        (this.$d = (function (p, M, S, b) {
+                        (this.$d = (function (p, M, S, k) {
                             try {
                                 if (["x", "X"].indexOf(M) > -1) return new Date((M === "X" ? 1e3 : 1) * p);
                                 var T = f(M)(p),
@@ -321,7 +321,7 @@ var kn = k((Te, we) => {
                                     : S
                                       ? new Date(Date.UTC(ee, le, X, pe, De, Le, ve))
                                       : ((me = new Date(ee, le, X, pe, De, Le, ve)),
-                                        J && (me = b(me).week(J).toDate()),
+                                        J && (me = k(me).week(J).toDate()),
                                         me);
                             } catch {
                                 return new Date("");
@@ -346,7 +346,7 @@ var kn = k((Te, we) => {
         };
     });
 });
-var Hn = k(($e, Ce) => {
+var Tn = b(($e, Ce) => {
     (function (n, t) {
         typeof $e == "object" && typeof Ce < "u"
             ? (Ce.exports = t())
@@ -465,7 +465,7 @@ var Hn = k(($e, Ce) => {
         };
     });
 });
-var jn = k((Oe, ze) => {
+var wn = b((Oe, ze) => {
     (function (n, t) {
         typeof Oe == "object" && typeof ze < "u"
             ? (ze.exports = t())
@@ -557,8 +557,8 @@ var jn = k((Oe, ze) => {
                             var x = C - 60 * A * 1e3,
                                 $ = u(x, q);
                             if (A === $) return [x, A];
-                            var H = u((x -= 60 * ($ - A) * 1e3), q);
-                            return $ === H ? [x, $] : [C - 60 * Math.min($, H) * 1e3, Math.max($, H)];
+                            var j = u((x -= 60 * ($ - A) * 1e3), q);
+                            return $ === j ? [x, $] : [C - 60 * Math.min($, j) * 1e3, Math.max($, j)];
                         })(e.utc(_, f).valueOf(), Y, m),
                         D = L[0],
                         w = L[1],
@@ -574,7 +574,7 @@ var jn = k((Oe, ze) => {
         };
     });
 });
-var Tn = k((Ae, Ie) => {
+var $n = b((Ae, Ie) => {
     (function (n, t) {
         typeof Ae == "object" && typeof Ie < "u"
             ? (Ie.exports = t())
@@ -678,7 +678,7 @@ var Tn = k((Ae, Ie) => {
         };
     });
 });
-var j = k((qe, xe) => {
+var H = b((qe, xe) => {
     (function (n, t) {
         typeof qe == "object" && typeof xe < "u"
             ? (xe.exports = t())
@@ -733,8 +733,8 @@ var j = k((qe, xe) => {
                     var p = 12 * (c.year() - h.year()) + (c.month() - h.month()),
                         M = h.clone().add(p, d),
                         S = c - M < 0,
-                        b = h.clone().add(p + (S ? -1 : 1), d);
-                    return +(-(p + (c - M) / (S ? M - b : b - M)) || 0);
+                        k = h.clone().add(p + (S ? -1 : 1), d);
+                    return +(-(p + (c - M) / (S ? M - k : k - M)) || 0);
                 },
                 a: function (v) {
                     return v < 0 ? Math.ceil(v) || 0 : Math.floor(v);
@@ -764,8 +764,8 @@ var j = k((qe, xe) => {
                 if (typeof h == "string") {
                     var S = h.toLowerCase();
                     C[S] && (M = S), c && ((C[S] = c), (M = S));
-                    var b = h.split("-");
-                    if (!M && b.length > 1) return v(b[0]);
+                    var k = h.split("-");
+                    if (!M && k.length > 1) return v(k[0]);
                 } else {
                     var T = h.name;
                     (C[T] = h), (M = T);
@@ -777,10 +777,10 @@ var j = k((qe, xe) => {
                 var c = typeof h == "object" ? h : {};
                 return (c.date = v), (c.args = arguments), new W(c);
             },
-            H = w;
-        (H.l = x),
-            (H.i = q),
-            (H.w = function (v, h) {
+            j = w;
+        (j.l = x),
+            (j.i = q),
+            (j.w = function (v, h) {
                 return $(v, { locale: h.$L, utc: h.$u, x: h.$x, $offset: h.$offset });
             });
         var W = (function () {
@@ -794,16 +794,16 @@ var j = k((qe, xe) => {
                             var M = p.date,
                                 S = p.utc;
                             if (M === null) return new Date(NaN);
-                            if (H.u(M)) return new Date();
+                            if (j.u(M)) return new Date();
                             if (M instanceof Date) return new Date(M);
                             if (typeof M == "string" && !/Z$/i.test(M)) {
-                                var b = M.match(m);
-                                if (b) {
-                                    var T = b[2] - 1 || 0,
-                                        I = (b[7] || "0").substring(0, 3);
+                                var k = M.match(m);
+                                if (k) {
+                                    var T = k[2] - 1 || 0,
+                                        I = (k[7] || "0").substring(0, 3);
                                     return S
-                                        ? new Date(Date.UTC(b[1], T, b[3] || 1, b[4] || 0, b[5] || 0, b[6] || 0, I))
-                                        : new Date(b[1], T, b[3] || 1, b[4] || 0, b[5] || 0, b[6] || 0, I);
+                                        ? new Date(Date.UTC(k[1], T, k[3] || 1, k[4] || 0, k[5] || 0, k[6] || 0, I))
+                                        : new Date(k[1], T, k[3] || 1, k[4] || 0, k[5] || 0, k[6] || 0, I);
                                 }
                             }
                             return new Date(M);
@@ -822,7 +822,7 @@ var j = k((qe, xe) => {
                             (this.$ms = c.getMilliseconds());
                     }),
                     (h.$utils = function () {
-                        return H;
+                        return j;
                     }),
                     (h.isValid = function () {
                         return this.$d.toString() !== f;
@@ -838,7 +838,7 @@ var j = k((qe, xe) => {
                         return this.endOf(p) < $(c);
                     }),
                     (h.$g = function (c, p, M) {
-                        return H.u(c) ? this[p] : this.set(M, c);
+                        return j.u(c) ? this[p] : this.set(M, c);
                     }),
                     (h.unix = function () {
                         return Math.floor(this.valueOf() / 1e3);
@@ -848,14 +848,14 @@ var j = k((qe, xe) => {
                     }),
                     (h.startOf = function (c, p) {
                         var M = this,
-                            S = !!H.u(p) || p,
-                            b = H.p(c),
+                            S = !!j.u(p) || p,
+                            k = j.p(c),
                             T = function (Z, J) {
-                                var G = H.w(M.$u ? Date.UTC(M.$y, J, Z) : new Date(M.$y, J, Z), M);
+                                var G = j.w(M.$u ? Date.UTC(M.$y, J, Z) : new Date(M.$y, J, Z), M);
                                 return S ? G : G.endOf(u);
                             },
                             I = function (Z, J) {
-                                return H.w(
+                                return j.w(
                                     M.toDate()[Z].apply(M.toDate("s"), (S ? [0, 0, 0, 0] : [23, 59, 59, 999]).slice(J)),
                                     M,
                                 );
@@ -864,7 +864,7 @@ var j = k((qe, xe) => {
                             E = this.$M,
                             P = this.$D,
                             B = "set" + (this.$u ? "UTC" : "");
-                        switch (b) {
+                        switch (k) {
                             case y:
                                 return S ? T(1, 0) : T(31, 11);
                             case d:
@@ -891,17 +891,17 @@ var j = k((qe, xe) => {
                     }),
                     (h.$set = function (c, p) {
                         var M,
-                            S = H.p(c),
-                            b = "set" + (this.$u ? "UTC" : ""),
+                            S = j.p(c),
+                            k = "set" + (this.$u ? "UTC" : ""),
                             T = ((M = {}),
-                            (M[u] = b + "Date"),
-                            (M[l] = b + "Date"),
-                            (M[d] = b + "Month"),
-                            (M[y] = b + "FullYear"),
-                            (M[a] = b + "Hours"),
-                            (M[r] = b + "Minutes"),
-                            (M[e] = b + "Seconds"),
-                            (M[i] = b + "Milliseconds"),
+                            (M[u] = k + "Date"),
+                            (M[l] = k + "Date"),
+                            (M[d] = k + "Month"),
+                            (M[y] = k + "FullYear"),
+                            (M[a] = k + "Hours"),
+                            (M[r] = k + "Minutes"),
+                            (M[e] = k + "Seconds"),
+                            (M[i] = k + "Milliseconds"),
                             M)[S],
                             I = S === u ? this.$D + (p - this.$W) : p;
                         if (S === d || S === y) {
@@ -914,24 +914,24 @@ var j = k((qe, xe) => {
                         return this.clone().$set(c, p);
                     }),
                     (h.get = function (c) {
-                        return this[H.p(c)]();
+                        return this[j.p(c)]();
                     }),
                     (h.add = function (c, p) {
                         var M,
                             S = this;
                         c = Number(c);
-                        var b = H.p(p),
+                        var k = j.p(p),
                             T = function (E) {
                                 var P = $(S);
-                                return H.w(P.date(P.date() + Math.round(E * c)), S);
+                                return j.w(P.date(P.date() + Math.round(E * c)), S);
                             };
-                        if (b === d) return this.set(d, this.$M + c);
-                        if (b === y) return this.set(y, this.$y + c);
-                        if (b === u) return T(1);
-                        if (b === o) return T(7);
-                        var I = ((M = {}), (M[r] = t), (M[a] = s), (M[e] = n), M)[b] || 1,
+                        if (k === d) return this.set(d, this.$M + c);
+                        if (k === y) return this.set(y, this.$y + c);
+                        if (k === u) return T(1);
+                        if (k === o) return T(7);
+                        var I = ((M = {}), (M[r] = t), (M[a] = s), (M[e] = n), M)[k] || 1,
                             N = this.$d.getTime() + c * I;
-                        return H.w(N, this);
+                        return j.w(N, this);
                     }),
                     (h.subtract = function (c, p) {
                         return this.add(-1 * c, p);
@@ -941,7 +941,7 @@ var j = k((qe, xe) => {
                             M = this.$locale();
                         if (!this.isValid()) return M.invalidDate || f;
                         var S = c || "YYYY-MM-DDTHH:mm:ssZ",
-                            b = H.z(this),
+                            k = j.z(this),
                             T = this.$H,
                             I = this.$m,
                             N = this.$M,
@@ -952,7 +952,7 @@ var j = k((qe, xe) => {
                                 return (J && (J[G] || J(p, S))) || X[G].slice(0, ee);
                             },
                             re = function (J) {
-                                return H.s(T % 12 || 12, J, "0");
+                                return j.s(T % 12 || 12, J, "0");
                             },
                             Z =
                                 B ||
@@ -968,11 +968,11 @@ var j = k((qe, xe) => {
                                         case "YY":
                                             return String(p.$y).slice(-2);
                                         case "YYYY":
-                                            return H.s(p.$y, 4, "0");
+                                            return j.s(p.$y, 4, "0");
                                         case "M":
                                             return N + 1;
                                         case "MM":
-                                            return H.s(N + 1, 2, "0");
+                                            return j.s(N + 1, 2, "0");
                                         case "MMM":
                                             return Q(M.monthsShort, N, P, 3);
                                         case "MMMM":
@@ -980,7 +980,7 @@ var j = k((qe, xe) => {
                                         case "D":
                                             return p.$D;
                                         case "DD":
-                                            return H.s(p.$D, 2, "0");
+                                            return j.s(p.$D, 2, "0");
                                         case "d":
                                             return String(p.$W);
                                         case "dd":
@@ -992,7 +992,7 @@ var j = k((qe, xe) => {
                                         case "H":
                                             return String(T);
                                         case "HH":
-                                            return H.s(T, 2, "0");
+                                            return j.s(T, 2, "0");
                                         case "h":
                                             return re(1);
                                         case "hh":
@@ -1004,19 +1004,19 @@ var j = k((qe, xe) => {
                                         case "m":
                                             return String(I);
                                         case "mm":
-                                            return H.s(I, 2, "0");
+                                            return j.s(I, 2, "0");
                                         case "s":
                                             return String(p.$s);
                                         case "ss":
-                                            return H.s(p.$s, 2, "0");
+                                            return j.s(p.$s, 2, "0");
                                         case "SSS":
-                                            return H.s(p.$ms, 3, "0");
+                                            return j.s(p.$ms, 3, "0");
                                         case "Z":
-                                            return b;
+                                            return k;
                                     }
                                     return null;
                                 })(J) ||
-                                b.replace(":", "")
+                                k.replace(":", "")
                             );
                         });
                     }),
@@ -1025,13 +1025,13 @@ var j = k((qe, xe) => {
                     }),
                     (h.diff = function (c, p, M) {
                         var S,
-                            b = this,
-                            T = H.p(p),
+                            k = this,
+                            T = j.p(p),
                             I = $(c),
                             N = (I.utcOffset() - this.utcOffset()) * t,
                             E = this - I,
                             P = function () {
-                                return H.m(b, I);
+                                return j.m(k, I);
                             };
                         switch (T) {
                             case y:
@@ -1061,7 +1061,7 @@ var j = k((qe, xe) => {
                             default:
                                 S = E;
                         }
-                        return M ? S : H.a(S);
+                        return M ? S : j.a(S);
                     }),
                     (h.daysInMonth = function () {
                         return this.endOf(d).$D;
@@ -1076,7 +1076,7 @@ var j = k((qe, xe) => {
                         return S && (M.$L = S), M;
                     }),
                     (h.clone = function () {
-                        return H.w(this.$d, this);
+                        return j.w(this.$d, this);
                     }),
                     (h.toDate = function () {
                         return new Date(this.valueOf());
@@ -1125,10 +1125,10 @@ var j = k((qe, xe) => {
         );
     });
 });
-var wn = k((Ne, Ee) => {
+var Cn = b((Ne, Ee) => {
     (function (n, t) {
         typeof Ne == "object" && typeof Ee < "u"
-            ? (Ee.exports = t(j()))
+            ? (Ee.exports = t(H()))
             : typeof define == "function" && define.amd
               ? define(["dayjs"], t)
               : ((n = typeof globalThis < "u" ? globalThis : n || self).dayjs_locale_ar = t(n.dayjs));
@@ -1227,10 +1227,10 @@ var wn = k((Ne, Ee) => {
         return s.default.locale(a, null, !0), a;
     });
 });
-var $n = k((Fe, Je) => {
+var On = b((Fe, Je) => {
     (function (n, t) {
         typeof Fe == "object" && typeof Je < "u"
-            ? (Je.exports = t(j()))
+            ? (Je.exports = t(H()))
             : typeof define == "function" && define.amd
               ? define(["dayjs"], t)
               : ((n = typeof globalThis < "u" ? globalThis : n || self).dayjs_locale_bs = t(n.dayjs));
@@ -1263,10 +1263,10 @@ var $n = k((Fe, Je) => {
         return s.default.locale(i, null, !0), i;
     });
 });
-var Cn = k((We, Ue) => {
+var zn = b((We, Ue) => {
     (function (n, t) {
         typeof We == "object" && typeof Ue < "u"
-            ? (Ue.exports = t(j()))
+            ? (Ue.exports = t(H()))
             : typeof define == "function" && define.amd
               ? define(["dayjs"], t)
               : ((n = typeof globalThis < "u" ? globalThis : n || self).dayjs_locale_ca = t(n.dayjs));
@@ -1319,10 +1319,10 @@ var Cn = k((We, Ue) => {
         return s.default.locale(i, null, !0), i;
     });
 });
-var Pe = k((Ye, On) => {
+var Pe = b((Ye, An) => {
     (function (n, t) {
-        typeof Ye == "object" && typeof On < "u"
-            ? t(Ye, j())
+        typeof Ye == "object" && typeof An < "u"
+            ? t(Ye, H())
             : typeof define == "function" && define.amd
               ? define(["exports", "dayjs"], t)
               : t(((n = typeof globalThis < "u" ? globalThis : n || self).dayjs_locale_ku = {}), n.dayjs);
@@ -1434,10 +1434,10 @@ var Pe = k((Ye, On) => {
             Object.defineProperty(n, "__esModule", { value: !0 });
     });
 });
-var zn = k((Re, Ge) => {
+var In = b((Re, Ge) => {
     (function (n, t) {
         typeof Re == "object" && typeof Ge < "u"
-            ? (Ge.exports = t(j()))
+            ? (Ge.exports = t(H()))
             : typeof define == "function" && define.amd
               ? define(["dayjs"], t)
               : ((n = typeof globalThis < "u" ? globalThis : n || self).dayjs_locale_cs = t(n.dayjs));
@@ -1521,10 +1521,10 @@ var zn = k((Re, Ge) => {
         return s.default.locale(r, null, !0), r;
     });
 });
-var An = k((Ze, Ve) => {
+var qn = b((Ze, Ve) => {
     (function (n, t) {
         typeof Ze == "object" && typeof Ve < "u"
-            ? (Ve.exports = t(j()))
+            ? (Ve.exports = t(H()))
             : typeof define == "function" && define.amd
               ? define(["dayjs"], t)
               : ((n = typeof globalThis < "u" ? globalThis : n || self).dayjs_locale_cy = t(n.dayjs));
@@ -1574,10 +1574,10 @@ var An = k((Ze, Ve) => {
         return s.default.locale(i, null, !0), i;
     });
 });
-var In = k((Ke, Qe) => {
+var xn = b((Ke, Qe) => {
     (function (n, t) {
         typeof Ke == "object" && typeof Qe < "u"
-            ? (Qe.exports = t(j()))
+            ? (Qe.exports = t(H()))
             : typeof define == "function" && define.amd
               ? define(["dayjs"], t)
               : ((n = typeof globalThis < "u" ? globalThis : n || self).dayjs_locale_da = t(n.dayjs));
@@ -1628,10 +1628,10 @@ var In = k((Ke, Qe) => {
         return s.default.locale(i, null, !0), i;
     });
 });
-var qn = k((Xe, Be) => {
+var Nn = b((Xe, Be) => {
     (function (n, t) {
         typeof Xe == "object" && typeof Be < "u"
-            ? (Be.exports = t(j()))
+            ? (Be.exports = t(H()))
             : typeof define == "function" && define.amd
               ? define(["dayjs"], t)
               : ((n = typeof globalThis < "u" ? globalThis : n || self).dayjs_locale_de = t(n.dayjs));
@@ -1697,14 +1697,79 @@ var qn = k((Xe, Be) => {
         return s.default.locale(r, null, !0), r;
     });
 });
-var xn = k((et, tt) => {
+var En = b((et, tt) => {
     (function (n, t) {
         typeof et == "object" && typeof tt < "u"
-            ? (tt.exports = t())
+            ? (tt.exports = t(H()))
+            : typeof define == "function" && define.amd
+              ? define(["dayjs"], t)
+              : ((n = typeof globalThis < "u" ? globalThis : n || self).dayjs_locale_el = t(n.dayjs));
+    })(et, function (n) {
+        "use strict";
+        function t(e) {
+            return e && typeof e == "object" && "default" in e ? e : { default: e };
+        }
+        var s = t(n),
+            i = {
+                name: "el",
+                weekdays:
+                    "\u039A\u03C5\u03C1\u03B9\u03B1\u03BA\u03AE_\u0394\u03B5\u03C5\u03C4\u03AD\u03C1\u03B1_\u03A4\u03C1\u03AF\u03C4\u03B7_\u03A4\u03B5\u03C4\u03AC\u03C1\u03C4\u03B7_\u03A0\u03AD\u03BC\u03C0\u03C4\u03B7_\u03A0\u03B1\u03C1\u03B1\u03C3\u03BA\u03B5\u03C5\u03AE_\u03A3\u03AC\u03B2\u03B2\u03B1\u03C4\u03BF".split(
+                        "_",
+                    ),
+                weekdaysShort:
+                    "\u039A\u03C5\u03C1_\u0394\u03B5\u03C5_\u03A4\u03C1\u03B9_\u03A4\u03B5\u03C4_\u03A0\u03B5\u03BC_\u03A0\u03B1\u03C1_\u03A3\u03B1\u03B2".split(
+                        "_",
+                    ),
+                weekdaysMin:
+                    "\u039A\u03C5_\u0394\u03B5_\u03A4\u03C1_\u03A4\u03B5_\u03A0\u03B5_\u03A0\u03B1_\u03A3\u03B1".split(
+                        "_",
+                    ),
+                months: "\u0399\u03B1\u03BD\u03BF\u03C5\u03AC\u03C1\u03B9\u03BF\u03C2_\u03A6\u03B5\u03B2\u03C1\u03BF\u03C5\u03AC\u03C1\u03B9\u03BF\u03C2_\u039C\u03AC\u03C1\u03C4\u03B9\u03BF\u03C2_\u0391\u03C0\u03C1\u03AF\u03BB\u03B9\u03BF\u03C2_\u039C\u03AC\u03B9\u03BF\u03C2_\u0399\u03BF\u03CD\u03BD\u03B9\u03BF\u03C2_\u0399\u03BF\u03CD\u03BB\u03B9\u03BF\u03C2_\u0391\u03CD\u03B3\u03BF\u03C5\u03C3\u03C4\u03BF\u03C2_\u03A3\u03B5\u03C0\u03C4\u03AD\u03BC\u03B2\u03C1\u03B9\u03BF\u03C2_\u039F\u03BA\u03C4\u03CE\u03B2\u03C1\u03B9\u03BF\u03C2_\u039D\u03BF\u03AD\u03BC\u03B2\u03C1\u03B9\u03BF\u03C2_\u0394\u03B5\u03BA\u03AD\u03BC\u03B2\u03C1\u03B9\u03BF\u03C2".split(
+                    "_",
+                ),
+                monthsShort:
+                    "\u0399\u03B1\u03BD_\u03A6\u03B5\u03B2_\u039C\u03B1\u03C1_\u0391\u03C0\u03C1_\u039C\u03B1\u03B9_\u0399\u03BF\u03C5\u03BD_\u0399\u03BF\u03C5\u03BB_\u0391\u03C5\u03B3_\u03A3\u03B5\u03C0\u03C4_\u039F\u03BA\u03C4_\u039D\u03BF\u03B5_\u0394\u03B5\u03BA".split(
+                        "_",
+                    ),
+                ordinal: function (e) {
+                    return e;
+                },
+                weekStart: 1,
+                relativeTime: {
+                    future: "\u03C3\u03B5 %s",
+                    past: "\u03C0\u03C1\u03B9\u03BD %s",
+                    s: "\u03BC\u03B5\u03C1\u03B9\u03BA\u03AC \u03B4\u03B5\u03C5\u03C4\u03B5\u03C1\u03CC\u03BB\u03B5\u03C0\u03C4\u03B1",
+                    m: "\u03AD\u03BD\u03B1 \u03BB\u03B5\u03C0\u03C4\u03CC",
+                    mm: "%d \u03BB\u03B5\u03C0\u03C4\u03AC",
+                    h: "\u03BC\u03AF\u03B1 \u03CE\u03C1\u03B1",
+                    hh: "%d \u03CE\u03C1\u03B5\u03C2",
+                    d: "\u03BC\u03AF\u03B1 \u03BC\u03AD\u03C1\u03B1",
+                    dd: "%d \u03BC\u03AD\u03C1\u03B5\u03C2",
+                    M: "\u03AD\u03BD\u03B1 \u03BC\u03AE\u03BD\u03B1",
+                    MM: "%d \u03BC\u03AE\u03BD\u03B5\u03C2",
+                    y: "\u03AD\u03BD\u03B1 \u03C7\u03C1\u03CC\u03BD\u03BF",
+                    yy: "%d \u03C7\u03C1\u03CC\u03BD\u03B9\u03B1",
+                },
+                formats: {
+                    LT: "h:mm A",
+                    LTS: "h:mm:ss A",
+                    L: "DD/MM/YYYY",
+                    LL: "D MMMM YYYY",
+                    LLL: "D MMMM YYYY h:mm A",
+                    LLLL: "dddd, D MMMM YYYY h:mm A",
+                },
+            };
+        return s.default.locale(i, null, !0), i;
+    });
+});
+var Fn = b((nt, it) => {
+    (function (n, t) {
+        typeof nt == "object" && typeof it < "u"
+            ? (it.exports = t())
             : typeof define == "function" && define.amd
               ? define(t)
               : ((n = typeof globalThis < "u" ? globalThis : n || self).dayjs_locale_en = t());
-    })(et, function () {
+    })(nt, function () {
         "use strict";
         return {
             name: "en",
@@ -1718,14 +1783,14 @@ var xn = k((et, tt) => {
         };
     });
 });
-var Nn = k((nt, it) => {
+var Jn = b((st, rt) => {
     (function (n, t) {
-        typeof nt == "object" && typeof it < "u"
-            ? (it.exports = t(j()))
+        typeof st == "object" && typeof rt < "u"
+            ? (rt.exports = t(H()))
             : typeof define == "function" && define.amd
               ? define(["dayjs"], t)
               : ((n = typeof globalThis < "u" ? globalThis : n || self).dayjs_locale_es = t(n.dayjs));
-    })(nt, function (n) {
+    })(st, function (n) {
         "use strict";
         function t(e) {
             return e && typeof e == "object" && "default" in e ? e : { default: e };
@@ -1771,14 +1836,14 @@ var Nn = k((nt, it) => {
         return s.default.locale(i, null, !0), i;
     });
 });
-var En = k((st, rt) => {
+var Wn = b((at, ut) => {
     (function (n, t) {
-        typeof st == "object" && typeof rt < "u"
-            ? (rt.exports = t(j()))
+        typeof at == "object" && typeof ut < "u"
+            ? (ut.exports = t(H()))
             : typeof define == "function" && define.amd
               ? define(["dayjs"], t)
               : ((n = typeof globalThis < "u" ? globalThis : n || self).dayjs_locale_et = t(n.dayjs));
-    })(st, function (n) {
+    })(at, function (n) {
         "use strict";
         function t(r) {
             return r && typeof r == "object" && "default" in r ? r : { default: r };
@@ -1839,14 +1904,14 @@ var En = k((st, rt) => {
         return s.default.locale(e, null, !0), e;
     });
 });
-var Fn = k((at, ut) => {
+var Un = b((ot, dt) => {
     (function (n, t) {
-        typeof at == "object" && typeof ut < "u"
-            ? (ut.exports = t(j()))
+        typeof ot == "object" && typeof dt < "u"
+            ? (dt.exports = t(H()))
             : typeof define == "function" && define.amd
               ? define(["dayjs"], t)
               : ((n = typeof globalThis < "u" ? globalThis : n || self).dayjs_locale_fa = t(n.dayjs));
-    })(at, function (n) {
+    })(ot, function (n) {
         "use strict";
         function t(e) {
             return e && typeof e == "object" && "default" in e ? e : { default: e };
@@ -1901,14 +1966,14 @@ var Fn = k((at, ut) => {
         return s.default.locale(i, null, !0), i;
     });
 });
-var Jn = k((ot, dt) => {
+var Pn = b((_t, ft) => {
     (function (n, t) {
-        typeof ot == "object" && typeof dt < "u"
-            ? (dt.exports = t(j()))
+        typeof _t == "object" && typeof ft < "u"
+            ? (ft.exports = t(H()))
             : typeof define == "function" && define.amd
               ? define(["dayjs"], t)
               : ((n = typeof globalThis < "u" ? globalThis : n || self).dayjs_locale_fi = t(n.dayjs));
-    })(ot, function (n) {
+    })(_t, function (n) {
         "use strict";
         function t(r) {
             return r && typeof r == "object" && "default" in r ? r : { default: r };
@@ -1997,14 +2062,14 @@ var Jn = k((ot, dt) => {
         return s.default.locale(e, null, !0), e;
     });
 });
-var Wn = k((_t, ft) => {
+var Rn = b((lt, mt) => {
     (function (n, t) {
-        typeof _t == "object" && typeof ft < "u"
-            ? (ft.exports = t(j()))
+        typeof lt == "object" && typeof mt < "u"
+            ? (mt.exports = t(H()))
             : typeof define == "function" && define.amd
               ? define(["dayjs"], t)
               : ((n = typeof globalThis < "u" ? globalThis : n || self).dayjs_locale_fr = t(n.dayjs));
-    })(_t, function (n) {
+    })(lt, function (n) {
         "use strict";
         function t(e) {
             return e && typeof e == "object" && "default" in e ? e : { default: e };
@@ -2051,14 +2116,14 @@ var Wn = k((_t, ft) => {
         return s.default.locale(i, null, !0), i;
     });
 });
-var Un = k((lt, mt) => {
+var Gn = b((ct, ht) => {
     (function (n, t) {
-        typeof lt == "object" && typeof mt < "u"
-            ? (mt.exports = t(j()))
+        typeof ct == "object" && typeof ht < "u"
+            ? (ht.exports = t(H()))
             : typeof define == "function" && define.amd
               ? define(["dayjs"], t)
               : ((n = typeof globalThis < "u" ? globalThis : n || self).dayjs_locale_hi = t(n.dayjs));
-    })(lt, function (n) {
+    })(ct, function (n) {
         "use strict";
         function t(e) {
             return e && typeof e == "object" && "default" in e ? e : { default: e };
@@ -2114,14 +2179,14 @@ var Un = k((lt, mt) => {
         return s.default.locale(i, null, !0), i;
     });
 });
-var Pn = k((ct, ht) => {
+var Zn = b((Mt, yt) => {
     (function (n, t) {
-        typeof ct == "object" && typeof ht < "u"
-            ? (ht.exports = t(j()))
+        typeof Mt == "object" && typeof yt < "u"
+            ? (yt.exports = t(H()))
             : typeof define == "function" && define.amd
               ? define(["dayjs"], t)
               : ((n = typeof globalThis < "u" ? globalThis : n || self).dayjs_locale_hu = t(n.dayjs));
-    })(ct, function (n) {
+    })(Mt, function (n) {
         "use strict";
         function t(e) {
             return e && typeof e == "object" && "default" in e ? e : { default: e };
@@ -2189,14 +2254,14 @@ var Pn = k((ct, ht) => {
         return s.default.locale(i, null, !0), i;
     });
 });
-var Rn = k((Mt, yt) => {
+var Vn = b((Yt, pt) => {
     (function (n, t) {
-        typeof Mt == "object" && typeof yt < "u"
-            ? (yt.exports = t(j()))
+        typeof Yt == "object" && typeof pt < "u"
+            ? (pt.exports = t(H()))
             : typeof define == "function" && define.amd
               ? define(["dayjs"], t)
               : ((n = typeof globalThis < "u" ? globalThis : n || self).dayjs_locale_hy_am = t(n.dayjs));
-    })(Mt, function (n) {
+    })(Yt, function (n) {
         "use strict";
         function t(e) {
             return e && typeof e == "object" && "default" in e ? e : { default: e };
@@ -2254,14 +2319,14 @@ var Rn = k((Mt, yt) => {
         return s.default.locale(i, null, !0), i;
     });
 });
-var Gn = k((Yt, pt) => {
+var Kn = b((Dt, Lt) => {
     (function (n, t) {
-        typeof Yt == "object" && typeof pt < "u"
-            ? (pt.exports = t(j()))
+        typeof Dt == "object" && typeof Lt < "u"
+            ? (Lt.exports = t(H()))
             : typeof define == "function" && define.amd
               ? define(["dayjs"], t)
               : ((n = typeof globalThis < "u" ? globalThis : n || self).dayjs_locale_id = t(n.dayjs));
-    })(Yt, function (n) {
+    })(Dt, function (n) {
         "use strict";
         function t(e) {
             return e && typeof e == "object" && "default" in e ? e : { default: e };
@@ -2307,14 +2372,14 @@ var Gn = k((Yt, pt) => {
         return s.default.locale(i, null, !0), i;
     });
 });
-var Zn = k((Dt, Lt) => {
+var Qn = b((vt, gt) => {
     (function (n, t) {
-        typeof Dt == "object" && typeof Lt < "u"
-            ? (Lt.exports = t(j()))
+        typeof vt == "object" && typeof gt < "u"
+            ? (gt.exports = t(H()))
             : typeof define == "function" && define.amd
               ? define(["dayjs"], t)
               : ((n = typeof globalThis < "u" ? globalThis : n || self).dayjs_locale_it = t(n.dayjs));
-    })(Dt, function (n) {
+    })(vt, function (n) {
         "use strict";
         function t(e) {
             return e && typeof e == "object" && "default" in e ? e : { default: e };
@@ -2360,14 +2425,14 @@ var Zn = k((Dt, Lt) => {
         return s.default.locale(i, null, !0), i;
     });
 });
-var Vn = k((vt, gt) => {
+var Xn = b((St, bt) => {
     (function (n, t) {
-        typeof vt == "object" && typeof gt < "u"
-            ? (gt.exports = t(j()))
+        typeof St == "object" && typeof bt < "u"
+            ? (bt.exports = t(H()))
             : typeof define == "function" && define.amd
               ? define(["dayjs"], t)
               : ((n = typeof globalThis < "u" ? globalThis : n || self).dayjs_locale_ja = t(n.dayjs));
-    })(vt, function (n) {
+    })(St, function (n) {
         "use strict";
         function t(e) {
             return e && typeof e == "object" && "default" in e ? e : { default: e };
@@ -2425,14 +2490,14 @@ var Vn = k((vt, gt) => {
         return s.default.locale(i, null, !0), i;
     });
 });
-var Kn = k((St, bt) => {
+var Bn = b((kt, jt) => {
     (function (n, t) {
-        typeof St == "object" && typeof bt < "u"
-            ? (bt.exports = t(j()))
+        typeof kt == "object" && typeof jt < "u"
+            ? (jt.exports = t(H()))
             : typeof define == "function" && define.amd
               ? define(["dayjs"], t)
               : ((n = typeof globalThis < "u" ? globalThis : n || self).dayjs_locale_ka = t(n.dayjs));
-    })(St, function (n) {
+    })(kt, function (n) {
         "use strict";
         function t(e) {
             return e && typeof e == "object" && "default" in e ? e : { default: e };
@@ -2490,14 +2555,14 @@ var Kn = k((St, bt) => {
         return s.default.locale(i, null, !0), i;
     });
 });
-var Qn = k((kt, Ht) => {
+var ei = b((Ht, Tt) => {
     (function (n, t) {
-        typeof kt == "object" && typeof Ht < "u"
-            ? (Ht.exports = t(j()))
+        typeof Ht == "object" && typeof Tt < "u"
+            ? (Tt.exports = t(H()))
             : typeof define == "function" && define.amd
               ? define(["dayjs"], t)
               : ((n = typeof globalThis < "u" ? globalThis : n || self).dayjs_locale_km = t(n.dayjs));
-    })(kt, function (n) {
+    })(Ht, function (n) {
         "use strict";
         function t(e) {
             return e && typeof e == "object" && "default" in e ? e : { default: e };
@@ -2549,14 +2614,14 @@ var Qn = k((kt, Ht) => {
         return s.default.locale(i, null, !0), i;
     });
 });
-var Xn = k((jt, Tt) => {
+var ti = b((wt, $t) => {
     (function (n, t) {
-        typeof jt == "object" && typeof Tt < "u"
-            ? (Tt.exports = t(j()))
+        typeof wt == "object" && typeof $t < "u"
+            ? ($t.exports = t(H()))
             : typeof define == "function" && define.amd
               ? define(["dayjs"], t)
               : ((n = typeof globalThis < "u" ? globalThis : n || self).dayjs_locale_lt = t(n.dayjs));
-    })(jt, function (n) {
+    })(wt, function (n) {
         "use strict";
         function t(o) {
             return o && typeof o == "object" && "default" in o ? o : { default: o };
@@ -2632,14 +2697,14 @@ var Xn = k((jt, Tt) => {
         return s.default.locale(u, null, !0), u;
     });
 });
-var Bn = k((wt, $t) => {
+var ni = b((Ct, Ot) => {
     (function (n, t) {
-        typeof wt == "object" && typeof $t < "u"
-            ? ($t.exports = t(j()))
+        typeof Ct == "object" && typeof Ot < "u"
+            ? (Ot.exports = t(H()))
             : typeof define == "function" && define.amd
               ? define(["dayjs"], t)
               : ((n = typeof globalThis < "u" ? globalThis : n || self).dayjs_locale_lv = t(n.dayjs));
-    })(wt, function (n) {
+    })(Ct, function (n) {
         "use strict";
         function t(e) {
             return e && typeof e == "object" && "default" in e ? e : { default: e };
@@ -2687,14 +2752,14 @@ var Bn = k((wt, $t) => {
         return s.default.locale(i, null, !0), i;
     });
 });
-var ei = k((Ct, Ot) => {
+var ii = b((zt, At) => {
     (function (n, t) {
-        typeof Ct == "object" && typeof Ot < "u"
-            ? (Ot.exports = t(j()))
+        typeof zt == "object" && typeof At < "u"
+            ? (At.exports = t(H()))
             : typeof define == "function" && define.amd
               ? define(["dayjs"], t)
               : ((n = typeof globalThis < "u" ? globalThis : n || self).dayjs_locale_ms = t(n.dayjs));
-    })(Ct, function (n) {
+    })(zt, function (n) {
         "use strict";
         function t(e) {
             return e && typeof e == "object" && "default" in e ? e : { default: e };
@@ -2738,14 +2803,14 @@ var ei = k((Ct, Ot) => {
         return s.default.locale(i, null, !0), i;
     });
 });
-var ti = k((zt, At) => {
+var si = b((It, qt) => {
     (function (n, t) {
-        typeof zt == "object" && typeof At < "u"
-            ? (At.exports = t(j()))
+        typeof It == "object" && typeof qt < "u"
+            ? (qt.exports = t(H()))
             : typeof define == "function" && define.amd
               ? define(["dayjs"], t)
               : ((n = typeof globalThis < "u" ? globalThis : n || self).dayjs_locale_my = t(n.dayjs));
-    })(zt, function (n) {
+    })(It, function (n) {
         "use strict";
         function t(e) {
             return e && typeof e == "object" && "default" in e ? e : { default: e };
@@ -2803,14 +2868,14 @@ var ti = k((zt, At) => {
         return s.default.locale(i, null, !0), i;
     });
 });
-var ni = k((It, qt) => {
+var ri = b((xt, Nt) => {
     (function (n, t) {
-        typeof It == "object" && typeof qt < "u"
-            ? (qt.exports = t(j()))
+        typeof xt == "object" && typeof Nt < "u"
+            ? (Nt.exports = t(H()))
             : typeof define == "function" && define.amd
               ? define(["dayjs"], t)
               : ((n = typeof globalThis < "u" ? globalThis : n || self).dayjs_locale_nl = t(n.dayjs));
-    })(It, function (n) {
+    })(xt, function (n) {
         "use strict";
         function t(e) {
             return e && typeof e == "object" && "default" in e ? e : { default: e };
@@ -2857,14 +2922,14 @@ var ni = k((It, qt) => {
         return s.default.locale(i, null, !0), i;
     });
 });
-var ii = k((xt, Nt) => {
+var ai = b((Et, Ft) => {
     (function (n, t) {
-        typeof xt == "object" && typeof Nt < "u"
-            ? (Nt.exports = t(j()))
+        typeof Et == "object" && typeof Ft < "u"
+            ? (Ft.exports = t(H()))
             : typeof define == "function" && define.amd
               ? define(["dayjs"], t)
               : ((n = typeof globalThis < "u" ? globalThis : n || self).dayjs_locale_nb = t(n.dayjs));
-    })(xt, function (n) {
+    })(Et, function (n) {
         "use strict";
         function t(e) {
             return e && typeof e == "object" && "default" in e ? e : { default: e };
@@ -2909,14 +2974,14 @@ var ii = k((xt, Nt) => {
         return s.default.locale(i, null, !0), i;
     });
 });
-var si = k((Et, Ft) => {
+var ui = b((Jt, Wt) => {
     (function (n, t) {
-        typeof Et == "object" && typeof Ft < "u"
-            ? (Ft.exports = t(j()))
+        typeof Jt == "object" && typeof Wt < "u"
+            ? (Wt.exports = t(H()))
             : typeof define == "function" && define.amd
               ? define(["dayjs"], t)
               : ((n = typeof globalThis < "u" ? globalThis : n || self).dayjs_locale_pl = t(n.dayjs));
-    })(Et, function (n) {
+    })(Jt, function (n) {
         "use strict";
         function t(_) {
             return _ && typeof _ == "object" && "default" in _ ? _ : { default: _ };
@@ -2994,14 +3059,14 @@ var si = k((Et, Ft) => {
         return s.default.locale(d, null, !0), d;
     });
 });
-var ri = k((Jt, Wt) => {
+var oi = b((Ut, Pt) => {
     (function (n, t) {
-        typeof Jt == "object" && typeof Wt < "u"
-            ? (Wt.exports = t(j()))
+        typeof Ut == "object" && typeof Pt < "u"
+            ? (Pt.exports = t(H()))
             : typeof define == "function" && define.amd
               ? define(["dayjs"], t)
               : ((n = typeof globalThis < "u" ? globalThis : n || self).dayjs_locale_pt_br = t(n.dayjs));
-    })(Jt, function (n) {
+    })(Ut, function (n) {
         "use strict";
         function t(e) {
             return e && typeof e == "object" && "default" in e ? e : { default: e };
@@ -3048,14 +3113,14 @@ var ri = k((Jt, Wt) => {
         return s.default.locale(i, null, !0), i;
     });
 });
-var ai = k((Ut, Pt) => {
+var di = b((Rt, Gt) => {
     (function (n, t) {
-        typeof Ut == "object" && typeof Pt < "u"
-            ? (Pt.exports = t(j()))
+        typeof Rt == "object" && typeof Gt < "u"
+            ? (Gt.exports = t(H()))
             : typeof define == "function" && define.amd
               ? define(["dayjs"], t)
               : ((n = typeof globalThis < "u" ? globalThis : n || self).dayjs_locale_pt = t(n.dayjs));
-    })(Ut, function (n) {
+    })(Rt, function (n) {
         "use strict";
         function t(e) {
             return e && typeof e == "object" && "default" in e ? e : { default: e };
@@ -3104,14 +3169,14 @@ var ai = k((Ut, Pt) => {
         return s.default.locale(i, null, !0), i;
     });
 });
-var ui = k((Rt, Gt) => {
+var _i = b((Zt, Vt) => {
     (function (n, t) {
-        typeof Rt == "object" && typeof Gt < "u"
-            ? (Gt.exports = t(j()))
+        typeof Zt == "object" && typeof Vt < "u"
+            ? (Vt.exports = t(H()))
             : typeof define == "function" && define.amd
               ? define(["dayjs"], t)
               : ((n = typeof globalThis < "u" ? globalThis : n || self).dayjs_locale_ro = t(n.dayjs));
-    })(Rt, function (n) {
+    })(Zt, function (n) {
         "use strict";
         function t(e) {
             return e && typeof e == "object" && "default" in e ? e : { default: e };
@@ -3157,14 +3222,14 @@ var ui = k((Rt, Gt) => {
         return s.default.locale(i, null, !0), i;
     });
 });
-var oi = k((Zt, Vt) => {
+var fi = b((Kt, Qt) => {
     (function (n, t) {
-        typeof Zt == "object" && typeof Vt < "u"
-            ? (Vt.exports = t(j()))
+        typeof Kt == "object" && typeof Qt < "u"
+            ? (Qt.exports = t(H()))
             : typeof define == "function" && define.amd
               ? define(["dayjs"], t)
               : ((n = typeof globalThis < "u" ? globalThis : n || self).dayjs_locale_ru = t(n.dayjs));
-    })(Zt, function (n) {
+    })(Kt, function (n) {
         "use strict";
         function t(l) {
             return l && typeof l == "object" && "default" in l ? l : { default: l };
@@ -3274,14 +3339,14 @@ var oi = k((Zt, Vt) => {
         return s.default.locale(y, null, !0), y;
     });
 });
-var di = k((Kt, Qt) => {
+var li = b((Xt, Bt) => {
     (function (n, t) {
-        typeof Kt == "object" && typeof Qt < "u"
-            ? (Qt.exports = t(j()))
+        typeof Xt == "object" && typeof Bt < "u"
+            ? (Bt.exports = t(H()))
             : typeof define == "function" && define.amd
               ? define(["dayjs"], t)
               : ((n = typeof globalThis < "u" ? globalThis : n || self).dayjs_locale_sv = t(n.dayjs));
-    })(Kt, function (n) {
+    })(Xt, function (n) {
         "use strict";
         function t(e) {
             return e && typeof e == "object" && "default" in e ? e : { default: e };
@@ -3331,14 +3396,14 @@ var di = k((Kt, Qt) => {
         return s.default.locale(i, null, !0), i;
     });
 });
-var _i = k((Xt, Bt) => {
+var mi = b((en, tn) => {
     (function (n, t) {
-        typeof Xt == "object" && typeof Bt < "u"
-            ? (Bt.exports = t(j()))
+        typeof en == "object" && typeof tn < "u"
+            ? (tn.exports = t(H()))
             : typeof define == "function" && define.amd
               ? define(["dayjs"], t)
               : ((n = typeof globalThis < "u" ? globalThis : n || self).dayjs_locale_th = t(n.dayjs));
-    })(Xt, function (n) {
+    })(en, function (n) {
         "use strict";
         function t(e) {
             return e && typeof e == "object" && "default" in e ? e : { default: e };
@@ -3392,14 +3457,14 @@ var _i = k((Xt, Bt) => {
         return s.default.locale(i, null, !0), i;
     });
 });
-var fi = k((en, tn) => {
+var ci = b((nn, sn) => {
     (function (n, t) {
-        typeof en == "object" && typeof tn < "u"
-            ? (tn.exports = t(j()))
+        typeof nn == "object" && typeof sn < "u"
+            ? (sn.exports = t(H()))
             : typeof define == "function" && define.amd
               ? define(["dayjs"], t)
               : ((n = typeof globalThis < "u" ? globalThis : n || self).dayjs_locale_tr = t(n.dayjs));
-    })(en, function (n) {
+    })(nn, function (n) {
         "use strict";
         function t(e) {
             return e && typeof e == "object" && "default" in e ? e : { default: e };
@@ -3445,14 +3510,14 @@ var fi = k((en, tn) => {
         return s.default.locale(i, null, !0), i;
     });
 });
-var li = k((nn, sn) => {
+var hi = b((rn, an) => {
     (function (n, t) {
-        typeof nn == "object" && typeof sn < "u"
-            ? (sn.exports = t(j()))
+        typeof rn == "object" && typeof an < "u"
+            ? (an.exports = t(H()))
             : typeof define == "function" && define.amd
               ? define(["dayjs"], t)
               : ((n = typeof globalThis < "u" ? globalThis : n || self).dayjs_locale_uk = t(n.dayjs));
-    })(nn, function (n) {
+    })(rn, function (n) {
         "use strict";
         function t(d) {
             return d && typeof d == "object" && "default" in d ? d : { default: d };
@@ -3552,14 +3617,14 @@ var li = k((nn, sn) => {
         return s.default.locale(o, null, !0), o;
     });
 });
-var mi = k((rn, an) => {
+var Mi = b((un, on) => {
     (function (n, t) {
-        typeof rn == "object" && typeof an < "u"
-            ? (an.exports = t(j()))
+        typeof un == "object" && typeof on < "u"
+            ? (on.exports = t(H()))
             : typeof define == "function" && define.amd
               ? define(["dayjs"], t)
               : ((n = typeof globalThis < "u" ? globalThis : n || self).dayjs_locale_vi = t(n.dayjs));
-    })(rn, function (n) {
+    })(un, function (n) {
         "use strict";
         function t(e) {
             return e && typeof e == "object" && "default" in e ? e : { default: e };
@@ -3612,14 +3677,14 @@ var mi = k((rn, an) => {
         return s.default.locale(i, null, !0), i;
     });
 });
-var ci = k((un, on) => {
+var yi = b((dn, _n) => {
     (function (n, t) {
-        typeof un == "object" && typeof on < "u"
-            ? (on.exports = t(j()))
+        typeof dn == "object" && typeof _n < "u"
+            ? (_n.exports = t(H()))
             : typeof define == "function" && define.amd
               ? define(["dayjs"], t)
               : ((n = typeof globalThis < "u" ? globalThis : n || self).dayjs_locale_zh_cn = t(n.dayjs));
-    })(un, function (n) {
+    })(dn, function (n) {
         "use strict";
         function t(e) {
             return e && typeof e == "object" && "default" in e ? e : { default: e };
@@ -3693,14 +3758,14 @@ var ci = k((un, on) => {
         return s.default.locale(i, null, !0), i;
     });
 });
-var hi = k((dn, _n) => {
+var Yi = b((fn, ln) => {
     (function (n, t) {
-        typeof dn == "object" && typeof _n < "u"
-            ? (_n.exports = t(j()))
+        typeof fn == "object" && typeof ln < "u"
+            ? (ln.exports = t(H()))
             : typeof define == "function" && define.amd
               ? define(["dayjs"], t)
               : ((n = typeof globalThis < "u" ? globalThis : n || self).dayjs_locale_zh_tw = t(n.dayjs));
-    })(dn, function (n) {
+    })(fn, function (n) {
         "use strict";
         function t(e) {
             return e && typeof e == "object" && "default" in e ? e : { default: e };
@@ -3772,15 +3837,15 @@ var hi = k((dn, _n) => {
         return s.default.locale(i, null, !0), i;
     });
 });
-var ln = 60,
-    mn = ln * 60,
-    cn = mn * 24,
-    ji = cn * 7,
+var cn = 60,
+    hn = cn * 60,
+    Mn = hn * 24,
+    $i = Mn * 7,
     ae = 1e3,
-    ce = ln * ae,
-    ge = mn * ae,
-    hn = cn * ae,
-    Mn = ji * ae,
+    ce = cn * ae,
+    ge = hn * ae,
+    yn = Mn * ae,
+    Yn = $i * ae,
     _e = "millisecond",
     te = "second",
     ne = "minute",
@@ -3791,11 +3856,11 @@ var ln = 60,
     he = "quarter",
     K = "year",
     se = "date",
-    yn = "YYYY-MM-DDTHH:mm:ssZ",
+    pn = "YYYY-MM-DDTHH:mm:ssZ",
     Se = "Invalid Date",
-    Yn = /^(\d{4})[-/]?(\d{1,2})?[-/]?(\d{0,2})[Tt\s]*(\d{1,2})?:?(\d{1,2})?:?(\d{1,2})?[.:]?(\d+)?$/,
-    pn = /\[([^\]]+)]|Y{1,4}|M{1,4}|D{1,2}|d{1,4}|H{1,2}|h{1,2}|a|A|m{1,2}|s{1,2}|Z{1,2}|SSS/g;
-var Ln = {
+    Dn = /^(\d{4})[-/]?(\d{1,2})?[-/]?(\d{0,2})[Tt\s]*(\d{1,2})?:?(\d{1,2})?:?(\d{1,2})?[.:]?(\d+)?$/,
+    Ln = /\[([^\]]+)]|Y{1,4}|M{1,4}|D{1,2}|d{1,4}|H{1,2}|h{1,2}|a|A|m{1,2}|s{1,2}|Z{1,2}|SSS/g;
+var gn = {
     name: "en",
     weekdays: "Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday".split("_"),
     months: "January_February_March_April_May_June_July_August_September_October_November_December".split("_"),
@@ -3809,14 +3874,14 @@ var be = function (t, s, i) {
         var e = String(t);
         return !e || e.length >= s ? t : "" + Array(s + 1 - e.length).join(i) + t;
     },
-    Ti = function (t) {
+    Ci = function (t) {
         var s = -t.utcOffset(),
             i = Math.abs(s),
             e = Math.floor(i / 60),
             r = i % 60;
         return (s <= 0 ? "+" : "-") + be(e, 2, "0") + ":" + be(r, 2, "0");
     },
-    wi = function n(t, s) {
+    Oi = function n(t, s) {
         if (t.date() < s.date()) return -n(s, t);
         var i = (s.year() - t.year()) * 12 + (s.month() - t.month()),
             e = t.clone().add(i, R),
@@ -3824,10 +3889,10 @@ var be = function (t, s, i) {
             a = t.clone().add(i + (r ? -1 : 1), R);
         return +(-(i + (s - e) / (r ? e - a : a - e)) || 0);
     },
-    $i = function (t) {
+    zi = function (t) {
         return t < 0 ? Math.ceil(t) || 0 : Math.floor(t);
     },
-    Ci = function (t) {
+    Ai = function (t) {
         var s = { M: R, y: K, w: oe, d: V, D: se, h: ie, m: ne, s: te, ms: _e, Q: he };
         return (
             s[t] ||
@@ -3836,16 +3901,16 @@ var be = function (t, s, i) {
                 .replace(/s$/, "")
         );
     },
-    Oi = function (t) {
+    Ii = function (t) {
         return t === void 0;
     },
-    vn = { s: be, z: Ti, m: wi, a: $i, p: Ci, u: Oi };
+    Sn = { s: be, z: Ci, m: Oi, a: zi, p: Ai, u: Ii };
 var fe = "en",
     ue = {};
-ue[fe] = Ln;
-var gn = "$isDayjsObject",
+ue[fe] = gn;
+var bn = "$isDayjsObject",
     ke = function (t) {
-        return t instanceof ye || !!(t && t[gn]);
+        return t instanceof ye || !!(t && t[bn]);
     },
     Me = function n(t, s, i) {
         var e;
@@ -3866,21 +3931,21 @@ var gn = "$isDayjsObject",
         var i = typeof s == "object" ? s : {};
         return (i.date = t), (i.args = arguments), new ye(i);
     },
-    zi = function (t, s) {
+    qi = function (t, s) {
         return F(t, { locale: s.$L, utc: s.$u, x: s.$x, $offset: s.$offset });
     },
-    z = vn;
+    z = Sn;
 z.l = Me;
 z.i = ke;
-z.w = zi;
-var Ai = function (t) {
+z.w = qi;
+var xi = function (t) {
         var s = t.date,
             i = t.utc;
         if (s === null) return new Date(NaN);
         if (z.u(s)) return new Date();
         if (s instanceof Date) return new Date(s);
         if (typeof s == "string" && !/Z$/i.test(s)) {
-            var e = s.match(Yn);
+            var e = s.match(Dn);
             if (e) {
                 var r = e[2] - 1 || 0,
                     a = (e[7] || "0").substring(0, 3);
@@ -3893,12 +3958,12 @@ var Ai = function (t) {
     },
     ye = (function () {
         function n(s) {
-            (this.$L = Me(s.locale, null, !0)), this.parse(s), (this.$x = this.$x || s.x || {}), (this[gn] = !0);
+            (this.$L = Me(s.locale, null, !0)), this.parse(s), (this.$x = this.$x || s.x || {}), (this[bn] = !0);
         }
         var t = n.prototype;
         return (
             (t.parse = function (i) {
-                (this.$d = Ai(i)), this.init();
+                (this.$d = xi(i)), this.init();
             }),
             (t.init = function () {
                 var i = this.$d;
@@ -4030,7 +4095,7 @@ var Ai = function (t) {
                 var e = this,
                     r = this.$locale();
                 if (!this.isValid()) return r.invalidDate || Se;
-                var a = i || yn,
+                var a = i || pn,
                     u = z.z(this),
                     o = this.$H,
                     d = this.$m,
@@ -4105,7 +4170,7 @@ var Ai = function (t) {
                         }
                         return null;
                     };
-                return a.replace(pn, function (w, g) {
+                return a.replace(Ln, function (w, g) {
                     return g || D(w) || u.replace(":", "");
                 });
             }),
@@ -4133,10 +4198,10 @@ var Ai = function (t) {
                         l = y() / 3;
                         break;
                     case oe:
-                        l = (_ - d) / Mn;
+                        l = (_ - d) / Yn;
                         break;
                     case V:
-                        l = (_ - d) / hn;
+                        l = (_ - d) / yn;
                         break;
                     case ie:
                         l = _ / ge;
@@ -4183,8 +4248,8 @@ var Ai = function (t) {
             n
         );
     })(),
-    Sn = ye.prototype;
-F.prototype = Sn;
+    kn = ye.prototype;
+F.prototype = kn;
 [
     ["$ms", _e],
     ["$s", te],
@@ -4195,7 +4260,7 @@ F.prototype = Sn;
     ["$y", K],
     ["$D", se],
 ].forEach(function (n) {
-    Sn[n[1]] = function (t) {
+    kn[n[1]] = function (t) {
         return this.$g(t, n[0], n[1]);
     };
 });
@@ -4211,18 +4276,18 @@ F.en = ue[fe];
 F.Ls = ue;
 F.p = {};
 var O = F;
-var yi = de(bn(), 1),
-    Yi = de(kn(), 1),
-    pi = de(Hn(), 1),
-    Di = de(jn(), 1),
-    Li = de(Tn(), 1);
-O.extend(yi.default);
-O.extend(Yi.default);
-O.extend(pi.default);
+var Di = de(jn(), 1),
+    Li = de(Hn(), 1),
+    vi = de(Tn(), 1),
+    gi = de(wn(), 1),
+    Si = de($n(), 1);
 O.extend(Di.default);
 O.extend(Li.default);
+O.extend(vi.default);
+O.extend(gi.default);
+O.extend(Si.default);
 window.dayjs = O;
-function Ii({
+function Ni({
     displayFormat: n,
     firstDayOfWeek: t,
     isAutofocused: s,
@@ -4246,7 +4311,7 @@ function Ii({
         dayLabels: [],
         months: [],
         init: function () {
-            O.locale(Mi[i] ?? Mi.en), (this.focusedDate = O().tz(a));
+            O.locale(pi[i] ?? pi.en), (this.focusedDate = O().tz(a));
             let u = this.getSelectedDate() ?? O().tz(a).hour(0).minute(0).second(0);
             ((this.getMaxDate() !== null && u.isAfter(this.getMaxDate())) ||
                 (this.getMinDate() !== null && u.isBefore(this.getMinDate()))) &&
@@ -4460,47 +4525,48 @@ function Ii({
         },
     };
 }
-var Mi = {
-    ar: wn(),
-    bs: $n(),
-    ca: Cn(),
+var pi = {
+    ar: Cn(),
+    bs: On(),
+    ca: zn(),
     ckb: Pe(),
-    cs: zn(),
-    cy: An(),
-    da: In(),
-    de: qn(),
-    en: xn(),
-    es: Nn(),
-    et: En(),
-    fa: Fn(),
-    fi: Jn(),
-    fr: Wn(),
-    hi: Un(),
-    hu: Pn(),
-    hy: Rn(),
-    id: Gn(),
-    it: Zn(),
-    ja: Vn(),
-    ka: Kn(),
-    km: Qn(),
+    cs: In(),
+    cy: qn(),
+    da: xn(),
+    de: Nn(),
+    el: En(),
+    en: Fn(),
+    es: Jn(),
+    et: Wn(),
+    fa: Un(),
+    fi: Pn(),
+    fr: Rn(),
+    hi: Gn(),
+    hu: Zn(),
+    hy: Vn(),
+    id: Kn(),
+    it: Qn(),
+    ja: Xn(),
+    ka: Bn(),
+    km: ei(),
     ku: Pe(),
-    lt: Xn(),
-    lv: Bn(),
-    ms: ei(),
-    my: ti(),
-    nl: ni(),
-    no: ii(),
-    pl: si(),
-    pt_BR: ri(),
-    pt_PT: ai(),
-    ro: ui(),
-    ru: oi(),
-    sv: di(),
-    th: _i(),
-    tr: fi(),
-    uk: li(),
-    vi: mi(),
-    zh_CN: ci(),
-    zh_TW: hi(),
+    lt: ti(),
+    lv: ni(),
+    ms: ii(),
+    my: si(),
+    nl: ri(),
+    no: ai(),
+    pl: ui(),
+    pt_BR: oi(),
+    pt_PT: di(),
+    ro: _i(),
+    ru: fi(),
+    sv: li(),
+    th: mi(),
+    tr: ci(),
+    uk: hi(),
+    vi: Mi(),
+    zh_CN: yi(),
+    zh_TW: Yi(),
 };
-export { Ii as default };
+export { Ni as default };

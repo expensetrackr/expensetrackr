@@ -8202,7 +8202,7 @@ b`.split(/\n/).length != 3
             }),
             (tt.fromTextArea = _d),
             kd(tt),
-            (tt.version = "5.65.18"),
+            (tt.version = "5.65.19"),
             tt
         );
     });
@@ -14837,7 +14837,7 @@ var bu = Ke((mu, vu) => {
                 if (c == "/" && T.eat("/")) return T.skipToEnd(), "comment";
                 if (b.test(c)) return T.eatWhile(b), "operator";
                 T.eatWhile(/[\w\$_]/);
-                var d = T.current();
+                var d = T.current().toLowerCase();
                 return v.propertyIsEnumerable(d) ? "keyword" : C.propertyIsEnumerable(d) ? "atom" : "variable";
             }
             function s(T) {
@@ -17347,6 +17347,8 @@ var Uu = Ke((Bu, Wu) => {
                 atoms: s("false true null unknown"),
                 operatorChars: /^[*\/+\-%<>!=&|^\/#@?~]/,
                 backslashStringEscapes: !1,
+                identifierQuote: '"',
+                hooks: { '"': v },
                 dateSQL: s("date time timestamp"),
                 support: s(
                     "decimallessFloat zerolessFloat binaryNumber hexNumber nCharCast charsetCast escapeConstant",

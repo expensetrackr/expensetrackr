@@ -1,9 +1,9 @@
-var pr = Object.defineProperty;
-var mr = (e, t) => {
-    for (var i in t) pr(e, i, { get: t[i], enumerable: !0 });
+var mr = Object.defineProperty;
+var ur = (e, t) => {
+    for (var i in t) mr(e, i, { get: t[i], enumerable: !0 });
 };
 var la = {};
-mr(la, {
+ur(la, {
     FileOrigin: () => Ct,
     FileStatus: () => Et,
     OptionTypes: () => Ui,
@@ -17,8 +17,8 @@ mr(la, {
     setOptions: () => Ft,
     supported: () => Gi,
 });
-var ur = (e) => e instanceof HTMLElement,
-    gr = (e, t = [], i = []) => {
+var gr = (e) => e instanceof HTMLElement,
+    fr = (e, t = [], i = []) => {
         let a = { ...e },
             n = [],
             l = [],
@@ -55,7 +55,7 @@ var ur = (e) => e instanceof HTMLElement,
             d
         );
     },
-    fr = (e, t, i) => {
+    hr = (e, t, i) => {
         if (typeof i == "function") {
             e[t] = i;
             return;
@@ -69,38 +69,38 @@ var ur = (e) => e instanceof HTMLElement,
         let t = {};
         return (
             te(e, (i) => {
-                fr(t, i, e[i]);
+                hr(t, i, e[i]);
             }),
             t
         );
     },
-    ce = (e, t, i = null) => {
+    se = (e, t, i = null) => {
         if (i === null) return e.getAttribute(t) || e.hasAttribute(t);
         e.setAttribute(t, i);
     },
-    hr = "http://www.w3.org/2000/svg",
-    br = ["svg", "path"],
-    za = (e) => br.includes(e),
+    br = "http://www.w3.org/2000/svg",
+    Er = ["svg", "path"],
+    za = (e) => Er.includes(e),
     li = (e, t, i = {}) => {
         typeof t == "object" && ((i = t), (t = null));
-        let a = za(e) ? document.createElementNS(hr, e) : document.createElement(e);
+        let a = za(e) ? document.createElementNS(br, e) : document.createElement(e);
         return (
-            t && (za(e) ? ce(a, "class", t) : (a.className = t)),
+            t && (za(e) ? se(a, "class", t) : (a.className = t)),
             te(i, (n, l) => {
-                ce(a, n, l);
+                se(a, n, l);
             }),
             a
         );
     },
-    Er = (e) => (t, i) => {
+    Tr = (e) => (t, i) => {
         typeof i < "u" && e.children[i] ? e.insertBefore(t, e.children[i]) : e.appendChild(t);
     },
-    Tr = (e, t) => (i, a) => (typeof a < "u" ? t.splice(a, 0, i) : t.push(i), i),
-    Ir = (e, t) => (i) => (t.splice(t.indexOf(i), 1), i.element.parentNode && e.removeChild(i.element), i),
-    vr = typeof window < "u" && typeof window.document < "u",
-    En = () => vr,
-    xr = En() ? li("svg") : {},
-    yr = "children" in xr ? (e) => e.children.length : (e) => e.childNodes.length,
+    Ir = (e, t) => (i, a) => (typeof a < "u" ? t.splice(a, 0, i) : t.push(i), i),
+    vr = (e, t) => (i) => (t.splice(t.indexOf(i), 1), i.element.parentNode && e.removeChild(i.element), i),
+    xr = typeof window < "u" && typeof window.document < "u",
+    En = () => xr,
+    yr = En() ? li("svg") : {},
+    Rr = "children" in yr ? (e) => e.children.length : (e) => e.childNodes.length,
     Tn = (e, t, i, a) => {
         let n = i[0] || e.left,
             l = i[1] || e.top,
@@ -137,8 +137,8 @@ var ur = (e) => e instanceof HTMLElement,
         (e.width = e.right - e.left), (e.height = e.bottom - e.top);
     },
     $e = (e) => typeof e == "number",
-    Rr = (e, t, i, a = 0.001) => Math.abs(e - t) < a && Math.abs(i) < a,
-    Sr = ({ stiffness: e = 0.5, damping: t = 0.75, mass: i = 10 } = {}) => {
+    Sr = (e, t, i, a = 0.001) => Math.abs(e - t) < a && Math.abs(i) < a,
+    _r = ({ stiffness: e = 0.5, damping: t = 0.75, mass: i = 10 } = {}) => {
         let a = null,
             n = null,
             l = 0,
@@ -154,7 +154,7 @@ var ur = (e) => e instanceof HTMLElement,
                     (l += m / i),
                         (n += l),
                         (l *= t),
-                        Rr(n, a, l) || d ? ((n = a), (l = 0), (o = !0), p.onupdate(n), p.oncomplete(n)) : p.onupdate(n);
+                        Sr(n, a, l) || d ? ((n = a), (l = 0), (o = !0), p.onupdate(n), p.oncomplete(n)) : p.onupdate(n);
                 },
                 target: {
                     set: (c) => {
@@ -177,8 +177,8 @@ var ur = (e) => e instanceof HTMLElement,
             });
         return p;
     };
-var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
-    wr = ({ duration: e = 500, easing: t = _r, delay: i = 0 } = {}) => {
+var wr = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
+    Lr = ({ duration: e = 500, easing: t = wr, delay: i = 0 } = {}) => {
         let a = null,
             n,
             l,
@@ -212,8 +212,8 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
             });
         return c;
     },
-    Da = { spring: Sr, tween: wr },
-    Lr = (e, t, i) => {
+    Da = { spring: _r, tween: Lr },
+    Mr = (e, t, i) => {
         let a = e[t] && typeof e[t][i] == "object" ? e[t][i] : e[t] || e,
             n = typeof a == "string" ? a : a.type,
             l = typeof a == "object" ? { ...a } : {};
@@ -231,12 +231,12 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
                 });
             });
     },
-    Mr = ({ mixinConfig: e, viewProps: t, viewInternalAPI: i, viewExternalAPI: a }) => {
+    Ar = ({ mixinConfig: e, viewProps: t, viewInternalAPI: i, viewExternalAPI: a }) => {
         let n = { ...t },
             l = [];
         return (
             te(e, (o, r) => {
-                let s = Lr(r);
+                let s = Mr(r);
                 if (!s) return;
                 (s.onupdate = (c) => {
                     t[o] = c;
@@ -273,16 +273,16 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
             }
         );
     },
-    Ar = (e) => (t, i) => {
+    Pr = (e) => (t, i) => {
         e.addEventListener(t, i);
     },
-    Pr = (e) => (t, i) => {
+    zr = (e) => (t, i) => {
         e.removeEventListener(t, i);
     },
-    zr = ({ mixinConfig: e, viewProps: t, viewInternalAPI: i, viewExternalAPI: a, viewState: n, view: l }) => {
+    Or = ({ mixinConfig: e, viewProps: t, viewInternalAPI: i, viewExternalAPI: a, viewState: n, view: l }) => {
         let o = [],
-            r = Ar(l.element),
-            s = Pr(l.element);
+            r = Pr(l.element),
+            s = zr(l.element);
         return (
             (a.on = (p, c) => {
                 o.push({ type: p, fn: c }), r(p, c);
@@ -304,11 +304,11 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
             }
         );
     },
-    Or = ({ mixinConfig: e, viewProps: t, viewExternalAPI: i }) => {
+    Fr = ({ mixinConfig: e, viewProps: t, viewExternalAPI: i }) => {
         Yi(e, i, t);
     },
     ue = (e) => e != null,
-    Fr = {
+    Dr = {
         opacity: 1,
         scaleX: 1,
         scaleY: 1,
@@ -320,7 +320,7 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
         originX: 0,
         originY: 0,
     },
-    Dr = ({ mixinConfig: e, viewProps: t, viewInternalAPI: i, viewExternalAPI: a, view: n }) => {
+    Cr = ({ mixinConfig: e, viewProps: t, viewInternalAPI: i, viewExternalAPI: a, view: n }) => {
         let l = { ...t },
             o = {};
         Yi(e, [i, a], t);
@@ -331,22 +331,22 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
             (i.rect = { get: p }),
             (a.rect = { get: p }),
             e.forEach((c) => {
-                t[c] = typeof l[c] > "u" ? Fr[c] : l[c];
+                t[c] = typeof l[c] > "u" ? Dr[c] : l[c];
             }),
             {
                 write: () => {
-                    if (Cr(o, t)) return Br(n.element, t), Object.assign(o, { ...t }), !0;
+                    if (Br(o, t)) return Nr(n.element, t), Object.assign(o, { ...t }), !0;
                 },
                 destroy: () => {},
             }
         );
     },
-    Cr = (e, t) => {
+    Br = (e, t) => {
         if (Object.keys(e).length !== Object.keys(t).length) return !0;
         for (let i in t) if (t[i] !== e[i]) return !0;
         return !1;
     },
-    Br = (
+    Nr = (
         e,
         {
             opacity: t,
@@ -383,7 +383,7 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
         let h = e.elementCurrentStyle || "";
         (f.length !== h.length || f !== h) && ((e.style.cssText = f), (e.elementCurrentStyle = f));
     },
-    Nr = { styles: Dr, listeners: zr, animations: Mr, apis: Or },
+    kr = { styles: Cr, listeners: Or, animations: Ar, apis: Fr },
     Ca = (e = {}, t = {}, i = {}) => (
         t.layoutCalculated ||
             ((e.paddingTop = parseInt(i.paddingTop, 10) || 0),
@@ -443,26 +443,26 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
                     R.forEach((Y) => Y(H));
                 },
                 D = (k, H, Y) => {
-                    let re = H.length === 0;
+                    let oe = H.length === 0;
                     return (
                         x.forEach((ee) => {
-                            ee({ props: g, root: K, actions: H, timestamp: k, shouldOptimize: Y }) === !1 && (re = !1);
+                            ee({ props: g, root: K, actions: H, timestamp: k, shouldOptimize: Y }) === !1 && (oe = !1);
                         }),
                         y.forEach((ee) => {
-                            ee.write(k) === !1 && (re = !1);
+                            ee.write(k) === !1 && (oe = !1);
                         }),
                         v
                             .filter((ee) => !!ee.element.parentNode)
                             .forEach((ee) => {
-                                ee._write(k, r(ee, H), Y) || (re = !1);
+                                ee._write(k, r(ee, H), Y) || (oe = !1);
                             }),
                         v.forEach((ee, dt) => {
                             ee.element.parentNode ||
-                                (K.appendChild(ee.element, dt), ee._read(), ee._write(k, r(ee, H), Y), (re = !1));
+                                (K.appendChild(ee.element, dt), ee._read(), ee._write(k, r(ee, H), Y), (oe = !1));
                         }),
-                        (T = re),
+                        (T = oe),
                         p({ props: g, root: K, actions: H, timestamp: k }),
-                        re
+                        oe
                     );
                 },
                 F = () => {
@@ -478,14 +478,14 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
                     rect: { get: O },
                     ref: { get: B },
                     is: (k) => t === k,
-                    appendChild: Er(f),
+                    appendChild: Tr(f),
                     createChildView: w(u),
                     linkView: (k) => (v.push(k), k),
                     unlinkView: (k) => {
                         v.splice(v.indexOf(k), 1);
                     },
-                    appendChildView: Tr(f, v),
-                    removeChildView: Ir(f, v),
+                    appendChildView: Ir(f, v),
+                    removeChildView: vr(f, v),
                     registerWriter: (k) => x.push(k),
                     registerReader: (k) => R.push(k),
                     registerDestroyer: (k) => z.push(k),
@@ -507,7 +507,7 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
             Object.keys(m)
                 .sort((k, H) => (k === "styles" ? 1 : H === "styles" ? -1 : 0))
                 .forEach((k) => {
-                    let H = Nr[k]({
+                    let H = kr[k]({
                         mixinConfig: m[k],
                         viewProps: g,
                         viewState: _,
@@ -519,16 +519,16 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
                 });
             let K = We(C);
             l({ root: K, props: g });
-            let oe = yr(f);
+            let pe = Rr(f);
             return (
                 v.forEach((k, H) => {
-                    K.appendChild(k.element, oe + H);
+                    K.appendChild(k.element, pe + H);
                 }),
                 s(K),
                 We(q)
             );
         },
-    kr = (e, t, i = 60) => {
+    Vr = (e, t, i = 60) => {
         let a = "__framePainter";
         if (window[a]) {
             window[a].readers.push(e), window[a].writers.push(t);
@@ -576,16 +576,16 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
     Na = (e, t) => t.parentNode.insertBefore(e, t.nextSibling),
     ci = (e) => Array.isArray(e),
     ke = (e) => e == null,
-    Vr = (e) => e.trim(),
+    Gr = (e) => e.trim(),
     di = (e) => "" + e,
-    Gr = (e, t = ",") =>
+    Ur = (e, t = ",") =>
         ke(e)
             ? []
             : ci(e)
               ? e
               : di(e)
                     .split(t)
-                    .map(Vr)
+                    .map(Gr)
                     .filter((i) => i.length),
     In = (e) => typeof e == "boolean",
     vn = (e) => (In(e) ? e : e === "true"),
@@ -604,7 +604,7 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
               : ni(i);
     },
     Xe = (e) => typeof e == "function",
-    Ur = (e) => {
+    Wr = (e) => {
         let t = self,
             i = e.split("."),
             a = null;
@@ -612,14 +612,14 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
         return t;
     },
     Ga = { process: "POST", patch: "PATCH", revert: "DELETE", fetch: "GET", restore: "GET", load: "GET" },
-    Wr = (e) => {
+    Hr = (e) => {
         let t = {};
         return (
             (t.url = ge(e) ? e : e.url || ""),
             (t.timeout = e.timeout ? parseInt(e.timeout, 10) : 0),
             (t.headers = e.headers ? e.headers : {}),
             te(Ga, (i) => {
-                t[i] = Hr(i, e[i], Ga[i], t.timeout, t.headers);
+                t[i] = jr(i, e[i], Ga[i], t.timeout, t.headers);
             }),
             (t.process = e.process || ge(e) || e.url ? t.process : null),
             (t.remove = e.remove || null),
@@ -627,7 +627,7 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
             t
         );
     },
-    Hr = (e, t, i, a, n) => {
+    jr = (e, t, i, a, n) => {
         if (t === null) return null;
         if (typeof t == "function") return t;
         let l = {
@@ -647,23 +647,23 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
         }
         return (l.withCredentials = vn(l.withCredentials)), l;
     },
-    jr = (e) => Wr(e),
-    Yr = (e) => e === null,
-    de = (e) => typeof e == "object" && e !== null,
-    qr = (e) => de(e) && ge(e.url) && de(e.process) && de(e.revert) && de(e.restore) && de(e.fetch),
+    Yr = (e) => Hr(e),
+    qr = (e) => e === null,
+    ce = (e) => typeof e == "object" && e !== null,
+    $r = (e) => ce(e) && ge(e.url) && ce(e.process) && ce(e.revert) && ce(e.restore) && ce(e.fetch),
     Oi = (e) =>
         ci(e)
             ? "array"
-            : Yr(e)
+            : qr(e)
               ? "null"
               : bt(e)
                 ? "int"
                 : /^[0-9]+ ?(?:GB|MB|KB)$/gi.test(e)
                   ? "bytes"
-                  : qr(e)
+                  : $r(e)
                     ? "api"
                     : typeof e,
-    $r = (e) =>
+    Xr = (e) =>
         e
             .replace(/{\s*'/g, '{"')
             .replace(/'\s*}/g, '"}')
@@ -671,37 +671,37 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
             .replace(/:\s*'/g, ':"')
             .replace(/,\s*'/g, ',"')
             .replace(/'\s*,/g, '",'),
-    Xr = {
-        array: Gr,
+    Kr = {
+        array: Ur,
         boolean: vn,
         int: (e) => (Oi(e) === "bytes" ? Va(e) : ni(e)),
         number: ka,
         float: ka,
         bytes: Va,
         string: (e) => (Xe(e) ? e : di(e)),
-        function: (e) => Ur(e),
-        serverapi: jr,
+        function: (e) => Wr(e),
+        serverapi: Yr,
         object: (e) => {
             try {
-                return JSON.parse($r(e));
+                return JSON.parse(Xr(e));
             } catch {
                 return null;
             }
         },
     },
-    Kr = (e, t) => Xr[t](e),
+    Qr = (e, t) => Kr[t](e),
     yn = (e, t, i) => {
         if (e === t) return e;
         let a = Oi(e);
         if (a !== i) {
-            let n = Kr(e, i);
+            let n = Qr(e, i);
             if (((a = Oi(n)), n === null))
                 throw `Trying to assign value with incorrect type to "${option}", allowed type: "${i}"`;
             e = n;
         }
         return e;
     },
-    Qr = (e, t) => {
+    Zr = (e, t) => {
         let i = e;
         return {
             enumerable: !0,
@@ -711,23 +711,23 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
             },
         };
     },
-    Zr = (e) => {
+    Jr = (e) => {
         let t = {};
         return (
             te(e, (i) => {
                 let a = e[i];
-                t[i] = Qr(a[0], a[1]);
+                t[i] = Zr(a[0], a[1]);
             }),
             We(t)
         );
     },
-    Jr = (e) => ({ items: [], listUpdateTimeout: null, itemUpdateTimeout: null, processingQueue: [], options: Zr(e) }),
+    es = (e) => ({ items: [], listUpdateTimeout: null, itemUpdateTimeout: null, processingQueue: [], options: Jr(e) }),
     pi = (e, t = "-") =>
         e
             .split(/(?=[A-Z])/)
             .map((i) => i.toLowerCase())
             .join(t),
-    es = (e, t) => {
+    ts = (e, t) => {
         let i = {};
         return (
             te(t, (a) => {
@@ -741,7 +741,7 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
             i
         );
     },
-    ts = (e) => (t, i, a) => {
+    is = (e) => (t, i, a) => {
         let n = {};
         return (
             te(e, (l) => {
@@ -756,7 +756,7 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
             n
         );
     },
-    is = (e) => (t) => {
+    as = (e) => (t) => {
         let i = {};
         return (
             te(e, (a) => {
@@ -768,7 +768,7 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
     Re = { API: 1, DROP: 2, BROWSE: 3, PASTE: 4, NONE: 5 },
     qi = () => Math.random().toString(36).substring(2, 11),
     $i = (e, t) => e.splice(t, 1),
-    as = (e, t) => {
+    ns = (e, t) => {
         t ? e() : document.hidden ? Promise.resolve(1).then(e) : setTimeout(e, 0);
     },
     mi = () => {
@@ -782,7 +782,7 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
             i = (a, n, l) => {
                 e.filter((o) => o.event === a)
                     .map((o) => o.cb)
-                    .forEach((o) => as(() => o(...n), l));
+                    .forEach((o) => ns(() => o(...n), l));
             };
         return {
             fireSync: (a, ...n) => {
@@ -810,7 +810,7 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
             .filter((a) => !i.includes(a))
             .forEach((a) => Object.defineProperty(t, a, Object.getOwnPropertyDescriptor(e, a)));
     },
-    ns = [
+    ls = [
         "fire",
         "process",
         "revert",
@@ -829,9 +829,9 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
     ],
     he = (e) => {
         let t = {};
-        return Rn(e, t, ns), t;
+        return Rn(e, t, ls), t;
     },
-    ls = (e) => {
+    os = (e) => {
         e.forEach((t, i) => {
             t.released && $i(e, i);
         });
@@ -847,10 +847,10 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
         LOADING: 7,
         LOAD_ERROR: 8,
     },
-    se = { INPUT: 1, LIMBO: 2, LOCAL: 3 },
+    re = { INPUT: 1, LIMBO: 2, LOCAL: 3 },
     Sn = (e) => /[^0-9]+/.exec(e),
     _n = () => Sn((1.1).toLocaleString())[0],
-    os = () => {
+    rs = () => {
         let e = _n(),
             t = (1e3).toLocaleString();
         return t !== "1000" ? Sn(t)[0] : e === "." ? "," : ".";
@@ -881,10 +881,10 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
                 .catch((r) => n(r));
         }),
     tt = (e, t, i) => Xi.filter((a) => a.key === e).map((a) => a.cb(t, i)),
-    rs = (e, t) => Xi.push({ key: e, cb: t }),
-    ss = (e) => Object.assign(pt, e),
+    ss = (e, t) => Xi.push({ key: e, cb: t }),
+    cs = (e) => Object.assign(pt, e),
     oi = () => ({ ...pt }),
-    cs = (e) => {
+    ds = (e) => {
         te(e, (t, i) => {
             pt[t] && (pt[t][0] = yn(i, pt[t][0], pt[t][1]));
         });
@@ -932,7 +932,7 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
         labelFileSizeMegabytes: ["MB", M.STRING],
         labelFileSizeGigabytes: ["GB", M.STRING],
         labelDecimalSeparator: [_n(), M.STRING],
-        labelThousandsSeparator: [os(), M.STRING],
+        labelThousandsSeparator: [rs(), M.STRING],
         labelIdle: ['Drag & Drop your files or <span class="filepond--label-action">Browse</span>', M.STRING],
         labelInvalidField: ["Field contains invalid files", M.STRING],
         labelFileWaitingForSize: ["Waiting for size", M.STRING],
@@ -1029,7 +1029,7 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
     Pe = (e) => e.filter((t) => !t.archived),
     Ln = { EMPTY: 0, IDLE: 1, ERROR: 2, BUSY: 3, READY: 4 },
     Zt = null,
-    ds = () => {
+    ps = () => {
         if (Zt === null)
             try {
                 let e = new DataTransfer();
@@ -1041,18 +1041,18 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
             }
         return Zt;
     },
-    ps = [U.LOAD_ERROR, U.PROCESSING_ERROR, U.PROCESSING_REVERT_ERROR],
-    ms = [U.LOADING, U.PROCESSING, U.PROCESSING_QUEUED, U.INIT],
-    us = [U.PROCESSING_COMPLETE],
-    gs = (e) => ps.includes(e.status),
+    ms = [U.LOAD_ERROR, U.PROCESSING_ERROR, U.PROCESSING_REVERT_ERROR],
+    us = [U.LOADING, U.PROCESSING, U.PROCESSING_QUEUED, U.INIT],
+    gs = [U.PROCESSING_COMPLETE],
     fs = (e) => ms.includes(e.status),
     hs = (e) => us.includes(e.status),
-    Ua = (e) => de(e.options.server) && (de(e.options.server.process) || Xe(e.options.server.process)),
-    bs = (e) => ({
+    bs = (e) => gs.includes(e.status),
+    Ua = (e) => ce(e.options.server) && (ce(e.options.server.process) || Xe(e.options.server.process)),
+    Es = (e) => ({
         GET_STATUS: () => {
             let t = Pe(e.items),
                 { EMPTY: i, ERROR: a, BUSY: n, IDLE: l, READY: o } = Ln;
-            return t.length === 0 ? i : t.some(gs) ? a : t.some(fs) ? n : t.some(hs) ? o : l;
+            return t.length === 0 ? i : t.some(fs) ? a : t.some(hs) ? n : t.some(bs) ? o : l;
         },
         GET_ITEM: (t) => Ke(e.items, t),
         GET_ACTIVE_ITEM: (t) => Ke(Pe(e.items), t),
@@ -1075,7 +1075,7 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
         GET_ITEM_PANEL_ASPECT_RATIO: () => e.options.styleItemPanelAspectRatio,
         GET_ITEMS_BY_STATUS: (t) => Pe(e.items).filter((i) => i.status === t),
         GET_TOTAL_ITEMS: () => Pe(e.items).length,
-        SHOULD_UPDATE_FILE_INPUT: () => e.options.storeAsFile && ds() && !Ua(e),
+        SHOULD_UPDATE_FILE_INPUT: () => e.options.storeAsFile && ps() && !Ua(e),
         IS_ASYNC: () => Ua(e),
         GET_FILE_SIZE_LABELS: (t) => ({
             labelBytes: t("GET_LABEL_FILE_SIZE_BYTES") || void 0,
@@ -1084,22 +1084,22 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
             labelGigabytes: t("GET_LABEL_FILE_SIZE_GIGABYTES") || void 0,
         }),
     }),
-    Es = (e) => {
+    Ts = (e) => {
         let t = Pe(e.items).length;
         if (!e.options.allowMultiple) return t === 0;
         let i = e.options.maxFiles;
         return i === null || t < i;
     },
     Mn = (e, t, i) => Math.max(Math.min(i, e), t),
-    Ts = (e, t, i) => e.splice(t, 0, i),
-    Is = (e, t, i) => (ke(t) ? null : typeof i > "u" ? (e.push(t), t) : ((i = Mn(i, 0, e.length)), Ts(e, i, t), t)),
+    Is = (e, t, i) => e.splice(t, 0, i),
+    vs = (e, t, i) => (ke(t) ? null : typeof i > "u" ? (e.push(t), t) : ((i = Mn(i, 0, e.length)), Is(e, i, t), t)),
     Fi = (e) =>
         /^\s*data:([a-z]+\/[a-z0-9-+.]+(;[a-z-]+=[a-z0-9-]+)?)?(;base64)?,([a-z0-9!$&',()*+;=\-._~:@\/?%\s]*)\s*$/i.test(
             e,
         ),
     Dt = (e) => `${e}`.split("/").pop().split("?").shift(),
     ui = (e) => e.split(".").pop(),
-    vs = (e) => {
+    xs = (e) => {
         if (typeof e != "string") return "";
         let t = e.split("/").pop();
         return /svg/.test(t)
@@ -1125,37 +1125,37 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
             (n.lastModifiedDate = new Date()),
             e._relativePath && (n._relativePath = e._relativePath),
             ge(t) || (t = An()),
-            t && a === null && ui(t) ? (n.name = t) : ((a = a || vs(n.type)), (n.name = t + (a ? "." + a : ""))),
+            t && a === null && ui(t) ? (n.name = t) : ((a = a || xs(n.type)), (n.name = t + (a ? "." + a : ""))),
             n
         );
     },
-    xs = () =>
+    ys = () =>
         (window.BlobBuilder =
             window.BlobBuilder || window.WebKitBlobBuilder || window.MozBlobBuilder || window.MSBlobBuilder),
     Pn = (e, t) => {
-        let i = xs();
+        let i = ys();
         if (i) {
             let a = new i();
             return a.append(e), a.getBlob(t);
         }
         return new Blob([e], { type: t });
     },
-    ys = (e, t) => {
+    Rs = (e, t) => {
         let i = new ArrayBuffer(e.length),
             a = new Uint8Array(i);
         for (let n = 0; n < e.length; n++) a[n] = e.charCodeAt(n);
         return Pn(i, t);
     },
     zn = (e) => (/^data:(.+);/.exec(e) || [])[1] || null,
-    Rs = (e) => e.split(",")[1].replace(/\s/g, ""),
-    Ss = (e) => atob(Rs(e)),
-    _s = (e) => {
+    Ss = (e) => e.split(",")[1].replace(/\s/g, ""),
+    _s = (e) => atob(Ss(e)),
+    ws = (e) => {
         let t = zn(e),
-            i = Ss(e);
-        return ys(i, t);
+            i = _s(e);
+        return Rs(i, t);
     },
-    ws = (e, t, i) => ht(_s(e), t, null, i),
-    Ls = (e) => {
+    Ls = (e, t, i) => ht(ws(e), t, null, i),
+    Ms = (e) => {
         if (!/^content-disposition:/i.test(e)) return null;
         let t = e
             .split(/filename=|filename\*=.+''/)
@@ -1164,30 +1164,30 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
             .filter((i) => i.length);
         return t.length ? decodeURI(t[t.length - 1]) : null;
     },
-    Ms = (e) => {
+    As = (e) => {
         if (/content-length:/i.test(e)) {
             let t = e.match(/[0-9]+/)[0];
             return t ? parseInt(t, 10) : null;
         }
         return null;
     },
-    As = (e) => (/x-content-transfer-id:/i.test(e) && (e.split(":")[1] || "").trim()) || null,
+    Ps = (e) => (/x-content-transfer-id:/i.test(e) && (e.split(":")[1] || "").trim()) || null,
     Ki = (e) => {
         let t = { source: null, name: null, size: null },
             i = e.split(`
 `);
         for (let a of i) {
-            let n = Ls(a);
+            let n = Ms(a);
             if (n) {
                 t.name = n;
                 continue;
             }
-            let l = Ms(a);
+            let l = As(a);
             if (l) {
                 t.size = l;
                 continue;
             }
-            let o = As(a);
+            let o = Ps(a);
             if (o) {
                 t.source = o;
                 continue;
@@ -1195,7 +1195,7 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
         }
         return t;
     },
-    Ps = (e) => {
+    zs = (e) => {
         let t = { source: null, complete: !1, progress: 0, size: null, timestamp: null, duration: 0, request: null },
             i = () => t.progress,
             a = () => {
@@ -1209,7 +1209,7 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
                         : r instanceof Blob
                           ? o.fire("load", ht(r, r.name))
                           : Fi(r)
-                            ? o.fire("load", ws(r))
+                            ? o.fire("load", Ls(r))
                             : l(r);
             },
             l = (r) => {
@@ -1336,7 +1336,7 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
         };
     },
     xe = { QUEUED: 0, COMPLETE: 1, PROCESSING: 2, ERROR: 3, WAITING: 4 },
-    zs = (e, t, i, a, n, l, o, r, s, p, c) => {
+    Os = (e, t, i, a, n, l, o, r, s, p, c) => {
         let d = [],
             { chunkTransferId: m, chunkServer: u, chunkSize: g, chunkRetryDelays: f } = c,
             h = { serverId: m, aborted: !1 },
@@ -1345,7 +1345,7 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
             T = t.onerror || ((w) => null),
             v = (w) => {
                 let O = new FormData();
-                de(n) && O.append(i, JSON.stringify(n));
+                ce(n) && O.append(i, JSON.stringify(n));
                 let S = typeof t.headers == "function" ? t.headers(a, n) : { ...t.headers, "Upload-Length": a.size },
                     L = { ...t, headers: S },
                     D = Qe(I(O), Ot(e, t.url), L);
@@ -1471,19 +1471,19 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
             }
         );
     },
-    Os = (e, t, i, a) => (n, l, o, r, s, p, c) => {
+    Fs = (e, t, i, a) => (n, l, o, r, s, p, c) => {
         if (!n) return;
         let d = a.chunkUploads,
             m = d && n.size > a.chunkSize,
             u = d && (m || a.chunkForce);
-        if (n instanceof Blob && u) return zs(e, t, i, n, l, o, r, s, p, c, a);
+        if (n instanceof Blob && u) return Os(e, t, i, n, l, o, r, s, p, c, a);
         let g = t.ondata || ((y) => y),
             f = t.onload || ((y) => y),
             h = t.onerror || ((y) => null),
             I = typeof t.headers == "function" ? t.headers(n, l) || {} : { ...t.headers },
             b = { ...t, headers: I };
         var T = new FormData();
-        de(l) && T.append(i, JSON.stringify(l)),
+        ce(l) && T.append(i, JSON.stringify(l)),
             (n instanceof Blob ? [{ name: null, file: n }] : n).forEach((y) => {
                 T.append(i, y.file, y.name === null ? y.file.name : `${y.name}${y.file.name}`);
             });
@@ -1501,8 +1501,8 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
             v
         );
     },
-    Fs = (e = "", t, i, a) =>
-        typeof t == "function" ? (...n) => t(i, ...n, a) : !t || !ge(t.url) ? null : Os(e, t, i, a),
+    Ds = (e = "", t, i, a) =>
+        typeof t == "function" ? (...n) => t(i, ...n, a) : !t || !ge(t.url) ? null : Fs(e, t, i, a),
     Pt = (e = "", t) => {
         if (typeof t == "function") return t;
         if (!t || !ge(t.url)) return (n, l) => l();
@@ -1523,7 +1523,7 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
         };
     },
     On = (e = 0, t = 1) => e + Math.random() * (t - e),
-    Ds = (e, t = 1e3, i = 0, a = 25, n = 250) => {
+    Cs = (e, t = 1e3, i = 0, a = 25, n = 250) => {
         let l = null,
             o = Date.now(),
             r = () => {
@@ -1546,7 +1546,7 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
             }
         );
     },
-    Cs = (e, t) => {
+    Bs = (e, t) => {
         let i = {
                 complete: !1,
                 perceivedProgress: 0,
@@ -1568,7 +1568,7 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
                     };
                 p.fire("start"),
                     (i.timestamp = Date.now()),
-                    (i.perceivedPerformanceUpdater = Ds(
+                    (i.perceivedPerformanceUpdater = Cs(
                         (g) => {
                             (i.perceivedProgress = g),
                                 (i.perceivedDuration = Date.now() - i.timestamp),
@@ -1581,7 +1581,7 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
                         c,
                         d,
                         (g) => {
-                            (i.response = de(g) ? g : { type: "load", code: 200, body: `${g}`, headers: {} }),
+                            (i.response = ce(g) ? g : { type: "load", code: 200, body: `${g}`, headers: {} }),
                                 (i.duration = Date.now() - i.timestamp),
                                 (i.progress = 1),
                                 p.fire("load", i.response.body),
@@ -1589,7 +1589,7 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
                         },
                         (g) => {
                             i.perceivedPerformanceUpdater.clear(),
-                                p.fire("error", de(g) ? g : { type: "error", code: 0, body: `${g}` });
+                                p.fire("error", ce(g) ? g : { type: "error", code: 0, body: `${g}` });
                         },
                         (g, f, h) => {
                             (i.duration = Date.now() - i.timestamp), (i.progress = g ? f / h : null), m();
@@ -1623,7 +1623,7 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
         return p;
     },
     Fn = (e) => e.substring(0, e.lastIndexOf(".")) || e,
-    Bs = (e) => {
+    Ns = (e) => {
         let t = [e.name, e.size, e.type];
         return (
             e instanceof Blob || Fi(e)
@@ -1636,16 +1636,16 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
     },
     Je = (e) => !!(e instanceof File || (e instanceof Blob && e.name)),
     Dn = (e) => {
-        if (!de(e)) return e;
+        if (!ce(e)) return e;
         let t = ci(e) ? [] : {};
         for (let i in e) {
             if (!e.hasOwnProperty(i)) continue;
             let a = e[i];
-            t[i] = a && de(a) ? Dn(a) : a;
+            t[i] = a && ce(a) ? Dn(a) : a;
         }
         return t;
     },
-    Ns = (e = null, t = null, i = null) => {
+    ks = (e = null, t = null, i = null) => {
         let a = qi(),
             n = {
                 archived: !1,
@@ -1675,7 +1675,7 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
                     E.fireSync("load-skip");
                     return;
                 }
-                (n.file = Bs(x)),
+                (n.file = Ns(x)),
                     R.on("init", () => {
                         s("load-init");
                     }),
@@ -1683,7 +1683,7 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
                         (n.file.size = P.size),
                             (n.file.filename = P.filename),
                             P.source &&
-                                ((e = se.LIMBO),
+                                ((e = re.LIMBO),
                                 (n.serverFileReference = P.source),
                                 (n.status = U.PROCESSING_COMPLETE)),
                             s("load-meta");
@@ -1701,7 +1701,7 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
                         n.activeLoader = null;
                         let A = (w) => {
                                 (n.file = Je(w) ? w : n.file),
-                                    e === se.LIMBO && n.serverFileReference ? r(U.PROCESSING_COMPLETE) : r(U.IDLE),
+                                    e === re.LIMBO && n.serverFileReference ? r(U.PROCESSING_COMPLETE) : r(U.IDLE),
                                     s("load");
                             },
                             B = (w) => {
@@ -1835,7 +1835,7 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
                 source: { get: () => n.source },
                 getMetadata: (x) => Dn(x ? o[x] : o),
                 setMetadata: (x, R, z) => {
-                    if (de(x)) {
+                    if (ce(x)) {
                         let P = x;
                         return (
                             Object.keys(P).forEach((A) => {
@@ -1865,9 +1865,9 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
             _ = We(E);
         return _;
     },
-    ks = (e, t) => (ke(t) ? 0 : ge(t) ? e.findIndex((i) => i.id === t) : -1),
+    Vs = (e, t) => (ke(t) ? 0 : ge(t) ? e.findIndex((i) => i.id === t) : -1),
     ja = (e, t) => {
-        let i = ks(e, t);
+        let i = Vs(e, t);
         if (!(i < 0)) return e[i] || null;
     },
     Ya = (e, t, i, a, n, l) => {
@@ -1898,12 +1898,12 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
             .replace(/([a-z])?:\/\//, "$1")
             .split("/")[0]
     ),
-    Vs = (e) => (e.indexOf(":") > -1 || e.indexOf("//") > -1) && qa(location.href) !== qa(e),
+    Gs = (e) => (e.indexOf(":") > -1 || e.indexOf("//") > -1) && qa(location.href) !== qa(e),
     Jt =
         (e) =>
         (...t) =>
             Xe(e) ? e(...t) : e,
-    Gs = (e) => !Je(e.file),
+    Us = (e) => !Je(e.file),
     Li = (e, t) => {
         clearTimeout(t.listUpdateTimeout),
             (t.listUpdateTimeout = setTimeout(() => {
@@ -1931,7 +1931,7 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
             }
             t(o, a, n, l || {});
         },
-    Us = (e, t, i) => ({
+    Ws = (e, t, i) => ({
         ABORT_ALL: () => {
             Pe(i.items).forEach((a) => {
                 a.freeze(), a.abortLoad(), a.abortProcessing();
@@ -1974,7 +1974,7 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
                         });
                         return;
                     }
-                    o.origin === se.LOCAL &&
+                    o.origin === re.LOCAL &&
                         e("DID_LOAD_ITEM", { id: o.id, error: null, serverFileReference: o.source });
                     let r = () => {
                             setTimeout(() => {
@@ -2040,7 +2040,7 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
                 return;
             }
             if (Je(a) && i.options.ignoredFiles.includes(a.name.toLowerCase())) return;
-            if (!Es(i)) {
+            if (!Ts(i)) {
                 if (i.options.allowMultiple || (!i.options.allowMultiple && !i.options.allowReplace)) {
                     let b = ie("warning", 0, "Max files");
                     e("DID_THROW_MAX_FILES", { source: a, error: b }), r({ error: b, file: null });
@@ -2069,15 +2069,15 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
                 }
                 e("REMOVE_ITEM", { query: I.id });
             }
-            let p = s.type === "local" ? se.LOCAL : s.type === "limbo" ? se.LIMBO : se.INPUT,
-                c = Ns(p, p === se.INPUT ? null : a, s.file);
+            let p = s.type === "local" ? re.LOCAL : s.type === "limbo" ? re.LIMBO : re.INPUT,
+                c = ks(p, p === re.INPUT ? null : a, s.file);
             Object.keys(s.metadata || {}).forEach((I) => {
                 c.setMetadata(I, s.metadata[I]);
             }),
                 tt("DID_CREATE_ITEM", c, { query: t, dispatch: e });
             let d = t("GET_ITEM_INSERT_LOCATION");
             i.options.itemInsertLocationFreedom || (n = d === "before" ? -1 : i.items.length),
-                Is(i.items, c, n),
+                vs(i.items, c, n),
                 Xe(d) && a && Mi(i, d);
             let m = c.id;
             c.on("init", () => {
@@ -2202,7 +2202,7 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
             let { url: u, load: g, restore: f, fetch: h } = i.options.server || {};
             c.load(
                 a,
-                Ps(p === se.INPUT ? (ge(a) && Vs(a) && h ? wi(u, h) : Ya) : p === se.LIMBO ? wi(u, f) : wi(u, g)),
+                zs(p === re.INPUT ? (ge(a) && Gs(a) && h ? wi(u, h) : Ya) : p === re.LIMBO ? wi(u, f) : wi(u, g)),
                 (I, b, T) => {
                     Ae("LOAD_FILE", I, { query: t }).then(b).catch(T);
                 },
@@ -2223,14 +2223,14 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
                 r = t("GET_ITEM_INSERT_LOCATION");
             if (
                 (Xe(r) && o && Mi(i, r),
-                e("DID_LOAD_ITEM", { id: a.id, error: null, serverFileReference: a.origin === se.INPUT ? null : o }),
+                e("DID_LOAD_ITEM", { id: a.id, error: null, serverFileReference: a.origin === re.INPUT ? null : o }),
                 l(he(a)),
-                a.origin === se.LOCAL)
+                a.origin === re.LOCAL)
             ) {
                 e("DID_LOAD_LOCAL_ITEM", { id: a.id });
                 return;
             }
-            if (a.origin === se.LIMBO) {
+            if (a.origin === re.LIMBO) {
                 e("DID_COMPLETE_ITEM_PROCESSING", { id: a.id, error: null, serverFileReference: o }),
                     e("DID_DEFINE_VALUE", { id: a.id, value: a.serverId || o });
                 return;
@@ -2292,9 +2292,9 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
             a.onOnce("process-complete", () => {
                 n(he(a)), s();
                 let c = i.options.server;
-                if (i.options.instantUpload && a.origin === se.LOCAL && Xe(c.remove)) {
+                if (i.options.instantUpload && a.origin === re.LOCAL && Xe(c.remove)) {
                     let u = () => {};
-                    (a.origin = se.LIMBO), i.options.server.remove(a.source, u, u);
+                    (a.origin = re.LIMBO), i.options.server.remove(a.source, u, u);
                 }
                 t("GET_ITEMS_BY_STATUS", U.PROCESSING_COMPLETE).length === i.items.length &&
                     e("DID_COMPLETE_ITEM_PROCESSING_ALL");
@@ -2304,8 +2304,8 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
                 });
             let p = i.options;
             a.process(
-                Cs(
-                    Fs(p.server.url, p.server.process, p.name, {
+                Bs(
+                    Ds(p.server.url, p.server.process, p.name, {
                         chunkTransferId: a.transferId,
                         chunkServer: p.server.patch,
                         chunkUploads: p.chunkUploads,
@@ -2341,7 +2341,7 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
                     ja(i.items, p).archive(), e("DID_REMOVE_ITEM", { error: null, id: p, item: a }), Li(e, i), n(he(a));
                 },
                 s = i.options.server;
-            a.origin === se.LOCAL && s && Xe(s.remove) && o.remove !== !1
+            a.origin === re.LOCAL && s && Xe(s.remove) && o.remove !== !1
                 ? (e("DID_START_ITEM_REMOVE", { id: a.id }),
                   s.remove(
                       a.source,
@@ -2354,7 +2354,7 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
                           });
                       },
                   ))
-                : (((o.revert && a.origin !== se.LOCAL && a.serverId !== null) ||
+                : (((o.revert && a.origin !== re.LOCAL && a.serverId !== null) ||
                       (i.options.chunkUploads && a.file.size > i.options.chunkSize) ||
                       (i.options.chunkUploads && i.options.chunkForce)) &&
                       a.revert(Pt(i.options.server.url, i.options.server.revert), t("GET_FORCE_REVERT")),
@@ -2390,19 +2390,19 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
         REVERT_ITEM_PROCESSING: ye(i, (a) => {
             a.revert(Pt(i.options.server.url, i.options.server.revert), t("GET_FORCE_REVERT"))
                 .then(() => {
-                    (i.options.instantUpload || Gs(a)) && e("REMOVE_ITEM", { query: a.id });
+                    (i.options.instantUpload || Us(a)) && e("REMOVE_ITEM", { query: a.id });
                 })
                 .catch(() => {});
         }),
         SET_OPTIONS: ({ options: a }) => {
             let n = Object.keys(a),
-                l = Ws.filter((r) => n.includes(r));
+                l = Hs.filter((r) => n.includes(r));
             [...l, ...Object.keys(a).filter((r) => !l.includes(r))].forEach((r) => {
                 e(`SET_${pi(r, "_").toUpperCase()}`, { value: a[r] });
             });
         },
     }),
-    Ws = ["server"],
+    Hs = ["server"],
     Qi = (e) => e,
     Ve = (e) => document.createElement(e),
     ae = (e, t) => {
@@ -2413,20 +2413,20 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
         let n = (((a % 360) - 90) * Math.PI) / 180;
         return { x: e + i * Math.cos(n), y: t + i * Math.sin(n) };
     },
-    Hs = (e, t, i, a, n, l) => {
+    js = (e, t, i, a, n, l) => {
         let o = Xa(e, t, i, n),
             r = Xa(e, t, i, a);
         return ["M", o.x, o.y, "A", i, i, 0, l, 0, r.x, r.y].join(" ");
     },
-    js = (e, t, i, a, n) => {
+    Ys = (e, t, i, a, n) => {
         let l = 1;
         return (
             n > a && n - a <= 0.5 && (l = 0),
             a > n && a - n >= 0.5 && (l = 0),
-            Hs(e, t, i, Math.min(0.9999, a) * 360, Math.min(0.9999, n) * 360, l)
+            js(e, t, i, Math.min(0.9999, a) * 360, Math.min(0.9999, n) * 360, l)
         );
     },
-    Ys = ({ root: e, props: t }) => {
+    qs = ({ root: e, props: t }) => {
         (t.spin = !1), (t.progress = 0), (t.opacity = 0);
         let i = li("svg");
         (e.ref.path = li("path", { "stroke-width": 2, "stroke-linecap": "round" })),
@@ -2434,24 +2434,24 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
             (e.ref.svg = i),
             e.appendChild(i);
     },
-    qs = ({ root: e, props: t }) => {
+    $s = ({ root: e, props: t }) => {
         if (t.opacity === 0) return;
         t.align && (e.element.dataset.align = t.align);
-        let i = parseInt(ce(e.ref.path, "stroke-width"), 10),
+        let i = parseInt(se(e.ref.path, "stroke-width"), 10),
             a = e.rect.element.width * 0.5,
             n = 0,
             l = 0;
         t.spin ? ((n = 0), (l = 0.5)) : ((n = 0), (l = t.progress));
-        let o = js(a, a, a - i, n, l);
-        ce(e.ref.path, "d", o), ce(e.ref.path, "stroke-opacity", t.spin || t.progress > 0 ? 1 : 0);
+        let o = Ys(a, a, a - i, n, l);
+        se(e.ref.path, "d", o), se(e.ref.path, "stroke-opacity", t.spin || t.progress > 0 ? 1 : 0);
     },
     Ka = ne({
         tag: "div",
         name: "progress-indicator",
         ignoreRectUpdate: !0,
         ignoreRect: !0,
-        create: Ys,
-        write: qs,
+        create: qs,
+        write: $s,
         mixins: {
             apis: ["progress", "spin", "align"],
             styles: ["opacity"],
@@ -2461,14 +2461,14 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
             },
         },
     }),
-    $s = ({ root: e, props: t }) => {
+    Xs = ({ root: e, props: t }) => {
         (e.element.innerHTML = (t.icon || "") + `<span>${t.label}</span>`), (t.isDisabled = !1);
     },
-    Xs = ({ root: e, props: t }) => {
+    Ks = ({ root: e, props: t }) => {
         let { isDisabled: i } = t,
             a = e.query("GET_DISABLED") || t.opacity === 0;
         a && !i
-            ? ((t.isDisabled = !0), ce(e.element, "disabled", "disabled"))
+            ? ((t.isDisabled = !0), se(e.element, "disabled", "disabled"))
             : !a && i && ((t.isDisabled = !1), e.element.removeAttribute("disabled"));
     },
     Cn = ne({
@@ -2489,8 +2489,8 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
             },
             listeners: !0,
         },
-        create: $s,
-        write: Xs,
+        create: Xs,
+        write: Ks,
     }),
     Bn = (e, t = ".", i = 1e3, a = {}) => {
         let {
@@ -2517,10 +2517,10 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
             .split(".")
             .filter((a) => a !== "0")
             .join(i),
-    Ks = ({ root: e, props: t }) => {
+    Qs = ({ root: e, props: t }) => {
         let i = Ve("span");
         (i.className = "filepond--file-info-main"),
-            ce(i, "aria-hidden", "true"),
+            se(i, "aria-hidden", "true"),
             e.appendChild(i),
             (e.ref.fileName = i);
         let a = Ve("span");
@@ -2549,7 +2549,7 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
         }
         ae(e.ref.fileSize, e.query("GET_LABEL_FILE_SIZE_NOT_AVAILABLE"));
     },
-    Qs = ne({
+    Zs = ne({
         name: "file-info",
         ignoreRect: !0,
         ignoreRectUpdate: !0,
@@ -2562,11 +2562,11 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
         didCreateView: (e) => {
             tt("CREATE_VIEW", { ...e, view: e });
         },
-        create: Ks,
+        create: Qs,
         mixins: { styles: ["translateX", "translateY"], animations: { translateX: "spring", translateY: "spring" } },
     }),
     Nn = (e) => Math.round(e * 100),
-    Zs = ({ root: e }) => {
+    Js = ({ root: e }) => {
         let t = Ve("span");
         (t.className = "filepond--file-status-main"), e.appendChild(t), (e.ref.main = t);
         let i = Ve("span");
@@ -2582,20 +2582,20 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
                 : `${e.query("GET_LABEL_FILE_LOADING")} ${Nn(t.progress)}%`;
         ae(e.ref.main, i), ae(e.ref.sub, e.query("GET_LABEL_TAP_TO_CANCEL"));
     },
-    Js = ({ root: e, action: t }) => {
+    ec = ({ root: e, action: t }) => {
         let i =
             t.progress === null
                 ? e.query("GET_LABEL_FILE_PROCESSING")
                 : `${e.query("GET_LABEL_FILE_PROCESSING")} ${Nn(t.progress)}%`;
         ae(e.ref.main, i), ae(e.ref.sub, e.query("GET_LABEL_TAP_TO_CANCEL"));
     },
-    ec = ({ root: e }) => {
+    tc = ({ root: e }) => {
         ae(e.ref.main, e.query("GET_LABEL_FILE_PROCESSING")), ae(e.ref.sub, e.query("GET_LABEL_TAP_TO_CANCEL"));
     },
-    tc = ({ root: e }) => {
+    ic = ({ root: e }) => {
         ae(e.ref.main, e.query("GET_LABEL_FILE_PROCESSING_ABORTED")), ae(e.ref.sub, e.query("GET_LABEL_TAP_TO_RETRY"));
     },
-    ic = ({ root: e }) => {
+    ac = ({ root: e }) => {
         ae(e.ref.main, e.query("GET_LABEL_FILE_PROCESSING_COMPLETE")), ae(e.ref.sub, e.query("GET_LABEL_TAP_TO_UNDO"));
     },
     Ja = ({ root: e }) => {
@@ -2604,17 +2604,17 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
     zt = ({ root: e, action: t }) => {
         ae(e.ref.main, t.status.main), ae(e.ref.sub, t.status.sub);
     },
-    ac = ne({
+    nc = ne({
         name: "file-status",
         ignoreRect: !0,
         ignoreRectUpdate: !0,
         write: fe({
             DID_LOAD_ITEM: Ja,
             DID_REVERT_ITEM_PROCESSING: Ja,
-            DID_REQUEST_ITEM_PROCESSING: ec,
-            DID_ABORT_ITEM_PROCESSING: tc,
-            DID_COMPLETE_ITEM_PROCESSING: ic,
-            DID_UPDATE_ITEM_PROCESS_PROGRESS: Js,
+            DID_REQUEST_ITEM_PROCESSING: tc,
+            DID_ABORT_ITEM_PROCESSING: ic,
+            DID_COMPLETE_ITEM_PROCESSING: ac,
+            DID_UPDATE_ITEM_PROCESS_PROGRESS: ec,
             DID_UPDATE_ITEM_LOAD_PROGRESS: kn,
             DID_THROW_ITEM_LOAD_ERROR: zt,
             DID_THROW_ITEM_INVALID: zt,
@@ -2625,7 +2625,7 @@ var _r = (e) => (e < 0.5 ? 2 * e * e : -1 + (4 - 2 * e) * e),
         didCreateView: (e) => {
             tt("CREATE_VIEW", { ...e, view: e });
         },
-        create: Zs,
+        create: Js,
         mixins: {
             styles: ["translateX", "translateY", "opacity"],
             animations: { opacity: { type: "tween", duration: 250 }, translateX: "spring", translateY: "spring" },
@@ -2689,13 +2689,13 @@ var Ie = (e) => {
         let t = e.ref.buttonRemoveItem.rect.element;
         return t.hidden ? null : t.width + t.left;
     },
-    nc = (e) => e.ref.buttonAbortItemLoad.rect.element.width,
+    lc = (e) => e.ref.buttonAbortItemLoad.rect.element.width,
     ei = (e) => Math.floor(e.ref.buttonRemoveItem.rect.element.height / 4),
-    lc = (e) => Math.floor(e.ref.buttonRemoveItem.rect.element.left / 2),
-    oc = (e) => e.query("GET_STYLE_LOAD_INDICATOR_POSITION"),
-    rc = (e) => e.query("GET_STYLE_PROGRESS_INDICATOR_POSITION"),
+    oc = (e) => Math.floor(e.ref.buttonRemoveItem.rect.element.left / 2),
+    rc = (e) => e.query("GET_STYLE_LOAD_INDICATOR_POSITION"),
+    sc = (e) => e.query("GET_STYLE_PROGRESS_INDICATOR_POSITION"),
     Ni = (e) => e.query("GET_STYLE_BUTTON_REMOVE_ITEM_POSITION"),
-    sc = {
+    cc = {
         buttonAbortItemLoad: { opacity: 0 },
         buttonRetryItemLoad: { opacity: 0 },
         buttonRemoveItem: { opacity: 0 },
@@ -2703,8 +2703,8 @@ var Ie = (e) => {
         buttonAbortItemProcessing: { opacity: 0 },
         buttonRetryItemProcessing: { opacity: 0 },
         buttonRevertItemProcessing: { opacity: 0 },
-        loadProgressIndicator: { opacity: 0, align: oc },
-        processProgressIndicator: { opacity: 0, align: rc },
+        loadProgressIndicator: { opacity: 0, align: rc },
+        processProgressIndicator: { opacity: 0, align: sc },
         processingCompleteIndicator: { opacity: 0, scaleX: 0.75, scaleY: 0.75 },
         info: { translateX: 0, translateY: 0, opacity: 0 },
         status: { translateX: 0, translateY: 0, opacity: 0 },
@@ -2777,7 +2777,7 @@ var Ie = (e) => {
         },
         DID_REVERT_ITEM_PROCESSING: en,
     },
-    cc = ne({
+    dc = ne({
         create: ({ root: e }) => {
             e.element.innerHTML = e.query("GET_ICON_DONE");
         },
@@ -2788,7 +2788,7 @@ var Ie = (e) => {
             animations: { scaleX: "spring", scaleY: "spring", opacity: { type: "tween", duration: 250 } },
         },
     }),
-    dc = ({ root: e, props: t }) => {
+    pc = ({ root: e, props: t }) => {
         let i = Object.keys(Ci).reduce((g, f) => ((g[f] = { ...Ci[f] }), g), {}),
             { id: a } = t,
             n = e.query("GET_ALLOW_REVERT"),
@@ -2814,7 +2814,7 @@ var Ie = (e) => {
             s && !n)
         ) {
             let g = mt.DID_COMPLETE_ITEM_PROCESSING;
-            (g.info.translateX = lc),
+            (g.info.translateX = oc),
                 (g.info.translateY = ei),
                 (g.status.translateY = ei),
                 (g.processingCompleteIndicator = { opacity: 1, scaleX: 1, scaleY: 1 });
@@ -2830,7 +2830,7 @@ var Ie = (e) => {
                 ].forEach((g) => {
                     mt[g].status.translateY = ei;
                 }),
-                (mt.DID_THROW_ITEM_PROCESSING_ERROR.status.translateX = nc)),
+                (mt.DID_THROW_ITEM_PROCESSING_ERROR.status.translateX = lc)),
             p && n)
         ) {
             i.RevertItemProcessing.align = "BUTTON_REMOVE_ITEM_POSITION";
@@ -2852,12 +2852,12 @@ var Ie = (e) => {
                     }),
                     (e.ref[`button${g}`] = h);
             }),
-            (e.ref.processingCompleteIndicator = e.appendChildView(e.createChildView(cc))),
+            (e.ref.processingCompleteIndicator = e.appendChildView(e.createChildView(dc))),
             (e.ref.processingCompleteIndicator.element.dataset.align = e.query(
                 "GET_STYLE_BUTTON_PROCESS_ITEM_POSITION",
             )),
-            (e.ref.info = e.appendChildView(e.createChildView(Qs, { id: a }))),
-            (e.ref.status = e.appendChildView(e.createChildView(ac, { id: a })));
+            (e.ref.info = e.appendChildView(e.createChildView(Zs, { id: a }))),
+            (e.ref.status = e.appendChildView(e.createChildView(nc, { id: a })));
         let m = e.appendChildView(
             e.createChildView(Ka, { opacity: 0, align: e.query("GET_STYLE_LOAD_INDICATOR_POSITION") }),
         );
@@ -2869,8 +2869,8 @@ var Ie = (e) => {
             (e.ref.processProgressIndicator = u),
             (e.ref.activeStyles = []);
     },
-    pc = ({ root: e, actions: t, props: i }) => {
-        mc({ root: e, actions: t, props: i });
+    mc = ({ root: e, actions: t, props: i }) => {
+        uc({ root: e, actions: t, props: i });
         let a = t
             .concat()
             .filter((n) => /^DID_/.test(n.type))
@@ -2879,7 +2879,7 @@ var Ie = (e) => {
         if (a) {
             e.ref.activeStyles = [];
             let n = mt[a.type];
-            te(sc, (l, o) => {
+            te(cc, (l, o) => {
                 let r = e.ref[l];
                 te(o, (s, p) => {
                     let c = n[l] && typeof n[l][s] < "u" ? n[l][s] : p;
@@ -2891,7 +2891,7 @@ var Ie = (e) => {
             n[l] = typeof o == "function" ? o(e) : o;
         });
     },
-    mc = fe({
+    uc = fe({
         DID_SET_LABEL_BUTTON_ABORT_ITEM_PROCESSING: ({ root: e, action: t }) => {
             e.ref.buttonAbortItemProcessing.label = t.value;
         },
@@ -2917,27 +2917,27 @@ var Ie = (e) => {
             (e.ref.processProgressIndicator.spin = !1), (e.ref.processProgressIndicator.progress = t.progress);
         },
     }),
-    uc = ne({
-        create: dc,
-        write: pc,
+    gc = ne({
+        create: pc,
+        write: mc,
         didCreateView: (e) => {
             tt("CREATE_VIEW", { ...e, view: e });
         },
         name: "file",
     }),
-    gc = ({ root: e, props: t }) => {
+    fc = ({ root: e, props: t }) => {
         (e.ref.fileName = Ve("legend")),
             e.appendChild(e.ref.fileName),
-            (e.ref.file = e.appendChildView(e.createChildView(uc, { id: t.id }))),
+            (e.ref.file = e.appendChildView(e.createChildView(gc, { id: t.id }))),
             (e.ref.data = !1);
     },
-    fc = ({ root: e, props: t }) => {
+    hc = ({ root: e, props: t }) => {
         ae(e.ref.fileName, Qi(e.query("GET_ITEM_NAME", t.id)));
     },
-    hc = ne({
-        create: gc,
+    bc = ne({
+        create: fc,
         ignoreRect: !0,
-        write: fe({ DID_LOAD_ITEM: fc }),
+        write: fe({ DID_LOAD_ITEM: hc }),
         didCreateView: (e) => {
             tt("CREATE_VIEW", { ...e, view: e });
         },
@@ -2945,7 +2945,7 @@ var Ie = (e) => {
         name: "file-wrapper",
     }),
     tn = { type: "spring", damping: 0.6, mass: 7 },
-    bc = ({ root: e, props: t }) => {
+    Ec = ({ root: e, props: t }) => {
         [
             { name: "top" },
             {
@@ -2959,17 +2959,17 @@ var Ie = (e) => {
                 mixins: { animations: { translateY: tn }, styles: ["translateY"] },
             },
         ].forEach((i) => {
-            Ec(e, i, t.name);
+            Tc(e, i, t.name);
         }),
             e.element.classList.add(`filepond--${t.name}`),
             (e.ref.scalable = null);
     },
-    Ec = (e, t, i) => {
+    Tc = (e, t, i) => {
         let a = ne({ name: `panel-${t.name} filepond--${i}`, mixins: t.mixins, ignoreRectUpdate: !0 }),
             n = e.createChildView(a, t.props);
         e.ref[t.name] = e.appendChildView(n);
     },
-    Tc = ({ root: e, props: t }) => {
+    Ic = ({ root: e, props: t }) => {
         if (
             ((e.ref.scalable === null || t.scalable !== e.ref.scalable) &&
                 ((e.ref.scalable = In(t.scalable) ? t.scalable : !0), (e.element.dataset.scalable = e.ref.scalable)),
@@ -2986,12 +2986,12 @@ var Ie = (e) => {
     Vn = ne({
         name: "panel",
         read: ({ root: e, props: t }) => (t.heightCurrent = e.ref.bottom.translateY),
-        write: Tc,
-        create: bc,
+        write: Ic,
+        create: Ec,
         ignoreRect: !0,
         mixins: { apis: ["height", "heightCurrent", "scalable"] },
     }),
-    Ic = (e) => {
+    vc = (e) => {
         let t = e.map((a) => a.id),
             i;
         return {
@@ -3021,12 +3021,12 @@ var Ie = (e) => {
         DID_ABORT_ITEM_PROCESSING: "cancelled",
         DID_REVERT_ITEM_PROCESSING: "idle",
     },
-    vc = ({ root: e, props: t }) => {
+    xc = ({ root: e, props: t }) => {
         if (
             ((e.ref.handleClick = (a) => e.dispatch("DID_ACTIVATE_ITEM", { id: t.id })),
             (e.element.id = `filepond--item-${t.id}`),
             e.element.addEventListener("click", e.ref.handleClick),
-            (e.ref.container = e.appendChildView(e.createChildView(hc, { id: t.id }))),
+            (e.ref.container = e.appendChildView(e.createChildView(bc, { id: t.id }))),
             (e.ref.panel = e.appendChildView(e.createChildView(Vn, { name: "item-panel" }))),
             (e.ref.panel.height = null),
             (t.markedForRemoval = !1),
@@ -3039,7 +3039,7 @@ var Ie = (e) => {
             let n = !1,
                 l = { x: a.pageX, y: a.pageY };
             (t.dragOrigin = { x: e.translateX, y: e.translateY }), (t.dragCenter = { x: a.offsetX, y: a.offsetY });
-            let o = Ic(e.query("GET_ACTIVE_ITEMS"));
+            let o = vc(e.query("GET_ACTIVE_ITEMS"));
             e.dispatch("DID_GRAB_ITEM", { id: t.id, dragState: o });
             let r = (d) => {
                     if (!d.isPrimary) return;
@@ -3070,12 +3070,12 @@ var Ie = (e) => {
         };
         e.element.addEventListener("pointerdown", i);
     },
-    xc = fe({
+    yc = fe({
         DID_UPDATE_PANEL_HEIGHT: ({ root: e, action: t }) => {
             e.height = t.height;
         },
     }),
-    yc = fe(
+    Rc = fe(
         {
             DID_GRAB_ITEM: ({ root: e, props: t }) => {
                 t.dragOrigin = { x: e.translateX, y: e.translateY };
@@ -3100,7 +3100,7 @@ var Ie = (e) => {
             let l = e.query("GET_ITEM_PANEL_ASPECT_RATIO") || e.query("GET_PANEL_ASPECT_RATIO");
             l
                 ? a || (e.height = e.rect.element.width * l)
-                : (xc({ root: e, actions: t, props: i }),
+                : (yc({ root: e, actions: t, props: i }),
                   !e.height &&
                       e.ref.container.rect.element.height > 0 &&
                       (e.height = e.ref.container.rect.element.height)),
@@ -3108,9 +3108,9 @@ var Ie = (e) => {
                 (e.ref.panel.height = e.height);
         },
     ),
-    Rc = ne({
-        create: vc,
-        write: yc,
+    Sc = ne({
+        create: xc,
+        write: Rc,
         destroy: ({ root: e, props: t }) => {
             e.element.removeEventListener("click", e.ref.handleClick), e.dispatch("RELEASE_ITEM", { query: t.id });
         },
@@ -3191,10 +3191,10 @@ var Ie = (e) => {
             (this.height === 0 || e === 0) && (this.height = e), (this.width === 0 || t === 0) && (this.width = t);
         },
     },
-    Sc = ({ root: e }) => {
-        ce(e.element, "role", "list"), (e.ref.lastItemSpanwDate = Date.now());
+    _c = ({ root: e }) => {
+        se(e.element, "role", "list"), (e.ref.lastItemSpanwDate = Date.now());
     },
-    _c = ({ root: e, action: t }) => {
+    wc = ({ root: e, action: t }) => {
         let { id: i, index: a, interactionMethod: n } = t;
         e.ref.addIndex = a;
         let l = Date.now(),
@@ -3207,7 +3207,7 @@ var Ie = (e) => {
             o = p < s ? l + (s - p) : l;
         }
         (e.ref.lastItemSpanwDate = o),
-            e.appendChildView(e.createChildView(Rc, { spawnDate: o, id: i, opacity: r, interactionMethod: n }), a);
+            e.appendChildView(e.createChildView(Sc, { spawnDate: o, id: i, opacity: r, interactionMethod: n }), a);
     },
     on = (e, t, i, a = 0, n = 1) => {
         e.dragOffset
@@ -3220,9 +3220,9 @@ var Ie = (e) => {
             : ((e.translateX = t),
               (e.translateY = i),
               Date.now() > e.spawnDate &&
-                  (e.opacity === 0 && wc(e, t, i, a, n), (e.scaleX = 1), (e.scaleY = 1), (e.opacity = 1)));
+                  (e.opacity === 0 && Lc(e, t, i, a, n), (e.scaleX = 1), (e.scaleY = 1), (e.opacity = 1)));
     },
-    wc = (e, t, i, a, n) => {
+    Lc = (e, t, i, a, n) => {
         e.interactionMethod === Re.NONE
             ? ((e.translateX = null), (e.translateX = t), (e.translateY = null), (e.translateY = i))
             : e.interactionMethod === Re.DROP
@@ -3237,14 +3237,14 @@ var Ie = (e) => {
                 : e.interactionMethod === Re.API &&
                   ((e.translateX = null), (e.translateX = t - 30), (e.translateY = null));
     },
-    Lc = ({ root: e, action: t }) => {
+    Mc = ({ root: e, action: t }) => {
         let { id: i } = t,
             a = e.childViews.find((n) => n.id === i);
         a && ((a.scaleX = 0.9), (a.scaleY = 0.9), (a.opacity = 0), (a.markedForRemoval = !0));
     },
     Pi = (e) => e.rect.element.height + e.rect.element.marginBottom * 0.5 + e.rect.element.marginTop * 0.5,
-    Mc = (e) => e.rect.element.width + e.rect.element.marginLeft * 0.5 + e.rect.element.marginRight * 0.5,
-    Ac = ({ root: e, action: t }) => {
+    Ac = (e) => e.rect.element.width + e.rect.element.marginLeft * 0.5 + e.rect.element.marginRight * 0.5,
+    Pc = ({ root: e, action: t }) => {
         let { id: i, dragState: a } = t,
             n = e.query("GET_ITEM", { id: i }),
             l = e.childViews.find((h) => h.id === i),
@@ -3256,7 +3256,7 @@ var Ie = (e) => {
                 y: l.dragOrigin.y + l.dragOffset.y + l.dragCenter.y,
             },
             p = Pi(l),
-            c = Mc(l),
+            c = Ac(l),
             d = Math.floor(e.rect.outer.width / c);
         d > o && (d = o);
         let m = Math.floor(o / d + 1);
@@ -3301,9 +3301,9 @@ var Ie = (e) => {
             e.dispatch("DID_REORDER_ITEMS", { items: e.query("GET_ACTIVE_ITEMS"), origin: r, target: g });
         }
     },
-    Pc = fe({ DID_ADD_ITEM: _c, DID_REMOVE_ITEM: Lc, DID_DRAG_ITEM: Ac }),
-    zc = ({ root: e, props: t, actions: i, shouldOptimize: a }) => {
-        Pc({ root: e, props: t, actions: i });
+    zc = fe({ DID_ADD_ITEM: wc, DID_REMOVE_ITEM: Mc, DID_DRAG_ITEM: Pc }),
+    Oc = ({ root: e, props: t, actions: i, shouldOptimize: a }) => {
+        zc({ root: e, props: t, actions: i });
         let { dragCoordinates: n } = t,
             l = e.rect.element.width,
             o = e.childViews.filter((T) => T.rect.element.height),
@@ -3362,10 +3362,10 @@ var Ie = (e) => {
             });
         }
     },
-    Oc = (e, t) => t.filter((i) => (i.data && i.data.id ? e.id === i.data.id : !0)),
-    Fc = ne({
-        create: Sc,
-        write: zc,
+    Fc = (e, t) => t.filter((i) => (i.data && i.data.id ? e.id === i.data.id : !0)),
+    Dc = ne({
+        create: _c,
+        write: Oc,
         tag: "ul",
         name: "list",
         didWriteView: ({ root: e }) => {
@@ -3375,26 +3375,26 @@ var Ie = (e) => {
                     t._destroy(), e.removeChildView(t);
                 });
         },
-        filterFrameActionsForChild: Oc,
+        filterFrameActionsForChild: Fc,
         mixins: { apis: ["dragCoordinates"] },
     }),
-    Dc = ({ root: e, props: t }) => {
-        (e.ref.list = e.appendChildView(e.createChildView(Fc))), (t.dragCoordinates = null), (t.overflowing = !1);
+    Cc = ({ root: e, props: t }) => {
+        (e.ref.list = e.appendChildView(e.createChildView(Dc))), (t.dragCoordinates = null), (t.overflowing = !1);
     },
-    Cc = ({ root: e, props: t, action: i }) => {
+    Bc = ({ root: e, props: t, action: i }) => {
         e.query("GET_ITEM_INSERT_LOCATION_FREEDOM") &&
             (t.dragCoordinates = {
                 left: i.position.scopeLeft - e.ref.list.rect.element.left,
                 top: i.position.scopeTop - (e.rect.outer.top + e.rect.element.marginTop + e.rect.element.scrollTop),
             });
     },
-    Bc = ({ props: e }) => {
+    Nc = ({ props: e }) => {
         e.dragCoordinates = null;
     },
-    Nc = fe({ DID_DRAG: Cc, DID_END_DRAG: Bc }),
-    kc = ({ root: e, props: t, actions: i }) => {
+    kc = fe({ DID_DRAG: Bc, DID_END_DRAG: Nc }),
+    Vc = ({ root: e, props: t, actions: i }) => {
         if (
-            (Nc({ root: e, props: t, actions: i }),
+            (kc({ root: e, props: t, actions: i }),
             (e.ref.list.dragCoordinates = t.dragCoordinates),
             t.overflowing && !t.overflow && ((t.overflowing = !1), (e.element.dataset.state = ""), (e.height = null)),
             t.overflow)
@@ -3403,9 +3403,9 @@ var Ie = (e) => {
             a !== e.height && ((t.overflowing = !0), (e.element.dataset.state = "overflow"), (e.height = a));
         }
     },
-    Vc = ne({
-        create: Dc,
-        write: kc,
+    Gc = ne({
+        create: Cc,
+        write: Vc,
         name: "list-scroller",
         mixins: {
             apis: ["overflow", "dragCoordinates"],
@@ -3414,9 +3414,9 @@ var Ie = (e) => {
         },
     }),
     ze = (e, t, i, a = "") => {
-        i ? ce(e, t, a) : e.removeAttribute(t);
+        i ? se(e, t, a) : e.removeAttribute(t);
     },
-    Gc = (e) => {
+    Uc = (e) => {
         if (!(!e || e.value === "")) {
             try {
                 e.value = "";
@@ -3429,11 +3429,11 @@ var Ie = (e) => {
             }
         }
     },
-    Uc = ({ root: e, props: t }) => {
+    Wc = ({ root: e, props: t }) => {
         (e.element.id = `filepond--browser-${t.id}`),
-            ce(e.element, "name", e.query("GET_NAME")),
-            ce(e.element, "aria-controls", `filepond--assistant-${t.id}`),
-            ce(e.element, "aria-labelledby", `filepond--drop-label-${t.id}`),
+            se(e.element, "name", e.query("GET_NAME")),
+            se(e.element, "aria-controls", `filepond--assistant-${t.id}`),
+            se(e.element, "aria-labelledby", `filepond--drop-label-${t.id}`),
             Gn({ root: e, action: { value: e.query("GET_ACCEPTED_FILE_TYPES") } }),
             Un({ root: e, action: { value: e.query("GET_ALLOW_MULTIPLE") } }),
             Wn({ root: e, action: { value: e.query("GET_ALLOW_DIRECTORIES_ONLY") } }),
@@ -3444,7 +3444,7 @@ var Ie = (e) => {
                 if (!e.element.value) return;
                 let a = Array.from(e.element.files).map((n) => ((n._relativePath = n.webkitRelativePath), n));
                 setTimeout(() => {
-                    t.onload(a), Gc(e.element);
+                    t.onload(a), Uc(e.element);
                 }, 250);
             }),
             e.element.addEventListener("change", e.ref.handleChange);
@@ -3484,23 +3484,23 @@ var Ie = (e) => {
                 e.query("GET_CHECK_VALIDITY") && t.setCustomValidity(""),
                 e.query("GET_REQUIRED") && ze(t, "required", !0);
     },
-    Wc = ({ root: e }) => {
+    Hc = ({ root: e }) => {
         e.query("GET_CHECK_VALIDITY") && e.element.setCustomValidity(e.query("GET_LABEL_INVALID_FIELD"));
     },
-    Hc = ne({
+    jc = ne({
         tag: "input",
         name: "browser",
         ignoreRect: !0,
         ignoreRectUpdate: !0,
         attributes: { type: "file" },
-        create: Uc,
+        create: Wc,
         destroy: ({ root: e }) => {
             e.element.removeEventListener("change", e.ref.handleChange);
         },
         write: fe({
             DID_LOAD_ITEM: rn,
             DID_REMOVE_ITEM: rn,
-            DID_THROW_ITEM_INVALID: Wc,
+            DID_THROW_ITEM_INVALID: Hc,
             DID_SET_DISABLED: ki,
             DID_SET_ALLOW_BROWSE: ki,
             DID_SET_ALLOW_DIRECTORIES_ONLY: Wn,
@@ -3511,10 +3511,10 @@ var Ie = (e) => {
         }),
     }),
     sn = { ENTER: 13, SPACE: 32 },
-    jc = ({ root: e, props: t }) => {
+    Yc = ({ root: e, props: t }) => {
         let i = Ve("label");
-        ce(i, "for", `filepond--browser-${t.id}`),
-            ce(i, "id", `filepond--drop-label-${t.id}`),
+        se(i, "for", `filepond--browser-${t.id}`),
+            se(i, "id", `filepond--drop-label-${t.id}`),
             (e.ref.handleKeyDown = (a) => {
                 (a.keyCode === sn.ENTER || a.keyCode === sn.SPACE) && (a.preventDefault(), e.ref.label.click());
             }),
@@ -3530,12 +3530,12 @@ var Ie = (e) => {
     Yn = (e, t) => {
         e.innerHTML = t;
         let i = e.querySelector(".filepond--label-action");
-        return i && ce(i, "tabindex", "0"), t;
+        return i && se(i, "tabindex", "0"), t;
     },
-    Yc = ne({
+    qc = ne({
         name: "drop-label",
         ignoreRect: !0,
-        create: jc,
+        create: Yc,
         destroy: ({ root: e }) => {
             e.ref.label.addEventListener("keydown", e.ref.handleKeyDown),
                 e.element.removeEventListener("click", e.ref.handleClick);
@@ -3550,7 +3550,7 @@ var Ie = (e) => {
             animations: { opacity: { type: "tween", duration: 150 }, translateX: "spring", translateY: "spring" },
         },
     }),
-    qc = ne({
+    $c = ne({
         name: "drip-blob",
         ignoreRect: !0,
         mixins: {
@@ -3564,16 +3564,16 @@ var Ie = (e) => {
             },
         },
     }),
-    $c = ({ root: e }) => {
+    Xc = ({ root: e }) => {
         let t = e.rect.element.width * 0.5,
             i = e.rect.element.height * 0.5;
         e.ref.blob = e.appendChildView(
-            e.createChildView(qc, { opacity: 0, scaleX: 2.5, scaleY: 2.5, translateX: t, translateY: i }),
+            e.createChildView($c, { opacity: 0, scaleX: 2.5, scaleY: 2.5, translateX: t, translateY: i }),
         );
     },
-    Xc = ({ root: e, action: t }) => {
+    Kc = ({ root: e, action: t }) => {
         if (!e.ref.blob) {
-            $c({ root: e });
+            Xc({ root: e });
             return;
         }
         (e.ref.blob.translateX = t.position.scopeLeft),
@@ -3582,19 +3582,19 @@ var Ie = (e) => {
             (e.ref.blob.scaleY = 1),
             (e.ref.blob.opacity = 1);
     },
-    Kc = ({ root: e }) => {
+    Qc = ({ root: e }) => {
         e.ref.blob && (e.ref.blob.opacity = 0);
     },
-    Qc = ({ root: e }) => {
+    Zc = ({ root: e }) => {
         e.ref.blob && ((e.ref.blob.scaleX = 2.5), (e.ref.blob.scaleY = 2.5), (e.ref.blob.opacity = 0));
     },
-    Zc = ({ root: e, props: t, actions: i }) => {
-        Jc({ root: e, props: t, actions: i });
+    Jc = ({ root: e, props: t, actions: i }) => {
+        ed({ root: e, props: t, actions: i });
         let { blob: a } = e.ref;
         i.length === 0 && a && a.opacity === 0 && (e.removeChildView(a), (e.ref.blob = null));
     },
-    Jc = fe({ DID_DRAG: Xc, DID_DROP: Qc, DID_END_DRAG: Kc }),
-    ed = ne({ ignoreRect: !0, ignoreRectUpdate: !0, name: "drip", write: Zc }),
+    ed = fe({ DID_DRAG: Kc, DID_DROP: Zc, DID_END_DRAG: Qc }),
+    td = ne({ ignoreRect: !0, ignoreRectUpdate: !0, name: "drip", write: Jc }),
     qn = (e, t) => {
         try {
             let i = new DataTransfer();
@@ -3607,7 +3607,7 @@ var Ie = (e) => {
         }
         return !0;
     },
-    td = ({ root: e }) => {
+    id = ({ root: e }) => {
         e.ref.fields = {};
         let t = document.createElement("legend");
         (t.textContent = "Files"), e.element.appendChild(t);
@@ -3619,12 +3619,12 @@ var Ie = (e) => {
         });
     },
     cn = ({ root: e }) => ea(e),
-    id = ({ root: e, action: t }) => {
-        let n = !(e.query("GET_ITEM", t.id).origin === se.LOCAL) && e.query("SHOULD_UPDATE_FILE_INPUT"),
+    ad = ({ root: e, action: t }) => {
+        let n = !(e.query("GET_ITEM", t.id).origin === re.LOCAL) && e.query("SHOULD_UPDATE_FILE_INPUT"),
             l = Ve("input");
         (l.type = n ? "file" : "hidden"), (l.name = e.query("GET_NAME")), (e.ref.fields[t.id] = l), ea(e);
     },
-    ad = ({ root: e, action: t }) => {
+    nd = ({ root: e, action: t }) => {
         let i = gi(e, t.id);
         if (
             !i ||
@@ -3634,57 +3634,57 @@ var Ie = (e) => {
         let a = e.query("GET_ITEM", t.id);
         qn(i, [a.file]);
     },
-    nd = ({ root: e, action: t }) => {
+    ld = ({ root: e, action: t }) => {
         e.query("SHOULD_UPDATE_FILE_INPUT") &&
             setTimeout(() => {
                 let i = gi(e, t.id);
                 i && qn(i, [t.file]);
             }, 0);
     },
-    ld = ({ root: e }) => {
+    od = ({ root: e }) => {
         e.element.disabled = e.query("GET_DISABLED");
-    },
-    od = ({ root: e, action: t }) => {
-        let i = gi(e, t.id);
-        i && (i.parentNode && i.parentNode.removeChild(i), delete e.ref.fields[t.id]);
     },
     rd = ({ root: e, action: t }) => {
         let i = gi(e, t.id);
+        i && (i.parentNode && i.parentNode.removeChild(i), delete e.ref.fields[t.id]);
+    },
+    sd = ({ root: e, action: t }) => {
+        let i = gi(e, t.id);
         i && (t.value === null ? i.removeAttribute("value") : i.type != "file" && (i.value = t.value), ea(e));
     },
-    sd = fe({
-        DID_SET_DISABLED: ld,
-        DID_ADD_ITEM: id,
-        DID_LOAD_ITEM: ad,
-        DID_REMOVE_ITEM: od,
-        DID_DEFINE_VALUE: rd,
-        DID_PREPARE_OUTPUT: nd,
+    cd = fe({
+        DID_SET_DISABLED: od,
+        DID_ADD_ITEM: ad,
+        DID_LOAD_ITEM: nd,
+        DID_REMOVE_ITEM: rd,
+        DID_DEFINE_VALUE: sd,
+        DID_PREPARE_OUTPUT: ld,
         DID_REORDER_ITEMS: cn,
         DID_SORT_ITEMS: cn,
     }),
-    cd = ne({ tag: "fieldset", name: "data", create: td, write: sd, ignoreRect: !0 }),
-    dd = (e) => ("getRootNode" in e ? e.getRootNode() : document),
-    pd = ["jpg", "jpeg", "png", "gif", "bmp", "webp", "svg", "tiff"],
-    md = ["css", "csv", "html", "txt"],
-    ud = { zip: "zip|compressed", epub: "application/epub+zip" },
+    dd = ne({ tag: "fieldset", name: "data", create: id, write: cd, ignoreRect: !0 }),
+    pd = (e) => ("getRootNode" in e ? e.getRootNode() : document),
+    md = ["jpg", "jpeg", "png", "gif", "bmp", "webp", "svg", "tiff"],
+    ud = ["css", "csv", "html", "txt"],
+    gd = { zip: "zip|compressed", epub: "application/epub+zip" },
     $n = (e = "") => (
         (e = e.toLowerCase()),
-        pd.includes(e)
+        md.includes(e)
             ? "image/" + (e === "jpg" ? "jpeg" : e === "svg" ? "svg+xml" : e)
-            : md.includes(e)
+            : ud.includes(e)
               ? "text/" + e
-              : ud[e] || ""
+              : gd[e] || ""
     ),
     ta = (e) =>
         new Promise((t, i) => {
-            let a = vd(e);
-            if (a.length && !gd(e)) return t(a);
-            fd(e).then(t);
+            let a = xd(e);
+            if (a.length && !fd(e)) return t(a);
+            hd(e).then(t);
         }),
-    gd = (e) => (e.files ? e.files.length > 0 : !1),
-    fd = (e) =>
+    fd = (e) => (e.files ? e.files.length > 0 : !1),
+    hd = (e) =>
         new Promise((t, i) => {
-            let a = (e.items ? Array.from(e.items) : []).filter((n) => hd(n)).map((n) => bd(n));
+            let a = (e.items ? Array.from(e.items) : []).filter((n) => bd(n)).map((n) => Ed(n));
             if (!a.length) {
                 t(e.files ? Array.from(e.files) : []);
                 return;
@@ -3703,22 +3703,22 @@ var Ie = (e) => {
                 })
                 .catch(console.error);
         }),
-    hd = (e) => {
+    bd = (e) => {
         if (Xn(e)) {
             let t = ia(e);
             if (t) return t.isFile || t.isDirectory;
         }
         return e.kind === "file";
     },
-    bd = (e) =>
+    Ed = (e) =>
         new Promise((t, i) => {
-            if (Id(e)) {
-                Ed(ia(e)).then(t).catch(i);
+            if (vd(e)) {
+                Td(ia(e)).then(t).catch(i);
                 return;
             }
             t([e.getAsFile()]);
         }),
-    Ed = (e) =>
+    Td = (e) =>
         new Promise((t, i) => {
             let a = [],
                 n = 0,
@@ -3740,7 +3740,7 @@ var Ie = (e) => {
                                         ? r(m)
                                         : (l++,
                                           m.file((u) => {
-                                              let g = Td(u);
+                                              let g = Id(u);
                                               m.fullPath && (g._relativePath = m.fullPath), a.push(g), l--, o();
                                           }));
                                 }),
@@ -3751,29 +3751,29 @@ var Ie = (e) => {
                 };
             r(e);
         }),
-    Td = (e) => {
+    Id = (e) => {
         if (e.type.length) return e;
         let t = e.lastModifiedDate,
             i = e.name,
             a = $n(ui(e.name));
         return a.length && ((e = e.slice(0, e.size, a)), (e.name = i), (e.lastModifiedDate = t)), e;
     },
-    Id = (e) => Xn(e) && (ia(e) || {}).isDirectory,
+    vd = (e) => Xn(e) && (ia(e) || {}).isDirectory,
     Xn = (e) => "webkitGetAsEntry" in e,
     ia = (e) => e.webkitGetAsEntry(),
-    vd = (e) => {
+    xd = (e) => {
         let t = [];
         try {
-            if (((t = yd(e)), t.length)) return t;
-            t = xd(e);
+            if (((t = Rd(e)), t.length)) return t;
+            t = yd(e);
         } catch {}
         return t;
     },
-    xd = (e) => {
+    yd = (e) => {
         let t = e.getData("url");
         return typeof t == "string" && t.length ? [t] : [];
     },
-    yd = (e) => {
+    Rd = (e) => {
         let t = e.getData("text/html");
         if (typeof t == "string" && t.length) {
             let i = t.match(/src\s*=\s*"(.+?)"/);
@@ -3788,8 +3788,8 @@ var Ie = (e) => {
         scopeLeft: e.offsetX || e.layerX,
         scopeTop: e.offsetY || e.layerY,
     }),
-    Rd = (e, t, i) => {
-        let a = Sd(t),
+    Sd = (e, t, i) => {
+        let a = _d(t),
             n = {
                 element: e,
                 filterElement: i,
@@ -3803,15 +3803,15 @@ var Ie = (e) => {
             };
         return (n.destroy = a.addListener(n)), n;
     },
-    Sd = (e) => {
+    _d = (e) => {
         let t = ri.find((a) => a.element === e);
         if (t) return t;
-        let i = _d(e);
+        let i = wd(e);
         return ri.push(i), i;
     },
-    _d = (e) => {
+    wd = (e) => {
         let t = [],
-            i = { dragenter: Ld, dragover: Md, dragleave: Pd, drop: Ad },
+            i = { dragenter: Md, dragover: Ad, dragleave: zd, drop: Pd },
             a = {};
         te(i, (l, o) => {
             (a[l] = o(e, t)), e.addEventListener(l, a[l], !1);
@@ -3832,10 +3832,10 @@ var Ie = (e) => {
         };
         return n;
     },
-    wd = (e, t) => ("elementFromPoint" in e || (e = document), e.elementFromPoint(t.x, t.y)),
+    Ld = (e, t) => ("elementFromPoint" in e || (e = document), e.elementFromPoint(t.x, t.y)),
     aa = (e, t) => {
-        let i = dd(t),
-            a = wd(i, { x: e.pageX - window.pageXOffset, y: e.pageY - window.pageYOffset });
+        let i = pd(t),
+            a = Ld(i, { x: e.pageX - window.pageXOffset, y: e.pageY - window.pageYOffset });
         return a === t || t.contains(a);
     },
     Kn = null,
@@ -3844,7 +3844,7 @@ var Ie = (e) => {
             e.dropEffect = t;
         } catch {}
     },
-    Ld = (e, t) => (i) => {
+    Md = (e, t) => (i) => {
         i.preventDefault(),
             (Kn = i.target),
             t.forEach((a) => {
@@ -3852,7 +3852,7 @@ var Ie = (e) => {
                 aa(i, n) && ((a.state = "enter"), l(et(i)));
             });
     },
-    Md = (e, t) => (i) => {
+    Ad = (e, t) => (i) => {
         i.preventDefault();
         let a = i.dataTransfer;
         ta(a).then((n) => {
@@ -3879,7 +3879,7 @@ var Ie = (e) => {
             });
         });
     },
-    Ad = (e, t) => (i) => {
+    Pd = (e, t) => (i) => {
         i.preventDefault();
         let a = i.dataTransfer;
         ta(a).then((n) => {
@@ -3892,17 +3892,17 @@ var Ie = (e) => {
             });
         });
     },
-    Pd = (e, t) => (i) => {
+    zd = (e, t) => (i) => {
         Kn === i.target &&
             t.forEach((a) => {
                 let { onexit: n } = a;
                 (a.state = null), n(et(i));
             });
     },
-    zd = (e, t, i) => {
+    Od = (e, t, i) => {
         e.classList.add("filepond--hopper");
         let { catchesDropsOnPage: a, requiresDropOnElement: n, filterItems: l = (c) => c } = i,
-            o = Rd(e, a ? document.documentElement : e, n),
+            o = Sd(e, a ? document.documentElement : e, n),
             r = "",
             s = "";
         (o.allowdrop = (c) => t(l(c))),
@@ -3941,7 +3941,12 @@ var Ie = (e) => {
     ut = [],
     Qn = (e) => {
         let t = document.activeElement;
-        if (t && (/textarea|input/i.test(t.nodeName) || t.getAttribute("contenteditable") === "true")) {
+        if (
+            t &&
+            (/textarea|input/i.test(t.nodeName) ||
+                t.getAttribute("contenteditable") === "true" ||
+                t.getAttribute("contenteditable") === "")
+        ) {
             let a = !1,
                 n = t;
             for (; n !== document.body; ) {
@@ -3957,29 +3962,29 @@ var Ie = (e) => {
             a.length && ut.forEach((n) => n(a));
         });
     },
-    Od = (e) => {
+    Fd = (e) => {
         ut.includes(e) || (ut.push(e), !Vi && ((Vi = !0), document.addEventListener("paste", Qn)));
     },
-    Fd = (e) => {
+    Dd = (e) => {
         $i(ut, ut.indexOf(e)), ut.length === 0 && (document.removeEventListener("paste", Qn), (Vi = !1));
     },
-    Dd = () => {
+    Cd = () => {
         let e = (i) => {
                 t.onload(i);
             },
             t = {
                 destroy: () => {
-                    Fd(e);
+                    Dd(e);
                 },
                 onload: () => {},
             };
-        return Od(e), t;
+        return Fd(e), t;
     },
-    Cd = ({ root: e, props: t }) => {
+    Bd = ({ root: e, props: t }) => {
         (e.element.id = `filepond--assistant-${t.id}`),
-            ce(e.element, "role", "alert"),
-            ce(e.element, "aria-live", "polite"),
-            ce(e.element, "aria-relevant", "additions");
+            se(e.element, "role", "alert"),
+            se(e.element, "aria-live", "polite"),
+            se(e.element, "aria-relevant", "additions");
     },
     dn = null,
     pn = null,
@@ -3987,7 +3992,7 @@ var Ie = (e) => {
     fi = (e, t) => {
         e.element.textContent = t;
     },
-    Bd = (e) => {
+    Nd = (e) => {
         e.element.textContent = "";
     },
     Zn = (e, t, i) => {
@@ -3998,11 +4003,11 @@ var Ie = (e) => {
         ),
             clearTimeout(pn),
             (pn = setTimeout(() => {
-                Bd(e);
+                Nd(e);
             }, 1500));
     },
     Jn = (e) => e.element.parentNode.contains(document.activeElement),
-    Nd = ({ root: e, action: t }) => {
+    kd = ({ root: e, action: t }) => {
         if (!Jn(e)) return;
         e.element.textContent = "";
         let i = e.query("GET_ITEM", t.id);
@@ -4012,12 +4017,12 @@ var Ie = (e) => {
                 Zn(e, zi.join(", "), e.query("GET_LABEL_FILE_ADDED")), (zi.length = 0);
             }, 750));
     },
-    kd = ({ root: e, action: t }) => {
+    Vd = ({ root: e, action: t }) => {
         if (!Jn(e)) return;
         let i = t.item;
         Zn(e, i.filename, e.query("GET_LABEL_FILE_REMOVED"));
     },
-    Vd = ({ root: e, action: t }) => {
+    Gd = ({ root: e, action: t }) => {
         let a = e.query("GET_ITEM", t.id).filename,
             n = e.query("GET_LABEL_FILE_PROCESSING_COMPLETE");
         fi(e, `${a} ${n}`);
@@ -4031,14 +4036,14 @@ var Ie = (e) => {
         let a = e.query("GET_ITEM", t.id).filename;
         fi(e, `${t.status.main} ${a} ${t.status.sub}`);
     },
-    Gd = ne({
-        create: Cd,
+    Ud = ne({
+        create: Bd,
         ignoreRect: !0,
         ignoreRectUpdate: !0,
         write: fe({
-            DID_LOAD_ITEM: Nd,
-            DID_REMOVE_ITEM: kd,
-            DID_COMPLETE_ITEM_PROCESSING: Vd,
+            DID_LOAD_ITEM: kd,
+            DID_REMOVE_ITEM: Vd,
+            DID_COMPLETE_ITEM_PROCESSING: Gd,
             DID_ABORT_ITEM_PROCESSING: mn,
             DID_REVERT_ITEM_PROCESSING: mn,
             DID_THROW_ITEM_REMOVE_ERROR: ai,
@@ -4062,9 +4067,9 @@ var Ie = (e) => {
             o < t ? i || (n = setTimeout(r, t - o)) : r();
         };
     },
-    Ud = 1e6,
+    Wd = 1e6,
     si = (e) => e.preventDefault(),
-    Wd = ({ root: e, props: t }) => {
+    Hd = ({ root: e, props: t }) => {
         let i = e.query("GET_ID");
         i && (e.element.id = i);
         let a = e.query("GET_CLASS_NAME");
@@ -4076,12 +4081,12 @@ var Ie = (e) => {
                     e.element.classList.add(s);
                 }),
             (e.ref.label = e.appendChildView(
-                e.createChildView(Yc, { ...t, translateY: null, caption: e.query("GET_LABEL_IDLE") }),
+                e.createChildView(qc, { ...t, translateY: null, caption: e.query("GET_LABEL_IDLE") }),
             )),
-            (e.ref.list = e.appendChildView(e.createChildView(Vc, { translateY: null }))),
+            (e.ref.list = e.appendChildView(e.createChildView(Gc, { translateY: null }))),
             (e.ref.panel = e.appendChildView(e.createChildView(Vn, { name: "panel-root" }))),
-            (e.ref.assistant = e.appendChildView(e.createChildView(Gd, { ...t }))),
-            (e.ref.data = e.appendChildView(e.createChildView(cd, { ...t }))),
+            (e.ref.assistant = e.appendChildView(e.createChildView(Ud, { ...t }))),
+            (e.ref.data = e.appendChildView(e.createChildView(dd, { ...t }))),
             (e.ref.measure = Ve("div")),
             (e.ref.measure.style.height = "100%"),
             e.element.appendChild(e.ref.measure),
@@ -4118,9 +4123,9 @@ var Ie = (e) => {
                 (e.ref.credits = s);
         }
     },
-    Hd = ({ root: e, props: t, actions: i }) => {
+    jd = ({ root: e, props: t, actions: i }) => {
         if (
-            (Xd({ root: e, props: t, actions: i }),
+            (Kd({ root: e, props: t, actions: i }),
             i
                 .filter((E) => /^DID_SET_STYLE_/.test(E.type))
                 .filter((E) => !ke(E.data.value))
@@ -4134,13 +4139,13 @@ var Ie = (e) => {
         e.rect.element.width !== e.ref.widthPrevious &&
             ((e.ref.widthPrevious = e.rect.element.width), e.ref.widthUpdated());
         let a = e.ref.bounds;
-        a || ((a = e.ref.bounds = qd(e)), e.element.removeChild(e.ref.measure), (e.ref.measure = null));
+        a || ((a = e.ref.bounds = $d(e)), e.element.removeChild(e.ref.measure), (e.ref.measure = null));
         let { hopper: n, label: l, list: o, panel: r } = e.ref;
         n && n.updateHopperState();
         let s = e.query("GET_PANEL_ASPECT_RATIO"),
             p = e.query("GET_ALLOW_MULTIPLE"),
             c = e.query("GET_TOTAL_ITEMS"),
-            d = p ? e.query("GET_MAX_FILES") || Ud : 1,
+            d = p ? e.query("GET_MAX_FILES") || Wd : 1,
             m = c === d,
             u = i.find((E) => E.type === "DID_ADD_ITEM");
         if (m && u) {
@@ -4154,8 +4159,8 @@ var Ie = (e) => {
                         ? (l.translateY = 40)
                         : (l.translateY = 30);
         } else m || ((l.opacity = 1), (l.translateX = 0), (l.translateY = 0));
-        let g = jd(e),
-            f = Yd(e),
+        let g = Yd(e),
+            f = qd(e),
             h = l.rect.element.height,
             I = !p || m ? 0 : h,
             b = m ? o.rect.element.marginTop : 0,
@@ -4195,11 +4200,11 @@ var Ie = (e) => {
         }
         e.ref.credits && r.heightCurrent && (e.ref.credits.style.transform = `translateY(${r.heightCurrent}px)`);
     },
-    jd = (e) => {
+    Yd = (e) => {
         let t = e.ref.list.childViews[0].childViews[0];
         return t ? { top: t.rect.element.marginTop, bottom: t.rect.element.marginBottom } : { top: 0, bottom: 0 };
     },
-    Yd = (e) => {
+    qd = (e) => {
         let t = 0,
             i = 0,
             a = e.ref.list,
@@ -4231,7 +4236,7 @@ var Ie = (e) => {
             { visual: t, bounds: i }
         );
     },
-    qd = (e) => {
+    $d = (e) => {
         let t = e.ref.measureHeight || null;
         return { cappedHeight: parseInt(e.style.maxHeight, 10) || null, fixedHeight: t === 0 ? null : t };
     },
@@ -4250,7 +4255,7 @@ var Ie = (e) => {
                     ? (e.dispatch("DID_THROW_MAX_FILES", { source: t, error: ie("warning", 0, "Max files") }), !0)
                     : !1);
     },
-    $d = (e, t, i) => {
+    Xd = (e, t, i) => {
         let a = e.childViews[0];
         return Ji(a, t, {
             left: i.scopeLeft - a.rect.element.left,
@@ -4262,7 +4267,7 @@ var Ie = (e) => {
             i = e.query("GET_DISABLED"),
             a = t && !i;
         if (a && !e.ref.hopper) {
-            let n = zd(
+            let n = Od(
                 e.element,
                 (l) => {
                     let o = e.query("GET_BEFORE_DROP_FILE") || (() => !0);
@@ -4287,7 +4292,7 @@ var Ie = (e) => {
                         .filter((c) => c);
                 Ae("ADD_ITEMS", l, { dispatch: e.dispatch }).then((c) => {
                     if (na(e, c)) return !1;
-                    e.dispatch("ADD_ITEMS", { items: c, index: $d(e.ref.list, p, o), interactionMethod: Re.DROP });
+                    e.dispatch("ADD_ITEMS", { items: c, index: Xd(e.ref.list, p, o), interactionMethod: Re.DROP });
                 }),
                     e.dispatch("DID_DROP", { position: o }),
                     e.dispatch("DID_END_DRAG", { position: o });
@@ -4302,7 +4307,7 @@ var Ie = (e) => {
                     e.dispatch("DID_END_DRAG", { position: l });
                 }),
                 (e.ref.hopper = n),
-                (e.ref.drip = e.appendChildView(e.createChildView(ed)));
+                (e.ref.drip = e.appendChildView(e.createChildView(td)));
         } else !a && e.ref.hopper && (e.ref.hopper.destroy(), (e.ref.hopper = null), e.removeChildView(e.ref.drip));
     },
     gn = (e, t) => {
@@ -4311,7 +4316,7 @@ var Ie = (e) => {
             n = i && !a;
         n && !e.ref.browser
             ? (e.ref.browser = e.appendChildView(
-                  e.createChildView(Hc, {
+                  e.createChildView(jc, {
                       ...t,
                       onload: (l) => {
                           Ae("ADD_ITEMS", l, { dispatch: e.dispatch }).then((o) => {
@@ -4329,7 +4334,7 @@ var Ie = (e) => {
             i = e.query("GET_DISABLED"),
             a = t && !i;
         a && !e.ref.paster
-            ? ((e.ref.paster = Dd()),
+            ? ((e.ref.paster = Cd()),
               (e.ref.paster.onload = (n) => {
                   Ae("ADD_ITEMS", n, { dispatch: e.dispatch }).then((l) => {
                       if (na(e, l)) return !1;
@@ -4338,7 +4343,7 @@ var Ie = (e) => {
               }))
             : !a && e.ref.paster && (e.ref.paster.destroy(), (e.ref.paster = null));
     },
-    Xd = fe({
+    Kd = fe({
         DID_SET_ALLOW_BROWSE: ({ root: e, props: t }) => {
             gn(e, t);
         },
@@ -4357,13 +4362,13 @@ var Ie = (e) => {
                     : e.element.removeAttribute("data-disabled");
         },
     }),
-    Kd = ne({
+    Qd = ne({
         name: "root",
         read: ({ root: e }) => {
             e.ref.measure && (e.ref.measureHeight = e.ref.measure.offsetHeight);
         },
-        create: Wd,
-        write: Hd,
+        create: Hd,
+        write: jd,
         destroy: ({ root: e }) => {
             e.ref.paster && e.ref.paster.destroy(),
                 e.ref.hopper && e.ref.hopper.destroy(),
@@ -4372,10 +4377,10 @@ var Ie = (e) => {
         },
         mixins: { styles: ["height"] },
     }),
-    Qd = (e = {}) => {
+    Zd = (e = {}) => {
         let t = null,
             i = oi(),
-            a = gr(Jr(i), [bs, is(i)], [Us, ts(i)]);
+            a = fr(es(i), [Es, as(i)], [Ws, is(i)]);
         a.dispatch("SET_OPTIONS", { options: e });
         let n = () => {
             document.hidden || a.dispatch("KICK");
@@ -4394,7 +4399,7 @@ var Ie = (e) => {
                     }, 500));
             };
         window.addEventListener("resize", c);
-        let d = Kd(a, { id: qi() }),
+        let d = Qd(a, { id: qi() }),
             m = !1,
             u = !1,
             g = {
@@ -4409,7 +4414,7 @@ var Ie = (e) => {
                 _write: (S) => {
                     let L = a.processActionQueue().filter((D) => !/^SET_/.test(D.type));
                     (m && !L.length) ||
-                        (b(L), (m = d._write(S, L, r)), ls(a.query("GET_ITEMS")), m && a.processDispatchQueue());
+                        (b(L), (m = d._write(S, L, r)), os(a.query("GET_ITEMS")), m && a.processDispatchQueue());
                 },
             },
             f = (S) => (L) => {
@@ -4554,7 +4559,7 @@ var Ie = (e) => {
                 if (!L.length) {
                     let D = z().filter(
                         (F) =>
-                            !(F.status === U.IDLE && F.origin === se.LOCAL) &&
+                            !(F.status === U.IDLE && F.origin === re.LOCAL) &&
                             F.status !== U.PROCESSING &&
                             F.status !== U.PROCESSING_COMPLETE &&
                             F.status !== U.PROCESSING_REVERT_ERROR,
@@ -4577,7 +4582,7 @@ var Ie = (e) => {
             O = {
                 ...mi(),
                 ...g,
-                ...es(a, i),
+                ...ts(a, i),
                 setOptions: T,
                 addFile: E,
                 addFiles: R,
@@ -4624,11 +4629,11 @@ var Ie = (e) => {
             te(oi(), (a, n) => {
                 t[a] = n[0];
             }),
-            Qd({ ...t, ...e })
+            Zd({ ...t, ...e })
         );
     },
-    Zd = (e) => e.charAt(0).toLowerCase() + e.slice(1),
-    Jd = (e) => el(e.replace(/^data-/, "")),
+    Jd = (e) => e.charAt(0).toLowerCase() + e.slice(1),
+    ep = (e) => el(e.replace(/^data-/, "")),
     al = (e, t) => {
         te(t, (i, a) => {
             te(e, (n, l) => {
@@ -4639,12 +4644,12 @@ var Ie = (e) => {
                     return;
                 }
                 let s = a.group;
-                de(a) && !e[s] && (e[s] = {}), (e[s][Zd(n.replace(o, ""))] = l);
+                ce(a) && !e[s] && (e[s] = {}), (e[s][Jd(n.replace(o, ""))] = l);
             }),
                 a.mapping && al(e[a.group], a.mapping);
         });
     },
-    ep = (e, t = {}) => {
+    tp = (e, t = {}) => {
         let i = [];
         te(e.attributes, (n) => {
             i.push(e.attributes[n]);
@@ -4652,12 +4657,12 @@ var Ie = (e) => {
         let a = i
             .filter((n) => n.name)
             .reduce((n, l) => {
-                let o = ce(e, l.name);
-                return (n[Jd(l.name)] = o === l.name ? !0 : o), n;
+                let o = se(e, l.name);
+                return (n[ep(l.name)] = o === l.name ? !0 : o), n;
             }, {});
         return al(a, t), a;
     },
-    tp = (e, t = {}) => {
+    ip = (e, t = {}) => {
         let i = {
             "^class$": "className",
             "^multiple$": "allowMultiple",
@@ -4678,9 +4683,9 @@ var Ie = (e) => {
         };
         tt("SET_ATTRIBUTE_TO_OPTION_MAP", i);
         let a = { ...t },
-            n = ep(e.nodeName === "FIELDSET" ? e.querySelector("input[type=file]") : e, i);
+            n = tp(e.nodeName === "FIELDSET" ? e.querySelector("input[type=file]") : e, i);
         Object.keys(n).forEach((o) => {
-            de(n[o]) ? (de(a[o]) || (a[o] = {}), Object.assign(a[o], n[o])) : (a[o] = n[o]);
+            ce(n[o]) ? (ce(a[o]) || (a[o] = {}), Object.assign(a[o], n[o])) : (a[o] = n[o]);
         }),
             (a.files = (t.files || []).concat(
                 Array.from(e.querySelectorAll("input:not([type=file])")).map((o) => ({
@@ -4698,14 +4703,14 @@ var Ie = (e) => {
             l
         );
     },
-    ip = (...e) => (ur(e[0]) ? tp(...e) : il(...e)),
-    ap = ["fire", "_read", "_write"],
+    ap = (...e) => (gr(e[0]) ? ip(...e) : il(...e)),
+    np = ["fire", "_read", "_write"],
     hn = (e) => {
         let t = {};
-        return Rn(e, t, ap), t;
+        return Rn(e, t, np), t;
     },
-    np = (e, t) => e.replace(/(?:{([a-zA-Z]+)})/g, (i, a) => t[a]),
-    lp = (e) => {
+    lp = (e, t) => e.replace(/(?:{([a-zA-Z]+)})/g, (i, a) => t[a]),
+    op = (e) => {
         let t = new Blob(["(", e.toString(), ")()"], { type: "application/javascript" }),
             i = URL.createObjectURL(t),
             a = new Worker(i);
@@ -4723,7 +4728,7 @@ var Ie = (e) => {
             },
         };
     },
-    op = (e) =>
+    rp = (e) =>
         new Promise((t, i) => {
             let a = new Image();
             (a.onload = () => {
@@ -4738,31 +4743,31 @@ var Ie = (e) => {
         let i = e.slice(0, e.size, e.type);
         return (i.lastModifiedDate = e.lastModifiedDate), (i.name = t), i;
     },
-    rp = (e) => nl(e, e.name),
+    sp = (e) => nl(e, e.name),
     bn = [],
-    sp = (e) => {
+    cp = (e) => {
         if (bn.includes(e)) return;
         bn.push(e);
         let t = e({
-            addFilter: rs,
+            addFilter: ss,
             utils: {
                 Type: M,
                 forin: te,
                 isString: ge,
                 isFile: Je,
                 toNaturalFileSize: Bn,
-                replaceInString: np,
+                replaceInString: lp,
                 getExtensionFromFilename: ui,
                 getFilenameWithoutExtension: Fn,
                 guesstimateMimeType: $n,
                 getFileFromBlob: ht,
                 getFilenameFromURL: Dt,
                 createRoute: fe,
-                createWorker: lp,
+                createWorker: op,
                 createView: ne,
                 createItemAPI: he,
-                loadImage: op,
-                copyFile: rp,
+                loadImage: rp,
+                copyFile: sp,
                 renameFile: nl,
                 createBlob: Pn,
                 applyFilterChain: Ae,
@@ -4771,22 +4776,22 @@ var Ie = (e) => {
             },
             views: { fileActionButton: Cn },
         });
-        ss(t.options);
+        cs(t.options);
     },
-    cp = () => Object.prototype.toString.call(window.operamini) === "[object OperaMini]",
-    dp = () => "Promise" in window,
-    pp = () => "slice" in Blob.prototype,
-    mp = () => "URL" in window && "createObjectURL" in window.URL,
-    up = () => "visibilityState" in document,
-    gp = () => "performance" in window,
-    fp = () => "supports" in (window.CSS || {}),
-    hp = () => /MSIE|Trident/.test(window.navigator.userAgent),
+    dp = () => Object.prototype.toString.call(window.operamini) === "[object OperaMini]",
+    pp = () => "Promise" in window,
+    mp = () => "slice" in Blob.prototype,
+    up = () => "URL" in window && "createObjectURL" in window.URL,
+    gp = () => "visibilityState" in document,
+    fp = () => "performance" in window,
+    hp = () => "supports" in (window.CSS || {}),
+    bp = () => /MSIE|Trident/.test(window.navigator.userAgent),
     Gi = (() => {
-        let e = En() && !cp() && up() && dp() && pp() && mp() && gp() && (fp() || hp());
+        let e = En() && !dp() && gp() && pp() && mp() && up() && fp() && (hp() || bp());
         return () => e;
     })(),
     Ue = { apps: [] },
-    bp = "filepond",
+    Ep = "filepond",
     it = () => {},
     ll = {},
     Et = {},
@@ -4800,7 +4805,7 @@ var Ie = (e) => {
     ji = it,
     Ft = it;
 if (Gi()) {
-    kr(
+    Vr(
         () => {
             Ue.apps.forEach((i) => i._read());
         },
@@ -4830,12 +4835,12 @@ if (Gi()) {
             Ui[i] = a[1];
         });
     (ll = { ...Ln }),
-        (Ct = { ...se }),
+        (Ct = { ...re }),
         (Et = { ...U }),
         (Ui = {}),
         t(),
         (gt = (...i) => {
-            let a = ip(...i);
+            let a = ap(...i);
             return a.on("destroy", ft), Ue.apps.push(a), hn(a);
         }),
         (ft = (i) => {
@@ -4843,7 +4848,7 @@ if (Gi()) {
             return a >= 0 ? (Ue.apps.splice(a, 1)[0].restoreElement(), !0) : !1;
         }),
         (Wi = (i) =>
-            Array.from(i.querySelectorAll(`.${bp}`))
+            Array.from(i.querySelectorAll(`.${Ep}`))
                 .filter((l) => !Ue.apps.find((o) => o.isAttachedTo(l)))
                 .map((l) => gt(l))),
         (Hi = (i) => {
@@ -4851,7 +4856,7 @@ if (Gi()) {
             return a ? hn(a) : null;
         }),
         (ve = (...i) => {
-            i.forEach(sp), t();
+            i.forEach(cp), t();
         }),
         (ji = () => {
             let i = {};
@@ -4863,11 +4868,11 @@ if (Gi()) {
             );
         }),
         (Ft = (i) => (
-            de(i) &&
+            ce(i) &&
                 (Ue.apps.forEach((a) => {
                     a.setOptions(i);
                 }),
-                cs(i)),
+                ds(i)),
             ji()
         ));
 }
@@ -4888,7 +4893,7 @@ function xl(e) {
         var i = arguments[t] != null ? arguments[t] : {};
         t % 2
             ? ol(Object(i), !0).forEach(function (a) {
-                  vp(e, a, i[a]);
+                  xp(e, a, i[a]);
               })
             : Object.getOwnPropertyDescriptors
               ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(i))
@@ -4898,7 +4903,7 @@ function xl(e) {
     }
     return e;
 }
-function Ep(e, t) {
+function Tp(e, t) {
     if (typeof e != "object" || !e) return e;
     var i = e[Symbol.toPrimitive];
     if (i !== void 0) {
@@ -4909,7 +4914,7 @@ function Ep(e, t) {
     return (t === "string" ? String : Number)(e);
 }
 function yl(e) {
-    var t = Ep(e, "string");
+    var t = Tp(e, "string");
     return typeof t == "symbol" ? t : t + "";
 }
 function sa(e) {
@@ -4928,7 +4933,7 @@ function sa(e) {
         sa(e)
     );
 }
-function Tp(e, t) {
+function Ip(e, t) {
     if (!(e instanceof t)) throw new TypeError("Cannot call a class as a function");
 }
 function rl(e, t) {
@@ -4940,10 +4945,10 @@ function rl(e, t) {
             Object.defineProperty(e, yl(a.key), a);
     }
 }
-function Ip(e, t, i) {
+function vp(e, t, i) {
     return t && rl(e.prototype, t), i && rl(e, i), Object.defineProperty(e, "prototype", { writable: !1 }), e;
 }
-function vp(e, t, i) {
+function xp(e, t, i) {
     return (
         (t = yl(t)),
         t in e ? Object.defineProperty(e, t, { value: i, enumerable: !0, configurable: !0, writable: !0 }) : (e[t] = i),
@@ -4951,15 +4956,15 @@ function vp(e, t, i) {
     );
 }
 function Rl(e) {
-    return xp(e) || yp(e) || Rp(e) || Sp();
-}
-function xp(e) {
-    if (Array.isArray(e)) return ca(e);
+    return yp(e) || Rp(e) || Sp(e) || _p();
 }
 function yp(e) {
+    if (Array.isArray(e)) return ca(e);
+}
+function Rp(e) {
     if ((typeof Symbol < "u" && e[Symbol.iterator] != null) || e["@@iterator"] != null) return Array.from(e);
 }
-function Rp(e, t) {
+function Sp(e, t) {
     if (e) {
         if (typeof e == "string") return ca(e, t);
         var i = Object.prototype.toString.call(e).slice(8, -1);
@@ -4973,7 +4978,7 @@ function ca(e, t) {
     for (var i = 0, a = new Array(t); i < t; i++) a[i] = e[i];
     return a;
 }
-function Sp() {
+function _p() {
     throw new TypeError(`Invalid attempt to spread non-iterable instance.
 In order to be iterable, non-array objects must have a [Symbol.iterator]() method.`);
 }
@@ -4998,7 +5003,7 @@ var Ti = typeof window < "u" && typeof window.document < "u",
     sl = "".concat(Z, "-disabled"),
     Ee = "".concat(Z, "-hidden"),
     cl = "".concat(Z, "-hide"),
-    _p = "".concat(Z, "-invisible"),
+    wp = "".concat(Z, "-invisible"),
     Ei = "".concat(Z, "-modal"),
     pa = "".concat(Z, "-move"),
     Ut = "".concat(Z, "Action"),
@@ -5011,21 +5016,21 @@ var Ti = typeof window < "u" && typeof window.document < "u",
     ga = "cropmove",
     fa = "cropstart",
     dl = "dblclick",
-    wp = Ea ? "touchstart" : "mousedown",
-    Lp = Ea ? "touchmove" : "mousemove",
-    Mp = Ea ? "touchend touchcancel" : "mouseup",
-    pl = Ta ? "pointerdown" : wp,
-    ml = Ta ? "pointermove" : Lp,
-    ul = Ta ? "pointerup pointercancel" : Mp,
+    Lp = Ea ? "touchstart" : "mousedown",
+    Mp = Ea ? "touchmove" : "mousemove",
+    Ap = Ea ? "touchend touchcancel" : "mouseup",
+    pl = Ta ? "pointerdown" : Lp,
+    ml = Ta ? "pointermove" : Mp,
+    ul = Ta ? "pointerup pointercancel" : Ap,
     gl = "ready",
     fl = "resize",
     hl = "wheel",
     ha = "zoom",
     bl = "image/jpeg",
-    Ap = /^e|w|s|n|se|sw|ne|nw|all|crop|move|zoom$/,
-    Pp = /^data:/,
-    zp = /^data:image\/jpeg;base64,/,
-    Op = /^img|canvas$/i,
+    Pp = /^e|w|s|n|se|sw|ne|nw|all|crop|move|zoom$/,
+    zp = /^data:/,
+    Op = /^data:image\/jpeg;base64,/,
+    Fp = /^img|canvas$/i,
     Al = 200,
     Pl = 100,
     El = {
@@ -5069,11 +5074,11 @@ var Ti = typeof window < "u" && typeof window.document < "u",
         crop: null,
         zoom: null,
     },
-    Fp =
+    Dp =
         '<div class="cropper-container" touch-action="none"><div class="cropper-wrap-box"><div class="cropper-canvas"></div></div><div class="cropper-drag-box"></div><div class="cropper-crop-box"><span class="cropper-view-box"></span><span class="cropper-dashed dashed-h"></span><span class="cropper-dashed dashed-v"></span><span class="cropper-center"></span><span class="cropper-face"></span><span class="cropper-line line-e" data-cropper-action="e"></span><span class="cropper-line line-n" data-cropper-action="n"></span><span class="cropper-line line-w" data-cropper-action="w"></span><span class="cropper-line line-s" data-cropper-action="s"></span><span class="cropper-point point-e" data-cropper-action="e"></span><span class="cropper-point point-n" data-cropper-action="n"></span><span class="cropper-point point-w" data-cropper-action="w"></span><span class="cropper-point point-s" data-cropper-action="s"></span><span class="cropper-point point-ne" data-cropper-action="ne"></span><span class="cropper-point point-nw" data-cropper-action="nw"></span><span class="cropper-point point-sw" data-cropper-action="sw"></span><span class="cropper-point point-se" data-cropper-action="se"></span></div></div>',
-    Dp = Number.isNaN || De.isNaN;
+    Cp = Number.isNaN || De.isNaN;
 function j(e) {
-    return typeof e == "number" && !Dp(e);
+    return typeof e == "number" && !Cp(e);
 }
 var Tl = function (t) {
     return t > 0 && t < 1 / 0;
@@ -5084,13 +5089,13 @@ function oa(e) {
 function lt(e) {
     return sa(e) === "object" && e !== null;
 }
-var Cp = Object.prototype.hasOwnProperty;
+var Bp = Object.prototype.hasOwnProperty;
 function It(e) {
     if (!lt(e)) return !1;
     try {
         var t = e.constructor,
             i = t.prototype;
-        return t && i && Cp.call(i, "isPrototypeOf");
+        return t && i && Bp.call(i, "isPrototypeOf");
     } catch {
         return !1;
     }
@@ -5098,9 +5103,9 @@ function It(e) {
 function be(e) {
     return typeof e == "function";
 }
-var Bp = Array.prototype.slice;
+var Np = Array.prototype.slice;
 function zl(e) {
-    return Array.from ? Array.from(e) : Bp.call(e);
+    return Array.from ? Array.from(e) : Np.call(e);
 }
 function le(e, t) {
     return (
@@ -5133,26 +5138,26 @@ var J =
                 t
             );
         },
-    Np = /\.\d*(?:0|9){12}\d*$/;
+    kp = /\.\d*(?:0|9){12}\d*$/;
 function xt(e) {
     var t = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : 1e11;
-    return Np.test(e) ? Math.round(e * t) / t : e;
+    return kp.test(e) ? Math.round(e * t) / t : e;
 }
-var kp = /^width|height|left|top|marginLeft|marginTop$/;
+var Vp = /^width|height|left|top|marginLeft|marginTop$/;
 function je(e, t) {
     var i = e.style;
     le(t, function (a, n) {
-        kp.test(n) && j(a) && (a = "".concat(a, "px")), (i[n] = a);
+        Vp.test(n) && j(a) && (a = "".concat(a, "px")), (i[n] = a);
     });
 }
-function Vp(e, t) {
+function Gp(e, t) {
     return e.classList ? e.classList.contains(t) : e.className.indexOf(t) > -1;
 }
-function pe(e, t) {
+function de(e, t) {
     if (t) {
         if (j(e.length)) {
             le(e, function (a) {
-                pe(a, t);
+                de(a, t);
             });
             return;
         }
@@ -5187,12 +5192,12 @@ function vt(e, t, i) {
             });
             return;
         }
-        i ? pe(e, t) : Fe(e, t);
+        i ? de(e, t) : Fe(e, t);
     }
 }
-var Gp = /([a-z\d])([A-Z])/g;
+var Up = /([a-z\d])([A-Z])/g;
 function xa(e) {
-    return e.replace(Gp, "$1-$2").toLowerCase();
+    return e.replace(Up, "$1-$2").toLowerCase();
 }
 function ba(e, t) {
     return lt(e[t]) ? e[t] : e.dataset ? e.dataset[t] : e.getAttribute("data-".concat(xa(t)));
@@ -5200,7 +5205,7 @@ function ba(e, t) {
 function Wt(e, t, i) {
     lt(i) ? (e[t] = i) : e.dataset ? (e.dataset[t] = i) : e.setAttribute("data-".concat(xa(t)), i);
 }
-function Up(e, t) {
+function Wp(e, t) {
     if (lt(e[t]))
         try {
             delete e[t];
@@ -5291,9 +5296,9 @@ function Dl(e) {
     };
 }
 var ra = De.location,
-    Wp = /^(\w+:)\/\/([^:/?#]*):?(\d*)/i;
+    Hp = /^(\w+:)\/\/([^:/?#]*):?(\d*)/i;
 function Il(e) {
-    var t = e.match(Wp);
+    var t = e.match(Hp);
     return t !== null && (t[1] !== ra.protocol || t[2] !== ra.hostname || t[3] !== ra.port);
 }
 function vl(e) {
@@ -5315,7 +5320,7 @@ function Gt(e) {
     var r = o.length ? o.join(" ") : "none";
     return { WebkitTransform: r, msTransform: r, transform: r };
 }
-function Hp(e) {
+function jp(e) {
     var t = xl({}, e),
         i = 0;
     return (
@@ -5341,7 +5346,7 @@ function bi(e, t) {
         n = { endX: i, endY: a };
     return t ? n : xl({ startX: i, startY: a }, n);
 }
-function jp(e) {
+function Yp(e) {
     var t = 0,
         i = 0,
         a = 0;
@@ -5369,7 +5374,7 @@ function Ye(e) {
     } else l ? (i = a / t) : o && (a = i * t);
     return { width: a, height: i };
 }
-function Yp(e) {
+function qp(e) {
     var t = e.width,
         i = e.height,
         a = e.degree;
@@ -5381,7 +5386,7 @@ function Yp(e) {
         s = t * l + i * o;
     return a > 90 ? { width: s, height: r } : { width: r, height: s };
 }
-function qp(e, t, i, a) {
+function $p(e, t, i, a) {
     var n = t.aspectRatio,
         l = t.naturalWidth,
         o = t.naturalHeight,
@@ -5434,8 +5439,8 @@ function qp(e, t, i, a) {
             O,
             [e].concat(
                 Rl(
-                    K.map(function (oe) {
-                        return Math.floor(xt(oe));
+                    K.map(function (pe) {
+                        return Math.floor(xt(pe));
                     }),
                 ),
             ),
@@ -5445,15 +5450,15 @@ function qp(e, t, i, a) {
     );
 }
 var Cl = String.fromCharCode;
-function $p(e, t, i) {
+function Xp(e, t, i) {
     var a = "";
     i += t;
     for (var n = t; n < i; n += 1) a += Cl(e.getUint8(n));
     return a;
 }
-var Xp = /^data:.*,/;
-function Kp(e) {
-    var t = e.replace(Xp, ""),
+var Kp = /^data:.*,/;
+function Qp(e) {
+    var t = e.replace(Kp, ""),
         i = atob(t),
         a = new ArrayBuffer(i.length),
         n = new Uint8Array(a);
@@ -5464,12 +5469,12 @@ function Kp(e) {
         a
     );
 }
-function Qp(e, t) {
+function Zp(e, t) {
     for (var i = [], a = 8192, n = new Uint8Array(e); n.length > 0; )
         i.push(Cl.apply(null, zl(n.subarray(0, a)))), (n = n.subarray(a));
     return "data:".concat(t, ";base64,").concat(btoa(i.join("")));
 }
-function Zp(e) {
+function Jp(e) {
     var t = new DataView(e),
         i;
     try {
@@ -5485,7 +5490,7 @@ function Zp(e) {
         if (n) {
             var s = n + 4,
                 p = n + 10;
-            if ($p(t, s, 4) === "Exif") {
+            if (Xp(t, s, 4) === "Exif") {
                 var c = t.getUint16(p);
                 if (((a = c === 18761), (a || c === 19789) && t.getUint16(p + 2, a) === 42)) {
                     var d = t.getUint32(p + 4, a);
@@ -5508,7 +5513,7 @@ function Zp(e) {
     }
     return i;
 }
-function Jp(e) {
+function em(e) {
     var t = 0,
         i = 1,
         a = 1;
@@ -5537,7 +5542,7 @@ function Jp(e) {
     }
     return { rotate: t, scaleX: i, scaleY: a };
 }
-var em = {
+var tm = {
         render: function () {
             this.initContainer(),
                 this.initCanvas(),
@@ -5552,12 +5557,12 @@ var em = {
                 n = this.cropper,
                 l = Number(i.minContainerWidth),
                 o = Number(i.minContainerHeight);
-            pe(n, Ee), Fe(t, Ee);
+            de(n, Ee), Fe(t, Ee);
             var r = {
                 width: Math.max(a.offsetWidth, l >= 0 ? l : Al),
                 height: Math.max(a.offsetHeight, o >= 0 ? o : Pl),
             };
-            (this.containerData = r), je(n, { width: r.width, height: r.height }), pe(t, Ee), Fe(n, Ee);
+            (this.containerData = r), je(n, { width: r.width, height: r.height }), de(t, Ee), Fe(n, Ee);
         },
         initCanvas: function () {
             var t = this.containerData,
@@ -5640,7 +5645,7 @@ var em = {
             var a = this.canvasData,
                 n = this.imageData;
             if (i) {
-                var l = Yp({
+                var l = qp({
                         width: n.naturalWidth * Math.abs(n.scaleX || 1),
                         height: n.naturalHeight * Math.abs(n.scaleY || 1),
                         degree: n.rotate || 0,
@@ -5762,7 +5767,7 @@ var em = {
             this.preview(), yt(this.element, ma, this.getData());
         },
     },
-    tm = {
+    im = {
         initPreview: function () {
             var t = this.element,
                 i = this.crossOrigin,
@@ -5797,7 +5802,7 @@ var em = {
         resetPreview: function () {
             le(this.previews, function (t) {
                 var i = ba(t, hi);
-                je(t, { width: i.width, height: i.height }), (t.innerHTML = i.html), Up(t, hi);
+                je(t, { width: i.width, height: i.height }), (t.innerHTML = i.html), Wp(t, hi);
             });
         },
         preview: function () {
@@ -5830,7 +5835,7 @@ var em = {
                 }));
         },
     },
-    im = {
+    am = {
         bind: function () {
             var t = this.element,
                 i = this.options,
@@ -5866,7 +5871,7 @@ var em = {
                 i.responsive && Oe(window, fl, this.onResize);
         },
     },
-    am = {
+    nm = {
         resize: function () {
             if (!this.disabled) {
                 var t = this.options,
@@ -5894,7 +5899,7 @@ var em = {
             }
         },
         dblclick: function () {
-            this.disabled || this.options.dragMode === Ml || this.setDragMode(Vp(this.dragBox, da) ? Ll : va);
+            this.disabled || this.options.dragMode === Ml || this.setDragMode(Gp(this.dragBox, da) ? Ll : va);
         },
         wheel: function (t) {
             var i = this,
@@ -5933,12 +5938,12 @@ var em = {
                       })
                     : (l[t.pointerId || 0] = bi(t)),
                     Object.keys(l).length > 1 && n.zoomable && n.zoomOnTouch ? (o = wl) : (o = ba(t.target, Ut)),
-                    Ap.test(o) &&
+                    Pp.test(o) &&
                         yt(this.element, fa, { originalEvent: t, action: o }) !== !1 &&
                         (t.preventDefault(),
                         (this.action = o),
                         (this.cropping = !1),
-                        o === Sl && ((this.cropping = !0), pe(this.dragBox, Ei)));
+                        o === Sl && ((this.cropping = !0), de(this.dragBox, Ei)));
             }
         },
         cropMove: function (t) {
@@ -5973,7 +5978,7 @@ var em = {
             }
         },
     },
-    nm = {
+    lm = {
         change: function (t) {
             var i = this.options,
                 a = this.canvasData,
@@ -6148,7 +6153,7 @@ var em = {
                     this.move(E.x, E.y), (T = !1);
                     break;
                 case wl:
-                    this.zoom(Hp(o), t), (T = !1);
+                    this.zoom(jp(o), t), (T = !1);
                     break;
                 case Sl:
                     if (!E.x || !E.y) {
@@ -6172,7 +6177,7 @@ var em = {
                 });
         },
     },
-    lm = {
+    om = {
         crop: function () {
             return (
                 this.ready &&
@@ -6180,7 +6185,7 @@ var em = {
                     !this.disabled &&
                     ((this.cropped = !0),
                     this.limitCropBox(!0, !0),
-                    this.options.modal && pe(this.dragBox, Ei),
+                    this.options.modal && de(this.dragBox, Ei),
                     Fe(this.cropBox, Ee),
                     this.setCropBoxData(this.initialCropBoxData)),
                 this
@@ -6208,7 +6213,7 @@ var em = {
                     this.limitCanvas(!0, !0),
                     this.renderCanvas(),
                     Fe(this.dragBox, Ei),
-                    pe(this.cropBox, Ee)),
+                    de(this.cropBox, Ee)),
                 this
             );
         },
@@ -6237,7 +6242,7 @@ var em = {
             return this.ready && this.disabled && ((this.disabled = !1), Fe(this.cropper, sl)), this;
         },
         disable: function () {
-            return this.ready && !this.disabled && ((this.disabled = !0), pe(this.cropper, sl)), this;
+            return this.ready && !this.disabled && ((this.disabled = !0), de(this.cropper, sl)), this;
         },
         destroy: function () {
             var t = this.element;
@@ -6288,7 +6293,7 @@ var em = {
                 if (a) {
                     var m = this.pointers,
                         u = Dl(this.cropper),
-                        g = m && Object.keys(m).length ? jp(m) : { pageX: a.pageX, pageY: a.pageY };
+                        g = m && Object.keys(m).length ? Yp(m) : { pageX: a.pageX, pageY: a.pageY };
                     (l.left -= (c - o) * ((g.pageX - u.left - l.left) / o)),
                         (l.top -= (d - r) * ((g.pageY - u.top - l.top) / r));
                 } else
@@ -6449,7 +6454,7 @@ var em = {
             var t = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : {};
             if (!this.ready || !window.HTMLCanvasElement) return null;
             var i = this.canvasData,
-                a = qp(this.image, this.imageData, i, t);
+                a = $p(this.image, this.imageData, i, t);
             if (!this.cropped) return a;
             var n = this.getData(t.rounded),
                 l = n.x,
@@ -6542,11 +6547,11 @@ var em = {
             return this;
         },
     },
-    om = De.Cropper,
+    rm = De.Cropper,
     ya = (function () {
         function e(t) {
             var i = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
-            if ((Tp(this, e), !t || !Op.test(t.tagName)))
+            if ((Ip(this, e), !t || !Fp.test(t.tagName)))
                 throw new Error("The first argument is required and must be an <img> or <canvas> element.");
             (this.element = t),
                 (this.options = J({}, El, It(i) && i)),
@@ -6560,7 +6565,7 @@ var em = {
                 (this.sizing = !1),
                 this.init();
         }
-        return Ip(
+        return vp(
             e,
             [
                 {
@@ -6594,8 +6599,8 @@ var em = {
                                 this.clone();
                                 return;
                             }
-                            if (Pp.test(i)) {
-                                zp.test(i) ? this.read(Kp(i)) : this.clone();
+                            if (zp.test(i)) {
+                                Op.test(i) ? this.read(Qp(i)) : this.clone();
                                 return;
                             }
                             var o = new XMLHttpRequest(),
@@ -6627,13 +6632,13 @@ var em = {
                     value: function (i) {
                         var a = this.options,
                             n = this.imageData,
-                            l = Zp(i),
+                            l = Jp(i),
                             o = 0,
                             r = 1,
                             s = 1;
                         if (l > 1) {
-                            this.url = Qp(i, bl);
-                            var p = Jp(l);
+                            this.url = Zp(i, bl);
+                            var p = em(l);
                             (o = p.rotate), (r = p.scaleX), (s = p.scaleY);
                         }
                         a.rotatable && (n.rotate = o), a.scalable && ((n.scaleX = r), (n.scaleY = s)), this.clone();
@@ -6656,7 +6661,7 @@ var em = {
                             (this.image = o),
                             (o.onload = this.start.bind(this)),
                             (o.onerror = this.stop.bind(this)),
-                            pe(o, cl),
+                            de(o, cl),
                             i.parentNode.insertBefore(o, i.nextSibling);
                     },
                 },
@@ -6707,7 +6712,7 @@ var em = {
                                 n = this.image,
                                 l = i.parentNode,
                                 o = document.createElement("div");
-                            o.innerHTML = Fp;
+                            o.innerHTML = Dp;
                             var r = o.querySelector(".".concat(Z, "-container")),
                                 s = r.querySelector(".".concat(Z, "-canvas")),
                                 p = r.querySelector(".".concat(Z, "-drag-box")),
@@ -6721,7 +6726,7 @@ var em = {
                                 (this.viewBox = r.querySelector(".".concat(Z, "-view-box"))),
                                 (this.face = d),
                                 s.appendChild(n),
-                                pe(i, Ee),
+                                de(i, Ee),
                                 l.insertBefore(r, i.nextSibling),
                                 Fe(n, cl),
                                 this.initPreview(),
@@ -6729,15 +6734,15 @@ var em = {
                                 (a.initialAspectRatio = Math.max(0, a.initialAspectRatio) || NaN),
                                 (a.aspectRatio = Math.max(0, a.aspectRatio) || NaN),
                                 (a.viewMode = Math.max(0, Math.min(3, Math.round(a.viewMode))) || 0),
-                                pe(c, Ee),
-                                a.guides || pe(c.getElementsByClassName("".concat(Z, "-dashed")), Ee),
-                                a.center || pe(c.getElementsByClassName("".concat(Z, "-center")), Ee),
-                                a.background && pe(r, "".concat(Z, "-bg")),
-                                a.highlight || pe(d, _p),
-                                a.cropBoxMovable && (pe(d, pa), Wt(d, Ut, Ia)),
+                                de(c, Ee),
+                                a.guides || de(c.getElementsByClassName("".concat(Z, "-dashed")), Ee),
+                                a.center || de(c.getElementsByClassName("".concat(Z, "-center")), Ee),
+                                a.background && de(r, "".concat(Z, "-bg")),
+                                a.highlight || de(d, wp),
+                                a.cropBoxMovable && (de(d, pa), Wt(d, Ut, Ia)),
                                 a.cropBoxResizable ||
-                                    (pe(c.getElementsByClassName("".concat(Z, "-line")), Ee),
-                                    pe(c.getElementsByClassName("".concat(Z, "-point")), Ee)),
+                                    (de(c.getElementsByClassName("".concat(Z, "-line")), Ee),
+                                    de(c.getElementsByClassName("".concat(Z, "-point")), Ee)),
                                 this.render(),
                                 (this.ready = !0),
                                 this.setDragMode(a.dragMode),
@@ -6775,7 +6780,7 @@ var em = {
                 {
                     key: "noConflict",
                     value: function () {
-                        return (window.Cropper = om), e;
+                        return (window.Cropper = rm), e;
                     },
                 },
                 {
@@ -6787,7 +6792,7 @@ var em = {
             ],
         );
     })();
-J(ya.prototype, em, tm, im, am, nm, lm);
+J(ya.prototype, tm, im, am, nm, lm, om);
 var Bl = {
     "application/prs.cww": ["cww"],
     "application/prs.xsf+xml": ["xsf"],
@@ -6826,6 +6831,7 @@ var Bl = {
     "application/vnd.aristanetworks.swi": ["swi"],
     "application/vnd.astraea-software.iota": ["iota"],
     "application/vnd.audiograph": ["aep"],
+    "application/vnd.autodesk.fbx": ["fbx"],
     "application/vnd.balsamiq.bmml+xml": ["bmml"],
     "application/vnd.blueice.multipass": ["mpm"],
     "application/vnd.bmi": ["bmi"],
@@ -6855,6 +6861,7 @@ var Bl = {
     "application/vnd.dart": ["dart"],
     "application/vnd.data-vision.rdz": ["rdz"],
     "application/vnd.dbf": ["dbf"],
+    "application/vnd.dcmp+xml": ["dcmp"],
     "application/vnd.dece.data": ["uvf", "uvvf", "uvd", "uvvd"],
     "application/vnd.dece.ttml+xml": ["uvt", "uvvt"],
     "application/vnd.dece.unspecified": ["uvx", "uvvx"],
@@ -6906,7 +6913,13 @@ var Bl = {
     "application/vnd.geospace": ["g3w"],
     "application/vnd.gmx": ["gmx"],
     "application/vnd.google-apps.document": ["gdoc"],
+    "application/vnd.google-apps.drawing": ["gdraw"],
+    "application/vnd.google-apps.form": ["gform"],
+    "application/vnd.google-apps.jam": ["gjam"],
+    "application/vnd.google-apps.map": ["gmap"],
     "application/vnd.google-apps.presentation": ["gslides"],
+    "application/vnd.google-apps.script": ["gscript"],
+    "application/vnd.google-apps.site": ["gsite"],
     "application/vnd.google-apps.spreadsheet": ["gsheet"],
     "application/vnd.google-earth.kml+xml": ["kml"],
     "application/vnd.google-earth.kmz": ["kmz"],
@@ -7017,6 +7030,7 @@ var Bl = {
     "application/vnd.ms-powerpoint.slideshow.macroenabled.12": ["ppsm"],
     "application/vnd.ms-powerpoint.template.macroenabled.12": ["potm"],
     "application/vnd.ms-project": ["*mpp", "mpt"],
+    "application/vnd.ms-visio.viewer": ["vdx"],
     "application/vnd.ms-word.document.macroenabled.12": ["docm"],
     "application/vnd.ms-word.template.macroenabled.12": ["dotm"],
     "application/vnd.ms-works": ["wps", "wks", "wcm", "wdb"],
@@ -7082,6 +7096,9 @@ var Bl = {
     "application/vnd.pocketlearn": ["plf"],
     "application/vnd.powerbuilder6": ["pbd"],
     "application/vnd.previewsystems.box": ["box"],
+    "application/vnd.procrate.brushset": ["brushset"],
+    "application/vnd.procreate.brush": ["brush"],
+    "application/vnd.procreate.dream": ["drm"],
     "application/vnd.proteus.magazine": ["mgz"],
     "application/vnd.publishare-delta-tree": ["qps"],
     "application/vnd.pvi.ptid1": ["ptid"],
@@ -7150,7 +7167,7 @@ var Bl = {
     "application/vnd.unity": ["unityweb"],
     "application/vnd.uoml+xml": ["uoml", "uo"],
     "application/vnd.vcx": ["vcx"],
-    "application/vnd.visio": ["vsd", "vst", "vss", "vsw"],
+    "application/vnd.visio": ["vsd", "vst", "vss", "vsw", "vsdx", "vtx"],
     "application/vnd.visionary": ["vis"],
     "application/vnd.vsf": ["vsf"],
     "application/vnd.wap.wbxml": ["wbxml"],
@@ -7184,6 +7201,7 @@ var Bl = {
     "application/x-bcpio": ["bcpio"],
     "application/x-bdoc": ["*bdoc"],
     "application/x-bittorrent": ["torrent"],
+    "application/x-blender": ["blend"],
     "application/x-blorb": ["blb", "blorb"],
     "application/x-bzip": ["bz"],
     "application/x-bzip2": ["bz2", "boz"],
@@ -7194,6 +7212,7 @@ var Bl = {
     "application/x-chess-pgn": ["pgn"],
     "application/x-chrome-extension": ["crx"],
     "application/x-cocoa": ["cco"],
+    "application/x-compressed": ["*rar"],
     "application/x-conference": ["nsc"],
     "application/x-cpio": ["cpio"],
     "application/x-csh": ["csh"],
@@ -7223,6 +7242,7 @@ var Bl = {
     "application/x-hdf": ["hdf"],
     "application/x-httpd-php": ["php"],
     "application/x-install-instructions": ["install"],
+    "application/x-ipynb+json": ["ipynb"],
     "application/x-iso9660-image": ["*iso"],
     "application/x-iwork-keynote-sffkey": ["*key"],
     "application/x-iwork-numbers-sffnumbers": ["*numbers"],
@@ -7300,6 +7320,7 @@ var Bl = {
     "application/x-xliff+xml": ["*xlf"],
     "application/x-xpinstall": ["xpi"],
     "application/x-xz": ["xz"],
+    "application/x-zip-compressed": ["*zip"],
     "application/x-zmachine": ["z1", "z2", "z3", "z4", "z5", "z6", "z7", "z8"],
     "audio/vnd.dece.audio": ["uva", "uvva"],
     "audio/vnd.digital-winds": ["eol"],
@@ -7357,6 +7378,7 @@ var Bl = {
     "image/vnd.xiff": ["xif"],
     "image/vnd.zbrush.pcx": ["pcx"],
     "image/x-3ds": ["3ds"],
+    "image/x-adobe-dng": ["dng"],
     "image/x-cmu-raster": ["ras"],
     "image/x-cmx": ["cmx"],
     "image/x-freehand": ["fh", "fhc", "fh4", "fh5", "fh7"],
@@ -7488,6 +7510,7 @@ var kl = {
     "application/dash+xml": ["mpd"],
     "application/dash-patch+xml": ["mpp"],
     "application/davmount+xml": ["davmount"],
+    "application/dicom": ["dcm"],
     "application/docbook+xml": ["dbk"],
     "application/dssc+der": ["dssc"],
     "application/dssc+xml": ["xdssc"],
@@ -7574,7 +7597,7 @@ var kl = {
     "application/oebps-package+xml": ["opf"],
     "application/ogg": ["ogx"],
     "application/omdoc+xml": ["omdoc"],
-    "application/onenote": ["onetoc", "onetoc2", "onetmp", "onepkg"],
+    "application/onenote": ["onetoc", "onetoc2", "onetmp", "onepkg", "one", "onea"],
     "application/oxps": ["oxps"],
     "application/p2p-overlay+xml": ["relo"],
     "application/patch-ops-error+xml": ["xer"],
@@ -7670,6 +7693,7 @@ var kl = {
     "application/yang": ["yang"],
     "application/yin+xml": ["yin"],
     "application/zip": ["zip"],
+    "application/zip+dotlottie": ["lottie"],
     "audio/3gpp": ["*3gpp"],
     "audio/aac": ["adts", "aac"],
     "audio/adpcm": ["adp"],
@@ -7678,7 +7702,7 @@ var kl = {
     "audio/midi": ["mid", "midi", "kar", "rmi"],
     "audio/mobile-xmf": ["mxmf"],
     "audio/mp3": ["*mp3"],
-    "audio/mp4": ["m4a", "mp4a"],
+    "audio/mp4": ["m4a", "mp4a", "m4b"],
     "audio/mpeg": ["mpga", "mp2", "mp2a", "mp3", "m2a", "m3a"],
     "audio/ogg": ["oga", "ogg", "spx", "opus"],
     "audio/s3m": ["s3m"],
@@ -7710,11 +7734,12 @@ var kl = {
     "image/heif": ["heif"],
     "image/heif-sequence": ["heifs"],
     "image/hej2k": ["hej2"],
-    "image/hsj2": ["hsj2"],
     "image/ief": ["ief"],
+    "image/jaii": ["jaii"],
+    "image/jais": ["jais"],
     "image/jls": ["jls"],
     "image/jp2": ["jp2", "jpg2"],
-    "image/jpeg": ["jpeg", "jpg", "jpe"],
+    "image/jpeg": ["jpg", "jpeg", "jpe"],
     "image/jph": ["jph"],
     "image/jphc": ["jhc"],
     "image/jpm": ["jpm", "jpgm"],
@@ -7729,6 +7754,7 @@ var kl = {
     "image/jxss": ["jxss"],
     "image/ktx": ["ktx"],
     "image/ktx2": ["ktx2"],
+    "image/pjpeg": ["jfif"],
     "image/png": ["png"],
     "image/sgi": ["sgi"],
     "image/svg+xml": ["svg", "svgz"],
@@ -7742,7 +7768,7 @@ var kl = {
     "message/global-delivery-status": ["u8dsn"],
     "message/global-disposition-notification": ["u8mdn"],
     "message/global-headers": ["u8hdr"],
-    "message/rfc822": ["eml", "mime"],
+    "message/rfc822": ["eml", "mime", "mht", "mhtml"],
     "model/3mf": ["3mf"],
     "model/gltf+json": ["gltf"],
     "model/gltf-binary": ["glb"],
@@ -7752,6 +7778,7 @@ var kl = {
     "model/mtl": ["mtl"],
     "model/obj": ["obj"],
     "model/prc": ["prc"],
+    "model/step": ["step", "stp", "stpnc", "p21", "210"],
     "model/step+xml": ["stpx"],
     "model/step+zip": ["stpz"],
     "model/step-xml+zip": ["stpxz"],
@@ -7848,8 +7875,8 @@ var _e = function (e, t, i, a) {
         }
         getType(t) {
             if (typeof t != "string") return null;
-            let i = t.replace(/^.*[/\\]/, "").toLowerCase(),
-                a = i.replace(/^.*\./, "").toLowerCase(),
+            let i = t.replace(/^.*[/\\]/s, "").toLowerCase(),
+                a = i.replace(/^.*\./s, "").toLowerCase(),
                 n = i.length < t.length;
             return !(a.length < i.length - 1) && n ? null : (_e(this, Rt, "f").get(a) ?? null);
         }
@@ -7951,8 +7978,8 @@ var Ul = ({ addFilter: e, utils: t }) => {
             }
         );
     },
-    rm = typeof window < "u" && typeof window.document < "u";
-rm && document.dispatchEvent(new CustomEvent("FilePond:pluginloaded", { detail: Ul }));
+    sm = typeof window < "u" && typeof window.document < "u";
+sm && document.dispatchEvent(new CustomEvent("FilePond:pluginloaded", { detail: Ul }));
 var Wl = Ul;
 var Hl = ({ addFilter: e, utils: t }) => {
         let {
@@ -8042,8 +8069,8 @@ var Hl = ({ addFilter: e, utils: t }) => {
             }
         );
     },
-    sm = typeof window < "u" && typeof window.document < "u";
-sm && document.dispatchEvent(new CustomEvent("FilePond:pluginloaded", { detail: Hl }));
+    cm = typeof window < "u" && typeof window.document < "u";
+cm && document.dispatchEvent(new CustomEvent("FilePond:pluginloaded", { detail: Hl }));
 var jl = Hl;
 var Yl = (e) => /^image/.test(e.type),
     ql = ({ addFilter: e, utils: t }) => {
@@ -8103,8 +8130,8 @@ var Yl = (e) => /^image/.test(e.type),
             { options: { allowImageCrop: [!0, i.BOOLEAN], imageCropAspectRatio: [null, i.STRING] } }
         );
     },
-    cm = typeof window < "u" && typeof window.document < "u";
-cm && document.dispatchEvent(new CustomEvent("FilePond:pluginloaded", { detail: ql }));
+    dm = typeof window < "u" && typeof window.document < "u";
+dm && document.dispatchEvent(new CustomEvent("FilePond:pluginloaded", { detail: ql }));
 var $l = ql;
 var _a = (e) => /^image/.test(e.type),
     Xl = (e) => {
@@ -8209,7 +8236,7 @@ var _a = (e) => /^image/.test(e.type),
                                 markup: L,
                             };
                         (h.onconfirm = ({ data: F }) => {
-                            let { crop: G, size: C, filter: q, color: X, colorMatrix: K, markup: oe } = F,
+                            let { crop: G, size: C, filter: q, color: X, colorMatrix: K, markup: pe } = F,
                                 k = {};
                             if ((G && (k.crop = G), C)) {
                                 let H = (R.getMetadata("resize") || {}).size,
@@ -8217,7 +8244,7 @@ var _a = (e) => /^image/.test(e.type),
                                 !(Y.width && Y.height) && H && ((Y.width = H.width), (Y.height = H.height)),
                                     (Y.width || Y.height) && (k.resize = { upscale: C.upscale, mode: C.mode, size: Y });
                             }
-                            oe && (k.markup = oe),
+                            pe && (k.markup = pe),
                                 (k.colors = X),
                                 (k.filters = q),
                                 (k.filter = K),
@@ -8297,14 +8324,14 @@ var _a = (e) => /^image/.test(e.type),
             }
         );
     },
-    dm = typeof window < "u" && typeof window.document < "u";
-dm && document.dispatchEvent(new CustomEvent("FilePond:pluginloaded", { detail: Xl }));
+    pm = typeof window < "u" && typeof window.document < "u";
+pm && document.dispatchEvent(new CustomEvent("FilePond:pluginloaded", { detail: Xl }));
 var Kl = Xl;
-var pm = (e) => /^image\/jpeg/.test(e.type),
+var mm = (e) => /^image\/jpeg/.test(e.type),
     rt = { JPEG: 65496, APP1: 65505, EXIF: 1165519206, TIFF: 18761, Orientation: 274, Unknown: 65280 },
     st = (e, t, i = !1) => e.getUint16(t, i),
     Ql = (e, t, i = !1) => e.getUint32(t, i),
-    mm = (e) =>
+    um = (e) =>
         new Promise((t, i) => {
             let a = new FileReader();
             (a.onload = function (n) {
@@ -8337,15 +8364,15 @@ var pm = (e) => /^image\/jpeg/.test(e.type),
             }),
                 a.readAsArrayBuffer(e.slice(0, 64 * 1024));
         }),
-    um = typeof window < "u" && typeof window.document < "u",
-    gm = () => um,
-    fm =
+    gm = typeof window < "u" && typeof window.document < "u",
+    fm = () => gm,
+    hm =
         "data:image/jpg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/4QA6RXhpZgAATU0AKgAAAAgAAwESAAMAAAABAAYAAAEoAAMAAAABAAIAAAITAAMAAAABAAEAAAAAAAD/2wBDAP//////////////////////////////////////////////////////////////////////////////////////wAALCAABAAIBASIA/8QAJgABAAAAAAAAAAAAAAAAAAAAAxABAAAAAAAAAAAAAAAAAAAAAP/aAAgBAQAAPwBH/9k=",
     Zl,
-    Ii = gm() ? new Image() : {};
+    Ii = fm() ? new Image() : {};
 Ii.onload = () => (Zl = Ii.naturalWidth > Ii.naturalHeight);
-Ii.src = fm;
-var hm = () => Zl,
+Ii.src = hm;
+var bm = () => Zl,
     Jl = ({ addFilter: e, utils: t }) => {
         let { Type: i, isFile: a } = t;
         return (
@@ -8354,8 +8381,8 @@ var hm = () => Zl,
                 (n, { query: l }) =>
                     new Promise((o, r) => {
                         let s = n.file;
-                        if (!a(s) || !pm(s) || !l("GET_ALLOW_IMAGE_EXIF_ORIENTATION") || !hm()) return o(n);
-                        mm(s).then((p) => {
+                        if (!a(s) || !mm(s) || !l("GET_ALLOW_IMAGE_EXIF_ORIENTATION") || !bm()) return o(n);
+                        um(s).then((p) => {
                             n.setMetadata("exif", { orientation: p }), o(n);
                         });
                     }),
@@ -8363,13 +8390,13 @@ var hm = () => Zl,
             { options: { allowImageExifOrientation: [!0, i.BOOLEAN] } }
         );
     },
-    bm = typeof window < "u" && typeof window.document < "u";
-bm && document.dispatchEvent(new CustomEvent("FilePond:pluginloaded", { detail: Jl }));
+    Em = typeof window < "u" && typeof window.document < "u";
+Em && document.dispatchEvent(new CustomEvent("FilePond:pluginloaded", { detail: Jl }));
 var eo = Jl;
-var Em = (e) => /^image/.test(e.type),
+var Tm = (e) => /^image/.test(e.type),
     to = (e, t) => Yt(e.x * t, e.y * t),
     io = (e, t) => Yt(e.x + t.x, e.y + t.y),
-    Tm = (e) => {
+    Im = (e) => {
         let t = Math.sqrt(e.x * e.x + e.y * e.y);
         return t === 0 ? { x: 0, y: 0 } : Yt(e.x / t, e.y / t);
     },
@@ -8384,7 +8411,7 @@ var Em = (e) => /^image/.test(e.type),
         if (typeof e == "string") return parseFloat(e) * i;
         if (typeof e == "number") return e * (a ? t[a] : Math.min(t.width, t.height));
     },
-    Im = (e, t, i) => {
+    vm = (e, t, i) => {
         let a = e.borderStyle || e.lineStyle || "solid",
             n = e.backgroundColor || e.fontColor || "transparent",
             l = e.borderColor || e.lineColor || "transparent",
@@ -8404,7 +8431,7 @@ var Em = (e) => /^image/.test(e.type),
         };
     },
     we = (e) => e != null,
-    vm = (e, t, i = 1) => {
+    xm = (e, t, i = 1) => {
         let a = Te(e.x, t, i, "width") || Te(e.left, t, i, "width"),
             n = Te(e.y, t, i, "height") || Te(e.top, t, i, "height"),
             l = Te(e.width, t, i, "width"),
@@ -8419,31 +8446,31 @@ var Em = (e) => /^image/.test(e.type),
             { x: a || 0, y: n || 0, width: l || 0, height: o || 0 }
         );
     },
-    xm = (e) => e.map((t, i) => `${i === 0 ? "M" : "L"} ${t.x} ${t.y}`).join(" "),
+    ym = (e) => e.map((t, i) => `${i === 0 ? "M" : "L"} ${t.x} ${t.y}`).join(" "),
     Be = (e, t) => Object.keys(t).forEach((i) => e.setAttribute(i, t[i])),
-    ym = "http://www.w3.org/2000/svg",
+    Rm = "http://www.w3.org/2000/svg",
     St = (e, t) => {
-        let i = document.createElementNS(ym, e);
+        let i = document.createElementNS(Rm, e);
         return t && Be(i, t), i;
     },
-    Rm = (e) => Be(e, { ...e.rect, ...e.styles }),
-    Sm = (e) => {
+    Sm = (e) => Be(e, { ...e.rect, ...e.styles }),
+    _m = (e) => {
         let t = e.rect.x + e.rect.width * 0.5,
             i = e.rect.y + e.rect.height * 0.5,
             a = e.rect.width * 0.5,
             n = e.rect.height * 0.5;
         return Be(e, { cx: t, cy: i, rx: a, ry: n, ...e.styles });
     },
-    _m = { contain: "xMidYMid meet", cover: "xMidYMid slice" },
-    wm = (e, t) => {
-        Be(e, { ...e.rect, ...e.styles, preserveAspectRatio: _m[t.fit] || "none" });
+    wm = { contain: "xMidYMid meet", cover: "xMidYMid slice" },
+    Lm = (e, t) => {
+        Be(e, { ...e.rect, ...e.styles, preserveAspectRatio: wm[t.fit] || "none" });
     },
-    Lm = { left: "start", center: "middle", right: "end" },
-    Mm = (e, t, i, a) => {
+    Mm = { left: "start", center: "middle", right: "end" },
+    Am = (e, t, i, a) => {
         let n = Te(t.fontSize, i, a),
             l = t.fontFamily || "sans-serif",
             o = t.fontWeight || "normal",
-            r = Lm[t.textAlign] || "start";
+            r = Mm[t.textAlign] || "start";
         Be(e, {
             ...e.rect,
             ...e.styles,
@@ -8455,7 +8482,7 @@ var Em = (e) => /^image/.test(e.type),
         }),
             e.text !== t.text && ((e.text = t.text), (e.textContent = t.text.length ? t.text : " "));
     },
-    Am = (e, t, i, a) => {
+    Pm = (e, t, i, a) => {
         Be(e, { ...e.rect, ...e.styles, fill: "none" });
         let n = e.childNodes[0],
             l = e.childNodes[1],
@@ -8464,7 +8491,7 @@ var Em = (e) => /^image/.test(e.type),
             s = { x: e.rect.x + e.rect.width, y: e.rect.y + e.rect.height };
         if ((Be(n, { x1: r.x, y1: r.y, x2: s.x, y2: s.y }), !t.lineDecoration)) return;
         (l.style.display = "none"), (o.style.display = "none");
-        let p = Tm({ x: s.x - r.x, y: s.y - r.y }),
+        let p = Im({ x: s.x - r.x, y: s.y - r.y }),
             c = Te(0.05, i, a);
         if (t.lineDecoration.indexOf("arrow-begin") !== -1) {
             let d = to(p, c),
@@ -8481,15 +8508,15 @@ var Em = (e) => /^image/.test(e.type),
             Be(o, { style: "display:block;", d: `M${u.x},${u.y} L${s.x},${s.y} L${g.x},${g.y}` });
         }
     },
-    Pm = (e, t, i, a) => {
+    zm = (e, t, i, a) => {
         Be(e, {
             ...e.styles,
             fill: "none",
-            d: xm(t.points.map((n) => ({ x: Te(n.x, i, a, "width"), y: Te(n.y, i, a, "height") }))),
+            d: ym(t.points.map((n) => ({ x: Te(n.x, i, a, "width"), y: Te(n.y, i, a, "height") }))),
         });
     },
     xi = (e) => (t) => St(e, { id: t.id }),
-    zm = (e) => {
+    Om = (e) => {
         let t = St("image", { id: e.id, "stroke-linecap": "round", "stroke-linejoin": "round", opacity: "0" });
         return (
             (t.onload = () => {
@@ -8499,7 +8526,7 @@ var Em = (e) => /^image/.test(e.type),
             t
         );
     },
-    Om = (e) => {
+    Fm = (e) => {
         let t = St("g", { id: e.id, "stroke-linecap": "round", "stroke-linejoin": "round" }),
             i = St("line");
         t.appendChild(i);
@@ -8508,21 +8535,21 @@ var Em = (e) => /^image/.test(e.type),
         let n = St("path");
         return t.appendChild(n), t;
     },
-    Fm = { image: zm, rect: xi("rect"), ellipse: xi("ellipse"), text: xi("text"), path: xi("path"), line: Om },
-    Dm = { rect: Rm, ellipse: Sm, image: wm, text: Mm, path: Pm, line: Am },
-    Cm = (e, t) => Fm[e](t),
-    Bm = (e, t, i, a, n) => {
-        t !== "path" && (e.rect = vm(i, a, n)), (e.styles = Im(i, a, n)), Dm[t](e, i, a, n);
+    Dm = { image: Om, rect: xi("rect"), ellipse: xi("ellipse"), text: xi("text"), path: xi("path"), line: Fm },
+    Cm = { rect: Sm, ellipse: _m, image: Lm, text: Am, path: zm, line: Pm },
+    Bm = (e, t) => Dm[e](t),
+    Nm = (e, t, i, a, n) => {
+        t !== "path" && (e.rect = xm(i, a, n)), (e.styles = vm(i, a, n)), Cm[t](e, i, a, n);
     },
-    Nm = ["x", "y", "left", "top", "right", "bottom", "width", "height"],
-    km = (e) => (typeof e == "string" && /%/.test(e) ? parseFloat(e) / 100 : e),
-    Vm = (e) => {
+    km = ["x", "y", "left", "top", "right", "bottom", "width", "height"],
+    Vm = (e) => (typeof e == "string" && /%/.test(e) ? parseFloat(e) / 100 : e),
+    Gm = (e) => {
         let [t, i] = e,
-            a = i.points ? {} : Nm.reduce((n, l) => ((n[l] = km(i[l])), n), {});
+            a = i.points ? {} : km.reduce((n, l) => ((n[l] = Vm(i[l])), n), {});
         return [t, { zIndex: 0, ...i, ...a }];
     },
-    Gm = (e, t) => (e[1].zIndex > t[1].zIndex ? 1 : e[1].zIndex < t[1].zIndex ? -1 : 0),
-    Um = (e) =>
+    Um = (e, t) => (e[1].zIndex > t[1].zIndex ? 1 : e[1].zIndex < t[1].zIndex ? -1 : 0),
+    Wm = (e) =>
         e.utils.createView({
             name: "image-preview-markup",
             tag: "svg",
@@ -8561,20 +8588,20 @@ var Em = (e) => /^image/.test(e.type),
                 t.element.innerHTML = "";
                 let m = t.query("GET_IMAGE_PREVIEW_MARKUP_FILTER");
                 l.filter(m)
-                    .map(Vm)
-                    .sort(Gm)
+                    .map(Gm)
+                    .sort(Um)
                     .forEach((u) => {
                         let [g, f] = u,
-                            h = Cm(g, f);
-                        Bm(h, g, f, c, d), t.element.appendChild(h);
+                            h = Bm(g, f);
+                        Nm(h, g, f, c, d), t.element.appendChild(h);
                     });
             },
         }),
     jt = (e, t) => ({ x: e, y: t }),
-    Wm = (e, t) => e.x * t.x + e.y * t.y,
+    Hm = (e, t) => e.x * t.x + e.y * t.y,
     ao = (e, t) => jt(e.x - t.x, e.y - t.y),
-    Hm = (e, t) => Wm(ao(e, t), ao(e, t)),
-    no = (e, t) => Math.sqrt(Hm(e, t)),
+    jm = (e, t) => Hm(ao(e, t), ao(e, t)),
+    no = (e, t) => Math.sqrt(jm(e, t)),
     lo = (e, t) => {
         let i = e,
             a = 1.5707963267948966,
@@ -8589,7 +8616,7 @@ var Em = (e) => /^image/.test(e.type),
             m = c * s;
         return jt(p * d, p * m);
     },
-    jm = (e, t) => {
+    Ym = (e, t) => {
         let i = e.width,
             a = e.height,
             n = lo(i, t),
@@ -8599,7 +8626,7 @@ var Em = (e) => /^image/.test(e.type),
             s = jt(e.x - Math.abs(l.y), e.y + e.height - Math.abs(l.x));
         return { width: no(o, r), height: no(o, s) };
     },
-    Ym = (e, t, i = 1) => {
+    qm = (e, t, i = 1) => {
         let a = e.height / e.width,
             n = 1,
             l = t,
@@ -8616,7 +8643,7 @@ var Em = (e) => /^image/.test(e.type),
             l = a.y > 0.5 ? 1 - a.y : a.y,
             o = n * 2 * e.width,
             r = l * 2 * e.height,
-            s = jm(t, i);
+            s = Ym(t, i);
         return Math.max(s.width / o, s.height / r);
     },
     so = (e, t) => {
@@ -8627,10 +8654,10 @@ var Em = (e) => /^image/.test(e.type),
             l = (e.height - a) * 0.5;
         return { x: n, y: l, width: i, height: a };
     },
-    qm = (e, t = {}) => {
+    $m = (e, t = {}) => {
         let { zoom: i, rotation: a, center: n, aspectRatio: l } = t;
         l || (l = e.height / e.width);
-        let o = Ym(e, l, i),
+        let o = qm(e, l, i),
             r = { x: o.width * 0.5, y: o.height * 0.5 },
             s = { x: 0, y: 0, width: o.width, height: o.height, center: r },
             p = typeof t.scaleToFit > "u" || t.scaleToFit,
@@ -8644,7 +8671,7 @@ var Em = (e) => /^image/.test(e.type),
         };
     },
     Ce = { type: "spring", stiffness: 0.5, damping: 0.45, mass: 10 },
-    $m = (e) =>
+    Xm = (e) =>
         e.utils.createView({
             name: "image-bitmap",
             ignoreRect: !0,
@@ -8653,7 +8680,7 @@ var Em = (e) => /^image/.test(e.type),
                 t.appendChild(i.image);
             },
         }),
-    Xm = (e) =>
+    Km = (e) =>
         e.utils.createView({
             name: "image-canvas-wrapper",
             tag: "div",
@@ -8674,7 +8701,7 @@ var Em = (e) => /^image/.test(e.type),
             create: ({ root: t, props: i }) => {
                 (i.width = i.image.width),
                     (i.height = i.image.height),
-                    (t.ref.bitmap = t.appendChildView(t.createChildView($m(e), { image: i.image })));
+                    (t.ref.bitmap = t.appendChildView(t.createChildView(Xm(e), { image: i.image })));
             },
             write: ({ root: t, props: i }) => {
                 let { flip: a } = i.crop,
@@ -8682,7 +8709,7 @@ var Em = (e) => /^image/.test(e.type),
                 (n.scaleX = a.horizontal ? -1 : 1), (n.scaleY = a.vertical ? -1 : 1);
             },
         }),
-    Km = (e) =>
+    Qm = (e) =>
         e.utils.createView({
             name: "image-clip",
             tag: "div",
@@ -8696,10 +8723,10 @@ var Em = (e) => /^image/.test(e.type),
                 i.background && (t.element.style.backgroundColor = i.background);
             },
             create: ({ root: t, props: i }) => {
-                (t.ref.image = t.appendChildView(t.createChildView(Xm(e), Object.assign({}, i)))),
+                (t.ref.image = t.appendChildView(t.createChildView(Km(e), Object.assign({}, i)))),
                     (t.ref.createMarkup = () => {
                         t.ref.markup ||
-                            (t.ref.markup = t.appendChildView(t.createChildView(Um(e), Object.assign({}, i))));
+                            (t.ref.markup = t.appendChildView(t.createChildView(Wm(e), Object.assign({}, i))));
                     }),
                     (t.ref.destroyMarkup = () => {
                         t.ref.markup && (t.removeChildView(t.ref.markup), (t.ref.markup = null));
@@ -8729,7 +8756,7 @@ var Em = (e) => /^image/.test(e.type),
                       (t.ref.markup.resize = o),
                       (t.ref.markup.dirty = r),
                       (t.ref.markup.markup = l),
-                      (t.ref.markup.crop = qm(d, n)))
+                      (t.ref.markup.crop = $m(d, n)))
                     : t.ref.markup && t.ref.destroyMarkup();
                 let T = t.ref.image;
                 if (a) {
@@ -8751,7 +8778,7 @@ var Em = (e) => /^image/.test(e.type),
                     (T.scaleY = b);
             },
         }),
-    Qm = (e) =>
+    Zm = (e) =>
         e.utils.createView({
             name: "image-preview",
             tag: "div",
@@ -8763,7 +8790,7 @@ var Em = (e) => /^image/.test(e.type),
             },
             create: ({ root: t, props: i }) => {
                 t.ref.clip = t.appendChildView(
-                    t.createChildView(Km(e), {
+                    t.createChildView(Qm(e), {
                         id: i.id,
                         image: i.image,
                         crop: i.crop,
@@ -8801,7 +8828,7 @@ var Em = (e) => /^image/.test(e.type),
                 v > m && ((v = m), (T = v * d)), T > u && ((T = u), (v = u / d)), (n.width = v), (n.height = T);
             },
         }),
-    Zm = `<svg width="500" height="200" viewBox="0 0 500 200" preserveAspectRatio="none">
+    Jm = `<svg width="500" height="200" viewBox="0 0 500 200" preserveAspectRatio="none">
     <defs>
         <radialGradient id="gradient-__UID__" cx=".5" cy="1.25" r="1.15">
             <stop offset='50%' stop-color='#000000'/>
@@ -8821,13 +8848,13 @@ var Em = (e) => /^image/.test(e.type),
     <rect x="0" width="500" height="200" fill="currentColor" mask="url(#mask-__UID__)"></rect>
 </svg>`,
     oo = 0,
-    Jm = (e) =>
+    eu = (e) =>
         e.utils.createView({
             name: "image-preview-overlay",
             tag: "div",
             ignoreRect: !0,
             create: ({ root: t, props: i }) => {
-                let a = Zm;
+                let a = Jm;
                 if (document.querySelector("base")) {
                     let n = new URL(window.location.href.replace(window.location.hash, "")).href;
                     a = a.replace(/url\(\#/g, "url(" + n + "#");
@@ -8838,14 +8865,14 @@ var Em = (e) => /^image/.test(e.type),
             },
             mixins: { styles: ["opacity"], animations: { opacity: { type: "spring", mass: 25 } } },
         }),
-    eu = function () {
+    tu = function () {
         self.onmessage = (e) => {
             createImageBitmap(e.data.message.file).then((t) => {
                 self.postMessage({ id: e.data.id, message: t }, [t]);
             });
         };
     },
-    tu = function () {
+    iu = function () {
         self.onmessage = (e) => {
             let t = e.data.message.imageData,
                 i = e.data.message.colorMatrix,
@@ -8888,7 +8915,7 @@ var Em = (e) => /^image/.test(e.type),
             self.postMessage({ id: e.data.id, message: t }, [t.data.buffer]);
         };
     },
-    iu = (e, t) => {
+    au = (e, t) => {
         let i = new Image();
         (i.onload = () => {
             let a = i.naturalWidth,
@@ -8897,7 +8924,7 @@ var Em = (e) => /^image/.test(e.type),
         }),
             (i.src = e);
     },
-    au = {
+    nu = {
         1: () => [1, 0, 0, 1, 0, 0],
         2: (e) => [-1, 0, 0, 1, e, 0],
         3: (e, t) => [-1, 0, 0, -1, e, t],
@@ -8907,21 +8934,21 @@ var Em = (e) => /^image/.test(e.type),
         7: (e, t) => [0, -1, -1, 0, t, e],
         8: (e) => [0, -1, 1, 0, 0, e],
     },
-    nu = (e, t, i, a) => {
-        a !== -1 && e.transform.apply(e, au[a](t, i));
-    },
     lu = (e, t, i, a) => {
+        a !== -1 && e.transform.apply(e, nu[a](t, i));
+    },
+    ou = (e, t, i, a) => {
         (t = Math.round(t)), (i = Math.round(i));
         let n = document.createElement("canvas");
         (n.width = t), (n.height = i);
         let l = n.getContext("2d");
-        return a >= 5 && a <= 8 && ([t, i] = [i, t]), nu(l, t, i, a), l.drawImage(e, 0, 0, t, i), n;
+        return a >= 5 && a <= 8 && ([t, i] = [i, t]), lu(l, t, i, a), l.drawImage(e, 0, 0, t, i), n;
     },
     co = (e) => /^image/.test(e.type) && !/svg/.test(e.type),
-    ou = 10,
     ru = 10,
-    su = (e) => {
-        let t = Math.min(ou / e.width, ru / e.height),
+    su = 10,
+    cu = (e) => {
+        let t = Math.min(ru / e.width, su / e.height),
             i = document.createElement("canvas"),
             a = i.getContext("2d"),
             n = (i.width = Math.ceil(e.width * t)),
@@ -8942,14 +8969,14 @@ var Em = (e) => /^image/.test(e.type),
         return (s = wa(s, r)), (p = wa(p, r)), (c = wa(c, r)), { r: s, g: p, b: c };
     },
     wa = (e, t) => Math.floor(Math.sqrt(e / (t / 4))),
-    cu = (e, t) => (
+    du = (e, t) => (
         (t = t || document.createElement("canvas")),
         (t.width = e.width),
         (t.height = e.height),
         t.getContext("2d").drawImage(e, 0, 0),
         t
     ),
-    du = (e) => {
+    pu = (e) => {
         let t;
         try {
             t = new ImageData(e.width, e.height);
@@ -8958,7 +8985,7 @@ var Em = (e) => /^image/.test(e.type),
         }
         return t.data.set(new Uint8ClampedArray(e.data)), t;
     },
-    pu = (e) =>
+    mu = (e) =>
         new Promise((t, i) => {
             let a = new Image();
             (a.crossOrigin = "Anonymous"),
@@ -8970,16 +8997,16 @@ var Em = (e) => /^image/.test(e.type),
                 }),
                 (a.src = e);
         }),
-    mu = (e) => {
-        let t = Jm(e),
-            i = Qm(e),
+    uu = (e) => {
+        let t = eu(e),
+            i = Zm(e),
             { createWorker: a } = e.utils,
             n = (b, T, v) =>
                 new Promise((y) => {
                     b.ref.imageData || (b.ref.imageData = v.getContext("2d").getImageData(0, 0, v.width, v.height));
-                    let E = du(b.ref.imageData);
+                    let E = pu(b.ref.imageData);
                     if (!T || T.length !== 20) return v.getContext("2d").putImageData(E, 0, 0), y();
-                    let _ = a(tu);
+                    let _ = a(iu);
                     _.post(
                         { imageData: E, colorMatrix: T },
                         (x) => {
@@ -9066,7 +9093,7 @@ var Em = (e) => /^image/.test(e.type),
                             Math.abs(E.aspectRatio - _.crop.aspectRatio) > 1e-5
                         ) {
                             let x = o({ root: b });
-                            r({ root: b, props: T, image: cu(x.image) });
+                            r({ root: b, props: T, image: du(x.image) });
                         } else s({ root: b, props: T });
                     }
                 }
@@ -9081,7 +9108,7 @@ var Em = (e) => /^image/.test(e.type),
                     y = b.query("GET_ITEM", v);
                 if (!y) return;
                 let E = URL.createObjectURL(y.file);
-                iu(E, (_, x) => {
+                au(E, (_, x) => {
                     b.dispatch("DID_IMAGE_PREVIEW_CALCULATE_SIZE", { id: v, width: _, height: x });
                 });
             },
@@ -9091,7 +9118,7 @@ var Em = (e) => /^image/.test(e.type),
                 if (!y) return;
                 let E = URL.createObjectURL(y.file),
                     _ = () => {
-                        pu(E).then(x);
+                        mu(E).then(x);
                     },
                     x = (R) => {
                         URL.revokeObjectURL(E);
@@ -9107,10 +9134,10 @@ var Em = (e) => /^image/.test(e.type),
                             G = D,
                             C = G * L;
                         L > 1 ? ((G = Math.min(A, D * S)), (C = G * L)) : ((C = Math.min(B, F * S)), (G = C / L));
-                        let q = lu(R, G, C, P),
+                        let q = ou(R, G, C, P),
                             X = () => {
-                                let oe = b.query("GET_IMAGE_PREVIEW_CALCULATE_AVERAGE_IMAGE_COLOR") ? su(data) : null;
-                                y.setMetadata("color", oe, !0),
+                                let pe = b.query("GET_IMAGE_PREVIEW_CALCULATE_AVERAGE_IMAGE_COLOR") ? cu(data) : null;
+                                y.setMetadata("color", pe, !0),
                                     "close" in R && R.close(),
                                     (b.ref.overlayShadow.opacity = 1),
                                     r({ root: b, props: T, image: q });
@@ -9119,7 +9146,7 @@ var Em = (e) => /^image/.test(e.type),
                         K ? n(b, K, q).then(X) : X();
                     };
                 if (c(y.file)) {
-                    let R = a(eu);
+                    let R = a(tu);
                     R.post({ file: y.file }, (z) => {
                         if ((R.terminate(), !z)) {
                             _();
@@ -9190,7 +9217,7 @@ var Em = (e) => /^image/.test(e.type),
     po = (e) => {
         let { addFilter: t, utils: i } = e,
             { Type: a, createRoute: n, isFile: l } = i,
-            o = mu(e);
+            o = uu(e);
         return (
             t("CREATE_VIEW", (r) => {
                 let { is: s, view: p, query: c } = r;
@@ -9200,7 +9227,7 @@ var Em = (e) => /^image/.test(e.type),
                             T = c("GET_ITEM", b);
                         if (!T || !l(T.file) || T.archived) return;
                         let v = T.file;
-                        if (!Em(v) || !c("GET_IMAGE_PREVIEW_FILTER_ITEM")(T)) return;
+                        if (!Tm(v) || !c("GET_IMAGE_PREVIEW_FILTER_ITEM")(T)) return;
                         let y = "createImageBitmap" in (window || {}),
                             E = c("GET_IMAGE_PREVIEW_MAX_FILE_SIZE");
                         if (!y && E && v.size > E) return;
@@ -9293,11 +9320,11 @@ var Em = (e) => /^image/.test(e.type),
             }
         );
     },
-    uu = typeof window < "u" && typeof window.document < "u";
-uu && document.dispatchEvent(new CustomEvent("FilePond:pluginloaded", { detail: po }));
+    gu = typeof window < "u" && typeof window.document < "u";
+gu && document.dispatchEvent(new CustomEvent("FilePond:pluginloaded", { detail: po }));
 var mo = po;
-var gu = (e) => /^image/.test(e.type),
-    fu = (e, t) => {
+var fu = (e) => /^image/.test(e.type),
+    hu = (e, t) => {
         let i = new Image();
         (i.onload = () => {
             let a = i.naturalWidth,
@@ -9315,7 +9342,7 @@ var gu = (e) => /^image/.test(e.type),
                 (a, { query: n }) =>
                     new Promise((l, o) => {
                         let r = a.file;
-                        if (!gu(r) || !n("GET_ALLOW_IMAGE_RESIZE")) return l(a);
+                        if (!fu(r) || !n("GET_ALLOW_IMAGE_RESIZE")) return l(a);
                         let s = n("GET_IMAGE_RESIZE_MODE"),
                             p = n("GET_IMAGE_RESIZE_TARGET_WIDTH"),
                             c = n("GET_IMAGE_RESIZE_TARGET_HEIGHT"),
@@ -9324,7 +9351,7 @@ var gu = (e) => /^image/.test(e.type),
                         let m = p === null ? c : p,
                             u = c === null ? m : c,
                             g = URL.createObjectURL(r);
-                        fu(g, (f) => {
+                        hu(g, (f) => {
                             if ((URL.revokeObjectURL(g), !f)) return l(a);
                             let { width: h, height: I } = f,
                                 b = (a.getMetadata("exif") || {}).orientation || -1;
@@ -9349,21 +9376,21 @@ var gu = (e) => /^image/.test(e.type),
             }
         );
     },
-    hu = typeof window < "u" && typeof window.document < "u";
-hu && document.dispatchEvent(new CustomEvent("FilePond:pluginloaded", { detail: uo }));
+    bu = typeof window < "u" && typeof window.document < "u";
+bu && document.dispatchEvent(new CustomEvent("FilePond:pluginloaded", { detail: uo }));
 var go = uo;
-var bu = (e) => /^image/.test(e.type),
-    Eu = (e) => e.substr(0, e.lastIndexOf(".")) || e,
-    Tu = { jpeg: "jpg", "svg+xml": "svg" },
-    Iu = (e, t) => {
-        let i = Eu(e),
+var Eu = (e) => /^image/.test(e.type),
+    Tu = (e) => e.substr(0, e.lastIndexOf(".")) || e,
+    Iu = { jpeg: "jpg", "svg+xml": "svg" },
+    vu = (e, t) => {
+        let i = Tu(e),
             a = t.split("/")[1],
-            n = Tu[a] || a;
+            n = Iu[a] || a;
         return `${i}.${n}`;
     },
-    vu = (e) => (/jpeg|png|svg\+xml/.test(e) ? e : "image/jpeg"),
-    xu = (e) => /^image/.test(e.type),
-    yu = {
+    xu = (e) => (/jpeg|png|svg\+xml/.test(e) ? e : "image/jpeg"),
+    yu = (e) => /^image/.test(e.type),
+    Ru = {
         1: () => [1, 0, 0, 1, 0, 0],
         2: (e) => [-1, 0, 0, 1, e, 0],
         3: (e, t) => [-1, 0, 0, -1, e, t],
@@ -9373,12 +9400,12 @@ var bu = (e) => /^image/.test(e.type),
         7: (e, t) => [0, -1, -1, 0, t, e],
         8: (e) => [0, -1, 1, 0, 0, e],
     },
-    Ru = (e, t, i) => (i === -1 && (i = 1), yu[i](e, t)),
+    Su = (e, t, i) => (i === -1 && (i = 1), Ru[i](e, t)),
     qt = (e, t) => ({ x: e, y: t }),
-    Su = (e, t) => e.x * t.x + e.y * t.y,
+    _u = (e, t) => e.x * t.x + e.y * t.y,
     fo = (e, t) => qt(e.x - t.x, e.y - t.y),
-    _u = (e, t) => Su(fo(e, t), fo(e, t)),
-    ho = (e, t) => Math.sqrt(_u(e, t)),
+    wu = (e, t) => _u(fo(e, t), fo(e, t)),
+    ho = (e, t) => Math.sqrt(wu(e, t)),
     bo = (e, t) => {
         let i = e,
             a = 1.5707963267948966,
@@ -9393,7 +9420,7 @@ var bu = (e) => /^image/.test(e.type),
             m = c * s;
         return qt(p * d, p * m);
     },
-    wu = (e, t) => {
+    Lu = (e, t) => {
         let i = e.width,
             a = e.height,
             n = bo(i, t),
@@ -9408,7 +9435,7 @@ var bu = (e) => /^image/.test(e.type),
             l = a.y > 0.5 ? 1 - a.y : a.y,
             o = n * 2 * e.width,
             r = l * 2 * e.height,
-            s = wu(t, i);
+            s = Lu(t, i);
         return Math.max(s.width / o, s.height / r);
     },
     vo = (e, t) => {
@@ -9435,7 +9462,7 @@ var bu = (e) => /^image/.test(e.type),
         (e.width = 1), (e.height = 1), e.getContext("2d").clearRect(0, 0, 1, 1);
     },
     To = (e) => e && (e.horizontal || e.vertical),
-    Lu = (e, t, i) => {
+    Mu = (e, t, i) => {
         if (t <= 1 && !To(i)) return (e.width = e.naturalWidth), (e.height = e.naturalHeight), e;
         let a = document.createElement("canvas"),
             n = e.naturalWidth,
@@ -9443,7 +9470,7 @@ var bu = (e) => /^image/.test(e.type),
             o = t >= 5 && t <= 8;
         o ? ((a.width = l), (a.height = n)) : ((a.width = n), (a.height = l));
         let r = a.getContext("2d");
-        if ((t && r.transform.apply(r, Ru(n, l, t)), To(i))) {
+        if ((t && r.transform.apply(r, Su(n, l, t)), To(i))) {
             let s = [1, 0, 0, 1, 0, 0];
             ((!o && i.horizontal) || o & i.vertical) && ((s[0] = -1), (s[4] = n)),
                 ((!o && i.vertical) || (o && i.horizontal)) && ((s[3] = -1), (s[5] = l)),
@@ -9451,10 +9478,10 @@ var bu = (e) => /^image/.test(e.type),
         }
         return r.drawImage(e, 0, 0, n, l), a;
     },
-    Mu = (e, t, i = {}, a = {}) => {
+    Au = (e, t, i = {}, a = {}) => {
         let { canvasMemoryLimit: n, background: l = null } = a,
             o = i.zoom || 1,
-            r = Lu(e, t, i.flip),
+            r = Mu(e, t, i.flip),
             s = { width: r.width, height: r.height },
             p = i.aspectRatio || s.height / s.width,
             c = Eo(s, p, o);
@@ -9480,8 +9507,8 @@ var bu = (e) => /^image/.test(e.type),
         let b = I.getImageData(0, 0, d.width, d.height);
         return xo(d), b;
     },
-    Au = typeof window < "u" && typeof window.document < "u";
-Au &&
+    Pu = typeof window < "u" && typeof window.document < "u";
+Pu &&
     (HTMLCanvasElement.prototype.toBlob ||
         Object.defineProperty(HTMLCanvasElement.prototype, "toBlob", {
             value: function (e, t, i) {
@@ -9493,7 +9520,7 @@ Au &&
                 });
             },
         }));
-var Pu = (e, t, i = null) =>
+var zu = (e, t, i = null) =>
         new Promise((a) => {
             let n = i ? i(e) : e;
             Promise.resolve(n).then((l) => {
@@ -9552,31 +9579,31 @@ var Pu = (e, t, i = null) =>
             { x: a || 0, y: n || 0, width: l || 0, height: o || 0 }
         );
     },
-    zu = (e) => e.map((t, i) => `${i === 0 ? "M" : "L"} ${t.x} ${t.y}`).join(" "),
+    Ou = (e) => e.map((t, i) => `${i === 0 ? "M" : "L"} ${t.x} ${t.y}`).join(" "),
     Ne = (e, t) => Object.keys(t).forEach((i) => e.setAttribute(i, t[i])),
-    Ou = "http://www.w3.org/2000/svg",
+    Fu = "http://www.w3.org/2000/svg",
     _t = (e, t) => {
-        let i = document.createElementNS(Ou, e);
+        let i = document.createElementNS(Fu, e);
         return t && Ne(i, t), i;
     },
-    Fu = (e) => Ne(e, { ...e.rect, ...e.styles }),
-    Du = (e) => {
+    Du = (e) => Ne(e, { ...e.rect, ...e.styles }),
+    Cu = (e) => {
         let t = e.rect.x + e.rect.width * 0.5,
             i = e.rect.y + e.rect.height * 0.5,
             a = e.rect.width * 0.5,
             n = e.rect.height * 0.5;
         return Ne(e, { cx: t, cy: i, rx: a, ry: n, ...e.styles });
     },
-    Cu = { contain: "xMidYMid meet", cover: "xMidYMid slice" },
-    Bu = (e, t) => {
-        Ne(e, { ...e.rect, ...e.styles, preserveAspectRatio: Cu[t.fit] || "none" });
+    Bu = { contain: "xMidYMid meet", cover: "xMidYMid slice" },
+    Nu = (e, t) => {
+        Ne(e, { ...e.rect, ...e.styles, preserveAspectRatio: Bu[t.fit] || "none" });
     },
-    Nu = { left: "start", center: "middle", right: "end" },
-    ku = (e, t, i, a) => {
+    ku = { left: "start", center: "middle", right: "end" },
+    Vu = (e, t, i, a) => {
         let n = me(t.fontSize, i, a),
             l = t.fontFamily || "sans-serif",
             o = t.fontWeight || "normal",
-            r = Nu[t.textAlign] || "start";
+            r = ku[t.textAlign] || "start";
         Ne(e, {
             ...e.rect,
             ...e.styles,
@@ -9588,7 +9615,7 @@ var Pu = (e, t, i = null) =>
         }),
             e.text !== t.text && ((e.text = t.text), (e.textContent = t.text.length ? t.text : " "));
     },
-    Vu = (e, t, i, a) => {
+    Gu = (e, t, i, a) => {
         Ne(e, { ...e.rect, ...e.styles, fill: "none" });
         let n = e.childNodes[0],
             l = e.childNodes[1],
@@ -9614,15 +9641,15 @@ var Pu = (e, t, i = null) =>
             Ne(o, { style: "display:block;", d: `M${u.x},${u.y} L${s.x},${s.y} L${g.x},${g.y}` });
         }
     },
-    Gu = (e, t, i, a) => {
+    Uu = (e, t, i, a) => {
         Ne(e, {
             ...e.styles,
             fill: "none",
-            d: zu(t.points.map((n) => ({ x: me(n.x, i, a, "width"), y: me(n.y, i, a, "height") }))),
+            d: Ou(t.points.map((n) => ({ x: me(n.x, i, a, "width"), y: me(n.y, i, a, "height") }))),
         });
     },
     yi = (e) => (t) => _t(e, { id: t.id }),
-    Uu = (e) => {
+    Wu = (e) => {
         let t = _t("image", { id: e.id, "stroke-linecap": "round", "stroke-linejoin": "round", opacity: "0" });
         return (
             (t.onload = () => {
@@ -9632,7 +9659,7 @@ var Pu = (e, t, i = null) =>
             t
         );
     },
-    Wu = (e) => {
+    Hu = (e) => {
         let t = _t("g", { id: e.id, "stroke-linecap": "round", "stroke-linejoin": "round" }),
             i = _t("line");
         t.appendChild(i);
@@ -9641,14 +9668,14 @@ var Pu = (e, t, i = null) =>
         let n = _t("path");
         return t.appendChild(n), t;
     },
-    Hu = { image: Uu, rect: yi("rect"), ellipse: yi("ellipse"), text: yi("text"), path: yi("path"), line: Wu },
-    ju = { rect: Fu, ellipse: Du, image: Bu, text: ku, path: Gu, line: Vu },
-    Yu = (e, t) => Hu[e](t),
-    qu = (e, t, i, a, n) => {
-        t !== "path" && (e.rect = wt(i, a, n)), (e.styles = ct(i, a, n)), ju[t](e, i, a, n);
+    ju = { image: Wu, rect: yi("rect"), ellipse: yi("ellipse"), text: yi("text"), path: yi("path"), line: Hu },
+    Yu = { rect: Du, ellipse: Cu, image: Nu, text: Vu, path: Uu, line: Gu },
+    qu = (e, t) => ju[e](t),
+    $u = (e, t, i, a, n) => {
+        t !== "path" && (e.rect = wt(i, a, n)), (e.styles = ct(i, a, n)), Yu[t](e, i, a, n);
     },
     Ro = (e, t) => (e[1].zIndex > t[1].zIndex ? 1 : e[1].zIndex < t[1].zIndex ? -1 : 0),
-    $u = (e, t = {}, i, a) =>
+    Xu = (e, t = {}, i, a) =>
         new Promise((n) => {
             let { background: l = null } = a,
                 o = new FileReader();
@@ -9677,13 +9704,13 @@ var Pu = (e, t, i = null) =>
                 let _ = "";
                 if (i && i.length) {
                     let K = { width: y, height: E };
-                    (_ = i.sort(Ro).reduce((oe, k) => {
-                        let H = Yu(k[0], k[1]);
+                    (_ = i.sort(Ro).reduce((pe, k) => {
+                        let H = qu(k[0], k[1]);
                         return (
-                            qu(H, k[0], k[1], K),
+                            $u(H, k[0], k[1], K),
                             H.removeAttribute("id"),
                             H.getAttribute("opacity") === 1 && H.removeAttribute("opacity"),
-                            oe +
+                            pe +
                                 `
 ` +
                                 H.outerHTML +
@@ -9741,7 +9768,7 @@ ${p.outerHTML}${_}
             }),
                 o.readAsText(e);
         }),
-    Xu = (e) => {
+    Ku = (e) => {
         let t;
         try {
             t = new ImageData(e.width, e.height);
@@ -9750,7 +9777,7 @@ ${p.outerHTML}${_}
         }
         return t.data.set(e.data), t;
     },
-    Ku = () => {
+    Qu = () => {
         let e = { resize: c, filter: p },
             t = (d, m) => (
                 d.forEach((u) => {
@@ -9833,11 +9860,11 @@ ${p.outerHTML}${_}
                 q = 0,
                 X = 0,
                 K = 0,
-                oe = 0,
+                pe = 0,
                 k = 0,
                 H = 0,
                 Y = 0,
-                re = 0,
+                oe = 0,
                 ee = 0;
             for (; F < g; F += 4)
                 (G = u[F] / 255),
@@ -9845,14 +9872,14 @@ ${p.outerHTML}${_}
                     (q = u[F + 2] / 255),
                     (X = u[F + 3] / 255),
                     (K = G * f + C * h + q * I + X * b + T),
-                    (oe = G * v + C * y + q * E + X * _ + x),
+                    (pe = G * v + C * y + q * E + X * _ + x),
                     (k = G * R + C * z + q * P + X * A + B),
                     (H = G * w + C * O + q * S + X * L + D),
                     (Y = Math.max(0, K * H) + a * (1 - H)),
-                    (re = Math.max(0, oe * H) + n * (1 - H)),
+                    (oe = Math.max(0, pe * H) + n * (1 - H)),
                     (ee = Math.max(0, k * H) + l * (1 - H)),
                     (u[F] = Math.max(0, Math.min(1, Y)) * 255),
-                    (u[F + 1] = Math.max(0, Math.min(1, re)) * 255),
+                    (u[F + 1] = Math.max(0, Math.min(1, oe)) * 255),
                     (u[F + 2] = Math.max(0, Math.min(1, ee)) * 255);
             return d;
         }
@@ -9890,12 +9917,12 @@ ${p.outerHTML}${_}
                         q = (A + 0.5) * R;
                     for (let X = Math.floor(A * R); X < (A + 1) * R; X++) {
                         let K = Math.abs(q - (X + 0.5)) / P,
-                            oe = (B + 0.5) * x,
+                            pe = (B + 0.5) * x,
                             k = K * K;
                         for (let H = Math.floor(B * x); H < (B + 1) * x; H++) {
-                            let Y = Math.abs(oe - (H + 0.5)) / z,
-                                re = Math.sqrt(k + Y * Y);
-                            if (re >= -1 && re <= 1 && ((O = 2 * re * re * re - 3 * re * re + 1), O > 0)) {
+                            let Y = Math.abs(pe - (H + 0.5)) / z,
+                                oe = Math.sqrt(k + Y * Y);
+                            if (oe >= -1 && oe <= 1 && ((O = 2 * oe * oe * oe - 3 * oe * oe + 1), O > 0)) {
                                 Y = 4 * (H + X * b);
                                 let ee = E[Y + 3];
                                 (C += O * ee),
@@ -9913,7 +9940,7 @@ ${p.outerHTML}${_}
             return { data: _, width: v, height: y };
         }
     },
-    Qu = (e, t) => {
+    Zu = (e, t) => {
         if (e.getUint32(t + 4, !1) !== 1165519206) return;
         t += 4;
         let i = e.getUint16((t += 6), !1) === 18761;
@@ -9924,7 +9951,7 @@ ${p.outerHTML}${_}
             if (e.getUint16(t + n * 12, i) === 274) return e.setUint16(t + n * 12 + 8, 1, i), !0;
         return !1;
     },
-    Zu = (e) => {
+    Ju = (e) => {
         let t = new DataView(e);
         if (t.getUint16(0) !== 65496) return null;
         let i = 2,
@@ -9936,30 +9963,30 @@ ${p.outerHTML}${_}
             i < t.byteLength &&
             ((a = t.getUint16(i, !1)),
             (n = t.getUint16(i + 2, !1) + 2),
-            !(!((a >= 65504 && a <= 65519) || a === 65534) || (l || (l = Qu(t, i, n)), i + n > t.byteLength)));
+            !(!((a >= 65504 && a <= 65519) || a === 65534) || (l || (l = Zu(t, i, n)), i + n > t.byteLength)));
 
         )
             i += n;
         return e.slice(0, i);
     },
-    Ju = (e) =>
+    eg = (e) =>
         new Promise((t) => {
             let i = new FileReader();
-            (i.onload = () => t(Zu(i.result) || null)), i.readAsArrayBuffer(e.slice(0, 256 * 1024));
+            (i.onload = () => t(Ju(i.result) || null)), i.readAsArrayBuffer(e.slice(0, 256 * 1024));
         }),
-    eg = () =>
+    tg = () =>
         (window.BlobBuilder =
             window.BlobBuilder || window.WebKitBlobBuilder || window.MozBlobBuilder || window.MSBlobBuilder),
-    tg = (e, t) => {
-        let i = eg();
+    ig = (e, t) => {
+        let i = tg();
         if (i) {
             let a = new i();
             return a.append(e), a.getBlob(t);
         }
         return new Blob([e], { type: t });
     },
-    ig = () => Math.random().toString(36).substr(2, 9),
-    ag = (e) => {
+    ag = () => Math.random().toString(36).substr(2, 9),
+    ng = (e) => {
         let t = new Blob(["(", e.toString(), ")()"], { type: "application/javascript" }),
             i = URL.createObjectURL(t),
             a = new Worker(i),
@@ -9967,7 +9994,7 @@ ${p.outerHTML}${_}
         return {
             transfer: () => {},
             post: (l, o, r) => {
-                let s = ig();
+                let s = ag();
                 (n[s] = o),
                     (a.onmessage = (p) => {
                         let c = n[p.data.id];
@@ -9980,7 +10007,7 @@ ${p.outerHTML}${_}
             },
         };
     },
-    ng = (e) =>
+    lg = (e) =>
         new Promise((t, i) => {
             let a = new Image();
             (a.onload = () => {
@@ -9991,18 +10018,18 @@ ${p.outerHTML}${_}
                 }),
                 (a.src = e);
         }),
-    lg = (e) => e.reduce((t, i) => t.then((a) => i().then(Array.prototype.concat.bind(a))), Promise.resolve([])),
-    og = (e, t) =>
+    og = (e) => e.reduce((t, i) => t.then((a) => i().then(Array.prototype.concat.bind(a))), Promise.resolve([])),
+    rg = (e, t) =>
         new Promise((i) => {
             let a = { width: e.width, height: e.height },
                 n = e.getContext("2d"),
                 l = t.sort(Ro).map(
                     (o) => () =>
                         new Promise((r) => {
-                            ug[o[0]](n, a, o[1], r) && r();
+                            gg[o[0]](n, a, o[1], r) && r();
                         }),
                 );
-            lg(l).then(() => i(e));
+            og(l).then(() => i(e));
         }),
     Lt = (e, t) => {
         e.beginPath(),
@@ -10017,12 +10044,12 @@ ${p.outerHTML}${_}
     Mt = (e) => {
         e.fill(), e.stroke(), (e.globalAlpha = 1);
     },
-    rg = (e, t, i) => {
+    sg = (e, t, i) => {
         let a = wt(i, t),
             n = ct(i, t);
         return Lt(e, n), e.rect(a.x, a.y, a.width, a.height), Mt(e, n), !0;
     },
-    sg = (e, t, i) => {
+    cg = (e, t, i) => {
         let a = wt(i, t),
             n = ct(i, t);
         Lt(e, n);
@@ -10047,7 +10074,7 @@ ${p.outerHTML}${_}
             !0
         );
     },
-    cg = (e, t, i, a) => {
+    dg = (e, t, i, a) => {
         let n = wt(i, t),
             l = ct(i, t);
         Lt(e, l);
@@ -10073,7 +10100,7 @@ ${p.outerHTML}${_}
             }),
             (o.src = i.src);
     },
-    dg = (e, t, i) => {
+    pg = (e, t, i) => {
         let a = wt(i, t),
             n = ct(i, t);
         Lt(e, n);
@@ -10083,7 +10110,7 @@ ${p.outerHTML}${_}
             s = i.textAlign || "left";
         return (e.font = `${r} ${l}px ${o}`), (e.textAlign = s), e.fillText(i.text, a.x, a.y), Mt(e, n), !0;
     },
-    pg = (e, t, i) => {
+    mg = (e, t, i) => {
         let a = ct(i, t);
         Lt(e, a), e.beginPath();
         let n = i.points.map((o) => ({ x: me(o.x, t, 1, "width"), y: me(o.y, t, 1, "height") }));
@@ -10092,7 +10119,7 @@ ${p.outerHTML}${_}
         for (let o = 1; o < l; o++) e.lineTo(n[o].x, n[o].y);
         return Mt(e, a), !0;
     },
-    mg = (e, t, i) => {
+    ug = (e, t, i) => {
         let a = wt(i, t),
             n = ct(i, t);
         Lt(e, n), e.beginPath();
@@ -10117,14 +10144,14 @@ ${p.outerHTML}${_}
         }
         return Mt(e, n), !0;
     },
-    ug = { rect: rg, ellipse: sg, image: cg, text: dg, line: mg, path: pg },
-    gg = (e) => {
+    gg = { rect: sg, ellipse: cg, image: dg, text: pg, line: ug, path: mg },
+    fg = (e) => {
         let t = document.createElement("canvas");
         return (t.width = e.width), (t.height = e.height), t.getContext("2d").putImageData(e, 0, 0), t;
     },
-    fg = (e, t, i = {}) =>
+    hg = (e, t, i = {}) =>
         new Promise((a, n) => {
-            if (!e || !xu(e)) return n({ status: "not an image file", file: e });
+            if (!e || !yu(e)) return n({ status: "not an image file", file: e });
             let { stripImageHead: l, beforeCreateBlob: o, afterCreateBlob: r, canvasMemoryLimit: s } = i,
                 { crop: p, size: c, filter: d, markup: m, output: u } = t,
                 g = t.image && t.image.orientation ? Math.max(1, Math.min(8, t.image.orientation)) : null,
@@ -10140,13 +10167,13 @@ ${p.outerHTML}${_}
                     Promise.resolve(x).then(a);
                 },
                 y = (_, x) => {
-                    let R = gg(_),
-                        z = m.length ? og(R, m) : R;
+                    let R = fg(_),
+                        z = m.length ? rg(R, m) : R;
                     Promise.resolve(z).then((P) => {
-                        Pu(P, x, o)
+                        zu(P, x, o)
                             .then((A) => {
                                 if ((xo(P), l)) return v(A);
-                                Ju(e).then((B) => {
+                                eg(e).then((B) => {
                                     B !== null && (A = new Blob([B, A.slice(20)], { type: A.type })), v(A);
                                 });
                             })
@@ -10154,35 +10181,35 @@ ${p.outerHTML}${_}
                     });
                 };
             if (/svg/.test(e.type) && I === null)
-                return $u(e, p, m, { background: b }).then((_) => {
-                    a(tg(_, "image/svg+xml"));
+                return Xu(e, p, m, { background: b }).then((_) => {
+                    a(ig(_, "image/svg+xml"));
                 });
             let E = URL.createObjectURL(e);
-            ng(E)
+            lg(E)
                 .then((_) => {
                     URL.revokeObjectURL(E);
-                    let x = Mu(_, g, p, { canvasMemoryLimit: s, background: b }),
+                    let x = Au(_, g, p, { canvasMemoryLimit: s, background: b }),
                         R = { quality: h, type: I || e.type };
                     if (!T.length) return y(x, R);
-                    let z = ag(Ku);
+                    let z = ng(Qu);
                     z.post(
                         { transforms: T, imageData: x },
                         (P) => {
-                            y(Xu(P), R), z.terminate();
+                            y(Ku(P), R), z.terminate();
                         },
                         [x.data.buffer],
                     );
                 })
                 .catch(n);
         }),
-    hg = ["x", "y", "left", "top", "right", "bottom", "width", "height"],
-    bg = (e) => (typeof e == "string" && /%/.test(e) ? parseFloat(e) / 100 : e),
-    Eg = (e) => {
+    bg = ["x", "y", "left", "top", "right", "bottom", "width", "height"],
+    Eg = (e) => (typeof e == "string" && /%/.test(e) ? parseFloat(e) / 100 : e),
+    Tg = (e) => {
         let [t, i] = e,
-            a = i.points ? {} : hg.reduce((n, l) => ((n[l] = bg(i[l])), n), {});
+            a = i.points ? {} : bg.reduce((n, l) => ((n[l] = Eg(i[l])), n), {});
         return [t, { zIndex: 0, ...i, ...a }];
     },
-    Tg = (e) =>
+    Ig = (e) =>
         new Promise((t, i) => {
             let a = new Image();
             a.src = URL.createObjectURL(e);
@@ -10214,7 +10241,7 @@ typeof window < "u" &&
             },
         }));
 var La = typeof window < "u" && typeof window.document < "u",
-    Ig = La && /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream,
+    vg = La && /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream,
     So = ({ addFilter: e, utils: t }) => {
         let { Type: i, forin: a, getFileFromBlob: n, isFile: l } = t,
             o = ["crop", "resize", "filter", "markup", "output"],
@@ -10238,8 +10265,8 @@ var La = typeof window < "u" && typeof window.document < "u",
         );
         let p = (c, d, m) =>
             new Promise((u) => {
-                if (!c("GET_ALLOW_IMAGE_TRANSFORM") || m.archived || !l(d) || !bu(d)) return u(!1);
-                Tg(d)
+                if (!c("GET_ALLOW_IMAGE_TRANSFORM") || m.archived || !l(d) || !Eu(d)) return u(!1);
+                Ig(d)
                     .then(() => {
                         let g = c("GET_IMAGE_TRANSFORM_IMAGE_FILTER");
                         if (g) {
@@ -10335,7 +10362,7 @@ var La = typeof window < "u" && typeof window.document < "u",
                                                         ? { mode: B.mode, upscale: B.upscale, ...B.size }
                                                         : void 0,
                                                 crop: S && !s(S) ? { ...S } : void 0,
-                                                markup: D && D.length ? D.map(Eg) : [],
+                                                markup: D && D.length ? D.map(Tg) : [],
                                                 filter: L,
                                             };
                                         if (F.output) {
@@ -10350,9 +10377,9 @@ var La = typeof window < "u" && typeof window.document < "u",
                                             canvasMemoryLimit: d("GET_IMAGE_TRANSFORM_CANVAS_MEMORY_LIMIT"),
                                             stripImageHead: d("GET_IMAGE_TRANSFORM_OUTPUT_STRIP_IMAGE_HEAD"),
                                         };
-                                        fg(x, F, G)
+                                        hg(x, F, G)
                                             .then((C) => {
-                                                let q = n(C, Iu(x.name, vu(C.type)));
+                                                let q = n(C, vu(x.name, xu(C.type)));
                                                 z(q);
                                             })
                                             .catch(P);
@@ -10380,7 +10407,7 @@ var La = typeof window < "u" && typeof window.document < "u",
                     imageTransformVariantsOriginalName: ["original_", i.STRING],
                     imageTransformBeforeCreateBlob: [null, i.FUNCTION],
                     imageTransformAfterCreateBlob: [null, i.FUNCTION],
-                    imageTransformCanvasMemoryLimit: [La && Ig ? 4096 * 4096 : null, i.INT],
+                    imageTransformCanvasMemoryLimit: [La && vg ? 4096 * 4096 : null, i.INT],
                     imageTransformCanvasBackgroundColor: [null, i.STRING],
                 },
             }
@@ -10448,7 +10475,7 @@ var Ma = (e) => /^video/.test(e.type),
             return t.getBoundingClientRect().left;
         }
     },
-    vg = (e) =>
+    xg = (e) =>
         e.utils.createView({
             name: "media-preview",
             tag: "div",
@@ -10506,13 +10533,13 @@ var Ma = (e) => /^video/.test(e.type),
                 },
             }),
         }),
-    xg = (e) => {
+    yg = (e) => {
         let t = ({ root: a, props: n }) => {
                 let { id: l } = n;
                 a.query("GET_ITEM", l) && a.dispatch("DID_MEDIA_PREVIEW_LOAD", { id: l });
             },
             i = ({ root: a, props: n }) => {
-                let l = vg(e);
+                let l = xg(e);
                 a.ref.media = a.appendChildView(a.createChildView(l, { id: n.id }));
             };
         return e.utils.createView({
@@ -10524,7 +10551,7 @@ var Ma = (e) => /^video/.test(e.type),
     Pa = (e) => {
         let { addFilter: t, utils: i } = e,
             { Type: a, createRoute: n } = i,
-            l = xg(e);
+            l = yg(e);
         return (
             t("CREATE_VIEW", (o) => {
                 let { is: r, view: s, query: p } = o;
@@ -10553,8 +10580,8 @@ var Ma = (e) => /^video/.test(e.type),
             { options: { allowVideoPreview: [!0, a.BOOLEAN], allowAudioPreview: [!0, a.BOOLEAN] } }
         );
     },
-    yg = typeof window < "u" && typeof window.document < "u";
-yg && document.dispatchEvent(new CustomEvent("FilePond:pluginloaded", { detail: Pa }));
+    Rg = typeof window < "u" && typeof window.document < "u";
+Rg && document.dispatchEvent(new CustomEvent("FilePond:pluginloaded", { detail: Pa }));
 var wo = {
     labelIdle:
         '\u134B\u12ED\u120E\u127D \u1235\u1260\u12CD \u12A5\u12DA\u1205 \u130B\u122D \u12ED\u120D\u1240\u1241\u1275 \u12C8\u12ED\u121D \u134B\u12ED\u1209\u1295 <span class="filepond--label-action"> \u12ED\u121D\u1228\u1321 </span>',
@@ -11402,10 +11429,10 @@ var Ho = {
     imageValidateSizeLabelExpectedMaxResolution: "Resolusi maksimum adalah {maxResolution}",
 };
 var jo = {
-    labelIdle: 'Trascina e rilascia i tuoi file oppure <span class = "filepond--label-action"> Carica <span>',
+    labelIdle: 'Trascina e rilascia i tuoi file oppure <span class="filepond--label-action"> Sfoglia <span>',
     labelInvalidField: "Il campo contiene dei file non validi",
-    labelFileWaitingForSize: "Aspettando le dimensioni",
-    labelFileSizeNotAvailable: "Dimensioni non disponibili",
+    labelFileWaitingForSize: "In attesa della dimensione",
+    labelFileSizeNotAvailable: "Dimensione non disponibile",
     labelFileLoading: "Caricamento",
     labelFileLoadError: "Errore durante il caricamento",
     labelFileProcessing: "Caricamento",
@@ -11420,17 +11447,17 @@ var jo = {
     labelButtonRemoveItem: "Elimina",
     labelButtonAbortItemLoad: "Cancella",
     labelButtonRetryItemLoad: "Ritenta",
-    labelButtonAbortItemProcessing: "Camcella",
+    labelButtonAbortItemProcessing: "Cancella",
     labelButtonUndoItemProcessing: "Indietro",
     labelButtonRetryItemProcessing: "Ritenta",
     labelButtonProcessItem: "Carica",
-    labelMaxFileSizeExceeded: "Il peso del file \xE8 eccessivo",
-    labelMaxFileSize: "Il peso massimo del file \xE8 {filesize}",
+    labelMaxFileSizeExceeded: "La dimensione del file \xE8 eccessiva",
+    labelMaxFileSize: "La dimensione massima del file \xE8 {filesize}",
     labelMaxTotalFileSizeExceeded: "Dimensione totale massima superata",
-    labelMaxTotalFileSize: "La dimensione massima totale del file \xE8 {filesize}",
+    labelMaxTotalFileSize: "La dimensione massima totale dei file \xE8 {filesize}",
     labelFileTypeNotAllowed: "File non supportato",
     fileValidateTypeLabelExpectedTypes: "Aspetta {allButLastType} o {lastType}",
-    imageValidateSizeLabelFormatError: "Tipo di immagine non compatibile",
+    imageValidateSizeLabelFormatError: "Tipo di immagine non supportata",
     imageValidateSizeLabelImageSizeTooSmall: "L'immagine \xE8 troppo piccola",
     imageValidateSizeLabelImageSizeTooBig: "L'immagine \xE8 troppo grande",
     imageValidateSizeLabelExpectedMinSize: "La dimensione minima \xE8 {minWidth} \xD7 {minHeight}",
@@ -12265,7 +12292,7 @@ ve(go);
 ve(_o);
 ve(Pa);
 window.FilePond = la;
-function Rg({
+function Sg({
     acceptedFileTypes: e,
     imageEditorEmptyFillColor: t,
     imageEditorMode: i,
@@ -12291,36 +12318,37 @@ function Rg({
     isDownloadable: E,
     isMultiple: _,
     isOpenable: x,
-    isPreviewable: R,
-    isReorderable: z,
-    itemPanelAspectRatio: P,
-    loadingIndicatorPosition: A,
-    locale: B,
-    maxFiles: w,
-    maxSize: O,
-    minSize: S,
-    maxParallelUploads: L,
-    mimeTypeMap: D,
-    panelAspectRatio: F,
-    panelLayout: G,
-    placeholder: C,
-    removeUploadedFileButtonPosition: q,
-    removeUploadedFileUsing: X,
-    reorderUploadedFilesUsing: K,
-    shouldAppendFiles: oe,
-    shouldOrientImageFromExif: k,
-    shouldTransformImage: H,
-    state: Y,
-    uploadButtonPosition: re,
-    uploadingMessage: ee,
-    uploadProgressIndicatorPosition: dt,
-    uploadUsing: dr,
+    isPasteable: R,
+    isPreviewable: z,
+    isReorderable: P,
+    itemPanelAspectRatio: A,
+    loadingIndicatorPosition: B,
+    locale: w,
+    maxFiles: O,
+    maxSize: S,
+    minSize: L,
+    maxParallelUploads: D,
+    mimeTypeMap: F,
+    panelAspectRatio: G,
+    panelLayout: C,
+    placeholder: q,
+    removeUploadedFileButtonPosition: X,
+    removeUploadedFileUsing: K,
+    reorderUploadedFilesUsing: pe,
+    shouldAppendFiles: k,
+    shouldOrientImageFromExif: H,
+    shouldTransformImage: Y,
+    state: oe,
+    uploadButtonPosition: ee,
+    uploadingMessage: dt,
+    uploadProgressIndicatorPosition: dr,
+    uploadUsing: pr,
 }) {
     return {
         fileKeyIndex: {},
         pond: null,
         shouldUpdateState: !0,
-        state: Y,
+        state: oe,
         lastState: null,
         error: null,
         uploadedFileIndex: {},
@@ -12329,17 +12357,17 @@ function Rg({
         currentRatio: "",
         editor: {},
         init: async function () {
-            Ft(cr[B] ?? cr.en),
+            Ft(cr[w] ?? cr.en),
                 (this.pond = gt(this.$refs.input, {
                     acceptedFileTypes: e,
-                    allowImageExifOrientation: k,
-                    allowPaste: !1,
+                    allowImageExifOrientation: H,
+                    allowPaste: R,
                     allowRemove: o,
-                    allowReorder: z,
-                    allowImagePreview: R,
-                    allowVideoPreview: R,
-                    allowAudioPreview: R,
-                    allowImageTransform: H,
+                    allowReorder: P,
+                    allowImagePreview: z,
+                    allowVideoPreview: z,
+                    allowAudioPreview: z,
+                    allowImageTransform: Y,
                     credits: !1,
                     files: await this.getFiles(),
                     imageCropAspectRatio: p,
@@ -12349,19 +12377,19 @@ function Rg({
                     imageResizeMode: d,
                     imageResizeUpscale: g,
                     imageTransformOutputStripImageHead: !1,
-                    itemInsertLocation: oe ? "after" : "before",
-                    ...(C && { labelIdle: C }),
-                    maxFiles: w,
-                    maxFileSize: O,
-                    minFileSize: S,
-                    ...(L && { maxParallelUploads: L }),
-                    styleButtonProcessItemPosition: re,
-                    styleButtonRemoveItemPosition: q,
-                    styleItemPanelAspectRatio: P,
-                    styleLoadIndicatorPosition: A,
-                    stylePanelAspectRatio: F,
-                    stylePanelLayout: G,
-                    styleProgressIndicatorPosition: dt,
+                    itemInsertLocation: k ? "after" : "before",
+                    ...(q && { labelIdle: q }),
+                    maxFiles: O,
+                    maxFileSize: S,
+                    minFileSize: L,
+                    ...(D && { maxParallelUploads: D }),
+                    styleButtonProcessItemPosition: ee,
+                    styleButtonRemoveItemPosition: X,
+                    styleItemPanelAspectRatio: A,
+                    styleLoadIndicatorPosition: B,
+                    stylePanelAspectRatio: G,
+                    stylePanelLayout: C,
+                    styleProgressIndicatorPosition: dr,
                     server: {
                         load: async (N, W) => {
                             let Q = await (await fetch(N, { cache: "no-store" })).blob();
@@ -12372,7 +12400,7 @@ function Rg({
                             let Kt = ("10000000-1000-4000-8000" + -1e11).replace(/[018]/g, (Qt) =>
                                 (Qt ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (Qt / 4)))).toString(16),
                             );
-                            dr(
+                            pr(
                                 Kt,
                                 W,
                                 (Qt) => {
@@ -12387,7 +12415,7 @@ function Rg({
                             $ && (await l($), W());
                         },
                         revert: async (N, W) => {
-                            await X(N), W();
+                            await K(N), W();
                         },
                     },
                     allowImageEdit: h,
@@ -12400,7 +12428,7 @@ function Rg({
                     fileValidateTypeDetectType: (N, W) =>
                         new Promise(($, Q) => {
                             let Ge = N.name.split(".").pop().toLowerCase(),
-                                Me = D[Ge] || W || Gl.getType(Ge);
+                                Me = F[Ge] || W || Gl.getType(Ge);
                             Me ? $(Me) : Q();
                         }),
                 })),
@@ -12421,7 +12449,7 @@ function Rg({
                     let W = N.map(($) =>
                         $.source instanceof File ? $.serverId : (this.uploadedFileIndex[$.source] ?? null),
                     ).filter(($) => $);
-                    await K(oe ? W : W.reverse());
+                    await pe(k ? W : W.reverse());
                 }),
                 this.pond.on("initfile", async (N) => {
                     E && (f || this.insertDownloadLink(N));
@@ -12431,7 +12459,7 @@ function Rg({
                 }),
                 this.pond.on("addfilestart", async (N) => {
                     N.status === Et.PROCESSING_QUEUED &&
-                        this.dispatchFormEvent("form-processing-started", { message: ee });
+                        this.dispatchFormEvent("form-processing-started", { message: dt });
                 });
             let V = async () => {
                 this.pond.getFiles().filter((N) => N.status === Et.PROCESSING || N.status === Et.PROCESSING_QUEUED)
@@ -12440,7 +12468,7 @@ function Rg({
             this.pond.on("processfile", V),
                 this.pond.on("processfileabort", V),
                 this.pond.on("processfilerevert", V),
-                G === "compact circle" &&
+                C === "compact circle" &&
                     (this.pond.on("error", (N) => {
                         this.error = `${N.main}: ${N.sub}`.replace("Expects  or", "Expects");
                     }),
@@ -12469,12 +12497,12 @@ function Rg({
                         options: {
                             type: "local",
                             ...(!N.type ||
-                            (R && (/^audio/.test(N.type) || /^image/.test(N.type) || /^video/.test(N.type)))
+                            (z && (/^audio/.test(N.type) || /^image/.test(N.type) || /^video/.test(N.type)))
                                 ? {}
                                 : { file: { name: N.name, size: N.size, type: N.type } }),
                         },
                     });
-            return oe ? V : V.reverse();
+            return k ? V : V.reverse();
         },
         insertDownloadLink: function (V) {
             if (V.origin !== Ct.LOCAL) return;
@@ -12672,12 +12700,12 @@ var cr = {
     zh_CN: rr,
     zh_TW: sr,
 };
-export { Rg as default };
+export { Sg as default };
 /*! Bundled license information:
 
 filepond/dist/filepond.esm.js:
   (*!
-   * FilePond 4.32.7
+   * FilePond 4.32.8
    * Licensed under MIT, https://opensource.org/licenses/MIT/
    * Please visit https://pqina.nl/filepond/ for details.
    *)
