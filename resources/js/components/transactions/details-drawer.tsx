@@ -8,7 +8,6 @@ import { CategoryIcon } from "#/components/category-icon.tsx";
 import { Image } from "#/components/image.tsx";
 import * as Avatar from "#/components/ui/avatar.tsx";
 import * as Badge from "#/components/ui/badge.tsx";
-import * as Button from "#/components/ui/button.tsx";
 import * as Divider from "#/components/ui/divider.tsx";
 import * as Drawer from "#/components/ui/drawer.tsx";
 import { SelectField } from "#/components/ui/form/select-field.tsx";
@@ -19,6 +18,8 @@ import { useTranslation } from "#/hooks/use-translation.ts";
 import { routes } from "#/routes.ts";
 import { type PaginatedResponse } from "#/types/pagination.ts";
 import { currencyFormatter } from "#/utils/number-formatter.ts";
+import { Button } from "../button.tsx";
+import { SubmitButton } from "../submit-button.tsx";
 import { Skeleton } from "../ui/skeleton.tsx";
 
 export function TransactionDetailsDrawer() {
@@ -307,7 +308,6 @@ export function TransactionDetailsDrawer() {
                         <Divider.Root $type="line-spacing" />
 
                         <Textarea
-                            data-autosubmit-debounce-timeout="1000"
                             disabled={form.processing || isLoading}
                             error={form.errors.note}
                             id="note"
@@ -323,16 +323,27 @@ export function TransactionDetailsDrawer() {
                 </Drawer.Body>
 
                 <Drawer.Footer>
-                    <Button.Root
+                    <SubmitButton
+                        $size="md"
+                        $type="primary"
+                        className="flex-1"
+                        form="update-transaction-form"
+                        isSubmitting={form.processing}
+                        type="submit"
+                    >
+                        {form.processing ? "Updating..." : "Update transaction"}
+                    </SubmitButton>
+
+                    <Button
                         $size="md"
                         $style="ghost"
                         $type="error"
                         className="w-full"
+                        leadingIcon={Delete02Icon}
                         onClick={() => actions.setParams({ action: "delete" })}
                     >
-                        <Button.Icon as={Delete02Icon} />
                         Delete Transaction
-                    </Button.Root>
+                    </Button>
                 </Drawer.Footer>
             </Drawer.Content>
         </Drawer.Root>
