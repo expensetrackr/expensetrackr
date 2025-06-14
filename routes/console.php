@@ -30,4 +30,11 @@ Schedule::command('transactions:process-recurring')
     ->daily()
     ->at('00:00')
     ->withoutOverlapping()
+    ->appendOutputTo(storage_path('logs/recurring-transactions.log'))
+    ->before(function () {
+        Log::info('Starting recurring transactions processing job');
+    })
+    ->after(function () {
+        Log::info('Completed recurring transactions processing job');
+    })
     ->sentryMonitor();
