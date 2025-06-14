@@ -7,6 +7,7 @@ use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schedule;
+use Spatie\Health\Commands\RunHealthChecksCommand;
 
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
@@ -38,3 +39,5 @@ Schedule::command('transactions:process-recurring')
         Log::info('Completed recurring transactions processing job');
     })
     ->sentryMonitor();
+
+Schedule::command(RunHealthChecksCommand::class)->everyMinute();

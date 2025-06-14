@@ -15,6 +15,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Spatie\Health\Http\Controllers\HealthCheckResultsController;
 
 Route::get('/', function (Request $request) {
     if ($request->user()) {
@@ -72,6 +73,8 @@ Route::middleware([
 Route::post('/language', LanguageController::class)->name('language.store');
 
 Route::get('/thank-you', fn () => Inertia::render('thank-you'))->name('thank-you');
+
+Route::get('health', HealthCheckResultsController::class);
 
 require __DIR__.'/socialstream.php';
 require __DIR__.'/workspaces.php';
