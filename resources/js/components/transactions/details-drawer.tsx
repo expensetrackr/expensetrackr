@@ -322,7 +322,7 @@ export function TransactionDetailsDrawer() {
                     </form>
                 </Drawer.Body>
 
-                <Drawer.Footer>
+                <Drawer.Footer className="grid gap-2">
                     <SubmitButton
                         $size="md"
                         $type="primary"
