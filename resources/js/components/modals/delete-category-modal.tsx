@@ -1,10 +1,11 @@
 import { useForm } from "@inertiajs/react";
 import Delete02Icon from "virtual:icons/hugeicons/delete-02";
 
-import * as Button from "#/components/ui/button.tsx";
+import { Button } from "#/components/button.tsx";
 import * as Modal from "#/components/ui/modal.tsx";
 import { useActionsParams } from "#/hooks/use-actions-params.ts";
 import { routes } from "#/routes.ts";
+import { SubmitButton } from "../submit-button.tsx";
 
 export function DeleteCategoryModal() {
     const actions = useActionsParams();
@@ -68,26 +69,19 @@ export function DeleteCategoryModal() {
 
                 <Modal.Footer className="border-t-0">
                     <Modal.Close asChild>
-                        <Button.Root
-                            $size="sm"
-                            $style="stroke"
-                            $type="neutral"
-                            className="w-full"
-                            onClick={handleClose}
-                        >
+                        <Button $size="sm" $style="stroke" $type="neutral" className="w-full" onClick={handleClose}>
                             Cancel
-                        </Button.Root>
+                        </Button>
                     </Modal.Close>
-                    <Button.Root
+                    <SubmitButton
                         $size="sm"
                         $type="error"
                         className="w-full"
-                        disabled={form.processing}
                         form="delete-category-form"
-                        type="submit"
+                        isSubmitting={form.processing}
                     >
                         Yes, delete
-                    </Button.Root>
+                    </SubmitButton>
                 </Modal.Footer>
             </Modal.Content>
         </Modal.Root>

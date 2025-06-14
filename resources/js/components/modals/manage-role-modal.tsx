@@ -4,7 +4,8 @@ import FolderSecurityIcon from "virtual:icons/hugeicons/folder-security";
 
 import { routes } from "#/routes.ts";
 import { Action } from "#/utils/action.ts";
-import * as Button from "../ui/button.tsx";
+import { Button } from "../button.tsx";
+import { SubmitButton } from "../submit-button.tsx";
 import { SelectField } from "../ui/form/select-field.tsx";
 import * as Modal from "../ui/modal.tsx";
 
@@ -79,7 +80,7 @@ export function ManageRoleModal({
 
                 <Modal.Footer>
                     <Modal.Close asChild>
-                        <Button.Root
+                        <Button
                             $size="sm"
                             $style="stroke"
                             $type="neutral"
@@ -88,17 +89,16 @@ export function ManageRoleModal({
                             onClick={() => setAction(null)}
                         >
                             Cancel
-                        </Button.Root>
+                        </Button>
                     </Modal.Close>
-                    <Button.Root
+                    <SubmitButton
                         $size="sm"
                         className="w-full"
-                        disabled={form.processing}
-                        form={`manage-role-form-${user.id}`}
-                        type="submit"
+                        form={`update-workspace-members-role-${user.id}-form`}
+                        isSubmitting={form.processing}
                     >
                         {form.processing ? "Updating..." : "Update role"}
-                    </Button.Root>
+                    </SubmitButton>
                 </Modal.Footer>
             </Modal.Content>
         </Modal.Root>

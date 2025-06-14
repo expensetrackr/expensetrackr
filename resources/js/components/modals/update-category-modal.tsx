@@ -4,9 +4,9 @@ import * as React from "react";
 import { toast } from "sonner";
 import { parse } from "valibot";
 
+import { Button } from "#/components/button.tsx";
 import { classificationIcons } from "#/components/category-classification-icon.tsx";
 import { categoryIcons } from "#/components/category-icon.tsx";
-import * as Button from "#/components/ui/button.tsx";
 import { ColorField } from "#/components/ui/form/color.tsx";
 import { SelectField } from "#/components/ui/form/select-field.tsx";
 import { TextField } from "#/components/ui/form/text-field.tsx";
@@ -16,6 +16,7 @@ import { useActionsParams } from "#/hooks/use-actions-params.ts";
 import { routes } from "#/routes.ts";
 import { CategoryClassification } from "#/schemas/enums.ts";
 import { type PaginatedResponse } from "#/types/pagination.ts";
+import { SubmitButton } from "../submit-button.tsx";
 
 export function UpdateCategoryModal() {
     const actions = useActionsParams();
@@ -246,7 +247,7 @@ export function UpdateCategoryModal() {
 
                 <Modal.Footer>
                     <Modal.Close asChild>
-                        <Button.Root
+                        <Button
                             $size="sm"
                             $style="stroke"
                             $type="neutral"
@@ -255,17 +256,16 @@ export function UpdateCategoryModal() {
                             onClick={handleClose}
                         >
                             Cancel
-                        </Button.Root>
+                        </Button>
                     </Modal.Close>
-                    <Button.Root
+                    <SubmitButton
                         $size="sm"
                         className="w-full"
-                        disabled={form.processing || isLoading || !category?.id}
                         form="update-category-form"
-                        type="submit"
+                        isSubmitting={form.processing || isLoading || !category?.id}
                     >
                         {form.processing ? "Updating..." : isLoading ? "Loading..." : "Update"}
-                    </Button.Root>
+                    </SubmitButton>
                 </Modal.Footer>
             </Modal.Content>
         </Modal.Root>

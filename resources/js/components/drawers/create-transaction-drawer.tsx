@@ -13,10 +13,10 @@ import { routes } from "#/routes.ts";
 import { TransactionRecurringInterval, TransactionType } from "#/schemas/enums.ts";
 import { type PaginatedResponse } from "#/types/pagination.ts";
 import { currencyFormatter, decimalFormatter } from "#/utils/number-formatter.ts";
+import { Button } from "../button.tsx";
 import { CurrencySelect } from "../currency-select.tsx";
 import { SubmitButton } from "../submit-button.tsx";
 import * as Avatar from "../ui/avatar.tsx";
-import * as Button from "../ui/button.tsx";
 import * as Divider from "../ui/divider.tsx";
 import * as Drawer from "../ui/drawer.tsx";
 import { DatePicker } from "../ui/form/date-picker.tsx";
@@ -335,7 +335,7 @@ export function CreateTransactionDrawer() {
                     </Drawer.Body>
 
                     <Drawer.Footer className="flex justify-between gap-3 border-t border-(--stroke-soft-200) p-5">
-                        <Button.Root
+                        <Button
                             $size="md"
                             $style="stroke"
                             $type="neutral"
@@ -343,7 +343,7 @@ export function CreateTransactionDrawer() {
                             onClick={() => actions.resetParams({ shallow: false })}
                         >
                             Discard
-                        </Button.Root>
+                        </Button>
 
                         <SubmitButton
                             $size="md"

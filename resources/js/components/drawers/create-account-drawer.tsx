@@ -17,8 +17,8 @@ import { useTranslation } from "#/hooks/use-translation.ts";
 import { routes } from "#/routes.ts";
 import { AccountTypeEnum, SubtypeOptions } from "#/schemas/account.ts";
 import { type BalanceSchema, CreateAccountSchema, InterestRateTypeEnum } from "#/utils/steppers/create-account.step.ts";
+import { Button } from "../button.tsx";
 import { SubmitButton } from "../submit-button.tsx";
-import * as Button from "../ui/button.tsx";
 import * as Divider from "../ui/divider.tsx";
 import * as Drawer from "../ui/drawer.tsx";
 import { DatePicker } from "../ui/form/date-picker.tsx";
@@ -229,7 +229,7 @@ export function CreateAccountDrawer() {
                     </Drawer.Body>
 
                     <Drawer.Footer className="flex justify-between gap-3 border-t border-(--stroke-soft-200) p-5">
-                        <Button.Root
+                        <Button
                             $size="md"
                             $style="stroke"
                             $type="neutral"
@@ -237,7 +237,8 @@ export function CreateAccountDrawer() {
                             onClick={() => actions.resetParams({ shallow: false })}
                         >
                             {t("accounts.create.discard")}
-                        </Button.Root>
+                        </Button>
+
                         <SubmitButton
                             $size="md"
                             $type="primary"

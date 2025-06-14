@@ -5,7 +5,8 @@ import MailRemove01Icon from "virtual:icons/hugeicons/mail-remove-01";
 
 import { routes } from "#/routes.ts";
 import { Action, getAction } from "#/utils/action.ts";
-import * as Button from "../ui/button.tsx";
+import { Button } from "../button.tsx";
+import { SubmitButton } from "../submit-button.tsx";
 import * as Modal from "../ui/modal.tsx";
 
 export function CancelWorkspaceInvitation({ invitation }: { invitation: App.Data.Workspace.WorkspaceInvitationData }) {
@@ -31,14 +32,14 @@ export function CancelWorkspaceInvitation({ invitation }: { invitation: App.Data
             open={action === getAction("WorkspaceInvitationsDestroy", invitation.id)}
         >
             <Modal.Trigger asChild>
-                <Button.Root
+                <Button
                     $size="sm"
                     $style="stroke"
                     $type="error"
                     onClick={() => setAction(getAction("WorkspaceInvitationsDestroy", invitation.id))}
                 >
                     Cancel invitation
-                </Button.Root>
+                </Button>
             </Modal.Trigger>
 
             <Modal.Content className="max-w-[440px]">
@@ -50,7 +51,7 @@ export function CancelWorkspaceInvitation({ invitation }: { invitation: App.Data
 
                 <Modal.Footer>
                     <Modal.Close asChild>
-                        <Button.Root
+                        <Button
                             $size="sm"
                             $style="stroke"
                             $type="neutral"
@@ -59,17 +60,17 @@ export function CancelWorkspaceInvitation({ invitation }: { invitation: App.Data
                             onClick={() => setAction(null)}
                         >
                             Cancel
-                        </Button.Root>
+                        </Button>
                     </Modal.Close>
-                    <Button.Root
+                    <SubmitButton
                         $size="sm"
                         $type="error"
                         className="w-full"
-                        disabled={isCancelling}
+                        isSubmitting={isCancelling}
                         onClick={() => cancelWorkspaceInvitation(invitation)}
                     >
                         {isCancelling ? "Cancelling..." : "Yes, cancel it"}
-                    </Button.Root>
+                    </SubmitButton>
                 </Modal.Footer>
             </Modal.Content>
         </Modal.Root>

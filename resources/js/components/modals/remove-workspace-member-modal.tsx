@@ -4,7 +4,8 @@ import Delete02SolidIcon from "virtual:icons/hugeicons/delete-02-solid";
 
 import { routes } from "#/routes.ts";
 import { Action } from "#/utils/action.ts";
-import * as Button from "../ui/button.tsx";
+import { Button } from "../button.tsx";
+import { SubmitButton } from "../submit-button.tsx";
 import * as Modal from "../ui/modal.tsx";
 
 type UserMembership = App.Data.Auth.UserData & {
@@ -62,7 +63,7 @@ export function RemoveWorkspaceMemberModal({
 
                 <Modal.Footer>
                     <Modal.Close asChild>
-                        <Button.Root
+                        <Button
                             $size="sm"
                             $style="stroke"
                             $type="neutral"
@@ -71,17 +72,16 @@ export function RemoveWorkspaceMemberModal({
                             onClick={() => setAction(null)}
                         >
                             Cancel
-                        </Button.Root>
+                        </Button>
                     </Modal.Close>
-                    <Button.Root
+                    <SubmitButton
                         $size="sm"
                         className="w-full"
-                        disabled={form.processing}
                         form={`destroy-workspace-members-${user.id}-form`}
-                        type="submit"
+                        isSubmitting={form.processing}
                     >
                         {form.processing ? "Removing..." : dialogSubmitLabel}
-                    </Button.Root>
+                    </SubmitButton>
                 </Modal.Footer>
             </Modal.Content>
         </Modal.Root>

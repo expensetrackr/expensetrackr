@@ -3,9 +3,9 @@ import { useQuery } from "@tanstack/react-query";
 import * as React from "react";
 import GeometricShapes01Icon from "virtual:icons/hugeicons/geometric-shapes-01";
 
+import { Button } from "#/components/button.tsx";
 import { classificationIcons } from "#/components/category-classification-icon.tsx";
 import { categoryIcons } from "#/components/category-icon.tsx";
-import * as Button from "#/components/ui/button.tsx";
 import { ColorField, colorSwatches } from "#/components/ui/form/color.tsx";
 import { SelectField } from "#/components/ui/form/select-field.tsx";
 import { TextField } from "#/components/ui/form/text-field.tsx";
@@ -14,6 +14,7 @@ import * as Modal from "#/components/ui/modal.tsx";
 import { useActionsParams } from "#/hooks/use-actions-params.ts";
 import { routes } from "#/routes.ts";
 import { type PaginatedResponse } from "#/types/pagination.ts";
+import { SubmitButton } from "../submit-button.tsx";
 
 export function CreateCategoryModal() {
     const actions = useActionsParams();
@@ -168,7 +169,7 @@ export function CreateCategoryModal() {
 
                 <Modal.Footer>
                     <Modal.Close asChild>
-                        <Button.Root
+                        <Button
                             $size="sm"
                             $style="stroke"
                             $type="neutral"
@@ -177,17 +178,16 @@ export function CreateCategoryModal() {
                             onClick={() => actions.resetParams()}
                         >
                             Cancel
-                        </Button.Root>
+                        </Button>
                     </Modal.Close>
-                    <Button.Root
+                    <SubmitButton
                         $size="sm"
                         className="w-full"
-                        disabled={form.processing}
                         form="create-category-form"
-                        type="submit"
+                        isSubmitting={form.processing}
                     >
                         {form.processing ? "Creating..." : "Create"}
-                    </Button.Root>
+                    </SubmitButton>
                 </Modal.Footer>
             </Modal.Content>
         </Modal.Root>
