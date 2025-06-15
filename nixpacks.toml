@@ -119,6 +119,16 @@ stdout_logfile=/var/log/worker-horizon.log
 stderr_logfile=/var/log/worker-horizon.log
 '''
 
+"worker-pulse.conf" = '''
+[program:pulse]
+process_name=%(program_name)s_%(process_num)02d
+command=php /app/artisan pulse:work
+autostart=true
+autorestart=true
+stdout_logfile=/var/log/worker-pulse.log
+stderr_logfile=/var/log/worker-pulse.log
+'''
+
 "php-fpm.conf" = '''
 [www]
 listen = 127.0.0.1:9000
