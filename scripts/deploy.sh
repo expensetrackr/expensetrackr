@@ -23,4 +23,6 @@ php artisan queue:restart
 
 php artisan make:sitemap
 
+php artisan horizon:terminate
+
 php artisan up
