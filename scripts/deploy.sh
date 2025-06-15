@@ -25,4 +25,6 @@ php artisan make:sitemap
 
 php artisan horizon:terminate
 
+php artisan pulse:restart
+
 php artisan up
