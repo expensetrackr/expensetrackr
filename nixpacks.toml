@@ -109,6 +109,16 @@ stderr_logfile=/var/log/worker-inertia-ssr.log
 stdout_logfile=/var/log/worker-inertia-ssr.log
 '''
 
+"worker-horizon.conf" = '''
+[program:horizon]
+process_name=%(program_name)s_%(process_num)02d
+command=php /app/artisan horizon
+autostart=true
+autorestart=true
+stdout_logfile=/var/log/worker-horizon.log
+stderr_logfile=/var/log/worker-horizon.log
+'''
+
 "php-fpm.conf" = '''
 [www]
 listen = 127.0.0.1:9000
