@@ -106,11 +106,6 @@ export function CreateAccountDrawer() {
 
                     <Drawer.Body className="flex-1 overflow-y-auto">
                         <form {...getFormProps(form)}>
-                            <input hidden name={fields.type.name} ref={typeControl.register} />
-                            <input hidden name={fields.subtype.name} ref={subtypeControl.register} />
-                            <input hidden name={fields.currency_code.name} ref={currencyCodeControl.register} />
-                            <input hidden name={fields.initial_balance.name} ref={initialBalanceControl.register} />
-
                             <div className="space-y-3 p-5">
                                 <TextField
                                     {...getInputProps(fields.name, { type: "text" })}
