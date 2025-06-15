@@ -34,6 +34,7 @@
         "laravel/framework": "12.18.0",
         "laravel/horizon": "5.33.0",
         "laravel/octane": "2.9.3",
+        "laravel/pulse": "1.4.2",
         "laravel/sanctum": "4.1.1",
         "laravel/scout": "10.15.0",
         "laravel/tinker": "2.10.1",
