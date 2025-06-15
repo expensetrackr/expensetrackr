@@ -1,5 +1,4 @@
-import { getFormProps, getInputProps, getTextareaProps, useForm } from "@conform-to/react";
-import { useControl } from "@conform-to/react/future";
+import { getFormProps, getInputProps, getTextareaProps, useForm, useInputControl } from "@conform-to/react";
 import { getValibotConstraint, parseWithValibot } from "@conform-to/valibot";
 import { useForm as useInertiaForm } from "@inertiajs/react";
 import { resolveCurrencyFormat } from "@sumup/intl";
@@ -71,11 +70,11 @@ export function CreateAccountDrawer() {
         },
     });
     const { language, t } = useTranslation();
-    const typeControl = useControl(fields.type);
-    const subtypeControl = useControl(fields.subtype);
-    const currencyCodeControl = useControl(fields.currency_code);
+    const typeControl = useInputControl(fields.type);
+    const subtypeControl = useInputControl(fields.subtype);
+    const currencyCodeControl = useInputControl(fields.currency_code);
     const currencyFormat = resolveCurrencyFormat(language, currencyCodeControl.value || "USD");
-    const initialBalanceControl = useControl(fields.initial_balance);
+    const initialBalanceControl = useInputControl(fields.initial_balance);
 
     const handleOpenChange = async (open: boolean) => {
         if (!open) {
@@ -303,19 +302,14 @@ type CreditCardFieldsProps = {
 };
 
 function CreditCardFields({ fields, currencyFormat, handleMoneyChange }: CreditCardFieldsProps) {
-    const availableBalanceControl = useControl(fields.available_balance);
-    const minimumPaymentControl = useControl(fields.minimum_payment);
-    const expiresAtControl = useControl(fields.expires_at);
-    const annualFeeControl = useControl(fields.annual_fee);
+    const availableBalanceControl = useInputControl(fields.available_balance);
+    const minimumPaymentControl = useInputControl(fields.minimum_payment);
+    const expiresAtControl = useInputControl(fields.expires_at);
+    const annualFeeControl = useInputControl(fields.annual_fee);
     const { t } = useTranslation();
 
     return (
         <>
-            <input hidden name={fields.available_balance.name} ref={availableBalanceControl.register} />
-            <input hidden name={fields.minimum_payment.name} ref={minimumPaymentControl.register} />
-            <input hidden name={fields.expires_at.name} ref={expiresAtControl.register} />
-            <input hidden name={fields.annual_fee.name} ref={annualFeeControl.register} />
-
             <CurrencyInput
                 currency={currencyFormat?.currency || "USD"}
                 customInput={TextField}
@@ -389,13 +383,11 @@ type LoanFieldsProps = {
 };
 
 function LoanFields({ fields }: LoanFieldsProps) {
-    const interestRateTypeControl = useControl(fields.interest_rate_type);
+    const interestRateTypeControl = useInputControl(fields.interest_rate_type);
     const { t } = useTranslation();
 
     return (
         <>
-            <input hidden name={fields.interest_rate.name} ref={interestRateTypeControl.register} />
-
             <div className="grid grid-cols-2 gap-4">
                 <TextField
                     error={fields.interest_rate.errors}
