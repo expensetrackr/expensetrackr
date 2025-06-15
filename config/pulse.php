@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Laravel\Pulse\Http\Middleware\Authorize;
 use Laravel\Pulse\Pulse;
 use Laravel\Pulse\Recorders;
@@ -81,7 +83,7 @@ return [
     */
 
     'ingest' => [
-        'driver' => env('PULSE_INGEST_DRIVER', 'storage'),
+        'driver' => env('PULSE_INGEST_DRIVER', 'redis'),
 
         'buffer' => env('PULSE_INGEST_BUFFER', 5_000),
 
