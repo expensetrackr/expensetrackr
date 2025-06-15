@@ -2,18 +2,14 @@
 
 declare(strict_types=1);
 
+use App\Console\Commands\MakeSitemap;
+use App\Console\Commands\ProcessRecurringTransactionsCommand;
 use App\Jobs\SnapshotAccountBalances;
-use Illuminate\Foundation\Inspiring;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schedule;
 use Spatie\Health\Commands\RunHealthChecksCommand;
 
-Artisan::command('inspire', function () {
-    $this->comment(Inspiring::quote());
-})->purpose('Display an inspiring quote');
-
-Schedule::command('make:sitemap')->daily()->sentryMonitor();
+Schedule::command(MakeSitemap::class)->daily()->sentryMonitor();
 
 Schedule::job(SnapshotAccountBalances::class)
     ->dailyAt('02:00')
@@ -27,7 +23,7 @@ Schedule::job(SnapshotAccountBalances::class)
     })
     ->sentryMonitor();
 
-Schedule::command('transactions:process-recurring')
+Schedule::command(ProcessRecurringTransactionsCommand::class)
     ->daily()
     ->at('00:00')
     ->withoutOverlapping()
