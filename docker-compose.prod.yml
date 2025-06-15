@@ -55,11 +55,19 @@ services:
 
     ssr:
         <<: *web-base
-        command: ["php", "/var/www/html/artisan", "inertia:start-ssr", "--runtime=bun"]
+        command: ["php", "/var/www/html/artisan", "inertia:start-ssr"]
         ports:
             - "13714:13714"
         environment:
             PHP_FPM_POOL_NAME: app_ssr
+
+    horizon:
+        <<: *web-base
+        command: ["php", "/var/www/html/artisan", "horizon"]
+        ports:
+            - "8000:8000"
+        environment:
+            PHP_FPM_POOL_NAME: app_horizon
 
 networks:
     web_network:
