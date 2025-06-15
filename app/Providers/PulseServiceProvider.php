@@ -19,9 +19,9 @@ final class PulseServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register the Horizon gate.
+     * Register the Pulse gate.
      *
-     * This gate determines who can access Horizon in non-local environments.
+     * This gate determines who can access Pulse in non-local environments.
      */
     protected function gate(): void
     {
