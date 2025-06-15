@@ -91,5 +91,5 @@
         "vite": "6.3.5",
         "vite-plugin-run": "0.6.1"
     },
-    "packageManager": "pnpm@latest"
+    "packageManager": "bun@latest"
 }
