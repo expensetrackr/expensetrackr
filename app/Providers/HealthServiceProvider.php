@@ -42,7 +42,7 @@ final class HealthServiceProvider extends ServiceProvider
             DatabaseCheck::new(),
             EnvironmentCheck::new(),
             HorizonCheck::new(),
-            QueueCheck::new(),
+            QueueCheck::new()->onQueue(['default', 'finance']),
             RedisCheck::new(),
             ScheduleCheck::new(),
             SecurityAdvisoriesCheck::new(),
