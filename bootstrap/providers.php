@@ -14,7 +14,6 @@ return [
     App\Providers\JsonResourceProvider::class,
     App\Providers\MacroServiceProvider::class,
     App\Providers\PrefixedIdsServiceProvider::class,
-    App\Providers\PulseServiceProvider::class,
     App\Providers\SentryServiceProvider::class,
     App\Providers\SocialstreamServiceProvider::class,
     App\Providers\TellerCertificatesServiceProvider::class,
