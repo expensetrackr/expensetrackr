@@ -141,6 +141,7 @@ final class ProcessRecurringTransactions implements ShouldBeUnique, ShouldQueue
             $newTransaction->recurring_parent_id = $transaction->id;
             $newTransaction->recurring_start_at = null;
             $newTransaction->is_recurring = false;
+            $newTransaction->recurring_interval = null; // child should not recur
 
             $newTransaction->save();
 
