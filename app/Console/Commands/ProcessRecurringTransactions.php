@@ -19,7 +19,7 @@ final class ProcessRecurringTransactions extends Command
 
         ProcessRecurringTransactionsJob::dispatch();
 
-        $this->info('Recurring transactions processed successfully.');
+        $this->info('Recurring transactions job dispatched.');
 
         return self::SUCCESS;
     }
