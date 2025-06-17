@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use App\Console\Commands\MakeSitemap;
-use App\Console\Commands\ProcessRecurringTransactionsCommand;
+use App\Jobs\ProcessRecurringTransactions;
 use App\Jobs\SnapshotAccountBalances;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schedule;
@@ -12,7 +12,7 @@ use Spatie\Health\Commands\RunHealthChecksCommand;
 Schedule::command(MakeSitemap::class)->daily();
 
 Schedule::job(SnapshotAccountBalances::class)
-    ->dailyAt('02:00')
+    ->daily()
     ->withoutOverlapping(60) // Prevent overlapping for 60 minutes
     ->appendOutputTo(storage_path('logs/daily-balances.log'))
     ->before(function () {
@@ -22,10 +22,9 @@ Schedule::job(SnapshotAccountBalances::class)
         Log::info('Completed daily balance snapshot job');
     });
 
-Schedule::command(ProcessRecurringTransactionsCommand::class)
+Schedule::job(ProcessRecurringTransactions::class)
     ->daily()
-    ->at('00:00')
-    ->withoutOverlapping()
+    ->withoutOverlapping(120) // Prevent overlapping for 120 minutes
     ->appendOutputTo(storage_path('logs/recurring-transactions.log'))
     ->before(function () {
         Log::info('Starting recurring transactions processing job');

@@ -8,7 +8,7 @@ use App\Jobs\EnrichTransactionJob;
 use App\Models\Transaction;
 use Illuminate\Console\Command;
 
-final class EnrichTransactionsCommand extends Command
+final class EnrichTransactions extends Command
 {
     /**
      * The name and signature of the console command.
@@ -29,12 +29,12 @@ final class EnrichTransactionsCommand extends Command
      */
     public function handle(): void
     {
-        $transactions = Transaction::query()->get();
+        Transaction::query()->chunkById(500, function ($transactions): void {
+            foreach ($transactions as $transaction) {
+                EnrichTransactionJob::dispatch($transaction);
 
-        foreach ($transactions as $transaction) {
-            EnrichTransactionJob::dispatch($transaction);
-
-            $this->info("Processed transaction {$transaction->id}");
-        }
+                $this->info("Processed transaction {$transaction->id}");
+            }
+        });
     }
 }

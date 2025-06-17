@@ -7,13 +7,14 @@ namespace App\Jobs;
 use App\Actions\AccountBalances\SnapshotBalanceAction;
 use App\Models\Account;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Throwable;
 
-final class SnapshotAccountBalances implements ShouldQueue
+final class SnapshotAccountBalances implements ShouldBeUnique, ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -30,7 +31,7 @@ final class SnapshotAccountBalances implements ShouldQueue
     /**
      * The number of seconds after which the job's unique lock will be released.
      */
-    public int $uniqueFor = 3600; // 1 hour
+    public int $uniqueFor = 3600;
 
     /**
      * Create a new job instance.

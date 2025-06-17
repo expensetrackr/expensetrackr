@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Throwable;
 
-final class InstitutionsGetCommand extends Command
+final class GetInstitutions extends Command
 {
     /**
      * Priority institutions ordered by popularity (highest first)
