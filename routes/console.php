@@ -24,7 +24,7 @@ Schedule::job(SnapshotAccountBalances::class)
 
 Schedule::job(ProcessRecurringTransactions::class)
     ->daily()
-    ->withoutOverlapping()
+    ->withoutOverlapping(120) // Prevent overlapping for 120 minutes
     ->appendOutputTo(storage_path('logs/recurring-transactions.log'))
     ->before(function () {
         Log::info('Starting recurring transactions processing job');
