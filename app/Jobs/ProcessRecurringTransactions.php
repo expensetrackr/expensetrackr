@@ -105,8 +105,8 @@ final class ProcessRecurringTransactions implements ShouldBeUnique, ShouldQueue
         // Prefetch existing child dates to avoid querying inside the loop
         $existingDates = $transaction->recurringChildren()
             ->pluck('dated_at')
-            ->map(fn ($date) => CarbonImmutable::parse($date)->toDateString())
-            ->toArray();
+            ->mapWithKeys(fn ($date) => [CarbonImmutable::parse($date)->toDateString() => true])
+            ->all();
 
         $maxCatchUp = 100; // safety limit
         $processedCount = 0;
@@ -125,7 +125,7 @@ final class ProcessRecurringTransactions implements ShouldBeUnique, ShouldQueue
             }
 
             // Skip if the occurrence already exists and continue processing future dates
-            if (in_array($nextDate->toDateString(), $existingDates, true)) {
+            if (isset($existingDates[$nextDate->toDateString()])) {
                 // Advance the date pointer to avoid infinite loop
                 $lastDate = $nextDate;
 
@@ -149,7 +149,7 @@ final class ProcessRecurringTransactions implements ShouldBeUnique, ShouldQueue
             $newTransaction->save();
 
             // Track the new occurrence
-            $existingDates[] = $nextDate->toDateString();
+            $existingDates[$nextDate->toDateString()] = true;
 
             $processedCount++;
 
