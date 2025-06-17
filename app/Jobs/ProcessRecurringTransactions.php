@@ -12,7 +12,6 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
 final class ProcessRecurringTransactions implements ShouldQueue
@@ -48,7 +47,7 @@ final class ProcessRecurringTransactions implements ShouldQueue
     public function handle(): void
     {
         DB::transaction(function (): void {
-            $now = Carbon::now();
+            $now = CarbonImmutable::now();
 
             Transaction::query()
                 ->where('is_recurring', true)
@@ -70,7 +69,7 @@ final class ProcessRecurringTransactions implements ShouldQueue
      */
     private function processRecurringTransaction(Transaction $transaction): void
     {
-        $now = Carbon::now();
+        $now = CarbonImmutable::now();
 
         /** @var CarbonImmutable|null $lastDate */
         $lastDate = $transaction->recurringChildren()
