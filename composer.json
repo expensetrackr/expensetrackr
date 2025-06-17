@@ -46,7 +46,6 @@
         "nunomaduro/essentials": "0.1.0",
         "pinkary-project/type-guard": "0.1.0",
         "resend/resend-laravel": "0.19.0",
-        "sentry/sentry-laravel": "4.15.0",
         "spatie/cpu-load-health-check": "1.0.4",
         "spatie/enum": "3.13.0",
         "spatie/laravel-data": "4.15.2",

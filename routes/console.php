@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schedule;
 use Spatie\Health\Commands\RunHealthChecksCommand;
 
-Schedule::command(MakeSitemap::class)->daily()->sentryMonitor();
+Schedule::command(MakeSitemap::class)->daily();
 
 Schedule::job(SnapshotAccountBalances::class)
     ->dailyAt('02:00')
@@ -20,8 +20,7 @@ Schedule::job(SnapshotAccountBalances::class)
     })
     ->after(function () {
         Log::info('Completed daily balance snapshot job');
-    })
-    ->sentryMonitor();
+    });
 
 Schedule::command(ProcessRecurringTransactionsCommand::class)
     ->daily()
@@ -33,7 +32,6 @@ Schedule::command(ProcessRecurringTransactionsCommand::class)
     })
     ->after(function () {
         Log::info('Completed recurring transactions processing job');
-    })
-    ->sentryMonitor();
+    });
 
 Schedule::command(RunHealthChecksCommand::class)->everyMinute();

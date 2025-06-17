@@ -56,7 +56,7 @@ return [
 
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single', 'sentry'],
+            'channels' => 'single',
             'ignore_exceptions' => false,
         ],
 
@@ -127,10 +127,6 @@ return [
 
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
-        ],
-
-        'sentry' => [
-            'driver' => 'sentry',
         ],
 
     ],

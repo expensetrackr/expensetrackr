@@ -17,7 +17,6 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Middleware\ThrottleRequests;
 use Inertia\Inertia;
 use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
-use Sentry\Laravel\Integration;
 use Symfony\Component\HttpFoundation\Response;
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -75,7 +74,5 @@ return Application::configure(basePath: dirname(__DIR__))
 
             return $response;
         });
-
-        Integration::handles($exceptions);
 
     })->create();
