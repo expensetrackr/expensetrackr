@@ -9,7 +9,7 @@ use App\Facades\Forex;
 use App\Models\CurrencyList;
 use Illuminate\Console\Command;
 
-final class InitializeCurrenciesCommand extends Command
+final class InitializeCurrencies extends Command
 {
     /**
      * The name and signature of the console command.

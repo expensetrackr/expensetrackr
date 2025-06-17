@@ -2,29 +2,29 @@
 
 declare(strict_types=1);
 
-namespace App\Console\Commands;
+namespace App\Jobs;
 
 use App\Enums\Finance\TransactionRecurringInterval;
 use App\Models\Transaction;
 use Carbon\CarbonImmutable;
-use Illuminate\Console\Command;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
-final class ProcessRecurringTransactionsCommand extends Command
+final class ProcessRecurringTransactions implements ShouldQueue
 {
-    protected $signature = 'transactions:process-recurring';
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $description = 'Process recurring transactions and create new instances';
-
+    /**
+     * Execute the job.
+     */
     public function handle(): void
     {
-        $this->info('Processing recurring transactions...');
-
         DB::transaction(function (): void {
-            // Get all recurring transactions that have either:
-            // 1. Already started (recurring_start_date in the past or null)
-            // 2. Are due to start today
             $now = Carbon::now();
 
             $recurringTransactions = Transaction::query()
@@ -40,24 +40,16 @@ final class ProcessRecurringTransactionsCommand extends Command
                 $this->processRecurringTransaction($transaction);
             }
         });
-
-        $this->info('Recurring transactions processed successfully.');
     }
 
     /**
      * Process a recurring transaction and create a new instance if necessary.
-     *
-     * @param  Transaction  $transaction  The transaction to process.
      */
     private function processRecurringTransaction(Transaction $transaction): void
     {
         $now = Carbon::now();
 
-        /**
-         * Get the latest child transaction's date, or use the parent's start date/dated_at
-         *
-         * @var CarbonImmutable|null
-         */
+        /** @var CarbonImmutable|null $lastDate */
         $lastDate = $transaction->recurringChildren()
             ->orderByDesc('dated_at')
             ->value('dated_at');
@@ -66,18 +58,15 @@ final class ProcessRecurringTransactionsCommand extends Command
             $lastDate = $transaction->recurring_start_at ?? $transaction->dated_at;
         }
 
-        // Convert to CarbonImmutable since calculateNextDate expects it
+        // Ensure immutable instance
         $lastDate = CarbonImmutable::parse($lastDate);
 
-        // Calculate the next date based on the interval
         $nextDate = $this->calculateNextDate($lastDate, $transaction->recurring_interval);
 
-        // If next date is in the future, skip
         if ($nextDate->isAfter($now)) {
             return;
         }
 
-        // Check if a transaction already exists for this date
         $existingTransaction = $transaction->recurringChildren()
             ->where('dated_at', $nextDate)
             ->exists();
@@ -86,7 +75,6 @@ final class ProcessRecurringTransactionsCommand extends Command
             return;
         }
 
-        // Create new transaction instance
         $newTransaction = $transaction->replicate([
             'public_id',
             'external_id',
@@ -97,23 +85,17 @@ final class ProcessRecurringTransactionsCommand extends Command
 
         $newTransaction->dated_at = $nextDate;
         $newTransaction->recurring_parent_id = $transaction->id;
-
-        // Clear the recurring_start_date as it's only needed on the parent
         $newTransaction->recurring_start_at = null;
-        $newTransaction->is_recurring = false; // Child transactions should not be recurring themselves
+        $newTransaction->is_recurring = false;
 
         $newTransaction->save();
 
-        // Process next occurrence if needed (for cases where multiple occurrences are due)
+        // Recursively process next occurrence if due
         $this->processRecurringTransaction($transaction);
     }
 
     /**
      * Calculate the next date for a recurring transaction based on the interval.
-     *
-     * @param  CarbonImmutable  $date  The base date to calculate from.
-     * @param  TransactionRecurringInterval|null  $interval  The interval to calculate the next date for.
-     * @return CarbonImmutable The next date.
      */
     private function calculateNextDate(CarbonImmutable $date, ?TransactionRecurringInterval $interval): CarbonImmutable
     {

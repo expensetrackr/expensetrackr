@@ -8,7 +8,7 @@ use App\Jobs\EnrichTransactionJob;
 use App\Models\Transaction;
 use Illuminate\Console\Command;
 
-final class EnrichTransactionsCommand extends Command
+final class EnrichTransactions extends Command
 {
     /**
      * The name and signature of the console command.
