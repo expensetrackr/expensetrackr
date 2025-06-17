@@ -46,22 +46,22 @@ final class ProcessRecurringTransactions implements ShouldQueue
      */
     public function handle(): void
     {
-        DB::transaction(function (): void {
-            $now = CarbonImmutable::now();
+        $now = CarbonImmutable::now();
 
-            Transaction::query()
-                ->where('is_recurring', true)
-                ->whereNotNull('recurring_interval')
-                ->where(function ($query) use ($now): void {
-                    $query->whereNull('recurring_start_at')
-                        ->orWhere('recurring_start_at', '<=', $now);
-                })
-                ->chunkById(500, function ($transactions): void {
+        Transaction::query()
+            ->where('is_recurring', true)
+            ->whereNotNull('recurring_interval')
+            ->where(function ($query) use ($now): void {
+                $query->whereNull('recurring_start_at')
+                    ->orWhere('recurring_start_at', '<=', $now);
+            })
+            ->chunkById(500, function ($transactions): void {
+                DB::transaction(function () use ($transactions): void {
                     foreach ($transactions as $transaction) {
                         $this->processRecurringTransaction($transaction);
                     }
                 });
-        });
+            });
     }
 
     /**
