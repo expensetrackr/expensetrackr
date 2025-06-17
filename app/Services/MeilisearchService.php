@@ -174,40 +174,37 @@ final readonly class MeilisearchService
 
         return is_array($result) ? $result : [];
     }
-/**
+
+    /**
      * Increment a numeric field in a document
      *
      * @param  string  $indexName  The name of the index
      * @param  string  $documentId  The ID of the document to update
      * @param  string  $fieldName  The field to increment
-     * @param  int     $incrementBy The amount to increment by (default: 1)
+     * @param  int  $incrementBy  The amount to increment by (default: 1)
      * @return array<mixed> The update operation result
      */
     public function incrementDocumentField(string $indexName, string $documentId, string $fieldName, int $incrementBy = 1): array
     {
-        // Get the current document
         $currentDocument = $this->getDocument($indexName, $documentId);
-        
-        if (!$currentDocument) {
+
+        if (! $currentDocument) {
             return ['error' => 'Document not found'];
         }
-        
-        // Increment the field safely
+
         $currentValue = isset($currentDocument[$fieldName]) ? (int) $currentDocument[$fieldName] : 0;
         $currentDocument[$fieldName] = $currentValue + $incrementBy;
-        
-        // Add tracking metadata
+
         $currentDocument['last_used_at'] = now()->toISOString();
         $currentDocument['usage_count'] = ($currentDocument['usage_count'] ?? 0) + 1;
-        
-        // Update the document in Meilisearch
+
         return $this->updateDocument($indexName, $documentId, $currentDocument);
     }
-    
+
     /**
      * Track institution usage by incrementing popularity and updating usage metadata
      *
-     * @param  string  $institutionId The ID of the institution
+     * @param  string  $institutionId  The ID of the institution
      * @return array<mixed> The tracking result with success status and updated data
      */
     public function trackInstitutionUsage(string $institutionId): array
@@ -215,33 +212,33 @@ final readonly class MeilisearchService
         try {
             // Increment the popularity field for the institution
             $result = $this->incrementDocumentField('institutions', $institutionId, 'popularity', 1);
-            
+
             if (isset($result['error'])) {
                 return [
-                    'success'        => false,
-                    'message'        => 'Institution not found',
-                    'error'          => $result['error'],
+                    'success' => false,
+                    'message' => 'Institution not found',
+                    'error' => $result['error'],
                     'institution_id' => $institutionId,
                 ];
             }
-            
+
             // Get the updated document to return current stats
             $updatedDocument = $this->getDocument('institutions', $institutionId);
-            
+
             return [
-                'success'        => true,
-                'message'        => 'Institution usage tracked successfully',
+                'success' => true,
+                'message' => 'Institution usage tracked successfully',
                 'institution_id' => $institutionId,
-                'popularity'     => $updatedDocument['popularity'] ?? 1,
-                'usage_count'    => $updatedDocument['usage_count'] ?? 1,
-                'last_used_at'   => $updatedDocument['last_used_at'] ?? now()->toISOString(),
+                'popularity' => $updatedDocument['popularity'] ?? 1,
+                'usage_count' => $updatedDocument['usage_count'] ?? 1,
+                'last_used_at' => $updatedDocument['last_used_at'] ?? now()->toISOString(),
             ];
-            
+
         } catch (Exception $e) {
             return [
-                'success'        => false,
-                'message'        => 'Failed to track institution usage',
-                'error'          => $e->getMessage(),
+                'success' => false,
+                'message' => 'Failed to track institution usage',
+                'error' => $e->getMessage(),
                 'institution_id' => $institutionId,
             ];
         }

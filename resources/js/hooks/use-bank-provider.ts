@@ -7,15 +7,10 @@ import { useTellerConnect } from "./use-teller-connect.ts";
 const trackInstitutionUsage = async (institutionId: string): Promise<void> => {
     try {
         await fetch(`/api/institutions/${institutionId}/track-usage`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '',
-            },
+            method: "POST",
         });
     } catch (error) {
-        // Log the error but don't throw - tracking failure shouldn't break the user flow
-        console.warn('Failed to track institution usage:', error);
+        console.warn("Failed to track institution usage:", error);
     }
 };
 
@@ -27,12 +22,12 @@ type ConnectBankProviderProps = {
 
 /**
  * Hook for connecting to bank providers with automatic usage tracking
- * 
+ *
  * Features:
  * - Tracks institution selection for popularity-based sorting
  * - Non-blocking tracking that won't disrupt user experience
  * - Extends provider-specific hooks with tracking capabilities
- * 
+ *
  * @param props - Configuration including institution id, name, and provider type
  * @returns Extended provider hook with tracking functionality
  */
@@ -44,8 +39,8 @@ export function useBankProvider({ provider, id }: ConnectBankProviderProps) {
                 ...tellerConnect,
                 trackUsage: () => trackInstitutionUsage(id),
                 setInstitution: async (institutionId: string) => {
-                    // Fire-and-forget tracking call
-                    trackInstitutionUsage(institutionId);
+                    await trackInstitutionUsage(institutionId);
+
                     return tellerConnect.setInstitution(institutionId);
                 },
             };
