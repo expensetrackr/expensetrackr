@@ -229,8 +229,28 @@ function InstitutionItem({ institution }: { institution: App.Data.Finance.Instit
     });
     const { setOpen } = useCommandMenuStore();
 
-    const handleSelect = () => {
+    const handleSelect = async () => {
         setOpen(false);
+
+        // Track institution usage for popularity sorting
+        try {
+            const csrfToken = document
+                .querySelector('meta[name="csrf-token"]')
+                ?.getAttribute('content');
+
+            await fetch(`/api/institutions/${institution.id}/track-usage`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    ...(csrfToken && { 'X-CSRF-TOKEN': csrfToken }),
+                },
+            });
+        } catch (error) {
+            // Don't let tracking failures break the user flow
+            console.warn('Failed to track institution usage:', error);
+        }
+
         setInstitution(institution.id);
     };
 

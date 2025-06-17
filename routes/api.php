@@ -19,7 +19,9 @@ Route::prefix('finance')->group(function () {
 
     Route::get('/institutions', InstitutionController::class)
         ->name('api.finance.institutions.index');
-});
+    Route::post('/institutions/{institution}/track-usage', [InstitutionController::class, 'trackUsage'])
+        ->name('api.finance.institutions.track-usage');
+    });
 
 Route::apiResource('accounts', AccountController::class)
     ->only(['index', 'show'])
