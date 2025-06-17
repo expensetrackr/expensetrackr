@@ -83,37 +83,37 @@ final class ProcessRecurringTransactions implements ShouldQueue
         // Ensure immutable instance
         $lastDate = CarbonImmutable::parse($lastDate);
 
-        $nextDate = $this->calculateNextDate($lastDate, $transaction->recurring_interval);
+        while (true) {
+            $nextDate = $this->calculateNextDate($lastDate, $transaction->recurring_interval);
 
-        if ($nextDate->isAfter($now)) {
-            return;
+            // Stop if the next occurrence is in the future
+            if ($nextDate->isAfter($now)) {
+                break;
+            }
+
+            // Stop if the occurrence already exists
+            if ($transaction->recurringChildren()->where('dated_at', $nextDate)->exists()) {
+                break;
+            }
+
+            $newTransaction = $transaction->replicate([
+                'public_id',
+                'external_id',
+                'created_at',
+                'updated_at',
+                'recurring_parent_id',
+            ]);
+
+            $newTransaction->dated_at = $nextDate;
+            $newTransaction->recurring_parent_id = $transaction->id;
+            $newTransaction->recurring_start_at = null;
+            $newTransaction->is_recurring = false;
+
+            $newTransaction->save();
+
+            // Update lastDate for the next iteration
+            $lastDate = $nextDate;
         }
-
-        $existingTransaction = $transaction->recurringChildren()
-            ->where('dated_at', $nextDate)
-            ->exists();
-
-        if ($existingTransaction) {
-            return;
-        }
-
-        $newTransaction = $transaction->replicate([
-            'public_id',
-            'external_id',
-            'created_at',
-            'updated_at',
-            'recurring_parent_id',
-        ]);
-
-        $newTransaction->dated_at = $nextDate;
-        $newTransaction->recurring_parent_id = $transaction->id;
-        $newTransaction->recurring_start_at = null;
-        $newTransaction->is_recurring = false;
-
-        $newTransaction->save();
-
-        // Recursively process next occurrence if due
-        $this->processRecurringTransaction($transaction);
     }
 
     /**
