@@ -124,9 +124,12 @@ final class ProcessRecurringTransactions implements ShouldBeUnique, ShouldQueue
                 break;
             }
 
-            // Stop if the occurrence already exists
+            // Skip if the occurrence already exists and continue processing future dates
             if (in_array($nextDate->toDateString(), $existingDates, true)) {
-                break;
+                // Advance the date pointer to avoid infinite loop
+                $lastDate = $nextDate;
+
+                continue;
             }
 
             $newTransaction = $transaction->replicate([
