@@ -30,7 +30,7 @@ final class SnapshotAccountBalances implements ShouldQueue
     /**
      * The number of seconds after which the job's unique lock will be released.
      */
-    public int $uniqueFor = 3600; // 1 hour
+    public int $uniqueFor = 3600;
 
     /**
      * Create a new job instance.

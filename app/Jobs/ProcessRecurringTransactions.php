@@ -20,6 +20,29 @@ final class ProcessRecurringTransactions implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
+     * The number of times the job may be attempted.
+     */
+    public int $tries = 3;
+
+    /**
+     * The number of seconds to wait before retrying the job.
+     */
+    public int $backoff = 60;
+
+    /**
+     * The number of seconds after which the job's unique lock will be released.
+     */
+    public int $uniqueFor = 3600;
+
+    /**
+     * The unique ID of the job.
+     */
+    public function uniqueId(): string
+    {
+        return 'process_recurring_transactions_'.now()->toDateString();
+    }
+
+    /**
      * Execute the job.
      */
     public function handle(): void
