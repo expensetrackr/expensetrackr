@@ -53,6 +53,7 @@ final class ProcessRecurringTransactions implements ShouldBeUnique, ShouldQueue
 
         $baseQuery = Transaction::query()
             ->where('is_recurring', true)
+            ->whereNull('recurring_parent_id')   // only root parents
             ->whereNotNull('recurring_interval')
             ->where(function ($query) use ($now): void {
                 $query->whereNull('recurring_start_at')
