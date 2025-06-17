@@ -86,6 +86,11 @@ final class ProcessRecurringTransactions implements ShouldQueue
         while (true) {
             $nextDate = $this->calculateNextDate($lastDate, $transaction->recurring_interval);
 
+            // Prevent infinite loop if calculateNextDate returns the same date
+            if ($nextDate->equalTo($lastDate)) {
+                break;
+            }
+
             // Stop if the next occurrence is in the future
             if ($nextDate->isAfter($now)) {
                 break;
