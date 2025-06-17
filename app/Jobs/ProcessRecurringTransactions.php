@@ -31,7 +31,7 @@ final class ProcessRecurringTransactions implements ShouldQueue
     /**
      * The number of seconds after which the job's unique lock will be released.
      */
-    public int $uniqueFor = 3600;
+    public int $uniqueFor = 86_400; // 24 hours
 
     /**
      * The unique ID of the job.
