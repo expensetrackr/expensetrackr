@@ -27,18 +27,18 @@ final class ProcessRecurringTransactions implements ShouldQueue
         DB::transaction(function (): void {
             $now = Carbon::now();
 
-            $recurringTransactions = Transaction::query()
+            Transaction::query()
                 ->where('is_recurring', true)
                 ->whereNotNull('recurring_interval')
                 ->where(function ($query) use ($now): void {
                     $query->whereNull('recurring_start_at')
                         ->orWhere('recurring_start_at', '<=', $now);
                 })
-                ->get();
-
-            foreach ($recurringTransactions as $transaction) {
-                $this->processRecurringTransaction($transaction);
-            }
+                ->chunkById(500, function ($transactions): void {
+                    foreach ($transactions as $transaction) {
+                        $this->processRecurringTransaction($transaction);
+                    }
+                });
         });
     }
 
