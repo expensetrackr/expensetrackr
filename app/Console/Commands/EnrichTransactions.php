@@ -29,12 +29,12 @@ final class EnrichTransactions extends Command
      */
     public function handle(): void
     {
-        $transactions = Transaction::query()->get();
+        Transaction::query()->chunkById(500, function ($transactions): void {
+            foreach ($transactions as $transaction) {
+                EnrichTransactionJob::dispatch($transaction);
 
-        foreach ($transactions as $transaction) {
-            EnrichTransactionJob::dispatch($transaction);
-
-            $this->info("Processed transaction {$transaction->id}");
-        }
+                $this->info("Processed transaction {$transaction->id}");
+            }
+        });
     }
 }
