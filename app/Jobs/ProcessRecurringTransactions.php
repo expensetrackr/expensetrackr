@@ -13,6 +13,8 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Throwable;
 
 final class ProcessRecurringTransactions implements ShouldQueue
 {
@@ -48,20 +50,35 @@ final class ProcessRecurringTransactions implements ShouldQueue
     {
         $now = CarbonImmutable::now();
 
-        Transaction::query()
+        $baseQuery = Transaction::query()
             ->where('is_recurring', true)
             ->whereNotNull('recurring_interval')
             ->where(function ($query) use ($now): void {
                 $query->whereNull('recurring_start_at')
                     ->orWhere('recurring_start_at', '<=', $now);
-            })
-            ->chunkById(500, function ($transactions): void {
-                DB::transaction(function () use ($transactions): void {
-                    foreach ($transactions as $transaction) {
+            });
+
+        $totalTransactions = (clone $baseQuery)->count();
+
+        Log::info('Processing recurring transactions', [
+            'total_found' => $totalTransactions,
+            'chunk_size' => 500,
+        ]);
+
+        $baseQuery->chunkById(500, function ($transactions): void {
+            foreach ($transactions as $transaction) {
+                DB::transaction(function () use ($transaction): void {
+                    try {
                         $this->processRecurringTransaction($transaction);
+                    } catch (Throwable $e) {
+                        Log::error('Failed to process recurring transaction', [
+                            'transaction_id' => $transaction->id,
+                            'error' => $e->getMessage(),
+                        ]);
                     }
                 });
-            });
+            }
+        });
     }
 
     /**
@@ -83,7 +100,16 @@ final class ProcessRecurringTransactions implements ShouldQueue
         // Ensure immutable instance
         $lastDate = CarbonImmutable::parse($lastDate);
 
-        while (true) {
+        // Prefetch existing child dates to avoid querying inside the loop
+        $existingDates = $transaction->recurringChildren()
+            ->pluck('dated_at')
+            ->map(fn ($date) => CarbonImmutable::parse($date)->toDateString())
+            ->toArray();
+
+        $maxCatchUp = 100; // safety limit
+        $processedCount = 0;
+
+        while ($processedCount < $maxCatchUp) {
             $nextDate = $this->calculateNextDate($lastDate, $transaction->recurring_interval);
 
             // Prevent infinite loop if calculateNextDate returns the same date
@@ -97,7 +123,7 @@ final class ProcessRecurringTransactions implements ShouldQueue
             }
 
             // Stop if the occurrence already exists
-            if ($transaction->recurringChildren()->where('dated_at', $nextDate)->exists()) {
+            if (in_array($nextDate->toDateString(), $existingDates, true)) {
                 break;
             }
 
@@ -116,7 +142,11 @@ final class ProcessRecurringTransactions implements ShouldQueue
 
             $newTransaction->save();
 
-            // Update lastDate for the next iteration
+            // Track the new occurrence
+            $existingDates[] = $nextDate->toDateString();
+
+            $processedCount++;
+
             $lastDate = $nextDate;
         }
     }
