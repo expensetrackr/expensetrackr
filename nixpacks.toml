@@ -129,6 +129,16 @@ stdout_logfile=/var/log/worker-pulse.log
 stderr_logfile=/var/log/worker-pulse.log
 '''
 
+"worker-nightwatch.conf" = '''
+[program:nightwatch]
+process_name=%(program_name)s_%(process_num)02d
+command=php /app/artisan nightwatch:agent
+autostart=true
+autorestart=true
+stdout_logfile=/var/log/worker-nightwatch.log
+stderr_logfile=/var/log/worker-nightwatch.log
+'''
+
 "php-fpm.conf" = '''
 [www]
 listen = 127.0.0.1:9000

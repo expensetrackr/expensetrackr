@@ -33,6 +33,7 @@
         "laravel/fortify": "1.26.0",
         "laravel/framework": "12.18.0",
         "laravel/horizon": "5.33.0",
+        "laravel/nightwatch": "1.7.1",
         "laravel/octane": "2.9.3",
         "laravel/pulse": "1.4.2",
         "laravel/sanctum": "4.1.1",
