@@ -52,6 +52,9 @@ final class ProcessRecurringTransactions implements ShouldBeUnique, ShouldQueue
         $now = CarbonImmutable::now();
 
         $baseQuery = Transaction::query()
+            ->with(['recurringChildren' => function ($query) {
+                $query->select('id', 'recurring_parent_id', 'dated_at');
+            }])
             ->where('is_recurring', true)
             ->whereNull('recurring_parent_id')   // only root parents
             ->whereNotNull('recurring_interval')
@@ -90,22 +93,18 @@ final class ProcessRecurringTransactions implements ShouldBeUnique, ShouldQueue
     {
         $now = CarbonImmutable::now();
 
-        /** @var CarbonImmutable|null $lastDate */
-        $lastDate = $transaction->recurringChildren()
-            ->orderByDesc('dated_at')
-            ->value('dated_at');
+        $lastDate = $transaction->recurringChildren
+            ->sortByDesc('dated_at')
+            ->first()?->dated_at;
 
         if (! $lastDate) {
             $lastDate = $transaction->recurring_start_at ?? $transaction->dated_at;
         }
 
-        // Ensure immutable instance
         $lastDate = CarbonImmutable::parse($lastDate);
 
-        // Prefetch existing child dates to avoid querying inside the loop
-        $existingDates = $transaction->recurringChildren()
-            ->pluck('dated_at')
-            ->mapWithKeys(fn ($date) => [CarbonImmutable::parse($date)->toDateString() => true])
+        $existingDates = $transaction->recurringChildren
+            ->mapWithKeys(fn ($child) => [CarbonImmutable::parse($child->dated_at)->toDateString() => true])
             ->all();
 
         $maxCatchUp = 100; // safety limit
@@ -148,7 +147,6 @@ final class ProcessRecurringTransactions implements ShouldBeUnique, ShouldQueue
 
             $newTransaction->save();
 
-            // Track the new occurrence
             $existingDates[$nextDate->toDateString()] = true;
 
             $processedCount++;
