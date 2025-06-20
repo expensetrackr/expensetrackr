@@ -40,24 +40,16 @@ final class InstitutionController
     public function trackUsage(string $institution, MeilisearchService $meilisearchService): JsonResponse
     {
         try {
-            $searchResults = $meilisearchService->getDocument('institutions', $institution);
+            $result = $meilisearchService->trackInstitutionUsage($institution);
 
-            if (empty($searchResults)) {
-                return response()->json(['message' => 'Institution not found'], 404);
+            if (! $result['success']) {
+                return response()->json(['message' => $result['message']], 404);
             }
-
-            $currentDocument = $searchResults[0];
-
-            $updatedDocument = array_merge($currentDocument, [
-                'popularity' => ($currentDocument['popularity'] ?? 0) + 1,
-                'last_used_at' => now()->toISOString(),
-            ]);
-
-            $meilisearchService->addDocuments('institutions', [$updatedDocument]);
 
             return response()->json([
                 'message' => 'Usage tracked successfully',
-                'popularity' => $updatedDocument['popularity'],
+                'institution_id' => $result['institution_id'],
+                'task_id' => $result['task_id'],
             ]);
         } catch (Exception $e) {
             Log::error('Failed to track institution usage', [
