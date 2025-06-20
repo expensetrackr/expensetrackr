@@ -179,7 +179,10 @@ final readonly class MeilisearchService
      * Increment a numeric field in a document atomically.
      *
      * This method uses an experimental Meilisearch feature 'editDocumentsByFunction'
-     * which needs to be enabled on the Meilisearch instance.
+     * which needs to be enabled on the Meilisearch instance. This function is designed
+     * to be atomic and prevent race conditions by sending the modification logic to
+     * Meilisearch to be executed on the server.
+     *
      * See: https://github.com/orgs/meilisearch/discussions/762
      *
      * @param  string  $indexName  The name of the index
