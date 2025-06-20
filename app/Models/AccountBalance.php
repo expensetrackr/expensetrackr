@@ -20,8 +20,6 @@ use InvalidArgumentException;
  * @property int $account_id
  * @property int $workspace_id
  * @property CarbonImmutable $dated_at
- * @property CarbonImmutable|null $created_at
- * @property CarbonImmutable|null $updated_at
  * @property-read Account $account
  * @property-read Workspace $workspace
  *

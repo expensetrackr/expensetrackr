@@ -19,7 +19,7 @@ final class SnapshotBalanceAction
     {
         $now = now()->startOfDay();
 
-        $balances = $accounts->map(fn ($account) => [
+        $balances = $accounts->map(fn ($account): array => [
             'balance' => $account->current_balance,
             'dated_at' => $now,
             'account_id' => $account->id,
