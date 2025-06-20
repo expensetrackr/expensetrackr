@@ -39,6 +39,10 @@ final class InstitutionController
      */
     public function trackUsage(string $institution, MeilisearchService $meilisearchService): JsonResponse
     {
+        if (empty(trim($institution))) {
+            return response()->json(['message' => 'Institution identifier is required'], 400);
+        }
+
         try {
             $result = $meilisearchService->trackInstitutionUsage($institution);
 
