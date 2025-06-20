@@ -52,7 +52,7 @@ final class ProcessRecurringTransactions implements ShouldBeUnique, ShouldQueue
         $now = CarbonImmutable::now();
 
         $baseQuery = Transaction::query()
-            ->with(['recurringChildren' => function ($query) {
+            ->with(['recurringChildren' => function ($query): void {
                 $query->select('id', 'recurring_parent_id', 'dated_at');
             }])
             ->where('is_recurring', true)

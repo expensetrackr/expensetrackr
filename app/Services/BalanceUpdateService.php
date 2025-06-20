@@ -48,7 +48,7 @@ final class BalanceUpdateService implements BalanceUpdateInterface
 
         $newBaseCurrentBalance = null;
 
-        DB::transaction(function () use ($transaction, $newCurrentBalance, $absoluteAmount, $isReversing, &$newBaseCurrentBalance) {
+        DB::transaction(function () use ($transaction, $newCurrentBalance, $absoluteAmount, $isReversing, &$newBaseCurrentBalance): void {
             $updateData = [
                 'current_balance' => $newCurrentBalance,
             ];
@@ -175,7 +175,7 @@ final class BalanceUpdateService implements BalanceUpdateInterface
         try {
             Log::info('Balance update completed', $logData);
         } catch (Throwable $e) {
-            throw new Exception('Failed to log balance update: '.$e->getMessage());
+            throw new Exception('Failed to log balance update: '.$e->getMessage(), $e->getCode(), $e);
         }
     }
 }
