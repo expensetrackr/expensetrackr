@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Services;
 
 use Exception;
+use InvalidArgumentException;
+use Log;
 use Meilisearch\Client;
 
 final readonly class MeilisearchService
@@ -193,6 +195,11 @@ final readonly class MeilisearchService
      */
     public function incrementDocumentField(string $indexName, string $documentId, string $fieldName, int $incrementBy = 1): array
     {
+        // Validate field name to prevent injection
+        if (! preg_match('/^[a-zA-Z_][a-zA-Z0-9_]*$/', $fieldName)) {
+            throw new InvalidArgumentException("Invalid field name: {$fieldName}");
+        }
+
         $index = $this->client->index($indexName);
 
         $function = <<<RHAI
@@ -211,17 +218,33 @@ if (doc.usage_count == null) {
 doc.last_used_at = last_used_at;
 RHAI;
 
-        $result = $index->updateDocumentsByFunction(
-            $function,
-            [
-                'filter' => "id = '{$documentId}'",
-                'context' => [
-                    'last_used_at' => now()->toISOString(),
-                ],
-            ]
-        );
+        try {
+            $result = $index->updateDocumentsByFunction(
+                $function,
+                [
+                    'filter' => "id = '{$documentId}'",
+                    'context' => [
+                        'last_used_at' => now()->toISOString(),
+                    ],
+                ]
+            );
 
-        return is_array($result) ? $result : [];
+            return is_array($result) ? $result : [];
+        } catch (Exception $e) {
+            // This could fail if the experimental feature is not enabled.
+            // Log the error and return a meaningful message.
+            Log::error('Meilisearch: Failed to increment document field.', [
+                'index' => $indexName,
+                'documentId' => $documentId,
+                'field' => $fieldName,
+                'error' => $e->getMessage(),
+            ]);
+
+            return [
+                'error' => 'Failed to update document.',
+                'message' => $e->getMessage(),
+            ];
+        }
     }
 
     /**
