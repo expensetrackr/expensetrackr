@@ -176,7 +176,11 @@ final readonly class MeilisearchService
     }
 
     /**
-     * Increment a numeric field in a document
+     * Increment a numeric field in a document atomically.
+     *
+     * This method uses an experimental Meilisearch feature 'editDocumentsByFunction'
+     * which needs to be enabled on the Meilisearch instance.
+     * See: https://github.com/orgs/meilisearch/discussions/762
      *
      * @param  string  $indexName  The name of the index
      * @param  string  $documentId  The ID of the document to update
@@ -186,19 +190,35 @@ final readonly class MeilisearchService
      */
     public function incrementDocumentField(string $indexName, string $documentId, string $fieldName, int $incrementBy = 1): array
     {
-        $currentDocument = $this->getDocument($indexName, $documentId);
+        $index = $this->client->index($indexName);
 
-        if (! $currentDocument) {
-            return ['error' => 'Document not found'];
-        }
+        $function = <<<RHAI
+if (doc.{$fieldName} == null) {
+    doc.{$fieldName} = {$incrementBy};
+} else {
+    doc.{$fieldName} += {$incrementBy};
+}
 
-        $currentValue = isset($currentDocument[$fieldName]) ? (int) $currentDocument[$fieldName] : 0;
-        $currentDocument[$fieldName] = $currentValue + $incrementBy;
+if (doc.usage_count == null) {
+    doc.usage_count = 1;
+} else {
+    doc.usage_count += 1;
+}
 
-        $currentDocument['last_used_at'] = now()->toISOString();
-        $currentDocument['usage_count'] = ($currentDocument['usage_count'] ?? 0) + 1;
+doc.last_used_at = last_used_at;
+RHAI;
 
-        return $this->updateDocument($indexName, $documentId, $currentDocument);
+        $result = $index->updateDocumentsByFunction(
+            $function,
+            [
+                'filter' => "id = '{$documentId}'",
+                'context' => [
+                    'last_used_at' => now()->toISOString(),
+                ],
+            ]
+        );
+
+        return is_array($result) ? $result : [];
     }
 
     /**
@@ -213,31 +233,18 @@ final readonly class MeilisearchService
             // Increment the popularity field for the institution
             $result = $this->incrementDocumentField('institutions', $institutionId, 'popularity', 1);
 
-            if (isset($result['error'])) {
-                return [
-                    'success' => false,
-                    'message' => 'Institution not found',
-                    'error' => $result['error'],
-                    'institution_id' => $institutionId,
-                ];
-            }
-
-            // Get the updated document to return current stats
-            $updatedDocument = $this->getDocument('institutions', $institutionId);
-
+            // At this point, the update is enqueued in Meilisearch.
+            // We can assume success for the purpose of the response.
             return [
                 'success' => true,
-                'message' => 'Institution usage tracked successfully',
+                'message' => 'Institution usage tracking has been updated.',
+                'task_id' => $result['taskUid'] ?? null,
                 'institution_id' => $institutionId,
-                'popularity' => $updatedDocument['popularity'] ?? 1,
-                'usage_count' => $updatedDocument['usage_count'] ?? 1,
-                'last_used_at' => $updatedDocument['last_used_at'] ?? now()->toISOString(),
             ];
-
         } catch (Exception $e) {
             return [
                 'success' => false,
-                'message' => 'Failed to track institution usage',
+                'message' => 'An error occurred while tracking institution usage.',
                 'error' => $e->getMessage(),
                 'institution_id' => $institutionId,
             ];
