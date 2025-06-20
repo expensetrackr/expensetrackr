@@ -19,6 +19,6 @@ final readonly class AccountObserver
      */
     public function created(Account $account): void
     {
-        $this->action->handle($account);
+        $this->action->handle(collect([$account]));
     }
 }
