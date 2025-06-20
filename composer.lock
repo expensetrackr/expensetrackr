@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8c799d38401f0240ef4df52193b96aef",
+    "content-hash": "ba149cd7e699d86717683263f39859e5",
     "packages": [
         {
             "name": "afatmustafa/blade-hugeicons",
@@ -1066,16 +1066,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.344.7",
+            "version": "3.346.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "64ccde0a674425ea902232a6f7aa1a07dfcfe861"
+                "reference": "d1403b5a39af7ab7af4fc538deb33013c19c8d33"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/64ccde0a674425ea902232a6f7aa1a07dfcfe861",
-                "reference": "64ccde0a674425ea902232a6f7aa1a07dfcfe861",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/d1403b5a39af7ab7af4fc538deb33013c19c8d33",
+                "reference": "d1403b5a39af7ab7af4fc538deb33013c19c8d33",
                 "shasum": ""
             },
             "require": {
@@ -1157,9 +1157,9 @@
             "support": {
                 "forum": "https://github.com/aws/aws-sdk-php/discussions",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.344.7"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.346.2"
             },
-            "time": "2025-06-16T18:05:39+00:00"
+            "time": "2025-06-20T18:10:21+00:00"
         },
         {
             "name": "bacon/bacon-qr-code",
@@ -3742,16 +3742,16 @@
         },
         {
             "name": "inertiajs/inertia-laravel",
-            "version": "v2.0.2",
+            "version": "v2.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/inertiajs/inertia-laravel.git",
-                "reference": "248e815cf8d41307cbfb735efaa514c118e2f3b4"
+                "reference": "b732a5cc33423b2c2366fea38b17dc637d2a0b4f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/inertiajs/inertia-laravel/zipball/248e815cf8d41307cbfb735efaa514c118e2f3b4",
-                "reference": "248e815cf8d41307cbfb735efaa514c118e2f3b4",
+                "url": "https://api.github.com/repos/inertiajs/inertia-laravel/zipball/b732a5cc33423b2c2366fea38b17dc637d2a0b4f",
+                "reference": "b732a5cc33423b2c2366fea38b17dc637d2a0b4f",
                 "shasum": ""
             },
             "require": {
@@ -3804,9 +3804,9 @@
             ],
             "support": {
                 "issues": "https://github.com/inertiajs/inertia-laravel/issues",
-                "source": "https://github.com/inertiajs/inertia-laravel/tree/v2.0.2"
+                "source": "https://github.com/inertiajs/inertia-laravel/tree/v2.0.3"
             },
-            "time": "2025-04-10T15:08:36+00:00"
+            "time": "2025-06-20T07:38:21+00:00"
         },
         {
             "name": "intervention/gif",
@@ -5535,16 +5535,16 @@
         },
         {
             "name": "laravel/wayfinder",
-            "version": "v0.1.4",
+            "version": "v0.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/wayfinder.git",
-                "reference": "e68357affd782cf63ace6a281e17e55585627ef0"
+                "reference": "3f695117a5f7c4617976a39d20c65170bd15e2ae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/wayfinder/zipball/e68357affd782cf63ace6a281e17e55585627ef0",
-                "reference": "e68357affd782cf63ace6a281e17e55585627ef0",
+                "url": "https://api.github.com/repos/laravel/wayfinder/zipball/3f695117a5f7c4617976a39d20c65170bd15e2ae",
+                "reference": "3f695117a5f7c4617976a39d20c65170bd15e2ae",
                 "shasum": ""
             },
             "require": {
@@ -5552,7 +5552,7 @@
                 "illuminate/filesystem": "^11.0|^12.0",
                 "illuminate/routing": "^11.0|^12.0",
                 "illuminate/support": "^11.0|^12.0",
-                "php": "^8.3"
+                "php": "^8.2"
             },
             "require-dev": {
                 "laravel/pint": "^1.21",
@@ -5593,7 +5593,7 @@
                 "issues": "https://github.com/laravel/wayfinder/issues",
                 "source": "https://github.com/laravel/wayfinder"
             },
-            "time": "2025-04-07T15:51:37+00:00"
+            "time": "2025-05-16T15:00:56+00:00"
         },
         {
             "name": "league/commonmark",
@@ -9791,16 +9791,16 @@
         },
         {
             "name": "spatie/laravel-data",
-            "version": "4.15.2",
+            "version": "4.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-data.git",
-                "reference": "50f5abe716ff1ad9a3e96dcfdeb4ad00f014bf8d"
+                "reference": "5ec820642ccfec47cd481cfc638d6148684f9655"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-data/zipball/50f5abe716ff1ad9a3e96dcfdeb4ad00f014bf8d",
-                "reference": "50f5abe716ff1ad9a3e96dcfdeb4ad00f014bf8d",
+                "url": "https://api.github.com/repos/spatie/laravel-data/zipball/5ec820642ccfec47cd481cfc638d6148684f9655",
+                "reference": "5ec820642ccfec47cd481cfc638d6148684f9655",
                 "shasum": ""
             },
             "require": {
@@ -9862,7 +9862,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-data/issues",
-                "source": "https://github.com/spatie/laravel-data/tree/4.15.2"
+                "source": "https://github.com/spatie/laravel-data/tree/4.16.0"
             },
             "funding": [
                 {
@@ -9870,7 +9870,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-06-12T09:42:08+00:00"
+            "time": "2025-06-20T12:20:21+00:00"
         },
         {
             "name": "spatie/laravel-health",
@@ -14505,16 +14505,16 @@
         },
         {
             "name": "larastan/larastan",
-            "version": "v3.4.2",
+            "version": "v3.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/larastan/larastan.git",
-                "reference": "36706736a0c51d3337478fab9c919d78d2e03404"
+                "reference": "e8ccd73008487ba91da9877b373f8c447743f1ce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/larastan/larastan/zipball/36706736a0c51d3337478fab9c919d78d2e03404",
-                "reference": "36706736a0c51d3337478fab9c919d78d2e03404",
+                "url": "https://api.github.com/repos/larastan/larastan/zipball/e8ccd73008487ba91da9877b373f8c447743f1ce",
+                "reference": "e8ccd73008487ba91da9877b373f8c447743f1ce",
                 "shasum": ""
             },
             "require": {
@@ -14582,7 +14582,7 @@
             ],
             "support": {
                 "issues": "https://github.com/larastan/larastan/issues",
-                "source": "https://github.com/larastan/larastan/tree/v3.4.2"
+                "source": "https://github.com/larastan/larastan/tree/v3.5.0"
             },
             "funding": [
                 {
@@ -14590,7 +14590,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-06-10T09:34:58+00:00"
+            "time": "2025-06-19T22:41:50+00:00"
         },
         {
             "name": "laravel/pail",
@@ -15829,16 +15829,16 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "11.0.9",
+            "version": "11.0.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "14d63fbcca18457e49c6f8bebaa91a87e8e188d7"
+                "reference": "1a800a7446add2d79cc6b3c01c45381810367d76"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/14d63fbcca18457e49c6f8bebaa91a87e8e188d7",
-                "reference": "14d63fbcca18457e49c6f8bebaa91a87e8e188d7",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/1a800a7446add2d79cc6b3c01c45381810367d76",
+                "reference": "1a800a7446add2d79cc6b3c01c45381810367d76",
                 "shasum": ""
             },
             "require": {
@@ -15895,15 +15895,27 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/php-code-coverage/issues",
                 "security": "https://github.com/sebastianbergmann/php-code-coverage/security/policy",
-                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/11.0.9"
+                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/show"
             },
             "funding": [
                 {
                     "url": "https://github.com/sebastianbergmann",
                     "type": "github"
+                },
+                {
+                    "url": "https://liberapay.com/sebastianbergmann",
+                    "type": "liberapay"
+                },
+                {
+                    "url": "https://thanks.dev/u/gh/sebastianbergmann",
+                    "type": "thanks_dev"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/phpunit/php-code-coverage",
+                    "type": "tidelift"
                 }
             ],
-            "time": "2025-02-25T13:26:39+00:00"
+            "time": "2025-06-18T08:56:18+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
