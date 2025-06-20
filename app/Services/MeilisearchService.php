@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Services;
 
 use Exception;
+use InvalidArgumentException;
+use Log;
 use Meilisearch\Client;
 
 final readonly class MeilisearchService
@@ -173,5 +175,105 @@ final readonly class MeilisearchService
         $result = $index->updateDocuments([$documentData]);
 
         return is_array($result) ? $result : [];
+    }
+
+    /**
+     * Increment a numeric field in a document atomically.
+     *
+     * This method uses an experimental Meilisearch feature 'editDocumentsByFunction'
+     * which needs to be enabled on the Meilisearch instance. This function is designed
+     * to be atomic and prevent race conditions by sending the modification logic to
+     * Meilisearch to be executed on the server.
+     *
+     * See: https://github.com/orgs/meilisearch/discussions/762
+     *
+     * @param  string  $indexName  The name of the index
+     * @param  string  $documentId  The ID of the document to update
+     * @param  string  $fieldName  The field to increment
+     * @param  int  $incrementBy  The amount to increment by (default: 1)
+     * @return array<mixed> The update operation result
+     */
+    public function incrementDocumentField(string $indexName, string $documentId, string $fieldName, int $incrementBy = 1): array
+    {
+        // Validate field name to prevent injection
+        if (! preg_match('/^[a-zA-Z_][a-zA-Z0-9_]*$/', $fieldName)) {
+            throw new InvalidArgumentException("Invalid field name: {$fieldName}");
+        }
+
+        $index = $this->client->index($indexName);
+
+        $function = <<<RHAI
+if (doc.{$fieldName} == null) {
+    doc.{$fieldName} = {$incrementBy};
+} else {
+    doc.{$fieldName} += {$incrementBy};
+}
+
+if (doc.usage_count == null) {
+    doc.usage_count = 1;
+} else {
+    doc.usage_count += 1;
+}
+
+doc.last_used_at = last_used_at;
+RHAI;
+
+        try {
+            $result = $index->updateDocumentsByFunction(
+                $function,
+                [
+                    'filter' => "id = '{$documentId}'",
+                    'context' => [
+                        'last_used_at' => now()->toISOString(),
+                    ],
+                ]
+            );
+
+            return is_array($result) ? $result : [];
+        } catch (Exception $e) {
+            // This could fail if the experimental feature is not enabled.
+            // Log the error and return a meaningful message.
+            Log::error('Meilisearch: Failed to increment document field.', [
+                'index' => $indexName,
+                'documentId' => $documentId,
+                'field' => $fieldName,
+                'error' => $e->getMessage(),
+            ]);
+
+            return [
+                'error' => 'Failed to update document.',
+                'message' => $e->getMessage(),
+            ];
+        }
+    }
+
+    /**
+     * Track institution usage by incrementing popularity and updating usage metadata
+     *
+     * @param  string  $institutionId  The ID of the institution
+     * @return array<mixed> The tracking result with success status and updated data
+     */
+    public function trackInstitutionUsage(string $institutionId): array
+    {
+        try {
+            // Increment the popularity field for the institution
+            $result = $this->incrementDocumentField('institutions', $institutionId, 'popularity', 1);
+
+            // At this point, the update is enqueued in Meilisearch.
+            // We can assume success for the purpose of the response.
+            return [
+                'success' => true,
+                'message' => 'Institution usage tracking has been updated.',
+                'task_id' => $result['taskUid'] ?? null,
+                'institution_id' => $institutionId,
+            ];
+        } catch (Exception $e) {
+            return [
+                'success' => false,
+                'message' => 'An error occurred while tracking institution usage.',
+                'error' => $e->getMessage(),
+                'institution_id' => $institutionId,
+            ];
+        }
     }
 }

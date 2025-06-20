@@ -229,9 +229,9 @@ function InstitutionItem({ institution }: { institution: App.Data.Finance.Instit
     });
     const { setOpen } = useCommandMenuStore();
 
-    const handleSelect = () => {
+    const handleSelect = async () => {
         setOpen(false);
-        setInstitution(institution.id);
+        await setInstitution(institution.id);
     };
 
     return (

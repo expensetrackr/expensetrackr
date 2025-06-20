@@ -6,8 +6,10 @@ namespace App\Http\Controllers\Financial;
 
 use App\Data\Finance\InstitutionSearchData;
 use App\Services\MeilisearchService;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 final class InstitutionController
 {
@@ -30,5 +32,36 @@ final class InstitutionController
         );
 
         return response()->json(InstitutionSearchData::collect($institutions));
+    }
+
+    /**
+     * Track usage of an institution by incrementing its popularity count
+     */
+    public function trackUsage(string $institution, MeilisearchService $meilisearchService): JsonResponse
+    {
+        if (empty(trim($institution))) {
+            return response()->json(['message' => 'Institution identifier is required'], 400);
+        }
+
+        try {
+            $result = $meilisearchService->trackInstitutionUsage($institution);
+
+            if (! $result['success']) {
+                return response()->json(['message' => $result['message']], 404);
+            }
+
+            return response()->json([
+                'message' => 'Usage tracked successfully',
+                'institution_id' => $result['institution_id'],
+                'task_id' => $result['task_id'],
+            ]);
+        } catch (Exception $e) {
+            Log::error('Failed to track institution usage', [
+                'institution' => $institution,
+                'error' => $e->getMessage(),
+            ]);
+
+            return response()->json(['message' => 'Failed to track usage'], 500);
+        }
     }
 }

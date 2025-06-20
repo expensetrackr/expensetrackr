@@ -6,6 +6,7 @@ namespace App\Observers;
 
 use App\Actions\AccountBalances\SnapshotBalanceAction;
 use App\Models\Account;
+use Illuminate\Database\Eloquent\Collection;
 
 final readonly class AccountObserver
 {
@@ -19,6 +20,6 @@ final readonly class AccountObserver
      */
     public function created(Account $account): void
     {
-        $this->action->handle(collect([$account]));
+        $this->action->handle(new Collection([$account]));
     }
 }
