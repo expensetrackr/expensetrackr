@@ -58,9 +58,7 @@ final class SnapshotAccountBalances implements ShouldBeUnique, ShouldQueue
             Account::query()
                 ->select(['id', 'current_balance', 'workspace_id'])
                 ->chunk(1000, function ($accounts) use ($action): void {
-                    foreach ($accounts as $account) {
-                        $action->handle($account);
-                    }
+                    $action->handle($accounts);
                 });
         } catch (Throwable $e) {
             $this->fail("Failed to save daily balances: {$e->getMessage()}");
