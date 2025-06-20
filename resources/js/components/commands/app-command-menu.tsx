@@ -231,16 +231,6 @@ function InstitutionItem({ institution }: { institution: App.Data.Finance.Instit
 
     const handleSelect = async () => {
         setOpen(false);
-
-        try {
-            await fetch(`/api/institutions/${institution.id}/track-usage`, {
-                method: "POST",
-            });
-        } catch (error) {
-            // Don't let tracking failures break the user flow
-            console.warn("Failed to track institution usage:", error);
-        }
-
         await setInstitution(institution.id);
     };
 

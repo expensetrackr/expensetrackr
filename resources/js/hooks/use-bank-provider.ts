@@ -6,7 +6,7 @@ import { useTellerConnect } from "./use-teller-connect.ts";
  */
 const trackInstitutionUsage = async (institutionId: string): Promise<void> => {
     try {
-        await fetch(`/api/institutions/${institutionId}/track-usage`, {
+        await fetch(`/api/finance/institutions/${institutionId}/track-usage`, {
             method: "POST",
         });
     } catch (error) {
