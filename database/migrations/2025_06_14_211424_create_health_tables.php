@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -8,12 +10,12 @@ use Spatie\Health\ResultStores\EloquentHealthResultStore;
 
 return new class extends Migration
 {
-    public function up()
+    public function up(): void
     {
         $connection = (new HealthCheckResultHistoryItem)->getConnectionName();
         $tableName = EloquentHealthResultStore::getHistoryItemInstance()->getTable();
-    
-        Schema::connection($connection)->create($tableName, function (Blueprint $table) {
+
+        Schema::connection($connection)->create($tableName, function (Blueprint $table): void {
             $table->id();
 
             $table->string('check_name');
@@ -27,8 +29,8 @@ return new class extends Migration
 
             $table->timestamps();
         });
-        
-        Schema::connection($connection)->table($tableName, function (Blueprint $table) {
+
+        Schema::connection($connection)->table($tableName, function (Blueprint $table): void {
             $table->index('created_at');
             $table->index('batch');
         });
