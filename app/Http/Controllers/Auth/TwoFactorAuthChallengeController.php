@@ -31,6 +31,10 @@ final class TwoFactorAuthChallengeController extends Controller
         // If we made it here, user is available via the EnsureTwoFactorChallengeSession middleware
         $user = $request->two_factor_auth_user;
 
+        if ($user === null) {
+            return redirect()->route('login');
+        }
+
         // Ensure the 2FA challenge is not rate limited
         $this->ensureIsNotRateLimited($user);
 
