@@ -21,8 +21,16 @@ final class ProcessRecoveryCode
         // If the user has entered multiple codes, only validate the first one
         $submittedCode = explode(' ', $submittedCode)[0];
 
-        // Check if the code is valid
-        if (! in_array($submittedCode, $recoveryCodes)) {
+        // Check if the code is valid using a timing-safe comparison
+        $valid = false;
+        foreach ($recoveryCodes as $code) {
+            if (hash_equals($code, $submittedCode)) {
+                $valid = true;
+                break;
+            }
+        }
+
+        if (! $valid) {
             return false;
         }
 
