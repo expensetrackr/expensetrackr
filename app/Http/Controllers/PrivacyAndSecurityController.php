@@ -82,6 +82,13 @@ final class PrivacyAndSecurityController extends Controller
             'code' => 'required|string',
         ]);
 
+        if ($request->user()->two_factor_secret === null) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Two-factor authentication is not enabled.',
+            ], 422);
+        }
+
         // Get the secret key from the user's record
         $secret = decrypt($request->user()->two_factor_secret);
 
