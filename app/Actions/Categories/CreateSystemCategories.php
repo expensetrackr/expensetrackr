@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Models\Workspace;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use RuntimeException;
 
 final class CreateSystemCategories
 {
@@ -71,7 +72,11 @@ final class CreateSystemCategories
                 ->where('workspace_id', $workspace->id)
                 ->first();
 
-            $parentId = $parent?->id;
+            if ($parent === null) {
+                throw new RuntimeException("CreateSystemCategories: parent_slug '{$category['parent_slug']}' not found for workspace ID {$workspace->id}");
+            }
+
+            $parentId = $parent->id;
         }
 
         Category::updateOrCreate(
