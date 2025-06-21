@@ -162,7 +162,10 @@ export function TwoFactorAuthenticationForm({ requiresConfirmation, recoveryCode
                                                 hint={error}
                                                 label="Enter verification code"
                                                 name="code"
-                                                onChange={(e) => setPasscode(e.target.value)}
+                                                onChange={(e) => {
+                                                    const value = e.target.value.replace(/[^0-9]/g, "");
+                                                    setPasscode(value);
+                                                }}
                                                 type="numeric"
                                                 value={passcode}
                                             />
