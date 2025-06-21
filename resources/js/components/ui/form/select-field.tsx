@@ -15,7 +15,7 @@ type SelectProps = Omit<React.CustomComponentPropsWithRef<typeof SelectPrimitive
     triggerIcon?: React.ForwardRefExoticComponent<React.SVGProps<SVGSVGElement>>;
     triggerClassName?: string;
     placeholder?: React.ReactNode;
-    options: Array<{
+    options?: Array<{
         value: string;
         label: React.ReactNode;
         icon?:
@@ -41,6 +41,7 @@ export function SelectField({
     placeholder,
     position = "popper",
     options,
+    children,
     hint,
     ...rest
 }: SelectProps) {
@@ -62,12 +63,14 @@ export function SelectField({
                     <SelectPrimitives.Value placeholder={placeholder} />
                 </SelectPrimitives.Trigger>
                 <SelectPrimitives.Content position={position}>
-                    {options.map((item) => (
-                        <SelectPrimitives.Item disabled={item.disabled} key={item.value} value={item.value}>
-                            {item.icon ? <SelectPrimitives.ItemIcon as={item.icon} /> : null}
-                            {item.label}
-                        </SelectPrimitives.Item>
-                    ))}
+                    {options && options.length > 0
+                        ? options.map((item) => (
+                              <SelectPrimitives.Item disabled={item.disabled} key={item.value} value={item.value}>
+                                  {item.icon ? <SelectPrimitives.ItemIcon as={item.icon} /> : null}
+                                  {item.label}
+                              </SelectPrimitives.Item>
+                          ))
+                        : children}
                 </SelectPrimitives.Content>
             </SelectPrimitives.Root>
 

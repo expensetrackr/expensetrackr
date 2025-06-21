@@ -248,7 +248,17 @@ SelectValue.displayName = "SelectValue";
 const SelectSeparator = SelectPrimitives.Separator;
 SelectSeparator.displayName = "SelectSeparator";
 
-const SelectGroupLabel = SelectPrimitives.Label;
+function SelectGroupLabel({
+    className,
+    children,
+    ...rest
+}: React.CustomComponentPropsWithRef<typeof SelectPrimitives.Label>) {
+    return (
+        <SelectPrimitives.Label className={cn("px-2 py-1.5 text-label-xs text-(--text-sub-600)", className)} {...rest}>
+            {children}
+        </SelectPrimitives.Label>
+    );
+}
 SelectGroupLabel.displayName = "SelectGroupLabel";
 
 const SELECT_TRIGGER_ICON_NAME = "SelectTriggerIcon";

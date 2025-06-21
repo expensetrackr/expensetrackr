@@ -278,6 +278,11 @@ files:
     terms.link2.label: fa2ead697d9998cbc65c81384e6533d5
     actions.submit.label: be11c74c1dd7f307bb80183a90dc2067
   lang/en/enum.php:
+    category.classification.income: 1f08d08fd864b99cbeebd88b9a0784a7
+    category.classification.expense: 7bf48cb939975c27a0d9cfa99c6f3461
+    category.classification.transfer: 6950810f0d2bba97a6f710c7b965b84e
+    category.classification.savings: ab0da0e987457927aebb5111d5d32c12
+    category.classification.other: 6311ae17c1ee52b36e68aaf4ad066387
     transaction.type.income: 1f08d08fd864b99cbeebd88b9a0784a7
     transaction.type.expense: 7bf48cb939975c27a0d9cfa99c6f3461
     transaction.type.transfer: 6950810f0d2bba97a6f710c7b965b84e
@@ -474,3 +479,68 @@ files:
     create.submit_loading: 29dfe0f071ce461d8f9d671d1864351b
     created.success: 2f762114286754e74aaf62ca5bc58dfe
     deleted.success: a710fe9e787e38c5db9fda7b0e78bc20
+  lang/en/categories.php:
+    salary.name: b083a446a3588547410dbd6c571c2a09
+    salary.description: 011640a025c23124b8a4a8b71981693a
+    investments.name: 58b5a31d0fe1c8f8bb513b2d78aed40d
+    investments.description: 36140af4bb0165a431c7db73397cfb1b
+    freelance.name: 0f28fe833d21018c7707e5680392c068
+    freelance.description: 564da42ce4a7bc69ec9873351d0daa8a
+    gifts.name: 67204426ac9de2ade3533836fe933da8
+    gifts.description: ec139aed4eb33b47ce1a39b8599bab59
+    refunds.name: 53beb26d8bca00f56fbd295fdee83459
+    refunds.description: 17b3e766996e28e5764f4d8955b04395
+    rental-income.name: b30008b0d6207e7c6b3cfc8de12bf45c
+    rental-income.description: 30e1bc1cda360c2051d79a74f81d681e
+    royalties.name: 3026f758aeee417e9672d6f1381b267c
+    royalties.description: f226d23f8dcd89ddafc1ffc9598b234d
+    cashback.name: 08dd733c4d7ded9053f7223efdad6512
+    cashback.description: e4d2d28025e3cb75963cf50ee166b638
+    housing.name: 6214b425ac6d1ce4c7246d4f40f95bf5
+    housing.description: ffa59284c7008033ad0268b46e9b6993
+    mortgage.name: 59fc519256027c0b90a627d1688c0975
+    mortgage.description: ab96f314fcd793fadd4022d6f441303a
+    repairs.name: 810a4b9ea5b95b1832b1ccd997c98236
+    repairs.description: fd1f8a1db53ae92553d790d2a7ff21f1
+    transportation.name: a600971fdd23ea1f5685d7ee01d5f5c3
+    transportation.description: 80faa0454390824e07dd1955ebf7d51f
+    groceries.name: 7c3765bf72361083d820071fb21308a9
+    groceries.description: 15a8fb79b085957af71eb37b60fc0009
+    dining.name: fc7a8a928be9e770fa84833b7c43853c
+    dining.description: 657d41ad5077eb5e0c30481fc6659679
+    utilities.name: ceba282b7418b7f199798b645e1cba56
+    utilities.description: 8a56ffd6e7f48911d62ef4e94d1143a8
+    healthcare.name: 4ee2a6c7bb7c40af94c5a15dbf7eb673
+    healthcare.description: fbd0669988f65d1c514b131b01040dd7
+    entertainment.name: 336fdcf7d540e4b430a890b63da159c9
+    entertainment.description: afeefcbb520eb8bd8a5050c6a791f2a5
+    clothing.name: efe0bd2c212eceec598c42a15b8cd07f
+    clothing.description: dde7721740e53df157f5d2fa14035c24
+    electronics.name: ee3c6e8ed9c27c45f161ea416c997df8
+    electronics.description: 963f8aecbb7e253ec0b482549e97a058
+    home-services.name: c0f92cccf2954dc942fccbebe9582a48
+    home-services.description: f7661c97e87ee00a212b9fa2f1c5de37
+    insurance.name: eaff1bdf24fcffe0e14e29a1bff51a12
+    insurance.description: 5120d1afa3e421f660e6ab80b51f5a22
+    taxes.name: 719fec04166d6fa75f89cd29ad61fa8c
+    taxes.description: 6fd68274430270969f4607e22cfbbbc9
+    subscriptions.name: 4ca2c509994c2776d0880357b4e8e5be
+    subscriptions.description: 06a2ecff406216c41baf490dd69f3c9f
+    child-care.name: d3f5d44ce500fbd7968f05d7e2952854
+    child-care.description: d9fb07be5160b1855908cc3312aa5072
+    pets.name: 750e92a6a691645ba02c20d6620583e0
+    pets.description: b3184d3f5097e8161269094c934c72e3
+    charity.name: de0dc1d39b0c11111a6133b76a562a3c
+    charity.description: 0e8e473644a5bf6ed43bed599e7f7571
+    personal-care.name: f390f31410b47c54cc4c467b9eaca3d3
+    personal-care.description: 155b3a2d856b07ad2cdcbb2ae821a64b
+    holidays-travel.name: fda52e7ebbd25d04787bd68fcd41b938
+    holidays-travel.description: 803d40a473921b05ad63823a45cd1bc0
+    debt-payments.name: 7a1e9e7a2ce3b4257c788c5ddd51c4b6
+    debt-payments.description: 655f0a56159c3df724f534731fcc1e16
+    savings.name: ab0da0e987457927aebb5111d5d32c12
+    savings.description: 9298f9bee5cc99efa7121f06fc25b253
+    transfer.name: 6950810f0d2bba97a6f710c7b965b84e
+    transfer.description: d1b518ba9eda86493e6f298e9ba5414d
+    other.name: 6311ae17c1ee52b36e68aaf4ad066387
+    other.description: 26681cdb423fb1f8b16e2558002946f0

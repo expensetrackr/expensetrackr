@@ -29,6 +29,7 @@
         "@tanstack/react-query": "5.80.10",
         "@tanstack/react-table": "8.21.3",
         "@unpic/react": "1.0.1",
+        "better-groupby": "1.0.13",
         "clsx": "2.1.1",
         "cmdk": "1.1.1",
         "d3-curve-circlecorners": "0.1.6",
