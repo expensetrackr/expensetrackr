@@ -76,5 +76,6 @@ Route::get('/thank-you', fn () => Inertia::render('thank-you'))->name('thank-you
 
 Route::get('health', HealthCheckResultsController::class);
 
+require __DIR__.'/auth.php';
 require __DIR__.'/socialstream.php';
 require __DIR__.'/workspaces.php';

@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, motion, type Variants } from "motion/react";
 import Clock04Icon from "virtual:icons/hugeicons/clock-04";
 import Delete02Icon from "virtual:icons/hugeicons/delete-02";
 
@@ -17,18 +17,19 @@ import { DeleteAccountModal } from "./delete-account-modal.tsx";
 
 const MLink = motion.create(Link);
 
-const recentTransactionItemVariants = (i: number) => ({
-    initial: {
-        opacity: 0,
-        translateY: 8,
-        transition: { duration: 0.3, ease: "easeOut", delay: 0.08 * i + 0.1 },
-    },
-    animate: {
-        opacity: 1,
-        translateY: 0,
-        transition: { duration: 0.3, ease: "easeOut", delay: 0.08 * i + 0.1 },
-    },
-});
+const recentTransactionItemVariants = (i: number) =>
+    ({
+        initial: {
+            opacity: 0,
+            translateY: 8,
+            transition: { duration: 0.3, ease: "easeOut", delay: 0.08 * i + 0.1 },
+        },
+        animate: {
+            opacity: 1,
+            translateY: 0,
+            transition: { duration: 0.3, ease: "easeOut", delay: 0.08 * i + 0.1 },
+        },
+    }) as Variants;
 
 export function AccountDetailsDrawer() {
     const actions = useActionsParams();
