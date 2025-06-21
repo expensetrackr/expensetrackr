@@ -6,7 +6,9 @@ namespace App\Http\Middleware;
 
 use App\Models\User;
 use Closure;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 final class EnsureTwoFactorChallengeSession
 {
@@ -22,10 +24,17 @@ final class EnsureTwoFactorChallengeSession
         }
 
         $userId = $request->session()->get('login.id');
-        $user = User::find($userId);
 
-        if (! $user) {
-            return redirect()->route('login');
+        try {
+            $user = Cache::remember("user.{$userId}", 300, fn () => User::find($userId));
+
+            if (! $user) {
+                $request->session()->forget('login.id');
+
+                return redirect()->route('login')->withErrors(['error' => 'Invalid session. Please log in again.']);
+            }
+        } catch (Exception $e) {
+            return redirect()->route('login')->withErrors(['error' => 'Authentication error. Please try again.']);
         }
 
         // Share the user with the request for controllers to use
