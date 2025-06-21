@@ -85,7 +85,7 @@ export function TwoFactorAuthenticationForm({ requiresConfirmation, recoveryCode
                         )}
                         {action === Action.TwoFactorConfirm ? (
                             <ConfirmsPassword onConfirm={handleConfirm}>
-                                <Button.Root disabled={!passcode || passcode.length < 6}>Finish setup</Button.Root>
+                                <Button.Root disabled={!passcode || passcode.length !== 6}>Finish setup</Button.Root>
                             </ConfirmsPassword>
                         ) : null}
                         {confirmed ? (
