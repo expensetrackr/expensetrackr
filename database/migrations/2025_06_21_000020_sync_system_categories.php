@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Actions\Categories\CreateSystemCategories;
 use App\Models\Workspace;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\Log;
 
 return new class extends Migration
 {
@@ -16,7 +17,14 @@ return new class extends Migration
             $action = app(CreateSystemCategories::class);
 
             foreach ($workspaces as $workspace) {
-                $action->handle($workspace);
+                try {
+                    $action->handle($workspace);
+                } catch (Exception $e) {
+                    Log::error("SyncSystemCategories: Error syncing categories for workspace {$workspace->id}", [
+                        'error' => $e->getMessage(),
+                        'trace' => $e->getTraceAsString(),
+                    ]);
+                }
             }
         });
     }
