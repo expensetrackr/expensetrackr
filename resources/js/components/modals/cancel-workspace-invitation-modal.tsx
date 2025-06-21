@@ -16,7 +16,7 @@ export function CancelWorkspaceInvitation({ invitation }: { invitation: App.Data
     function cancelWorkspaceInvitation(invitation: App.Data.Workspace.WorkspaceInvitationData) {
         setCancelling(true);
 
-        router.delete(routes.workspaceInvitations.destroy.url({ invitation: invitation.id.toString() }), {
+        router.delete(routes.workspaceInvitations.destroy.url({ invitation: invitation.id }), {
             preserveScroll: true,
             onSuccess: async () => {
                 await setAction(null);
