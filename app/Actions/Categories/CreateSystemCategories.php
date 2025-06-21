@@ -7,6 +7,7 @@ namespace App\Actions\Categories;
 use App\Enums\Finance\CategoryClassification;
 use App\Models\Category;
 use App\Models\Workspace;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 final class CreateSystemCategories
@@ -16,17 +17,23 @@ final class CreateSystemCategories
      */
     public function handle(Workspace $workspace): void
     {
-        // Primary source comes from config which is cacheable (perf-friendly).
         $categories = config('system_categories', []);
 
-        // Optional override via JSON for custom deployments.
         $jsonPath = storage_path('app/system_categories.json');
 
         if (is_file($jsonPath)) {
-            $json = json_decode((string) file_get_contents($jsonPath), true);
+            $contents = @file_get_contents($jsonPath);
 
-            if (is_array($json)) {
-                $categories = $json;
+            if ($contents === false) {
+                Log::warning("CreateSystemCategories: Unable to read system_categories.json at $jsonPath");
+            } else {
+                $decoded = json_decode($contents, true);
+
+                if (json_last_error() !== JSON_ERROR_NONE) {
+                    Log::warning('CreateSystemCategories: Invalid JSON in '.$jsonPath.' – '.json_last_error_msg());
+                } elseif (is_array($decoded)) {
+                    $categories = $decoded;
+                }
             }
         }
 
@@ -52,15 +59,12 @@ final class CreateSystemCategories
      */
     private function upsertCategory(Workspace $workspace, array $category): void
     {
-        // Resolve classification enum instance
         $classification = $category['classification'] instanceof CategoryClassification
             ? $category['classification']
             : CategoryClassification::from($category['classification']);
 
-        // Determine slug – provided or derived from name
         $slug = $category['slug'] ?? Str::of($category['name'])->slug()->toString();
 
-        // Resolve parent id if any
         $parentId = null;
         if (isset($category['parent_slug'])) {
             $parent = Category::where('slug', $category['parent_slug'])
