@@ -63,7 +63,7 @@ final class ConfirmablePasswordController extends Controller
         return response()->json([
             'confirmed' => $confirmed,
         ], headers: array_filter([
-            'X-Retry-After' => $confirmed ? $lastConfirmed : null,
+            'X-Retry-After' => ! $confirmed ? (config('auth.password_timeout', 900) - $lastConfirmed) : null,
         ]));
     }
 }
