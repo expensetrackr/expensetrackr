@@ -29,7 +29,7 @@ final class GenerateNewRecoveryCodes
         return $codes;
     }
 
-    public function generate(): string
+    private function generate(): string
     {
         return Str::random(10).'-'.Str::random(10);
     }
