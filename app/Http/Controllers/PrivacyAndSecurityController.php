@@ -36,7 +36,7 @@ final class PrivacyAndSecurityController extends Controller
         return Inertia::render('settings/privacy-and-security/show', [
             'confirmsTwoFactorAuthentication' => $confirmed,
             'sessions' => SessionData::collect(BrowserSessions::sessions()),
-            'recoveryCodes' => $user->two_factor_secret !== null ? json_decode(decrypt($user->two_factor_recovery_codes)) : [],
+            'recoveryCodes' => $user->two_factor_secret !== null && $user->two_factor_recovery_codes !== null ? json_decode(decrypt($user->two_factor_recovery_codes)) : [],
         ]);
     }
 
