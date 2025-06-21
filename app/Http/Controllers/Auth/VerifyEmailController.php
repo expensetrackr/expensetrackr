@@ -25,8 +25,10 @@ final class VerifyEmailController extends Controller
             $user = $request->user();
 
             event(new Verified($user));
+
+            return redirect()->intended(route('dashboard', absolute: false).'?verified=1');
         }
 
-        return redirect()->intended(route('dashboard', absolute: false).'?verified=1');
+        return redirect()->intended(route('dashboard', absolute: false).'?verification_failed=1');
     }
 }
