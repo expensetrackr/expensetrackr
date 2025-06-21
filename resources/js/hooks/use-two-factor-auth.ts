@@ -74,9 +74,9 @@ export function useTwoFactorAuth(initialConfirmed: boolean, initialRecoveryCodes
 
     const confirm = useCallback(
         async (passcode: string) => {
-            if (!passcode || passcode.length !== 6) return;
-
             const formattedCode = passcode.replace(/\s+/g, "").trim();
+
+            if (!formattedCode || formattedCode.length !== 6) return;
 
             try {
                 const response = await axios.post<ConfirmResponse>(routes.twoFactor.confirm.url(), {
