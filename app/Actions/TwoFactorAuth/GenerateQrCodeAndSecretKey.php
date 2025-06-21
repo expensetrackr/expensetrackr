@@ -44,7 +44,7 @@ final class GenerateQrCodeAndSecretKey
         // Create the QR code image
         $writer = new Writer(
             new ImageRenderer(
-                new RendererStyle(400),
+                new RendererStyle(config('auth.two_factor.qr_code.size', 400)),
                 new SvgImageBackEnd()
             )
         );

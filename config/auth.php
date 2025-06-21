@@ -116,6 +116,9 @@ return [
 
     'two_factor' => [
         'enabled' => env('AUTH_TWO_FACTOR_ENABLED', true),
+        'qr_code' => [
+            'size' => env('AUTH_QR_CODE_SIZE', 400),
+        ],
     ],
 
     'verification' => [
