@@ -9,6 +9,7 @@ use Illuminate\Auth\AuthenticationException;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Date;
 
 final class OtherBrowserSessionsController extends Controller
 {
@@ -19,9 +20,21 @@ final class OtherBrowserSessionsController extends Controller
      */
     public function destroy(Request $request, StatefulGuard $guard): RedirectResponse
     {
-        // TODO: Implement password confirmation
+        $lastConfirmation = $request->session()->get(
+            'auth.password_confirmed_at', 0
+        );
 
-        $guard->logoutOtherDevices(type($request->password)->asString());
+        $lastConfirmed = Date::now()->unix() - $lastConfirmation;
+
+        $confirmed = $lastConfirmed < $request->input(
+            'seconds', config('auth.password_timeout', 900)
+        );
+
+        if (! $confirmed) {
+            return back(303, [
+                'seconds' => config('auth.password_timeout', 900) - $lastConfirmed,
+            ]);
+        }
 
         BrowserSessions::logoutOtherBrowserSessions();
 
