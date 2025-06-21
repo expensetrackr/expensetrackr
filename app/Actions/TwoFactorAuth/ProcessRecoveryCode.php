@@ -18,9 +18,6 @@ final class ProcessRecoveryCode
         // Clean the submitted code
         $submittedCode = trim($submittedCode);
 
-        // If the user has entered multiple codes, only validate the first one
-        $submittedCode = explode(' ', $submittedCode)[0];
-
         // Check if the code is valid using a timing-safe comparison
         $valid = false;
         foreach ($recoveryCodes as $code) {
