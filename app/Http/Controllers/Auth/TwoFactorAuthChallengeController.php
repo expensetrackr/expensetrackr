@@ -93,8 +93,8 @@ final class TwoFactorAuthChallengeController extends Controller
         // Process the recovery code - this handles validation and removing the used code
         $updatedCodes = app(ProcessRecoveryCode::class)($recoveryCodes, $request->recovery_code);
 
-        // If ProcessRecoveryCode returns false, the code was invalid
-        if ($updatedCodes === false) {
+        // If ProcessRecoveryCode returns a non-array, the code was invalid
+        if (! is_array($updatedCodes)) {
             RateLimiter::hit($this->throttleKey($user));
 
             return back()->withErrors(['recovery_code' => __('The provided two factor authentication recovery code was invalid.')]);
