@@ -190,7 +190,7 @@ return [
     [
         'name' => 'Charity',
         'slug' => 'charity',
-        'color' => '#C026D3',
+        'color' => '#EC4899',
         'classification' => CategoryClassification::Expense,
         'icon' => 'hand-heart',
     ],
