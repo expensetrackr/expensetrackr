@@ -5,7 +5,6 @@ import { ActionSection } from "#/components/action-section.tsx";
 import { ConfirmsPassword } from "#/components/confirms-password.tsx";
 import * as Button from "#/components/ui/button.tsx";
 import { TextField } from "#/components/ui/form/text-field.tsx";
-import { useCopyToClipboard } from "#/hooks/use-copy-to-clipboard.ts";
 import { useTwoFactorAuth } from "#/hooks/use-two-factor-auth.ts";
 import { useUser } from "#/hooks/use-user.ts";
 import { Action } from "#/utils/action.ts";
@@ -18,7 +17,6 @@ interface TwoFactorAuthenticationFormProps {
 export function TwoFactorAuthenticationForm({ requiresConfirmation, recoveryCodes }: TwoFactorAuthenticationFormProps) {
     const [action, setAction] = useQueryState("action", parseAsStringEnum<Action>(Object.values(Action)));
     const [passcode, setPasscode] = React.useState("");
-    const { copyToClipboard } = useCopyToClipboard();
 
     const user = useUser();
     const twoFactorEnabled = action !== Action.TwoFactorEnable && user?.twoFactorEnabled;
@@ -128,17 +126,7 @@ export function TwoFactorAuthenticationForm({ requiresConfirmation, recoveryCode
                                     </div>
 
                                     {secretKey ? (
-                                        <div
-                                            className="mx-auto w-full max-w-56 rounded-8 bg-(--bg-weak-50) p-2"
-                                            onClick={() => copyToClipboard(secretKey)}
-                                            onKeyDown={(event) => {
-                                                if (event.key === "Enter" || event.key === " ") {
-                                                    void copyToClipboard(secretKey);
-                                                }
-                                            }}
-                                            role="button"
-                                            tabIndex={0}
-                                        >
+                                        <div className="mx-auto w-full max-w-56 rounded-8 bg-(--bg-weak-50) p-2">
                                             <p className="text-center text-label-sm text-(--text-sub-600)">
                                                 Setup key:
                                             </p>
