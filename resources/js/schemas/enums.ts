@@ -12,5 +12,6 @@ export const CategoryClassification = v.picklist<App.Enums.Finance.CategoryClass
     "income",
     "expense",
     "transfer",
+    "savings",
     "other",
 ]);
