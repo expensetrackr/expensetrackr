@@ -17,10 +17,20 @@ final class GenerateNewRecoveryCodes
      */
     public function __invoke(): Collection
     {
-        return Collection::times(8, fn () => $this->generate());
+        $codes = collect();
+
+        while ($codes->count() < 8) {
+            $code = $this->generate();
+
+            if (! $codes->contains($code)) {
+                $codes->push($code);
+            }
+        }
+
+        return $codes;
     }
 
-    public function generate()
+    public function generate(): string
     {
         return Str::random(10).'-'.Str::random(10);
     }
