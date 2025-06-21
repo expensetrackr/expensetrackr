@@ -121,4 +121,12 @@ return [
     'verification' => [
         'enabled' => env('AUTH_VERIFICATION_ENABLED', true),
     ],
+
+    'update_password' => [
+        'enabled' => env('AUTH_UPDATE_PASSWORD_ENABLED', true),
+    ],
+
+    'update_profile_information' => [
+        'enabled' => env('AUTH_UPDATE_PROFILE_INFORMATION_ENABLED', true),
+    ],
 ];

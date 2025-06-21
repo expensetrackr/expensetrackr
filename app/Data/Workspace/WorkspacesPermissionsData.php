@@ -31,10 +31,10 @@ final class WorkspacesPermissionsData extends Data
     {
         return self::from([
             'canCreateWorkspaces' => Gate::forUser($user)->check('create', Workspace::class),
-            'canManageTwoFactorAuthentication' => true,
-            'canUpdatePassword' => true,
-            'canUpdateProfileInformation' => true,
-            'hasEmailVerification' => true,
+            'canManageTwoFactorAuthentication' => config('auth.two_factor.enabled'),
+            'canUpdatePassword' => config('auth.update_password.enabled'),
+            'canUpdateProfileInformation' => config('auth.update_profile_information.enabled'),
+            'hasEmailVerification' => config('auth.verification.enabled'),
             'hasAccountDeletionFeatures' => WorkspaceFeatures::hasAccountDeletionFeatures(),
             'hasApiFeatures' => WorkspaceFeatures::hasApiFeatures(),
             'hasWorkspaceFeatures' => WorkspaceFeatures::hasWorkspaceFeatures(),
