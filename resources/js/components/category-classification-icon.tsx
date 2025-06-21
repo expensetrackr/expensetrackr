@@ -1,15 +1,17 @@
+import ArrowLeftRightIcon from "virtual:icons/hugeicons/arrow-left-right";
+import BankIcon from "virtual:icons/hugeicons/bank";
 import MoreHorizontalCircle01Icon from "virtual:icons/hugeicons/more-horizontal-circle-01";
-import RepeatIcon from "virtual:icons/hugeicons/repeat";
 import ShoppingBasket03Icon from "virtual:icons/hugeicons/shopping-basket-03";
-import Wallet02Icon from "virtual:icons/hugeicons/wallet-02";
+import Wallet05Icon from "virtual:icons/hugeicons/wallet-05";
 
 export const classificationIcons: Record<
     App.Enums.Finance.CategoryClassification,
     React.ComponentType<React.SVGProps<SVGSVGElement>>
 > = {
-    income: Wallet02Icon,
+    income: Wallet05Icon,
     expense: ShoppingBasket03Icon,
-    transfer: RepeatIcon,
+    transfer: ArrowLeftRightIcon,
+    savings: BankIcon,
     other: MoreHorizontalCircle01Icon,
 };
 
