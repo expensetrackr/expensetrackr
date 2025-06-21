@@ -210,13 +210,15 @@ export function UpdateCategoryModal() {
                                     form.setData("classification", value as App.Enums.Finance.CategoryClassification);
                                     form.setData("parentId", "");
                                 }}
-                                options={["income", "expense", "transfer", "other"].map((classification) => ({
-                                    value: classification,
-                                    label: classification,
-                                    icon: classificationIcons[
-                                        classification as App.Enums.Finance.CategoryClassification
-                                    ],
-                                }))}
+                                options={["income", "expense", "transfer", "savings", "other"].map(
+                                    (classification) => ({
+                                        value: classification,
+                                        label: classification,
+                                        icon: classificationIcons[
+                                            classification as App.Enums.Finance.CategoryClassification
+                                        ],
+                                    }),
+                                )}
                                 placeholder={isLoading ? "Loading..." : "Select classification"}
                                 value={form.data.classification}
                             />
