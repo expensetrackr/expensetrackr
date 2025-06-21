@@ -13,7 +13,7 @@ final class GenerateNewRecoveryCodes
      * Generate new recovery codes for the user.
      *
      * @param  mixed  $user
-     * @return void
+     * @return Collection<int, string>
      */
     public function __invoke(): Collection
     {
