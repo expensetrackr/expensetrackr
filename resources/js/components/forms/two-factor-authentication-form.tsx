@@ -80,6 +80,10 @@ export function TwoFactorAuthenticationForm({ requiresConfirmation }: TwoFactorA
         });
     }
 
+    function hideRecoveryCodes() {
+        setRecoveryCodes([]);
+    }
+
     async function regenerateRecoveryCodes() {
         return axios.post("/user/two-factor-recovery-codes").then(async () => {
             await showRecoveryCodes();
@@ -118,13 +122,6 @@ export function TwoFactorAuthenticationForm({ requiresConfirmation }: TwoFactorA
             action={
                 twoFactorEnabled || action === Action.TwoFactorConfirm ? (
                     <>
-                        {recoveryCodes.length > 0 && action !== Action.TwoFactorConfirm ? (
-                            <ConfirmsPassword onConfirm={regenerateRecoveryCodes}>
-                                <Button.Root $style="stroke" $type="error">
-                                    Regenerate recovery codes
-                                </Button.Root>
-                            </ConfirmsPassword>
-                        ) : null}
                         {action === Action.TwoFactorConfirm ? (
                             <ConfirmsPassword onConfirm={disableTwoFactorAuthentication}>
                                 <Button.Root $style="stroke" $type="neutral">
@@ -147,10 +144,12 @@ export function TwoFactorAuthenticationForm({ requiresConfirmation }: TwoFactorA
                                 <Button.Root>Finish setup</Button.Root>
                             </ConfirmsPassword>
                         ) : null}
-                        {recoveryCodes.length === 0 && action !== Action.TwoFactorConfirm ? (
-                            <ConfirmsPassword onConfirm={showRecoveryCodes}>
+                        {action !== Action.TwoFactorConfirm ? (
+                            <ConfirmsPassword
+                                onConfirm={recoveryCodes.length > 0 ? hideRecoveryCodes : showRecoveryCodes}
+                            >
                                 <Button.Root $style="stroke" $type="neutral">
-                                    Show recovery codes
+                                    {recoveryCodes.length > 0 ? "Hide recovery codes" : "Show recovery codes"}
                                 </Button.Root>
                             </ConfirmsPassword>
                         ) : null}
@@ -234,10 +233,18 @@ export function TwoFactorAuthenticationForm({ requiresConfirmation }: TwoFactorA
                         ) : null}
 
                         {recoveryCodes.length && action !== Action.TwoFactorConfirm ? (
-                            <div className="rounded-lg text-sm grid max-w-xl gap-1 bg-(--bg-surface-700) px-4 py-4 font-mono text-white">
-                                {recoveryCodes.map((code) => (
-                                    <div key={code}>{code}</div>
-                                ))}
+                            <div className="mx-auto grid max-w-xl gap-4">
+                                <div className="grid gap-1 rounded-8 bg-(--bg-soft-200) px-4 py-4 font-mono text-paragraph-sm text-(--text-sub-600)">
+                                    {recoveryCodes.map((code) => (
+                                        <div key={code}>{code}</div>
+                                    ))}
+                                </div>
+
+                                <ConfirmsPassword onConfirm={regenerateRecoveryCodes}>
+                                    <Button.Root $style="stroke" $type="error">
+                                        Regenerate recovery codes
+                                    </Button.Root>
+                                </ConfirmsPassword>
                             </div>
                         ) : null}
                     </>
