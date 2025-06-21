@@ -13,7 +13,9 @@ use PragmaRX\Google2FA\Google2FA;
 
 final class GenerateQrCodeAndSecretKey
 {
-    public string $companyName;
+    public function __construct(
+        private readonly string $companyName = ''
+    ) {}
 
     /**
      * Generate QR code and secret key for two-factor authentication setup.
