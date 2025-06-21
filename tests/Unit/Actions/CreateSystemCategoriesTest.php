@@ -24,4 +24,7 @@ it('seeds system categories idempotently', function (): void {
     $action->handle($workspace);
 
     expect($workspace->categories()->count())->toBe($firstCount);
+
+    expect($workspace->categories()->where('slug', 'salary')->exists())->toBeTrue();
+    expect($workspace->categories()->where('slug', 'housing')->exists())->toBeTrue();
 });
