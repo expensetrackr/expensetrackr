@@ -54,6 +54,10 @@ final class TwoFactorAuthChallengeController extends Controller
      */
     protected function authenticateUsingCode(Request $request, User $user)
     {
+        if ($user->two_factor_secret === null) {
+            return back()->withErrors(['code' => __('Two-factor authentication is not enabled for this account.')]);
+        }
+
         $secret = decrypt($user->two_factor_secret);
         $valid = app(VerifyTwoFactorCode::class)($secret, $request->code);
 
@@ -76,6 +80,10 @@ final class TwoFactorAuthChallengeController extends Controller
      */
     protected function authenticateUsingRecoveryCode(Request $request, User $user)
     {
+        if ($user->two_factor_recovery_codes === null || $user->two_factor_secret === null) {
+            return back()->withErrors(['recovery_code' => __('Two-factor authentication is not enabled for this account.')]);
+        }
+
         $recoveryCodes = json_decode(decrypt($user->two_factor_recovery_codes), true);
 
         // Process the recovery code - this handles validation and removing the used code
