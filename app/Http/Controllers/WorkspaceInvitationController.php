@@ -37,7 +37,7 @@ final class WorkspaceInvitationController extends Controller
 
         $invitation->delete();
 
-        return redirect(type(config('fortify.home'))->asString())
+        return redirect(route('dashboard', absolute: false))
             ->with('toast', ['type' => 'success', 'message' => __('Great! You have accepted the invitation to join the :workspace workspace.', ['workspace' => $invitation->workspace->name])]);
     }
 

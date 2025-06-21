@@ -35,7 +35,7 @@ export default function SettingsShow() {
     function onSubmit(e: React.FormEvent) {
         e.preventDefault();
 
-        form.put(routes.userProfileInformation.update.url(), {
+        form.put(routes.currentUser.update.url(), {
             errorBag: "updateProfileInformation",
             preserveScroll: true,
             onSuccess: () => {
@@ -64,7 +64,7 @@ export default function SettingsShow() {
             </div>
 
             <form
-                {...routes.userProfileInformation.update.form()}
+                {...routes.currentUser.update.form()}
                 className="flex w-full flex-col gap-5 px-4 py-6 lg:px-8"
                 encType="multipart/form-data"
                 id="update-profile-settings-form"

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Data\Auth;
 
 use App\Models\User;
-use Laravel\Fortify\Features;
 use Spatie\LaravelData\Attributes\MapName;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\Mappers\CamelCaseMapper;
@@ -34,8 +33,7 @@ final class UserData extends Data
             'email' => $user->email,
             'profilePhotoPath' => $user->profile_photo_path,
             'profilePhotoUrl' => $user->profile_photo_url,
-            'twoFactorEnabled' => Features::enabled(Features::twoFactorAuthentication())
-                && $user->two_factor_secret !== null,
+            'twoFactorEnabled' => $user->two_factor_secret !== null,
             'isSubscribed' => $user->isSubscribed(),
         ]);
     }

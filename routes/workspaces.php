@@ -6,7 +6,6 @@ use App\Http\Controllers\ApiTokenController;
 use App\Http\Controllers\CurrentUserController;
 use App\Http\Controllers\CurrentWorkspaceController;
 use App\Http\Controllers\OtherBrowserSessionsController;
-use App\Http\Controllers\PrivacyAndSecurityController;
 use App\Http\Controllers\PrivacyPolicyController;
 use App\Http\Controllers\ProfilePhotoController;
 use App\Http\Controllers\TermsOfServiceController;
@@ -29,16 +28,14 @@ Route::group(['middleware' => config('workspaces.middleware', ['web'])], functio
         : null;
 
     Route::group(['middleware' => array_filter([$authMiddleware, $authSessionMiddleware])], function () {
-        Route::prefix('settings')->group(function () {
-            Route::get('/privacy-and-security', [PrivacyAndSecurityController::class, 'show'])->name('settings.privacy-and-security.show');
-        });
-
         Route::delete('/user/other-browser-sessions', [OtherBrowserSessionsController::class, 'destroy'])
             ->name('other-browser-sessions.destroy');
 
         Route::delete('/user/profile-photo', [ProfilePhotoController::class, 'destroy'])
             ->name('current-user-photo.destroy');
 
+        Route::put('/user', [CurrentUserController::class, 'update'])
+            ->name('current-user.update');
         Route::delete('/user', [CurrentUserController::class, 'destroy'])
             ->name('current-user.destroy');
 

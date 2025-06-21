@@ -14,11 +14,13 @@ import { type PageProps } from "#/types/globals.js";
 type PrivacyAndSecurityShowProps = {
     sessions: App.Data.Auth.SessionData[];
     confirmsTwoFactorAuthentication: boolean;
+    recoveryCodes: string[];
 };
 
 export default function PrivacyAndSecurityShow({
     sessions,
     confirmsTwoFactorAuthentication,
+    recoveryCodes,
     ...props
 }: PageProps<PrivacyAndSecurityShowProps>) {
     const permissions = props.permissions;
@@ -40,7 +42,10 @@ export default function PrivacyAndSecurityShow({
                     <>
                         <Divider.Root $type="line-spacing" />
 
-                        <TwoFactorAuthenticationForm requiresConfirmation={confirmsTwoFactorAuthentication} />
+                        <TwoFactorAuthenticationForm
+                            recoveryCodes={recoveryCodes}
+                            requiresConfirmation={confirmsTwoFactorAuthentication}
+                        />
                     </>
                 )}
 

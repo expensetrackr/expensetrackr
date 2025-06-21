@@ -23,7 +23,7 @@ export function UpdatePasswordForm() {
     function onSubmit(e: React.FormEvent) {
         e.preventDefault();
 
-        form.put(routes.userPassword.update.url(), {
+        form.put(routes.privacyAndSecurity.password.update.url(), {
             errorBag: "updatePassword",
             preserveScroll: true,
             onSuccess: () => {
@@ -70,7 +70,7 @@ export function UpdatePasswordForm() {
 
                         <Modal.Body>
                             <form
-                                {...routes.userPassword.update.form()}
+                                {...routes.privacyAndSecurity.password.update.form()}
                                 className="flex flex-col gap-3"
                                 id="update-password-form"
                                 onSubmit={onSubmit}

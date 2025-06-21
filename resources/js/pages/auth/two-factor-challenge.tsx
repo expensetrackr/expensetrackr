@@ -38,7 +38,7 @@ export default function TwoFactorChallengePage() {
     const submit: React.FormEventHandler = (e) => {
         e.preventDefault();
 
-        post(routes.twoFactor.login.url());
+        post(routes.twoFactor.challenge.url());
     };
 
     return (
@@ -79,7 +79,7 @@ export default function TwoFactorChallengePage() {
 
                 <div className="flex items-center justify-end gap-3 py-2">
                     <LinkButton.Root $style="black" onClick={toggleRecovery}>
-                        <Link href={routes.twoFactor.login.url()}>
+                        <Link href={routes.twoFactor.challenge.url()}>
                             {recovery
                                 ? t("auth.two_factor_challenge.actions.login.recovery")
                                 : t("auth.two_factor_challenge.actions.login.code")}

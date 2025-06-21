@@ -2,29 +2,20 @@
 
 declare(strict_types=1);
 
-namespace App\Actions\Fortify;
+namespace App\Actions\User;
 
 use App\Models\User;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
-use Laravel\Fortify\Contracts\UpdatesUserProfileInformation;
 
-final class UpdateUserProfileInformation implements UpdatesUserProfileInformation
+final class UpdateUser
 {
     /**
      * Validate and update the given user's profile information.
      *
      * @param  array{ name?: string, email?: string, photo?: UploadedFile|null }  $input
      */
-    public function update(User $user, array $input): void
+    public function handle(User $user, array $input): void
     {
-        Validator::make($input, [
-            'name' => ['sometimes', 'required', 'string', 'max:255'],
-            'email' => ['sometimes', 'required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
-            'photo' => ['nullable', 'mimes:jpg,jpeg,png', 'max:5120'],
-        ])->validateWithBag('updateProfileInformation');
-
         if (isset($input['photo'])) {
             $user->updateProfilePhoto($input['photo']);
         }

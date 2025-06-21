@@ -2,27 +2,25 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Settings;
 
-use App\Actions\Password\UpdatePassword;
 use App\Actions\TwoFactorAuth\DisableTwoFactorAuthentication;
 use App\Actions\TwoFactorAuth\GenerateNewRecoveryCodes;
 use App\Actions\TwoFactorAuth\GenerateQrCodeAndSecretKey;
 use App\Actions\TwoFactorAuth\VerifyTwoFactorCode;
-use App\Data\Auth\SessionData;
-use App\Http\Requests\UpdatePasswordRequest;
-use Cjmellor\BrowserSessions\Facades\BrowserSessions;
-use Illuminate\Http\RedirectResponse;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Inertia\Response;
 
-final class PrivacyAndSecurityController extends Controller
+final class TwoFactorAuthController extends Controller
 {
     /**
-     * Show the general profile settings screen.
+     * Show the two factor auth settings page
+     * route[GET] => 'settings/two-factor'
+     *
+     * @return \Inertia\Response
      */
-    public function show(Request $request): Response
+    public function show(Request $request)
     {
         $user = $request->user();
         $confirmed = $user->two_factor_confirmed_at !== null;
@@ -33,30 +31,19 @@ final class PrivacyAndSecurityController extends Controller
             app(DisableTwoFactorAuthentication::class)($user);
         }
 
-        return Inertia::render('settings/privacy-and-security/show', [
-            'confirmsTwoFactorAuthentication' => $confirmed,
-            'sessions' => SessionData::collect(BrowserSessions::sessions()),
+        return Inertia::render('settings/two-factor', [
+            'confirmed' => $confirmed,
             'recoveryCodes' => $user->two_factor_secret !== null ? json_decode(decrypt($user->two_factor_recovery_codes)) : [],
         ]);
     }
 
     /**
-     * Update the user's password.
-     */
-    public function updatePassword(UpdatePasswordRequest $request, UpdatePassword $action): RedirectResponse
-    {
-        $action->handle($request->user(), $request->validated());
-
-        return back();
-    }
-
-    /**
      * Enable two factor authentication
-     * route[POST] => 'settings/privacy-and-security/two-factor'
+     * route[POST] => 'settings/two-factor'
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function enableTwoFactorAuthentication(Request $request)
+    public function enable(Request $request)
     {
         [$qrCode, $secret] = app(GenerateQrCodeAndSecretKey::class)($request->user());
 
@@ -72,11 +59,11 @@ final class PrivacyAndSecurityController extends Controller
 
     /**
      * Verify and confirm the user's two-factor authentication.
-     * route[POST] => 'settings/privacy-and-security/two-factor/confirm'
+     * route[POST] => 'settings/two-factor/confirm'
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function confirmTwoFactorAuthentication(Request $request)
+    public function confirm(Request $request)
     {
         $request->validate([
             'code' => 'required|string',
@@ -112,7 +99,7 @@ final class PrivacyAndSecurityController extends Controller
 
     /**
      * Generate new recovery codes for the user.
-     * route[POST] => 'settings/privacy-and-security/two-factor/recovery-codes'
+     * route[POST] => 'settings/two-factor/recovery-codes'
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -131,11 +118,11 @@ final class PrivacyAndSecurityController extends Controller
 
     /**
      * Disable two factor authentication for the user.
-     * route[DELETE] => 'settings/privacy-and-security/two-factor'
+     * route[DELETE] => 'settings/two-factor'
      *
      * @return void
      */
-    public function disableTwoFactorAuthentication(Request $request)
+    public function disable(Request $request)
     {
         $disableTwoFactorAuthentication = app(DisableTwoFactorAuthentication::class);
         $disableTwoFactorAuthentication($request->user());

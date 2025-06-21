@@ -18,7 +18,6 @@ use Illuminate\Support\Facades\Gate;
 use Inertia\Middleware;
 use JoelButcher\Socialstream\ConnectedAccount;
 use JoelButcher\Socialstream\Socialstream;
-use Laravel\Fortify\Features;
 use stdClass;
 
 final class HandleInertiaRequests extends Middleware
@@ -77,12 +76,12 @@ final class HandleInertiaRequests extends Middleware
                 'canCreateCategories' => Gate::forUser($request->user())->check('create', Category::class),
                 'canCreateTransactions' => Gate::forUser($request->user())->check('create', Transaction::class),
                 'canCreateWorkspaces' => Gate::forUser($request->user())->check('create', Workspace::class),
-                'canManageTwoFactorAuthentication' => Features::canManageTwoFactorAuthentication(),
-                'canUpdatePassword' => Features::enabled(Features::updatePasswords()),
-                'canUpdateProfileInformation' => Features::canUpdateProfileInformation(),
+                'canManageTwoFactorAuthentication' => true,
+                'canUpdatePassword' => true,
+                'canUpdateProfileInformation' => true,
             ],
             'features' => [
-                'hasEmailVerification' => Features::enabled(Features::emailVerification()),
+                'hasEmailVerification' => true,
                 'hasAccountDeletionFeatures' => WorkspaceFeatures::hasAccountDeletionFeatures(),
                 'hasApiFeatures' => WorkspaceFeatures::hasApiFeatures(),
                 'hasWorkspaceFeatures' => WorkspaceFeatures::hasWorkspaceFeatures(),

@@ -4,34 +4,36 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Actions\User\UpdateUser;
 use App\Actions\Workspaces\DeleteUser;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Contracts\Auth\StatefulGuard;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
-use Laravel\Fortify\Actions\ConfirmPassword;
 use Symfony\Component\HttpFoundation\Response;
 
 final class CurrentUserController extends Controller
 {
+    /**
+     * Update the user's profile settings.
+     */
+    public function update(UpdateUserRequest $request, UpdateUser $action): RedirectResponse
+    {
+        $action->handle($request->user(), $request->validated());
+
+        return to_route('settings.show');
+    }
+
     /**
      * Delete the current user.
      */
     public function destroy(Request $request, StatefulGuard $guard, DeleteUser $action): Response
     {
         $user = type($request->user())->as(User::class);
-        $confirmed = resolve(ConfirmPassword::class)(
-            $guard,
-            $user,
-            type($request->password)->asString()
-        );
 
-        if (! $confirmed) {
-            throw ValidationException::withMessages([
-                'password' => __('passwords.incorrect'),
-            ]);
-        }
+        // TODO: Implement password confirmation
 
         $action->handle($user);
 

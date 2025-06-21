@@ -21,6 +21,6 @@ final class CurrentWorkspaceController extends Controller
             abort(403);
         }
 
-        return redirect(type(config('fortify.home'))->asString(), 303);
+        return redirect(route('dashboard', absolute: false), 303);
     }
 }

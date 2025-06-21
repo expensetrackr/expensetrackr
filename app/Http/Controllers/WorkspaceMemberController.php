@@ -74,7 +74,7 @@ final class WorkspaceMemberController extends Controller
         );
 
         if ($currentUser->is($member)) {
-            return redirect(type(config('fortify.home'))->asString());
+            return redirect(route('dashboard', absolute: false));
         }
 
         return back(303);

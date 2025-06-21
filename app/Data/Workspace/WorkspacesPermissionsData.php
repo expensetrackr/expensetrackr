@@ -8,7 +8,6 @@ use App\Models\User;
 use App\Models\Workspace;
 use App\Utilities\Workspaces\WorkspaceFeatures;
 use Illuminate\Support\Facades\Gate;
-use Laravel\Fortify\Features;
 use Spatie\LaravelData\Data;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
@@ -32,10 +31,10 @@ final class WorkspacesPermissionsData extends Data
     {
         return self::from([
             'canCreateWorkspaces' => Gate::forUser($user)->check('create', Workspace::class),
-            'canManageTwoFactorAuthentication' => Features::canManageTwoFactorAuthentication(),
-            'canUpdatePassword' => Features::enabled(Features::updatePasswords()),
-            'canUpdateProfileInformation' => Features::canUpdateProfileInformation(),
-            'hasEmailVerification' => Features::enabled(Features::emailVerification()),
+            'canManageTwoFactorAuthentication' => true,
+            'canUpdatePassword' => true,
+            'canUpdateProfileInformation' => true,
+            'hasEmailVerification' => true,
             'hasAccountDeletionFeatures' => WorkspaceFeatures::hasAccountDeletionFeatures(),
             'hasApiFeatures' => WorkspaceFeatures::hasApiFeatures(),
             'hasWorkspaceFeatures' => WorkspaceFeatures::hasWorkspaceFeatures(),

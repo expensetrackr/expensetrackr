@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Data\Auth\UserData;
 use App\Data\Workspace\WorkspaceData;
 use App\Http\Middleware\AddWorkspaceToRequest;
+use App\Http\Middleware\EnsureTwoFactorChallengeSession;
 use App\Http\Middleware\HandleInertiaRequests;
 use App\Http\Middleware\HandleLanguageMiddleware;
 use App\Http\Middleware\HandleWorkspacesPermissionMiddleware;
@@ -27,6 +28,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->alias([
+            'ensure-two-factor-challenge-session' => EnsureTwoFactorChallengeSession::class,
+        ]);
+
         $middleware->web(append: [
             HandleLanguageMiddleware::class,
             HandleWorkspacesPermissionMiddleware::class,

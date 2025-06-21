@@ -10,6 +10,7 @@ use App\Http\Controllers\ChangelogController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\PricingController;
+use App\Http\Controllers\PrivacyAndSecurityController;
 use App\Http\Controllers\TransactionController;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
@@ -64,6 +65,17 @@ Route::middleware([
         Route::get('/billing', [BillingController::class, 'show'])->name('settings.billing.show');
         Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
 
+        Route::prefix('privacy-and-security')->group(function () {
+            Route::get('/', [PrivacyAndSecurityController::class, 'show'])->name('privacy-and-security.show');
+
+            Route::put('/password', [PrivacyAndSecurityController::class, 'updatePassword'])->name('privacy-and-security.password.update');
+
+            Route::post('/two-factor', [PrivacyAndSecurityController::class, 'enableTwoFactorAuthentication'])->name('two-factor.enable');
+            Route::post('/two-factor/confirm', [PrivacyAndSecurityController::class, 'confirmTwoFactorAuthentication'])->name('two-factor.confirm');
+            Route::post('/two-factor/recovery-codes', [PrivacyAndSecurityController::class, 'regenerateRecoveryCodes'])->name('two-factor.regenerate-recovery-codes');
+            Route::delete('/two-factor', [PrivacyAndSecurityController::class, 'disableTwoFactorAuthentication'])->name('two-factor.disable');
+        });
+
         Route::get('/connected-accounts', fn () => Inertia::render('settings/connected-accounts/show'))->name('settings.connected-accounts.show');
     });
 
@@ -76,5 +88,6 @@ Route::get('/thank-you', fn () => Inertia::render('thank-you'))->name('thank-you
 
 Route::get('health', HealthCheckResultsController::class);
 
+require __DIR__.'/auth.php';
 require __DIR__.'/socialstream.php';
 require __DIR__.'/workspaces.php';

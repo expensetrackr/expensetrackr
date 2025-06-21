@@ -4,14 +4,11 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Cjmellor\BrowserSessions\Facades\BrowserSessions;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
-use Laravel\Fortify\Actions\ConfirmPassword;
 
 final class OtherBrowserSessionsController extends Controller
 {
@@ -22,17 +19,7 @@ final class OtherBrowserSessionsController extends Controller
      */
     public function destroy(Request $request, StatefulGuard $guard): RedirectResponse
     {
-        $confirmed = resolve(ConfirmPassword::class)(
-            $guard,
-            type($request->user())->as(User::class),
-            type($request->password)->asString()
-        );
-
-        if (! $confirmed) {
-            throw ValidationException::withMessages([
-                'password' => __('The password is incorrect.'),
-            ]);
-        }
+        // TODO: Implement password confirmation
 
         $guard->logoutOtherDevices(type($request->password)->asString());
 

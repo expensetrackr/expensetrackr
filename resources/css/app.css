@@ -3,6 +3,7 @@ html {
     --font-family: "Geist";
 
     scroll-behavior: smooth;
+    interpolate-size: allow-keywords;
 }
 
 :root,
