@@ -16,7 +16,7 @@ final class GenerateQrCodeAndSecretKey
     public string $companyName;
 
     /**
-     * Generate new recovery codes for the user.
+     * Generate QR code and secret key for two-factor authentication setup.
      *
      * @return array{string, string}
      */
