@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Actions\TwoFactorAuth;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 
 final class DisableTwoFactorAuthentication
 {
@@ -21,6 +22,10 @@ final class DisableTwoFactorAuthentication
                 'two_factor_recovery_codes' => null,
                 'two_factor_confirmed_at' => null,
             ])->save();
+
+            Log::info('User disabled two factor authentication.', [
+                'user_id' => $user->id,
+            ]);
         }
     }
 }
