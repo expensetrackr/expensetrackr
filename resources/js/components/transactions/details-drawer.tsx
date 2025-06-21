@@ -1,5 +1,6 @@
 import { useForm } from "@inertiajs/react";
 import { useQueries } from "@tanstack/react-query";
+import { groupBy } from "better-groupby";
 import * as React from "react";
 import { toast } from "sonner";
 import Delete02Icon from "virtual:icons/hugeicons/delete-02";
@@ -13,11 +14,13 @@ import * as Drawer from "#/components/ui/drawer.tsx";
 import { SelectField } from "#/components/ui/form/select-field.tsx";
 import { TextField } from "#/components/ui/form/text-field.tsx";
 import { Textarea } from "#/components/ui/form/textarea.tsx";
+import * as Select from "#/components/ui/select.tsx";
 import { useActionsParams } from "#/hooks/use-actions-params.ts";
 import { useTranslation } from "#/hooks/use-translation.ts";
 import { routes } from "#/routes.ts";
 import { type PaginatedResponse } from "#/types/pagination.ts";
 import { currencyFormatter } from "#/utils/number-formatter.ts";
+import { queryClient } from "#/utils/query-client.ts";
 import { Button } from "../button.tsx";
 import { SubmitButton } from "../submit-button.tsx";
 import { Skeleton } from "../ui/skeleton.tsx";
@@ -70,6 +73,34 @@ export function TransactionDetailsDrawer() {
         };
     }, [transaction, setData, reset]);
 
+    // Compute grouped categories ordered so the classification matching the current transaction type appears first
+    const groupedCategoryEntries = React.useMemo(() => {
+        const grouped = groupBy(categories?.data ?? [], "classification");
+        const entries = Object.entries(grouped);
+
+        // If the transaction has a type, place that classification first
+        if (transaction?.type) {
+            entries.sort(([a], [b]) => {
+                if (a === transaction.type) return -1;
+                if (b === transaction.type) return 1;
+                return a.localeCompare(b);
+            });
+        } else {
+            // Otherwise, sort alphabetically for consistency
+            entries.sort(([a], [b]) => a.localeCompare(b));
+        }
+
+        return entries;
+    }, [categories, transaction?.type]);
+
+    const handleOpenChange = async (open: boolean) => {
+        if (!open) {
+            await actions.resetParams();
+            form.reset();
+            return;
+        }
+    };
+
     const onSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
@@ -80,8 +111,12 @@ export function TransactionDetailsDrawer() {
         form.put(routes.transactions.update.url({ transaction: transaction?.id ?? "" }), {
             errorBag: "updateTransaction",
             preserveScroll: true,
-            onSuccess: () => {
+            async onSuccess() {
                 toast.success("Transaction updated.");
+
+                await queryClient.refetchQueries({
+                    queryKey: ["transactions", actions.resourceId],
+                });
             },
             onError: () => {
                 toast.error("Failed to update transaction.");
@@ -91,7 +126,7 @@ export function TransactionDetailsDrawer() {
     };
 
     return (
-        <Drawer.Root onOpenChange={() => actions.resetParams()} open={isOpen}>
+        <Drawer.Root onOpenChange={handleOpenChange} open={isOpen}>
             <Drawer.Content>
                 <Drawer.Header>
                     <Drawer.Title>Transaction Details</Drawer.Title>
@@ -284,26 +319,31 @@ export function TransactionDetailsDrawer() {
                             labelClassName="text-subheading-xs text-(--text-soft-400) uppercase"
                             name="categoryId"
                             onValueChange={(value) => form.setData("categoryId", value)}
-                            options={
-                                categories?.data?.map((category) => ({
-                                    value: category.id,
-                                    label: (
-                                        <div className="inline-flex items-center gap-1.5 text-paragraph-sm text-(--text-sub-600)">
-                                            <Badge.Root
-                                                className="size-2.5 bg-(--color-category-color) p-0"
-                                                style={
-                                                    {
-                                                        "--color-category-color": category.color,
-                                                    } as React.CSSProperties
-                                                }
-                                            ></Badge.Root>
-                                            <span>{category.name}</span>
-                                        </div>
-                                    ),
-                                })) ?? []
-                            }
                             value={form.data.categoryId}
-                        />
+                        >
+                            {groupedCategoryEntries.map(([classification, categories]) => (
+                                <Select.Group key={classification}>
+                                    <Select.GroupLabel>
+                                        {t(`enum.category.classification.${classification}`)}
+                                    </Select.GroupLabel>
+                                    {categories
+                                        ?.sort((a, b) => a.name.localeCompare(b.name))
+                                        .map((category) => (
+                                            <Select.Item key={category.id} value={category.id}>
+                                                <Badge.Root
+                                                    className="size-2.5 bg-(--color-category-color) p-0"
+                                                    style={
+                                                        {
+                                                            "--color-category-color": category.color,
+                                                        } as React.CSSProperties
+                                                    }
+                                                />
+                                                {t(`categories.${category.slug}.name`, {}, category.name)}
+                                            </Select.Item>
+                                        ))}
+                                </Select.Group>
+                            ))}
+                        </SelectField>
 
                         <Divider.Root $type="line-spacing" />
 

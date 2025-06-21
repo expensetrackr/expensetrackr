@@ -44,8 +44,7 @@ function DrawerContent({
                 <DialogPrimitive.Content
                     className={cn(
                         // base
-                        "size-full max-w-[400px] overflow-y-auto",
-                        "border-l border-(--stroke-soft-200) bg-(--bg-white-0)",
+                        "flex size-full max-w-[416px] flex-col overflow-y-auto p-2",
                         // animation
                         "data-[state=open]:duration-200 data-[state=open]:ease-out data-[state=open]:animate-in",
                         "data-[state=closed]:duration-200 data-[state=closed]:ease-in data-[state=closed]:animate-out",
@@ -55,7 +54,9 @@ function DrawerContent({
                     )}
                     {...rest}
                 >
-                    <div className="relative flex size-full flex-col">{children}</div>
+                    <div className="relative flex w-full flex-1 flex-col rounded-20 bg-(--bg-white-0) shadow-md">
+                        {children}
+                    </div>
                 </DialogPrimitive.Content>
             </DrawerOverlay>
         </DrawerPortal>

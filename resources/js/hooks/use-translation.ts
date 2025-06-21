@@ -6,8 +6,8 @@ export function useTranslation() {
 
     return {
         language: pageProps.language,
-        t(key: string, replacements: Record<string, string> = {}) {
-            let translation = translations[key] || key;
+        t(key: string, replacements: Record<string, string> = {}, fallback: string = key) {
+            let translation = translations[key] || fallback;
 
             Object.keys(replacements).forEach((replacement) => {
                 translation = translation.replace(`:${replacement}`, replacements[replacement] || "");
