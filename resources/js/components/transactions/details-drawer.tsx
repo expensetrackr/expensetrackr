@@ -73,9 +73,9 @@ export function TransactionDetailsDrawer() {
         };
     }, [transaction, setData, reset]);
 
-    // Compute grouped categories ordered so the classification matching the current transaction type appears first
+    const validCategories = (categories?.data ?? []).filter((cat) => cat.classification);
+    const grouped = groupBy(validCategories, "classification");
     const groupedCategoryEntries = React.useMemo(() => {
-        const grouped = groupBy(categories?.data ?? [], "classification");
         const entries = Object.entries(grouped);
 
         // If the transaction has a type, place that classification first
@@ -91,7 +91,7 @@ export function TransactionDetailsDrawer() {
         }
 
         return entries;
-    }, [categories, transaction?.type]);
+    }, [grouped, transaction?.type]);
 
     const handleOpenChange = async (open: boolean) => {
         if (!open) {
