@@ -139,10 +139,8 @@ final class PrivacyAndSecurityController extends Controller
     /**
      * Disable two factor authentication for the user.
      * route[DELETE] => 'settings/privacy-and-security/two-factor'
-     *
-     * @return void
      */
-    public function disableTwoFactorAuthentication(Request $request)
+    public function disableTwoFactorAuthentication(Request $request): void
     {
         $disableTwoFactorAuthentication = app(DisableTwoFactorAuthentication::class);
         $disableTwoFactorAuthentication($request->user());
