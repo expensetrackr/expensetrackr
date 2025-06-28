@@ -21,10 +21,10 @@ Route::prefix('api')->group(function () {
 
     Route::prefix('finance')->group(function () {
         Route::get('/currencies', CurrencyController::class)
-            ->name('api.finance.currencies.index');
+            ->name('finance.currencies.index');
 
         Route::get('/institutions', InstitutionController::class)
-            ->name('api.finance.institutions.index');
+            ->name('finance.institutions.index');
     });
 
     Route::apiResource('accounts', AccountController::class)
