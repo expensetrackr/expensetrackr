@@ -15,15 +15,11 @@ final class RegisteredUserController
 {
     /**
      * The guard implementation.
-     *
-     * @var StatefulGuard
      */
-    private $guard;
+    private StatefulGuard $guard;
 
     /**
      * Create a new controller instance.
-     *
-     * @return void
      */
     public function __construct(StatefulGuard $guard)
     {
@@ -33,7 +29,7 @@ final class RegisteredUserController
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, CreateNewUser $creator)
+    public function store(Request $request, CreateNewUser $creator): string
     {
         if (config('fortify.lowercase_usernames') && $request->has(Fortify::username())) {
             $request->merge([

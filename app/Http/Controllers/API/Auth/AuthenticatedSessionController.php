@@ -21,15 +21,11 @@ final class AuthenticatedSessionController
 {
     /**
      * The guard implementation.
-     *
-     * @var StatefulGuard
      */
-    private $guard;
+    private StatefulGuard $guard;
 
     /**
      * Create a new controller instance.
-     *
-     * @return void
      */
     public function __construct(StatefulGuard $guard)
     {
@@ -38,10 +34,8 @@ final class AuthenticatedSessionController
 
     /**
      * Attempt to authenticate a new session.
-     *
-     * @return mixed
      */
-    public function store(LoginRequest $request)
+    public function store(LoginRequest $request): string
     {
         return $this->loginPipeline($request)->then(fn ($request) => $request->user()->createToken(name: $request->device_name)->plainTextToken);
     }
@@ -65,10 +59,8 @@ final class AuthenticatedSessionController
 
     /**
      * Get the authentication pipeline instance.
-     *
-     * @return \Illuminate\Pipeline\Pipeline
      */
-    private function loginPipeline(LoginRequest $request)
+    private function loginPipeline(LoginRequest $request): Pipeline
     {
         if (Fortify::$authenticateThroughCallback) {
             return (new Pipeline(app()))->send($request)->through(array_filter(
