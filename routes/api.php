@@ -76,6 +76,14 @@ $routeGroup = function () {
             ])
             ->name('api.auth.logout');
     });
+
+    Route::prefix('finance')->group(function () {
+        Route::get('/currencies', CurrencyController::class)
+            ->name('api.finance.currencies.index');
+
+        Route::get('/institutions', InstitutionController::class)
+            ->name('api.finance.institutions.index');
+    });
 };
 
 if ($domain = config('app.api_domain')) {
