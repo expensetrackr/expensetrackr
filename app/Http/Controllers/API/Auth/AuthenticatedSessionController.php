@@ -5,18 +5,13 @@ declare(strict_types=1);
 namespace App\Http\Controllers\API\Auth;
 
 use App\Http\Requests\LoginRequest;
+use App\Models\User;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Routing\Pipeline;
-use Laravel\Fortify\Actions\AttemptToAuthenticate;
-use Laravel\Fortify\Actions\CanonicalizeUsername;
-use Laravel\Fortify\Actions\EnsureLoginIsNotThrottled;
-use Laravel\Fortify\Actions\PrepareAuthenticatedSession;
-use Laravel\Fortify\Contracts\RedirectsIfTwoFactorAuthenticatable;
-use Laravel\Fortify\Features;
-use Laravel\Fortify\Fortify;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 
 final class AuthenticatedSessionController
 {
@@ -38,7 +33,15 @@ final class AuthenticatedSessionController
      */
     public function store(LoginRequest $request): RedirectResponse|string
     {
-        return $this->loginPipeline($request)->then(fn ($request) => $request->user()->createToken(name: $request->device_name)->plainTextToken);
+        $user = User::where('email', $request->email)->first();
+
+        if (! $user || ! Hash::check($request->password, $user->password)) {
+            throw ValidationException::withMessages([
+                'email' => ['These credentials do not match our records.'],
+            ]);
+        }
+
+        return $user->createToken(name: $request->device_name)->plainTextToken;
     }
 
     /**
@@ -54,31 +57,5 @@ final class AuthenticatedSessionController
         }
 
         return response()->noContent();
-    }
-
-    /**
-     * Get the authentication pipeline instance.
-     */
-    private function loginPipeline(LoginRequest $request): Pipeline
-    {
-        if (Fortify::$authenticateThroughCallback) {
-            return (new Pipeline(app()))->send($request)->through(array_filter(
-                call_user_func(Fortify::$authenticateThroughCallback, $request)
-            ));
-        }
-
-        if (is_array(config('fortify.pipelines.login'))) {
-            return (new Pipeline(app()))->send($request)->through(array_filter(
-                config('fortify.pipelines.login')
-            ));
-        }
-
-        return (new Pipeline(app()))->send($request)->through(array_filter([
-            config('fortify.limiters.login') ? null : EnsureLoginIsNotThrottled::class,
-            config('fortify.lowercase_usernames') ? CanonicalizeUsername::class : null,
-            Features::enabled(Features::twoFactorAuthentication()) ? RedirectsIfTwoFactorAuthenticatable::class : null,
-            AttemptToAuthenticate::class,
-            PrepareAuthenticatedSession::class,
-        ]));
     }
 }
