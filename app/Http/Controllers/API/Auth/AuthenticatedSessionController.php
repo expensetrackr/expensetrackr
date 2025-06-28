@@ -42,8 +42,6 @@ final class AuthenticatedSessionController
 
     /**
      * Destroy an authenticated session.
-     *
-     * @return \Laravel\Fortify\Contracts\LogoutResponse
      */
     public function destroy(Request $request): Response
     {
