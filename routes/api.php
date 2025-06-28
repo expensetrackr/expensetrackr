@@ -37,26 +37,34 @@ Route::apiResource('transactions', TransactionController::class)
     ->only('show')
     ->names('api.transactions');
 
-Route::group(['middleware' => 'auth:sanctum'], function () {
-    Route::prefix('auth')->withoutMiddleware('auth:sanctum')->group(function () {
-        Route::post('login', [AuthenticatedSessionController::class, 'store'])
-            ->middleware('guest:'.config('fortify.guard'))
-            ->name('api.auth.login');
-
-        if (Features::enabled(Features::resetPasswords())) {
-            Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])
+$routeGroup = function () {
+    Route::group(['middleware' => 'auth:sanctum'], function () {
+        Route::prefix('auth')->withoutMiddleware('auth:sanctum')->group(function () {
+            Route::post('login', [AuthenticatedSessionController::class, 'store'])
                 ->middleware('guest:'.config('fortify.guard'))
-                ->name('api.auth.forgot-password');
-        }
+                ->name('api.auth.login');
 
-        if (Features::enabled(Features::registration())) {
-            Route::post('register', [RegisteredUserController::class, 'store'])
-                ->middleware('guest:'.config('fortify.guard'))
-                ->name('api.auth.register');
-        }
+            if (Features::enabled(Features::resetPasswords())) {
+                Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])
+                    ->middleware('guest:'.config('fortify.guard'))
+                    ->name('api.auth.forgot-password');
+            }
 
-        Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
-            ->middleware('auth:sanctum')
-            ->name('api.auth.logout');
+            if (Features::enabled(Features::registration())) {
+                Route::post('register', [RegisteredUserController::class, 'store'])
+                    ->middleware('guest:'.config('fortify.guard'))
+                    ->name('api.auth.register');
+            }
+
+            Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
+                ->middleware('auth:sanctum')
+                ->name('api.auth.logout');
+        });
     });
-});
+};
+
+if (app()->environment('production')) {
+    Route::domain('api.expensetrackr.app')->group($routeGroup);
+} else {
+    $routeGroup();
+}
