@@ -14,28 +14,30 @@ use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 use Laravel\Fortify\Http\Controllers\PasswordResetLinkController;
 
-Route::post('teller/webhook', WebhookTellerController::class)
-    ->name('teller.webhook');
+Route::prefix('api')->group(function () {
+    Route::post('teller/webhook', WebhookTellerController::class)
+        ->name('teller.webhook');
 
-Route::prefix('finance')->group(function () {
-    Route::get('/currencies', CurrencyController::class)
-        ->name('api.finance.currencies.index');
+    Route::prefix('finance')->group(function () {
+        Route::get('/currencies', CurrencyController::class)
+            ->name('api.finance.currencies.index');
 
-    Route::get('/institutions', InstitutionController::class)
-        ->name('api.finance.institutions.index');
+        Route::get('/institutions', InstitutionController::class)
+            ->name('api.finance.institutions.index');
+    });
+
+    Route::apiResource('accounts', AccountController::class)
+        ->only(['index', 'show'])
+        ->names('api.accounts');
+
+    Route::apiResource('categories', CategoryController::class)
+        ->only(['index', 'show'])
+        ->names('api.categories');
+
+    Route::apiResource('transactions', TransactionController::class)
+        ->only('show')
+        ->names('api.transactions');
 });
-
-Route::apiResource('accounts', AccountController::class)
-    ->only(['index', 'show'])
-    ->names('api.accounts');
-
-Route::apiResource('categories', CategoryController::class)
-    ->only(['index', 'show'])
-    ->names('api.categories');
-
-Route::apiResource('transactions', TransactionController::class)
-    ->only('show')
-    ->names('api.transactions');
 
 $routeGroup = function () {
     Route::group(['middleware' => 'auth:sanctum'], function () {
