@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\API\Auth;
 
 use Illuminate\Contracts\Auth\StatefulGuard;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Pipeline;
@@ -35,7 +36,7 @@ final class AuthenticatedSessionController
     /**
      * Attempt to authenticate a new session.
      */
-    public function store(LoginRequest $request): string
+    public function store(LoginRequest $request): RedirectResponse|string
     {
         return $this->loginPipeline($request)->then(fn ($request) => $request->user()->createToken(name: $request->device_name)->plainTextToken);
     }
