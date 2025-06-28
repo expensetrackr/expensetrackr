@@ -13,6 +13,7 @@ use App\Http\Controllers\WebhookTellerController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 use Laravel\Fortify\Http\Controllers\PasswordResetLinkController;
+use Spatie\Health\Http\Controllers\HealthCheckResultsController;
 
 Route::prefix('api')->group(function () {
     Route::post('teller/webhook', WebhookTellerController::class)
@@ -40,6 +41,8 @@ Route::prefix('api')->group(function () {
 });
 
 $routeGroup = function () {
+    Route::get('health', HealthCheckResultsController::class);
+
     Route::prefix('auth')->group(function () {
         Route::post('login', [AuthenticatedSessionController::class, 'store'])
             ->middleware([
