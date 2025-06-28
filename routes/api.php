@@ -65,8 +65,8 @@ $routeGroup = function () {
     });
 };
 
-if (app()->environment('production')) {
-    Route::domain('api.expensetrackr.app')->group($routeGroup);
+if ($domain = config('app.api_domain')) {
+    Route::domain($domain)->group($routeGroup);
 } else {
     $routeGroup();
 }
