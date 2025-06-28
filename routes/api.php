@@ -12,6 +12,7 @@ use App\Http\Controllers\Financial\InstitutionController;
 use App\Http\Controllers\WebhookTellerController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
+use Laravel\Fortify\Http\Controllers\PasswordResetLinkController;
 
 Route::post('teller/webhook', WebhookTellerController::class)
     ->name('teller.webhook');
@@ -41,6 +42,12 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::post('login', [AuthenticatedSessionController::class, 'store'])
             ->middleware('guest:'.config('fortify.guard'))
             ->name('api.auth.login');
+
+        if (Features::enabled(Features::resetPasswords())) {
+            Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])
+                ->middleware('guest:'.config('fortify.guard'))
+                ->name('api.auth.forgot-password');
+        }
 
         if (Features::enabled(Features::registration())) {
             Route::post('register', [RegisteredUserController::class, 'store'])
