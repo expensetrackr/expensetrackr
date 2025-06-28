@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\API\Auth;
 
+use App\Http\Requests\LoginRequest;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -16,7 +17,6 @@ use Laravel\Fortify\Actions\PrepareAuthenticatedSession;
 use Laravel\Fortify\Contracts\RedirectsIfTwoFactorAuthenticatable;
 use Laravel\Fortify\Features;
 use Laravel\Fortify\Fortify;
-use Laravel\Fortify\Http\Requests\LoginRequest;
 
 final class AuthenticatedSessionController
 {
