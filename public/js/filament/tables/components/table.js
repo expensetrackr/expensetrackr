@@ -8,25 +8,26 @@ function n() {
         lastCheckedRecord: null,
         livewireId: null,
         init: function () {
-            (this.livewireId = this.$root.closest("[wire\\:id]").attributes["wire:id"].value),
+            ((this.livewireId = this.$root.closest("[wire\\:id]").attributes["wire:id"].value),
                 this.$wire.$on("deselectAllTableRecords", () => this.deselectAllRecords()),
                 this.$watch("selectedRecords", () => {
                     if (!this.shouldCheckUniqueSelection) {
                         this.shouldCheckUniqueSelection = !0;
                         return;
                     }
-                    (this.selectedRecords = [...new Set(this.selectedRecords)]), (this.shouldCheckUniqueSelection = !1);
+                    ((this.selectedRecords = [...new Set(this.selectedRecords)]),
+                        (this.shouldCheckUniqueSelection = !1));
                 }),
                 this.$nextTick(() => this.watchForCheckboxClicks()),
                 Livewire.hook("element.init", ({ component: e }) => {
                     e.id === this.livewireId && this.watchForCheckboxClicks();
-                });
+                }));
         },
         mountAction: function (e, t = null) {
-            this.$wire.set("selectedTableRecords", this.selectedRecords, !1), this.$wire.mountTableAction(e, t);
+            (this.$wire.set("selectedTableRecords", this.selectedRecords, !1), this.$wire.mountTableAction(e, t));
         },
         mountBulkAction: function (e) {
-            this.$wire.set("selectedTableRecords", this.selectedRecords, !1), this.$wire.mountTableBulkAction(e);
+            (this.$wire.set("selectedTableRecords", this.selectedRecords, !1), this.$wire.mountTableBulkAction(e));
         },
         toggleSelectRecordsOnPage: function () {
             let e = this.getRecordsOnPage();
@@ -41,7 +42,7 @@ function n() {
                 this.deselectRecords(await this.$wire.getGroupedSelectableTableRecordKeys(e));
                 return;
             }
-            this.selectRecords(await this.$wire.getGroupedSelectableTableRecordKeys(e)), (this.isLoading = !1);
+            (this.selectRecords(await this.$wire.getGroupedSelectableTableRecordKeys(e)), (this.isLoading = !1));
         },
         getRecordsInGroupOnPage: function (e) {
             let t = [];
@@ -64,9 +65,9 @@ function n() {
             }
         },
         selectAllRecords: async function () {
-            (this.isLoading = !0),
+            ((this.isLoading = !0),
                 (this.selectedRecords = await this.$wire.getAllSelectableTableRecordKeys()),
-                (this.isLoading = !1);
+                (this.isLoading = !1));
         },
         deselectAllRecords: function () {
             this.selectedRecords = [];
@@ -91,8 +92,8 @@ function n() {
             this.collapsedGroups = [];
         },
         watchForCheckboxClicks: function () {
-            this.checkboxClickController && this.checkboxClickController.abort(),
-                (this.checkboxClickController = new AbortController());
+            (this.checkboxClickController && this.checkboxClickController.abort(),
+                (this.checkboxClickController = new AbortController()));
             let { signal: e } = this.checkboxClickController;
             this.$root?.addEventListener(
                 "click",
@@ -115,7 +116,7 @@ function n() {
                     r = s.indexOf(t),
                     l = [o, r].sort((i, d) => i - d),
                     c = [];
-                for (let i = l[0]; i <= l[1]; i++) (s[i].checked = t.checked), c.push(s[i].value);
+                for (let i = l[0]; i <= l[1]; i++) ((s[i].checked = t.checked), c.push(s[i].value));
                 t.checked ? this.selectRecords(c) : this.deselectRecords(c);
             }
             this.lastChecked = t;

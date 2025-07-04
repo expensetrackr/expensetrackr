@@ -3,13 +3,13 @@ function r({ initialHeight: t, shouldAutosize: i, state: s }) {
         state: s,
         wrapperEl: null,
         init: function () {
-            (this.wrapperEl = this.$el.parentNode),
+            ((this.wrapperEl = this.$el.parentNode),
                 this.setInitialHeight(),
                 i
                     ? this.$watch("state", () => {
                           this.resize();
                       })
-                    : this.setUpResizeObserver();
+                    : this.setUpResizeObserver());
         },
         setInitialHeight: function () {
             this.$el.scrollHeight <= 0 || (this.wrapperEl.style.height = t + "rem");

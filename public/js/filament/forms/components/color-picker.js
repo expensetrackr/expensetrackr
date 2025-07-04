@@ -35,7 +35,8 @@ var nt = { grad: 360 / 400, turn: 360, rad: 360 / (Math.PI * 2) },
     },
     J = it,
     lt = ({ h: e, s: t, l: r, a: o }) => (
-        (t *= (r < 50 ? r : 100 - r) / 100), { h: e, s: t > 0 ? ((2 * t) / (r + t)) * 100 : 0, v: r + t, a: o }
+        (t *= (r < 50 ? r : 100 - r) / 100),
+        { h: e, s: t > 0 ? ((2 * t) / (r + t)) * 100 : 0, v: r + t, a: o }
     ),
     X = (e) => ct(A(e)),
     Y = ({ h: e, s: t, v: r, a: o }) => {
@@ -56,7 +57,7 @@ var d = (e) => {
         return `hsla(${t}, ${r}%, ${o}%, ${s})`;
     },
     A = ({ h: e, s: t, v: r, a: o }) => {
-        (e = (e / 360) * 6), (t = t / 100), (r = r / 100);
+        ((e = (e / 360) * 6), (t = t / 100), (r = r / 100));
         let s = Math.floor(e),
             a = r * (1 - t),
             i = r * (1 - (e - s) * t),
@@ -116,7 +117,7 @@ var L = (e, t) => {
 var Q = {},
     H = (e) => {
         let t = Q[e];
-        return t || ((t = document.createElement("template")), (t.innerHTML = e), (Q[e] = t)), t;
+        return (t || ((t = document.createElement("template")), (t.innerHTML = e), (Q[e] = t)), t);
     },
     f = (e, t, r) => {
         e.dispatchEvent(new CustomEvent(t, { bubbles: !0, detail: r }));
@@ -172,27 +173,27 @@ var m = !1,
             let a = H(`<div role="slider" tabindex="0" part="${r}" ${o}><div part="${r}-pointer"></div></div>`);
             t.appendChild(a.content.cloneNode(!0));
             let i = t.querySelector(`[part=${r}]`);
-            i.addEventListener("mousedown", this),
+            (i.addEventListener("mousedown", this),
                 i.addEventListener("touchstart", this),
                 i.addEventListener("keydown", this),
                 (this.el = i),
                 (this.xy = s),
-                (this.nodes = [i.firstChild, i]);
+                (this.nodes = [i.firstChild, i]));
         }
         set dragging(t) {
             let r = t ? document.addEventListener : document.removeEventListener;
-            r(m ? "touchmove" : "mousemove", this), r(m ? "touchend" : "mouseup", this);
+            (r(m ? "touchmove" : "mousemove", this), r(m ? "touchend" : "mouseup", this));
         }
         handleEvent(t) {
             switch (t.type) {
                 case "mousedown":
                 case "touchstart":
                     if ((t.preventDefault(), !pt(t) || (!m && t.button != 0))) return;
-                    this.el.focus(), W(this, t), (this.dragging = !0);
+                    (this.el.focus(), W(this, t), (this.dragging = !0));
                     break;
                 case "mousemove":
                 case "touchmove":
-                    t.preventDefault(), W(this, t);
+                    (t.preventDefault(), W(this, t));
                     break;
                 case "mouseup":
                 case "touchend":
@@ -214,9 +215,9 @@ var S = class extends u {
         super(t, "hue", 'aria-label="Hue" aria-valuemin="0" aria-valuemax="360"', !1);
     }
     update({ h: t }) {
-        (this.h = t),
+        ((this.h = t),
             this.style([{ left: `${(t / 360) * 100}%`, color: d({ h: t, s: 100, v: 100, a: 1 }) }]),
-            this.el.setAttribute("aria-valuenow", `${n(t)}`);
+            this.el.setAttribute("aria-valuenow", `${n(t)}`));
     }
     getMove(t, r) {
         return { h: r ? c(this.h + t.x * 360, 0, 360) : 360 * t.x };
@@ -227,12 +228,12 @@ var T = class extends u {
         super(t, "saturation", 'aria-label="Color"', !0);
     }
     update(t) {
-        (this.hsva = t),
+        ((this.hsva = t),
             this.style([
                 { top: `${100 - t.v}%`, left: `${t.s}%`, color: d(t) },
                 { "background-color": d({ h: t.h, s: 100, v: 100, a: 1 }) },
             ]),
-            this.el.setAttribute("aria-valuetext", `Saturation ${n(t.s)}%, Brightness ${n(t.v)}%`);
+            this.el.setAttribute("aria-valuetext", `Saturation ${n(t.s)}%, Brightness ${n(t.v)}%`));
     }
     getMove(t, r) {
         return {
@@ -270,21 +271,21 @@ var w = Symbol("same"),
         set color(t) {
             if (!this[w](t)) {
                 let r = this.colorModel.toHsva(t);
-                this[_](r), (this[R] = t);
+                (this[_](r), (this[R] = t));
             }
         }
         constructor() {
             super();
             let t = H(`<style>${this[g].join("")}</style>`),
                 r = this.attachShadow({ mode: "open" });
-            r.appendChild(t.content.cloneNode(!0)),
+            (r.appendChild(t.content.cloneNode(!0)),
                 r.addEventListener("move", this),
-                (this[ot] = this[x].map((o) => new o(r)));
+                (this[ot] = this[x].map((o) => new o(r))));
         }
         connectedCallback() {
             if (this.hasOwnProperty("color")) {
                 let t = this.color;
-                delete this.color, (this.color = t);
+                (delete this.color, (this.color = t));
             } else this.color || (this.color = this.colorModel.defaultColor);
         }
         attributeChangedCallback(t, r, o) {
@@ -304,7 +305,7 @@ var w = Symbol("same"),
             return this.color && this.colorModel.equal(t, this.color);
         }
         [_](t) {
-            (this[et] = t), this[ot].forEach((r) => r.update(t));
+            ((this[et] = t), this[ot].forEach((r) => r.update(t)));
         }
     };
 var dt = {
@@ -348,7 +349,7 @@ var k = class extends u {
             s = t.a * 100;
         this.style([{ left: `${s}%`, color: $(t) }, { "--gradient": `linear-gradient(90deg, ${r}, ${o}` }]);
         let a = n(s);
-        this.el.setAttribute("aria-valuenow", `${a}`), this.el.setAttribute("aria-valuetext", `${a}%`);
+        (this.el.setAttribute("aria-valuenow", `${a}`), this.el.setAttribute("aria-valuetext", `${a}%`));
     }
     getMove(t, r) {
         return { a: r ? c(this.hsva.a + t.x) : t.x };
@@ -383,32 +384,32 @@ function gt({
     return {
         state: i,
         init: function () {
-            this.state === null || this.state === "" || this.setState(this.state),
+            (this.state === null || this.state === "" || this.setState(this.state),
                 e && this.togglePanelVisibility(this.$refs.input),
                 this.$refs.input.addEventListener("change", (l) => {
                     this.setState(l.target.value);
                 }),
                 this.$refs.panel.addEventListener("color-changed", (l) => {
-                    this.setState(l.detail.value),
+                    (this.setState(l.detail.value),
                         !(s || !(r || o)) &&
                             setTimeout(
                                 () => {
                                     this.state === l.detail.value && this.commitState();
                                 },
                                 o ? a : 250,
-                            );
+                            ));
                 }),
                 (r || o || s) &&
                     new MutationObserver(() => (this.isOpen() ? null : this.commitState())).observe(this.$refs.panel, {
                         attributes: !0,
                         childList: !0,
-                    });
+                    }));
         },
         togglePanelVisibility: function () {
             t || this.$refs.panel.toggle(this.$refs.input);
         },
         setState: function (l) {
-            (this.state = l), (this.$refs.input.value = l), (this.$refs.panel.color = l);
+            ((this.state = l), (this.$refs.input.value = l), (this.$refs.panel.color = l));
         },
         isOpen: function () {
             return this.$refs.panel.style.display === "block";

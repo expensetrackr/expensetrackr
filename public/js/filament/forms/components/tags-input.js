@@ -8,7 +8,7 @@ function i({ state: a, splitKeys: n }) {
                     this.newTag = "";
                     return;
                 }
-                this.state.push(this.newTag), (this.newTag = "");
+                (this.state.push(this.newTag), (this.newTag = ""));
             }
         },
         deleteTag: function (t) {
@@ -16,7 +16,7 @@ function i({ state: a, splitKeys: n }) {
         },
         reorderTags: function (t) {
             let e = this.state.splice(t.oldIndex, 1)[0];
-            this.state.splice(t.newIndex, 0, e), (this.state = [...this.state]);
+            (this.state.splice(t.newIndex, 0, e), (this.state = [...this.state]));
         },
         input: {
             "x-on:blur": "createTag()",
@@ -32,7 +32,7 @@ function i({ state: a, splitKeys: n }) {
                     }
                     let t = n.map((e) => e.replace(/[/\-\\^$*+?.()|[\]{}]/g, "\\$&")).join("|");
                     this.newTag.split(new RegExp(t, "g")).forEach((e) => {
-                        (this.newTag = e), this.createTag();
+                        ((this.newTag = e), this.createTag());
                     });
                 });
             },

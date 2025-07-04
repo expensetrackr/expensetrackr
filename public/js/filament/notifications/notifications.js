@@ -23,14 +23,14 @@
             g.getRandomValues &&
             ((y = new Uint8Array(16)),
             (v = function () {
-                return g.getRandomValues(y), y;
+                return (g.getRandomValues(y), y);
             }));
         var y;
         v ||
             ((T = new Array(16)),
             (v = function () {
                 for (var i = 0, t; i < 16; i++)
-                    (i & 3) === 0 && (t = Math.random() * 4294967296), (T[i] = (t >>> ((i & 3) << 3)) & 255);
+                    ((i & 3) === 0 && (t = Math.random() * 4294967296), (T[i] = (t >>> ((i & 3) << 3)) & 255));
                 return T;
             }));
         var T;
@@ -90,16 +90,16 @@
                 h >= 1e4)
             )
                 throw new Error("uuid.v1(): Can't create more than 10M uuids/sec");
-            (D = o), (A = h), (F = r), (o += 122192928e5);
+            ((D = o), (A = h), (F = r), (o += 122192928e5));
             var c = ((o & 268435455) * 1e4 + h) % 4294967296;
-            (n[s++] = (c >>> 24) & 255), (n[s++] = (c >>> 16) & 255), (n[s++] = (c >>> 8) & 255), (n[s++] = c & 255);
+            ((n[s++] = (c >>> 24) & 255), (n[s++] = (c >>> 16) & 255), (n[s++] = (c >>> 8) & 255), (n[s++] = c & 255));
             var u = ((o / 4294967296) * 1e4) & 268435455;
-            (n[s++] = (u >>> 8) & 255),
+            ((n[s++] = (u >>> 8) & 255),
                 (n[s++] = u & 255),
                 (n[s++] = ((u >>> 24) & 15) | 16),
                 (n[s++] = (u >>> 16) & 255),
                 (n[s++] = (r >>> 8) | 128),
-                (n[s++] = r & 255);
+                (n[s++] = r & 255));
             for (var $ = i.node || Z, m = 0; m < 6; ++m) n[s + m] = $[m];
             return t || X(n);
         }
@@ -110,7 +110,7 @@
             et = C();
         function st(i, t, e) {
             var s = (t && e) || 0;
-            typeof i == "string" && ((t = i == "binary" ? new Array(16) : null), (i = null)), (i = i || {});
+            (typeof i == "string" && ((t = i == "binary" ? new Array(16) : null), (i = null)), (i = i || {}));
             var n = i.random || (i.rng || it)();
             if (((n[6] = (n[6] & 15) | 64), (n[8] = (n[8] & 63) | 128), t))
                 for (var r = 0; r < 16; ++r) t[s + r] = n[r];
@@ -139,7 +139,7 @@
             transitionDuration: null,
             transitionEasing: null,
             init: function () {
-                (this.computedStyle = window.getComputedStyle(this.$el)),
+                ((this.computedStyle = window.getComputedStyle(this.$el)),
                     (this.transitionDuration = parseFloat(this.computedStyle.transitionDuration) * 1e3),
                     (this.transitionEasing = this.computedStyle.transitionTimingFunction),
                     this.configureTransitions(),
@@ -153,16 +153,16 @@
                             }
                             this.$el.addEventListener("mouseleave", () => this.close());
                         }, t.duration),
-                    (this.isShown = !0);
+                    (this.isShown = !0));
             },
             configureTransitions: function () {
                 let e = this.computedStyle.display,
                     s = () => {
-                        i.mutateDom(() => {
-                            this.$el.style.setProperty("display", e),
-                                this.$el.style.setProperty("visibility", "visible");
+                        (i.mutateDom(() => {
+                            (this.$el.style.setProperty("display", e),
+                                this.$el.style.setProperty("visibility", "visible"));
                         }),
-                            (this.$el._x_isShown = !0);
+                            (this.$el._x_isShown = !0));
                     },
                     n = () => {
                         i.mutateDom(() => {
@@ -186,8 +186,8 @@
                         requestAnimationFrame(() => {
                             let l = () => this.$el.getBoundingClientRect().top,
                                 c = l();
-                            h(() => {
-                                (e = () => {
+                            (h(() => {
+                                ((e = () => {
                                     this.isShown &&
                                         this.$el.animate(
                                             [
@@ -197,20 +197,20 @@
                                             { duration: this.transitionDuration, easing: this.transitionEasing },
                                         );
                                 }),
-                                    this.$el.getAnimations().forEach((u) => u.finish());
+                                    this.$el.getAnimations().forEach((u) => u.finish()));
                             }),
                                 r(({ snapshot: u, effect: $ }) => {
                                     e();
-                                });
+                                }));
                         });
                 });
             },
             close: function () {
-                (this.isShown = !1),
+                ((this.isShown = !1),
                     setTimeout(
                         () => window.dispatchEvent(new CustomEvent("notificationClosed", { detail: { id: t.id } })),
                         this.transitionDuration,
-                    );
+                    ));
             },
             markAsRead: function () {
                 window.dispatchEvent(new CustomEvent("markedNotificationAsRead", { detail: { id: t.id } }));
@@ -223,169 +223,170 @@
     var B = J(z(), 1),
         p = class {
             constructor() {
-                return this.id((0, B.v4)()), this;
+                return (this.id((0, B.v4)()), this);
             }
             id(t) {
-                return (this.id = t), this;
+                return ((this.id = t), this);
             }
             title(t) {
-                return (this.title = t), this;
+                return ((this.title = t), this);
             }
             body(t) {
-                return (this.body = t), this;
+                return ((this.body = t), this);
             }
             actions(t) {
-                return (this.actions = t), this;
+                return ((this.actions = t), this);
             }
             status(t) {
-                return (this.status = t), this;
+                return ((this.status = t), this);
             }
             color(t) {
-                return (this.color = t), this;
+                return ((this.color = t), this);
             }
             icon(t) {
-                return (this.icon = t), this;
+                return ((this.icon = t), this);
             }
             iconColor(t) {
-                return (this.iconColor = t), this;
+                return ((this.iconColor = t), this);
             }
             duration(t) {
-                return (this.duration = t), this;
+                return ((this.duration = t), this);
             }
             seconds(t) {
-                return this.duration(t * 1e3), this;
+                return (this.duration(t * 1e3), this);
             }
             persistent() {
-                return this.duration("persistent"), this;
+                return (this.duration("persistent"), this);
             }
             danger() {
-                return this.status("danger"), this;
+                return (this.status("danger"), this);
             }
             info() {
-                return this.status("info"), this;
+                return (this.status("info"), this);
             }
             success() {
-                return this.status("success"), this;
+                return (this.status("success"), this);
             }
             warning() {
-                return this.status("warning"), this;
+                return (this.status("warning"), this);
             }
             view(t) {
-                return (this.view = t), this;
+                return ((this.view = t), this);
             }
             viewData(t) {
-                return (this.viewData = t), this;
+                return ((this.viewData = t), this);
             }
             send() {
                 return (
-                    window.dispatchEvent(new CustomEvent("notificationSent", { detail: { notification: this } })), this
+                    window.dispatchEvent(new CustomEvent("notificationSent", { detail: { notification: this } })),
+                    this
                 );
             }
         },
         w = class {
             constructor(t) {
-                return this.name(t), this;
+                return (this.name(t), this);
             }
             name(t) {
-                return (this.name = t), this;
+                return ((this.name = t), this);
             }
             color(t) {
-                return (this.color = t), this;
+                return ((this.color = t), this);
             }
             dispatch(t, e) {
-                return this.event(t), this.eventData(e), this;
+                return (this.event(t), this.eventData(e), this);
             }
             dispatchSelf(t, e) {
-                return this.dispatch(t, e), (this.dispatchDirection = "self"), this;
+                return (this.dispatch(t, e), (this.dispatchDirection = "self"), this);
             }
             dispatchTo(t, e, s) {
-                return this.dispatch(e, s), (this.dispatchDirection = "to"), (this.dispatchToComponent = t), this;
+                return (this.dispatch(e, s), (this.dispatchDirection = "to"), (this.dispatchToComponent = t), this);
             }
             emit(t, e) {
-                return this.dispatch(t, e), this;
+                return (this.dispatch(t, e), this);
             }
             emitSelf(t, e) {
-                return this.dispatchSelf(t, e), this;
+                return (this.dispatchSelf(t, e), this);
             }
             emitTo(t, e, s) {
-                return this.dispatchTo(t, e, s), this;
+                return (this.dispatchTo(t, e, s), this);
             }
             dispatchDirection(t) {
-                return (this.dispatchDirection = t), this;
+                return ((this.dispatchDirection = t), this);
             }
             dispatchToComponent(t) {
-                return (this.dispatchToComponent = t), this;
+                return ((this.dispatchToComponent = t), this);
             }
             event(t) {
-                return (this.event = t), this;
+                return ((this.event = t), this);
             }
             eventData(t) {
-                return (this.eventData = t), this;
+                return ((this.eventData = t), this);
             }
             extraAttributes(t) {
-                return (this.extraAttributes = t), this;
+                return ((this.extraAttributes = t), this);
             }
             icon(t) {
-                return (this.icon = t), this;
+                return ((this.icon = t), this);
             }
             iconPosition(t) {
-                return (this.iconPosition = t), this;
+                return ((this.iconPosition = t), this);
             }
             outlined(t = !0) {
-                return (this.isOutlined = t), this;
+                return ((this.isOutlined = t), this);
             }
             disabled(t = !0) {
-                return (this.isDisabled = t), this;
+                return ((this.isDisabled = t), this);
             }
             label(t) {
-                return (this.label = t), this;
+                return ((this.label = t), this);
             }
             close(t = !0) {
-                return (this.shouldClose = t), this;
+                return ((this.shouldClose = t), this);
             }
             openUrlInNewTab(t = !0) {
-                return (this.shouldOpenUrlInNewTab = t), this;
+                return ((this.shouldOpenUrlInNewTab = t), this);
             }
             size(t) {
-                return (this.size = t), this;
+                return ((this.size = t), this);
             }
             url(t) {
-                return (this.url = t), this;
+                return ((this.url = t), this);
             }
             view(t) {
-                return (this.view = t), this;
+                return ((this.view = t), this);
             }
             button() {
-                return this.view("filament-actions::button-action"), this;
+                return (this.view("filament-actions::button-action"), this);
             }
             grouped() {
-                return this.view("filament-actions::grouped-action"), this;
+                return (this.view("filament-actions::grouped-action"), this);
             }
             link() {
-                return this.view("filament-actions::link-action"), this;
+                return (this.view("filament-actions::link-action"), this);
             }
         },
         x = class {
             constructor(t) {
-                return this.actions(t), this;
+                return (this.actions(t), this);
             }
             actions(t) {
-                return (this.actions = t.map((e) => e.grouped())), this;
+                return ((this.actions = t.map((e) => e.grouped())), this);
             }
             color(t) {
-                return (this.color = t), this;
+                return ((this.color = t), this);
             }
             icon(t) {
-                return (this.icon = t), this;
+                return ((this.icon = t), this);
             }
             iconPosition(t) {
-                return (this.iconPosition = t), this;
+                return ((this.iconPosition = t), this);
             }
             label(t) {
-                return (this.label = t), this;
+                return ((this.label = t), this);
             }
             tooltip(t) {
-                return (this.tooltip = t), this;
+                return ((this.tooltip = t), this);
             }
         };
     window.FilamentNotificationAction = w;

@@ -31,8 +31,8 @@ var $e = ft((Ae, Ye) => {
             "use strict";
             var se = {
                     282: function (j, i, b) {
-                        Object.defineProperty(i, "__esModule", { value: !0 }),
-                            (i.clearChoices = i.activateChoices = i.filterChoices = i.addChoice = void 0);
+                        (Object.defineProperty(i, "__esModule", { value: !0 }),
+                            (i.clearChoices = i.activateChoices = i.filterChoices = i.addChoice = void 0));
                         var _ = b(883),
                             h = function (c) {
                                 var l = c.value,
@@ -63,7 +63,7 @@ var $e = ft((Ae, Ye) => {
                         };
                         i.filterChoices = d;
                         var a = function (c) {
-                            return c === void 0 && (c = !0), { type: _.ACTION_TYPES.ACTIVATE_CHOICES, active: c };
+                            return (c === void 0 && (c = !0), { type: _.ACTION_TYPES.ACTIVATE_CHOICES, active: c });
                         };
                         i.activateChoices = a;
                         var r = function () {
@@ -72,7 +72,7 @@ var $e = ft((Ae, Ye) => {
                         i.clearChoices = r;
                     },
                     783: function (j, i, b) {
-                        Object.defineProperty(i, "__esModule", { value: !0 }), (i.addGroup = void 0);
+                        (Object.defineProperty(i, "__esModule", { value: !0 }), (i.addGroup = void 0));
                         var _ = b(883),
                             h = function (d) {
                                 var a = d.value,
@@ -84,8 +84,8 @@ var $e = ft((Ae, Ye) => {
                         i.addGroup = h;
                     },
                     464: function (j, i, b) {
-                        Object.defineProperty(i, "__esModule", { value: !0 }),
-                            (i.highlightItem = i.removeItem = i.addItem = void 0);
+                        (Object.defineProperty(i, "__esModule", { value: !0 }),
+                            (i.highlightItem = i.removeItem = i.addItem = void 0));
                         var _ = b(883),
                             h = function (r) {
                                 var c = r.value,
@@ -119,8 +119,8 @@ var $e = ft((Ae, Ye) => {
                         i.highlightItem = a;
                     },
                     137: function (j, i, b) {
-                        Object.defineProperty(i, "__esModule", { value: !0 }),
-                            (i.setIsLoading = i.resetTo = i.clearAll = void 0);
+                        (Object.defineProperty(i, "__esModule", { value: !0 }),
+                            (i.setIsLoading = i.resetTo = i.clearAll = void 0));
                         var _ = b(883),
                             h = function () {
                                 return { type: _.ACTION_TYPES.CLEAR_ALL };
@@ -170,9 +170,9 @@ var $e = ft((Ae, Ye) => {
                             w = {},
                             N = (function () {
                                 function g(e, t) {
-                                    e === void 0 && (e = "[data-choice]"), t === void 0 && (t = {});
+                                    (e === void 0 && (e = "[data-choice]"), t === void 0 && (t = {}));
                                     var n = this;
-                                    t.allowHTML === void 0 &&
+                                    (t.allowHTML === void 0 &&
                                         console.warn(
                                             "Deprecation warning: allowHTML will default to false in a future release. To render HTML in Choices, you will need to set it to true. Setting allowHTML will suppress this message.",
                                         ),
@@ -180,7 +180,7 @@ var $e = ft((Ae, Ye) => {
                                             arrayMerge: function (u, C) {
                                                 return _([], C, !0);
                                             },
-                                        }));
+                                        })));
                                     var s = (0, k.diff)(this.config, D.DEFAULT_CONFIG);
                                     s.length && console.warn("Unknown config option(s) passed", s.join(", "));
                                     var v = typeof e == "string" ? document.querySelector(e) : e;
@@ -283,12 +283,12 @@ var $e = ft((Ae, Ye) => {
                                         (this._onDeleteKey = this._onDeleteKey.bind(this)),
                                         this.passedElement.isActive)
                                     ) {
-                                        this.config.silent ||
+                                        (this.config.silent ||
                                             console.warn(
                                                 "Trying to initialise Choices on element already initialised",
                                                 { element: e },
                                             ),
-                                            (this.initialised = !0);
+                                            (this.initialised = !0));
                                         return;
                                     }
                                     this.init();
@@ -310,16 +310,16 @@ var $e = ft((Ae, Ye) => {
                                     }),
                                     (g.prototype.init = function () {
                                         if (!this.initialised) {
-                                            this._createTemplates(),
+                                            (this._createTemplates(),
                                                 this._createElements(),
                                                 this._createStructure(),
                                                 this._store.subscribe(this._render),
                                                 this._render(),
-                                                this._addEventListeners();
+                                                this._addEventListeners());
                                             var e =
                                                 !this.config.addItems ||
                                                 this.passedElement.element.hasAttribute("disabled");
-                                            e && this.disable(), (this.initialised = !0);
+                                            (e && this.disable(), (this.initialised = !0));
                                             var t = this.config.callbackOnInit;
                                             t && typeof t == "function" && t.call(this);
                                         }
@@ -447,7 +447,7 @@ var $e = ft((Ae, Ye) => {
                                         return (
                                             e === void 0 && (e = !1),
                                             this._store.highlightedActiveItems.forEach(function (n) {
-                                                t._removeItem(n), e && t._triggerChange(n.value);
+                                                (t._removeItem(n), e && t._triggerChange(n.value));
                                             }),
                                             this
                                         );
@@ -457,10 +457,10 @@ var $e = ft((Ae, Ye) => {
                                         return this.dropdown.isActive
                                             ? this
                                             : (requestAnimationFrame(function () {
-                                                  t.dropdown.show(),
+                                                  (t.dropdown.show(),
                                                       t.containerOuter.open(t.dropdown.distanceFromTopWindow),
                                                       !e && t._canSearch && t.input.focus(),
-                                                      t.passedElement.triggerEvent(y.EVENTS.showDropdown, {});
+                                                      t.passedElement.triggerEvent(y.EVENTS.showDropdown, {}));
                                               }),
                                               this);
                                     }),
@@ -468,12 +468,12 @@ var $e = ft((Ae, Ye) => {
                                         var t = this;
                                         return this.dropdown.isActive
                                             ? (requestAnimationFrame(function () {
-                                                  t.dropdown.hide(),
+                                                  (t.dropdown.hide(),
                                                       t.containerOuter.close(),
                                                       !e &&
                                                           t._canSearch &&
                                                           (t.input.removeActiveDescendant(), t.input.blur()),
-                                                      t.passedElement.triggerEvent(y.EVENTS.hideDropdown, {});
+                                                      t.passedElement.triggerEvent(y.EVENTS.hideDropdown, {}));
                                               }),
                                               this)
                                             : this;
@@ -482,7 +482,7 @@ var $e = ft((Ae, Ye) => {
                                         e === void 0 && (e = !1);
                                         var t = this._store.activeItems.reduce(function (n, s) {
                                             var v = e ? s.value : s;
-                                            return n.push(v), n;
+                                            return (n.push(v), n);
                                         }, []);
                                         return this._isSelectOneElement ? t[0] : t;
                                     }),
@@ -588,10 +588,10 @@ var $e = ft((Ae, Ye) => {
                                         );
                                     }),
                                     (g.prototype.clearChoices = function () {
-                                        return this._store.dispatch((0, r.clearChoices)()), this;
+                                        return (this._store.dispatch((0, r.clearChoices)()), this);
                                     }),
                                     (g.prototype.clearStore = function () {
-                                        return this._store.dispatch((0, O.clearAll)()), this;
+                                        return (this._store.dispatch((0, O.clearAll)()), this);
                                     }),
                                     (g.prototype.clearInput = function () {
                                         var e = !this._isSelectOneElement;
@@ -636,13 +636,13 @@ var $e = ft((Ae, Ye) => {
                                             var P = s.filter(function (C) {
                                                 return C.placeholder === !0 && C.groupId === -1;
                                             });
-                                            P.length >= 1 && (v = this._createChoicesFragment(P, v)),
-                                                (v = this._createGroupsFragment(n, s, v));
+                                            (P.length >= 1 && (v = this._createChoicesFragment(P, v)),
+                                                (v = this._createGroupsFragment(n, s, v)));
                                         } else s.length >= 1 && (v = this._createChoicesFragment(s, v));
                                         if (v.childNodes && v.childNodes.length > 0) {
                                             var M = this._store.activeItems,
                                                 K = this._canAddItem(M, this.input.value);
-                                            if (K.response) this.choiceList.append(v), this._highlightChoice();
+                                            if (K.response) (this.choiceList.append(v), this._highlightChoice());
                                             else {
                                                 var f = this._getTemplate("notice", K.notice);
                                                 this.choiceList.append(f);
@@ -650,7 +650,7 @@ var $e = ft((Ae, Ye) => {
                                         } else {
                                             var u = void 0,
                                                 f = void 0;
-                                            this._isSearching
+                                            (this._isSearching
                                                 ? ((f =
                                                       typeof this.config.noResultsText == "function"
                                                           ? this.config.noResultsText()
@@ -661,7 +661,7 @@ var $e = ft((Ae, Ye) => {
                                                           ? this.config.noChoicesText()
                                                           : this.config.noChoicesText),
                                                   (u = this._getTemplate("notice", f, "no-choices"))),
-                                                this.choiceList.append(u);
+                                                this.choiceList.append(u));
                                         }
                                     }),
                                     (g.prototype._renderItems = function () {
@@ -687,7 +687,7 @@ var $e = ft((Ae, Ye) => {
                                                 var M = v(P);
                                                 if (M.length >= 1) {
                                                     var K = s._getTemplate("choiceGroup", P);
-                                                    n.appendChild(K), s._createChoicesFragment(M, n, !0);
+                                                    (n.appendChild(K), s._createChoicesFragment(M, n, !0));
                                                 }
                                             }),
                                             n
@@ -695,8 +695,8 @@ var $e = ft((Ae, Ye) => {
                                     }),
                                     (g.prototype._createChoicesFragment = function (e, t, n) {
                                         var s = this;
-                                        t === void 0 && (t = document.createDocumentFragment()),
-                                            n === void 0 && (n = !1);
+                                        (t === void 0 && (t = document.createDocumentFragment()),
+                                            n === void 0 && (n = !1));
                                         var v = this.config,
                                             P = v.renderSelectedChoices,
                                             M = v.searchResultLimit,
@@ -742,7 +742,7 @@ var $e = ft((Ae, Ye) => {
                                             v = s.shouldSortItems,
                                             P = s.sorter,
                                             M = s.removeItemButton;
-                                        v && !this._isSelectOneElement && e.sort(P),
+                                        (v && !this._isSelectOneElement && e.sort(P),
                                             this._isTextElement
                                                 ? (this.passedElement.value = e
                                                       .map(function (f) {
@@ -750,25 +750,25 @@ var $e = ft((Ae, Ye) => {
                                                           return u;
                                                       })
                                                       .join(this.config.delimiter))
-                                                : (this.passedElement.options = e);
+                                                : (this.passedElement.options = e));
                                         var K = function (f) {
                                             var u = n._getTemplate("item", f, M);
                                             t.appendChild(u);
                                         };
-                                        return e.forEach(K), t;
+                                        return (e.forEach(K), t);
                                     }),
                                     (g.prototype._triggerChange = function (e) {
                                         e != null && this.passedElement.triggerEvent(y.EVENTS.change, { value: e });
                                     }),
                                     (g.prototype._selectPlaceholderChoice = function (e) {
-                                        this._addItem({
+                                        (this._addItem({
                                             value: e.value,
                                             label: e.label,
                                             choiceId: e.id,
                                             groupId: e.groupId,
                                             placeholder: e.placeholder,
                                         }),
-                                            this._triggerChange(e.value);
+                                            this._triggerChange(e.value));
                                     }),
                                     (g.prototype._handleButtonAction = function (e, t) {
                                         if (!(!e || !t || !this.config.removeItems || !this.config.removeItemButton)) {
@@ -793,12 +793,12 @@ var $e = ft((Ae, Ye) => {
                                             !(!e || !t || !this.config.removeItems || this._isSelectOneElement))
                                         ) {
                                             var v = t.dataset.id;
-                                            e.forEach(function (P) {
+                                            (e.forEach(function (P) {
                                                 P.id === parseInt("".concat(v), 10) && !P.highlighted
                                                     ? s.highlightItem(P)
                                                     : !n && P.highlighted && s.unhighlightItem(P);
                                             }),
-                                                this.input.focus();
+                                                this.input.focus());
                                         }
                                     }),
                                     (g.prototype._handleChoiceAction = function (e, t) {
@@ -826,10 +826,10 @@ var $e = ft((Ae, Ye) => {
                                                         }),
                                                         this._triggerChange(s.value));
                                                 }
-                                                this.clearInput(),
+                                                (this.clearInput(),
                                                     P &&
                                                         this._isSelectOneElement &&
-                                                        (this.hideDropdown(!0), this.containerOuter.focus());
+                                                        (this.hideDropdown(!0), this.containerOuter.focus()));
                                             }
                                         }
                                     }),
@@ -903,7 +903,7 @@ var $e = ft((Ae, Ye) => {
                                                     : this.config.addItemText;
                                         if (!this._isSelectOneElement) {
                                             var v = (0, k.existsInArray)(e, t);
-                                            this.config.maxItemCount > 0 &&
+                                            (this.config.maxItemCount > 0 &&
                                                 this.config.maxItemCount <= e.length &&
                                                 ((n = !1),
                                                 (s =
@@ -927,7 +927,7 @@ var $e = ft((Ae, Ye) => {
                                                     (s =
                                                         typeof this.config.customAddItemText == "function"
                                                             ? this.config.customAddItemText(t)
-                                                            : this.config.customAddItemText));
+                                                            : this.config.customAddItemText)));
                                         }
                                         return { response: n, notice: s };
                                     }),
@@ -956,7 +956,7 @@ var $e = ft((Ae, Ye) => {
                                     }),
                                     (g.prototype._addEventListeners = function () {
                                         var e = document.documentElement;
-                                        e.addEventListener("touchend", this._onTouchEnd, !0),
+                                        (e.addEventListener("touchend", this._onTouchEnd, !0),
                                             this.containerOuter.element.addEventListener(
                                                 "keydown",
                                                 this._onKeyDown,
@@ -990,11 +990,11 @@ var $e = ft((Ae, Ye) => {
                                                 this.input.element.form.addEventListener("reset", this._onFormReset, {
                                                     passive: !0,
                                                 }),
-                                            this.input.addEventListeners();
+                                            this.input.addEventListeners());
                                     }),
                                     (g.prototype._removeEventListeners = function () {
                                         var e = document.documentElement;
-                                        e.removeEventListener("touchend", this._onTouchEnd, !0),
+                                        (e.removeEventListener("touchend", this._onTouchEnd, !0),
                                             this.containerOuter.element.removeEventListener(
                                                 "keydown",
                                                 this._onKeyDown,
@@ -1019,7 +1019,7 @@ var $e = ft((Ae, Ye) => {
                                             this.input.element.removeEventListener("blur", this._onBlur),
                                             this.input.element.form &&
                                                 this.input.element.form.removeEventListener("reset", this._onFormReset),
-                                            this.input.removeEventListeners();
+                                            this.input.removeEventListeners());
                                     }),
                                     (g.prototype._onKeyDown = function (e) {
                                         var t = e.keyCode,
@@ -1075,7 +1075,8 @@ var $e = ft((Ae, Ye) => {
                                             var f = P.notice && s;
                                             if (f) {
                                                 var u = this._getTemplate("notice", P.notice);
-                                                (this.dropdown.element.innerHTML = u.outerHTML), this.showDropdown(!0);
+                                                ((this.dropdown.element.innerHTML = u.outerHTML),
+                                                    this.showDropdown(!0));
                                             } else this.hideDropdown(!0);
                                         } else {
                                             var C = n === M || n === K,
@@ -1119,8 +1120,8 @@ var $e = ft((Ae, Ye) => {
                                             var f = this.dropdown.getChild(
                                                 ".".concat(this.config.classNames.highlightedState),
                                             );
-                                            f && (t[0] && (t[0].keyCode = v), this._handleChoiceAction(t, f)),
-                                                e.preventDefault();
+                                            (f && (t[0] && (t[0].keyCode = v), this._handleChoiceAction(t, f)),
+                                                e.preventDefault());
                                         } else this._isSelectOneElement && (this.showDropdown(), e.preventDefault());
                                     }),
                                     (g.prototype._onEscapeKey = function (e) {
@@ -1133,7 +1134,7 @@ var $e = ft((Ae, Ye) => {
                                             P = y.KEY_CODES.PAGE_UP_KEY,
                                             M = y.KEY_CODES.PAGE_DOWN_KEY;
                                         if (t || this._isSelectOneElement) {
-                                            this.showDropdown(), (this._canSearch = !1);
+                                            (this.showDropdown(), (this._canSearch = !1));
                                             var K = n === v || n === M ? 1 : -1,
                                                 f = s || n === M || n === P,
                                                 u = "[data-choice-selectable]",
@@ -1152,11 +1153,11 @@ var $e = ft((Ae, Ye) => {
                                                     ? (C = (0, k.getAdjacentEl)(Y, u, K))
                                                     : (C = this.dropdown.element.querySelector(u));
                                             }
-                                            C &&
+                                            (C &&
                                                 ((0, k.isScrolledIntoView)(C, this.choiceList.element, K) ||
                                                     this.choiceList.scrollToChildElement(C, K),
                                                 this._highlightChoice(C)),
-                                                e.preventDefault();
+                                                e.preventDefault());
                                         }
                                     }),
                                     (g.prototype._onDeleteKey = function (e, t, n) {
@@ -1175,11 +1176,11 @@ var $e = ft((Ae, Ye) => {
                                         if (n) {
                                             var s =
                                                 t === this.containerOuter.element || t === this.containerInner.element;
-                                            s &&
+                                            (s &&
                                                 (this._isTextElement
                                                     ? this.input.focus()
                                                     : this._isSelectMultipleElement && this.showDropdown()),
-                                                e.stopPropagation();
+                                                e.stopPropagation());
                                         }
                                         this._wasTap = !0;
                                     }),
@@ -1229,9 +1230,9 @@ var $e = ft((Ae, Ye) => {
                                                   this.hideDropdown();
                                         else {
                                             var s = this._store.highlightedActiveItems.length > 0;
-                                            s && this.unhighlightAll(),
+                                            (s && this.unhighlightAll(),
                                                 this.containerOuter.removeFocusState(),
-                                                this.hideDropdown(!0);
+                                                this.hideDropdown(!0));
                                         }
                                     }),
                                     (g.prototype._onFocus = function (e) {
@@ -1246,8 +1247,8 @@ var $e = ft((Ae, Ye) => {
                                                     s === n.input.element && n.containerOuter.addFocusState();
                                                 }),
                                                 (t[y.SELECT_ONE_TYPE] = function () {
-                                                    n.containerOuter.addFocusState(),
-                                                        s === n.input.element && n.showDropdown(!0);
+                                                    (n.containerOuter.addFocusState(),
+                                                        s === n.input.element && n.showDropdown(!0));
                                                 }),
                                                 (t[y.SELECT_MULTIPLE_TYPE] = function () {
                                                     s === n.input.element &&
@@ -1276,10 +1277,10 @@ var $e = ft((Ae, Ye) => {
                                                             n.hideDropdown(!0));
                                                     }),
                                                     (t[y.SELECT_ONE_TYPE] = function () {
-                                                        n.containerOuter.removeFocusState(),
+                                                        (n.containerOuter.removeFocusState(),
                                                             (s === n.input.element ||
                                                                 (s === n.containerOuter.element && !n._canSearch)) &&
-                                                                n.hideDropdown(!0);
+                                                                n.hideDropdown(!0));
                                                     }),
                                                     (t[y.SELECT_MULTIPLE_TYPE] = function () {
                                                         s === n.input.element &&
@@ -1289,7 +1290,7 @@ var $e = ft((Ae, Ye) => {
                                                     }),
                                                     t);
                                             K[this.passedElement.element.type]();
-                                        } else (this._isScrollingOnIe = !1), this.input.element.focus();
+                                        } else ((this._isScrollingOnIe = !1), this.input.element.focus());
                                     }),
                                     (g.prototype._onFormReset = function () {
                                         this._store.dispatch((0, O.resetTo)(this._initialState));
@@ -1307,9 +1308,9 @@ var $e = ft((Ae, Ye) => {
                                                         ".".concat(this.config.classNames.highlightedState),
                                                     ),
                                                 );
-                                            v.forEach(function (P) {
-                                                P.classList.remove(t.config.classNames.highlightedState),
-                                                    P.setAttribute("aria-selected", "false");
+                                            (v.forEach(function (P) {
+                                                (P.classList.remove(t.config.classNames.highlightedState),
+                                                    P.setAttribute("aria-selected", "false"));
                                             }),
                                                 s
                                                     ? (this._highlightPosition = n.indexOf(s))
@@ -1322,7 +1323,7 @@ var $e = ft((Ae, Ye) => {
                                                 this.passedElement.triggerEvent(y.EVENTS.highlightChoice, { el: s }),
                                                 this.dropdown.isActive &&
                                                     (this.input.setActiveDescendant(s.id),
-                                                    this.containerOuter.setActiveDescendant(s.id));
+                                                    this.containerOuter.setActiveDescendant(s.id)));
                                         }
                                     }),
                                     (g.prototype._addItem = function (e) {
@@ -1345,7 +1346,7 @@ var $e = ft((Ae, Ye) => {
                                             z = P || -1,
                                             ee = K >= 0 ? this._store.getGroupById(K) : null,
                                             ae = W ? W.length + 1 : 1;
-                                        this.config.prependValue && ($ = this.config.prependValue + $.toString()),
+                                        (this.config.prependValue && ($ = this.config.prependValue + $.toString()),
                                             this.config.appendValue && ($ += this.config.appendValue.toString()),
                                             this._store.dispatch(
                                                 (0, l.addItem)({
@@ -1367,7 +1368,7 @@ var $e = ft((Ae, Ye) => {
                                                 customProperties: u,
                                                 groupValue: ee && ee.value ? ee.value : null,
                                                 keyCode: U,
-                                            });
+                                            }));
                                     }),
                                     (g.prototype._removeItem = function (e) {
                                         var t = e.id,
@@ -1412,7 +1413,7 @@ var $e = ft((Ae, Ye) => {
                                                     .concat(this._baseId, "-")
                                                     .concat(this._idNames.itemChoice, "-")
                                                     .concat(ee);
-                                            this._store.dispatch(
+                                            (this._store.dispatch(
                                                 (0, r.addChoice)({
                                                     id: ee,
                                                     groupId: u,
@@ -1433,7 +1434,7 @@ var $e = ft((Ae, Ye) => {
                                                         customProperties: Y,
                                                         placeholder: U,
                                                         keyCode: W,
-                                                    });
+                                                    }));
                                         }
                                     }),
                                     (g.prototype._addGroup = function (e) {
@@ -1483,11 +1484,11 @@ var $e = ft((Ae, Ye) => {
                                     (g.prototype._createTemplates = function () {
                                         var e = this.config.callbackOnCreateTemplates,
                                             t = {};
-                                        e && typeof e == "function" && (t = e.call(this, k.strToEl)),
-                                            (this._templates = (0, d.default)(ne.default, t));
+                                        (e && typeof e == "function" && (t = e.call(this, k.strToEl)),
+                                            (this._templates = (0, d.default)(ne.default, t)));
                                     }),
                                     (g.prototype._createElements = function () {
-                                        (this.containerOuter = new L.Container({
+                                        ((this.containerOuter = new L.Container({
                                             element: this._getTemplate(
                                                 "containerOuter",
                                                 this._direction,
@@ -1523,10 +1524,10 @@ var $e = ft((Ae, Ye) => {
                                                 element: this._getTemplate("dropdown"),
                                                 classNames: this.config.classNames,
                                                 type: this.passedElement.element.type,
-                                            }));
+                                            })));
                                     }),
                                     (g.prototype._createStructure = function () {
-                                        this.passedElement.conceal(),
+                                        (this.passedElement.conceal(),
                                             this.containerInner.wrap(this.passedElement.element),
                                             this.containerOuter.wrap(this.containerInner.element),
                                             this._isSelectOneElement
@@ -1554,12 +1555,12 @@ var $e = ft((Ae, Ye) => {
                                                     ? this._addPredefinedGroups(this._presetGroups)
                                                     : this._addPredefinedChoices(this._presetChoices),
                                                 this._stopLoading()),
-                                            this._isTextElement && this._addPredefinedItems(this._presetItems);
+                                            this._isTextElement && this._addPredefinedItems(this._presetItems));
                                     }),
                                     (g.prototype._addPredefinedGroups = function (e) {
                                         var t = this,
                                             n = this.passedElement.placeholderOption;
-                                        n &&
+                                        (n &&
                                             n.parentNode &&
                                             n.parentNode.tagName === "SELECT" &&
                                             this._addChoice({
@@ -1571,7 +1572,7 @@ var $e = ft((Ae, Ye) => {
                                             }),
                                             e.forEach(function (s) {
                                                 return t._addGroup({ group: s, id: s.id || null });
-                                            });
+                                            }));
                                     }),
                                     (g.prototype._addPredefinedChoices = function (e) {
                                         var t = this;
@@ -1617,7 +1618,7 @@ var $e = ft((Ae, Ye) => {
                                     (g.prototype._addPredefinedItems = function (e) {
                                         var t = this;
                                         e.forEach(function (n) {
-                                            typeof n == "object" &&
+                                            (typeof n == "object" &&
                                                 n.value &&
                                                 t._addItem({
                                                     value: n.value,
@@ -1626,7 +1627,7 @@ var $e = ft((Ae, Ye) => {
                                                     customProperties: n.customProperties,
                                                     placeholder: n.placeholder,
                                                 }),
-                                                typeof n == "string" && t._addItem({ value: n });
+                                                typeof n == "string" && t._addItem({ value: n }));
                                         });
                                     }),
                                     (g.prototype._setChoiceOrItem = function (e) {
@@ -1713,7 +1714,7 @@ var $e = ft((Ae, Ye) => {
                                         l = r.type,
                                         O = r.classNames,
                                         L = r.position;
-                                    (this.element = c),
+                                    ((this.element = c),
                                         (this.classNames = O),
                                         (this.type = l),
                                         (this.position = L),
@@ -1723,16 +1724,16 @@ var $e = ft((Ae, Ye) => {
                                         (this.isDisabled = !1),
                                         (this.isLoading = !1),
                                         (this._onFocus = this._onFocus.bind(this)),
-                                        (this._onBlur = this._onBlur.bind(this));
+                                        (this._onBlur = this._onBlur.bind(this)));
                                 }
                                 return (
                                     (a.prototype.addEventListeners = function () {
-                                        this.element.addEventListener("focus", this._onFocus),
-                                            this.element.addEventListener("blur", this._onBlur);
+                                        (this.element.addEventListener("focus", this._onFocus),
+                                            this.element.addEventListener("blur", this._onBlur));
                                     }),
                                     (a.prototype.removeEventListeners = function () {
-                                        this.element.removeEventListener("focus", this._onFocus),
-                                            this.element.removeEventListener("blur", this._onBlur);
+                                        (this.element.removeEventListener("focus", this._onFocus),
+                                            this.element.removeEventListener("blur", this._onBlur));
                                     }),
                                     (a.prototype.shouldFlip = function (r) {
                                         if (typeof r != "number") return !1;
@@ -1751,21 +1752,21 @@ var $e = ft((Ae, Ye) => {
                                         this.element.removeAttribute("aria-activedescendant");
                                     }),
                                     (a.prototype.open = function (r) {
-                                        this.element.classList.add(this.classNames.openState),
+                                        (this.element.classList.add(this.classNames.openState),
                                             this.element.setAttribute("aria-expanded", "true"),
                                             (this.isOpen = !0),
                                             this.shouldFlip(r) &&
                                                 (this.element.classList.add(this.classNames.flippedState),
-                                                (this.isFlipped = !0));
+                                                (this.isFlipped = !0)));
                                     }),
                                     (a.prototype.close = function () {
-                                        this.element.classList.remove(this.classNames.openState),
+                                        (this.element.classList.remove(this.classNames.openState),
                                             this.element.setAttribute("aria-expanded", "false"),
                                             this.removeActiveDescendant(),
                                             (this.isOpen = !1),
                                             this.isFlipped &&
                                                 (this.element.classList.remove(this.classNames.flippedState),
-                                                (this.isFlipped = !1));
+                                                (this.isFlipped = !1)));
                                     }),
                                     (a.prototype.focus = function () {
                                         this.isFocussed || this.element.focus();
@@ -1777,18 +1778,18 @@ var $e = ft((Ae, Ye) => {
                                         this.element.classList.remove(this.classNames.focusState);
                                     }),
                                     (a.prototype.enable = function () {
-                                        this.element.classList.remove(this.classNames.disabledState),
+                                        (this.element.classList.remove(this.classNames.disabledState),
                                             this.element.removeAttribute("aria-disabled"),
                                             this.type === h.SELECT_ONE_TYPE &&
                                                 this.element.setAttribute("tabindex", "0"),
-                                            (this.isDisabled = !1);
+                                            (this.isDisabled = !1));
                                     }),
                                     (a.prototype.disable = function () {
-                                        this.element.classList.add(this.classNames.disabledState),
+                                        (this.element.classList.add(this.classNames.disabledState),
                                             this.element.setAttribute("aria-disabled", "true"),
                                             this.type === h.SELECT_ONE_TYPE &&
                                                 this.element.setAttribute("tabindex", "-1"),
-                                            (this.isDisabled = !0);
+                                            (this.isDisabled = !0));
                                     }),
                                     (a.prototype.wrap = function (r) {
                                         (0, _.wrap)(r, this.element);
@@ -1799,14 +1800,14 @@ var $e = ft((Ae, Ye) => {
                                             this.element.parentNode.removeChild(this.element));
                                     }),
                                     (a.prototype.addLoadingState = function () {
-                                        this.element.classList.add(this.classNames.loadingState),
+                                        (this.element.classList.add(this.classNames.loadingState),
                                             this.element.setAttribute("aria-busy", "true"),
-                                            (this.isLoading = !0);
+                                            (this.isLoading = !0));
                                     }),
                                     (a.prototype.removeLoadingState = function () {
-                                        this.element.classList.remove(this.classNames.loadingState),
+                                        (this.element.classList.remove(this.classNames.loadingState),
                                             this.element.removeAttribute("aria-busy"),
-                                            (this.isLoading = !1);
+                                            (this.isLoading = !1));
                                     }),
                                     (a.prototype._onFocus = function () {
                                         this.isFocussed = !0;
@@ -1826,7 +1827,7 @@ var $e = ft((Ae, Ye) => {
                                 var d = h.element,
                                     a = h.type,
                                     r = h.classNames;
-                                (this.element = d), (this.classNames = r), (this.type = a), (this.isActive = !1);
+                                ((this.element = d), (this.classNames = r), (this.type = a), (this.isActive = !1));
                             }
                             return (
                                 Object.defineProperty(_.prototype, "distanceFromTopWindow", {
@@ -1866,8 +1867,8 @@ var $e = ft((Ae, Ye) => {
                             function (O) {
                                 return O && O.__esModule ? O : { default: O };
                             };
-                        Object.defineProperty(i, "__esModule", { value: !0 }),
-                            (i.WrappedSelect = i.WrappedInput = i.List = i.Input = i.Container = i.Dropdown = void 0);
+                        (Object.defineProperty(i, "__esModule", { value: !0 }),
+                            (i.WrappedSelect = i.WrappedInput = i.List = i.Input = i.Container = i.Dropdown = void 0));
                         var h = _(b(217));
                         i.Dropdown = h.default;
                         var d = _(b(613));
@@ -1891,7 +1892,7 @@ var $e = ft((Ae, Ye) => {
                                         l = r.type,
                                         O = r.classNames,
                                         L = r.preventPaste;
-                                    (this.element = c),
+                                    ((this.element = c),
                                         (this.type = l),
                                         (this.classNames = O),
                                         (this.preventPaste = L),
@@ -1900,7 +1901,7 @@ var $e = ft((Ae, Ye) => {
                                         (this._onPaste = this._onPaste.bind(this)),
                                         (this._onInput = this._onInput.bind(this)),
                                         (this._onFocus = this._onFocus.bind(this)),
-                                        (this._onBlur = this._onBlur.bind(this));
+                                        (this._onBlur = this._onBlur.bind(this)));
                                 }
                                 return (
                                     Object.defineProperty(a.prototype, "placeholder", {
@@ -1928,22 +1929,22 @@ var $e = ft((Ae, Ye) => {
                                         configurable: !0,
                                     }),
                                     (a.prototype.addEventListeners = function () {
-                                        this.element.addEventListener("paste", this._onPaste),
+                                        (this.element.addEventListener("paste", this._onPaste),
                                             this.element.addEventListener("input", this._onInput, { passive: !0 }),
                                             this.element.addEventListener("focus", this._onFocus, { passive: !0 }),
-                                            this.element.addEventListener("blur", this._onBlur, { passive: !0 });
+                                            this.element.addEventListener("blur", this._onBlur, { passive: !0 }));
                                     }),
                                     (a.prototype.removeEventListeners = function () {
-                                        this.element.removeEventListener("input", this._onInput),
+                                        (this.element.removeEventListener("input", this._onInput),
                                             this.element.removeEventListener("paste", this._onPaste),
                                             this.element.removeEventListener("focus", this._onFocus),
-                                            this.element.removeEventListener("blur", this._onBlur);
+                                            this.element.removeEventListener("blur", this._onBlur));
                                     }),
                                     (a.prototype.enable = function () {
-                                        this.element.removeAttribute("disabled"), (this.isDisabled = !1);
+                                        (this.element.removeAttribute("disabled"), (this.isDisabled = !1));
                                     }),
                                     (a.prototype.disable = function () {
-                                        this.element.setAttribute("disabled", ""), (this.isDisabled = !0);
+                                        (this.element.setAttribute("disabled", ""), (this.isDisabled = !0));
                                     }),
                                     (a.prototype.focus = function () {
                                         this.isFocussed || this.element.focus();
@@ -1964,8 +1965,8 @@ var $e = ft((Ae, Ye) => {
                                             c = r.style,
                                             l = r.value,
                                             O = r.placeholder;
-                                        (c.minWidth = "".concat(O.length + 1, "ch")),
-                                            (c.width = "".concat(l.length + 1, "ch"));
+                                        ((c.minWidth = "".concat(O.length + 1, "ch")),
+                                            (c.width = "".concat(l.length + 1, "ch")));
                                     }),
                                     (a.prototype.setActiveDescendant = function (r) {
                                         this.element.setAttribute("aria-activedescendant", r);
@@ -1996,9 +1997,9 @@ var $e = ft((Ae, Ye) => {
                             h = (function () {
                                 function d(a) {
                                     var r = a.element;
-                                    (this.element = r),
+                                    ((this.element = r),
                                         (this.scrollPos = this.element.scrollTop),
-                                        (this.height = this.element.offsetHeight);
+                                        (this.height = this.element.offsetHeight));
                                 }
                                 return (
                                     (d.prototype.clear = function () {
@@ -2044,13 +2045,13 @@ var $e = ft((Ae, Ye) => {
                                             l = _.SCROLLING_SPEED,
                                             O = this.element.scrollTop,
                                             L = !1;
-                                        r > 0
+                                        (r > 0
                                             ? (this._scrollDown(O, l, a), O < a && (L = !0))
                                             : (this._scrollUp(O, l, a), O > a && (L = !0)),
                                             L &&
                                                 requestAnimationFrame(function () {
                                                     c._animateScroll(a, r);
-                                                });
+                                                }));
                                     }),
                                     d
                                 );
@@ -2098,34 +2099,34 @@ var $e = ft((Ae, Ye) => {
                                         configurable: !0,
                                     }),
                                     (d.prototype.conceal = function () {
-                                        this.element.classList.add(this.classNames.input),
+                                        (this.element.classList.add(this.classNames.input),
                                             (this.element.hidden = !0),
-                                            (this.element.tabIndex = -1);
+                                            (this.element.tabIndex = -1));
                                         var a = this.element.getAttribute("style");
-                                        a && this.element.setAttribute("data-choice-orig-style", a),
-                                            this.element.setAttribute("data-choice", "active");
+                                        (a && this.element.setAttribute("data-choice-orig-style", a),
+                                            this.element.setAttribute("data-choice", "active"));
                                     }),
                                     (d.prototype.reveal = function () {
-                                        this.element.classList.remove(this.classNames.input),
+                                        (this.element.classList.remove(this.classNames.input),
                                             (this.element.hidden = !1),
-                                            this.element.removeAttribute("tabindex");
+                                            this.element.removeAttribute("tabindex"));
                                         var a = this.element.getAttribute("data-choice-orig-style");
-                                        a
+                                        (a
                                             ? (this.element.removeAttribute("data-choice-orig-style"),
                                               this.element.setAttribute("style", a))
                                             : this.element.removeAttribute("style"),
                                             this.element.removeAttribute("data-choice"),
-                                            (this.element.value = this.element.value);
+                                            (this.element.value = this.element.value));
                                     }),
                                     (d.prototype.enable = function () {
-                                        this.element.removeAttribute("disabled"),
+                                        (this.element.removeAttribute("disabled"),
                                             (this.element.disabled = !1),
-                                            (this.isDisabled = !1);
+                                            (this.isDisabled = !1));
                                     }),
                                     (d.prototype.disable = function () {
-                                        this.element.setAttribute("disabled", ""),
+                                        (this.element.setAttribute("disabled", ""),
                                             (this.element.disabled = !0),
-                                            (this.isDisabled = !0);
+                                            (this.isDisabled = !0));
                                     }),
                                     (d.prototype.triggerEvent = function (a, r) {
                                         (0, _.dispatchEvent)(this.element, a, r);
@@ -2181,7 +2182,7 @@ var $e = ft((Ae, Ye) => {
                                         L = l.classNames,
                                         y = l.delimiter,
                                         D = r.call(this, { element: O, classNames: L }) || this;
-                                    return (D.delimiter = y), D;
+                                    return ((D.delimiter = y), D);
                                 }
                                 return (
                                     Object.defineProperty(c.prototype, "value", {
@@ -2189,7 +2190,7 @@ var $e = ft((Ae, Ye) => {
                                             return this.element.value;
                                         },
                                         set: function (l) {
-                                            this.element.setAttribute("value", l), (this.element.value = l);
+                                            (this.element.setAttribute("value", l), (this.element.value = l));
                                         },
                                         enumerable: !1,
                                         configurable: !0,
@@ -2245,7 +2246,7 @@ var $e = ft((Ae, Ye) => {
                                         L = l.classNames,
                                         y = l.template,
                                         D = r.call(this, { element: O, classNames: L }) || this;
-                                    return (D.template = y), D;
+                                    return ((D.template = y), D);
                                 }
                                 return (
                                     Object.defineProperty(c.prototype, "placeholderOption", {
@@ -2276,16 +2277,16 @@ var $e = ft((Ae, Ye) => {
                                                     var k = O.template(D);
                                                     L.appendChild(k);
                                                 };
-                                            l.forEach(function (D) {
+                                            (l.forEach(function (D) {
                                                 return y(D);
                                             }),
-                                                this.appendDocFragment(L);
+                                                this.appendDocFragment(L));
                                         },
                                         enumerable: !1,
                                         configurable: !0,
                                     }),
                                     (c.prototype.appendDocFragment = function (l) {
-                                        (this.element.innerHTML = ""), this.element.appendChild(l);
+                                        ((this.element.innerHTML = ""), this.element.appendChild(l));
                                     }),
                                     c
                                 );
@@ -2293,7 +2294,7 @@ var $e = ft((Ae, Ye) => {
                         i.default = a;
                     },
                     883: function (j, i) {
-                        Object.defineProperty(i, "__esModule", { value: !0 }),
+                        (Object.defineProperty(i, "__esModule", { value: !0 }),
                             (i.SCROLLING_SPEED =
                                 i.SELECT_MULTIPLE_TYPE =
                                 i.SELECT_ONE_TYPE =
@@ -2341,13 +2342,13 @@ var $e = ft((Ae, Ye) => {
                             (i.TEXT_TYPE = "text"),
                             (i.SELECT_ONE_TYPE = "select-one"),
                             (i.SELECT_MULTIPLE_TYPE = "select-multiple"),
-                            (i.SCROLLING_SPEED = 4);
+                            (i.SCROLLING_SPEED = 4));
                     },
                     789: function (j, i, b) {
-                        Object.defineProperty(i, "__esModule", { value: !0 }),
-                            (i.DEFAULT_CONFIG = i.DEFAULT_CLASSNAMES = void 0);
+                        (Object.defineProperty(i, "__esModule", { value: !0 }),
+                            (i.DEFAULT_CONFIG = i.DEFAULT_CLASSNAMES = void 0));
                         var _ = b(799);
-                        (i.DEFAULT_CLASSNAMES = {
+                        ((i.DEFAULT_CLASSNAMES = {
                             containerOuter: "choices",
                             containerInner: "choices__inner",
                             input: "choices__input",
@@ -2426,7 +2427,7 @@ var $e = ft((Ae, Ye) => {
                                 callbackOnInit: null,
                                 callbackOnCreateTemplates: null,
                                 classNames: i.DEFAULT_CLASSNAMES,
-                            });
+                            }));
                     },
                     18: function (j, i) {
                         Object.defineProperty(i, "__esModule", { value: !0 });
@@ -2453,17 +2454,17 @@ var $e = ft((Ae, Ye) => {
                                     ? function (d, a, r, c) {
                                           c === void 0 && (c = r);
                                           var l = Object.getOwnPropertyDescriptor(a, r);
-                                          (!l || ("get" in l ? !a.__esModule : l.writable || l.configurable)) &&
+                                          ((!l || ("get" in l ? !a.__esModule : l.writable || l.configurable)) &&
                                               (l = {
                                                   enumerable: !0,
                                                   get: function () {
                                                       return a[r];
                                                   },
                                               }),
-                                              Object.defineProperty(d, c, l);
+                                              Object.defineProperty(d, c, l));
                                       }
                                     : function (d, a, r, c) {
-                                          c === void 0 && (c = r), (d[c] = a[r]);
+                                          (c === void 0 && (c = r), (d[c] = a[r]));
                                       }),
                             h =
                                 (this && this.__exportStar) ||
@@ -2471,7 +2472,7 @@ var $e = ft((Ae, Ye) => {
                                     for (var r in d)
                                         r !== "default" && !Object.prototype.hasOwnProperty.call(a, r) && _(a, d, r);
                                 };
-                        Object.defineProperty(i, "__esModule", { value: !0 }),
+                        (Object.defineProperty(i, "__esModule", { value: !0 }),
                             h(b(18), i),
                             h(b(978), i),
                             h(b(948), i),
@@ -2486,7 +2487,7 @@ var $e = ft((Ae, Ye) => {
                             h(b(37), i),
                             h(b(47), i),
                             h(b(923), i),
-                            h(b(876), i);
+                            h(b(876), i));
                     },
                     287: function (j, i) {
                         Object.defineProperty(i, "__esModule", { value: !0 });
@@ -2516,7 +2517,7 @@ var $e = ft((Ae, Ye) => {
                         Object.defineProperty(i, "__esModule", { value: !0 });
                     },
                     799: function (j, i) {
-                        Object.defineProperty(i, "__esModule", { value: !0 }),
+                        (Object.defineProperty(i, "__esModule", { value: !0 }),
                             (i.parseCustomProperties =
                                 i.diff =
                                 i.cloneObject =
@@ -2534,7 +2535,7 @@ var $e = ft((Ae, Ye) => {
                                 i.generateId =
                                 i.generateChars =
                                 i.getRandomNumber =
-                                    void 0);
+                                    void 0));
                         var b = function (E, w) {
                             return Math.floor(Math.random() * (w - E) + E);
                         };
@@ -2550,7 +2551,7 @@ var $e = ft((Ae, Ye) => {
                                 E.id ||
                                 (E.name && "".concat(E.name, "-").concat((0, i.generateChars)(2))) ||
                                 (0, i.generateChars)(4);
-                            return (N = N.replace(/(:|\.|\[|\]|,)/g, "")), (N = "".concat(w, "-").concat(N)), N;
+                            return ((N = N.replace(/(:|\.|\[|\]|,)/g, "")), (N = "".concat(w, "-").concat(N)), N);
                         };
                         i.generateId = h;
                         var d = function (E) {
@@ -2600,7 +2601,7 @@ var $e = ft((Ae, Ye) => {
                                       .replace(/</g, "&lt;")
                                       .replace(/"/g, "&quot;");
                         };
-                        (i.sanitise = O),
+                        ((i.sanitise = O),
                             (i.strToEl = (function () {
                                 var E = document.createElement("div");
                                 return function (w) {
@@ -2609,7 +2610,7 @@ var $e = ft((Ae, Ye) => {
                                     for (var g = E.children[0]; E.firstChild; ) E.removeChild(E.firstChild);
                                     return g;
                                 };
-                            })());
+                            })()));
                         var L = function (E, w) {
                             var N = E.value,
                                 g = E.label,
@@ -2676,9 +2677,9 @@ var $e = ft((Ae, Ye) => {
                                             (l || (l = Array.prototype.slice.call(d, 0, r)), (l[r] = d[r]));
                                 return h.concat(l || Array.prototype.slice.call(d));
                             };
-                        Object.defineProperty(i, "__esModule", { value: !0 }),
+                        (Object.defineProperty(i, "__esModule", { value: !0 }),
                             (i.defaultState = void 0),
-                            (i.defaultState = []);
+                            (i.defaultState = []));
                         function _(h, d) {
                             switch ((h === void 0 && (h = i.defaultState), d === void 0 && (d = {}), d.type)) {
                                 case "ADD_CHOICE": {
@@ -2704,7 +2705,8 @@ var $e = ft((Ae, Ye) => {
                                         ? h.map(function (y) {
                                               var D = y;
                                               return (
-                                                  D.id === parseInt("".concat(c.choiceId), 10) && (D.selected = !0), D
+                                                  D.id === parseInt("".concat(c.choiceId), 10) && (D.selected = !0),
+                                                  D
                                               );
                                           })
                                         : h;
@@ -2715,7 +2717,8 @@ var $e = ft((Ae, Ye) => {
                                         ? h.map(function (y) {
                                               var D = y;
                                               return (
-                                                  D.id === parseInt("".concat(l.choiceId), 10) && (D.selected = !1), D
+                                                  D.id === parseInt("".concat(l.choiceId), 10) && (D.selected = !1),
+                                                  D
                                               );
                                           })
                                         : h;
@@ -2738,7 +2741,7 @@ var $e = ft((Ae, Ye) => {
                                     var L = d;
                                     return h.map(function (y) {
                                         var D = y;
-                                        return (D.active = L.active), D;
+                                        return ((D.active = L.active), D);
                                     });
                                 }
                                 case "CLEAR_CHOICES":
@@ -2759,9 +2762,9 @@ var $e = ft((Ae, Ye) => {
                                             (l || (l = Array.prototype.slice.call(d, 0, r)), (l[r] = d[r]));
                                 return h.concat(l || Array.prototype.slice.call(d));
                             };
-                        Object.defineProperty(i, "__esModule", { value: !0 }),
+                        (Object.defineProperty(i, "__esModule", { value: !0 }),
                             (i.defaultState = void 0),
-                            (i.defaultState = []);
+                            (i.defaultState = []));
                         function _(h, d) {
                             switch ((h === void 0 && (h = i.defaultState), d === void 0 && (d = {}), d.type)) {
                                 case "ADD_GROUP": {
@@ -2786,7 +2789,7 @@ var $e = ft((Ae, Ye) => {
                             function (y) {
                                 return y && y.__esModule ? y : { default: y };
                             };
-                        Object.defineProperty(i, "__esModule", { value: !0 }), (i.defaultState = void 0);
+                        (Object.defineProperty(i, "__esModule", { value: !0 }), (i.defaultState = void 0));
                         var h = b(791),
                             d = _(b(52)),
                             a = _(b(871)),
@@ -2818,9 +2821,9 @@ var $e = ft((Ae, Ye) => {
                                             (l || (l = Array.prototype.slice.call(d, 0, r)), (l[r] = d[r]));
                                 return h.concat(l || Array.prototype.slice.call(d));
                             };
-                        Object.defineProperty(i, "__esModule", { value: !0 }),
+                        (Object.defineProperty(i, "__esModule", { value: !0 }),
                             (i.defaultState = void 0),
-                            (i.defaultState = []);
+                            (i.defaultState = []));
                         function _(h, d) {
                             switch ((h === void 0 && (h = i.defaultState), d === void 0 && (d = {}), d.type)) {
                                 case "ADD_ITEM": {
@@ -2845,19 +2848,19 @@ var $e = ft((Ae, Ye) => {
                                         );
                                     return r.map(function (l) {
                                         var O = l;
-                                        return (O.highlighted = !1), O;
+                                        return ((O.highlighted = !1), O);
                                     });
                                 }
                                 case "REMOVE_ITEM":
                                     return h.map(function (l) {
                                         var O = l;
-                                        return O.id === d.id && (O.active = !1), O;
+                                        return (O.id === d.id && (O.active = !1), O);
                                     });
                                 case "HIGHLIGHT_ITEM": {
                                     var c = d;
                                     return h.map(function (l) {
                                         var O = l;
-                                        return O.id === c.id && (O.highlighted = c.highlighted), O;
+                                        return (O.id === c.id && (O.highlighted = c.highlighted), O);
                                     });
                                 }
                                 default:
@@ -2867,9 +2870,9 @@ var $e = ft((Ae, Ye) => {
                         i.default = _;
                     },
                     502: function (j, i) {
-                        Object.defineProperty(i, "__esModule", { value: !0 }),
+                        (Object.defineProperty(i, "__esModule", { value: !0 }),
                             (i.defaultState = void 0),
-                            (i.defaultState = !1);
+                            (i.defaultState = !1));
                         var b = function (_, h) {
                             switch ((_ === void 0 && (_ = i.defaultState), h === void 0 && (h = {}), h.type)) {
                                 case "SET_IS_LOADING":
@@ -3101,7 +3104,7 @@ var $e = ft((Ae, Ye) => {
                                     t.classList.add(g ? y : D),
                                     d)
                                 ) {
-                                    N && t.classList.remove(D), (t.dataset.deletable = "");
+                                    (N && t.classList.remove(D), (t.dataset.deletable = ""));
                                     var n = "Remove item",
                                         s = Object.assign(
                                             document.createElement("button"),
@@ -3109,9 +3112,9 @@ var $e = ft((Ae, Ye) => {
                                             (r[c ? "innerHTML" : "innerText"] = n),
                                             r),
                                         );
-                                    s.setAttribute("aria-label", "".concat(n, ": '").concat(Z, "'")),
+                                    (s.setAttribute("aria-label", "".concat(n, ": '").concat(Z, "'")),
                                         (s.dataset.button = ""),
-                                        t.appendChild(s);
+                                        t.appendChild(s));
                                 }
                                 return t;
                             },
@@ -3212,7 +3215,7 @@ var $e = ft((Ae, Ye) => {
                                     d = h.list,
                                     a = h.listDropdown,
                                     r = document.createElement("div");
-                                return r.classList.add(d, a), r.setAttribute("aria-expanded", "false"), r;
+                                return (r.classList.add(d, a), r.setAttribute("aria-expanded", "false"), r);
                             },
                             notice: function (_, h, d) {
                                 var a,
@@ -3242,7 +3245,7 @@ var $e = ft((Ae, Ye) => {
                                     r = _.active,
                                     c = _.disabled,
                                     l = new Option(h, d, !1, r);
-                                return a && (l.dataset.customProperties = "".concat(a)), (l.disabled = !!c), l;
+                                return (a && (l.dataset.customProperties = "".concat(a)), (l.disabled = !!c), l);
                             },
                         };
                         i.default = b;
@@ -3318,10 +3321,10 @@ var $e = ft((Ae, Ye) => {
                             );
                         }
                         function Z(E, w, N) {
-                            (N = N || {}),
+                            ((N = N || {}),
                                 (N.arrayMerge = N.arrayMerge || l),
                                 (N.isMergeableObject = N.isMergeableObject || i),
-                                (N.cloneUnlessOtherwiseSpecified = c);
+                                (N.cloneUnlessOtherwiseSpecified = c));
                             var g = Array.isArray(w),
                                 e = Array.isArray(E),
                                 t = g === e;
@@ -3337,12 +3340,12 @@ var $e = ft((Ae, Ye) => {
                         j.exports = ne;
                     },
                     221: function (j, i, b) {
-                        b.r(i),
+                        (b.r(i),
                             b.d(i, {
                                 default: function () {
                                     return Se;
                                 },
-                            });
+                            }));
                         function _(p) {
                             return Array.isArray ? Array.isArray(p) : k(p) === "[object Array]";
                         }
@@ -3392,15 +3395,15 @@ var $e = ft((Ae, Ye) => {
                             g = Object.prototype.hasOwnProperty;
                         class e {
                             constructor(o) {
-                                (this._keys = []), (this._keyMap = {});
+                                ((this._keys = []), (this._keyMap = {}));
                                 let m = 0;
-                                o.forEach((S) => {
+                                (o.forEach((S) => {
                                     let I = t(S);
-                                    (m += I.weight), this._keys.push(I), (this._keyMap[I.id] = I), (m += I.weight);
+                                    ((m += I.weight), this._keys.push(I), (this._keyMap[I.id] = I), (m += I.weight));
                                 }),
                                     this._keys.forEach((S) => {
                                         S.weight /= m;
-                                    });
+                                    }));
                             }
                             get(o) {
                                 return this._keyMap[o];
@@ -3418,12 +3421,12 @@ var $e = ft((Ae, Ye) => {
                                 S = null,
                                 I = 1,
                                 T = null;
-                            if (r(p) || _(p)) (S = p), (o = n(p)), (m = s(p));
+                            if (r(p) || _(p)) ((S = p), (o = n(p)), (m = s(p)));
                             else {
                                 if (!g.call(p, "name")) throw new Error(w("name"));
                                 let A = p.name;
                                 if (((S = A), g.call(p, "weight") && ((I = p.weight), I <= 0))) throw new Error(N(A));
-                                (o = n(A)), (m = s(A)), (T = p.getFn);
+                                ((o = n(A)), (m = s(A)), (T = p.getFn));
                             }
                             return { path: o, id: m, weight: I, src: S, getFn: T };
                         }
@@ -3450,7 +3453,7 @@ var $e = ft((Ae, Ye) => {
                                             } else A.length && I(H, A, R + 1);
                                         }
                                 };
-                            return I(p, r(o) ? o.split(".") : o, 0), S ? m : m[0];
+                            return (I(p, r(o) ? o.split(".") : o, 0), S ? m : m[0]);
                         }
                         var u = {
                             ...{
@@ -3481,7 +3484,7 @@ var $e = ft((Ae, Ye) => {
                                     if (m.has(T)) return m.get(T);
                                     let A = 1 / Math.pow(T, 0.5 * p),
                                         R = parseFloat(Math.round(A * S) / S);
-                                    return m.set(T, R), R;
+                                    return (m.set(T, R), R);
                                 },
                                 clear() {
                                     m.clear();
@@ -3490,7 +3493,10 @@ var $e = ft((Ae, Ye) => {
                         }
                         class V {
                             constructor({ getFn: o = u.getFn, fieldNormWeight: m = u.fieldNormWeight } = {}) {
-                                (this.norm = Y(m, 3)), (this.getFn = o), (this.isCreated = !1), this.setIndexRecords();
+                                ((this.norm = Y(m, 3)),
+                                    (this.getFn = o),
+                                    (this.isCreated = !1),
+                                    this.setIndexRecords());
                             }
                             setSources(o = []) {
                                 this.docs = o;
@@ -3499,11 +3505,11 @@ var $e = ft((Ae, Ye) => {
                                 this.records = o;
                             }
                             setKeys(o = []) {
-                                (this.keys = o),
+                                ((this.keys = o),
                                     (this._keysMap = {}),
                                     o.forEach((m, S) => {
                                         this._keysMap[m.id] = S;
-                                    });
+                                    }));
                             }
                             create() {
                                 this.isCreated ||
@@ -3539,7 +3545,7 @@ var $e = ft((Ae, Ye) => {
                             }
                             _addObject(o, m) {
                                 let S = { i: m, $: {} };
-                                this.keys.forEach((I, T) => {
+                                (this.keys.forEach((I, T) => {
                                     let A = I.getFn ? I.getFn(o) : this.getFn(o, I.path);
                                     if (y(A)) {
                                         if (_(A)) {
@@ -3564,7 +3570,7 @@ var $e = ft((Ae, Ye) => {
                                         }
                                     }
                                 }),
-                                    this.records.push(S);
+                                    this.records.push(S));
                             }
                             toJSON() {
                                 return { keys: this.keys, records: this.records };
@@ -3572,12 +3578,12 @@ var $e = ft((Ae, Ye) => {
                         }
                         function U(p, o, { getFn: m = u.getFn, fieldNormWeight: S = u.fieldNormWeight } = {}) {
                             let I = new V({ getFn: m, fieldNormWeight: S });
-                            return I.setKeys(p.map(t)), I.setSources(o), I.create(), I;
+                            return (I.setKeys(p.map(t)), I.setSources(o), I.create(), I);
                         }
                         function $(p, { getFn: o = u.getFn, fieldNormWeight: m = u.fieldNormWeight } = {}) {
                             let { keys: S, records: I } = p,
                                 T = new V({ getFn: o, fieldNormWeight: m });
-                            return T.setKeys(S), T.setIndexRecords(I), T;
+                            return (T.setKeys(S), T.setIndexRecords(I), T);
                         }
                         function W(
                             p,
@@ -3605,7 +3611,7 @@ var $e = ft((Ae, Ye) => {
                                     ? (S = T)
                                     : !R && S !== -1 && ((I = T - 1), I - S + 1 >= o && m.push([S, I]), (S = -1));
                             }
-                            return p[T - 1] && T - S >= o && m.push([S, T - 1]), m;
+                            return (p[T - 1] && T - S >= o && m.push([S, T - 1]), m);
                         }
                         let z = 32;
                         function ee(
@@ -3640,7 +3646,7 @@ var $e = ft((Ae, Ye) => {
                                 });
                                 if (((q = Math.min(he, q)), (re = ve + B), ue)) {
                                     let ge = 0;
-                                    for (; ge < B; ) (Ee[ve + ge] = 1), (ge += 1);
+                                    for (; ge < B; ) ((Ee[ve + ge] = 1), (ge += 1));
                                 }
                             }
                             re = -1;
@@ -3652,7 +3658,7 @@ var $e = ft((Ae, Ye) => {
                                 let ge = 0,
                                     ye = we;
                                 for (; ge < ye; )
-                                    W(o, {
+                                    (W(o, {
                                         errors: he,
                                         currentLocation: G + ye,
                                         expectedLocation: G,
@@ -3661,7 +3667,7 @@ var $e = ft((Ae, Ye) => {
                                     }) <= q
                                         ? (ge = ye)
                                         : (we = ye),
-                                        (ye = Math.floor((we - ge) / 2 + ge));
+                                        (ye = Math.floor((we - ge) / 2 + ge)));
                                 we = ye;
                                 let Ue = Math.max(1, G - ye + 1),
                                     Fe = A ? x : Math.min(G + ye, x) + B,
@@ -3753,7 +3759,7 @@ var $e = ft((Ae, Ye) => {
                                     let G = 0,
                                         q = x % z,
                                         re = x - q;
-                                    for (; G < re; ) B(this.pattern.substr(G, z), G), (G += z);
+                                    for (; G < re; ) (B(this.pattern.substr(G, z), G), (G += z));
                                     if (q) {
                                         let ue = x - z;
                                         B(this.pattern.substr(ue), ue);
@@ -3764,7 +3770,7 @@ var $e = ft((Ae, Ye) => {
                                 let { isCaseSensitive: m, includeMatches: S } = this.options;
                                 if ((m || (o = o.toLowerCase()), this.pattern === o)) {
                                     let re = { isMatch: !0, score: 0 };
-                                    return S && (re.indices = [[0, o.length - 1]]), re;
+                                    return (S && (re.indices = [[0, o.length - 1]]), re);
                                 }
                                 let {
                                         location: I,
@@ -3791,10 +3797,10 @@ var $e = ft((Ae, Ye) => {
                                         includeMatches: S,
                                         ignoreLocation: H,
                                     });
-                                    ve && (G = !0), (x += Ie), ve && be && (B = [...B, ...be]);
+                                    (ve && (G = !0), (x += Ie), ve && be && (B = [...B, ...be]));
                                 });
                                 let q = { isMatch: G, score: G ? x / this.chunks.length : 1 };
-                                return G && S && (q.indices = B), q;
+                                return (G && S && (q.indices = B), q);
                             }
                         }
                         class le {
@@ -3939,7 +3945,7 @@ var $e = ft((Ae, Ye) => {
                                     ignoreLocation: H = u.ignoreLocation,
                                 } = {},
                             ) {
-                                super(o),
+                                (super(o),
                                     (this._bitapSearch = new ce(o, {
                                         location: m,
                                         threshold: S,
@@ -3949,7 +3955,7 @@ var $e = ft((Ae, Ye) => {
                                         minMatchCharLength: R,
                                         isCaseSensitive: F,
                                         ignoreLocation: H,
-                                    }));
+                                    })));
                             }
                             static get type() {
                                 return "fuzzy";
@@ -3982,7 +3988,7 @@ var $e = ft((Ae, Ye) => {
                                     S,
                                     I = [],
                                     T = this.pattern.length;
-                                for (; (S = o.indexOf(this.pattern, m)) > -1; ) (m = S + T), I.push([S, m - 1]);
+                                for (; (S = o.indexOf(this.pattern, m)) > -1; ) ((m = S + T), I.push([S, m - 1]));
                                 let A = !!I.length;
                                 return { isMatch: A, score: A ? 0 : 1, indices: I };
                             }
@@ -4035,7 +4041,7 @@ var $e = ft((Ae, Ye) => {
                                     distance: H = u.distance,
                                 } = {},
                             ) {
-                                (this.query = null),
+                                ((this.query = null),
                                     (this.options = {
                                         isCaseSensitive: m,
                                         includeMatches: S,
@@ -4047,7 +4053,7 @@ var $e = ft((Ae, Ye) => {
                                         distance: H,
                                     }),
                                     (this.pattern = m ? o : o.toLowerCase()),
-                                    (this.query = Qe(this.pattern, this.options));
+                                    (this.query = Qe(this.pattern, this.options)));
                             }
                             static condition(o, m) {
                                 return m.useExtendedSearch;
@@ -4062,7 +4068,7 @@ var $e = ft((Ae, Ye) => {
                                     R = 0;
                                 for (let F = 0, H = m.length; F < H; F += 1) {
                                     let B = m[F];
-                                    (A.length = 0), (T = 0);
+                                    ((A.length = 0), (T = 0));
                                     for (let x = 0, G = B.length; x < G; x += 1) {
                                         let q = B[x],
                                             { isMatch: re, indices: ue, score: Ee } = q.search(o);
@@ -4072,13 +4078,13 @@ var $e = ft((Ae, Ye) => {
                                                 Ze.has(ve) ? (A = [...A, ...ue]) : A.push(ue);
                                             }
                                         } else {
-                                            (R = 0), (T = 0), (A.length = 0);
+                                            ((R = 0), (T = 0), (A.length = 0));
                                             break;
                                         }
                                     }
                                     if (T) {
                                         let x = { isMatch: !0, score: R / T };
-                                        return S && (x.indices = A), x;
+                                        return (S && (x.indices = A), x);
                                     }
                                 }
                                 return { isMatch: !1, score: 1 };
@@ -4111,7 +4117,7 @@ var $e = ft((Ae, Ye) => {
                                         H = A ? I[je.PATTERN] : I[F];
                                     if (!r(H)) throw new Error(ne(F));
                                     let B = { keyId: s(F), pattern: H };
-                                    return m && (B.searcher = Ne(H, o)), B;
+                                    return (m && (B.searcher = Ne(H, o)), B);
                                 }
                                 let R = { children: [], operator: T[0] };
                                 return (
@@ -4125,30 +4131,30 @@ var $e = ft((Ae, Ye) => {
                                     R
                                 );
                             };
-                            return Re(p) || (p = ke(p)), S(p);
+                            return (Re(p) || (p = ke(p)), S(p));
                         }
                         function nt(p, { ignoreFieldNorm: o = u.ignoreFieldNorm }) {
                             p.forEach((m) => {
                                 let S = 1;
-                                m.matches.forEach(({ key: I, norm: T, score: A }) => {
+                                (m.matches.forEach(({ key: I, norm: T, score: A }) => {
                                     let R = I ? I.weight : null;
                                     S *= Math.pow(A === 0 && R ? Number.EPSILON : A, (R || 1) * (o ? 1 : T));
                                 }),
-                                    (m.score = S);
+                                    (m.score = S));
                             });
                         }
                         function rt(p, o) {
                             let m = p.matches;
-                            (o.matches = []),
+                            ((o.matches = []),
                                 y(m) &&
                                     m.forEach((S) => {
                                         if (!y(S.indices) || !S.indices.length) return;
                                         let { indices: I, value: T } = S,
                                             A = { indices: I, value: T };
-                                        S.key && (A.key = S.key.src),
+                                        (S.key && (A.key = S.key.src),
                                             S.idx > -1 && (A.refIndex = S.idx),
-                                            o.matches.push(A);
-                                    });
+                                            o.matches.push(A));
+                                    }));
                         }
                         function st(p, o) {
                             o.score = p.score;
@@ -4177,10 +4183,10 @@ var $e = ft((Ae, Ye) => {
                         }
                         class Se {
                             constructor(o, m = {}, S) {
-                                (this.options = { ...u, ...m }),
+                                ((this.options = { ...u, ...m }),
                                     this.options.useExtendedSearch,
                                     (this._keyStore = new e(this.options.keys)),
-                                    this.setCollection(o, S);
+                                    this.setCollection(o, S));
                             }
                             setCollection(o, m) {
                                 if (((this._docs = o), m && !(m instanceof V))) throw new Error(Z);
@@ -4203,7 +4209,7 @@ var $e = ft((Ae, Ye) => {
                                 return m;
                             }
                             removeAt(o) {
-                                this._docs.splice(o, 1), this._myIndex.removeAt(o);
+                                (this._docs.splice(o, 1), this._myIndex.removeAt(o));
                             }
                             getIndex() {
                                 return this._myIndex;
@@ -4292,10 +4298,10 @@ var $e = ft((Ae, Ye) => {
                                     I.forEach(({ $: A, i: R }) => {
                                         if (!y(A)) return;
                                         let F = [];
-                                        S.forEach((H, B) => {
+                                        (S.forEach((H, B) => {
                                             F.push(...this._findMatches({ key: H, value: A[B], searcher: m }));
                                         }),
-                                            F.length && T.push({ idx: R, item: A, matches: F });
+                                            F.length && T.push({ idx: R, item: A, matches: F }));
                                     }),
                                     T
                                 );
@@ -4317,15 +4323,15 @@ var $e = ft((Ae, Ye) => {
                                 return I;
                             }
                         }
-                        (Se.version = "6.6.2"),
+                        ((Se.version = "6.6.2"),
                             (Se.createIndex = U),
                             (Se.parseIndex = $),
                             (Se.config = u),
                             (Se.parseQuery = xe),
-                            et(qe);
+                            et(qe));
                     },
                     791: function (j, i, b) {
-                        b.r(i),
+                        (b.r(i),
                             b.d(i, {
                                 __DO_NOT_USE__ActionTypes: function () {
                                     return y;
@@ -4348,7 +4354,7 @@ var $e = ft((Ae, Ye) => {
                                 legacy_createStore: function () {
                                     return N;
                                 },
-                            });
+                            }));
                         function _(f) {
                             "@babel/helpers - typeof";
                             return (
@@ -4400,11 +4406,11 @@ var $e = ft((Ae, Ye) => {
                             var C = Object.keys(f);
                             if (Object.getOwnPropertySymbols) {
                                 var Y = Object.getOwnPropertySymbols(f);
-                                u &&
+                                (u &&
                                     (Y = Y.filter(function (V) {
                                         return Object.getOwnPropertyDescriptor(f, V).enumerable;
                                     })),
-                                    C.push.apply(C, Y);
+                                    C.push.apply(C, Y));
                             }
                             return C;
                         }
@@ -4533,9 +4539,9 @@ var $e = ft((Ae, Ye) => {
                                     function () {
                                         if (de) {
                                             if (J) throw new Error(l(6));
-                                            (de = !1), z();
+                                            ((de = !1), z());
                                             var oe = W.indexOf(te);
-                                            W.splice(oe, 1), ($ = null);
+                                            (W.splice(oe, 1), ($ = null));
                                         }
                                     }
                                 );
@@ -4545,7 +4551,7 @@ var $e = ft((Ae, Ye) => {
                                 if (typeof te.type > "u") throw new Error(l(8));
                                 if (J) throw new Error(l(9));
                                 try {
-                                    (J = !0), (U = V(U, te));
+                                    ((J = !0), (U = V(U, te)));
                                 } finally {
                                     J = !1;
                                 }
@@ -4557,7 +4563,7 @@ var $e = ft((Ae, Ye) => {
                             }
                             function le(te) {
                                 if (typeof te != "function") throw new Error(l(10));
-                                (V = te), ce({ type: y.REPLACE });
+                                ((V = te), ce({ type: y.REPLACE }));
                             }
                             function _e() {
                                 var te,
@@ -4662,9 +4668,9 @@ var $e = ft((Ae, Ye) => {
                                         var Te = ee && ee.type;
                                         throw new Error(l(14));
                                     }
-                                    (le[te] = oe), (ce = ce || oe !== pe);
+                                    ((le[te] = oe), (ce = ce || oe !== pe));
                                 }
-                                return (ce = ce || U.length !== Object.keys(z).length), ce ? le : z;
+                                return ((ce = ce || U.length !== Object.keys(z).length), ce ? le : z);
                             };
                         }
                         function s(f, u) {
@@ -4713,7 +4719,7 @@ var $e = ft((Ae, Ye) => {
                                         W = u.map(function (J) {
                                             return J($);
                                         });
-                                    return (U = P.apply(void 0, W)(V.dispatch)), c(c({}, V), {}, { dispatch: U });
+                                    return ((U = P.apply(void 0, W)(V.dispatch)), c(c({}, V), {}, { dispatch: U }));
                                 };
                             };
                         }
@@ -4725,9 +4731,9 @@ var $e = ft((Ae, Ye) => {
                 var i = ie[j];
                 if (i !== void 0) return i.exports;
                 var b = (ie[j] = { exports: {} });
-                return se[j].call(b.exports, b, b.exports, X), b.exports;
+                return (se[j].call(b.exports, b, b.exports, X), b.exports);
             }
-            (function () {
+            ((function () {
                 X.n = function (j) {
                     var i =
                         j && j.__esModule
@@ -4737,7 +4743,7 @@ var $e = ft((Ae, Ye) => {
                             : function () {
                                   return j;
                               };
-                    return X.d(i, { a: i }), i;
+                    return (X.d(i, { a: i }), i);
                 };
             })(),
                 (function () {
@@ -4753,12 +4759,12 @@ var $e = ft((Ae, Ye) => {
                 })(),
                 (function () {
                     X.r = function (j) {
-                        typeof Symbol < "u" &&
+                        (typeof Symbol < "u" &&
                             Symbol.toStringTag &&
                             Object.defineProperty(j, Symbol.toStringTag, { value: "Module" }),
-                            Object.defineProperty(j, "__esModule", { value: !0 });
+                            Object.defineProperty(j, "__esModule", { value: !0 }));
                     };
-                })();
+                })());
             var me = {};
             return (
                 (function () {
@@ -4813,7 +4819,7 @@ function vt({
         isStateBeingUpdated: !1,
         state: N,
         init: async function () {
-            (this.select = new ze.default(this.$refs.input, {
+            ((this.select = new ze.default(this.$refs.input, {
                 allowHTML: ie,
                 duplicateItemsAllowed: !1,
                 itemSelectText: "",
@@ -4838,31 +4844,31 @@ function vt({
                 this.refreshPlaceholder(),
                 b && this.select.showDropdown(),
                 this.$refs.input.addEventListener("change", () => {
-                    this.refreshPlaceholder(),
+                    (this.refreshPlaceholder(),
                         !this.isStateBeingUpdated &&
                             ((this.isStateBeingUpdated = !0),
                             (this.state = this.select.getValue(!0) ?? null),
-                            this.$nextTick(() => (this.isStateBeingUpdated = !1)));
+                            this.$nextTick(() => (this.isStateBeingUpdated = !1))));
                 }),
                 d &&
                     this.$refs.input.addEventListener("showDropdown", async () => {
-                        this.select.clearChoices(),
+                        (this.select.clearChoices(),
                             await this.select.setChoices([{ label: c, value: "", disabled: !0 }]),
-                            await this.refreshChoices();
+                            await this.refreshChoices());
                     }),
                 a &&
                     (this.$refs.input.addEventListener("search", async (e) => {
                         let t = e.detail.value?.trim();
-                        (this.isSearching = !0),
+                        ((this.isSearching = !0),
                             this.select.clearChoices(),
                             await this.select.setChoices([
                                 { label: [null, void 0, ""].includes(t) ? c : ne, value: "", disabled: !0 },
-                            ]);
+                            ]));
                     }),
                     this.$refs.input.addEventListener(
                         "search",
                         Alpine.debounce(async (e) => {
-                            await this.refreshChoices({ search: e.detail.value?.trim() }), (this.isSearching = !1);
+                            (await this.refreshChoices({ search: e.detail.value?.trim() }), (this.isSearching = !1));
                         }, Z),
                     )),
                 _ ||
@@ -4875,10 +4881,10 @@ function vt({
                     this.select &&
                         (this.refreshPlaceholder(),
                         !this.isStateBeingUpdated && (await this.refreshChoices({ withInitialOptions: !d })));
-                });
+                }));
         },
         destroy: function () {
-            this.select.destroy(), (this.select = null);
+            (this.select.destroy(), (this.select = null));
         },
         refreshChoices: async function (e = {}) {
             let t = await this.getChoices(e);
