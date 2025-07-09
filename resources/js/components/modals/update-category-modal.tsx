@@ -27,7 +27,9 @@ export function UpdateCategoryModal() {
                 {
                     queryKey: ["category", actions.resourceId],
                     queryFn: async () => {
-                        const res = await fetch(routes.api.categories.show.url({ category: actions.resourceId ?? "" }));
+                        const res = await fetch(
+                            routes.internal.api.categories.show.url({ category: actions.resourceId ?? "" }),
+                        );
 
                         if (!res.ok) {
                             throw new Error(`Failed to fetch category: ${res.statusText}`);
@@ -40,7 +42,7 @@ export function UpdateCategoryModal() {
                 {
                     queryKey: ["categories"],
                     queryFn: async () => {
-                        const res = await fetch(routes.api.categories.index.url({ query: { per_page: 100 } }));
+                        const res = await fetch(routes.internal.api.categories.index.url({ query: { per_page: 100 } }));
 
                         if (!res.ok) {
                             throw new Error(`Failed to fetch categories: ${res.statusText}`);

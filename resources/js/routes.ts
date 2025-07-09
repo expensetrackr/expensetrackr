@@ -8,6 +8,7 @@ import currentUser from "./routes/current-user/index.ts";
 import currentUserPhoto from "./routes/current-user-photo/index.ts";
 import currentWorkspace from "./routes/current-workspace/index.ts";
 import { dashboard, home, login, logout, pricing, register, subscribe } from "./routes/index.ts";
+import internal from "./routes/internal/index.ts";
 import language from "./routes/language/index.ts";
 import oauth from "./routes/oauth/index.ts";
 import otherBrowserSessions from "./routes/other-browser-sessions/index.ts";
@@ -38,6 +39,7 @@ export const routes = {
     currentWorkspace,
     dashboard,
     home,
+    internal,
     language,
     login,
     logout,

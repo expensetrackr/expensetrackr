@@ -255,7 +255,7 @@ function SelectCurrencies(props: React.CustomComponentPropsWithRef<typeof Select
     const query = useQuery<string[]>({
         queryKey: ["currencies"],
         queryFn: async () => {
-            const res = await fetch(routes.api.finance.currencies.index.url());
+            const res = await fetch(routes.internal.api.finance.currencies.index.url());
             return (await res.json()) as string[];
         },
     });

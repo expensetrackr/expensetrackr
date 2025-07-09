@@ -187,7 +187,9 @@ function ChooseInstitution() {
     const query = useQuery<App.Data.Finance.InstitutionSearchData[]>({
         queryKey: ["institutions", debouncedSearchQuery],
         queryFn: async () => {
-            const res = await fetch(routes.api.finance.institutions.index({ query: { q: debouncedSearchQuery } }).url);
+            const res = await fetch(
+                routes.internal.api.finance.institutions.index({ query: { q: debouncedSearchQuery } }).url,
+            );
             return (await res.json()) as App.Data.Finance.InstitutionSearchData[];
         },
         enabled: params.commandPage === "institution",
@@ -215,7 +217,9 @@ function ChooseInstitution() {
             ) : null}
 
             <CommandMenu.Group>
-                {query.data?.map((institution) => <InstitutionItem institution={institution} key={institution.id} />)}
+                {query.data?.map((institution) => (
+                    <InstitutionItem institution={institution} key={institution.id} />
+                ))}
             </CommandMenu.Group>
         </>
     );

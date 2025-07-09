@@ -94,6 +94,7 @@
             window.ENV = {
                 APP_NAME: '{{ config('app.name') }}',
                 APP_URL: '{{ config('app.url') }}',
+                API_URL: '{{ config('app.url') }}',
                 IMAGE_URL: 'https://image.danestves.com',
                 TELLER_APP_ID: '{{ config('services.teller.app_id') }}',
                 TELLER_ENVIRONMENT: '{{ config('services.teller.environment') }}',

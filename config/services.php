@@ -72,4 +72,8 @@ return [
             'lifetime' => 'c969cccd-95cc-4c0c-b7a4-721a61d63e4b',
         ],
     ],
+
+    'api' => [
+        'url' => env('API_URL', 'https://api.expensetrackr.app'),
+    ],
 ];

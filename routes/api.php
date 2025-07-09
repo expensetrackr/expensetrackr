@@ -21,23 +21,23 @@ Route::prefix('api')->group(function () {
 
     Route::prefix('finance')->group(function () {
         Route::get('/currencies', CurrencyController::class)
-            ->name('finance.currencies.index');
+            ->name('internal.api.finance.currencies.index');
 
         Route::get('/institutions', InstitutionController::class)
-            ->name('finance.institutions.index');
+            ->name('internal.api.finance.institutions.index');
     });
 
     Route::apiResource('accounts', AccountController::class)
         ->only(['index', 'show'])
-        ->names('api.accounts');
+        ->names('internal.api.accounts');
 
     Route::apiResource('categories', CategoryController::class)
         ->only(['index', 'show'])
-        ->names('api.categories');
+        ->names('internal.api.categories');
 
     Route::apiResource('transactions', TransactionController::class)
         ->only('show')
-        ->names('api.transactions');
+        ->names('internal.api.transactions');
 });
 
 $routeGroup = function () {
