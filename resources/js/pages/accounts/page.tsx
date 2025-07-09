@@ -25,7 +25,7 @@ export default function AccountsPage({ accounts, permissions }: PageProps<Accoun
     return (
         <>
             <Header
-                contentClassName="hidden lg:flex"
+                contentClassName="flex"
                 description={t("pages.accounts.description")}
                 icon={
                     <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-(--bg-white-0) shadow-xs ring-1 ring-(--stroke-soft-200) ring-inset">
