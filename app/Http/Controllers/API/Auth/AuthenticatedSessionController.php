@@ -12,19 +12,18 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 
-final class AuthenticatedSessionController
+final readonly class AuthenticatedSessionController
 {
-    /**
-     * The guard implementation.
-     */
-    private StatefulGuard $guard;
-
     /**
      * Create a new controller instance.
      */
-    public function __construct(StatefulGuard $guard)
+    public function __construct(
+        /**
+         * The guard implementation.
+         */
+        private StatefulGuard $guard
+    )
     {
-        $this->guard = $guard;
     }
 
     /**

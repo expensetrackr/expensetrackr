@@ -1,6 +1,5 @@
 import { useForm } from "@inertiajs/react";
 import { useQueries } from "@tanstack/react-query";
-import { groupBy } from "better-groupby";
 import { CurrencyInput } from "headless-currency-input";
 import * as React from "react";
 import BankIcon from "virtual:icons/hugeicons/bank";
@@ -13,6 +12,7 @@ import { useTranslation } from "#/hooks/use-translation.ts";
 import { routes } from "#/routes.ts";
 import { TransactionRecurringInterval, TransactionType } from "#/schemas/enums.ts";
 import { type PaginatedResponse } from "#/types/pagination.ts";
+import { groupBy } from "#/utils/group.ts";
 import { currencyFormatter, decimalFormatter } from "#/utils/number-formatter.ts";
 import { Button } from "../button.tsx";
 import { CurrencySelect } from "../currency-select.tsx";

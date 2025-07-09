@@ -57,13 +57,11 @@ final class ManageWorkspaceMemberRequest extends FormRequest
             $email = $this->input('email');
 
             // Only check if email is present and is a string
-            if (is_string($email) && ! empty($email)) {
-                if ($this->workspace->hasUserWithEmail($email)) {
-                    $validator->errors()->add(
-                        'email',
-                        __('This user already belongs to the workspace.')
-                    );
-                }
+            if (is_string($email) && !($email === '' || $email === '0') && $this->workspace->hasUserWithEmail($email)) {
+                $validator->errors()->add(
+                    'email',
+                    __('This user already belongs to the workspace.')
+                );
             }
         });
     }

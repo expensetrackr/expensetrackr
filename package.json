@@ -29,13 +29,12 @@
         "@tanstack/react-query": "5.81.5",
         "@tanstack/react-table": "8.21.3",
         "@unpic/react": "1.0.1",
-        "better-groupby": "1.0.14",
         "clsx": "2.1.1",
         "cmdk": "1.1.1",
         "d3-curve-circlecorners": "0.1.6",
         "d3-shape": "3.2.0",
         "date-fns": "4.1.0",
-        "decimal.js": "10.5.0",
+        "decimal.js": "10.6.0",
         "dompurify": "3.2.6",
         "headless-currency-input": "1.5.0",
         "jsdom": "26.1.0",
@@ -89,7 +88,7 @@
         "typescript": "5.8.3",
         "unplugin-icons": "22.1.0",
         "vibe-rules": "0.3.50",
-        "vite": "7.0.2",
+        "vite": "7.0.3",
         "vite-plugin-run": "0.6.1"
     },
     "packageManager": "bun@latest"

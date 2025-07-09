@@ -11,19 +11,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Laravel\Fortify\Fortify;
 
-final class RegisteredUserController
+final readonly class RegisteredUserController
 {
-    /**
-     * The guard implementation.
-     */
-    private StatefulGuard $guard;
-
     /**
      * Create a new controller instance.
      */
-    public function __construct(StatefulGuard $guard)
+    public function __construct(
+        /**
+         * The guard implementation.
+         */
+        private StatefulGuard $guard
+    )
     {
-        $this->guard = $guard;
     }
 
     /**

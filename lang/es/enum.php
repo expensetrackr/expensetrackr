@@ -7,8 +7,8 @@ return [
         'type' => [
             'income' => 'Ingresos',
             'expense' => 'Gastos',
-            'transfer' => 'Transferencia'
-        ]
+            'transfer' => 'Transferencia',
+        ],
     ],
     'category' => [
         'classification' => [
@@ -16,7 +16,7 @@ return [
             'expense' => 'Gastos',
             'transfer' => 'Transferencia',
             'savings' => 'Ahorros',
-            'other' => 'Otro'
-        ]
-    ]
+            'other' => 'Otro',
+        ],
+    ],
 ];

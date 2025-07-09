@@ -1,6 +1,5 @@
 import { useForm } from "@inertiajs/react";
 import { useQueries } from "@tanstack/react-query";
-import { groupBy } from "better-groupby";
 import * as React from "react";
 import { toast } from "sonner";
 import Delete02Icon from "virtual:icons/hugeicons/delete-02";
@@ -19,6 +18,7 @@ import { useActionsParams } from "#/hooks/use-actions-params.ts";
 import { useTranslation } from "#/hooks/use-translation.ts";
 import { routes } from "#/routes.ts";
 import { type PaginatedResponse } from "#/types/pagination.ts";
+import { groupBy } from "#/utils/group.ts";
 import { currencyFormatter } from "#/utils/number-formatter.ts";
 import { queryClient } from "#/utils/query-client.ts";
 import { Button } from "../button.tsx";

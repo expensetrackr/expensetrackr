@@ -91,6 +91,8 @@ export function CreateAccountDrawer() {
         return decimalValue.toFixed(currencyFormat?.minimumFractionDigits);
     };
 
+    console.info("[ISAAC] allErrors: ", form.allErrors);
+
     return (
         <Drawer.Root onOpenChange={handleOpenChange} open={isOpen}>
             <Drawer.Content className="absolute inset-y-0 mx-2 my-2 max-h-[calc(100%-16px)] w-[min(400px,calc(100%-16px))] rounded-20 bg-(--bg-white-0) shadow-md">

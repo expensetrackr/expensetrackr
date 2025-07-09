@@ -76,9 +76,9 @@
 
         <script type="application/ld+json">
             {
-                "@context": "https://schema.org",
-                "@type": "Organization",
-                "@id": "{{ config('app.url') }}",
+                "@@context": "https://schema.org",
+                "@@type": "Organization",
+                "@@id": "{{ config('app.url') }}",
                 "name": "ExpenseTrackr",
                 "url": "{{ config('app.url') }}",
                 "logo": "{{ config('app.url') }}/favicons/android-chrome-512x512.png",
