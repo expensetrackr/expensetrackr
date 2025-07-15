@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace App\Actions\BankAccounts;
 
-use App\Enums\Finance\AccountType;
 use App\Exceptions\ExchangeRateException;
 use App\Facades\Forex;
 use App\Models\Account;
 use App\Models\CreditCard;
 use App\Models\Loan;
 use Illuminate\Support\Facades\DB;
-use InvalidArgumentException;
 
 final class UpdateAccount
 {
@@ -25,12 +23,12 @@ final class UpdateAccount
         return DB::transaction(function () use ($account, $input) {
             // Update the main account fields
             $this->updateAccountFields($account, $input);
-            
+
             // Update accountable-specific fields if provided
             $this->updateAccountableFields($account, $input);
-            
+
             $account->save();
-            
+
             return $account->fresh();
         });
     }
@@ -53,9 +51,10 @@ final class UpdateAccount
 
         if (isset($input['is_default'])) {
             // If setting as default, unset other default accounts in workspace
-            if ($input['is_default'] && !$account->is_default) {
+            if ($input['is_default'] && ! $account->is_default) {
                 Account::where('workspace_id', $account->workspace_id)
                     ->where('id', '!=', $account->id)
+                    ->lockForUpdate()
                     ->update(['is_default' => false]);
             }
             $account->is_default = $input['is_default'];
@@ -81,7 +80,7 @@ final class UpdateAccount
     private function updateCurrency(Account $account, string $newCurrencyCode): void
     {
         $currentBalance = $account->current_balance;
-        
+
         if ($newCurrencyCode === 'USD') {
             // Converting to USD
             $account->currency_code = 'USD';
@@ -92,7 +91,7 @@ final class UpdateAccount
         } else {
             // Converting from USD or changing to another currency
             $exchangeRate = Forex::getCachedExchangeRate('USD', $newCurrencyCode);
-            
+
             if ($exchangeRate === null) {
                 throw ExchangeRateException::failedToFetch('USD', $newCurrencyCode);
             }
@@ -106,11 +105,11 @@ final class UpdateAccount
             $account->base_current_balance = $currentBalance;
             $account->base_initial_balance = $account->initial_balance;
             $account->currency_rate = $exchangeRate;
-            
+
             // Convert to new currency
             $account->currency_code = $newCurrencyCode;
-            $account->current_balance = bcmul($currentBalance, (string) $exchangeRate, 4);
-            $account->initial_balance = bcmul($account->initial_balance, (string) $exchangeRate, 4);
+            $account->current_balance = bcmul((string) $currentBalance, (string) $exchangeRate, 4);
+            $account->initial_balance = bcmul((string) $account->initial_balance, (string) $exchangeRate, 4);
         }
     }
 
@@ -122,7 +121,7 @@ final class UpdateAccount
     private function updateAccountableFields(Account $account, array $input): void
     {
         $accountable = $account->accountable;
-        
+
         if ($accountable instanceof CreditCard) {
             $this->updateCreditCardFields($accountable, $input);
         } elseif ($accountable instanceof Loan) {
@@ -159,7 +158,7 @@ final class UpdateAccount
             $fieldsToUpdate['expires_at'] = $input['expires_at'];
         }
 
-        if (!empty($fieldsToUpdate)) {
+        if (! empty($fieldsToUpdate)) {
             $creditCard->update($fieldsToUpdate);
         }
     }
@@ -185,7 +184,7 @@ final class UpdateAccount
             $fieldsToUpdate['term_months'] = $input['term_months'];
         }
 
-        if (!empty($fieldsToUpdate)) {
+        if (! empty($fieldsToUpdate)) {
             $loan->update($fieldsToUpdate);
         }
     }

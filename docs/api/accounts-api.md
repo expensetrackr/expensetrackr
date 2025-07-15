@@ -24,20 +24,26 @@ Authorization: Bearer {token}
 All API responses follow a consistent format:
 
 ### Success Response
+
 ```json
 {
-  "success": true,
-  "message": "Success message",
-  "data": { /* resource data */ }
+    "success": true,
+    "message": "Success message",
+    "data": {
+        /* resource data */
+    }
 }
 ```
 
 ### Error Response
+
 ```json
 {
-  "success": false,
-  "message": "Error message",
-  "errors": { /* validation errors if applicable */ }
+    "success": false,
+    "message": "Error message",
+    "errors": {
+        /* validation errors if applicable */
+    }
 }
 ```
 
@@ -51,16 +57,16 @@ Retrieve a paginated list of accounts for the current workspace.
 
 #### Query Parameters
 
-| Parameter | Type | Description | Default |
-|-----------|------|-------------|---------|
-| `per_page` | integer | Items per page (max 100) | 15 |
-| `page` | integer | Page number | 1 |
-| `filter[name]` | string | Filter by account name | - |
-| `filter[currency_code]` | string | Filter by currency code | - |
-| `filter[is_default]` | boolean | Filter by default status | - |
-| `filter[is_manual]` | boolean | Filter by manual status | - |
-| `sort` | string | Sort field (`name`, `-name`, `created_at`, `-created_at`, `current_balance`, `-current_balance`) | `-created_at` |
-| `include` | string | Include relationships (`bankConnection`, `accountable`) | - |
+| Parameter               | Type    | Description                                                                                      | Default       |
+| ----------------------- | ------- | ------------------------------------------------------------------------------------------------ | ------------- |
+| `per_page`              | integer | Items per page (max 100)                                                                         | 15            |
+| `page`                  | integer | Page number                                                                                      | 1             |
+| `filter[name]`          | string  | Filter by account name                                                                           | -             |
+| `filter[currency_code]` | string  | Filter by currency code                                                                          | -             |
+| `filter[is_default]`    | boolean | Filter by default status                                                                         | -             |
+| `filter[is_manual]`     | boolean | Filter by manual status                                                                          | -             |
+| `sort`                  | string  | Sort field (`name`, `-name`, `created_at`, `-created_at`, `current_balance`, `-current_balance`) | `-created_at` |
+| `include`               | string  | Include relationships (`bankConnection`, `accountable`)                                          | -             |
 
 #### Example Request
 
@@ -72,36 +78,40 @@ GET /api/accounts?per_page=20&filter[name]=savings&sort=-current_balance&include
 
 ```json
 {
-  "data": [
-    {
-      "id": "acc_123456",
-      "name": "Primary Savings",
-      "description": "Main savings account",
-      "type": "depository",
-      "subtype": "savings",
-      "currencyCode": "USD",
-      "baseCurrency": null,
-      "currencyRate": null,
-      "initialBalance": "1000.00",
-      "baseInitialBalance": null,
-      "currentBalance": "1500.00",
-      "baseCurrentBalance": null,
-      "isDefault": true,
-      "isManual": true,
-      "externalId": null,
-      "createdAt": "2024-01-15T10:30:00Z",
-      "updatedAt": "2024-01-15T10:30:00Z",
-      "connection": null,
-      "accountable": {},
-      "permissions": {
-        "canView": true,
-        "canUpdate": true,
-        "canDelete": true
-      }
+    "data": [
+        {
+            "id": "acc_123456",
+            "name": "Primary Savings",
+            "description": "Main savings account",
+            "type": "depository",
+            "subtype": "savings",
+            "currencyCode": "USD",
+            "baseCurrency": null,
+            "currencyRate": null,
+            "initialBalance": "1000.00",
+            "baseInitialBalance": null,
+            "currentBalance": "1500.00",
+            "baseCurrentBalance": null,
+            "isDefault": true,
+            "isManual": true,
+            "externalId": null,
+            "createdAt": "2024-01-15T10:30:00Z",
+            "updatedAt": "2024-01-15T10:30:00Z",
+            "connection": null,
+            "accountable": {},
+            "permissions": {
+                "canView": true,
+                "canUpdate": true,
+                "canDelete": true
+            }
+        }
+    ],
+    "links": {
+        /* pagination links */
+    },
+    "meta": {
+        /* pagination metadata */
     }
-  ],
-  "links": { /* pagination links */ },
-  "meta": { /* pagination metadata */ }
 }
 ```
 
@@ -113,47 +123,47 @@ Create a new account in the current workspace.
 
 #### Request Body
 
-| Field | Type | Required | Description |
-|-------|------|----------|-------------|
-| `name` | string | Yes | Account name (max 255 chars) |
-| `description` | string | No | Account description (max 500 chars) |
-| `currency_code` | string | Yes | 3-letter currency code |
-| `initial_balance` | number | Yes | Initial balance (min 0.01) |
-| `type` | string | Yes | Account type (see Account Types) |
-| `subtype` | string | No | Account subtype |
-| `is_default` | boolean | No | Set as default account |
-| `bank_connection_id` | integer | No | Associated bank connection ID |
-| `external_id` | string | No | External system ID |
+| Field                | Type    | Required | Description                         |
+| -------------------- | ------- | -------- | ----------------------------------- |
+| `name`               | string  | Yes      | Account name (max 255 chars)        |
+| `description`        | string  | No       | Account description (max 500 chars) |
+| `currency_code`      | string  | Yes      | 3-letter currency code              |
+| `initial_balance`    | number  | Yes      | Initial balance (min 0.01)          |
+| `type`               | string  | Yes      | Account type (see Account Types)    |
+| `subtype`            | string  | No       | Account subtype                     |
+| `is_default`         | boolean | No       | Set as default account              |
+| `bank_connection_id` | integer | No       | Associated bank connection ID       |
+| `external_id`        | string  | No       | External system ID                  |
 
 #### Credit Card Specific Fields (required if type = "credit_card")
 
-| Field | Type | Required | Description |
-|-------|------|----------|-------------|
-| `available_credit` | number | Yes | Available credit limit |
-| `minimum_payment` | number | Yes | Minimum payment amount |
-| `apr` | number | Yes | Annual percentage rate |
-| `annual_fee` | number | Yes | Annual fee amount |
-| `expires_at` | date | Yes | Card expiration date |
+| Field              | Type   | Required | Description            |
+| ------------------ | ------ | -------- | ---------------------- |
+| `available_credit` | number | Yes      | Available credit limit |
+| `minimum_payment`  | number | Yes      | Minimum payment amount |
+| `apr`              | number | Yes      | Annual percentage rate |
+| `annual_fee`       | number | Yes      | Annual fee amount      |
+| `expires_at`       | date   | Yes      | Card expiration date   |
 
 #### Loan Specific Fields (required if type = "loan")
 
-| Field | Type | Required | Description |
-|-------|------|----------|-------------|
-| `interest_rate` | number | Yes | Interest rate percentage |
-| `rate_type` | string | Yes | Rate type (fixed, variable) |
-| `term_months` | integer | Yes | Loan term in months |
+| Field           | Type    | Required | Description                 |
+| --------------- | ------- | -------- | --------------------------- |
+| `interest_rate` | number  | Yes      | Interest rate percentage    |
+| `rate_type`     | string  | Yes      | Rate type (fixed, variable) |
+| `term_months`   | integer | Yes      | Loan term in months         |
 
 #### Example Request
 
 ```json
 {
-  "name": "Primary Checking",
-  "description": "Main checking account",
-  "currency_code": "USD",
-  "initial_balance": 5000.00,
-  "type": "depository",
-  "subtype": "checking",
-  "is_default": true
+    "name": "Primary Checking",
+    "description": "Main checking account",
+    "currency_code": "USD",
+    "initial_balance": 5000.0,
+    "type": "depository",
+    "subtype": "checking",
+    "is_default": true
 }
 ```
 
@@ -161,34 +171,34 @@ Create a new account in the current workspace.
 
 ```json
 {
-  "success": true,
-  "message": "Account created successfully",
-  "data": {
-    "id": "acc_789012",
-    "name": "Primary Checking",
-    "description": "Main checking account",
-    "type": "depository",
-    "subtype": "checking",
-    "currencyCode": "USD",
-    "baseCurrency": null,
-    "currencyRate": null,
-    "initialBalance": "5000.00",
-    "baseInitialBalance": null,
-    "currentBalance": "5000.00",
-    "baseCurrentBalance": null,
-    "isDefault": true,
-    "isManual": true,
-    "externalId": null,
-    "createdAt": "2024-01-15T11:30:00Z",
-    "updatedAt": "2024-01-15T11:30:00Z",
-    "connection": null,
-    "accountable": {},
-    "permissions": {
-      "canView": true,
-      "canUpdate": true,
-      "canDelete": true
+    "success": true,
+    "message": "Account created successfully",
+    "data": {
+        "id": "acc_789012",
+        "name": "Primary Checking",
+        "description": "Main checking account",
+        "type": "depository",
+        "subtype": "checking",
+        "currencyCode": "USD",
+        "baseCurrency": null,
+        "currencyRate": null,
+        "initialBalance": "5000.00",
+        "baseInitialBalance": null,
+        "currentBalance": "5000.00",
+        "baseCurrentBalance": null,
+        "isDefault": true,
+        "isManual": true,
+        "externalId": null,
+        "createdAt": "2024-01-15T11:30:00Z",
+        "updatedAt": "2024-01-15T11:30:00Z",
+        "connection": null,
+        "accountable": {},
+        "permissions": {
+            "canView": true,
+            "canUpdate": true,
+            "canDelete": true
+        }
     }
-  }
 }
 ```
 
@@ -200,14 +210,14 @@ Retrieve a specific account by its public ID.
 
 #### Path Parameters
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
+| Parameter | Type   | Description       |
+| --------- | ------ | ----------------- |
 | `account` | string | Account public ID |
 
 #### Query Parameters
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
+| Parameter | Type   | Description                                                             |
+| --------- | ------ | ----------------------------------------------------------------------- |
 | `include` | string | Include relationships (`bankConnection`, `accountable`, `transactions`) |
 
 #### Example Request
@@ -220,43 +230,43 @@ GET /api/accounts/acc_123456?include=bankConnection,accountable,transactions
 
 ```json
 {
-  "id": "acc_123456",
-  "name": "Primary Savings",
-  "description": "Main savings account",
-  "type": "depository",
-  "subtype": "savings",
-  "currencyCode": "USD",
-  "baseCurrency": null,
-  "currencyRate": null,
-  "initialBalance": "1000.00",
-  "baseInitialBalance": null,
-  "currentBalance": "1500.00",
-  "baseCurrentBalance": null,
-  "isDefault": true,
-  "isManual": true,
-  "externalId": null,
-  "createdAt": "2024-01-15T10:30:00Z",
-  "updatedAt": "2024-01-15T10:30:00Z",
-  "connection": null,
-  "accountable": {},
-  "transactions": [
-    {
-      "id": "txn_123",
-      "name": "Deposit",
-      "amount": "500.00",
-      "type": "income",
-      "datedAt": "2024-01-15T09:00:00Z",
-      "category": {
-        "id": "cat_123",
-        "name": "Transfer"
-      }
+    "id": "acc_123456",
+    "name": "Primary Savings",
+    "description": "Main savings account",
+    "type": "depository",
+    "subtype": "savings",
+    "currencyCode": "USD",
+    "baseCurrency": null,
+    "currencyRate": null,
+    "initialBalance": "1000.00",
+    "baseInitialBalance": null,
+    "currentBalance": "1500.00",
+    "baseCurrentBalance": null,
+    "isDefault": true,
+    "isManual": true,
+    "externalId": null,
+    "createdAt": "2024-01-15T10:30:00Z",
+    "updatedAt": "2024-01-15T10:30:00Z",
+    "connection": null,
+    "accountable": {},
+    "transactions": [
+        {
+            "id": "txn_123",
+            "name": "Deposit",
+            "amount": "500.00",
+            "type": "income",
+            "datedAt": "2024-01-15T09:00:00Z",
+            "category": {
+                "id": "cat_123",
+                "name": "Transfer"
+            }
+        }
+    ],
+    "permissions": {
+        "canView": true,
+        "canUpdate": true,
+        "canDelete": true
     }
-  ],
-  "permissions": {
-    "canView": true,
-    "canUpdate": true,
-    "canDelete": true
-  }
 }
 ```
 
@@ -268,28 +278,29 @@ Update an existing account.
 
 #### Path Parameters
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
+| Parameter | Type   | Description       |
+| --------- | ------ | ----------------- |
 | `account` | string | Account public ID |
 
 #### Request Body
 
 All fields are optional for updates. Only include fields you want to change.
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `name` | string | Account name (max 255 chars) |
-| `description` | string | Account description (max 500 chars) |
-| `currency_code` | string | 3-letter currency code |
-| `is_default` | boolean | Set as default account |
-| `external_id` | string | External system ID |
-| `subtype` | string | Account subtype |
+| Field           | Type    | Description                         |
+| --------------- | ------- | ----------------------------------- |
+| `name`          | string  | Account name (max 255 chars)        |
+| `description`   | string  | Account description (max 500 chars) |
+| `currency_code` | string  | 3-letter currency code              |
+| `is_default`    | boolean | Set as default account              |
+| `external_id`   | string  | External system ID                  |
+| `subtype`       | string  | Account subtype                     |
 
 #### Type-Specific Fields
 
 Include type-specific fields only if the account type supports them:
 
 **Credit Card Fields:**
+
 - `available_credit` (number)
 - `minimum_payment` (number)
 - `apr` (number)
@@ -297,6 +308,7 @@ Include type-specific fields only if the account type supports them:
 - `expires_at` (date)
 
 **Loan Fields:**
+
 - `interest_rate` (number)
 - `rate_type` (string)
 - `term_months` (integer)
@@ -305,9 +317,9 @@ Include type-specific fields only if the account type supports them:
 
 ```json
 {
-  "name": "Updated Savings Account",
-  "description": "Updated description",
-  "is_default": false
+    "name": "Updated Savings Account",
+    "description": "Updated description",
+    "is_default": false
 }
 ```
 
@@ -315,34 +327,34 @@ Include type-specific fields only if the account type supports them:
 
 ```json
 {
-  "success": true,
-  "message": "Account updated successfully",
-  "data": {
-    "id": "acc_123456",
-    "name": "Updated Savings Account",
-    "description": "Updated description",
-    "type": "depository",
-    "subtype": "savings",
-    "currencyCode": "USD",
-    "baseCurrency": null,
-    "currencyRate": null,
-    "initialBalance": "1000.00",
-    "baseInitialBalance": null,
-    "currentBalance": "1500.00",
-    "baseCurrentBalance": null,
-    "isDefault": false,
-    "isManual": true,
-    "externalId": null,
-    "createdAt": "2024-01-15T10:30:00Z",
-    "updatedAt": "2024-01-15T12:00:00Z",
-    "connection": null,
-    "accountable": {},
-    "permissions": {
-      "canView": true,
-      "canUpdate": true,
-      "canDelete": true
+    "success": true,
+    "message": "Account updated successfully",
+    "data": {
+        "id": "acc_123456",
+        "name": "Updated Savings Account",
+        "description": "Updated description",
+        "type": "depository",
+        "subtype": "savings",
+        "currencyCode": "USD",
+        "baseCurrency": null,
+        "currencyRate": null,
+        "initialBalance": "1000.00",
+        "baseInitialBalance": null,
+        "currentBalance": "1500.00",
+        "baseCurrentBalance": null,
+        "isDefault": false,
+        "isManual": true,
+        "externalId": null,
+        "createdAt": "2024-01-15T10:30:00Z",
+        "updatedAt": "2024-01-15T12:00:00Z",
+        "connection": null,
+        "accountable": {},
+        "permissions": {
+            "canView": true,
+            "canUpdate": true,
+            "canDelete": true
+        }
     }
-  }
 }
 ```
 
@@ -354,8 +366,8 @@ Delete an existing account.
 
 #### Path Parameters
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
+| Parameter | Type   | Description       |
+| --------- | ------ | ----------------- |
 | `account` | string | Account public ID |
 
 #### Example Request
@@ -368,9 +380,9 @@ DELETE /api/accounts/acc_123456
 
 ```json
 {
-  "success": true,
-  "message": "Account deleted successfully",
-  "data": null
+    "success": true,
+    "message": "Account deleted successfully",
+    "data": null
 }
 ```
 
@@ -378,15 +390,15 @@ DELETE /api/accounts/acc_123456
 
 The following account types are supported:
 
-| Type | Description | Specific Fields |
-|------|-------------|-----------------|
-| `depository` | Bank accounts (checking, savings) | - |
-| `investment` | Investment accounts | - |
-| `crypto` | Cryptocurrency accounts | - |
-| `other_asset` | Other asset accounts | - |
-| `credit_card` | Credit card accounts | available_credit, minimum_payment, apr, annual_fee, expires_at |
-| `loan` | Loan accounts | interest_rate, rate_type, term_months |
-| `other_liability` | Other liability accounts | - |
+| Type              | Description                       | Specific Fields                                                |
+| ----------------- | --------------------------------- | -------------------------------------------------------------- |
+| `depository`      | Bank accounts (checking, savings) | -                                                              |
+| `investment`      | Investment accounts               | -                                                              |
+| `crypto`          | Cryptocurrency accounts           | -                                                              |
+| `other_asset`     | Other asset accounts              | -                                                              |
+| `credit_card`     | Credit card accounts              | available_credit, minimum_payment, apr, annual_fee, expires_at |
+| `loan`            | Loan accounts                     | interest_rate, rate_type, term_months                          |
+| `other_liability` | Other liability accounts          | -                                                              |
 
 ## Error Handling
 
@@ -396,12 +408,12 @@ The API uses standard HTTP status codes and provides detailed error messages:
 
 ```json
 {
-  "success": false,
-  "message": "The given data was invalid.",
-  "errors": {
-    "name": ["The name field is required."],
-    "currency_code": ["The currency code field is required."]
-  }
+    "success": false,
+    "message": "The given data was invalid.",
+    "errors": {
+        "name": ["The name field is required."],
+        "currency_code": ["The currency code field is required."]
+    }
 }
 ```
 
@@ -409,8 +421,8 @@ The API uses standard HTTP status codes and provides detailed error messages:
 
 ```json
 {
-  "success": false,
-  "message": "You are not authorized to perform this action."
+    "success": false,
+    "message": "You are not authorized to perform this action."
 }
 ```
 
@@ -418,8 +430,8 @@ The API uses standard HTTP status codes and provides detailed error messages:
 
 ```json
 {
-  "success": false,
-  "message": "Resource not found."
+    "success": false,
+    "message": "Resource not found."
 }
 ```
 
@@ -427,8 +439,8 @@ The API uses standard HTTP status codes and provides detailed error messages:
 
 ```json
 {
-  "success": false,
-  "message": "Cannot delete account with existing transactions. Please delete or reassign all transactions first."
+    "success": false,
+    "message": "Cannot delete account with existing transactions. Please delete or reassign all transactions first."
 }
 ```
 
@@ -438,6 +450,14 @@ API endpoints are subject to rate limiting to prevent abuse. The limits are:
 
 - **Authenticated requests**: 60 requests per minute
 - **Unauthenticated requests**: 20 requests per minute
+
+Rate limit information is included in response headers:
+
+- `X-RateLimit-Limit`: The maximum number of requests allowed
+- `X-RateLimit-Remaining`: The number of requests remaining in the current window
+- `X-RateLimit-Reset`: The Unix timestamp when the rate limit window resets
+
+When rate limit is exceeded, a 429 status code is returned with a `Retry-After` header indicating when to retry.
 
 ## Performance Optimizations
 

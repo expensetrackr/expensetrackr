@@ -52,8 +52,10 @@ final class DeleteAccount
     private function reassignDefaultAccount(Account $account): void
     {
         // Find another account in the same workspace to make default
+        // Use oldest account (created_at ASC) for deterministic selection
         $newDefaultAccount = Account::where('workspace_id', $account->workspace_id)
             ->where('id', '!=', $account->id)
+            ->orderBy('created_at', 'asc')
             ->first();
 
         if ($newDefaultAccount) {

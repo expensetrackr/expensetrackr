@@ -2,6 +2,33 @@
 
 declare(strict_types=1);
 
+/*
+ * API ROUTES OVERVIEW
+ * ===================
+ *
+ * This file defines two distinct API route groups:
+ *
+ * 1. INTERNAL API ROUTES (internal.api.*)
+ *    - No authentication required
+ *    - Read-only operations
+ *    - Public data access
+ *    - System-to-system communication
+ *
+ * 2. AUTHENTICATED API ROUTES (api.*)
+ *    - Authentication required (auth:sanctum)
+ *    - Workspace context required (ensure.workspace)
+ *    - Full CRUD operations
+ *    - User-specific data operations
+ *
+ * Route Naming Convention:
+ * - Internal routes: internal.api.{resource}.{action}
+ * - Authenticated routes: api.{resource}.{action}
+ *
+ * Choose the appropriate route group based on your use case:
+ * - Use internal routes for public data that doesn't require user context
+ * - Use authenticated routes for user-specific operations
+ */
+
 use App\Http\Controllers\API\AccountController;
 use App\Http\Controllers\API\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\API\Auth\RegisteredUserController;
@@ -15,6 +42,22 @@ use Laravel\Fortify\Features;
 use Laravel\Fortify\Http\Controllers\PasswordResetLinkController;
 use Spatie\Health\Http\Controllers\HealthCheckResultsController;
 
+/*
+ * INTERNAL API ROUTES (No Authentication Required)
+ * ================================================
+ * These routes are designed for internal system use and public data access.
+ * They are READ-ONLY and do not require authentication.
+ * Use these routes for:
+ * - Public data that doesn't require user context
+ * - System-to-system communication
+ * - Data that should be accessible without workspace context
+ *
+ * Security Notes:
+ * - No authentication required
+ * - No workspace context
+ * - Limited to safe HTTP methods (GET only for most resources)
+ * - Should not expose sensitive user data
+ */
 Route::prefix('api')->group(function () {
     Route::post('teller/webhook', WebhookTellerController::class)
         ->name('teller.webhook');
@@ -84,7 +127,23 @@ $routeGroup = function () {
             ->name('api.finance.institutions.index');
     });
 
-    // Protected API routes (require authentication)
+    /*
+     * AUTHENTICATED API ROUTES (Authentication & Workspace Required)
+     * ==============================================================
+     * These routes are designed for authenticated user operations.
+     * They require both authentication and workspace context.
+     * Use these routes for:
+     * - User-specific data operations (CRUD)
+     * - Workspace-scoped operations
+     * - Operations that modify user data
+     *
+     * Security Notes:
+     * - Requires authentication (auth:sanctum)
+     * - Requires workspace context (ensure.workspace middleware)
+     * - Full CRUD operations available
+     * - Data is scoped to user's current workspace
+     * - All operations are subject to authorization policies
+     */
     Route::middleware(['auth:sanctum', 'ensure.workspace'])->group(function () {
         Route::apiResource('accounts', AccountController::class)
             ->names('api.accounts');

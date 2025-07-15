@@ -54,7 +54,10 @@ abstract class BaseApiController extends Controller
      */
     protected function resourceResponse($resource): JsonResponse
     {
-        return response()->json($resource);
+        return response()->json([
+            'success' => true,
+            'data' => $resource,
+        ]);
     }
 
     /**
