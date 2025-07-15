@@ -1,4 +1,4 @@
 {
     "upgrade": true,
-    "reject": ["react-day-picker"]
+    "reject": ["react-day-picker", "recharts"]
 }

@@ -49,8 +49,8 @@ composer install
 
 ```bash
 npm install
-# or if you prefer bun
-bun install
+# or if you prefer pnpm
+pnpm install
 ```
 
 4. Copy the environment file and configure your environment variables:
@@ -92,8 +92,8 @@ php artisan db:seed
 
 ```bash
 npm run build
-# or with bun
-bun run build
+# or with pnpm
+pnpm run build
 ```
 
 ## Development
@@ -110,8 +110,8 @@ php artisan serve
 
 ```bash
 npm run dev
-# or with bun
-bun run dev
+# or with pnpm
+pnpm run dev
 ```
 
 ### Docker Setup

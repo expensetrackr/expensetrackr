@@ -20,7 +20,6 @@ We take your privacy seriously and are committed to protecting your personal and
 We collect several types of information for various purposes:
 
 - **Account Information**:
-
     - Email address
     - Name
     - Password (encrypted)
@@ -28,7 +27,6 @@ We collect several types of information for various purposes:
     - Contact information
 
 - **Financial Information**:
-
     - Account balances
     - Transaction history
     - Budget data
@@ -132,14 +130,12 @@ Your information, including Personal Data, may be transferred to and maintained 
 When we transfer your data internationally, we ensure appropriate safeguards through:
 
 1. **Legal Frameworks**:
-
     - Standard Contractual Clauses (SCCs)
     - Privacy Shield certification
     - Binding Corporate Rules
     - Adequacy decisions
 
 2. **Technical Measures**:
-
     - End-to-end encryption
     - Secure data transmission protocols
     - Access controls and authentication
@@ -174,7 +170,6 @@ If danestves, LLC is involved in a merger, acquisition, or asset sale, your Pers
 We may share your data with third parties in the following circumstances:
 
 1. **Service Providers**:
-
     - Payment processors
     - Cloud storage providers
     - Analytics services
@@ -182,7 +177,6 @@ We may share your data with third parties in the following circumstances:
     - Authentication services
 
 2. **Business Partners**:
-
     - Financial data aggregators
     - Banking institutions
     - Investment platforms

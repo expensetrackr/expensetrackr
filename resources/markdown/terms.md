@@ -38,7 +38,6 @@ You are responsible for:
 #### Service Tiers
 
 1. **Free Tier**
-
     - Basic features with usage limitations
     - Limited number of transactions per month
     - Basic reporting capabilities
@@ -111,14 +110,12 @@ When connecting external financial accounts:
 We offer:
 
 1. **One-Time Payments**
-
     - Permanent access to specific features
     - No recurring charges
     - Non-refundable
     - May require upgrade payments for major versions
 
 2. **Subscriptions**
-
     - Monthly or annual billing
     - Automatic renewals
     - Cancel anytime
@@ -134,21 +131,18 @@ We offer:
 While we generally maintain a no-refund policy, we may consider refund requests in certain circumstances:
 
 1. **How to Request a Refund**
-
     - Email support@expensetrackr.app
     - Include your account email address
     - Provide detailed reason for refund request
     - Include relevant transaction information
 
 2. **Refund Consideration**
-
     - Requests evaluated on a case-by-case basis
     - No guarantee of refund approval
     - Decision is at our sole discretion
     - Processing time may vary
 
 3. **General Policy**
-
     - All sales are generally considered final
     - Approved refunds processed to original payment method
     - Partial refunds may be offered in some cases

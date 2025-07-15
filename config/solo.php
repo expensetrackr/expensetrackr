@@ -48,7 +48,7 @@ return [
     */
     'commands' => [
         'Logs' => Command::from('php artisan pail --timeout=0 -v'),
-        'Vite' => 'bun run dev',
+        'Vite' => 'pnpm run dev',
         'Make' => new MakeCommand,
 
         // Lazy commands do not automatically start when Solo starts.
