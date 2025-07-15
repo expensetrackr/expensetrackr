@@ -28,10 +28,6 @@ final class AccountController extends BaseApiController
     public function index(Request $request): ResourceCollection|JsonResponse
     {
         try {
-            if ($workspaceError = $this->ensureWorkspace($request)) {
-                return $workspaceError;
-            }
-
             /** @var int */
             $perPage = $request->get('per_page', 15);
             $perPage = min($perPage, 100); // Limit to 100 items per page for performance
@@ -55,10 +51,6 @@ final class AccountController extends BaseApiController
     public function store(StoreAccountRequest $request, CreateAccount $action): JsonResponse
     {
         try {
-            if ($workspaceError = $this->ensureWorkspace($request)) {
-                return $workspaceError;
-            }
-
             $account = $action->create($request->validated(), isManual: true);
 
             return $this->successResponse(
@@ -74,13 +66,9 @@ final class AccountController extends BaseApiController
     /**
      * Display the specified resource.
      */
-    public function show(Request $request, Account $account): JsonResponse
+    public function show(Account $account): JsonResponse
     {
         try {
-            if ($workspaceError = $this->ensureWorkspace($request)) {
-                return $workspaceError;
-            }
-
             $this->authorize('view', $account);
 
             $account->load([
@@ -105,10 +93,6 @@ final class AccountController extends BaseApiController
     public function update(UpdateAccountRequest $request, Account $account, UpdateAccount $action): JsonResponse
     {
         try {
-            if ($workspaceError = $this->ensureWorkspace($request)) {
-                return $workspaceError;
-            }
-
             $updatedAccount = $action->handle($account, $request->validated());
 
             return $this->successResponse(
@@ -123,13 +107,9 @@ final class AccountController extends BaseApiController
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request, Account $account, DeleteAccount $action): JsonResponse
+    public function destroy(Account $account, DeleteAccount $action): JsonResponse
     {
         try {
-            if ($workspaceError = $this->ensureWorkspace($request)) {
-                return $workspaceError;
-            }
-
             $this->authorize('delete', $account);
 
             $action->handle($account);

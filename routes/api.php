@@ -85,7 +85,7 @@ $routeGroup = function () {
     });
 
     // Protected API routes (require authentication)
-    Route::middleware('auth:sanctum')->group(function () {
+    Route::middleware(['auth:sanctum', 'ensure.workspace'])->group(function () {
         Route::apiResource('accounts', AccountController::class)
             ->names('api.accounts');
 

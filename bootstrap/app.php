@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Data\Auth\UserData;
 use App\Data\Workspace\WorkspaceData;
 use App\Http\Middleware\AddWorkspaceToRequest;
+use App\Http\Middleware\EnsureWorkspace;
 use App\Http\Middleware\HandleInertiaRequests;
 use App\Http\Middleware\HandleLanguageMiddleware;
 use App\Http\Middleware\HandleWorkspacesPermissionMiddleware;
@@ -42,6 +43,9 @@ return Application::configure(basePath: dirname(__DIR__))
             ThrottleRequests::class.':api',
             HandleWorkspacesPermissionMiddleware::class,
             AddWorkspaceToRequest::class,
+        ]);
+        $middleware->alias([
+            'ensure.workspace' => EnsureWorkspace::class,
         ]);
         $middleware->validateCsrfTokens(except: [
             'polar/webhook',

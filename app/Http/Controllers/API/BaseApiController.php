@@ -7,9 +7,9 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use RuntimeException;
 use Throwable;
 
 abstract class BaseApiController extends Controller
@@ -20,8 +20,6 @@ abstract class BaseApiController extends Controller
      * Return a JSON success response.
      *
      * @param  mixed  $data
-     * @param  int  $status
-     * @return JsonResponse
      */
     protected function successResponse($data = null, string $message = 'Success', int $status = 200): JsonResponse
     {
@@ -60,18 +58,6 @@ abstract class BaseApiController extends Controller
     }
 
     /**
-     * Check if the user has a current workspace.
-     */
-    protected function ensureWorkspace(Request $request): ?JsonResponse
-    {
-        if (!$request->user()?->currentWorkspace) {
-            return $this->errorResponse('No workspace selected', 400);
-        }
-
-        return null;
-    }
-
-    /**
      * Handle exceptions and return appropriate API responses.
      */
     protected function handleException(Throwable $exception): JsonResponse
@@ -81,14 +67,10 @@ abstract class BaseApiController extends Controller
 
         // Return appropriate error response based on exception type
         return match (true) {
-            $exception instanceof \Illuminate\Auth\Access\AuthorizationException => 
-                $this->errorResponse('You are not authorized to perform this action.', 403),
-            $exception instanceof \Illuminate\Database\Eloquent\ModelNotFoundException => 
-                $this->errorResponse('Resource not found.', 404),
-            $exception instanceof \Illuminate\Validation\ValidationException => 
-                $this->errorResponse('Validation failed.', 422, $exception->errors()),
-            $exception instanceof \RuntimeException => 
-                $this->errorResponse($exception->getMessage(), 422),
+            $exception instanceof \Illuminate\Auth\Access\AuthorizationException => $this->errorResponse('You are not authorized to perform this action.', 403),
+            $exception instanceof \Illuminate\Database\Eloquent\ModelNotFoundException => $this->errorResponse('Resource not found.', 404),
+            $exception instanceof \Illuminate\Validation\ValidationException => $this->errorResponse('Validation failed.', 422, $exception->errors()),
+            $exception instanceof RuntimeException => $this->errorResponse($exception->getMessage(), 422),
             default => $this->errorResponse('An error occurred while processing your request.', 500),
         };
     }
