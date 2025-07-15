@@ -1,6 +1,16 @@
 [phases.setup]
 nixPkgs = ["...", "python311Packages.supervisor"]
 
+[phases.install]
+onlyIncludeFiles = [
+  ".npmrc",
+  "package.json",
+  "pnpm-lock.yaml",
+  "pnpm-workspace.yaml",
+  "composer.json",
+  "composer.lock"
+]
+
 [phases.build]
 cmds = [
     "mkdir -p /etc/supervisor/conf.d/",
