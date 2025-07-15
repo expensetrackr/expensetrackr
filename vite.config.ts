@@ -10,6 +10,23 @@ import { wayfinder } from "@laravel/vite-plugin-wayfinder";
 
 export default defineConfig({
     plugins: [
+        wayfinder({
+            formVariants: false,
+        }),
+        Icons({
+            compiler: "jsx",
+            jsx: "react",
+            autoInstall: true,
+            customCollections: {
+                untitled: FileSystemIconLoader("./public/untitled"),
+                hugeicons: FileSystemIconLoader("./public/icons/hugeicons"),
+            },
+            iconCustomizer(_collection, _icon, props) {
+                props.width = "1em";
+                props.height = "1em";
+                props["data-slot"] = "icon";
+            },
+        }),
         laravel({
             input: "resources/js/app.tsx",
             ssr: "resources/js/ssr.tsx",
@@ -28,23 +45,6 @@ export default defineConfig({
                 pattern: ["app/Data/**/*.php"],
             },
         ]),
-        wayfinder({
-            formVariants: false,
-        }),
-        Icons({
-            compiler: "jsx",
-            jsx: "react",
-            autoInstall: true,
-            customCollections: {
-                untitled: FileSystemIconLoader("./public/untitled"),
-                hugeicons: FileSystemIconLoader("./public/icons/hugeicons"),
-            },
-            iconCustomizer(_collection, _icon, props) {
-                props.width = "1em";
-                props.height = "1em";
-                props["data-slot"] = "icon";
-            },
-        }),
     ],
     esbuild: {
         jsx: "automatic",
