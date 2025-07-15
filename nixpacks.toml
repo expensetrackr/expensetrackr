@@ -1,42 +1,17 @@
 [phases.setup]
 nixPkgs = ["...", "python311Packages.supervisor"]
 
-[variables]
-PNPM_HOME = "$HOME/.local/share/pnpm"
-PATH = "$PNPM_HOME:$PATH"
-
-[phases.preInstall]
-cmds = [
-    "curl -fsSL https://get.pnpm.io/install.sh | sh -",
-    "export PNPM_HOME=\"$HOME/.local/share/pnpm\"",
-    "export PATH=\"$PNPM_HOME:$PATH\"",
-    "source ~/.bashrc || true",
-    "which composer && which pnpm"
-]
-
 [phases.install]
-dependsOn = ["preInstall"]
-cmds = [
-    "export PNPM_HOME=\"$HOME/.local/share/pnpm\"",
-    "export PATH=\"$PNPM_HOME:$PATH\"",
-    "mkdir -p /var/log/nginx && mkdir -p /var/cache/nginx",
-    "composer install --ignore-platform-reqs",
-    "pnpm i --frozen-lockfile"
-]
 onlyIncludeFiles = [
   ".npmrc",
   "package.json",
-  "pnpm-lock.yaml",
-  "pnpm-workspace.yaml",
+  "package-lock.json",
   "composer.json",
   "composer.lock"
 ]
 
 [phases.build]
-dependsOn = ["install"]
 cmds = [
-    "export PNPM_HOME=\"$HOME/.local/share/pnpm\"",
-    "export PATH=\"$PNPM_HOME:$PATH\"",
     "mkdir -p /etc/supervisor/conf.d/",
     "cp /assets/worker-*.conf /etc/supervisor/conf.d/",
     "cp /assets/supervisord.conf /etc/supervisord.conf",
