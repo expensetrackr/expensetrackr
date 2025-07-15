@@ -4,78 +4,131 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
+use App\Actions\BankAccounts\CreateAccount;
+use App\Actions\BankAccounts\DeleteAccount;
+use App\Actions\BankAccounts\UpdateAccount;
+use App\Http\Requests\API\StoreAccountRequest;
+use App\Http\Requests\API\UpdateAccountRequest;
 use App\Http\Resources\AccountResource;
 use App\Models\Account;
 use Illuminate\Contracts\Database\Eloquent\Builder;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Spatie\QueryBuilder\QueryBuilder;
+use Throwable;
 
-final class AccountController extends Controller
+final class AccountController extends BaseApiController
 {
-    use AuthorizesRequests;
-
     /**
      * Display a listing of the resource.
      *
-     * @return ResourceCollection<Account>
+     * @return ResourceCollection<Account>|JsonResponse
      */
     public function index(Request $request): ResourceCollection|JsonResponse
     {
-        /** @var int */
-        $perPage = $request->get('per_page', 10);
+        try {
+            // Check if user has a current workspace
+            if ($workspaceError = $this->ensureWorkspace($request)) {
+                return $workspaceError;
+            }
 
-        if (! $request->user()?->currentWorkspace) {
-            return response()->json(['message' => 'No workspace selected'], 400);
+            /** @var int */
+            $perPage = $request->get('per_page', 15);
+            $perPage = min($perPage, 100); // Limit to 100 items per page for performance
+
+            return QueryBuilder::for(Account::class)
+                ->allowedFilters(['name', 'currency_code', 'is_default', 'is_manual'])
+                ->allowedSorts(['name', '-name', 'created_at', '-created_at', 'current_balance', '-current_balance'])
+                ->allowedIncludes(['bankConnection', 'accountable'])
+                ->defaultSort('-created_at')
+                ->paginate($perPage)
+                ->withQueryString()
+                ->toResourceCollection();
+        } catch (Throwable $e) {
+            return $this->handleException($e);
         }
-
-        return QueryBuilder::for(Account::class)
-            ->allowedFilters(['name'])
-            ->allowedSorts(['name', '-name', 'created_at', '-created_at'])
-            ->allowedIncludes(['bankConnection'])
-            ->defaultSort('-created_at')
-            ->paginate($perPage)
-            ->withQueryString()
-            ->toResourceCollection();
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): void
+    public function store(StoreAccountRequest $request, CreateAccount $action): JsonResponse
     {
-        //
+        try {
+            // Check if user has a current workspace
+            if ($workspaceError = $this->ensureWorkspace($request)) {
+                return $workspaceError;
+            }
+
+            $account = $action->create($request->validated(), isManual: true);
+
+            return $this->successResponse(
+                new AccountResource($account->load(['bankConnection', 'accountable'])),
+                'Account created successfully',
+                201
+            );
+        } catch (Throwable $e) {
+            return $this->handleException($e);
+        }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Account $account): AccountResource
+    public function show(Account $account): JsonResponse
     {
-        return $account->load(['bankConnection', 'transactions' => function (Builder $query): void {
-            $query
-                ->latest('dated_at')
-                ->with('category')
-                ->limit(3);
-        }])->toResource();
+        try {
+            // Check authorization
+            $this->authorize('view', $account);
+
+            $account->load([
+                'bankConnection', 
+                'accountable',
+                'transactions' => function (Builder $query): void {
+                    $query->latest('dated_at')
+                        ->with('category')
+                        ->limit(5);
+                }
+            ]);
+
+            return $this->resourceResponse(new AccountResource($account));
+        } catch (Throwable $e) {
+            return $this->handleException($e);
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Account $account): void
+    public function update(UpdateAccountRequest $request, Account $account, UpdateAccount $action): JsonResponse
     {
-        //
+        try {
+            $updatedAccount = $action->handle($account, $request->validated());
+
+            return $this->successResponse(
+                new AccountResource($updatedAccount->load(['bankConnection', 'accountable'])),
+                'Account updated successfully'
+            );
+        } catch (Throwable $e) {
+            return $this->handleException($e);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Account $account): void
+    public function destroy(Account $account, DeleteAccount $action): JsonResponse
     {
-        //
+        try {
+            // Check authorization
+            $this->authorize('delete', $account);
+
+            $action->handle($account);
+
+            return $this->successResponse(null, 'Account deleted successfully', 204);
+        } catch (Throwable $e) {
+            return $this->handleException($e);
+        }
     }
 }

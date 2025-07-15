@@ -28,7 +28,6 @@ Route::prefix('api')->group(function () {
     });
 
     Route::apiResource('accounts', AccountController::class)
-        ->only(['index', 'show'])
         ->names('internal.api.accounts');
 
     Route::apiResource('categories', CategoryController::class)
@@ -83,6 +82,18 @@ $routeGroup = function () {
 
         Route::get('/institutions', InstitutionController::class)
             ->name('api.finance.institutions.index');
+    });
+
+    // Protected API routes (require authentication)
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::apiResource('accounts', AccountController::class)
+            ->names('api.accounts');
+
+        Route::apiResource('categories', CategoryController::class)
+            ->names('api.categories');
+
+        Route::apiResource('transactions', TransactionController::class)
+            ->names('api.transactions');
     });
 };
 
