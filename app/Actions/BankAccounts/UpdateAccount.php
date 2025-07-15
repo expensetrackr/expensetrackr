@@ -8,7 +8,12 @@ use App\Exceptions\ExchangeRateException;
 use App\Facades\Forex;
 use App\Models\Account;
 use App\Models\CreditCard;
+use App\Models\Crypto;
+use App\Models\Depository;
+use App\Models\Investment;
 use App\Models\Loan;
+use App\Models\OtherAsset;
+use App\Models\OtherLiability;
 use Illuminate\Support\Facades\DB;
 
 final class UpdateAccount
@@ -17,10 +22,11 @@ final class UpdateAccount
      * Update an existing account and its associated accountable model.
      *
      * @param  array<string, mixed>  $input
+     * @param  bool  $fresh  Whether to return fresh model data from database
      */
-    public function handle(Account $account, array $input): Account
+    public function handle(Account $account, array $input, bool $fresh = false): Account
     {
-        return DB::transaction(function () use ($account, $input) {
+        return DB::transaction(function () use ($account, $input, $fresh): Account {
             // Update the main account fields
             $this->updateAccountFields($account, $input);
 
@@ -29,7 +35,7 @@ final class UpdateAccount
 
             $account->save();
 
-            return $account->fresh();
+            return $fresh ? $account->fresh() : $account;
         });
     }
 
@@ -122,70 +128,57 @@ final class UpdateAccount
     {
         $accountable = $account->accountable;
 
-        if ($accountable instanceof CreditCard) {
-            $this->updateCreditCardFields($accountable, $input);
-        } elseif ($accountable instanceof Loan) {
-            $this->updateLoanFields($accountable, $input);
-        }
-    }
-
-    /**
-     * Update credit card specific fields.
-     *
-     * @param  array<string, mixed>  $input
-     */
-    private function updateCreditCardFields(CreditCard $creditCard, array $input): void
-    {
-        $fieldsToUpdate = [];
-
-        if (isset($input['available_credit'])) {
-            $fieldsToUpdate['available_credit'] = $input['available_credit'];
+        if (! $accountable) {
+            return;
         }
 
-        if (isset($input['minimum_payment'])) {
-            $fieldsToUpdate['minimum_payment'] = $input['minimum_payment'];
-        }
+        // Get the fields to update based on the accountable type
+        $fieldsToUpdate = match ($accountable::class) {
+            CreditCard::class => array_filter([
+                'available_credit' => $input['available_credit'] ?? null,
+                'minimum_payment' => $input['minimum_payment'] ?? null,
+                'apr' => $input['apr'] ?? null,
+                'annual_fee' => $input['annual_fee'] ?? null,
+                'expires_at' => $input['expires_at'] ?? null,
+            ], fn ($value) => $value !== null),
 
-        if (isset($input['apr'])) {
-            $fieldsToUpdate['apr'] = $input['apr'];
-        }
+            Loan::class => array_filter([
+                'interest_rate' => $input['interest_rate'] ?? null,
+                'rate_type' => $input['rate_type'] ?? null,
+                'term_months' => $input['term_months'] ?? null,
+            ], fn ($value) => $value !== null),
 
-        if (isset($input['annual_fee'])) {
-            $fieldsToUpdate['annual_fee'] = $input['annual_fee'];
-        }
+            Depository::class => array_filter([
+                'routing_number' => $input['routing_number'] ?? null,
+                'account_number' => $input['account_number'] ?? null,
+            ], fn ($value) => $value !== null),
 
-        if (isset($input['expires_at'])) {
-            $fieldsToUpdate['expires_at'] = $input['expires_at'];
-        }
+            Investment::class => array_filter([
+                'account_number' => $input['account_number'] ?? null,
+                'broker_name' => $input['broker_name'] ?? null,
+            ], fn ($value) => $value !== null),
 
+            Crypto::class => array_filter([
+                'wallet_address' => $input['wallet_address'] ?? null,
+                'exchange_name' => $input['exchange_name'] ?? null,
+            ], fn ($value) => $value !== null),
+
+            OtherAsset::class => array_filter([
+                'asset_type' => $input['asset_type'] ?? null,
+                'valuation_method' => $input['valuation_method'] ?? null,
+            ], fn ($value) => $value !== null),
+
+            OtherLiability::class => array_filter([
+                'liability_type' => $input['liability_type'] ?? null,
+                'creditor_name' => $input['creditor_name'] ?? null,
+            ], fn ($value) => $value !== null),
+
+            default => [],
+        };
+
+        // Only update if there are fields to update
         if (! empty($fieldsToUpdate)) {
-            $creditCard->update($fieldsToUpdate);
-        }
-    }
-
-    /**
-     * Update loan specific fields.
-     *
-     * @param  array<string, mixed>  $input
-     */
-    private function updateLoanFields(Loan $loan, array $input): void
-    {
-        $fieldsToUpdate = [];
-
-        if (isset($input['interest_rate'])) {
-            $fieldsToUpdate['interest_rate'] = $input['interest_rate'];
-        }
-
-        if (isset($input['rate_type'])) {
-            $fieldsToUpdate['rate_type'] = $input['rate_type'];
-        }
-
-        if (isset($input['term_months'])) {
-            $fieldsToUpdate['term_months'] = $input['term_months'];
-        }
-
-        if (! empty($fieldsToUpdate)) {
-            $loan->update($fieldsToUpdate);
+            $accountable->update($fieldsToUpdate);
         }
     }
 }
