@@ -28,7 +28,6 @@ final class AccountController extends BaseApiController
     public function index(Request $request): ResourceCollection|JsonResponse
     {
         try {
-            // Check if user has a current workspace
             if ($workspaceError = $this->ensureWorkspace($request)) {
                 return $workspaceError;
             }
@@ -56,7 +55,6 @@ final class AccountController extends BaseApiController
     public function store(StoreAccountRequest $request, CreateAccount $action): JsonResponse
     {
         try {
-            // Check if user has a current workspace
             if ($workspaceError = $this->ensureWorkspace($request)) {
                 return $workspaceError;
             }
@@ -76,20 +74,23 @@ final class AccountController extends BaseApiController
     /**
      * Display the specified resource.
      */
-    public function show(Account $account): JsonResponse
+    public function show(Request $request, Account $account): JsonResponse
     {
         try {
-            // Check authorization
+            if ($workspaceError = $this->ensureWorkspace($request)) {
+                return $workspaceError;
+            }
+
             $this->authorize('view', $account);
 
             $account->load([
-                'bankConnection', 
+                'bankConnection',
                 'accountable',
                 'transactions' => function (Builder $query): void {
                     $query->latest('dated_at')
                         ->with('category')
                         ->limit(5);
-                }
+                },
             ]);
 
             return $this->resourceResponse(new AccountResource($account));
@@ -104,6 +105,10 @@ final class AccountController extends BaseApiController
     public function update(UpdateAccountRequest $request, Account $account, UpdateAccount $action): JsonResponse
     {
         try {
+            if ($workspaceError = $this->ensureWorkspace($request)) {
+                return $workspaceError;
+            }
+
             $updatedAccount = $action->handle($account, $request->validated());
 
             return $this->successResponse(
@@ -118,15 +123,18 @@ final class AccountController extends BaseApiController
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Account $account, DeleteAccount $action): JsonResponse
+    public function destroy(Request $request, Account $account, DeleteAccount $action): JsonResponse
     {
         try {
-            // Check authorization
+            if ($workspaceError = $this->ensureWorkspace($request)) {
+                return $workspaceError;
+            }
+
             $this->authorize('delete', $account);
 
             $action->handle($account);
 
-            return $this->successResponse(null, 'Account deleted successfully', 204);
+            return response()->json(null, 204);
         } catch (Throwable $e) {
             return $this->handleException($e);
         }
