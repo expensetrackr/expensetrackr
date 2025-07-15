@@ -103,6 +103,5 @@
     "peerDependencies": {
         "@inertiajs/core": "2.0.14",
         "react-number-format": "5.4.4"
-    },
-    "packageManager": "pnpm@10.13.1"
+    }
 }
