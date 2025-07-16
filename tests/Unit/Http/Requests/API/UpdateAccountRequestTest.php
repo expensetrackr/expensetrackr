@@ -24,12 +24,12 @@ final class UpdateAccountRequestTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         $this->user = User::factory()->create();
         $this->workspace = Workspace::factory()->create();
         $this->user->workspaces()->attach($this->workspace);
         $this->user->update(['current_workspace_id' => $this->workspace->id]);
-        
+
         $this->account = Account::factory()->create([
             'workspace_id' => $this->workspace->id,
             'created_by' => $this->user->id,
@@ -40,7 +40,7 @@ final class UpdateAccountRequestTest extends TestCase
     {
         $request = new UpdateAccountRequest();
         $validator = Validator::make([], $request->rules());
-        
+
         $this->assertTrue($validator->passes());
     }
 
@@ -54,7 +54,7 @@ final class UpdateAccountRequestTest extends TestCase
 
         $request = new UpdateAccountRequest();
         $validator = Validator::make($data, $request->rules());
-        
+
         $this->assertFalse($validator->passes());
         $this->assertArrayHasKey('name', $validator->errors()->toArray());
         $this->assertArrayHasKey('currency_code', $validator->errors()->toArray());
@@ -74,9 +74,12 @@ final class UpdateAccountRequestTest extends TestCase
         ];
 
         $request = new UpdateAccountRequest();
-        $request->setRouteResolver(fn() => (object) ['account' => $this->account]);
+        $request->setRouteResolver(fn() => new class {
+            public function __construct(private Account $account) {}
+            public function parameter(string $key): Account { return $this->account; }
+        }($this->account));
         $validator = Validator::make($data, $request->rules());
-        
+
         $this->assertFalse($validator->passes());
         $this->assertArrayHasKey('external_id', $validator->errors()->toArray());
     }
@@ -90,9 +93,12 @@ final class UpdateAccountRequestTest extends TestCase
         ];
 
         $request = new UpdateAccountRequest();
-        $request->setRouteResolver(fn() => (object) ['account' => $this->account]);
+        $request->setRouteResolver(fn() => new class {
+            public function __construct(private Account $account) {}
+            public function parameter(string $key): Account { return $this->account; }
+        }($this->account));
         $validator = Validator::make($data, $request->rules());
-        
+
         $this->assertTrue($validator->passes());
     }
 
@@ -108,7 +114,7 @@ final class UpdateAccountRequestTest extends TestCase
 
         $request = new UpdateAccountRequest();
         $validator = Validator::make($data, $request->rules());
-        
+
         $this->assertFalse($validator->passes());
         $this->assertArrayHasKey('available_credit', $validator->errors()->toArray());
         $this->assertArrayHasKey('minimum_payment', $validator->errors()->toArray());
@@ -127,7 +133,7 @@ final class UpdateAccountRequestTest extends TestCase
 
         $request = new UpdateAccountRequest();
         $validator = Validator::make($data, $request->rules());
-        
+
         $this->assertFalse($validator->passes());
         $this->assertArrayHasKey('interest_rate', $validator->errors()->toArray());
         $this->assertArrayHasKey('rate_type', $validator->errors()->toArray());
@@ -145,7 +151,7 @@ final class UpdateAccountRequestTest extends TestCase
 
         $request = new UpdateAccountRequest();
         $validator = Validator::make($data, $request->rules());
-        
+
         $this->assertTrue($validator->passes());
     }
 
@@ -160,7 +166,7 @@ final class UpdateAccountRequestTest extends TestCase
 
         $request = new UpdateAccountRequest();
         $validator = Validator::make($data, $request->rules());
-        
+
         $this->assertFalse($validator->passes());
         $this->assertArrayHasKey('name', $validator->errors()->toArray());
         $this->assertArrayHasKey('description', $validator->errors()->toArray());
@@ -172,8 +178,11 @@ final class UpdateAccountRequestTest extends TestCase
     {
         $request = new UpdateAccountRequest();
         $request->setUserResolver(fn() => $this->user);
-        $request->setRouteResolver(fn() => (object) ['account' => $this->account]);
-        
+        $request->setRouteResolver(fn() => new class {
+            public function __construct(private Account $account) {}
+            public function parameter(string $key): Account { return $this->account; }
+        }($this->account));
+
         $this->assertTrue($request->authorize());
     }
 
@@ -187,8 +196,11 @@ final class UpdateAccountRequestTest extends TestCase
 
         $request = new UpdateAccountRequest();
         $request->setUserResolver(fn() => $this->user);
-        $request->setRouteResolver(fn() => (object) ['account' => $otherAccount]);
-        
+        $request->setRouteResolver(fn() => new class {
+            public function __construct(private Account $account) {}
+            public function parameter(string $key): Account { return $this->account; }
+        }($otherAccount));
+
         $this->assertFalse($request->authorize());
     }
 
@@ -196,12 +208,12 @@ final class UpdateAccountRequestTest extends TestCase
     {
         $request = new UpdateAccountRequest();
         $messages = $request->messages();
-        
+
         $this->assertArrayHasKey('name.required', $messages);
         $this->assertArrayHasKey('currency_code.required', $messages);
         $this->assertArrayHasKey('available_credit.numeric', $messages);
         $this->assertArrayHasKey('interest_rate.numeric', $messages);
-        
+
         $this->assertStringContainsString('account name', $messages['name.required']);
         $this->assertStringContainsString('currency code', $messages['currency_code.required']);
         $this->assertStringContainsString('available credit', $messages['available_credit.numeric']);
@@ -216,7 +228,7 @@ final class UpdateAccountRequestTest extends TestCase
 
         $request = new UpdateAccountRequest();
         $validator = Validator::make($data, $request->rules());
-        
+
         $this->assertTrue($validator->passes());
     }
 
@@ -228,7 +240,7 @@ final class UpdateAccountRequestTest extends TestCase
 
         $request = new UpdateAccountRequest();
         $validator = Validator::make($data, $request->rules());
-        
+
         $this->assertFalse($validator->passes());
         $this->assertArrayHasKey('subtype', $validator->errors()->toArray());
     }
@@ -243,7 +255,7 @@ final class UpdateAccountRequestTest extends TestCase
 
         $request = new UpdateAccountRequest();
         $validator = Validator::make($data, $request->rules());
-        
+
         $this->assertTrue($validator->passes());
     }
 
@@ -260,7 +272,7 @@ final class UpdateAccountRequestTest extends TestCase
 
         $request = new UpdateAccountRequest();
         $validator = Validator::make($data, $request->rules());
-        
+
         $this->assertTrue($validator->passes());
     }
 
@@ -272,7 +284,7 @@ final class UpdateAccountRequestTest extends TestCase
 
         $request = new UpdateAccountRequest();
         $validator = Validator::make($data, $request->rules());
-        
+
         $this->assertTrue($validator->passes());
     }
 
@@ -284,7 +296,7 @@ final class UpdateAccountRequestTest extends TestCase
 
         $request = new UpdateAccountRequest();
         $validator = Validator::make($data, $request->rules());
-        
+
         $this->assertTrue($validator->passes());
     }
 }
