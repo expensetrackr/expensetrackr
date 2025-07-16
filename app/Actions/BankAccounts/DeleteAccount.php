@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Actions\BankAccounts;
 
+use App\Exceptions\Account\AccountDeletionException;
 use App\Models\Account;
 use Illuminate\Support\Facades\DB;
-use RuntimeException;
 
 final class DeleteAccount
 {
@@ -18,13 +18,22 @@ final class DeleteAccount
         DB::transaction(function () use ($account) {
             // Check if the account has any transactions
             if ($account->transactions()->exists()) {
-                throw new RuntimeException('Cannot delete account with existing transactions. Please delete or reassign all transactions first.');
+                $transactionCount = $account->transactions()->count();
+                throw new AccountDeletionException(
+                    $account->public_id,
+                    'Account has existing transactions',
+                    ['transaction_count' => $transactionCount]
+                );
             }
 
             // Check if this is the only account in the workspace
             $accountsInWorkspace = Account::where('workspace_id', $account->workspace_id)->count();
             if ($accountsInWorkspace === 1) {
-                throw new RuntimeException('Cannot delete the only account in the workspace. At least one account must remain.');
+                throw new AccountDeletionException(
+                    $account->public_id,
+                    'Cannot delete the only account in the workspace',
+                    ['accounts_in_workspace' => $accountsInWorkspace]
+                );
             }
 
             // If this is the default account, set another account as default

@@ -65,16 +65,34 @@ abstract class BaseApiController extends Controller
      */
     protected function handleException(Throwable $exception): JsonResponse
     {
-        // Log the exception
+        // Log the exception with context
         report($exception);
 
         // Return appropriate error response based on exception type
         return match (true) {
+            $exception instanceof \App\Exceptions\Account\AccountNotFoundException => $this->handleAccountException($exception),
+            $exception instanceof \App\Exceptions\Account\InvalidAccountTypeException => $this->handleAccountException($exception),
+            $exception instanceof \App\Exceptions\Account\InsufficientBalanceException => $this->handleAccountException($exception),
+            $exception instanceof \App\Exceptions\Account\AccountDeletionException => $this->handleAccountException($exception),
             $exception instanceof \Illuminate\Auth\Access\AuthorizationException => $this->errorResponse('You are not authorized to perform this action.', 403),
             $exception instanceof \Illuminate\Database\Eloquent\ModelNotFoundException => $this->errorResponse('Resource not found.', 404),
             $exception instanceof \Illuminate\Validation\ValidationException => $this->errorResponse('Validation failed.', 422, $exception->errors()),
             $exception instanceof RuntimeException => $this->errorResponse($exception->getMessage(), 422),
             default => $this->errorResponse('An error occurred while processing your request.', 500),
         };
+    }
+
+    /**
+     * Handle account-specific exceptions.
+     */
+    protected function handleAccountException(Throwable $exception): JsonResponse
+    {
+        // Account exceptions have their own render method
+        if (method_exists($exception, 'render')) {
+            return $exception->render(request());
+        }
+
+        // Fallback to generic error handling
+        return $this->errorResponse($exception->getMessage(), $exception->getCode() ?: 422);
     }
 }

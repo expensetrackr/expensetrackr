@@ -7,6 +7,8 @@ namespace App\Http\Requests\Concerns;
 use App\Enums\Finance\AccountSubtype;
 use App\Enums\Finance\AccountType;
 use App\Enums\Finance\RateType;
+use App\Exceptions\Account\InvalidAccountTypeException;
+use App\Facades\Forex;
 use App\Models\Account;
 use Illuminate\Validation\Rule;
 
@@ -166,5 +168,215 @@ trait AccountValidationRules
     {
         $account = $this->route('account');
         return $account instanceof Account && $this->user()?->can('update', $account) ?? false;
+    }
+
+    /**
+     * Get enhanced validation rules with business logic.
+     *
+     * @param float|null $minBalance Minimum balance requirement
+     * @param bool $includeDescription Whether to include description field
+     * @param int|null $ignoreAccountId Account ID to ignore for unique validations
+     * @return array<string, array<mixed>>
+     */
+    protected function getEnhancedAccountValidationRules(
+        ?float $minBalance = 0.01,
+        bool $includeDescription = true,
+        ?int $ignoreAccountId = null
+    ): array {
+        $rules = $this->getAccountValidationRules($minBalance, $includeDescription, $ignoreAccountId);
+        
+        // Add business logic validation
+        $rules = array_merge($rules, [
+            'currency_code' => [
+                'required',
+                'string',
+                'max:3',
+                function ($attribute, $value, $fail) {
+                    $this->validateCurrencyCode($attribute, $value, $fail);
+                },
+            ],
+            'initial_balance' => [
+                'required',
+                'numeric',
+                'min:' . $minBalance,
+                function ($attribute, $value, $fail) use ($minBalance) {
+                    $this->validateInitialBalance($attribute, $value, $fail, $minBalance);
+                },
+            ],
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+                function ($attribute, $value, $fail) {
+                    $this->validateAccountName($attribute, $value, $fail);
+                },
+            ],
+        ]);
+
+        // Add account limit validation
+        if (!$ignoreAccountId) {
+            $rules['account_limit'] = [
+                function ($attribute, $value, $fail) {
+                    $this->validateAccountLimit($attribute, $value, $fail);
+                },
+            ];
+        }
+
+        return $rules;
+    }
+
+    /**
+     * Validate currency code against supported currencies.
+     */
+    private function validateCurrencyCode(string $attribute, mixed $value, callable $fail): void
+    {
+        if (!is_string($value)) {
+            return;
+        }
+
+        $supportedCurrencies = Forex::getSupportedCurrencies();
+        
+        if ($supportedCurrencies && !in_array(strtoupper($value), $supportedCurrencies)) {
+            $fail("The {$attribute} '{$value}' is not supported. Supported currencies: " . implode(', ', $supportedCurrencies));
+        }
+    }
+
+    /**
+     * Validate initial balance with business rules.
+     */
+    private function validateInitialBalance(string $attribute, mixed $value, callable $fail, float $minBalance): void
+    {
+        if (!is_numeric($value)) {
+            return;
+        }
+
+        $balance = (float) $value;
+        
+        // Check for reasonable balance limits
+        if ($balance > 1000000000) { // 1 billion limit
+            $fail("The {$attribute} cannot exceed 1,000,000,000.00.");
+        }
+
+        // Check for negative balances on asset accounts
+        $accountType = $this->input('type');
+        if ($accountType && in_array($accountType, ['depository', 'investment', 'crypto', 'other_asset'])) {
+            if ($balance < 0) {
+                $fail("The {$attribute} cannot be negative for asset accounts.");
+            }
+        }
+    }
+
+    /**
+     * Validate account name for business rules.
+     */
+    private function validateAccountName(string $attribute, mixed $value, callable $fail): void
+    {
+        if (!is_string($value)) {
+            return;
+        }
+
+        // Check for duplicate names in the same workspace
+        $workspaceId = $this->user()?->current_workspace_id;
+        if ($workspaceId) {
+            $query = Account::where('workspace_id', $workspaceId)
+                ->where('name', $value);
+            
+            // Exclude current account for updates
+            if ($this->route('account') instanceof Account) {
+                $query->where('id', '!=', $this->route('account')->id);
+            }
+            
+            if ($query->exists()) {
+                $fail("An account with the name '{$value}' already exists in this workspace.");
+            }
+        }
+
+        // Check for reserved names
+        $reservedNames = ['system', 'admin', 'root', 'default'];
+        if (in_array(strtolower($value), $reservedNames)) {
+            $fail("The {$attribute} '{$value}' is reserved and cannot be used.");
+        }
+    }
+
+    /**
+     * Validate account limits based on user subscription.
+     */
+    private function validateAccountLimit(string $attribute, mixed $value, callable $fail): void
+    {
+        $user = $this->user();
+        if (!$user) {
+            return;
+        }
+
+        $currentAccountCount = $user->accounts()->count();
+        $maxAccounts = $this->getMaxAccountsForUser($user);
+
+        if ($currentAccountCount >= $maxAccounts) {
+            $fail("You have reached the maximum number of accounts ({$maxAccounts}) for your subscription level.");
+        }
+    }
+
+    /**
+     * Get maximum accounts allowed for a user based on subscription.
+     */
+    private function getMaxAccountsForUser($user): int
+    {
+        if ($user->is_admin || $user->subscribed('enterprise')) {
+            return 999; // Unlimited
+        }
+
+        if ($user->subscribed('business')) {
+            return 50;
+        }
+
+        if ($user->subscribed('personal')) {
+            return 10;
+        }
+
+        return 3; // Free tier
+    }
+
+    /**
+     * Get validation rules for balance constraints.
+     */
+    protected function getBalanceConstraintRules(): array
+    {
+        return [
+            'balance_constraint' => [
+                function ($attribute, $value, $fail) {
+                    $this->validateBalanceConstraints($attribute, $value, $fail);
+                },
+            ],
+        ];
+    }
+
+    /**
+     * Validate balance constraints based on account type.
+     */
+    private function validateBalanceConstraints(string $attribute, mixed $value, callable $fail): void
+    {
+        $accountType = $this->input('type');
+        $initialBalance = $this->input('initial_balance');
+        
+        if (!$accountType || !is_numeric($initialBalance)) {
+            return;
+        }
+
+        $balance = (float) $initialBalance;
+        
+        // Liability accounts should have positive balances (representing debt)
+        if (in_array($accountType, ['credit_card', 'loan', 'other_liability'])) {
+            if ($balance < 0) {
+                $fail("Liability accounts should have positive balances representing the amount owed.");
+            }
+        }
+
+        // Credit card specific validation
+        if ($accountType === 'credit_card') {
+            $availableCredit = $this->input('available_credit');
+            if (is_numeric($availableCredit) && $balance > (float) $availableCredit) {
+                $fail("The initial balance cannot exceed the available credit limit.");
+            }
+        }
     }
 }
