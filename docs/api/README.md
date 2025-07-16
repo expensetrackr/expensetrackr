@@ -5,9 +5,11 @@ This directory contains comprehensive API documentation for all ExpenseTrackr en
 ## 📋 Available APIs
 
 ### 🏦 [Account API](./accounts-api.md)
+
 Complete CRUD operations for financial account management.
 
 **Features:**
+
 - Create, read, update, and delete accounts
 - Support for multiple account types (depository, credit card, loan, etc.)
 - Currency conversion and multi-currency support
@@ -15,6 +17,7 @@ Complete CRUD operations for financial account management.
 - Performance optimizations with pagination and filtering
 
 **Endpoints:**
+
 - `GET /api/accounts` - List accounts
 - `POST /api/accounts` - Create account
 - `GET /api/accounts/{id}` - Get specific account
@@ -30,6 +33,7 @@ Authorization: Bearer {your_token}
 ```
 
 To obtain a token, use the authentication endpoints:
+
 - `POST /api/auth/login` - Login and receive token
 - `POST /api/auth/register` - Register new user and receive token
 
@@ -38,20 +42,26 @@ To obtain a token, use the authentication endpoints:
 All API responses follow a consistent format:
 
 ### Success Response
+
 ```json
 {
-  "success": true,
-  "message": "Operation successful",
-  "data": { /* response data */ }
+    "success": true,
+    "message": "Operation successful",
+    "data": {
+        /* response data */
+    }
 }
 ```
 
 ### Error Response
+
 ```json
 {
-  "success": false,
-  "message": "Error description",
-  "errors": { /* validation errors if applicable */ }
+    "success": false,
+    "message": "Error description",
+    "errors": {
+        /* validation errors if applicable */
+    }
 }
 ```
 
@@ -79,6 +89,7 @@ More API documentation will be added as new endpoints are developed:
 ## 📞 Support
 
 For API support or questions:
+
 1. Check the specific endpoint documentation
 2. Review the error response format
 3. Consult the development documentation
@@ -86,4 +97,4 @@ For API support or questions:
 
 ---
 
-*Last updated: January 2024*
+_Last updated: January 2024_
