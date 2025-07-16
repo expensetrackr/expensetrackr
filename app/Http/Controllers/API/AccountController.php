@@ -16,6 +16,7 @@ use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 use Throwable;
 
@@ -46,44 +47,71 @@ final class AccountController extends BaseApiController
             $perPage = $request->get('per_page', 15);
             $perPage = min($perPage, 100); // Limit to 100 items per page for performance
             
-            $page = $request->get('page', 1);
             $workspaceId = auth()->user()->current_workspace_id;
             
-            // Build filters array
-            $filters = [];
-            if ($request->has('search')) {
-                $filters['search'] = $request->get('search');
-            }
-            if ($request->has('type')) {
-                $filters['type'] = $request->get('type');
-            }
-            if ($request->has('currency')) {
-                $filters['currency'] = $request->get('currency');
-            }
-            if ($request->has('is_default')) {
-                $filters['is_default'] = $request->boolean('is_default');
-            }
-            if ($request->has('balance_min')) {
-                $filters['balance_min'] = $request->get('balance_min');
-            }
-            if ($request->has('balance_max')) {
-                $filters['balance_max'] = $request->get('balance_max');
-            }
-            if ($request->has('created_from')) {
-                $filters['created_from'] = $request->get('created_from');
-            }
-            if ($request->has('created_to')) {
-                $filters['created_to'] = $request->get('created_to');
-            }
-
-            // Use caching service
-            $result = $this->cacheService->getAccountsList($workspaceId, $filters, $page, $perPage);
+            // Create cache key based on request parameters
+            $cacheKey = $this->generateCacheKey($request, $workspaceId);
             
-            return AccountResource::collection($result['data'])->additional([
-                'meta' => $result['meta'],
+            // Try to get from cache first
+            $cachedResult = $this->cacheService->getCachedQuery($cacheKey);
+            if ($cachedResult) {
+                return $cachedResult;
+            }
+            
+            // Use QueryBuilder for flexible, efficient queries
+            $accounts = QueryBuilder::for(Account::class)
+                ->where('workspace_id', $workspaceId)
+                ->allowedFilters([
+                    AllowedFilter::partial('name'),
+                    AllowedFilter::exact('currency_code'),
+                    AllowedFilter::exact('is_default'),
+                    AllowedFilter::exact('is_manual'),
+                    AllowedFilter::callback('type', function ($query, $value) {
+                        $modelClass = $this->getModelClassFromType($value);
+                        $query->where('accountable_type', $modelClass);
+                    }),
+                    AllowedFilter::callback('balance_min', function ($query, $value) {
+                        $query->where('current_balance', '>=', $value);
+                    }),
+                    AllowedFilter::callback('balance_max', function ($query, $value) {
+                        $query->where('current_balance', '<=', $value);
+                    }),
+                    AllowedFilter::callback('created_from', function ($query, $value) {
+                        $query->where('created_at', '>=', $value);
+                    }),
+                    AllowedFilter::callback('created_to', function ($query, $value) {
+                        $query->where('created_at', '<=', $value);
+                    }),
+                    AllowedFilter::callback('search', function ($query, $value) {
+                        $query->where('name', 'like', '%' . $value . '%');
+                    }),
+                ])
+                ->allowedSorts([
+                    'name', 
+                    '-name', 
+                    'created_at', 
+                    '-created_at', 
+                    'current_balance', 
+                    '-current_balance',
+                    'currency_code',
+                    '-currency_code',
+                    'is_default',
+                    '-is_default'
+                ])
+                ->allowedIncludes(['bankConnection', 'accountable'])
+                ->defaultSort('-created_at')
+                ->paginate($perPage)
+                ->withQueryString();
+            
+            $result = AccountResource::collection($accounts)->additional([
                 'success' => true,
                 'message' => 'Accounts retrieved successfully.',
             ]);
+            
+            // Cache the result
+            $this->cacheService->cacheQuery($cacheKey, $result);
+            
+            return $result;
         } catch (Throwable $e) {
             return $this->handleException($e);
         }
@@ -180,7 +208,27 @@ final class AccountController extends BaseApiController
         try {
             $workspaceId = auth()->user()->current_workspace_id;
             
-            $stats = $this->cacheService->getAccountStats($workspaceId);
+            $cacheKey = 'accounts:stats:' . $workspaceId;
+            $stats = $this->cacheService->getCachedQuery($cacheKey);
+            
+            if (!$stats) {
+                $accounts = QueryBuilder::for(Account::class)
+                    ->where('workspace_id', $workspaceId)
+                    ->get();
+                
+                $stats = [
+                    'total_accounts' => $accounts->count(),
+                    'total_balance' => $accounts->sum('current_balance'),
+                    'by_type' => $accounts->groupBy('accountable_type')->map->count(),
+                    'by_currency' => $accounts->groupBy('currency_code')->map->count(),
+                    'default_account' => $accounts->where('is_default', true)->first()?->public_id,
+                    'average_balance' => $accounts->avg('current_balance'),
+                    'manual_accounts' => $accounts->where('is_manual', true)->count(),
+                    'automated_accounts' => $accounts->where('is_manual', false)->count(),
+                ];
+                
+                $this->cacheService->cacheQuery($cacheKey, $stats);
+            }
             
             return $this->successResponse($stats, 'Account statistics retrieved successfully.');
         } catch (Throwable $e) {
@@ -195,8 +243,15 @@ final class AccountController extends BaseApiController
     {
         try {
             $workspaceId = auth()->user()->current_workspace_id;
+            $modelClass = $this->getModelClassFromType($type);
             
-            $accounts = $this->cacheService->getAccountsByType($workspaceId, $type);
+            $accounts = QueryBuilder::for(Account::class)
+                ->where('workspace_id', $workspaceId)
+                ->where('accountable_type', $modelClass)
+                ->allowedIncludes(['bankConnection', 'accountable'])
+                ->allowedSorts(['name', '-name', 'created_at', '-created_at', 'current_balance', '-current_balance'])
+                ->defaultSort('name')
+                ->get();
             
             return $this->successResponse(
                 AccountResource::collection($accounts),
@@ -205,5 +260,32 @@ final class AccountController extends BaseApiController
         } catch (Throwable $e) {
             return $this->handleException($e);
         }
+    }
+
+    /**
+     * Generate cache key for request.
+     */
+    private function generateCacheKey(Request $request, int $workspaceId): string
+    {
+        $params = $request->query();
+        ksort($params);
+        return 'accounts:query:' . $workspaceId . ':' . md5(serialize($params));
+    }
+
+    /**
+     * Get model class from account type.
+     */
+    private function getModelClassFromType(string $type): string
+    {
+        return match ($type) {
+            'depository' => 'App\\Models\\Depository',
+            'credit_card' => 'App\\Models\\CreditCard',
+            'loan' => 'App\\Models\\Loan',
+            'investment' => 'App\\Models\\Investment',
+            'crypto' => 'App\\Models\\Crypto',
+            'other_asset' => 'App\\Models\\OtherAsset',
+            'other_liability' => 'App\\Models\\OtherLiability',
+            default => 'App\\Models\\Depository',
+        };
     }
 }

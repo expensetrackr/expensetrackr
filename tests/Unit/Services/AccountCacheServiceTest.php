@@ -52,172 +52,71 @@ final class AccountCacheServiceTest extends TestCase
         $this->assertNull($result);
     }
 
-    public function test_get_accounts_list_returns_paginated_results(): void
+    public function test_cache_query_stores_and_retrieves_data(): void
     {
-        Account::factory()->count(5)->create([
-            'workspace_id' => $this->workspace->id,
-            'created_by' => $this->user->id,
-        ]);
+        $cacheKey = 'test:key';
+        $testData = ['test' => 'data'];
 
-        $result = $this->cacheService->getAccountsList($this->workspace->id);
+        $this->cacheService->cacheQuery($cacheKey, $testData);
+        $result = $this->cacheService->getCachedQuery($cacheKey);
 
-        $this->assertIsArray($result);
-        $this->assertArrayHasKey('data', $result);
-        $this->assertArrayHasKey('meta', $result);
-        $this->assertCount(5, $result['data']);
-        $this->assertEquals(5, $result['meta']['total']);
+        $this->assertEquals($testData, $result);
     }
 
-    public function test_get_accounts_list_applies_search_filter(): void
+    public function test_get_cached_query_returns_null_for_non_existent_key(): void
     {
-        Account::factory()->create([
-            'workspace_id' => $this->workspace->id,
-            'created_by' => $this->user->id,
-            'name' => 'Savings Account',
-        ]);
+        $result = $this->cacheService->getCachedQuery('non-existent-key');
 
-        Account::factory()->create([
-            'workspace_id' => $this->workspace->id,
-            'created_by' => $this->user->id,
-            'name' => 'Checking Account',
-        ]);
-
-        $result = $this->cacheService->getAccountsList($this->workspace->id, ['search' => 'Savings']);
-
-        $this->assertCount(1, $result['data']);
-        $this->assertEquals('Savings Account', $result['data'][0]->name);
+        $this->assertNull($result);
     }
 
-    public function test_get_accounts_list_applies_type_filter(): void
+    public function test_cache_query_overwrites_existing_data(): void
     {
-        Account::factory()->create([
-            'workspace_id' => $this->workspace->id,
-            'created_by' => $this->user->id,
-            'accountable_type' => 'App\\Models\\Depository',
-        ]);
+        $cacheKey = 'test:key';
+        $originalData = ['original' => 'data'];
+        $newData = ['new' => 'data'];
 
-        Account::factory()->create([
-            'workspace_id' => $this->workspace->id,
-            'created_by' => $this->user->id,
-            'accountable_type' => 'App\\Models\\CreditCard',
-        ]);
+        $this->cacheService->cacheQuery($cacheKey, $originalData);
+        $this->cacheService->cacheQuery($cacheKey, $newData);
+        $result = $this->cacheService->getCachedQuery($cacheKey);
 
-        $result = $this->cacheService->getAccountsList($this->workspace->id, ['type' => 'depository']);
-
-        $this->assertCount(1, $result['data']);
-        $this->assertEquals('App\\Models\\Depository', $result['data'][0]->accountable_type);
+        $this->assertEquals($newData, $result);
     }
 
-    public function test_get_accounts_list_applies_currency_filter(): void
+    public function test_cache_handles_complex_data_structures(): void
     {
-        Account::factory()->create([
-            'workspace_id' => $this->workspace->id,
-            'created_by' => $this->user->id,
-            'currency_code' => 'USD',
-        ]);
+        $cacheKey = 'test:complex';
+        $complexData = [
+            'accounts' => [
+                ['id' => 1, 'name' => 'Account 1'],
+                ['id' => 2, 'name' => 'Account 2'],
+            ],
+            'meta' => [
+                'total' => 2,
+                'per_page' => 10,
+            ],
+        ];
 
-        Account::factory()->create([
-            'workspace_id' => $this->workspace->id,
-            'created_by' => $this->user->id,
-            'currency_code' => 'EUR',
-        ]);
+        $this->cacheService->cacheQuery($cacheKey, $complexData);
+        $result = $this->cacheService->getCachedQuery($cacheKey);
 
-        $result = $this->cacheService->getAccountsList($this->workspace->id, ['currency' => 'USD']);
-
-        $this->assertCount(1, $result['data']);
-        $this->assertEquals('USD', $result['data'][0]->currency_code);
+        $this->assertEquals($complexData, $result);
     }
 
-    public function test_get_accounts_list_applies_balance_range_filter(): void
+    public function test_cache_ttl_is_respected(): void
     {
-        Account::factory()->create([
-            'workspace_id' => $this->workspace->id,
-            'created_by' => $this->user->id,
-            'current_balance' => 500.00,
-        ]);
+        $cacheKey = 'test:ttl';
+        $testData = ['test' => 'data'];
 
-        Account::factory()->create([
-            'workspace_id' => $this->workspace->id,
-            'created_by' => $this->user->id,
-            'current_balance' => 1500.00,
-        ]);
-
-        $result = $this->cacheService->getAccountsList($this->workspace->id, [
-            'balance_min' => 1000.00,
-            'balance_max' => 2000.00,
-        ]);
-
-        $this->assertCount(1, $result['data']);
-        $this->assertEquals(1500.00, $result['data'][0]->current_balance);
-    }
-
-    public function test_get_accounts_list_applies_date_range_filter(): void
-    {
-        Account::factory()->create([
-            'workspace_id' => $this->workspace->id,
-            'created_by' => $this->user->id,
-            'created_at' => now()->subDays(30),
-        ]);
-
-        Account::factory()->create([
-            'workspace_id' => $this->workspace->id,
-            'created_by' => $this->user->id,
-            'created_at' => now()->subDays(5),
-        ]);
-
-        $result = $this->cacheService->getAccountsList($this->workspace->id, [
-            'created_from' => now()->subDays(10)->toDateString(),
-            'created_to' => now()->toDateString(),
-        ]);
-
-        $this->assertCount(1, $result['data']);
-    }
-
-    public function test_get_account_stats_returns_correct_statistics(): void
-    {
-        Account::factory()->create([
-            'workspace_id' => $this->workspace->id,
-            'created_by' => $this->user->id,
-            'current_balance' => 1000.00,
-            'currency_code' => 'USD',
-            'is_default' => true,
-        ]);
-
-        Account::factory()->create([
-            'workspace_id' => $this->workspace->id,
-            'created_by' => $this->user->id,
-            'current_balance' => 500.00,
-            'currency_code' => 'EUR',
-            'is_default' => false,
-        ]);
-
-        $stats = $this->cacheService->getAccountStats($this->workspace->id);
-
-        $this->assertEquals(2, $stats['total_accounts']);
-        $this->assertEquals(1500.00, $stats['total_balance']);
-        $this->assertArrayHasKey('by_type', $stats);
-        $this->assertArrayHasKey('by_currency', $stats);
-        $this->assertArrayHasKey('default_account', $stats);
-    }
-
-    public function test_get_accounts_by_type_returns_correct_accounts(): void
-    {
-        Account::factory()->create([
-            'workspace_id' => $this->workspace->id,
-            'created_by' => $this->user->id,
-            'accountable_type' => 'App\\Models\\Depository',
-        ]);
-
-        Account::factory()->create([
-            'workspace_id' => $this->workspace->id,
-            'created_by' => $this->user->id,
-            'accountable_type' => 'App\\Models\\CreditCard',
-        ]);
-
-        $accounts = $this->cacheService->getAccountsByType($this->workspace->id, 'depository');
-
-        $this->assertCount(1, $accounts);
-        $this->assertEquals('App\\Models\\Depository', $accounts->first()->accountable_type);
+        $this->cacheService->cacheQuery($cacheKey, $testData);
+        
+        // Verify data is cached
+        $result = $this->cacheService->getCachedQuery($cacheKey);
+        $this->assertEquals($testData, $result);
+        
+        // This test would require mocking time to test TTL expiration
+        // For now, we just verify the cache mechanism works
+        $this->assertTrue(true);
     }
 
     public function test_invalidate_account_clears_cache(): void

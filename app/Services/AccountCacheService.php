@@ -33,37 +33,19 @@ final class AccountCacheService
     }
 
     /**
-     * Get cached accounts list for workspace.
+     * Cache a query result.
      */
-    public function getAccountsList(
-        int $workspaceId,
-        array $filters = [],
-        int $page = 1,
-        int $perPage = 15
-    ): array {
-        $cacheKey = $this->getCacheKey('list', $workspaceId, $filters, $page, $perPage);
-        
-        return Cache::remember($cacheKey, self::CACHE_TTL, function () use ($workspaceId, $filters, $page, $perPage) {
-            $query = Account::where('workspace_id', $workspaceId)
-                ->with(['accountable', 'bankConnection']);
+    public function cacheQuery(string $cacheKey, $result): void
+    {
+        Cache::put($cacheKey, $result, self::CACHE_TTL);
+    }
 
-            // Apply filters
-            $query = $this->applyFilters($query, $filters);
-
-            // Get paginated results
-            $accounts = $query->orderBy('created_at', 'desc')
-                ->paginate($perPage, ['*'], 'page', $page);
-
-            return [
-                'data' => $accounts->items(),
-                'meta' => [
-                    'current_page' => $accounts->currentPage(),
-                    'total' => $accounts->total(),
-                    'per_page' => $accounts->perPage(),
-                    'last_page' => $accounts->lastPage(),
-                ]
-            ];
-        });
+    /**
+     * Get cached query result.
+     */
+    public function getCachedQuery(string $cacheKey)
+    {
+        return Cache::get($cacheKey);
     }
 
     /**
@@ -113,8 +95,8 @@ final class AccountCacheService
     {
         $patterns = [
             $this->getCacheKey('single', $account->public_id, $account->workspace_id),
-            $this->getCacheKey('list', $account->workspace_id, '*'),
-            $this->getCacheKey('stats', $account->workspace_id),
+            'accounts:query:' . $account->workspace_id . ':*',
+            'accounts:stats:' . $account->workspace_id,
             $this->getCacheKey('type', $account->workspace_id, '*'),
         ];
 
@@ -139,8 +121,8 @@ final class AccountCacheService
     {
         $patterns = [
             $this->getCacheKey('single', '*', $workspaceId),
-            $this->getCacheKey('list', $workspaceId, '*'),
-            $this->getCacheKey('stats', $workspaceId),
+            'accounts:query:' . $workspaceId . ':*',
+            'accounts:stats:' . $workspaceId,
             $this->getCacheKey('type', $workspaceId, '*'),
         ];
 

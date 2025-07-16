@@ -13,6 +13,7 @@ use App\Models\Account;
 use App\Services\AccountCacheService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
+use Spatie\QueryBuilder\QueryBuilder;
 use Throwable;
 
 final class BulkAccountController extends BaseApiController
@@ -87,7 +88,8 @@ final class BulkAccountController extends BaseApiController
             DB::transaction(function () use ($request, $action, &$updatedAccounts, &$errors, $workspaceId) {
                 foreach ($request->validated()['accounts'] as $index => $accountUpdate) {
                     try {
-                        $account = Account::where('public_id', $accountUpdate['id'])
+                        $account = QueryBuilder::for(Account::class)
+                            ->where('public_id', $accountUpdate['id'])
                             ->where('workspace_id', $workspaceId)
                             ->first();
 
@@ -146,7 +148,8 @@ final class BulkAccountController extends BaseApiController
             DB::transaction(function () use ($request, $action, &$deletedAccounts, &$errors, $workspaceId) {
                 foreach ($request->validated()['account_ids'] as $index => $accountId) {
                     try {
-                        $account = Account::where('public_id', $accountId)
+                        $account = QueryBuilder::for(Account::class)
+                            ->where('public_id', $accountId)
                             ->where('workspace_id', $workspaceId)
                             ->first();
 
@@ -201,14 +204,13 @@ final class BulkAccountController extends BaseApiController
             $workspaceId = auth()->user()->current_workspace_id;
             $accountIds = $request->validated()['account_ids'] ?? [];
 
-            $query = Account::where('workspace_id', $workspaceId)
-                ->with(['accountable', 'bankConnection']);
-
-            if (!empty($accountIds)) {
-                $query->whereIn('public_id', $accountIds);
-            }
-
-            $accounts = $query->get();
+            $accounts = QueryBuilder::for(Account::class)
+                ->where('workspace_id', $workspaceId)
+                ->with(['accountable', 'bankConnection'])
+                ->when(!empty($accountIds), function ($query) use ($accountIds) {
+                    $query->whereIn('public_id', $accountIds);
+                })
+                ->get();
 
             $exportData = $accounts->map(function ($account) {
                 return [
@@ -250,7 +252,8 @@ final class BulkAccountController extends BaseApiController
                 foreach ($request->validated()['accounts'] as $index => $accountData) {
                     try {
                         // Check if account with this name already exists
-                        $existingAccount = Account::where('workspace_id', $workspaceId)
+                        $existingAccount = QueryBuilder::for(Account::class)
+                            ->where('workspace_id', $workspaceId)
                             ->where('name', $accountData['name'])
                             ->first();
 
@@ -303,7 +306,8 @@ final class BulkAccountController extends BaseApiController
             $workspaceId = auth()->user()->current_workspace_id;
             $accountIds = $request->validated()['account_ids'] ?? [];
 
-            $accounts = Account::where('workspace_id', $workspaceId)
+            $accounts = QueryBuilder::for(Account::class)
+                ->where('workspace_id', $workspaceId)
                 ->whereIn('public_id', $accountIds)
                 ->get();
 

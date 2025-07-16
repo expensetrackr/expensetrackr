@@ -11,6 +11,7 @@ use App\Exceptions\Account\InvalidAccountTypeException;
 use App\Facades\Forex;
 use App\Models\Account;
 use Illuminate\Validation\Rule;
+use Spatie\QueryBuilder\QueryBuilder;
 
 trait AccountValidationRules
 {
@@ -278,7 +279,8 @@ trait AccountValidationRules
         // Check for duplicate names in the same workspace
         $workspaceId = $this->user()?->current_workspace_id;
         if ($workspaceId) {
-            $query = Account::where('workspace_id', $workspaceId)
+            $query = QueryBuilder::for(Account::class)
+                ->where('workspace_id', $workspaceId)
                 ->where('name', $value);
             
             // Exclude current account for updates

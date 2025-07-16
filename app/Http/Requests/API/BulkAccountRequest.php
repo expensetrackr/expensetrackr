@@ -8,6 +8,7 @@ use App\Http\Requests\Concerns\AccountValidationRules;
 use App\Models\Account;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Spatie\QueryBuilder\QueryBuilder;
 
 final class BulkAccountRequest extends FormRequest
 {
@@ -308,7 +309,8 @@ final class BulkAccountRequest extends FormRequest
         $accountIds = $this->input('account_ids', []);
         $workspaceId = $user->current_workspace_id;
 
-        $validAccountIds = Account::where('workspace_id', $workspaceId)
+        $validAccountIds = QueryBuilder::for(Account::class)
+            ->where('workspace_id', $workspaceId)
             ->whereIn('public_id', $accountIds)
             ->pluck('public_id')
             ->toArray();
