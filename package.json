@@ -26,8 +26,8 @@
         "rollup": "4.44.1"
     },
     "dependencies": {
-        "@conform-to/react": "1.8.1",
-        "@conform-to/valibot": "1.8.1",
+        "@conform-to/react": "1.8.2",
+        "@conform-to/valibot": "1.8.2",
         "@inertiajs/react": "2.0.14",
         "@number-flow/react": "0.5.10",
         "@stepperize/react": "5.1.6",
@@ -46,7 +46,7 @@
         "headless-currency-input": "1.5.0",
         "jsdom": "26.1.0",
         "mitt": "3.0.1",
-        "motion": "12.23.0",
+        "motion": "12.23.6",
         "next-themes": "0.4.6",
         "nuqs": "2.4.3",
         "radix-ui": "1.4.2",
