@@ -5,15 +5,16 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Models\Account;
+use Exception;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 
 final class AccountCacheService
 {
-    private const CACHE_TTL = 3600; // 1 hour
-    private const CACHE_PREFIX = 'account';
+    private const int CACHE_TTL = 3600; // 1 hour
+
+    private const string CACHE_PREFIX = 'account';
 
     /**
      * Get cached account by ID.
@@ -21,7 +22,7 @@ final class AccountCacheService
     public function getAccount(string $accountId, int $workspaceId): ?Account
     {
         $cacheKey = $this->getCacheKey('single', $accountId, $workspaceId);
-        
+
         return Cache::remember($cacheKey, self::CACHE_TTL, function () use ($accountId, $workspaceId) {
             return Account::where('public_id', $accountId)
                 ->where('workspace_id', $workspaceId)
@@ -54,10 +55,10 @@ final class AccountCacheService
     public function getAccountStats(int $workspaceId): array
     {
         $cacheKey = $this->getCacheKey('stats', $workspaceId);
-        
+
         return Cache::remember($cacheKey, self::CACHE_TTL, function () use ($workspaceId) {
             $accounts = Account::where('workspace_id', $workspaceId)->get();
-            
+
             $stats = [
                 'total_accounts' => $accounts->count(),
                 'total_balance' => $accounts->sum('current_balance'),
@@ -76,10 +77,10 @@ final class AccountCacheService
     public function getAccountsByType(int $workspaceId, string $type): Collection
     {
         $cacheKey = $this->getCacheKey('type', $workspaceId, $type);
-        
+
         return Cache::remember($cacheKey, self::CACHE_TTL, function () use ($workspaceId, $type) {
             $modelClass = $this->getModelClassFromType($type);
-            
+
             return Account::where('workspace_id', $workspaceId)
                 ->where('accountable_type', $modelClass)
                 ->with(['accountable', 'bankConnection'])
@@ -95,8 +96,8 @@ final class AccountCacheService
     {
         $patterns = [
             $this->getCacheKey('single', $account->public_id, $account->workspace_id),
-            'accounts:query:' . $account->workspace_id . ':*',
-            'accounts:stats:' . $account->workspace_id,
+            "accounts:query:{$account->workspace_id}:*",
+            "accounts:stats:{$account->workspace_id}",
             $this->getCacheKey('type', $account->workspace_id, '*'),
         ];
 
@@ -121,8 +122,8 @@ final class AccountCacheService
     {
         $patterns = [
             $this->getCacheKey('single', '*', $workspaceId),
-            'accounts:query:' . $workspaceId . ':*',
-            'accounts:stats:' . $workspaceId,
+            "accounts:query:{$workspaceId}:*",
+            "accounts:stats:{$workspaceId}",
             $this->getCacheKey('type', $workspaceId, '*'),
         ];
 
@@ -141,13 +142,8 @@ final class AccountCacheService
     public function warmUpCache(int $workspaceId): void
     {
         try {
-            // Pre-cache account stats
             $this->getAccountStats($workspaceId);
-            
-            // Pre-cache first page of accounts
-            $this->getAccountsList($workspaceId, [], 1, 15);
-            
-            // Pre-cache accounts by common types
+
             $commonTypes = ['depository', 'credit_card', 'loan'];
             foreach ($commonTypes as $type) {
                 $this->getAccountsByType($workspaceId, $type);
@@ -156,7 +152,7 @@ final class AccountCacheService
             Log::info('Account cache warmed up', [
                 'workspace_id' => $workspaceId,
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error('Cache warm-up failed', [
                 'workspace_id' => $workspaceId,
                 'error' => $e->getMessage(),
@@ -169,57 +165,16 @@ final class AccountCacheService
      */
     private function getCacheKey(string $type, ...$params): string
     {
-        $key = self::CACHE_PREFIX . ':' . $type;
-        
+        $key = self::CACHE_PREFIX.':'.$type;
+
         foreach ($params as $param) {
             if (is_array($param)) {
                 $param = md5(serialize($param));
             }
-            $key .= ':' . $param;
+            $key .= ':'.$param;
         }
 
         return $key;
-    }
-
-    /**
-     * Apply filters to query.
-     */
-    private function applyFilters($query, array $filters)
-    {
-        if (isset($filters['search']) && !empty($filters['search'])) {
-            $query->where('name', 'like', '%' . $filters['search'] . '%');
-        }
-
-        if (isset($filters['type']) && !empty($filters['type'])) {
-            $modelClass = $this->getModelClassFromType($filters['type']);
-            $query->where('accountable_type', $modelClass);
-        }
-
-        if (isset($filters['currency']) && !empty($filters['currency'])) {
-            $query->where('currency_code', $filters['currency']);
-        }
-
-        if (isset($filters['is_default'])) {
-            $query->where('is_default', $filters['is_default']);
-        }
-
-        if (isset($filters['balance_min'])) {
-            $query->where('current_balance', '>=', $filters['balance_min']);
-        }
-
-        if (isset($filters['balance_max'])) {
-            $query->where('current_balance', '<=', $filters['balance_max']);
-        }
-
-        if (isset($filters['created_from'])) {
-            $query->where('created_at', '>=', $filters['created_from']);
-        }
-
-        if (isset($filters['created_to'])) {
-            $query->where('created_at', '<=', $filters['created_to']);
-        }
-
-        return $query;
     }
 
     /**
@@ -246,7 +201,7 @@ final class AccountCacheService
     {
         if (Cache::getStore() instanceof \Illuminate\Cache\RedisStore) {
             $keys = Cache::getStore()->connection()->keys($pattern);
-            if (!empty($keys)) {
+            if (! empty($keys)) {
                 Cache::getStore()->connection()->del($keys);
             }
         } else {

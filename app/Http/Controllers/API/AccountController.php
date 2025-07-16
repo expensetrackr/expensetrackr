@@ -9,10 +9,8 @@ use App\Actions\BankAccounts\DeleteAccount;
 use App\Actions\BankAccounts\UpdateAccount;
 use App\Http\Requests\API\StoreAccountRequest;
 use App\Http\Requests\API\UpdateAccountRequest;
-use App\Http\Resources\AccountResource;
 use App\Models\Account;
 use App\Services\AccountCacheService;
-use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -46,18 +44,18 @@ final class AccountController extends BaseApiController
             /** @var int */
             $perPage = $request->get('per_page', 15);
             $perPage = min($perPage, 100); // Limit to 100 items per page for performance
-            
+
             $workspaceId = auth()->user()->current_workspace_id;
-            
+
             // Create cache key based on request parameters
             $cacheKey = $this->generateCacheKey($request, $workspaceId);
-            
+
             // Try to get from cache first
             $cachedResult = $this->cacheService->getCachedQuery($cacheKey);
             if ($cachedResult) {
                 return $cachedResult;
             }
-            
+
             // Use QueryBuilder for flexible, efficient queries
             $accounts = QueryBuilder::for(Account::class)
                 ->where('workspace_id', $workspaceId)
@@ -83,35 +81,30 @@ final class AccountController extends BaseApiController
                         $query->where('created_at', '<=', $value);
                     }),
                     AllowedFilter::callback('search', function ($query, $value) {
-                        $query->where('name', 'like', '%' . $value . '%');
+                        $query->where('name', 'like', '%'.$value.'%');
                     }),
                 ])
                 ->allowedSorts([
-                    'name', 
-                    '-name', 
-                    'created_at', 
-                    '-created_at', 
-                    'current_balance', 
+                    'name',
+                    '-name',
+                    'created_at',
+                    '-created_at',
+                    'current_balance',
                     '-current_balance',
                     'currency_code',
                     '-currency_code',
                     'is_default',
-                    '-is_default'
+                    '-is_default',
                 ])
                 ->allowedIncludes(['bankConnection', 'accountable'])
                 ->defaultSort('-created_at')
                 ->paginate($perPage)
-                ->withQueryString();
-            
-            $result = AccountResource::collection($accounts)->additional([
-                'success' => true,
-                'message' => 'Accounts retrieved successfully.',
-            ]);
-            
-            // Cache the result
-            $this->cacheService->cacheQuery($cacheKey, $result);
-            
-            return $result;
+                ->withQueryString()
+                ->toResourceCollection();
+
+            $this->cacheService->cacheQuery($cacheKey, $accounts);
+
+            return $accounts;
         } catch (Throwable $e) {
             return $this->handleException($e);
         }
@@ -125,11 +118,10 @@ final class AccountController extends BaseApiController
         try {
             $account = $action->create($request->validated(), isManual: true);
 
-            // Invalidate cache for the workspace
             $this->cacheService->invalidateWorkspaceCache($account->workspace_id);
 
             return $this->successResponse(
-                new AccountResource($account->load(['bankConnection', 'accountable'])),
+                $account->load(['bankConnection', 'accountable'])->toResource(),
                 'Account created successfully',
                 201
             );
@@ -147,15 +139,14 @@ final class AccountController extends BaseApiController
             $this->authorize('view', $account);
 
             $workspaceId = auth()->user()->current_workspace_id;
-            
-            // Use caching service to get the account
+
             $cachedAccount = $this->cacheService->getAccount($account->public_id, $workspaceId);
-            
-            if (!$cachedAccount) {
+
+            if (! $cachedAccount) {
                 return $this->errorResponse('Account not found.', 404);
             }
 
-            return $this->resourceResponse(new AccountResource($cachedAccount));
+            return $this->resourceResponse($cachedAccount->toResource());
         } catch (Throwable $e) {
             return $this->handleException($e);
         }
@@ -169,11 +160,10 @@ final class AccountController extends BaseApiController
         try {
             $updatedAccount = $action->handle($account, $request->validated());
 
-            // Invalidate cache for the account
             $this->cacheService->invalidateAccount($updatedAccount);
 
             return $this->successResponse(
-                new AccountResource($updatedAccount->load(['bankConnection', 'accountable'])),
+                $updatedAccount->load(['bankConnection', 'accountable'])->toResource(),
                 'Account updated successfully'
             );
         } catch (Throwable $e) {
@@ -189,7 +179,6 @@ final class AccountController extends BaseApiController
         try {
             $this->authorize('delete', $account);
 
-            // Invalidate cache before deletion
             $this->cacheService->invalidateAccount($account);
 
             $action->handle($account);
@@ -207,15 +196,15 @@ final class AccountController extends BaseApiController
     {
         try {
             $workspaceId = auth()->user()->current_workspace_id;
-            
-            $cacheKey = 'accounts:stats:' . $workspaceId;
+
+            $cacheKey = "accounts:stats:$workspaceId";
             $stats = $this->cacheService->getCachedQuery($cacheKey);
-            
-            if (!$stats) {
+
+            if (! $stats) {
                 $accounts = QueryBuilder::for(Account::class)
                     ->where('workspace_id', $workspaceId)
                     ->get();
-                
+
                 $stats = [
                     'total_accounts' => $accounts->count(),
                     'total_balance' => $accounts->sum('current_balance'),
@@ -226,10 +215,10 @@ final class AccountController extends BaseApiController
                     'manual_accounts' => $accounts->where('is_manual', true)->count(),
                     'automated_accounts' => $accounts->where('is_manual', false)->count(),
                 ];
-                
+
                 $this->cacheService->cacheQuery($cacheKey, $stats);
             }
-            
+
             return $this->successResponse($stats, 'Account statistics retrieved successfully.');
         } catch (Throwable $e) {
             return $this->handleException($e);
@@ -244,17 +233,18 @@ final class AccountController extends BaseApiController
         try {
             $workspaceId = auth()->user()->current_workspace_id;
             $modelClass = $this->getModelClassFromType($type);
-            
+
             $accounts = QueryBuilder::for(Account::class)
                 ->where('workspace_id', $workspaceId)
                 ->where('accountable_type', $modelClass)
                 ->allowedIncludes(['bankConnection', 'accountable'])
                 ->allowedSorts(['name', '-name', 'created_at', '-created_at', 'current_balance', '-current_balance'])
                 ->defaultSort('name')
-                ->get();
-            
+                ->get()
+                ->toResourceCollection();
+
             return $this->successResponse(
-                AccountResource::collection($accounts),
+                $accounts,
                 "Accounts of type '{$type}' retrieved successfully."
             );
         } catch (Throwable $e) {
@@ -269,7 +259,8 @@ final class AccountController extends BaseApiController
     {
         $params = $request->query();
         ksort($params);
-        return 'accounts:query:' . $workspaceId . ':' . md5(serialize($params));
+
+        return 'accounts:query:'.$workspaceId.':'.md5(serialize($params));
     }
 
     /**

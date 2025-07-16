@@ -11,6 +11,7 @@ use App\Http\Requests\API\BulkAccountRequest;
 use App\Http\Resources\AccountResource;
 use App\Models\Account;
 use App\Services\AccountCacheService;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -41,7 +42,7 @@ final class BulkAccountController extends BaseApiController
             $errors = [];
             $workspaceId = auth()->user()->current_workspace_id;
 
-            DB::transaction(function () use ($request, $action, &$accounts, &$errors, $workspaceId) {
+            DB::transaction(function () use ($request, $action, &$accounts, &$errors) {
                 foreach ($request->validated()['accounts'] as $index => $accountData) {
                     try {
                         $account = $action->create($accountData, isManual: true);
@@ -55,13 +56,11 @@ final class BulkAccountController extends BaseApiController
                     }
                 }
 
-                // If any errors occurred, rollback the transaction
-                if (!empty($errors)) {
-                    throw new \Exception('Some accounts failed to create');
+                if (! empty($errors)) {
+                    throw new Exception('Some accounts failed to create');
                 }
             });
 
-            // Invalidate cache for the workspace
             $this->cacheService->invalidateWorkspaceCache($workspaceId);
 
             return $this->successResponse([
@@ -93,12 +92,13 @@ final class BulkAccountController extends BaseApiController
                             ->where('workspace_id', $workspaceId)
                             ->first();
 
-                        if (!$account) {
+                        if (! $account) {
                             $errors[] = [
                                 'index' => $index,
                                 'id' => $accountUpdate['id'],
                                 'error' => 'Account not found',
                             ];
+
                             continue;
                         }
 
@@ -115,13 +115,11 @@ final class BulkAccountController extends BaseApiController
                     }
                 }
 
-                // If any critical errors occurred, rollback the transaction
                 if (count($errors) > count($request->validated()['accounts']) / 2) {
-                    throw new \Exception('Too many failures in bulk update');
+                    throw new Exception('Too many failures in bulk update');
                 }
             });
 
-            // Invalidate cache for the workspace
             $this->cacheService->invalidateWorkspaceCache($workspaceId);
 
             return $this->successResponse([
@@ -153,12 +151,13 @@ final class BulkAccountController extends BaseApiController
                             ->where('workspace_id', $workspaceId)
                             ->first();
 
-                        if (!$account) {
+                        if (! $account) {
                             $errors[] = [
                                 'index' => $index,
                                 'id' => $accountId,
                                 'error' => 'Account not found',
                             ];
+
                             continue;
                         }
 
@@ -175,13 +174,11 @@ final class BulkAccountController extends BaseApiController
                     }
                 }
 
-                // If any critical errors occurred, rollback the transaction
                 if (count($errors) > count($request->validated()['account_ids']) / 2) {
-                    throw new \Exception('Too many failures in bulk delete');
+                    throw new Exception('Too many failures in bulk delete');
                 }
             });
 
-            // Invalidate cache for the workspace
             $this->cacheService->invalidateWorkspaceCache($workspaceId);
 
             return $this->successResponse([
@@ -207,7 +204,7 @@ final class BulkAccountController extends BaseApiController
             $accounts = QueryBuilder::for(Account::class)
                 ->where('workspace_id', $workspaceId)
                 ->with(['accountable', 'bankConnection'])
-                ->when(!empty($accountIds), function ($query) use ($accountIds) {
+                ->when(! empty($accountIds), function ($query) use ($accountIds) {
                     $query->whereIn('public_id', $accountIds);
                 })
                 ->get();
@@ -251,7 +248,6 @@ final class BulkAccountController extends BaseApiController
             DB::transaction(function () use ($request, $action, &$importedAccounts, &$errors, $workspaceId) {
                 foreach ($request->validated()['accounts'] as $index => $accountData) {
                     try {
-                        // Check if account with this name already exists
                         $existingAccount = QueryBuilder::for(Account::class)
                             ->where('workspace_id', $workspaceId)
                             ->where('name', $accountData['name'])
@@ -263,6 +259,7 @@ final class BulkAccountController extends BaseApiController
                                 'name' => $accountData['name'],
                                 'error' => 'Account with this name already exists',
                             ];
+
                             continue;
                         }
 
@@ -277,13 +274,11 @@ final class BulkAccountController extends BaseApiController
                     }
                 }
 
-                // If too many errors occurred, rollback the transaction
                 if (count($errors) > count($request->validated()['accounts']) / 2) {
-                    throw new \Exception('Too many failures in bulk import');
+                    throw new Exception('Too many failures in bulk import');
                 }
             });
 
-            // Invalidate cache for the workspace
             $this->cacheService->invalidateWorkspaceCache($workspaceId);
 
             return $this->successResponse([
@@ -311,16 +306,14 @@ final class BulkAccountController extends BaseApiController
                 ->whereIn('public_id', $accountIds)
                 ->get();
 
-            $status = $accounts->map(function ($account) {
-                return [
-                    'id' => $account->public_id,
-                    'name' => $account->name,
-                    'status' => 'active', // Could be extended with actual status logic
-                    'last_transaction' => $account->transactions()->latest()->first()?->created_at,
-                    'balance' => $account->current_balance,
-                    'currency' => $account->currency_code,
-                ];
-            });
+            $status = $accounts->map(fn ($account) => [
+                'id' => $account->public_id,
+                'name' => $account->name,
+                'status' => 'active', // Could be extended with actual status logic
+                'last_transaction' => $account->transactions()->latest()->first()?->created_at,
+                'balance' => $account->current_balance,
+                'currency' => $account->currency_code,
+            ]);
 
             return $this->successResponse([
                 'accounts' => $status,
