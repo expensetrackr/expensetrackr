@@ -12,6 +12,7 @@
         "pint": "./vendor/bin/pint .",
         "prepare": "husky",
         "translate": "languine translate",
+        "pretypecheck": "node scripts/fix-wayfinder-ts.cjs",
         "typecheck": "tsc"
     },
     "lint-staged": {
