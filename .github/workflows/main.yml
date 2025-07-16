@@ -95,6 +95,17 @@ jobs:
             - name: 📥 Install npm dependencies
               run: npm install
 
+            - name: 🔧 Setup Laravel environment
+              run: |
+                  cp .env.example .env
+                  echo "" >> .env
+                  echo "DB_CONNECTION=sqlite" >> .env
+                  echo "DB_DATABASE=:memory:" >> .env
+                  php artisan key:generate
+                  mkdir -p database
+                  touch database/database.sqlite
+                  php artisan config:cache
+
             - name: 🔨 Build
               run: npm run build
 
