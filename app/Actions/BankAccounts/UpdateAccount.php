@@ -35,7 +35,7 @@ final class UpdateAccount
 
             $account->save();
 
-            return $fresh ? $account->fresh() : $account;
+            return $fresh ? $account->fresh(['accountable']) : $account;
         });
     }
 
@@ -134,44 +134,44 @@ final class UpdateAccount
 
         // Get the fields to update based on the accountable type
         $fieldsToUpdate = match ($accountable::class) {
-            CreditCard::class => array_filter([
-                'available_credit' => $input['available_credit'] ?? null,
-                'minimum_payment' => $input['minimum_payment'] ?? null,
-                'apr' => $input['apr'] ?? null,
-                'annual_fee' => $input['annual_fee'] ?? null,
-                'expires_at' => $input['expires_at'] ?? null,
-            ], fn ($value) => $value !== null),
+            CreditCard::class => $this->extractFieldsToUpdate($input, [
+                'available_credit',
+                'minimum_payment',
+                'apr',
+                'annual_fee',
+                'expires_at',
+            ]),
 
-            Loan::class => array_filter([
-                'interest_rate' => $input['interest_rate'] ?? null,
-                'rate_type' => $input['rate_type'] ?? null,
-                'term_months' => $input['term_months'] ?? null,
-            ], fn ($value) => $value !== null),
+            Loan::class => $this->extractFieldsToUpdate($input, [
+                'interest_rate',
+                'rate_type',
+                'term_months',
+            ]),
 
-            Depository::class => array_filter([
-                'routing_number' => $input['routing_number'] ?? null,
-                'account_number' => $input['account_number'] ?? null,
-            ], fn ($value) => $value !== null),
+            Depository::class => $this->extractFieldsToUpdate($input, [
+                'routing_number',
+                'account_number',
+            ]),
 
-            Investment::class => array_filter([
-                'account_number' => $input['account_number'] ?? null,
-                'broker_name' => $input['broker_name'] ?? null,
-            ], fn ($value) => $value !== null),
+            Investment::class => $this->extractFieldsToUpdate($input, [
+                'account_number',
+                'broker_name',
+            ]),
 
-            Crypto::class => array_filter([
-                'wallet_address' => $input['wallet_address'] ?? null,
-                'exchange_name' => $input['exchange_name'] ?? null,
-            ], fn ($value) => $value !== null),
+            Crypto::class => $this->extractFieldsToUpdate($input, [
+                'wallet_address',
+                'exchange_name',
+            ]),
 
-            OtherAsset::class => array_filter([
-                'asset_type' => $input['asset_type'] ?? null,
-                'valuation_method' => $input['valuation_method'] ?? null,
-            ], fn ($value) => $value !== null),
+            OtherAsset::class => $this->extractFieldsToUpdate($input, [
+                'asset_type',
+                'valuation_method',
+            ]),
 
-            OtherLiability::class => array_filter([
-                'liability_type' => $input['liability_type'] ?? null,
-                'creditor_name' => $input['creditor_name'] ?? null,
-            ], fn ($value) => $value !== null),
+            OtherLiability::class => $this->extractFieldsToUpdate($input, [
+                'liability_type',
+                'creditor_name',
+            ]),
 
             default => [],
         };
@@ -180,5 +180,25 @@ final class UpdateAccount
         if (! empty($fieldsToUpdate)) {
             $accountable->update($fieldsToUpdate);
         }
+    }
+
+    /**
+     * Extract fields to update from input, allowing explicit null values.
+     *
+     * @param  array<string, mixed>  $input
+     * @param  array<string>  $allowedFields
+     * @return array<string, mixed>
+     */
+    private function extractFieldsToUpdate(array $input, array $allowedFields): array
+    {
+        $fieldsToUpdate = [];
+
+        foreach ($allowedFields as $field) {
+            if (array_key_exists($field, $input)) {
+                $fieldsToUpdate[$field] = $input[$field];
+            }
+        }
+
+        return $fieldsToUpdate;
     }
 }
