@@ -21,26 +21,23 @@ jobs:
             - name: ⬇️ Checkout repo
               uses: actions/checkout@v4
 
-            - name: 🧅 Setup bun
-              uses: oven-sh/setup-bun@v1
-
             - name: ⎔ Setup node
               uses: actions/setup-node@v4
               with:
-                  node-version: "20.x"
+                  node-version: "22.x"
 
             - uses: actions/cache@v4
               with:
-                  path: ~/.bun/install/cache
-                  key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb') }}
+                  path: ~/.npm/install/cache
+                  key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
                   restore-keys: |
-                      ${{ runner.os }}-bun-
+                      ${{ runner.os }}-npm-
 
             - name: 📥 Download deps
-              run: bun install
+              run: npm install
 
             - name: 🔬 Lint
-              run: bun run lint .
+              run: npm run lint .
 
     typecheck:
         name: ʦ TypeScript
@@ -49,13 +46,10 @@ jobs:
             - name: ⬇️ Checkout repo
               uses: actions/checkout@v4
 
-            - name: 🧅 Setup bun
-              uses: oven-sh/setup-bun@v1
-
             - name: ⎔ Setup node
               uses: actions/setup-node@v4
               with:
-                  node-version: "20.x"
+                  node-version: "22.x"
 
             - name: 🐘 Setup PHP
               uses: shivammathur/setup-php@v2
@@ -65,10 +59,10 @@ jobs:
 
             - uses: actions/cache@v4
               with:
-                  path: ~/.bun/install/cache
-                  key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb') }}
+                  path: ~/.npm/install/cache
+                  key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
                   restore-keys: |
-                      ${{ runner.os }}-bun-
+                      ${{ runner.os }}-npm-
 
             - uses: actions/cache@v4
               with:
@@ -90,12 +84,11 @@ jobs:
             - name: 📥 Dump autoload
               run: composer dump-autoload --optimize
 
-            - name: 📥 Install bun dependencies
-              run: bun install
+            - name: 📥 Install npm dependencies
+              run: npm install
 
             - name: 🔨 Build
-              run: bun run build
+              run: npm run build
 
-            # TODO: Uncomment this once we have a way to run typecheck on github actions
-            # - name: 🔎 Type check
-            #   run: bun run typecheck --if-present
+            - name: 🔎 Type check
+              run: bun run typecheck --if-present
