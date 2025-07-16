@@ -1,0 +1,276 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Services;
+
+use App\Models\Account;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
+
+final class AccountCacheService
+{
+    private const CACHE_TTL = 3600; // 1 hour
+    private const CACHE_PREFIX = 'account';
+
+    /**
+     * Get cached account by ID.
+     */
+    public function getAccount(string $accountId, int $workspaceId): ?Account
+    {
+        $cacheKey = $this->getCacheKey('single', $accountId, $workspaceId);
+        
+        return Cache::remember($cacheKey, self::CACHE_TTL, function () use ($accountId, $workspaceId) {
+            return Account::where('public_id', $accountId)
+                ->where('workspace_id', $workspaceId)
+                ->with(['accountable', 'bankConnection', 'transactions' => function ($query) {
+                    $query->latest()->limit(5);
+                }])
+                ->first();
+        });
+    }
+
+    /**
+     * Get cached accounts list for workspace.
+     */
+    public function getAccountsList(
+        int $workspaceId,
+        array $filters = [],
+        int $page = 1,
+        int $perPage = 15
+    ): array {
+        $cacheKey = $this->getCacheKey('list', $workspaceId, $filters, $page, $perPage);
+        
+        return Cache::remember($cacheKey, self::CACHE_TTL, function () use ($workspaceId, $filters, $page, $perPage) {
+            $query = Account::where('workspace_id', $workspaceId)
+                ->with(['accountable', 'bankConnection']);
+
+            // Apply filters
+            $query = $this->applyFilters($query, $filters);
+
+            // Get paginated results
+            $accounts = $query->orderBy('created_at', 'desc')
+                ->paginate($perPage, ['*'], 'page', $page);
+
+            return [
+                'data' => $accounts->items(),
+                'meta' => [
+                    'current_page' => $accounts->currentPage(),
+                    'total' => $accounts->total(),
+                    'per_page' => $accounts->perPage(),
+                    'last_page' => $accounts->lastPage(),
+                ]
+            ];
+        });
+    }
+
+    /**
+     * Get cached account statistics for workspace.
+     */
+    public function getAccountStats(int $workspaceId): array
+    {
+        $cacheKey = $this->getCacheKey('stats', $workspaceId);
+        
+        return Cache::remember($cacheKey, self::CACHE_TTL, function () use ($workspaceId) {
+            $accounts = Account::where('workspace_id', $workspaceId)->get();
+            
+            $stats = [
+                'total_accounts' => $accounts->count(),
+                'total_balance' => $accounts->sum('current_balance'),
+                'by_type' => $accounts->groupBy('accountable_type')->map->count(),
+                'by_currency' => $accounts->groupBy('currency_code')->map->count(),
+                'default_account' => $accounts->where('is_default', true)->first()?->public_id,
+            ];
+
+            return $stats;
+        });
+    }
+
+    /**
+     * Get cached accounts by type.
+     */
+    public function getAccountsByType(int $workspaceId, string $type): Collection
+    {
+        $cacheKey = $this->getCacheKey('type', $workspaceId, $type);
+        
+        return Cache::remember($cacheKey, self::CACHE_TTL, function () use ($workspaceId, $type) {
+            $modelClass = $this->getModelClassFromType($type);
+            
+            return Account::where('workspace_id', $workspaceId)
+                ->where('accountable_type', $modelClass)
+                ->with(['accountable', 'bankConnection'])
+                ->orderBy('name')
+                ->get();
+        });
+    }
+
+    /**
+     * Invalidate account cache.
+     */
+    public function invalidateAccount(Account $account): void
+    {
+        $patterns = [
+            $this->getCacheKey('single', $account->public_id, $account->workspace_id),
+            $this->getCacheKey('list', $account->workspace_id, '*'),
+            $this->getCacheKey('stats', $account->workspace_id),
+            $this->getCacheKey('type', $account->workspace_id, '*'),
+        ];
+
+        foreach ($patterns as $pattern) {
+            if (str_contains($pattern, '*')) {
+                $this->invalidateByPattern($pattern);
+            } else {
+                Cache::forget($pattern);
+            }
+        }
+
+        Log::info('Account cache invalidated', [
+            'account_id' => $account->public_id,
+            'workspace_id' => $account->workspace_id,
+        ]);
+    }
+
+    /**
+     * Invalidate all account caches for a workspace.
+     */
+    public function invalidateWorkspaceCache(int $workspaceId): void
+    {
+        $patterns = [
+            $this->getCacheKey('single', '*', $workspaceId),
+            $this->getCacheKey('list', $workspaceId, '*'),
+            $this->getCacheKey('stats', $workspaceId),
+            $this->getCacheKey('type', $workspaceId, '*'),
+        ];
+
+        foreach ($patterns as $pattern) {
+            $this->invalidateByPattern($pattern);
+        }
+
+        Log::info('Workspace account cache invalidated', [
+            'workspace_id' => $workspaceId,
+        ]);
+    }
+
+    /**
+     * Warm up cache for frequently accessed data.
+     */
+    public function warmUpCache(int $workspaceId): void
+    {
+        try {
+            // Pre-cache account stats
+            $this->getAccountStats($workspaceId);
+            
+            // Pre-cache first page of accounts
+            $this->getAccountsList($workspaceId, [], 1, 15);
+            
+            // Pre-cache accounts by common types
+            $commonTypes = ['depository', 'credit_card', 'loan'];
+            foreach ($commonTypes as $type) {
+                $this->getAccountsByType($workspaceId, $type);
+            }
+
+            Log::info('Account cache warmed up', [
+                'workspace_id' => $workspaceId,
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Cache warm-up failed', [
+                'workspace_id' => $workspaceId,
+                'error' => $e->getMessage(),
+            ]);
+        }
+    }
+
+    /**
+     * Generate cache key.
+     */
+    private function getCacheKey(string $type, ...$params): string
+    {
+        $key = self::CACHE_PREFIX . ':' . $type;
+        
+        foreach ($params as $param) {
+            if (is_array($param)) {
+                $param = md5(serialize($param));
+            }
+            $key .= ':' . $param;
+        }
+
+        return $key;
+    }
+
+    /**
+     * Apply filters to query.
+     */
+    private function applyFilters($query, array $filters)
+    {
+        if (isset($filters['search']) && !empty($filters['search'])) {
+            $query->where('name', 'like', '%' . $filters['search'] . '%');
+        }
+
+        if (isset($filters['type']) && !empty($filters['type'])) {
+            $modelClass = $this->getModelClassFromType($filters['type']);
+            $query->where('accountable_type', $modelClass);
+        }
+
+        if (isset($filters['currency']) && !empty($filters['currency'])) {
+            $query->where('currency_code', $filters['currency']);
+        }
+
+        if (isset($filters['is_default'])) {
+            $query->where('is_default', $filters['is_default']);
+        }
+
+        if (isset($filters['balance_min'])) {
+            $query->where('current_balance', '>=', $filters['balance_min']);
+        }
+
+        if (isset($filters['balance_max'])) {
+            $query->where('current_balance', '<=', $filters['balance_max']);
+        }
+
+        if (isset($filters['created_from'])) {
+            $query->where('created_at', '>=', $filters['created_from']);
+        }
+
+        if (isset($filters['created_to'])) {
+            $query->where('created_at', '<=', $filters['created_to']);
+        }
+
+        return $query;
+    }
+
+    /**
+     * Get model class from account type.
+     */
+    private function getModelClassFromType(string $type): string
+    {
+        return match ($type) {
+            'depository' => 'App\\Models\\Depository',
+            'credit_card' => 'App\\Models\\CreditCard',
+            'loan' => 'App\\Models\\Loan',
+            'investment' => 'App\\Models\\Investment',
+            'crypto' => 'App\\Models\\Crypto',
+            'other_asset' => 'App\\Models\\OtherAsset',
+            'other_liability' => 'App\\Models\\OtherLiability',
+            default => 'App\\Models\\Depository',
+        };
+    }
+
+    /**
+     * Invalidate cache by pattern (Redis specific).
+     */
+    private function invalidateByPattern(string $pattern): void
+    {
+        if (Cache::getStore() instanceof \Illuminate\Cache\RedisStore) {
+            $keys = Cache::getStore()->connection()->keys($pattern);
+            if (!empty($keys)) {
+                Cache::getStore()->connection()->del($keys);
+            }
+        } else {
+            // For other cache stores, we'll need to track keys manually
+            // This is a simplified approach
+            Cache::flush();
+        }
+    }
+}

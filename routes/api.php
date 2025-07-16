@@ -32,6 +32,7 @@ declare(strict_types=1);
 use App\Http\Controllers\API\AccountController;
 use App\Http\Controllers\API\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\API\Auth\RegisteredUserController;
+use App\Http\Controllers\API\BulkAccountController;
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\TransactionController;
 use App\Http\Controllers\Financial\CurrencyController;
@@ -145,6 +146,21 @@ $routeGroup = function () {
      * - All operations are subject to authorization policies
      */
     Route::middleware(['auth:sanctum', 'ensure.workspace'])->group(function () {
+        // Account statistics and type filtering
+        Route::get('accounts/stats', [AccountController::class, 'stats'])->name('api.accounts.stats');
+        Route::get('accounts/type/{type}', [AccountController::class, 'byType'])->name('api.accounts.by-type');
+        
+        // Bulk operations
+        Route::prefix('accounts/bulk')->name('api.accounts.bulk.')->group(function () {
+            Route::post('create', [BulkAccountController::class, 'bulkCreate'])->name('create');
+            Route::post('update', [BulkAccountController::class, 'bulkUpdate'])->name('update');
+            Route::post('delete', [BulkAccountController::class, 'bulkDelete'])->name('delete');
+            Route::post('export', [BulkAccountController::class, 'bulkExport'])->name('export');
+            Route::post('import', [BulkAccountController::class, 'bulkImport'])->name('import');
+            Route::post('status', [BulkAccountController::class, 'bulkStatus'])->name('status');
+        });
+        
+        // Standard CRUD operations
         Route::apiResource('accounts', AccountController::class)
             ->names('api.accounts');
 
