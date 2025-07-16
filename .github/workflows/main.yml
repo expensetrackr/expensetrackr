@@ -26,12 +26,16 @@ jobs:
               with:
                   node-version: "22.x"
 
+            - id: npm-cache-dir
+              run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
+
             - uses: actions/cache@v4
+              id: npm-cache
               with:
-                  path: ~/.npm/install/cache
-                  key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+                  path: ${{ steps.npm-cache-dir.outputs.dir }}
+                  key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
                   restore-keys: |
-                      ${{ runner.os }}-npm-
+                      ${{ runner.os }}-node-
 
             - name: 📥 Download deps
               run: npm install
@@ -57,12 +61,16 @@ jobs:
                   php-version: "8.3"
                   extensions: bcmath, intl, zip, redis, xdebug
 
+            - id: npm-cache-dir
+              run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
+
             - uses: actions/cache@v4
+              id: npm-cache
               with:
-                  path: ~/.npm/install/cache
-                  key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+                  path: ${{ steps.npm-cache-dir.outputs.dir }}
+                  key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
                   restore-keys: |
-                      ${{ runner.os }}-npm-
+                      ${{ runner.os }}-node-
 
             - uses: actions/cache@v4
               with:
