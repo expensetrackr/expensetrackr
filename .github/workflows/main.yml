@@ -38,7 +38,7 @@ jobs:
                       ${{ runner.os }}-node-
 
             - name: 📥 Download deps
-              run: npm install
+              run: npm ci
 
             - name: 🔬 Lint
               run: npm run lint
@@ -86,14 +86,14 @@ jobs:
                   key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
                   restore-keys: ${{ runner.os }}-composer-
 
-            - name: 📥 Install composer dependencies
+            - name: 📥 Download php deps
               run: composer install --prefer-dist
 
             - name: 📥 Dump autoload
               run: composer dump-autoload --optimize
 
-            - name: 📥 Install npm dependencies
-              run: npm install
+            - name: 📥 Download npm deps
+              run: npm ci
 
             - name: 🔧 Setup Laravel environment
               run: |
