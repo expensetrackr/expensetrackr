@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Http\Requests\API;
 
-use App\Enums\Finance\AccountType;
 use App\Http\Requests\API\UpdateAccountRequest;
 use App\Models\Account;
 use App\Models\User;
@@ -18,7 +17,9 @@ final class UpdateAccountRequestTest extends TestCase
     use RefreshDatabase;
 
     private User $user;
+
     private Workspace $workspace;
+
     private Account $account;
 
     protected function setUp(): void
@@ -74,10 +75,15 @@ final class UpdateAccountRequestTest extends TestCase
         ];
 
         $request = new UpdateAccountRequest();
-        $request->setRouteResolver(fn() => new class {
+        $request->setRouteResolver(fn () => new class($this->account)
+        {
             public function __construct(private Account $account) {}
-            public function parameter(string $key): Account { return $this->account; }
-        }($this->account));
+
+            public function parameter(string $key): Account
+            {
+                return $this->account;
+            }
+        });
         $validator = Validator::make($data, $request->rules());
 
         $this->assertFalse($validator->passes());
@@ -93,10 +99,15 @@ final class UpdateAccountRequestTest extends TestCase
         ];
 
         $request = new UpdateAccountRequest();
-        $request->setRouteResolver(fn() => new class {
+        $request->setRouteResolver(fn () => new class($this->account)
+        {
             public function __construct(private Account $account) {}
-            public function parameter(string $key): Account { return $this->account; }
-        }($this->account));
+
+            public function parameter(string $key): Account
+            {
+                return $this->account;
+            }
+        });
         $validator = Validator::make($data, $request->rules());
 
         $this->assertTrue($validator->passes());
@@ -177,11 +188,16 @@ final class UpdateAccountRequestTest extends TestCase
     public function test_authorization_passes_when_user_can_update_account(): void
     {
         $request = new UpdateAccountRequest();
-        $request->setUserResolver(fn() => $this->user);
-        $request->setRouteResolver(fn() => new class {
+        $request->setUserResolver(fn () => $this->user);
+        $request->setRouteResolver(fn () => new class($this->account)
+        {
             public function __construct(private Account $account) {}
-            public function parameter(string $key): Account { return $this->account; }
-        }($this->account));
+
+            public function parameter(string $key): Account
+            {
+                return $this->account;
+            }
+        });
 
         $this->assertTrue($request->authorize());
     }
@@ -195,11 +211,16 @@ final class UpdateAccountRequestTest extends TestCase
         ]);
 
         $request = new UpdateAccountRequest();
-        $request->setUserResolver(fn() => $this->user);
-        $request->setRouteResolver(fn() => new class {
+        $request->setUserResolver(fn () => $this->user);
+        $request->setRouteResolver(fn () => new class($otherAccount)
+        {
             public function __construct(private Account $account) {}
-            public function parameter(string $key): Account { return $this->account; }
-        }($otherAccount));
+
+            public function parameter(string $key): Account
+            {
+                return $this->account;
+            }
+        });
 
         $this->assertFalse($request->authorize());
     }

@@ -23,29 +23,14 @@ final class InvalidAccountTypeException extends Exception
     /**
      * Create a new InvalidAccountTypeException instance.
      */
-    public function __construct(string $providedType, array $validTypes = [], string $message = null, int $code = 422)
+    public function __construct(string $providedType, array $validTypes = [], ?string $message = null, int $code = 422)
     {
         $this->providedType = $providedType;
         $this->validTypes = $validTypes;
-        
-        $message = $message ?? $this->generateMessage();
-        
-        parent::__construct($message, $code);
-    }
 
-    /**
-     * Generate a descriptive error message.
-     */
-    private function generateMessage(): string
-    {
-        $message = "Invalid account type '{$this->providedType}' provided.";
-        
-        if (!empty($this->validTypes)) {
-            $validTypesString = implode(', ', $this->validTypes);
-            $message .= " Valid types are: {$validTypesString}.";
-        }
-        
-        return $message;
+        $message = $message ?? $this->generateMessage();
+
+        parent::__construct($message, $code);
     }
 
     /**
@@ -102,5 +87,20 @@ final class InvalidAccountTypeException extends Exception
             'user_id' => auth()->id(),
             'workspace_id' => auth()->user()?->current_workspace_id,
         ];
+    }
+
+    /**
+     * Generate a descriptive error message.
+     */
+    private function generateMessage(): string
+    {
+        $message = "Invalid account type '{$this->providedType}' provided.";
+
+        if (! empty($this->validTypes)) {
+            $validTypesString = implode(', ', $this->validTypes);
+            $message .= " Valid types are: {$validTypesString}.";
+        }
+
+        return $message;
     }
 }

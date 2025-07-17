@@ -333,8 +333,35 @@ Route::middleware(['auth:sanctum', 'throttle:60,1'])->group(function () {
 
 ```php
 // In AccountController::index()
+$queryHash = md5($request->getQueryString() ?: '');
 return Cache::remember(
-    "accounts.{$request->user()->id}.{$request->getQueryString()}",
+    "accounts.{$request->user()->id}.{$queryHash}",
+    now()->addMinutes(5),
+    fn() => $this->getAccountsQuery($request)->paginate($perPage)
+);
+
+// Alternative implementation with more secure cache key generation
+protected function generateCacheKey(Request $request): string
+{
+    $userId = $request->user()->id;
+    $queryParams = $request->query();
+
+    // Sort parameters to ensure consistent cache keys
+    ksort($queryParams);
+
+    // Filter out potentially dangerous or irrelevant parameters
+    $allowedParams = ['page', 'per_page', 'sort', 'filter', 'search'];
+    $filteredParams = array_intersect_key($queryParams, array_flip($allowedParams));
+
+    // Create a hash of the filtered parameters
+    $queryHash = hash('sha256', json_encode($filteredParams));
+
+    return "accounts.{$userId}.{$queryHash}";
+}
+
+// Usage in controller:
+return Cache::remember(
+    $this->generateCacheKey($request),
     now()->addMinutes(5),
     fn() => $this->getAccountsQuery($request)->paginate($perPage)
 );
@@ -346,10 +373,73 @@ return Cache::remember(
 // In AccountValidationRules trait
 protected function sanitizeInput(): void
 {
-    $this->merge([
-        'name' => strip_tags($this->input('name', '')),
-        'description' => strip_tags($this->input('description', '')),
-    ]);
+    $sanitized = [];
+
+    // Sanitize text fields with Laravel's e() helper for HTML escaping
+    if ($this->has('name')) {
+        $sanitized['name'] = e(trim(strip_tags($this->input('name', ''))));
+    }
+
+    if ($this->has('description')) {
+        $sanitized['description'] = e(trim(strip_tags($this->input('description', ''))));
+    }
+
+    // Sanitize numeric fields with filter_var
+    if ($this->has('balance')) {
+        $sanitized['balance'] = filter_var(
+            $this->input('balance'),
+            FILTER_SANITIZE_NUMBER_FLOAT,
+            FILTER_FLAG_ALLOW_FRACTION
+        );
+    }
+
+    // Sanitize other numeric fields
+    $numericFields = ['current_balance', 'available_credit', 'minimum_payment', 'apr', 'annual_fee', 'interest_rate'];
+    foreach ($numericFields as $field) {
+        if ($this->has($field)) {
+            $sanitized[$field] = filter_var(
+                $this->input($field),
+                FILTER_SANITIZE_NUMBER_FLOAT,
+                FILTER_FLAG_ALLOW_FRACTION
+            );
+        }
+    }
+
+    // Sanitize currency code (trim and uppercase)
+    if ($this->has('currency_code')) {
+        $sanitized['currency_code'] = strtoupper(trim(strip_tags($this->input('currency_code', ''))));
+    }
+
+    // Sanitize external_id
+    if ($this->has('external_id')) {
+        $sanitized['external_id'] = trim(strip_tags($this->input('external_id', '')));
+    }
+
+    $this->merge($sanitized);
+}
+
+// Enhanced validation rules with additional sanitization
+protected function getValidationRules(): array
+{
+    return [
+        'name' => ['required', 'string', 'max:255', function ($attribute, $value, $fail) {
+            if (trim(strip_tags($value)) !== $value) {
+                $fail('The ' . $attribute . ' contains invalid characters.');
+            }
+        }],
+        'description' => ['nullable', 'string', 'max:500', function ($attribute, $value, $fail) {
+            if ($value && trim(strip_tags($value)) !== $value) {
+                $fail('The ' . $attribute . ' contains invalid characters.');
+            }
+        }],
+        'balance' => ['required', 'numeric', 'min:0'],
+        'currency_code' => ['required', 'string', 'size:3', 'alpha', 'uppercase'],
+        'external_id' => ['nullable', 'string', 'max:255', function ($attribute, $value, $fail) {
+            if ($value && trim(strip_tags($value)) !== $value) {
+                $fail('The ' . $attribute . ' contains invalid characters.');
+            }
+        }],
+    ];
 }
 ```
 

@@ -9,6 +9,7 @@ use App\Enums\Finance\AccountType;
 use App\Enums\Finance\RateType;
 use App\Facades\Forex;
 use App\Models\Account;
+use App\Services\SubscriptionService;
 use Illuminate\Validation\Rule;
 use Spatie\QueryBuilder\QueryBuilder;
 
@@ -192,8 +193,8 @@ trait AccountValidationRules
                 'required',
                 'numeric',
                 "min:$minBalance",
-                function ($attribute, $value, $fail) use ($minBalance) {
-                    $this->validateInitialBalance($attribute, $value, $fail, $minBalance);
+                function ($attribute, $value, $fail) {
+                    $this->validateInitialBalance($attribute, $value, $fail);
                 },
             ],
             'name' => [
@@ -251,7 +252,7 @@ trait AccountValidationRules
     /**
      * Validate initial balance with business rules.
      */
-    private function validateInitialBalance(string $attribute, mixed $value, callable $fail, float $minBalance): void
+    private function validateInitialBalance(string $attribute, mixed $value, callable $fail): void
     {
         if (! is_numeric($value)) {
             return;
@@ -329,19 +330,7 @@ trait AccountValidationRules
      */
     private function getMaxAccountsForUser($user): int
     {
-        if ($user->is_admin || $user->subscribed('enterprise')) {
-            return 999; // Unlimited
-        }
-
-        if ($user->subscribed('business')) {
-            return 50;
-        }
-
-        if ($user->subscribed('personal')) {
-            return 10;
-        }
-
-        return 3; // Free tier
+        return SubscriptionService::getMaxAccountsForUser($user);
     }
 
     /**

@@ -56,18 +56,22 @@ final class BulkAccountController extends BaseApiController
                     }
                 }
 
-                if (! empty($errors)) {
-                    throw new Exception('Some accounts failed to create');
+                // Only throw exception if more than half of the operations fail
+                if (count($errors) > count($request->validated()['accounts']) / 2) {
+                    throw new Exception('Too many failures in bulk create');
                 }
             });
 
             $this->cacheService->invalidateWorkspaceCache($workspaceId);
 
+            $message = (empty($errors)) ? 'Bulk account creation completed successfully.' : 'Bulk account creation completed with some failures.';
+
             return $this->successResponse([
                 'accounts' => AccountResource::collection($accounts),
                 'created_count' => count($accounts),
+                'failed_count' => count($errors),
                 'errors' => $errors,
-            ], 'Bulk account creation completed successfully.', 201);
+            ], $message, 201);
 
         } catch (Throwable $e) {
             return $this->handleException($e);
@@ -206,6 +210,9 @@ final class BulkAccountController extends BaseApiController
                 ->with(['accountable', 'bankConnection'])
                 ->when(! empty($accountIds), function ($query) use ($accountIds) {
                     $query->whereIn('public_id', $accountIds);
+                }, function ($query) {
+                    // Add default limit when no specific account IDs are provided
+                    $query->limit(100)->orderBy('created_at', 'desc');
                 })
                 ->get();
 
@@ -304,13 +311,22 @@ final class BulkAccountController extends BaseApiController
             $accounts = QueryBuilder::for(Account::class)
                 ->where('workspace_id', $workspaceId)
                 ->whereIn('public_id', $accountIds)
+                ->addSelect([
+                    'last_transaction_date' => function ($query) {
+                        $query->select('created_at')
+                            ->from('transactions')
+                            ->whereColumn('transactions.account_id', 'accounts.id')
+                            ->orderBy('created_at', 'desc')
+                            ->limit(1);
+                    },
+                ])
                 ->get();
 
             $status = $accounts->map(fn ($account) => [
                 'id' => $account->public_id,
                 'name' => $account->name,
                 'status' => 'active', // Could be extended with actual status logic
-                'last_transaction' => $account->transactions()->latest()->first()?->created_at,
+                'last_transaction' => $account->getAttribute('last_transaction_date'),
                 'balance' => $account->current_balance,
                 'currency' => $account->currency_code,
             ]);

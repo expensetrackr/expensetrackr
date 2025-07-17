@@ -57,47 +57,7 @@ final class AccountController extends BaseApiController
             }
 
             // Use QueryBuilder for flexible, efficient queries
-            $accounts = QueryBuilder::for(Account::class)
-                ->where('workspace_id', $workspaceId)
-                ->allowedFilters([
-                    AllowedFilter::partial('name'),
-                    AllowedFilter::exact('currency_code'),
-                    AllowedFilter::exact('is_default'),
-                    AllowedFilter::exact('is_manual'),
-                    AllowedFilter::callback('type', function ($query, $value) {
-                        $modelClass = $this->getModelClassFromType($value);
-                        $query->where('accountable_type', $modelClass);
-                    }),
-                    AllowedFilter::callback('balance_min', function ($query, $value) {
-                        $query->where('current_balance', '>=', $value);
-                    }),
-                    AllowedFilter::callback('balance_max', function ($query, $value) {
-                        $query->where('current_balance', '<=', $value);
-                    }),
-                    AllowedFilter::callback('created_from', function ($query, $value) {
-                        $query->where('created_at', '>=', $value);
-                    }),
-                    AllowedFilter::callback('created_to', function ($query, $value) {
-                        $query->where('created_at', '<=', $value);
-                    }),
-                    AllowedFilter::callback('search', function ($query, $value) {
-                        $query->where('name', 'like', '%'.$value.'%');
-                    }),
-                ])
-                ->allowedSorts([
-                    'name',
-                    '-name',
-                    'created_at',
-                    '-created_at',
-                    'current_balance',
-                    '-current_balance',
-                    'currency_code',
-                    '-currency_code',
-                    'is_default',
-                    '-is_default',
-                ])
-                ->allowedIncludes(['bankConnection', 'accountable'])
-                ->defaultSort('-created_at')
+            $accounts = $this->buildAccountQuery($workspaceId)
                 ->paginate($perPage)
                 ->withQueryString()
                 ->toResourceCollection();
@@ -192,7 +152,7 @@ final class AccountController extends BaseApiController
     /**
      * Get account statistics for the workspace.
      */
-    public function stats(Request $request): JsonResponse
+    public function stats(): JsonResponse
     {
         try {
             $workspaceId = auth()->user()->current_workspace_id;
@@ -228,7 +188,7 @@ final class AccountController extends BaseApiController
     /**
      * Get accounts by type.
      */
-    public function byType(Request $request, string $type): JsonResponse
+    public function byType(string $type): JsonResponse
     {
         try {
             $workspaceId = auth()->user()->current_workspace_id;
@@ -250,6 +210,54 @@ final class AccountController extends BaseApiController
         } catch (Throwable $e) {
             return $this->handleException($e);
         }
+    }
+
+    /**
+     * Build the base query for accounts with filters and sorting.
+     */
+    private function buildAccountQuery(int $workspaceId): QueryBuilder
+    {
+        return QueryBuilder::for(Account::class)
+            ->where('workspace_id', $workspaceId)
+            ->allowedFilters([
+                AllowedFilter::partial('name'),
+                AllowedFilter::exact('currency_code'),
+                AllowedFilter::exact('is_default'),
+                AllowedFilter::exact('is_manual'),
+                AllowedFilter::callback('type', function ($query, $value) {
+                    $modelClass = $this->getModelClassFromType($value);
+                    $query->where('accountable_type', $modelClass);
+                }),
+                AllowedFilter::callback('balance_min', function ($query, $value) {
+                    $query->where('current_balance', '>=', $value);
+                }),
+                AllowedFilter::callback('balance_max', function ($query, $value) {
+                    $query->where('current_balance', '<=', $value);
+                }),
+                AllowedFilter::callback('created_from', function ($query, $value) {
+                    $query->where('created_at', '>=', $value);
+                }),
+                AllowedFilter::callback('created_to', function ($query, $value) {
+                    $query->where('created_at', '<=', $value);
+                }),
+                AllowedFilter::callback('search', function ($query, $value) {
+                    $query->where('name', 'like', '%'.$value.'%');
+                }),
+            ])
+            ->allowedSorts([
+                'name',
+                '-name',
+                'created_at',
+                '-created_at',
+                'current_balance',
+                '-current_balance',
+                'currency_code',
+                '-currency_code',
+                'is_default',
+                '-is_default',
+            ])
+            ->allowedIncludes(['bankConnection', 'accountable'])
+            ->defaultSort('-created_at');
     }
 
     /**

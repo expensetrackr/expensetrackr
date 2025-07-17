@@ -6,6 +6,7 @@ namespace App\Http\Requests\API;
 
 use App\Http\Requests\Concerns\AccountValidationRules;
 use App\Models\Account;
+use App\Services\SubscriptionService;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -19,7 +20,20 @@ final class BulkAccountRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return $this->user()?->can('create', Account::class) ?? false;
+        $user = $this->user();
+        if (! $user) {
+            return false;
+        }
+
+        $routeName = $this->route()->getName();
+
+        return match ($routeName) {
+            'api.accounts.bulk.create', 'api.accounts.bulk.import' => $user->can('create', Account::class),
+            'api.accounts.bulk.update' => $user->can('update', Account::class),
+            'api.accounts.bulk.delete' => $user->can('delete', Account::class),
+            'api.accounts.bulk.export', 'api.accounts.bulk.status' => $user->can('view', Account::class),
+            default => false,
+        };
     }
 
     /**
@@ -30,7 +44,7 @@ final class BulkAccountRequest extends FormRequest
     public function rules(): array
     {
         $routeName = $this->route()->getName();
-        
+
         return match ($routeName) {
             'api.accounts.bulk.create' => $this->getCreateRules(),
             'api.accounts.bulk.update' => $this->getUpdateRules(),
@@ -40,127 +54,6 @@ final class BulkAccountRequest extends FormRequest
             'api.accounts.bulk.status' => $this->getStatusRules(),
             default => []
         };
-    }
-
-    /**
-     * Get validation rules for bulk create.
-     */
-    private function getCreateRules(): array
-    {
-        return [
-            'accounts' => ['required', 'array', 'min:1', 'max:50'],
-            'accounts.*.name' => ['required', 'string', 'max:255'],
-            'accounts.*.description' => ['nullable', 'string', 'max:500'],
-            'accounts.*.currency_code' => ['required', 'string', 'max:3'],
-            'accounts.*.initial_balance' => ['required', 'numeric', 'min:0.01'],
-            'accounts.*.type' => ['required', 'string', Rule::in([
-                'depository', 'credit_card', 'loan', 'investment', 
-                'crypto', 'other_asset', 'other_liability'
-            ])],
-            'accounts.*.is_default' => ['sometimes', 'boolean'],
-            'accounts.*.external_id' => ['sometimes', 'string', 'max:255'],
-            'accounts.*.bank_connection_id' => ['sometimes', 'integer', 'exists:bank_connections,id'],
-            
-            // Credit card specific fields
-            'accounts.*.available_credit' => ['required_if:accounts.*.type,credit_card', 'numeric', 'min:0'],
-            'accounts.*.minimum_payment' => ['required_if:accounts.*.type,credit_card', 'numeric', 'min:0'],
-            'accounts.*.apr' => ['required_if:accounts.*.type,credit_card', 'numeric', 'min:0', 'max:100'],
-            'accounts.*.annual_fee' => ['required_if:accounts.*.type,credit_card', 'numeric', 'min:0'],
-            'accounts.*.expires_at' => ['required_if:accounts.*.type,credit_card', 'date'],
-            
-            // Loan specific fields
-            'accounts.*.interest_rate' => ['required_if:accounts.*.type,loan', 'numeric', 'min:0', 'max:100'],
-            'accounts.*.rate_type' => ['required_if:accounts.*.type,loan', 'string', Rule::in(['fixed', 'variable'])],
-            'accounts.*.term_months' => ['required_if:accounts.*.type,loan', 'integer', 'min:1', 'max:600'],
-        ];
-    }
-
-    /**
-     * Get validation rules for bulk update.
-     */
-    private function getUpdateRules(): array
-    {
-        return [
-            'accounts' => ['required', 'array', 'min:1', 'max:50'],
-            'accounts.*.id' => ['required', 'string', 'exists:accounts,public_id'],
-            'accounts.*.name' => ['sometimes', 'string', 'max:255'],
-            'accounts.*.description' => ['sometimes', 'nullable', 'string', 'max:500'],
-            'accounts.*.currency_code' => ['sometimes', 'string', 'max:3'],
-            'accounts.*.is_default' => ['sometimes', 'boolean'],
-            'accounts.*.external_id' => ['sometimes', 'nullable', 'string', 'max:255'],
-            
-            // Credit card specific fields
-            'accounts.*.available_credit' => ['sometimes', 'numeric', 'min:0'],
-            'accounts.*.minimum_payment' => ['sometimes', 'numeric', 'min:0'],
-            'accounts.*.apr' => ['sometimes', 'numeric', 'min:0', 'max:100'],
-            'accounts.*.annual_fee' => ['sometimes', 'numeric', 'min:0'],
-            'accounts.*.expires_at' => ['sometimes', 'date'],
-            
-            // Loan specific fields
-            'accounts.*.interest_rate' => ['sometimes', 'numeric', 'min:0', 'max:100'],
-            'accounts.*.rate_type' => ['sometimes', 'string', Rule::in(['fixed', 'variable'])],
-            'accounts.*.term_months' => ['sometimes', 'integer', 'min:1', 'max:600'],
-        ];
-    }
-
-    /**
-     * Get validation rules for bulk delete.
-     */
-    private function getDeleteRules(): array
-    {
-        return [
-            'account_ids' => ['required', 'array', 'min:1', 'max:50'],
-            'account_ids.*' => ['required', 'string', 'exists:accounts,public_id'],
-            'force' => ['sometimes', 'boolean'],
-        ];
-    }
-
-    /**
-     * Get validation rules for bulk export.
-     */
-    private function getExportRules(): array
-    {
-        return [
-            'account_ids' => ['sometimes', 'array', 'max:100'],
-            'account_ids.*' => ['string', 'exists:accounts,public_id'],
-            'format' => ['sometimes', 'string', Rule::in(['json', 'csv', 'xlsx'])],
-            'include_transactions' => ['sometimes', 'boolean'],
-        ];
-    }
-
-    /**
-     * Get validation rules for bulk import.
-     */
-    private function getImportRules(): array
-    {
-        return [
-            'accounts' => ['required', 'array', 'min:1', 'max:100'],
-            'accounts.*.name' => ['required', 'string', 'max:255'],
-            'accounts.*.description' => ['nullable', 'string', 'max:500'],
-            'accounts.*.currency_code' => ['required', 'string', 'max:3'],
-            'accounts.*.initial_balance' => ['required', 'numeric', 'min:0.01'],
-            'accounts.*.type' => ['required', 'string', Rule::in([
-                'depository', 'credit_card', 'loan', 'investment', 
-                'crypto', 'other_asset', 'other_liability'
-            ])],
-            'accounts.*.is_default' => ['sometimes', 'boolean'],
-            'accounts.*.external_id' => ['sometimes', 'string', 'max:255'],
-            'skip_duplicates' => ['sometimes', 'boolean'],
-            'update_existing' => ['sometimes', 'boolean'],
-        ];
-    }
-
-    /**
-     * Get validation rules for bulk status.
-     */
-    private function getStatusRules(): array
-    {
-        return [
-            'account_ids' => ['required', 'array', 'min:1', 'max:50'],
-            'account_ids.*' => ['required', 'string', 'exists:accounts,public_id'],
-            'include_transactions' => ['sometimes', 'boolean'],
-            'include_balance_history' => ['sometimes', 'boolean'],
-        ];
     }
 
     /**
@@ -192,14 +85,14 @@ final class BulkAccountRequest extends FormRequest
             'account_ids.*.required' => 'Each account ID is required.',
             'account_ids.*.string' => 'Each account ID must be a string.',
             'account_ids.*.exists' => 'Account ID does not exist.',
-            
+
             // Credit card specific messages
             'accounts.*.available_credit.required_if' => 'Available credit is required for credit card accounts.',
             'accounts.*.minimum_payment.required_if' => 'Minimum payment is required for credit card accounts.',
             'accounts.*.apr.required_if' => 'APR is required for credit card accounts.',
             'accounts.*.annual_fee.required_if' => 'Annual fee is required for credit card accounts.',
             'accounts.*.expires_at.required_if' => 'Expiration date is required for credit card accounts.',
-            
+
             // Loan specific messages
             'accounts.*.interest_rate.required_if' => 'Interest rate is required for loan accounts.',
             'accounts.*.rate_type.required_if' => 'Rate type is required for loan accounts.',
@@ -246,27 +139,150 @@ final class BulkAccountRequest extends FormRequest
     }
 
     /**
+     * Get validation rules for bulk create.
+     */
+    private function getCreateRules(): array
+    {
+        return [
+            'accounts' => ['required', 'array', 'min:1', 'max:50'],
+            'accounts.*.name' => ['required', 'string', 'max:255'],
+            'accounts.*.description' => ['nullable', 'string', 'max:500'],
+            'accounts.*.currency_code' => ['required', 'string', 'max:3'],
+            'accounts.*.initial_balance' => ['required', 'numeric', 'min:0.01'],
+            'accounts.*.type' => ['required', 'string', Rule::in([
+                'depository', 'credit_card', 'loan', 'investment',
+                'crypto', 'other_asset', 'other_liability',
+            ])],
+            'accounts.*.is_default' => ['sometimes', 'boolean'],
+            'accounts.*.external_id' => ['sometimes', 'string', 'max:255'],
+            'accounts.*.bank_connection_id' => ['sometimes', 'integer', 'exists:bank_connections,id'],
+
+            // Credit card specific fields
+            'accounts.*.available_credit' => ['required_if:accounts.*.type,credit_card', 'numeric', 'min:0'],
+            'accounts.*.minimum_payment' => ['required_if:accounts.*.type,credit_card', 'numeric', 'min:0'],
+            'accounts.*.apr' => ['required_if:accounts.*.type,credit_card', 'numeric', 'min:0', 'max:100'],
+            'accounts.*.annual_fee' => ['required_if:accounts.*.type,credit_card', 'numeric', 'min:0'],
+            'accounts.*.expires_at' => ['required_if:accounts.*.type,credit_card', 'date'],
+
+            // Loan specific fields
+            'accounts.*.interest_rate' => ['required_if:accounts.*.type,loan', 'numeric', 'min:0', 'max:100'],
+            'accounts.*.rate_type' => ['required_if:accounts.*.type,loan', 'string', Rule::in(['fixed', 'variable'])],
+            'accounts.*.term_months' => ['required_if:accounts.*.type,loan', 'integer', 'min:1', 'max:600'],
+        ];
+    }
+
+    /**
+     * Get validation rules for bulk update.
+     */
+    private function getUpdateRules(): array
+    {
+        return [
+            'accounts' => ['required', 'array', 'min:1', 'max:50'],
+            'accounts.*.id' => ['required', 'string', 'exists:accounts,public_id'],
+            'accounts.*.name' => ['sometimes', 'string', 'max:255'],
+            'accounts.*.description' => ['sometimes', 'nullable', 'string', 'max:500'],
+            'accounts.*.currency_code' => ['sometimes', 'string', 'max:3'],
+            'accounts.*.is_default' => ['sometimes', 'boolean'],
+            'accounts.*.external_id' => ['sometimes', 'nullable', 'string', 'max:255'],
+
+            // Credit card specific fields
+            'accounts.*.available_credit' => ['sometimes', 'numeric', 'min:0'],
+            'accounts.*.minimum_payment' => ['sometimes', 'numeric', 'min:0'],
+            'accounts.*.apr' => ['sometimes', 'numeric', 'min:0', 'max:100'],
+            'accounts.*.annual_fee' => ['sometimes', 'numeric', 'min:0'],
+            'accounts.*.expires_at' => ['sometimes', 'date'],
+
+            // Loan specific fields
+            'accounts.*.interest_rate' => ['sometimes', 'numeric', 'min:0', 'max:100'],
+            'accounts.*.rate_type' => ['sometimes', 'string', Rule::in(['fixed', 'variable'])],
+            'accounts.*.term_months' => ['sometimes', 'integer', 'min:1', 'max:600'],
+        ];
+    }
+
+    /**
+     * Get validation rules for bulk delete.
+     */
+    private function getDeleteRules(): array
+    {
+        return [
+            'account_ids' => ['required', 'array', 'min:1', 'max:50'],
+            'account_ids.*' => ['required', 'string', 'exists:accounts,public_id'],
+            'force' => ['sometimes', 'boolean'],
+        ];
+    }
+
+    /**
+     * Get validation rules for bulk export.
+     */
+    private function getExportRules(): array
+    {
+        return [
+            'account_ids' => ['sometimes', 'array', 'max:100'],
+            'account_ids.*' => ['string', 'exists:accounts,public_id'],
+            'format' => ['sometimes', 'string', Rule::in(['json', 'csv', 'xlsx'])],
+            'include_transactions' => ['sometimes', 'boolean'],
+        ];
+    }
+
+    /**
+     * Get validation rules for bulk import.
+     */
+    private function getImportRules(): array
+    {
+        return [
+            'accounts' => ['required', 'array', 'min:1', 'max:100'],
+            'accounts.*.name' => ['required', 'string', 'max:255'],
+            'accounts.*.description' => ['nullable', 'string', 'max:500'],
+            'accounts.*.currency_code' => ['required', 'string', 'max:3'],
+            'accounts.*.initial_balance' => ['required', 'numeric', 'min:0.01'],
+            'accounts.*.type' => ['required', 'string', Rule::in([
+                'depository', 'credit_card', 'loan', 'investment',
+                'crypto', 'other_asset', 'other_liability',
+            ])],
+            'accounts.*.is_default' => ['sometimes', 'boolean'],
+            'accounts.*.external_id' => ['sometimes', 'string', 'max:255'],
+            'skip_duplicates' => ['sometimes', 'boolean'],
+            'update_existing' => ['sometimes', 'boolean'],
+        ];
+    }
+
+    /**
+     * Get validation rules for bulk status.
+     */
+    private function getStatusRules(): array
+    {
+        return [
+            'account_ids' => ['required', 'array', 'min:1', 'max:50'],
+            'account_ids.*' => ['required', 'string', 'exists:accounts,public_id'],
+            'include_transactions' => ['sometimes', 'boolean'],
+            'include_balance_history' => ['sometimes', 'boolean'],
+        ];
+    }
+
+    /**
      * Validate account limits based on user subscription.
      */
     private function validateAccountLimits($validator): void
     {
-        if (!$this->route()->named('api.accounts.bulk.create')) {
+        if (! $this->route()->named('api.accounts.bulk.create')) {
             return;
         }
 
         $user = $this->user();
-        if (!$user) {
+        if (! $user) {
             return;
         }
 
-        $currentAccountCount = $user->accounts()->count();
+        $currentAccountCount = $user->accounts()
+            ->where('workspace_id', $user->current_workspace_id)
+            ->count();
         $newAccountCount = count($this->input('accounts', []));
         $totalAfterCreation = $currentAccountCount + $newAccountCount;
 
         $maxAccounts = $this->getMaxAccountsForUser($user);
 
         if ($totalAfterCreation > $maxAccounts) {
-            $validator->errors()->add('accounts', 
+            $validator->errors()->add('accounts',
                 "Creating {$newAccountCount} accounts would exceed your limit of {$maxAccounts} accounts."
             );
         }
@@ -277,17 +293,34 @@ final class BulkAccountRequest extends FormRequest
      */
     private function validateDuplicateNames($validator): void
     {
-        if (!in_array($this->route()->getName(), ['api.accounts.bulk.create', 'api.accounts.bulk.import'])) {
+        if (! in_array($this->route()->getName(), ['api.accounts.bulk.create', 'api.accounts.bulk.import'])) {
             return;
         }
 
         $accounts = $this->input('accounts', []);
-        $names = array_column($accounts, 'name');
-        $duplicates = array_diff_assoc($names, array_unique($names));
 
-        if (!empty($duplicates)) {
-            $validator->errors()->add('accounts', 
-                'Duplicate account names found: ' . implode(', ', array_unique($duplicates))
+        // Filter and validate accounts array structure
+        $validAccounts = array_filter($accounts, fn ($account) => is_array($account) && array_key_exists('name', $account));
+
+        // Only proceed if we have valid accounts with names
+        if (empty($validAccounts)) {
+            return;
+        }
+
+        $names = array_column($validAccounts, 'name');
+
+        // Filter out empty or non-string names
+        $validNames = array_filter($names, fn ($name) => is_string($name) && trim($name) !== '');
+
+        if (empty($validNames)) {
+            return;
+        }
+
+        $duplicates = array_diff_assoc($validNames, array_unique($validNames));
+
+        if (! empty($duplicates)) {
+            $validator->errors()->add('accounts',
+                'Duplicate account names found: '.implode(', ', array_unique($duplicates))
             );
         }
     }
@@ -297,12 +330,12 @@ final class BulkAccountRequest extends FormRequest
      */
     private function validateWorkspaceAccess($validator): void
     {
-        if (!$this->has('account_ids')) {
+        if (! $this->has('account_ids')) {
             return;
         }
 
         $user = $this->user();
-        if (!$user) {
+        if (! $user) {
             return;
         }
 
@@ -317,9 +350,9 @@ final class BulkAccountRequest extends FormRequest
 
         $invalidIds = array_diff($accountIds, $validAccountIds);
 
-        if (!empty($invalidIds)) {
-            $validator->errors()->add('account_ids', 
-                'Invalid account IDs for your workspace: ' . implode(', ', $invalidIds)
+        if (! empty($invalidIds)) {
+            $validator->errors()->add('account_ids',
+                'Invalid account IDs for your workspace: '.implode(', ', $invalidIds)
             );
         }
     }
@@ -329,18 +362,6 @@ final class BulkAccountRequest extends FormRequest
      */
     private function getMaxAccountsForUser($user): int
     {
-        if ($user->is_admin || $user->subscribed('enterprise')) {
-            return 999; // Unlimited
-        }
-
-        if ($user->subscribed('business')) {
-            return 50;
-        }
-
-        if ($user->subscribed('personal')) {
-            return 10;
-        }
-
-        return 3; // Free tier
+        return SubscriptionService::getMaxAccountsForUser($user);
     }
 }

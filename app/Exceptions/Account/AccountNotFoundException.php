@@ -18,12 +18,12 @@ final class AccountNotFoundException extends Exception
     /**
      * Create a new AccountNotFoundException instance.
      */
-    public function __construct(string $accountId, string $message = null, int $code = 404)
+    public function __construct(string $accountId, ?string $message = null, int $code = 404)
     {
         $this->accountId = $accountId;
-        
+
         $message = $message ?? "Account with ID '{$accountId}' was not found.";
-        
+
         parent::__construct($message, $code);
     }
 

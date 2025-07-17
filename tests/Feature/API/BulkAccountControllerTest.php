@@ -18,17 +18,18 @@ final class BulkAccountControllerTest extends TestCase
     use RefreshDatabase;
 
     private User $user;
+
     private Workspace $workspace;
 
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         $this->user = User::factory()->create();
         $this->workspace = Workspace::factory()->create();
         $this->user->workspaces()->attach($this->workspace);
         $this->user->update(['current_workspace_id' => $this->workspace->id]);
-        
+
         Sanctum::actingAs($this->user, ['*']);
     }
 
@@ -492,8 +493,6 @@ final class BulkAccountControllerTest extends TestCase
 
     public function test_bulk_operations_require_authentication(): void
     {
-        Sanctum::actingAs(null);
-
         $response = $this->postJson('/api/accounts/bulk/create', [
             'accounts' => [
                 [

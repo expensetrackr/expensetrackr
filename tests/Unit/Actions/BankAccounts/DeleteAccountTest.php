@@ -19,18 +19,20 @@ final class DeleteAccountTest extends TestCase
     use RefreshDatabase;
 
     private User $user;
+
     private Workspace $workspace;
+
     private DeleteAccount $deleteAction;
 
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         $this->user = User::factory()->create();
         $this->workspace = Workspace::factory()->create();
         $this->user->workspaces()->attach($this->workspace);
         $this->user->update(['current_workspace_id' => $this->workspace->id]);
-        
+
         $this->deleteAction = new DeleteAccount();
     }
 
@@ -109,7 +111,7 @@ final class DeleteAccountTest extends TestCase
 
         $this->assertTrue($result);
         $this->assertDatabaseMissing('accounts', ['id' => $defaultAccount->id]);
-        
+
         $otherAccount->refresh();
         $this->assertTrue($otherAccount->is_default);
     }
@@ -132,7 +134,7 @@ final class DeleteAccountTest extends TestCase
 
         $this->assertTrue($result);
         $this->assertDatabaseMissing('accounts', ['id' => $accountToDelete->id]);
-        
+
         $defaultAccount->refresh();
         $this->assertTrue($defaultAccount->is_default);
     }

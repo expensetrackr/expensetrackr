@@ -32,35 +32,16 @@ final class AccountDeletionException extends Exception
         string $accountId,
         string $reason,
         array $context = [],
-        string $message = null,
+        ?string $message = null,
         int $code = 422
     ) {
         $this->accountId = $accountId;
         $this->reason = $reason;
         $this->context = $context;
-        
-        $message = $message ?? $this->generateMessage();
-        
-        parent::__construct($message, $code);
-    }
 
-    /**
-     * Generate a descriptive error message.
-     */
-    private function generateMessage(): string
-    {
-        $message = "Cannot delete account '{$this->accountId}': {$this->reason}";
-        
-        if (!empty($this->context)) {
-            $contextString = implode(', ', array_map(
-                fn($key, $value) => "{$key}: {$value}",
-                array_keys($this->context),
-                array_values($this->context)
-            ));
-            $message .= " ({$contextString})";
-        }
-        
-        return $message;
+        $message = $message ?? $this->generateMessage();
+
+        parent::__construct($message, $code);
     }
 
     /**
@@ -127,5 +108,24 @@ final class AccountDeletionException extends Exception
             'user_id' => auth()->id(),
             'workspace_id' => auth()->user()?->current_workspace_id,
         ];
+    }
+
+    /**
+     * Generate a descriptive error message.
+     */
+    private function generateMessage(): string
+    {
+        $message = "Cannot delete account '{$this->accountId}': {$this->reason}";
+
+        if (! empty($this->context)) {
+            $contextString = implode(', ', array_map(
+                fn ($key, $value) => "{$key}: {$value}",
+                array_keys($this->context),
+                array_values($this->context)
+            ));
+            $message .= " ({$contextString})";
+        }
+
+        return $message;
     }
 }

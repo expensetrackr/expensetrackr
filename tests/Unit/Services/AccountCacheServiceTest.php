@@ -8,8 +8,8 @@ use App\Models\Account;
 use App\Models\User;
 use App\Models\Workspace;
 use App\Services\AccountCacheService;
+use DB;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Cache;
 use Tests\TestCase;
 
 final class AccountCacheServiceTest extends TestCase
@@ -125,13 +125,30 @@ final class AccountCacheServiceTest extends TestCase
             'created_by' => $this->user->id,
         ]);
 
-        $this->cacheService->getAccount($account->public_id, $this->workspace->id);
+        // First fetch - should cache the account
+        $firstFetch = $this->cacheService->getAccount($account->public_id, $this->workspace->id);
+        $this->assertInstanceOf(Account::class, $firstFetch);
 
-        $this->assertTrue(Cache::has('account:single:'.$account->public_id.':'.$this->workspace->id));
+        // Spy on the database to track queries
+        $queryCount = 0;
+        DB::listen(function ($query) use (&$queryCount) {
+            if (str_contains($query->sql, 'select * from "accounts"')) {
+                $queryCount++;
+            }
+        });
 
+        // Second fetch - should use cache, no additional query
+        $secondFetch = $this->cacheService->getAccount($account->public_id, $this->workspace->id);
+        $this->assertInstanceOf(Account::class, $secondFetch);
+        $this->assertEquals(0, $queryCount, 'Second fetch should use cache, not hit database');
+
+        // Invalidate cache
         $this->cacheService->invalidateAccount($account);
 
-        $this->assertFalse(Cache::has('account:single:'.$account->public_id.':'.$this->workspace->id));
+        // Third fetch - should trigger database query due to cache miss
+        $thirdFetch = $this->cacheService->getAccount($account->public_id, $this->workspace->id);
+        $this->assertInstanceOf(Account::class, $thirdFetch);
+        $this->assertEquals(1, $queryCount, 'Third fetch should hit database after cache invalidation');
     }
 
     public function test_invalidate_workspace_cache_clears_all_workspace_cache(): void
@@ -141,12 +158,30 @@ final class AccountCacheServiceTest extends TestCase
             'created_by' => $this->user->id,
         ]);
 
+        // Cache account and stats
         $this->cacheService->getAccount($account->public_id, $this->workspace->id);
         $this->cacheService->getAccountStats($this->workspace->id);
 
+        // Spy on database queries to track cache behavior
+        $queryCount = 0;
+        DB::listen(function ($query) use (&$queryCount) {
+            if (str_contains($query->sql, 'select * from "accounts"')) {
+                $queryCount++;
+            }
+        });
+
+        // Verify cache is working - should not hit database
+        $this->cacheService->getAccount($account->public_id, $this->workspace->id);
+        $this->cacheService->getAccountStats($this->workspace->id);
+        $this->assertEquals(0, $queryCount, 'Cached data should not trigger database queries');
+
+        // Invalidate workspace cache
         $this->cacheService->invalidateWorkspaceCache($this->workspace->id);
 
-        $this->assertTrue(true);
+        // Verify cache is cleared - should hit database
+        $this->cacheService->getAccount($account->public_id, $this->workspace->id);
+        $this->cacheService->getAccountStats($this->workspace->id);
+        $this->assertGreaterThan(0, $queryCount, 'After invalidation, should trigger database queries');
     }
 
     public function test_warm_up_cache_preloads_data(): void
@@ -156,9 +191,31 @@ final class AccountCacheServiceTest extends TestCase
             'created_by' => $this->user->id,
         ]);
 
+        // Spy on database queries to track cache behavior
+        $queryCount = 0;
+        DB::listen(function ($query) use (&$queryCount) {
+            if (str_contains($query->sql, 'select * from "accounts"')) {
+                $queryCount++;
+            }
+        });
+
+        // Warm up cache
         $this->cacheService->warmUpCache($this->workspace->id);
 
-        $this->assertTrue(true);
+        // Reset query count after warm up
+        $queryCount = 0;
+
+        // Verify cache is warmed up by checking stats don't trigger DB queries
+        $stats = $this->cacheService->getAccountStats($this->workspace->id);
+        $this->assertIsArray($stats);
+        $this->assertArrayHasKey('total_accounts', $stats);
+        $this->assertEquals(3, $stats['total_accounts']);
+        $this->assertEquals(0, $queryCount, 'Warmed cache should not trigger database queries for stats');
+
+        // Verify preloaded account types don't trigger DB queries
+        $depositoryAccounts = $this->cacheService->getAccountsByType($this->workspace->id, 'depository');
+        $this->assertInstanceOf(\Illuminate\Database\Eloquent\Collection::class, $depositoryAccounts);
+        $this->assertEquals(0, $queryCount, 'Warmed cache should not trigger database queries for account types');
     }
 
     public function test_cache_keys_are_unique_per_workspace(): void
@@ -183,9 +240,9 @@ final class AccountCacheServiceTest extends TestCase
         $this->assertEquals($workspace2->id, $result2->workspace_id);
     }
 
-    public function test_multiple_filters_work_together(): void
+    public function test_cached_stats_reflect_multiple_account_types_and_currencies(): void
     {
-        Account::factory()->create([
+        $usdChecking = Account::factory()->create([
             'workspace_id' => $this->workspace->id,
             'created_by' => $this->user->id,
             'name' => 'USD Checking',
@@ -193,7 +250,7 @@ final class AccountCacheServiceTest extends TestCase
             'current_balance' => 1000.00,
         ]);
 
-        Account::factory()->create([
+        $eurSavings = Account::factory()->create([
             'workspace_id' => $this->workspace->id,
             'created_by' => $this->user->id,
             'name' => 'EUR Savings',
@@ -201,7 +258,7 @@ final class AccountCacheServiceTest extends TestCase
             'current_balance' => 500.00,
         ]);
 
-        Account::factory()->create([
+        $usdSavings = Account::factory()->create([
             'workspace_id' => $this->workspace->id,
             'created_by' => $this->user->id,
             'name' => 'USD Savings',
@@ -209,6 +266,35 @@ final class AccountCacheServiceTest extends TestCase
             'current_balance' => 200.00,
         ]);
 
-        $this->assertTrue(true);
+        // Get cached stats
+        $stats = $this->cacheService->getAccountStats($this->workspace->id);
+
+        // Verify total accounts
+        $this->assertEquals(3, $stats['total_accounts']);
+
+        // Verify total balance calculation
+        $this->assertEquals(1700.00, $stats['total_balance']);
+
+        // Verify currency grouping
+        $this->assertArrayHasKey('by_currency', $stats);
+        $this->assertEquals(2, $stats['by_currency']['USD']); // 2 USD accounts
+        $this->assertEquals(1, $stats['by_currency']['EUR']); // 1 EUR account
+
+        // Verify account type grouping
+        $this->assertArrayHasKey('by_type', $stats);
+        $this->assertEquals(3, $stats['by_type'][$usdChecking->accountable_type]); // All accounts have same type
+
+        // Spy on database queries to verify caching
+        $queryCount = 0;
+        DB::listen(function ($query) use (&$queryCount) {
+            if (str_contains($query->sql, 'select * from "accounts"')) {
+                $queryCount++;
+            }
+        });
+
+        // Second call should use cache, not hit database
+        $cachedStats = $this->cacheService->getAccountStats($this->workspace->id);
+        $this->assertEquals($stats, $cachedStats);
+        $this->assertEquals(0, $queryCount, 'Second stats call should use cache, not hit database');
     }
 }

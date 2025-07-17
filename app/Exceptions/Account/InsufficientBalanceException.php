@@ -32,26 +32,16 @@ final class InsufficientBalanceException extends Exception
         string $accountId,
         string $currentBalance,
         string $requiredAmount,
-        string $message = null,
+        ?string $message = null,
         int $code = 422
     ) {
         $this->accountId = $accountId;
         $this->currentBalance = $currentBalance;
         $this->requiredAmount = $requiredAmount;
-        
-        $message = $message ?? $this->generateMessage();
-        
-        parent::__construct($message, $code);
-    }
 
-    /**
-     * Generate a descriptive error message.
-     */
-    private function generateMessage(): string
-    {
-        return "Insufficient balance in account '{$this->accountId}'. " .
-               "Current balance: {$this->currentBalance}, " .
-               "Required amount: {$this->requiredAmount}.";
+        $message = $message ?? $this->generateMessage();
+
+        parent::__construct($message, $code);
     }
 
     /**
@@ -118,5 +108,15 @@ final class InsufficientBalanceException extends Exception
             'user_id' => auth()->id(),
             'workspace_id' => auth()->user()?->current_workspace_id,
         ];
+    }
+
+    /**
+     * Generate a descriptive error message.
+     */
+    private function generateMessage(): string
+    {
+        return "Insufficient balance in account '{$this->accountId}'. ".
+               "Current balance: {$this->currentBalance}, ".
+               "Required amount: {$this->requiredAmount}.";
     }
 }

@@ -12,8 +12,6 @@ use Illuminate\Support\Facades\Log;
 
 final class AccountCacheService
 {
-    private const int CACHE_TTL = 3600; // 1 hour
-
     private const string CACHE_PREFIX = 'account';
 
     /**
@@ -23,14 +21,16 @@ final class AccountCacheService
     {
         $cacheKey = $this->getCacheKey('single', $accountId, $workspaceId);
 
-        return Cache::remember($cacheKey, self::CACHE_TTL, function () use ($accountId, $workspaceId) {
-            return Account::where('public_id', $accountId)
-                ->where('workspace_id', $workspaceId)
-                ->with(['accountable', 'bankConnection', 'transactions' => function ($query) {
-                    $query->latest()->limit(5);
-                }])
-                ->first();
-        });
+        $result = Cache::remember($cacheKey, $this->getCacheTTL(), fn () => Account::where('public_id', $accountId)
+            ->where('workspace_id', $workspaceId)
+            ->with(['accountable', 'bankConnection', 'transactions' => function ($query) {
+                $query->latest()->limit(5);
+            }])
+            ->first());
+
+        $this->addTrackedKey($cacheKey);
+
+        return $result;
     }
 
     /**
@@ -38,7 +38,8 @@ final class AccountCacheService
      */
     public function cacheQuery(string $cacheKey, $result): void
     {
-        Cache::put($cacheKey, $result, self::CACHE_TTL);
+        Cache::put($cacheKey, $result, $this->getCacheTTL());
+        $this->addTrackedKey($cacheKey);
     }
 
     /**
@@ -56,7 +57,7 @@ final class AccountCacheService
     {
         $cacheKey = $this->getCacheKey('stats', $workspaceId);
 
-        return Cache::remember($cacheKey, self::CACHE_TTL, function () use ($workspaceId) {
+        $result = Cache::remember($cacheKey, $this->getCacheTTL(), function () use ($workspaceId) {
             $accounts = Account::where('workspace_id', $workspaceId)->get();
 
             $stats = [
@@ -69,6 +70,10 @@ final class AccountCacheService
 
             return $stats;
         });
+
+        $this->addTrackedKey($cacheKey);
+
+        return $result;
     }
 
     /**
@@ -78,7 +83,7 @@ final class AccountCacheService
     {
         $cacheKey = $this->getCacheKey('type', $workspaceId, $type);
 
-        return Cache::remember($cacheKey, self::CACHE_TTL, function () use ($workspaceId, $type) {
+        $result = Cache::remember($cacheKey, $this->getCacheTTL(), function () use ($workspaceId, $type) {
             $modelClass = $this->getModelClassFromType($type);
 
             return Account::where('workspace_id', $workspaceId)
@@ -87,6 +92,10 @@ final class AccountCacheService
                 ->orderBy('name')
                 ->get();
         });
+
+        $this->addTrackedKey($cacheKey);
+
+        return $result;
     }
 
     /**
@@ -149,6 +158,9 @@ final class AccountCacheService
                 $this->getAccountsByType($workspaceId, $type);
             }
 
+            // Clean up expired tracked keys during warmup
+            $this->cleanupExpiredTrackedKeys();
+
             Log::info('Account cache warmed up', [
                 'workspace_id' => $workspaceId,
             ]);
@@ -157,6 +169,34 @@ final class AccountCacheService
                 'workspace_id' => $workspaceId,
                 'error' => $e->getMessage(),
             ]);
+        }
+    }
+
+    /**
+     * Get the cache TTL from configuration.
+     */
+    private function getCacheTTL(): int
+    {
+        return config('accounts.cache_ttl', 3600);
+    }
+
+    /**
+     * Clean up expired tracked keys to prevent unlimited growth.
+     */
+    private function cleanupExpiredTrackedKeys(): void
+    {
+        $trackedKeys = $this->getTrackedKeys();
+        $validKeys = [];
+
+        foreach ($trackedKeys as $key) {
+            if (Cache::has($key)) {
+                $validKeys[] = $key;
+            }
+        }
+
+        if (count($validKeys) !== count($trackedKeys)) {
+            $keyTracker = self::CACHE_PREFIX.':_tracked_keys';
+            Cache::put($keyTracker, $validKeys, $this->getCacheTTL() * 2);
         }
     }
 
@@ -171,7 +211,7 @@ final class AccountCacheService
             if (is_array($param)) {
                 $param = md5(serialize($param));
             }
-            $key .= ':'.$param;
+            $key .= ":$param";
         }
 
         return $key;
@@ -182,20 +222,14 @@ final class AccountCacheService
      */
     private function getModelClassFromType(string $type): string
     {
-        return match ($type) {
-            'depository' => 'App\\Models\\Depository',
-            'credit_card' => 'App\\Models\\CreditCard',
-            'loan' => 'App\\Models\\Loan',
-            'investment' => 'App\\Models\\Investment',
-            'crypto' => 'App\\Models\\Crypto',
-            'other_asset' => 'App\\Models\\OtherAsset',
-            'other_liability' => 'App\\Models\\OtherLiability',
-            default => 'App\\Models\\Depository',
-        };
+        $typeMap = config('accounts.type_map', []);
+        $defaultType = config('accounts.default_type', 'depository');
+
+        return $typeMap[$type] ?? $typeMap[$defaultType] ?? \App\Models\Depository::class;
     }
 
     /**
-     * Invalidate cache by pattern (Redis specific).
+     * Invalidate cache by pattern with targeted key management.
      */
     private function invalidateByPattern(string $pattern): void
     {
@@ -205,9 +239,79 @@ final class AccountCacheService
                 Cache::getStore()->connection()->del($keys);
             }
         } else {
-            // For other cache stores, we'll need to track keys manually
-            // This is a simplified approach
-            Cache::flush();
+            // For non-Redis stores, use targeted invalidation to avoid clearing entire cache
+            $this->invalidateAccountKeysManually($pattern);
+        }
+    }
+
+    /**
+     * Manually invalidate account-related cache keys for non-Redis stores.
+     */
+    private function invalidateAccountKeysManually(string $pattern): void
+    {
+        $trackedKeys = $this->getTrackedKeys();
+        $keysToInvalidate = [];
+
+        foreach ($trackedKeys as $key) {
+            if ($this->matchesPattern($key, $pattern)) {
+                $keysToInvalidate[] = $key;
+            }
+        }
+
+        foreach ($keysToInvalidate as $key) {
+            Cache::forget($key);
+            $this->removeTrackedKey($key);
+        }
+    }
+
+    /**
+     * Check if a key matches the given pattern.
+     */
+    private function matchesPattern(string $key, string $pattern): bool
+    {
+        // Convert pattern to regex
+        $regex = str_replace(['*', ':'], ['.*', ':'], $pattern);
+        $regex = '/^'.str_replace('/', '\/', $regex).'$/';
+
+        return preg_match($regex, $key) === 1;
+    }
+
+    /**
+     * Get tracked cache keys for account-related caches.
+     */
+    private function getTrackedKeys(): array
+    {
+        $keyTracker = self::CACHE_PREFIX.':_tracked_keys';
+
+        return Cache::get($keyTracker, []);
+    }
+
+    /**
+     * Add a key to the tracked keys list.
+     */
+    private function addTrackedKey(string $key): void
+    {
+        $keyTracker = self::CACHE_PREFIX.':_tracked_keys';
+        $trackedKeys = $this->getTrackedKeys();
+
+        if (! in_array($key, $trackedKeys)) {
+            $trackedKeys[] = $key;
+            Cache::put($keyTracker, $trackedKeys, $this->getCacheTTL() * 2); // Keep tracker longer
+        }
+    }
+
+    /**
+     * Remove a key from the tracked keys list.
+     */
+    private function removeTrackedKey(string $key): void
+    {
+        $keyTracker = self::CACHE_PREFIX.':_tracked_keys';
+        $trackedKeys = $this->getTrackedKeys();
+
+        $filteredKeys = array_filter($trackedKeys, fn ($trackedKey) => $trackedKey !== $key);
+
+        if (count($filteredKeys) !== count($trackedKeys)) {
+            Cache::put($keyTracker, array_values($filteredKeys), $this->getCacheTTL() * 2);
         }
     }
 }

@@ -149,7 +149,7 @@ $routeGroup = function () {
         // Account statistics and type filtering
         Route::get('accounts/stats', [AccountController::class, 'stats'])->name('api.accounts.stats');
         Route::get('accounts/type/{type}', [AccountController::class, 'byType'])->name('api.accounts.by-type');
-        
+
         // Bulk operations
         Route::prefix('accounts/bulk')->name('api.accounts.bulk.')->group(function () {
             Route::post('create', [BulkAccountController::class, 'bulkCreate'])->name('create');
@@ -159,7 +159,7 @@ $routeGroup = function () {
             Route::post('import', [BulkAccountController::class, 'bulkImport'])->name('import');
             Route::post('status', [BulkAccountController::class, 'bulkStatus'])->name('status');
         });
-        
+
         // Standard CRUD operations
         Route::apiResource('accounts', AccountController::class)
             ->names('api.accounts');
