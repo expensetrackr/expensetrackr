@@ -50,7 +50,9 @@ export function CreateTransactionDrawer() {
             {
                 queryKey: ["accounts"],
                 queryFn: async () => {
-                    const res = await fetch(routes.api.accounts.index.url({ query: { include: "bankConnection" } }));
+                    const res = await fetch(routes.api.accounts.index.url({ query: { include: "bankConnection" } }), {
+                        credentials: "include",
+                    });
                     return (await res.json()) as PaginatedResponse<Resources.Account>;
                 },
                 enabled: isOpen,
@@ -66,7 +68,9 @@ export function CreateTransactionDrawer() {
             {
                 queryKey: ["categories"],
                 queryFn: async () => {
-                    const res = await fetch(routes.api.categories.index.url({ query: { per_page: 100 } }));
+                    const res = await fetch(routes.api.categories.index.url({ query: { per_page: 100 } }), {
+                        credentials: "include",
+                    });
                     return (await res.json()) as PaginatedResponse<Resources.Category>;
                 },
                 enabled: isOpen,

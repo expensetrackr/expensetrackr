@@ -40,7 +40,9 @@ export function TransactionDetailsDrawer() {
             {
                 queryKey: ["transactions", actions.resourceId],
                 queryFn: async () => {
-                    const res = await fetch(routes.api.transactions.show.url({ public_id: actions.resourceId ?? "" }));
+                    const res = await fetch(routes.api.transactions.show.url({ public_id: actions.resourceId ?? "" }), {
+                        credentials: "include",
+                    });
                     return (await res.json()) as Resources.Transaction;
                 },
                 enabled: isOpen,
@@ -48,7 +50,9 @@ export function TransactionDetailsDrawer() {
             {
                 queryKey: ["categories"],
                 queryFn: async () => {
-                    const res = await fetch(routes.api.categories.index.url({ query: { per_page: 100 } }));
+                    const res = await fetch(routes.api.categories.index.url({ query: { per_page: 100 } }), {
+                        credentials: "include",
+                    });
                     return (await res.json()) as PaginatedResponse<Resources.Category>;
                 },
                 enabled: isOpen,
