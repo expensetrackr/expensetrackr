@@ -5,7 +5,6 @@ declare(strict_types=1);
 use App\Data\Auth\UserData;
 use App\Data\Workspace\WorkspaceData;
 use App\Http\Middleware\AddWorkspaceToRequest;
-use App\Http\Middleware\EnsureWorkspace;
 use App\Http\Middleware\HandleInertiaRequests;
 use App\Http\Middleware\HandleLanguageMiddleware;
 use App\Http\Middleware\HandleWorkspacesPermissionMiddleware;
@@ -14,43 +13,57 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets;
-use Illuminate\Http\Middleware\HandleCors;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Middleware\ThrottleRequests;
 use Inertia\Inertia;
-use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 use Symfony\Component\HttpFoundation\Response;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         web: __DIR__.'/../routes/web.php',
-        api: __DIR__.'/../routes/api.php',
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
-        apiPrefix: '',
+        using: function () {
+            $apiUrl = config('app.api_url');
+
+            if ($apiUrl && trim($apiUrl) !== '') {
+                // Extract domain from URL if it contains a scheme
+                $domain = parse_url($apiUrl, PHP_URL_HOST) ?: $apiUrl;
+
+                Route::domain($domain)
+                    ->middleware('api')
+                    ->group(base_path('routes/api.php'));
+            } else {
+                Route::prefix('api')
+                    ->middleware('api')
+                    ->group(base_path('routes/api.php'));
+            }
+
+            Route::middleware('web')
+                ->middleware('web')
+                ->group(base_path('routes/web.php'));
+        },
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->api(append: [
+            AddWorkspaceToRequest::class,
+            HandleWorkspacesPermissionMiddleware::class,
+        ]);
+
         $middleware->web(append: [
             HandleLanguageMiddleware::class,
-            HandleWorkspacesPermissionMiddleware::class,
-            AddWorkspaceToRequest::class,
             HandleInertiaRequests::class,
+            AddWorkspaceToRequest::class,
+            HandleWorkspacesPermissionMiddleware::class,
             AddLinkHeadersForPreloadedAssets::class,
         ]);
-        $middleware->api(append: [
-            HandleCors::class,
-            EnsureFrontendRequestsAreStateful::class,
-            ThrottleRequests::class.':api',
-            HandleWorkspacesPermissionMiddleware::class,
-            AddWorkspaceToRequest::class,
-        ]);
-        $middleware->alias([
-            'ensure.workspace' => EnsureWorkspace::class,
-        ]);
+
+        $middleware->statefulApi();
+
         $middleware->validateCsrfTokens(except: [
             'polar/webhook',
             'teller/webhook',
         ]);
+
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->respond(function (Response $response, Throwable $exception, Request $request) {

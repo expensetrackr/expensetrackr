@@ -38,7 +38,9 @@ export function AccountDetailsDrawer() {
     const { data: account, isLoading } = useQuery({
         queryKey: ["accounts", actions.resourceId],
         queryFn: async () => {
-            const res = await fetch(routes.internal.api.accounts.show.url({ public_id: actions.resourceId ?? "" }));
+            const res = await fetch(routes.api.accounts.show.url({ public_id: actions.resourceId ?? "" }), {
+                credentials: "include",
+            });
             return (await res.json()) as Resources.Account;
         },
         enabled: isOpen,

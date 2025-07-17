@@ -187,9 +187,7 @@ function ChooseInstitution() {
     const query = useQuery<App.Data.Finance.InstitutionSearchData[]>({
         queryKey: ["institutions", debouncedSearchQuery],
         queryFn: async () => {
-            const res = await fetch(
-                routes.internal.api.finance.institutions.index({ query: { q: debouncedSearchQuery } }).url,
-            );
+            const res = await fetch(routes.api.finance.institutions.index({ query: { q: debouncedSearchQuery } }).url);
             return (await res.json()) as App.Data.Finance.InstitutionSearchData[];
         },
         enabled: params.commandPage === "institution",
