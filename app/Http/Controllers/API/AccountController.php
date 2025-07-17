@@ -25,7 +25,7 @@ final class AccountController extends Controller
      */
     public function index(Request $request): ResourceCollection|JsonResponse
     {
-        $this->authorize('viewAny', Account::class);
+        $this->authorize('viewAny');
 
         /** @var int */
         $perPage = $request->get('per_page', 10);
