@@ -23,10 +23,24 @@ use Symfony\Component\HttpFoundation\Response;
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         web: __DIR__.'/../routes/web.php',
-        api: __DIR__.'/../routes/api.php',
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
-        apiPrefix: '',
+        using: function () {
+            $apiUrl = config('app.api_url');
+
+            if ($apiUrl && trim($apiUrl) !== '') {
+                // Extract domain from URL if it contains a scheme
+                $domain = parse_url($apiUrl, PHP_URL_HOST) ?: $apiUrl;
+
+                Route::domain($domain)
+                    ->middleware('api')
+                    ->group(base_path('routes/api.php'));
+            } else {
+                Route::prefix('api')
+                    ->middleware('api')
+                    ->group(base_path('routes/api.php'));
+            }
+        },
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->web(append: [

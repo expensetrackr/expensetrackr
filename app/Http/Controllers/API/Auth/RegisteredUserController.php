@@ -21,9 +21,7 @@ final readonly class RegisteredUserController
          * The guard implementation.
          */
         private StatefulGuard $guard
-    )
-    {
-    }
+    ) {}
 
     /**
      * Store a newly created resource in storage.
