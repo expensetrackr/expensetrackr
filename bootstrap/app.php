@@ -44,10 +44,13 @@ return Application::configure(basePath: dirname(__DIR__))
         },
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        $middleware->web(append: [
-            HandleLanguageMiddleware::class,
+        $middleware->append([
             AddWorkspaceToRequest::class,
             HandleWorkspacesPermissionMiddleware::class,
+        ]);
+
+        $middleware->web(append: [
+            HandleLanguageMiddleware::class,
             HandleInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
         ]);
@@ -58,10 +61,6 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
 
         $middleware->statefulApi();
-        $middleware->api(prepend: [
-            AddWorkspaceToRequest::class,
-            HandleWorkspacesPermissionMiddleware::class,
-        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->respond(function (Response $response, Throwable $exception, Request $request) {
