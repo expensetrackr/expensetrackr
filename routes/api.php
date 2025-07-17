@@ -10,6 +10,7 @@ use App\Http\Controllers\API\TransactionController;
 use App\Http\Controllers\Financial\CurrencyController;
 use App\Http\Controllers\Financial\InstitutionController;
 use App\Http\Controllers\WebhookTellerController;
+use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 use Laravel\Fortify\Http\Controllers\PasswordResetLinkController;
@@ -23,7 +24,7 @@ Route::prefix('finance')->group(function () {
         ->name('api.finance.institutions.index');
 });
 
-Route::group(['middleware' => 'auth:sanctum'], function () {
+Route::middleware([AddQueuedCookiesToResponse::class, 'auth:sanctum'])->group(function () {
     Route::apiResource('accounts', AccountController::class)
         ->only(['index', 'show'])
         ->names('api.accounts');
