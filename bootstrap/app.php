@@ -55,12 +55,13 @@ return Application::configure(basePath: dirname(__DIR__))
             AddLinkHeadersForPreloadedAssets::class,
         ]);
 
+        $middleware->statefulApi();
+
         $middleware->validateCsrfTokens(except: [
             'polar/webhook',
             'teller/webhook',
         ]);
 
-        $middleware->statefulApi();
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->respond(function (Response $response, Throwable $exception, Request $request) {
