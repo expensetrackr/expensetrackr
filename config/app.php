@@ -64,7 +64,7 @@ return [
     | This domain is used to route the API requests to the correct domain.
     | If not set, the API will be routed to the same domain as the application.
     */
-    'api_domain' => env('API_DOMAIN'),
+    'api_url' => env('API_URL'),
 
     /*
     |--------------------------------------------------------------------------

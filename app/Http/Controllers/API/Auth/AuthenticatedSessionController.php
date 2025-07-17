@@ -22,9 +22,7 @@ final readonly class AuthenticatedSessionController
          * The guard implementation.
          */
         private StatefulGuard $guard
-    )
-    {
-    }
+    ) {}
 
     /**
      * Attempt to authenticate a new session.
