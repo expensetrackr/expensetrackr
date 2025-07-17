@@ -25,6 +25,8 @@ final class AccountController extends Controller
      */
     public function index(Request $request): ResourceCollection|JsonResponse
     {
+        $this->authorize('viewAny', Account::class);
+
         /** @var int */
         $perPage = $request->get('per_page', 10);
 
@@ -51,6 +53,8 @@ final class AccountController extends Controller
      */
     public function show(Account $account): AccountResource
     {
+        $this->authorize('view', $account);
+
         return $account->load(['bankConnection', 'transactions' => function (Builder $query): void {
             $query
                 ->latest('dated_at')
