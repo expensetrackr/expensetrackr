@@ -15,10 +15,9 @@ final class CategoryPolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(): bool
+    public function viewAny(User $user): bool
     {
-        // TODO: Only view any if the categories have is_system set to true or the workspace has categories
-        return true;
+        return $user->currentWorkspace->categories()->exists();
     }
 
     /**

@@ -22,12 +22,8 @@ final class CategoryController extends Controller
      *
      * @return ResourceCollection<Category>
      */
-    public function index(Request $request): JsonResponse|ResourceCollection
+    public function index(): JsonResponse|ResourceCollection
     {
-        if (! $request->user()?->currentWorkspace) {
-            return response()->json(['message' => 'No workspace selected'], 400);
-        }
-
         /** @var int */
         $perPage = request()->get('per_page', 10);
 
