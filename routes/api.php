@@ -23,17 +23,20 @@ Route::prefix('finance')->group(function () {
         ->name('api.finance.institutions.index');
 });
 
-Route::apiResource('accounts', AccountController::class)
-    ->only(['index', 'show'])
-    ->names('api.accounts');
+Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::apiResource('accounts', AccountController::class)
+        ->only(['index', 'show'])
+        ->names('api.accounts');
 
-Route::apiResource('categories', CategoryController::class)
-    ->only(['index', 'show'])
-    ->names('api.categories');
+    Route::apiResource('categories', CategoryController::class)
+        ->only(['index', 'show'])
+        ->names('api.categories');
 
-Route::apiResource('transactions', TransactionController::class)
-    ->only('show')
-    ->names('api.transactions');
+    Route::apiResource('transactions', TransactionController::class)
+        ->only('show')
+        ->names('api.transactions');
+
+});
 
 Route::prefix('auth')->group(function () {
     Route::post('login', [AuthenticatedSessionController::class, 'store'])
