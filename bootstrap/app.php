@@ -26,18 +26,20 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
         using: function () {
-            if (! config('app.api_url')) {
-                Route::prefix('api')
+            $apiUrl = config('app.api_url');
+
+            if ($apiUrl && trim($apiUrl) !== '') {
+                // Extract domain from URL if it contains a scheme
+                $domain = parse_url($apiUrl, PHP_URL_HOST) ?: $apiUrl;
+
+                Route::domain($domain)
                     ->middleware('api')
                     ->group(base_path('routes/api.php'));
             } else {
-                Route::domain(config('app.api_url'))
+                Route::prefix('api')
                     ->middleware('api')
                     ->group(base_path('routes/api.php'));
             }
-
-            Route::middleware('web')
-                ->group(base_path('routes/web.php'));
         },
     )
     ->withMiddleware(function (Middleware $middleware): void {
