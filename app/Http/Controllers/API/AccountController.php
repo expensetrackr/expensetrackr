@@ -28,10 +28,6 @@ final class AccountController extends Controller
         /** @var int */
         $perPage = $request->get('per_page', 10);
 
-        if (! $request->user()?->currentWorkspace) {
-            return response()->json(['message' => 'No workspace selected'], 400);
-        }
-
         return QueryBuilder::for(Account::class)
             ->allowedFilters(['name'])
             ->allowedSorts(['name', '-name', 'created_at', '-created_at'])
