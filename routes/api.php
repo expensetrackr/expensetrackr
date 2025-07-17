@@ -23,7 +23,7 @@ Route::prefix('finance')->group(function () {
         ->name('api.finance.institutions.index');
 });
 
-Route::middleware(['auth:sanctum'])->group(function () {
+Route::middleware(['auth:sanctum', config('workspaces.auth_session')])->group(function () {
     Route::apiResource('accounts', AccountController::class)
         ->only(['index', 'show'])
         ->names('api.accounts');
