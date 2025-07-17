@@ -40,6 +40,10 @@ return Application::configure(basePath: dirname(__DIR__))
                     ->middleware('api')
                     ->group(base_path('routes/api.php'));
             }
+
+            Route::middleware('web')
+                ->middleware('web')
+                ->group(base_path('routes/web.php'));
         },
     )
     ->withMiddleware(function (Middleware $middleware): void {
