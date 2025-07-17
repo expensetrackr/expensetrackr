@@ -7,6 +7,7 @@ namespace App\Policies;
 use App\Models\Account;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Support\Facades\Log;
 
 final class AccountPolicy
 {
@@ -17,6 +18,8 @@ final class AccountPolicy
      */
     public function viewAny(User $user): bool
     {
+        Log::error($user);
+
         return $user->currentWorkspace?->accounts()->exists() ?? false;
     }
 
