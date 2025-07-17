@@ -17,7 +17,7 @@ final class AccountPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->currentWorkspace->accounts()->exists();
+        return $user->currentWorkspace?->accounts()->exists() ?? false;
     }
 
     /**
