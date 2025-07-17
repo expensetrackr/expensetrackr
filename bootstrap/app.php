@@ -52,6 +52,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->web(append: [
             HandleLanguageMiddleware::class,
             HandleInertiaRequests::class,
+            AddWorkspaceToRequest::class,
+            HandleWorkspacesPermissionMiddleware::class,
             AddLinkHeadersForPreloadedAssets::class,
         ]);
 
