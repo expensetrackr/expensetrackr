@@ -33,7 +33,7 @@ return Application::configure(basePath: dirname(__DIR__))
                 $domain = parse_url($apiUrl, PHP_URL_HOST) ?: $apiUrl;
 
                 Route::domain($domain)
-                    ->middleware('api')
+                    ->middleware(['api', HandleCors::class])
                     ->group(base_path('routes/api.php'));
             } else {
                 Route::prefix('api')
