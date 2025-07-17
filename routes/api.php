@@ -10,8 +10,6 @@ use App\Http\Controllers\API\TransactionController;
 use App\Http\Controllers\Financial\CurrencyController;
 use App\Http\Controllers\Financial\InstitutionController;
 use App\Http\Controllers\WebhookTellerController;
-use App\Http\Middleware\AddWorkspaceToRequest;
-use App\Http\Middleware\HandleWorkspacesPermissionMiddleware;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 use Laravel\Fortify\Http\Controllers\PasswordResetLinkController;
@@ -25,21 +23,20 @@ Route::prefix('finance')->group(function () {
         ->name('api.finance.institutions.index');
 });
 
-Route::group(['middleware' => 'auth:sanctum', AddWorkspaceToRequest::class,
-    HandleWorkspacesPermissionMiddleware::class, ], function () {
-        Route::apiResource('accounts', AccountController::class)
-            ->only(['index', 'show'])
-            ->names('api.accounts');
+Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::apiResource('accounts', AccountController::class)
+        ->only(['index', 'show'])
+        ->names('api.accounts');
 
-        Route::apiResource('categories', CategoryController::class)
-            ->only(['index', 'show'])
-            ->names('api.categories');
+    Route::apiResource('categories', CategoryController::class)
+        ->only(['index', 'show'])
+        ->names('api.categories');
 
-        Route::apiResource('transactions', TransactionController::class)
-            ->only('show')
-            ->names('api.transactions');
+    Route::apiResource('transactions', TransactionController::class)
+        ->only('show')
+        ->names('api.transactions');
 
-    });
+});
 
 Route::prefix('auth')->group(function () {
     Route::post('login', [AuthenticatedSessionController::class, 'store'])
