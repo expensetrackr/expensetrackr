@@ -44,7 +44,7 @@ return Application::configure(basePath: dirname(__DIR__))
         },
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        $middleware->append([
+        $middleware->api(append: [
             AddWorkspaceToRequest::class,
             HandleWorkspacesPermissionMiddleware::class,
         ]);
