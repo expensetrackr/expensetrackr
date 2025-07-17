@@ -49,17 +49,17 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->web(append: [
             HandleLanguageMiddleware::class,
-            HandleWorkspacesPermissionMiddleware::class,
             AddWorkspaceToRequest::class,
+            HandleWorkspacesPermissionMiddleware::class,
             HandleInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
         ]);
         $middleware->api(append: [
             HandleCors::class,
             EnsureFrontendRequestsAreStateful::class,
-            ThrottleRequests::class.':api',
-            HandleWorkspacesPermissionMiddleware::class,
             AddWorkspaceToRequest::class,
+            HandleWorkspacesPermissionMiddleware::class,
+            ThrottleRequests::class.':api',
         ]);
         $middleware->validateCsrfTokens(except: [
             'polar/webhook',
