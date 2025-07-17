@@ -23,12 +23,6 @@
         "buttonClassName",
         "wrapperClassName"
     ],
-    "tailwindCSS.experimental.classRegex": [
-        [
-            "([\"'`][^\"'`]*.*?[\"'`])",
-            "[\"'`]([^\"'`]*).*?[\"'`]"
-        ],
-    ],
     "tailwindCSS.experimental.configFile": "./resources/css/tailwind.css",
     "tailwindCSS.includeLanguages": {
         "typescript": "javascript",

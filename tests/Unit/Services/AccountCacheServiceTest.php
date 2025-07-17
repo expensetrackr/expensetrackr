@@ -115,7 +115,10 @@ final class AccountCacheServiceTest extends TestCase
         $result = $this->cacheService->getCachedQuery($cacheKey);
         $this->assertEquals($testData, $result);
 
-        $this->assertTrue(true);
+        // Fast-forward time to after TTL expiration
+        // Note: This requires either mocking the cache or using a test cache driver
+        // that supports time manipulation, or refactoring the service to accept TTL
+        $this->markTestIncomplete('TTL testing requires cache time manipulation support');
     }
 
     public function test_invalidate_account_clears_cache(): void
@@ -250,7 +253,7 @@ final class AccountCacheServiceTest extends TestCase
             'current_balance' => 1000.00,
         ]);
 
-        $eurSavings = Account::factory()->create([
+        Account::factory()->create([
             'workspace_id' => $this->workspace->id,
             'created_by' => $this->user->id,
             'name' => 'EUR Savings',
@@ -258,7 +261,7 @@ final class AccountCacheServiceTest extends TestCase
             'current_balance' => 500.00,
         ]);
 
-        $usdSavings = Account::factory()->create([
+        Account::factory()->create([
             'workspace_id' => $this->workspace->id,
             'created_by' => $this->user->id,
             'name' => 'USD Savings',

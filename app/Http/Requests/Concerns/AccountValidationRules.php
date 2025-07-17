@@ -159,7 +159,7 @@ trait AccountValidationRules
      */
     protected function authorizeAccountUpdateOperation(): bool
     {
-        $account = $this->route('accounts.index');
+        $account = $this->route('account');
 
         return $account instanceof Account && $this->user()?->can('update', $account) ?? false;
     }

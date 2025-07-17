@@ -81,11 +81,13 @@ final class InvalidAccountTypeException extends Exception
      */
     public function context(): array
     {
+        $user = auth()->user();
+
         return [
             'provided_type' => $this->providedType,
             'valid_types' => $this->validTypes,
-            'user_id' => auth()->id(),
-            'workspace_id' => auth()->user()?->current_workspace_id,
+            'user_id' => $user?->id,
+            'workspace_id' => $user?->current_workspace_id,
         ];
     }
 

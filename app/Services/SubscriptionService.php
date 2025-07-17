@@ -13,28 +13,17 @@ final class SubscriptionService
      */
     public static function getMaxAccountsForUser(User $user): int
     {
-        $defaultLimits = [
+        $defaultLimits = config('accounts.limits', [
             'free' => 1,
             'personal' => 5,
             'business' => 10,
             'enterprise' => 999,
-        ];
+        ]);
 
         $limits = config('accounts.limits', $defaultLimits);
+        $tier = self::detectSubscriptionTier($user);
 
-        if ($user->is_admin || $user->subscribed('enterprise')) {
-            return $limits['enterprise'];
-        }
-
-        if ($user->subscribed('business')) {
-            return $limits['business'];
-        }
-
-        if ($user->subscribed('personal')) {
-            return $limits['personal'];
-        }
-
-        return $limits['free'];
+        return $limits[$tier];
     }
 
     /**
@@ -61,6 +50,14 @@ final class SubscriptionService
      * Get the subscription tier name for a user.
      */
     public static function getSubscriptionTier(User $user): string
+    {
+        return self::detectSubscriptionTier($user);
+    }
+
+    /**
+     * Detect the subscription tier for a user.
+     */
+    private static function detectSubscriptionTier(User $user): string
     {
         if ($user->is_admin || $user->subscribed('enterprise')) {
             return 'enterprise';
