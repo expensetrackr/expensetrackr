@@ -30,7 +30,7 @@ final readonly class RegisteredUserController
     /**
      * Register a new user
      *
-     * Register a new user for the authenticated user.
+     * Register a new user account.
      */
     #[Unauthenticated]
     #[BodyParam(name: 'name', type: 'string', description: 'The name of the user.', required: true)]

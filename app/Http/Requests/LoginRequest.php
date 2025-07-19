@@ -30,6 +30,9 @@ final class LoginRequest extends FormRequest
         ];
     }
 
+    /**
+     * @return array<string, array{description:string,required:bool,example?:mixed}>
+     */
     public function bodyParameters(): array
     {
         return [
@@ -41,6 +44,7 @@ final class LoginRequest extends FormRequest
             'password' => [
                 'description' => 'The password of the user.',
                 'required' => true,
+                'example' => 'P@ssw0rd!',
             ],
         ];
     }

@@ -19,15 +19,16 @@ final class WebhookTellerController extends Controller
      * Handle incoming Teller webhook events.
      */
     #[Unauthenticated]
-    #[Header('teller-signature', 'The signature of the Teller webhook.')]
+    #[Header('teller-signature', 'The signature of the Teller webhook.', required: true)]
     public function __invoke(TellerWebhookRequest $request, ValidateTellerWebhookSignature $action): JsonResponse
     {
         // Validate webhook signature
+        $signature = $request->header('teller-signature');
         if (! $action->handle($request)) {
             Log::warning('Invalid Teller webhook signature', [
                 'ip' => $request->ip(),
                 'type' => $request->input('type'),
-                'signature' => $request->header('teller-signature'),
+                'signature' => $signature,
             ]);
 
             abort(401, 'Invalid webhook signature');
