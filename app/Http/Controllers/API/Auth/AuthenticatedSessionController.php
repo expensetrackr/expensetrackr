@@ -11,7 +11,11 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
+use Knuckles\Scribe\Attributes\BodyParam;
+use Knuckles\Scribe\Attributes\Group;
+use Knuckles\Scribe\Attributes\Unauthenticated;
 
+#[Group(name: 'Authentication')]
 final readonly class AuthenticatedSessionController
 {
     /**
@@ -25,8 +29,14 @@ final readonly class AuthenticatedSessionController
     ) {}
 
     /**
-     * Attempt to authenticate a new session.
+     * Login a user
+     *
+     * Attempt to authenticate a new session for the authenticated user.
      */
+    #[Unauthenticated]
+    #[BodyParam(name: 'email', type: 'string', description: 'The email of the user.', required: true)]
+    #[BodyParam(name: 'password', type: 'string', description: 'The password of the user.', required: true)]
+    #[BodyParam(name: 'device_name', type: 'string', description: 'The name of the device.', required: true)]
     public function store(LoginRequest $request): JsonResponse|string
     {
         $user = User::where('email', $request->email)->first();
@@ -41,7 +51,9 @@ final readonly class AuthenticatedSessionController
     }
 
     /**
-     * Destroy an authenticated session.
+     * Logout a user
+     *
+     * Logout the authenticated user.
      */
     public function destroy(Request $request): Response
     {

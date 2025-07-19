@@ -9,7 +9,9 @@ use App\Models\Transaction;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Knuckles\Scribe\Attributes\Group;
 
+#[Group(name: 'Transactions')]
 final class TransactionController extends Controller
 {
     use AuthorizesRequests;
@@ -31,7 +33,9 @@ final class TransactionController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Retrieve a transaction
+     *
+     * Retrieve a transaction by its public ID for the authenticated user in the current workspace.
      *
      * @return JsonResource<Transaction>
      */

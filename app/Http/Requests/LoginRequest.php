@@ -30,6 +30,21 @@ final class LoginRequest extends FormRequest
         ];
     }
 
+    public function bodyParameters(): array
+    {
+        return [
+            'email' => [
+                'description' => 'The email of the user.',
+                'required' => true,
+                'example' => 'test@example.com',
+            ],
+            'password' => [
+                'description' => 'The password of the user.',
+                'required' => true,
+            ],
+        ];
+    }
+
     /**
      * Handle a failed validation attempt.
      *

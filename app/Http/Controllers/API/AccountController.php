@@ -7,6 +7,7 @@ namespace App\Http\Controllers\API;
 use App\Actions\BankAccounts\CreateAccount;
 use App\Actions\BankAccounts\DeleteAccount;
 use App\Actions\BankAccounts\UpdateAccount;
+use App\Enums\Finance\AccountType;
 use App\Http\Requests\API\StoreAccountRequest;
 use App\Http\Requests\API\UpdateAccountRequest;
 use App\Models\Account;
@@ -14,10 +15,13 @@ use App\Services\AccountCacheService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Knuckles\Scribe\Attributes\Group;
+use Knuckles\Scribe\Attributes\QueryParam;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 use Throwable;
 
+#[Group(name: 'Accounts')]
 final class AccountController extends BaseApiController
 {
     /**
@@ -34,10 +38,26 @@ final class AccountController extends BaseApiController
     }
 
     /**
-     * Display a listing of the resource.
+     * List all accounts
+     *
+     * Retrieve a list of accounts for the authenticated user in the current workspace.
      *
      * @return ResourceCollection<Account>|JsonResponse
      */
+    #[QueryParam(name: 'per_page', type: 'integer', description: 'The number of items per page', example: 15, required: false)]
+    #[QueryParam(name: 'page', type: 'integer', description: 'The page number', example: 1, required: false)]
+    #[QueryParam(name: 'sort', type: 'string', description: 'The field to sort by', example: 'name', required: false, enum: ['name', '-name', 'created_at', '-created_at', 'current_balance', '-current_balance', 'currency_code', '-currency_code', 'is_default', '-is_default'])]
+    #[QueryParam(name: 'include', type: 'string', description: 'The relationships to include', example: 'bankConnection,accountable', required: false, enum: ['bankConnection', 'accountable'])]
+    #[QueryParam(name: 'filter[q]', type: 'string', description: 'The search query to filter accounts by name', example: 'My Account', required: false)]
+    #[QueryParam(name: 'filter[name]', type: 'string', description: 'The name of the account', example: 'My Account', required: false)]
+    #[QueryParam(name: 'filter[currency_code]', type: 'string', description: 'The currency code of the account', example: 'USD', required: false)]
+    #[QueryParam(name: 'filter[is_default]', type: 'boolean', description: 'Whether the account is the default account', example: true, required: false)]
+    #[QueryParam(name: 'filter[is_manual]', type: 'boolean', description: 'Whether the account is manual', example: true, required: false)]
+    #[QueryParam(name: 'filter[type]', type: 'string', description: 'The type of the account', example: 'depository', required: false, enum: AccountType::class)]
+    #[QueryParam(name: 'filter[balance_min]', type: 'number', description: 'The minimum balance of the account', example: 100, required: false)]
+    #[QueryParam(name: 'filter[balance_max]', type: 'number', description: 'The maximum balance of the account', example: 1000, required: false)]
+    #[QueryParam(name: 'filter[created_from]', type: 'date', description: 'The minimum creation date of the account', example: '2021-01-01', required: false)]
+    #[QueryParam(name: 'filter[created_to]', type: 'date', description: 'The maximum creation date of the account', example: '2021-01-01', required: false)]
     public function index(Request $request): ResourceCollection|JsonResponse
     {
         try {
@@ -71,7 +91,9 @@ final class AccountController extends BaseApiController
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Create a new account
+     *
+     * Create a new account for the authenticated user in the current workspace.
      */
     public function store(StoreAccountRequest $request, CreateAccount $action): JsonResponse
     {
@@ -91,7 +113,9 @@ final class AccountController extends BaseApiController
     }
 
     /**
-     * Display the specified resource.
+     * Retrieve an account
+     *
+     * Retrieve an account by its public ID for the authenticated user in the current workspace.
      */
     public function show(Account $account): JsonResponse
     {
@@ -113,7 +137,9 @@ final class AccountController extends BaseApiController
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update an account
+     *
+     * Update an account for the authenticated user in the current workspace.
      */
     public function update(UpdateAccountRequest $request, Account $account, UpdateAccount $action): JsonResponse
     {
@@ -132,7 +158,9 @@ final class AccountController extends BaseApiController
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete an account
+     *
+     * Delete an account for the authenticated user in the current workspace.
      */
     public function destroy(Account $account, DeleteAccount $action): JsonResponse
     {
@@ -150,7 +178,9 @@ final class AccountController extends BaseApiController
     }
 
     /**
-     * Get account statistics for the workspace.
+     * Get account statistics
+     *
+     * Retrieve statistics for all accounts in the current workspace.
      */
     public function stats(): JsonResponse
     {
@@ -186,33 +216,6 @@ final class AccountController extends BaseApiController
     }
 
     /**
-     * Get accounts by type.
-     */
-    public function byType(string $type): JsonResponse
-    {
-        try {
-            $workspaceId = auth()->user()->current_workspace_id;
-            $modelClass = $this->getModelClassFromType($type);
-
-            $accounts = QueryBuilder::for(Account::class)
-                ->where('workspace_id', $workspaceId)
-                ->where('accountable_type', $modelClass)
-                ->allowedIncludes(['bankConnection', 'accountable'])
-                ->allowedSorts(['name', '-name', 'created_at', '-created_at', 'current_balance', '-current_balance'])
-                ->defaultSort('name')
-                ->get()
-                ->toResourceCollection();
-
-            return $this->successResponse(
-                $accounts,
-                "Accounts of type '{$type}' retrieved successfully."
-            );
-        } catch (Throwable $e) {
-            return $this->handleException($e);
-        }
-    }
-
-    /**
      * Build the base query for accounts with filters and sorting.
      */
     private function buildAccountQuery(int $workspaceId): QueryBuilder
@@ -240,8 +243,8 @@ final class AccountController extends BaseApiController
                 AllowedFilter::callback('created_to', function ($query, $value) {
                     $query->where('created_at', '<=', $value);
                 }),
-                AllowedFilter::callback('search', function ($query, $value) {
-                    $query->where('name', 'like', '%'.$value.'%');
+                AllowedFilter::callback('q', function ($query, $value) {
+                    $query->where('name', 'like', "%$value%");
                 }),
             ])
             ->allowedSorts([
