@@ -31,7 +31,7 @@ Route::prefix('finance')->group(function () {
 
 Route::middleware(['auth:sanctum', config('workspaces.auth_session')])->group(function () {
     Route::apiResource('accounts', AccountController::class)
-        ->only(['index', 'store', 'show', 'update', 'destroy', 'stats', 'byType'])
+        ->only(['index', 'store', 'show', 'update', 'destroy'])
         ->names('api.accounts');
 
     Route::apiResource('categories', CategoryController::class)
@@ -55,13 +55,6 @@ Route::prefix('auth')->group(function () {
         ->name('api.auth.login');
 
     if (Features::enabled(Features::resetPasswords())) {
-        /**
-         * Forgot password
-         *
-         * Send a password reset link to the user's email.
-         *
-         * @group Authentication
-         */
         Route::post('forgot-password',
             [PasswordResetLinkController::class, 'store'])
             ->middleware([
