@@ -25,10 +25,12 @@ php artisan inertia:stop-ssr
 
 php artisan queue:restart
 
-php artisan make:sitemap
-
 php artisan horizon:terminate
 
 php artisan pulse:restart
+
+php artisan make:sitemap
+
+php artisan scribe:generate
 
 php artisan up

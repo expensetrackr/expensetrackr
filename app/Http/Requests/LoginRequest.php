@@ -31,6 +31,25 @@ final class LoginRequest extends FormRequest
     }
 
     /**
+     * @return array<string, array{description:string,required:bool,example?:mixed}>
+     */
+    public function bodyParameters(): array
+    {
+        return [
+            'email' => [
+                'description' => 'The email of the user.',
+                'required' => true,
+                'example' => 'test@example.com',
+            ],
+            'password' => [
+                'description' => 'The password of the user.',
+                'required' => true,
+                'example' => 'P@ssw0rd!',
+            ],
+        ];
+    }
+
+    /**
      * Handle a failed validation attempt.
      *
      * @throws HttpResponseException
