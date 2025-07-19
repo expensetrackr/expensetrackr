@@ -10,12 +10,16 @@ use App\Jobs\SyncBankAccounts;
 use App\Models\BankConnection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
+use Knuckles\Scribe\Attributes\Header;
+use Knuckles\Scribe\Attributes\Unauthenticated;
 
 final class WebhookTellerController extends Controller
 {
     /**
      * Handle incoming Teller webhook events.
      */
+    #[Unauthenticated]
+    #[Header('teller-signature', 'The signature of the Teller webhook.')]
     public function __invoke(TellerWebhookRequest $request, ValidateTellerWebhookSignature $action): JsonResponse
     {
         // Validate webhook signature
