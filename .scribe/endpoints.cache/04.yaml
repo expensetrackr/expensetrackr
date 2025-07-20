@@ -117,7 +117,7 @@ endpoints:
       subgroup: ''
       subgroupDescription: ''
       title: 'Register a new user'
-      description: 'Register a new user for the authenticated user.'
+      description: 'Register a new user account.'
       authenticated: false
       custom: []
     headers:

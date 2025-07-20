@@ -33,6 +33,6 @@ php artisan pulse:restart
 
 php artisan make:sitemap
 
-php artisan scribe:generate
+php artisan scribe:generate:s3
 
 php artisan up

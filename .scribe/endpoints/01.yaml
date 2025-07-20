@@ -283,7 +283,7 @@ endpoints:
         name: is_default
         description: ''
         required: false
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -375,7 +375,7 @@ endpoints:
         name: expires_at
         description: 'This field is required when <code>type</code> is <code>credit_card</code>. Must be a valid date.'
         required: false
-        example: '2025-07-19T20:17:29'
+        example: '2025-07-20T04:16:26'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -438,14 +438,14 @@ endpoints:
       name: b
       currency_code: 'n'
       initial_balance: 84
-      is_default: true
+      is_default: false
       type: architecto
       subtype: architecto
       available_credit: 39
       minimum_payment: 84
       apr: 12
       annual_fee: 77
-      expires_at: '2025-07-19T20:17:29'
+      expires_at: '2025-07-20T04:16:26'
       interest_rate: 8
       rate_type: architecto
       term_months: 22
@@ -584,7 +584,7 @@ endpoints:
         name: is_default
         description: ''
         required: false
-        example: false
+        example: true
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -659,7 +659,7 @@ endpoints:
         name: expires_at
         description: 'Must be a valid date.'
         required: false
-        example: '2025-07-19T20:17:29'
+        example: '2025-07-20T04:16:26'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -712,13 +712,13 @@ endpoints:
       name: b
       description: 'Et animi quos velit et fugiat.'
       currency_code: d
-      is_default: false
+      is_default: true
       subtype: architecto
       available_credit: 39
       minimum_payment: 84
       apr: 12
       annual_fee: 77
-      expires_at: '2025-07-19T20:17:29'
+      expires_at: '2025-07-20T04:16:26'
       interest_rate: 8
       rate_type: architecto
       term_months: 22
