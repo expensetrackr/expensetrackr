@@ -15,6 +15,12 @@ use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 use Spatie\Health\Http\Controllers\HealthCheckResultsController;
 
+Route::get('/docs', fn () => view('scribe.index'))->name('scribe');
+
+Route::get('/docs.postman', fn () => response()->file(public_path('docs/collection.json'), ['Content-Type' => 'application/json']))->name('scribe.postman');
+
+Route::get('/docs.openapi', fn () => response()->file(public_path('docs/openapi.yaml'), ['Content-Type' => 'text/yaml']))->name('scribe.openapi');
+
 Route::post('teller/webhook', WebhookTellerController::class)
     ->name('teller.webhook');
 

@@ -13,9 +13,7 @@ use App\Http\Controllers\PricingController;
 use App\Http\Controllers\TransactionController;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Spatie\Health\Http\Controllers\HealthCheckResultsController;
 
@@ -33,46 +31,6 @@ Route::get('/', function (Request $request) {
 })->name('home');
 
 Route::get('/pricing', PricingController::class)->name('pricing');
-
-Route::get('/docs.openapi', function () {
-    $path = Storage::disk('s3')->path('scribe/openapi.yaml');
-
-    if (! Storage::disk('s3')->exists('scribe/openapi.yaml')) {
-        // Try to generate the documentation
-        try {
-            Artisan::call('scribe:generate');
-        } catch (Exception $e) {
-            // If generation fails, return 404 or empty response
-            abort(404, 'API documentation is not available.');
-        }
-    }
-
-    // Check again after attempting to generate
-    if (! Storage::disk('s3')->exists('scribe/openapi.yaml')) {
-        abort(404, 'API documentation is not available.');
-    }
-
-    return response()->file($path);
-})->name('scribe.openapi');
-
-Route::get('/docs', fn () => view('scribe.index'))->name('scribe');
-
-Route::get('/docs.postman', function () {
-    if (! Storage::disk('s3')->exists('scribe/collection.json')) {
-        // Try to generate the documentation
-        try {
-            Artisan::call('scribe:generate');
-        } catch (Exception $e) {
-            abort(404, 'API documentation is not available.');
-        }
-    }
-
-    if (! Storage::disk('s3')->exists('scribe/collection.json')) {
-        abort(404, 'API documentation is not available.');
-    }
-
-    return response()->file(Storage::disk('s3')->path('scribe/collection.json'), ['Content-Type' => 'application/json']);
-})->name('scribe.postman');
 
 Route::get('/changelog', [ChangelogController::class, 'index'])->name('changelog.index');
 Route::get('/changelog/{changelog}', [ChangelogController::class, 'show'])->name('changelog.show');
