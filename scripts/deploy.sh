@@ -21,6 +21,8 @@ php artisan filament:cache-components
 
 php artisan migrate --force
 
+php artisan storage:link
+
 php artisan inertia:stop-ssr
 
 php artisan queue:restart
