@@ -37,17 +37,13 @@ final class AccountResource extends JsonResource
             'createdAt' => $this->created_at,
             'updatedAt' => $this->updated_at,
             'connection' => new BankConnectionResource($this->whenLoaded('bankConnection')),
-            'accountable' => $this->whenLoaded('accountable', function () {
-                return $this->accountable ? $this->accountable->toArray() : null;
-            }),
+            'accountable' => $this->whenLoaded('accountable', fn () => $this->accountable?->toArray()),
             'transactions' => TransactionResource::collection($this->whenLoaded('transactions')),
-            'permissions' => $this->when($request->user(), function () use ($request) {
-                return [
-                    'canView' => $request->user()?->can('view', $this->resource),
-                    'canUpdate' => $request->user()?->can('update', $this->resource),
-                    'canDelete' => $request->user()?->can('delete', $this->resource),
-                ];
-            }),
+            'permissions' => $this->when($request->user(), fn () => [
+                'canView' => $request->user()?->can('view', $this->resource),
+                'canUpdate' => $request->user()?->can('update', $this->resource),
+                'canDelete' => $request->user()?->can('delete', $this->resource),
+            ]),
         ];
     }
 }

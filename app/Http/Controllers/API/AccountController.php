@@ -10,6 +10,7 @@ use App\Actions\BankAccounts\UpdateAccount;
 use App\Enums\Finance\AccountType;
 use App\Http\Requests\API\StoreAccountRequest;
 use App\Http\Requests\API\UpdateAccountRequest;
+use App\Http\Resources\AccountCollection;
 use App\Http\Resources\AccountResource;
 use App\Models\Account;
 use App\Services\AccountCacheService;
@@ -61,7 +62,7 @@ final class AccountController extends BaseApiController
     #[QueryParam(name: 'filter[balance_max]', type: 'number', description: 'The maximum balance of the account', example: 1000, required: false)]
     #[QueryParam(name: 'filter[created_from]', type: 'date', description: 'The minimum creation date of the account', example: '2021-01-01', required: false)]
     #[QueryParam(name: 'filter[created_to]', type: 'date', description: 'The maximum creation date of the account', example: '2021-01-01', required: false)]
-    #[ResponseFromApiResource(AccountResource::class, Account::class, paginate: 15)]
+    #[ResponseFromApiResource(AccountCollection::class, Account::class, paginate: 15)]
     public function index(Request $request): ResourceCollection|JsonResponse
     {
         try {

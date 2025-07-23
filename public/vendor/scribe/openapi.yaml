@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: 'ExpenseTrackr API Documentation'
   description: ''
-  version: 3.1.0
+  version: 1.0.0
 servers:
   -
     url: 'https://expensetrackr.app.test'
@@ -222,57 +222,57 @@ paths:
               schema:
                 type: object
                 example:
-                  id: acct_26d642c5fc684a59a316f215b2714f2a
-                  name: 'Primary Checking'
+                  id: acct_b1b2520d2da147faa4e9d273f428e820
+                  name: 'Business Account'
                   description: null
-                  type: depository
+                  type: other_asset
                   subtype: null
-                  currencyCode: SOS
-                  baseCurrency: null
-                  currencyRate: '5.515960'
-                  initialBalance: '2302.0618'
-                  baseInitialBalance: '8654.5255'
-                  currentBalance: '7584.2777'
+                  currencyCode: TWD
+                  baseCurrency: UYU
+                  currencyRate: '6.344134'
+                  initialBalance: '4730.4138'
+                  baseInitialBalance: null
+                  currentBalance: '8991.1288'
                   baseCurrentBalance: null
                   isDefault: false
-                  isManual: false
+                  isManual: true
                   externalId: null
-                  createdAt: '2025-07-23T21:22:10.000000Z'
-                  updatedAt: '2025-07-23T21:22:10.000000Z'
+                  createdAt: '2025-07-23T23:10:17.000000Z'
+                  updatedAt: '2025-07-23T23:10:17.000000Z'
                 properties:
                   id:
                     type: string
-                    example: acct_26d642c5fc684a59a316f215b2714f2a
+                    example: acct_b1b2520d2da147faa4e9d273f428e820
                   name:
                     type: string
-                    example: 'Primary Checking'
+                    example: 'Business Account'
                   description:
                     type: string
                     example: null
                   type:
                     type: string
-                    example: depository
+                    example: other_asset
                   subtype:
                     type: string
                     example: null
                   currencyCode:
                     type: string
-                    example: SOS
+                    example: TWD
                   baseCurrency:
                     type: string
-                    example: null
+                    example: UYU
                   currencyRate:
                     type: string
-                    example: '5.515960'
+                    example: '6.344134'
                   initialBalance:
                     type: string
-                    example: '2302.0618'
+                    example: '4730.4138'
                   baseInitialBalance:
                     type: string
-                    example: '8654.5255'
+                    example: null
                   currentBalance:
                     type: string
-                    example: '7584.2777'
+                    example: '8991.1288'
                   baseCurrentBalance:
                     type: string
                     example: null
@@ -281,16 +281,16 @@ paths:
                     example: false
                   isManual:
                     type: boolean
-                    example: false
+                    example: true
                   externalId:
                     type: string
                     example: null
                   createdAt:
                     type: string
-                    example: '2025-07-23T21:22:10.000000Z'
+                    example: '2025-07-23T23:10:17.000000Z'
                   updatedAt:
                     type: string
-                    example: '2025-07-23T21:22:10.000000Z'
+                    example: '2025-07-23T23:10:17.000000Z'
       tags:
         - Accounts
     post:
@@ -306,7 +306,7 @@ paths:
               schema:
                 type: object
                 example:
-                  id: acct_e3c9b0f8be4640c5b6e276f2cdc79a90
+                  id: acct_3dd7150bc64041cbac0ea605cd72e081
                   name: 'Retirement Fund'
                   description: 'Modi deserunt aut ab provident perspiciatis.'
                   type: crypto
@@ -321,12 +321,12 @@ paths:
                   isDefault: false
                   isManual: true
                   externalId: null
-                  createdAt: '2025-07-23T21:22:10.000000Z'
-                  updatedAt: '2025-07-23T21:22:10.000000Z'
+                  createdAt: '2025-07-23T23:10:17.000000Z'
+                  updatedAt: '2025-07-23T23:10:17.000000Z'
                 properties:
                   id:
                     type: string
-                    example: acct_e3c9b0f8be4640c5b6e276f2cdc79a90
+                    example: acct_3dd7150bc64041cbac0ea605cd72e081
                   name:
                     type: string
                     example: 'Retirement Fund'
@@ -371,10 +371,10 @@ paths:
                     example: null
                   createdAt:
                     type: string
-                    example: '2025-07-23T21:22:10.000000Z'
+                    example: '2025-07-23T23:10:17.000000Z'
                   updatedAt:
                     type: string
-                    example: '2025-07-23T21:22:10.000000Z'
+                    example: '2025-07-23T23:10:17.000000Z'
       tags:
         - Accounts
       requestBody:
@@ -466,7 +466,7 @@ paths:
                 expires_at:
                   type: string
                   description: 'This field is required when <code>type</code> is <code>credit_card</code>. Must be a valid date.'
-                  example: '2025-07-23T21:22:10'
+                  example: '2025-07-23T23:10:17'
                   nullable: false
                 interest_rate:
                   type: number
@@ -516,7 +516,7 @@ paths:
               schema:
                 type: object
                 example:
-                  id: acct_1cb21056040542d1846949e774ca94c5
+                  id: acct_131780d3eb364d5c98f6c96a46016047
                   name: 'Credit Card'
                   description: 'Qui commodi incidunt iure odit.'
                   type: crypto
@@ -531,12 +531,12 @@ paths:
                   isDefault: false
                   isManual: true
                   externalId: 502eabbf-311f-3542-a47b-b2a14f5de904
-                  createdAt: '2025-07-23T21:22:10.000000Z'
-                  updatedAt: '2025-07-23T21:22:10.000000Z'
+                  createdAt: '2025-07-23T23:10:17.000000Z'
+                  updatedAt: '2025-07-23T23:10:17.000000Z'
                 properties:
                   id:
                     type: string
-                    example: acct_1cb21056040542d1846949e774ca94c5
+                    example: acct_131780d3eb364d5c98f6c96a46016047
                   name:
                     type: string
                     example: 'Credit Card'
@@ -581,10 +581,10 @@ paths:
                     example: 502eabbf-311f-3542-a47b-b2a14f5de904
                   createdAt:
                     type: string
-                    example: '2025-07-23T21:22:10.000000Z'
+                    example: '2025-07-23T23:10:17.000000Z'
                   updatedAt:
                     type: string
-                    example: '2025-07-23T21:22:10.000000Z'
+                    example: '2025-07-23T23:10:17.000000Z'
       tags:
         - Accounts
     put:
@@ -600,7 +600,7 @@ paths:
               schema:
                 type: object
                 example:
-                  id: acct_19262b1b5fbf45c3a7395196f545d5df
+                  id: acct_e7dfbeddd9c8479aaa60d2b78b24cdcb
                   name: 'Credit Card'
                   description: null
                   type: loan
@@ -615,12 +615,12 @@ paths:
                   isDefault: false
                   isManual: true
                   externalId: bfc53181-d647-36b2-9080-f9c2b76006f4
-                  createdAt: '2025-07-23T21:22:10.000000Z'
-                  updatedAt: '2025-07-23T21:22:10.000000Z'
+                  createdAt: '2025-07-23T23:10:17.000000Z'
+                  updatedAt: '2025-07-23T23:10:17.000000Z'
                 properties:
                   id:
                     type: string
-                    example: acct_19262b1b5fbf45c3a7395196f545d5df
+                    example: acct_e7dfbeddd9c8479aaa60d2b78b24cdcb
                   name:
                     type: string
                     example: 'Credit Card'
@@ -665,10 +665,10 @@ paths:
                     example: bfc53181-d647-36b2-9080-f9c2b76006f4
                   createdAt:
                     type: string
-                    example: '2025-07-23T21:22:10.000000Z'
+                    example: '2025-07-23T23:10:17.000000Z'
                   updatedAt:
                     type: string
-                    example: '2025-07-23T21:22:10.000000Z'
+                    example: '2025-07-23T23:10:17.000000Z'
       tags:
         - Accounts
       requestBody:
@@ -696,7 +696,7 @@ paths:
                 is_default:
                   type: boolean
                   description: ''
-                  example: false
+                  example: true
                   nullable: false
                 subtype:
                   type: string
@@ -742,7 +742,7 @@ paths:
                 expires_at:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2025-07-23T21:22:10'
+                  example: '2025-07-23T23:10:17'
                   nullable: false
                 interest_rate:
                   type: number
