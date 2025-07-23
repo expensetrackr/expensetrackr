@@ -13,6 +13,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Knuckles\Scribe\Attributes\BodyParam;
 use Knuckles\Scribe\Attributes\Group;
+use Knuckles\Scribe\Attributes\Response as ScribeResponse;
 use Knuckles\Scribe\Attributes\Unauthenticated;
 
 #[Group(name: 'Authentication')]
@@ -37,6 +38,7 @@ final readonly class AuthenticatedSessionController
     #[BodyParam(name: 'email', type: 'string', description: 'The email of the user.', required: true)]
     #[BodyParam(name: 'password', type: 'string', description: 'The password of the user.', required: true)]
     #[BodyParam(name: 'device_name', type: 'string', description: 'The name of the device.', required: true)]
+    #[ScribeResponse('', 200)]
     public function store(LoginRequest $request): JsonResponse|string
     {
         $user = User::where('email', $request->email)->first();
@@ -55,6 +57,7 @@ final readonly class AuthenticatedSessionController
      *
      * Logout the authenticated user.
      */
+    #[ScribeResponse(null, 204)]
     public function destroy(Request $request): Response
     {
         $this->guard->logout();

@@ -202,13 +202,10 @@ endpoints:
     fileParameters: []
     responses:
       -
-        status: 401
-        content: '{"message":"Unauthenticated."}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          vary: Origin
-        description: null
+        status: 200
+        content: '{"id":"acct_8eb4fdf543474d61baab022e127c1d10","name":"Emergency Fund","description":"Ut est minus delectus aperiam a sed est.","type":"loan","subtype":null,"currencyCode":"ERN","baseCurrency":null,"currencyRate":"5.653792","initialBalance":"3789.8650","baseInitialBalance":"784.3290","currentBalance":"3039.5982","baseCurrentBalance":"3413.9969","isDefault":false,"isManual":true,"externalId":null,"createdAt":"2025-07-23T21:22:35.000000Z","updatedAt":"2025-07-23T21:22:35.000000Z"}'
+        headers: []
+        description: ''
         custom: []
     responseFields: []
     auth:
@@ -377,7 +374,7 @@ endpoints:
         name: expires_at
         description: 'This field is required when <code>type</code> is <code>credit_card</code>. Must be a valid date.'
         required: false
-        example: '2025-07-20T04:30:48'
+        example: '2025-07-23T21:22:35'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -447,14 +444,20 @@ endpoints:
       minimum_payment: 84
       apr: 12
       annual_fee: 77
-      expires_at: '2025-07-20T04:30:48'
+      expires_at: '2025-07-23T21:22:35'
       interest_rate: 8
       rate_type: architecto
       term_months: 22
       description: 'Animi quos velit et fugiat.'
       external_id: d
     fileParameters: []
-    responses: []
+    responses:
+      -
+        status: 200
+        content: '{"id":"acct_b68e9ecb5a6a479facdaeb8e1fee19c5","name":"Retirement Fund","description":"Modi deserunt aut ab provident perspiciatis.","type":"crypto","subtype":null,"currencyCode":"JPY","baseCurrency":"KRW","currencyRate":"3.732566","initialBalance":"6620.3085","baseInitialBalance":null,"currentBalance":"6052.7915","baseCurrentBalance":"1965.0388","isDefault":false,"isManual":true,"externalId":null,"createdAt":"2025-07-23T21:22:35.000000Z","updatedAt":"2025-07-23T21:22:35.000000Z"}'
+        headers: []
+        description: ''
+        custom: []
     responseFields: []
     auth:
       - headers
@@ -501,13 +504,10 @@ endpoints:
     fileParameters: []
     responses:
       -
-        status: 401
-        content: '{"message":"Unauthenticated."}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          vary: Origin
-        description: null
+        status: 200
+        content: '{"id":"acct_7cadcbcf3442443d8859343c6ba182ab","name":"Credit Card","description":"Qui commodi incidunt iure odit.","type":"crypto","subtype":"angel","currencyCode":"YER","baseCurrency":null,"currencyRate":null,"initialBalance":"5456.5324","baseInitialBalance":"7652.8239","currentBalance":"4927.8888","baseCurrentBalance":null,"isDefault":false,"isManual":true,"externalId":"502eabbf-311f-3542-a47b-b2a14f5de904","createdAt":"2025-07-23T21:22:35.000000Z","updatedAt":"2025-07-23T21:22:35.000000Z"}'
+        headers: []
+        description: ''
         custom: []
     responseFields: []
     auth:
@@ -661,7 +661,7 @@ endpoints:
         name: expires_at
         description: 'Must be a valid date.'
         required: false
-        example: '2025-07-20T04:30:48'
+        example: '2025-07-23T21:22:35'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -720,13 +720,19 @@ endpoints:
       minimum_payment: 84
       apr: 12
       annual_fee: 77
-      expires_at: '2025-07-20T04:30:48'
+      expires_at: '2025-07-23T21:22:35'
       interest_rate: 8
       rate_type: architecto
       term_months: 22
       external_id: g
     fileParameters: []
-    responses: []
+    responses:
+      -
+        status: 200
+        content: '{"id":"acct_8d3915d45d05491c8d0db86b2be72cfb","name":"Credit Card","description":null,"type":"loan","subtype":"none","currencyCode":"PGK","baseCurrency":"SHP","currencyRate":"5.573992","initialBalance":"3970.3752","baseInitialBalance":null,"currentBalance":"6303.2587","baseCurrentBalance":null,"isDefault":false,"isManual":true,"externalId":"bfc53181-d647-36b2-9080-f9c2b76006f4","createdAt":"2025-07-23T21:22:35.000000Z","updatedAt":"2025-07-23T21:22:35.000000Z"}'
+        headers: []
+        description: ''
+        custom: []
     responseFields: []
     auth:
       - headers
@@ -771,7 +777,13 @@ endpoints:
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
-    responses: []
+    responses:
+      -
+        status: 204
+        content: null
+        headers: []
+        description: ''
+        custom: []
     responseFields: []
     auth:
       - headers

@@ -59,7 +59,13 @@ endpoints:
       password: '|]|{+-'
       device_name: architecto
     fileParameters: []
-    responses: []
+    responses:
+      -
+        status: 200
+        content: ''
+        headers: []
+        description: ''
+        custom: []
     responseFields: []
     auth: []
     controller: null
@@ -100,7 +106,13 @@ endpoints:
     cleanBodyParameters:
       email: gbailey@example.net
     fileParameters: []
-    responses: []
+    responses:
+      -
+        status: 204
+        content: null
+        headers: []
+        description: ''
+        custom: []
     responseFields: []
     auth: []
     controller: null
@@ -196,7 +208,13 @@ endpoints:
       terms: false
       device_name: architecto
     fileParameters: []
-    responses: []
+    responses:
+      -
+        status: 200
+        content: ''
+        headers: []
+        description: ''
+        custom: []
     responseFields: []
     auth: []
     controller: null
@@ -227,7 +245,13 @@ endpoints:
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
-    responses: []
+    responses:
+      -
+        status: 204
+        content: null
+        headers: []
+        description: ''
+        custom: []
     responseFields: []
     auth:
       - headers

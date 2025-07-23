@@ -163,7 +163,7 @@ return [
         'enabled' => true,
 
         'overrides' => [
-            // 'info.version' => '2.0.0',
+            // 'info.version' => '3.1.0',
         ],
 
         // Additional generators to use when generating the OpenAPI spec.

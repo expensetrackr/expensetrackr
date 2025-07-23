@@ -4,8 +4,15 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
-use App\Enums\Finance\AccountType;
+use App\Enums\Finance\AccountSubtype;
 use App\Models\Account;
+use App\Models\CreditCard;
+use App\Models\Crypto;
+use App\Models\Depository;
+use App\Models\Investment;
+use App\Models\Loan;
+use App\Models\OtherAsset;
+use App\Models\OtherLiability;
 use App\Models\User;
 use App\Models\Workspace;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -20,17 +27,48 @@ final class AccountFactory extends Factory
      */
     public function definition(): array
     {
+        $accountableTypes = [
+            Depository::class,
+            Investment::class,
+            Crypto::class,
+            OtherAsset::class,
+            CreditCard::class,
+            Loan::class,
+            OtherLiability::class,
+        ];
+
+        $accountableType = $this->faker->randomElement($accountableTypes);
+
         return [
-            'name' => $this->faker->name(),
-            'description' => $this->faker->sentence(),
+            'accountable_type' => $accountableType,
+            'accountable_id' => $accountableType::factory(),
+            'name' => $this->faker->randomElement([
+                'Primary Checking',
+                'Savings Account',
+                'Emergency Fund',
+                'Investment Portfolio',
+                'Credit Card',
+                'Business Account',
+                'Joint Account',
+                'Retirement Fund',
+            ]),
+            'description' => $this->faker->optional()->sentence(),
+            'subtype' => $this->faker->optional()->randomElement(AccountSubtype::cases()),
             'currency_code' => $this->faker->currencyCode(),
-            'initial_balance' => $this->faker->randomFloat(2, 0, 1000),
-            'current_balance' => $this->faker->randomFloat(2, 0, 1000),
-            'type' => $this->faker->randomElement(array_column(AccountType::cases(), 'value')),
-            'is_default' => $this->faker->boolean(),
+            'base_currency' => $this->faker->optional()->currencyCode(),
+            'currency_rate' => $this->faker->optional()->randomFloat(6, 0.1, 10),
+            'initial_balance' => $this->faker->randomFloat(4, 0, 10000),
+            'base_initial_balance' => $this->faker->optional()->randomFloat(4, 0, 10000),
+            'current_balance' => $this->faker->randomFloat(4, 0, 10000),
+            'base_current_balance' => $this->faker->optional()->randomFloat(4, 0, 10000),
+            'is_default' => $this->faker->boolean(10), // 10% chance of being default
+            'is_manual' => $this->faker->boolean(),
+            'public_id' => $this->faker->uuid(),
             'workspace_id' => Workspace::factory(),
+            'external_id' => $this->faker->optional()->uuid(),
             'created_by' => User::factory(),
             'updated_by' => User::factory(),
+            'bank_connection_id' => null, // Optional relationship
         ];
     }
 }

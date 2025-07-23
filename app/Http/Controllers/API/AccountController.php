@@ -10,6 +10,7 @@ use App\Actions\BankAccounts\UpdateAccount;
 use App\Enums\Finance\AccountType;
 use App\Http\Requests\API\StoreAccountRequest;
 use App\Http\Requests\API\UpdateAccountRequest;
+use App\Http\Resources\AccountResource;
 use App\Models\Account;
 use App\Services\AccountCacheService;
 use Illuminate\Http\JsonResponse;
@@ -17,6 +18,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Knuckles\Scribe\Attributes\Group;
 use Knuckles\Scribe\Attributes\QueryParam;
+use Knuckles\Scribe\Attributes\Response;
+use Knuckles\Scribe\Attributes\ResponseFromApiResource;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 use Throwable;
@@ -58,6 +61,7 @@ final class AccountController extends BaseApiController
     #[QueryParam(name: 'filter[balance_max]', type: 'number', description: 'The maximum balance of the account', example: 1000, required: false)]
     #[QueryParam(name: 'filter[created_from]', type: 'date', description: 'The minimum creation date of the account', example: '2021-01-01', required: false)]
     #[QueryParam(name: 'filter[created_to]', type: 'date', description: 'The maximum creation date of the account', example: '2021-01-01', required: false)]
+    #[ResponseFromApiResource(AccountResource::class, Account::class, paginate: 15)]
     public function index(Request $request): ResourceCollection|JsonResponse
     {
         try {
@@ -95,6 +99,7 @@ final class AccountController extends BaseApiController
      *
      * Create a new account for the authenticated user in the current workspace.
      */
+    #[ResponseFromApiResource(AccountResource::class, Account::class)]
     public function store(StoreAccountRequest $request, CreateAccount $action): JsonResponse
     {
         try {
@@ -117,6 +122,7 @@ final class AccountController extends BaseApiController
      *
      * Retrieve an account by its public ID for the authenticated user in the current workspace.
      */
+    #[ResponseFromApiResource(AccountResource::class, Account::class)]
     public function show(Account $account): JsonResponse
     {
         try {
@@ -141,6 +147,7 @@ final class AccountController extends BaseApiController
      *
      * Update an account for the authenticated user in the current workspace.
      */
+    #[ResponseFromApiResource(AccountResource::class, Account::class)]
     public function update(UpdateAccountRequest $request, Account $account, UpdateAccount $action): JsonResponse
     {
         try {
@@ -162,6 +169,7 @@ final class AccountController extends BaseApiController
      *
      * Delete an account for the authenticated user in the current workspace.
      */
+    #[Response(null, 204)]
     public function destroy(Account $account, DeleteAccount $action): JsonResponse
     {
         try {
@@ -171,7 +179,7 @@ final class AccountController extends BaseApiController
 
             $action->handle($account);
 
-            return $this->successResponse(null, 'Account deleted successfully.');
+            return $this->successResponse(null, 'Account deleted successfully.', 204);
         } catch (Throwable $e) {
             return $this->handleException($e);
         }

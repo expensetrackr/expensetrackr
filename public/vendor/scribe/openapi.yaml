@@ -1,0 +1,1721 @@
+openapi: 3.0.3
+info:
+  title: 'ExpenseTrackr API Documentation'
+  description: ''
+  version: 3.1.0
+servers:
+  -
+    url: 'https://expensetrackr.app.test'
+tags:
+  -
+    name: Accounts
+    description: ''
+  -
+    name: Authentication
+    description: ''
+  -
+    name: Categories
+    description: ''
+  -
+    name: Financial
+    description: ''
+  -
+    name: Transactions
+    description: ''
+components:
+  securitySchemes:
+    default:
+      type: http
+      scheme: bearer
+      description: 'You can retrieve your token by visiting your dashboard and clicking <b>Generate API token</b>.'
+security:
+  -
+    default: []
+paths:
+  /api/accounts:
+    get:
+      summary: 'List all accounts'
+      operationId: listAllAccounts
+      description: 'Retrieve a list of accounts for the authenticated user in the current workspace.'
+      parameters:
+        -
+          in: query
+          name: per_page
+          description: 'The number of items per page'
+          example: 15
+          required: false
+          schema:
+            type: integer
+            description: 'The number of items per page'
+            example: 15
+            nullable: false
+        -
+          in: query
+          name: page
+          description: 'The page number'
+          example: 1
+          required: false
+          schema:
+            type: integer
+            description: 'The page number'
+            example: 1
+            nullable: false
+        -
+          in: query
+          name: sort
+          description: 'The field to sort by'
+          example: name
+          required: false
+          schema:
+            type: string
+            description: 'The field to sort by'
+            example: name
+            nullable: false
+            enum:
+              - name
+              - '-name'
+              - created_at
+              - '-created_at'
+              - current_balance
+              - '-current_balance'
+              - currency_code
+              - '-currency_code'
+              - is_default
+              - '-is_default'
+        -
+          in: query
+          name: include
+          description: 'The relationships to include'
+          example: 'bankConnection,accountable'
+          required: false
+          schema:
+            type: string
+            description: 'The relationships to include'
+            example: 'bankConnection,accountable'
+            nullable: false
+            enum:
+              - bankConnection
+              - accountable
+        -
+          in: query
+          name: 'filter[q]'
+          description: 'The search query to filter accounts by name'
+          example: 'My Account'
+          required: false
+          schema:
+            type: string
+            description: 'The search query to filter accounts by name'
+            example: 'My Account'
+            nullable: false
+        -
+          in: query
+          name: 'filter[name]'
+          description: 'The name of the account'
+          example: 'My Account'
+          required: false
+          schema:
+            type: string
+            description: 'The name of the account'
+            example: 'My Account'
+            nullable: false
+        -
+          in: query
+          name: 'filter[currency_code]'
+          description: 'The currency code of the account'
+          example: USD
+          required: false
+          schema:
+            type: string
+            description: 'The currency code of the account'
+            example: USD
+            nullable: false
+        -
+          in: query
+          name: 'filter[is_default]'
+          description: 'Whether the account is the default account'
+          example: true
+          required: false
+          schema:
+            type: boolean
+            description: 'Whether the account is the default account'
+            example: true
+            nullable: false
+        -
+          in: query
+          name: 'filter[is_manual]'
+          description: 'Whether the account is manual'
+          example: true
+          required: false
+          schema:
+            type: boolean
+            description: 'Whether the account is manual'
+            example: true
+            nullable: false
+        -
+          in: query
+          name: 'filter[type]'
+          description: 'The type of the account'
+          example: depository
+          required: false
+          schema:
+            type: string
+            description: 'The type of the account'
+            example: depository
+            nullable: false
+            enum:
+              - depository
+              - investment
+              - crypto
+              - other_asset
+              - credit_card
+              - loan
+              - other_liability
+        -
+          in: query
+          name: 'filter[balance_min]'
+          description: 'The minimum balance of the account'
+          example: 100
+          required: false
+          schema:
+            type: number
+            description: 'The minimum balance of the account'
+            example: 100
+            nullable: false
+        -
+          in: query
+          name: 'filter[balance_max]'
+          description: 'The maximum balance of the account'
+          example: 1000
+          required: false
+          schema:
+            type: number
+            description: 'The maximum balance of the account'
+            example: 1000
+            nullable: false
+        -
+          in: query
+          name: 'filter[created_from]'
+          description: 'The minimum creation date of the account'
+          example: '2021-01-01'
+          required: false
+          schema:
+            type: date
+            description: 'The minimum creation date of the account'
+            example: '2021-01-01'
+            nullable: false
+        -
+          in: query
+          name: 'filter[created_to]'
+          description: 'The maximum creation date of the account'
+          example: '2021-01-01'
+          required: false
+          schema:
+            type: date
+            description: 'The maximum creation date of the account'
+            example: '2021-01-01'
+            nullable: false
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  id: acct_26d642c5fc684a59a316f215b2714f2a
+                  name: 'Primary Checking'
+                  description: null
+                  type: depository
+                  subtype: null
+                  currencyCode: SOS
+                  baseCurrency: null
+                  currencyRate: '5.515960'
+                  initialBalance: '2302.0618'
+                  baseInitialBalance: '8654.5255'
+                  currentBalance: '7584.2777'
+                  baseCurrentBalance: null
+                  isDefault: false
+                  isManual: false
+                  externalId: null
+                  createdAt: '2025-07-23T21:22:10.000000Z'
+                  updatedAt: '2025-07-23T21:22:10.000000Z'
+                properties:
+                  id:
+                    type: string
+                    example: acct_26d642c5fc684a59a316f215b2714f2a
+                  name:
+                    type: string
+                    example: 'Primary Checking'
+                  description:
+                    type: string
+                    example: null
+                  type:
+                    type: string
+                    example: depository
+                  subtype:
+                    type: string
+                    example: null
+                  currencyCode:
+                    type: string
+                    example: SOS
+                  baseCurrency:
+                    type: string
+                    example: null
+                  currencyRate:
+                    type: string
+                    example: '5.515960'
+                  initialBalance:
+                    type: string
+                    example: '2302.0618'
+                  baseInitialBalance:
+                    type: string
+                    example: '8654.5255'
+                  currentBalance:
+                    type: string
+                    example: '7584.2777'
+                  baseCurrentBalance:
+                    type: string
+                    example: null
+                  isDefault:
+                    type: boolean
+                    example: false
+                  isManual:
+                    type: boolean
+                    example: false
+                  externalId:
+                    type: string
+                    example: null
+                  createdAt:
+                    type: string
+                    example: '2025-07-23T21:22:10.000000Z'
+                  updatedAt:
+                    type: string
+                    example: '2025-07-23T21:22:10.000000Z'
+      tags:
+        - Accounts
+    post:
+      summary: 'Create a new account'
+      operationId: createANewAccount
+      description: 'Create a new account for the authenticated user in the current workspace.'
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  id: acct_e3c9b0f8be4640c5b6e276f2cdc79a90
+                  name: 'Retirement Fund'
+                  description: 'Modi deserunt aut ab provident perspiciatis.'
+                  type: crypto
+                  subtype: null
+                  currencyCode: JPY
+                  baseCurrency: KRW
+                  currencyRate: '3.732566'
+                  initialBalance: '6620.3085'
+                  baseInitialBalance: null
+                  currentBalance: '6052.7915'
+                  baseCurrentBalance: '1965.0388'
+                  isDefault: false
+                  isManual: true
+                  externalId: null
+                  createdAt: '2025-07-23T21:22:10.000000Z'
+                  updatedAt: '2025-07-23T21:22:10.000000Z'
+                properties:
+                  id:
+                    type: string
+                    example: acct_e3c9b0f8be4640c5b6e276f2cdc79a90
+                  name:
+                    type: string
+                    example: 'Retirement Fund'
+                  description:
+                    type: string
+                    example: 'Modi deserunt aut ab provident perspiciatis.'
+                  type:
+                    type: string
+                    example: crypto
+                  subtype:
+                    type: string
+                    example: null
+                  currencyCode:
+                    type: string
+                    example: JPY
+                  baseCurrency:
+                    type: string
+                    example: KRW
+                  currencyRate:
+                    type: string
+                    example: '3.732566'
+                  initialBalance:
+                    type: string
+                    example: '6620.3085'
+                  baseInitialBalance:
+                    type: string
+                    example: null
+                  currentBalance:
+                    type: string
+                    example: '6052.7915'
+                  baseCurrentBalance:
+                    type: string
+                    example: '1965.0388'
+                  isDefault:
+                    type: boolean
+                    example: false
+                  isManual:
+                    type: boolean
+                    example: true
+                  externalId:
+                    type: string
+                    example: null
+                  createdAt:
+                    type: string
+                    example: '2025-07-23T21:22:10.000000Z'
+                  updatedAt:
+                    type: string
+                    example: '2025-07-23T21:22:10.000000Z'
+      tags:
+        - Accounts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                bank_connection_id:
+                  type: string
+                  description: 'The <code>id</code> of an existing record in the bank_connections table.'
+                  example: null
+                  nullable: true
+                name:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: b
+                  nullable: false
+                currency_code:
+                  type: string
+                  description: 'Must not be greater than 3 characters.'
+                  example: 'n'
+                  nullable: false
+                initial_balance:
+                  type: number
+                  description: 'Must be at least 0.01.'
+                  example: 84
+                  nullable: false
+                is_default:
+                  type: boolean
+                  description: ''
+                  example: false
+                  nullable: false
+                type:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                  enum:
+                    - depository
+                    - investment
+                    - crypto
+                    - other_asset
+                    - credit_card
+                    - loan
+                    - other_liability
+                subtype:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: true
+                  enum:
+                    - none
+                    - checking
+                    - savings
+                    - brokerage
+                    - pension
+                    - retirement
+                    - 401k
+                    - traditional_401k
+                    - roth_401k
+                    - 529_plan
+                    - hsa
+                    - mutual_fund
+                    - traditional_ira
+                    - roth_ira
+                    - angel
+                available_credit:
+                  type: number
+                  description: 'This field is required when <code>type</code> is <code>credit_card</code>. Must be at least 0.'
+                  example: 39
+                  nullable: false
+                minimum_payment:
+                  type: number
+                  description: 'This field is required when <code>type</code> is <code>credit_card</code>. Must be at least 0.'
+                  example: 84
+                  nullable: false
+                apr:
+                  type: number
+                  description: 'This field is required when <code>type</code> is <code>credit_card</code>. Must be at least 0.'
+                  example: 12
+                  nullable: false
+                annual_fee:
+                  type: number
+                  description: 'This field is required when <code>type</code> is <code>credit_card</code>. Must be at least 0.'
+                  example: 77
+                  nullable: false
+                expires_at:
+                  type: string
+                  description: 'This field is required when <code>type</code> is <code>credit_card</code>. Must be a valid date.'
+                  example: '2025-07-23T21:22:10'
+                  nullable: false
+                interest_rate:
+                  type: number
+                  description: 'This field is required when <code>type</code> is <code>loan</code>. Must be at least 0.'
+                  example: 8
+                  nullable: false
+                rate_type:
+                  type: string
+                  description: 'This field is required when <code>type</code> is <code>loan</code>.'
+                  example: architecto
+                  nullable: false
+                  enum:
+                    - fixed
+                    - variable
+                    - adjustable
+                term_months:
+                  type: integer
+                  description: 'This field is required when <code>type</code> is <code>loan</code>. Must be at least 1.'
+                  example: 22
+                  nullable: false
+                description:
+                  type: string
+                  description: 'Must not be greater than 500 characters.'
+                  example: 'Animi quos velit et fugiat.'
+                  nullable: true
+                external_id:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: d
+                  nullable: true
+              required:
+                - name
+                - currency_code
+                - initial_balance
+                - type
+  '/api/accounts/{public_id}':
+    get:
+      summary: 'Retrieve an account'
+      operationId: retrieveAnAccount
+      description: 'Retrieve an account by its public ID for the authenticated user in the current workspace.'
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  id: acct_1cb21056040542d1846949e774ca94c5
+                  name: 'Credit Card'
+                  description: 'Qui commodi incidunt iure odit.'
+                  type: crypto
+                  subtype: angel
+                  currencyCode: YER
+                  baseCurrency: null
+                  currencyRate: null
+                  initialBalance: '5456.5324'
+                  baseInitialBalance: '7652.8239'
+                  currentBalance: '4927.8888'
+                  baseCurrentBalance: null
+                  isDefault: false
+                  isManual: true
+                  externalId: 502eabbf-311f-3542-a47b-b2a14f5de904
+                  createdAt: '2025-07-23T21:22:10.000000Z'
+                  updatedAt: '2025-07-23T21:22:10.000000Z'
+                properties:
+                  id:
+                    type: string
+                    example: acct_1cb21056040542d1846949e774ca94c5
+                  name:
+                    type: string
+                    example: 'Credit Card'
+                  description:
+                    type: string
+                    example: 'Qui commodi incidunt iure odit.'
+                  type:
+                    type: string
+                    example: crypto
+                  subtype:
+                    type: string
+                    example: angel
+                  currencyCode:
+                    type: string
+                    example: YER
+                  baseCurrency:
+                    type: string
+                    example: null
+                  currencyRate:
+                    type: string
+                    example: null
+                  initialBalance:
+                    type: string
+                    example: '5456.5324'
+                  baseInitialBalance:
+                    type: string
+                    example: '7652.8239'
+                  currentBalance:
+                    type: string
+                    example: '4927.8888'
+                  baseCurrentBalance:
+                    type: string
+                    example: null
+                  isDefault:
+                    type: boolean
+                    example: false
+                  isManual:
+                    type: boolean
+                    example: true
+                  externalId:
+                    type: string
+                    example: 502eabbf-311f-3542-a47b-b2a14f5de904
+                  createdAt:
+                    type: string
+                    example: '2025-07-23T21:22:10.000000Z'
+                  updatedAt:
+                    type: string
+                    example: '2025-07-23T21:22:10.000000Z'
+      tags:
+        - Accounts
+    put:
+      summary: 'Update an account'
+      operationId: updateAnAccount
+      description: 'Update an account for the authenticated user in the current workspace.'
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  id: acct_19262b1b5fbf45c3a7395196f545d5df
+                  name: 'Credit Card'
+                  description: null
+                  type: loan
+                  subtype: none
+                  currencyCode: PGK
+                  baseCurrency: SHP
+                  currencyRate: '5.573992'
+                  initialBalance: '3970.3752'
+                  baseInitialBalance: null
+                  currentBalance: '6303.2587'
+                  baseCurrentBalance: null
+                  isDefault: false
+                  isManual: true
+                  externalId: bfc53181-d647-36b2-9080-f9c2b76006f4
+                  createdAt: '2025-07-23T21:22:10.000000Z'
+                  updatedAt: '2025-07-23T21:22:10.000000Z'
+                properties:
+                  id:
+                    type: string
+                    example: acct_19262b1b5fbf45c3a7395196f545d5df
+                  name:
+                    type: string
+                    example: 'Credit Card'
+                  description:
+                    type: string
+                    example: null
+                  type:
+                    type: string
+                    example: loan
+                  subtype:
+                    type: string
+                    example: none
+                  currencyCode:
+                    type: string
+                    example: PGK
+                  baseCurrency:
+                    type: string
+                    example: SHP
+                  currencyRate:
+                    type: string
+                    example: '5.573992'
+                  initialBalance:
+                    type: string
+                    example: '3970.3752'
+                  baseInitialBalance:
+                    type: string
+                    example: null
+                  currentBalance:
+                    type: string
+                    example: '6303.2587'
+                  baseCurrentBalance:
+                    type: string
+                    example: null
+                  isDefault:
+                    type: boolean
+                    example: false
+                  isManual:
+                    type: boolean
+                    example: true
+                  externalId:
+                    type: string
+                    example: bfc53181-d647-36b2-9080-f9c2b76006f4
+                  createdAt:
+                    type: string
+                    example: '2025-07-23T21:22:10.000000Z'
+                  updatedAt:
+                    type: string
+                    example: '2025-07-23T21:22:10.000000Z'
+      tags:
+        - Accounts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: b
+                  nullable: false
+                description:
+                  type: string
+                  description: 'Must not be greater than 500 characters.'
+                  example: 'Et animi quos velit et fugiat.'
+                  nullable: true
+                currency_code:
+                  type: string
+                  description: 'Must not be greater than 3 characters.'
+                  example: d
+                  nullable: false
+                is_default:
+                  type: boolean
+                  description: ''
+                  example: false
+                  nullable: false
+                subtype:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: true
+                  enum:
+                    - none
+                    - checking
+                    - savings
+                    - brokerage
+                    - pension
+                    - retirement
+                    - 401k
+                    - traditional_401k
+                    - roth_401k
+                    - 529_plan
+                    - hsa
+                    - mutual_fund
+                    - traditional_ira
+                    - roth_ira
+                    - angel
+                available_credit:
+                  type: number
+                  description: 'Must be at least 0.'
+                  example: 39
+                  nullable: false
+                minimum_payment:
+                  type: number
+                  description: 'Must be at least 0.'
+                  example: 84
+                  nullable: false
+                apr:
+                  type: number
+                  description: 'Must be at least 0.'
+                  example: 12
+                  nullable: false
+                annual_fee:
+                  type: number
+                  description: 'Must be at least 0.'
+                  example: 77
+                  nullable: false
+                expires_at:
+                  type: string
+                  description: 'Must be a valid date.'
+                  example: '2025-07-23T21:22:10'
+                  nullable: false
+                interest_rate:
+                  type: number
+                  description: 'Must be at least 0.'
+                  example: 8
+                  nullable: false
+                rate_type:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                  enum:
+                    - fixed
+                    - variable
+                    - adjustable
+                term_months:
+                  type: integer
+                  description: 'Must be at least 1.'
+                  example: 22
+                  nullable: false
+                external_id:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: g
+                  nullable: true
+              required:
+                - name
+                - currency_code
+    delete:
+      summary: 'Delete an account'
+      operationId: deleteAnAccount
+      description: 'Delete an account for the authenticated user in the current workspace.'
+      parameters: []
+      responses:
+        204:
+          description: ''
+      tags:
+        - Accounts
+    parameters:
+      -
+        in: path
+        name: public_id
+        description: 'The ID of the public.'
+        example: acct_8dd8351ad4c241cbbc3736f300fd2957
+        required: true
+        schema:
+          type: string
+  /api/accounts/stats:
+    get:
+      summary: 'Get account statistics'
+      operationId: getAccountStatistics
+      description: 'Retrieve statistics for all accounts in the current workspace.'
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Accounts
+  /api/auth/login:
+    post:
+      summary: 'Login a user'
+      operationId: loginAUser
+      description: 'Attempt to authenticate a new session for the authenticated user.'
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: ''
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: 'The email of the user.'
+                  example: gbailey@example.net
+                  nullable: false
+                password:
+                  type: string
+                  description: 'The password of the user.'
+                  example: '|]|{+-'
+                  nullable: false
+                device_name:
+                  type: string
+                  description: 'The name of the device.'
+                  example: architecto
+                  nullable: false
+              required:
+                - email
+                - password
+                - device_name
+      security: []
+  /api/auth/forgot-password:
+    post:
+      summary: 'Reset password'
+      operationId: resetPassword
+      description: "Send a password reset link to the user's email."
+      parameters: []
+      responses:
+        204:
+          description: ''
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: 'The email of the user.'
+                  example: gbailey@example.net
+                  nullable: false
+              required:
+                - email
+      security: []
+  /api/auth/register:
+    post:
+      summary: 'Register a new user'
+      operationId: registerANewUser
+      description: 'Register a new user account.'
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: ''
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'The name of the user.'
+                  example: architecto
+                  nullable: false
+                email:
+                  type: string
+                  description: 'The email of the user.'
+                  example: gbailey@example.net
+                  nullable: false
+                password:
+                  type: string
+                  description: 'The password of the user.'
+                  example: '|]|{+-'
+                  nullable: false
+                password_confirmation:
+                  type: string
+                  description: 'The password confirmation of the user.'
+                  example: architecto
+                  nullable: false
+                terms:
+                  type: boolean
+                  description: 'Whether the user has accepted the terms and conditions.'
+                  example: false
+                  nullable: false
+                device_name:
+                  type: string
+                  description: 'The name of the device.'
+                  example: architecto
+                  nullable: false
+              required:
+                - name
+                - email
+                - password
+                - password_confirmation
+                - terms
+                - device_name
+      security: []
+  /api/auth/logout:
+    post:
+      summary: 'Logout a user'
+      operationId: logoutAUser
+      description: 'Logout the authenticated user.'
+      parameters: []
+      responses:
+        204:
+          description: ''
+      tags:
+        - Authentication
+  /api/categories:
+    get:
+      summary: 'List all categories'
+      operationId: listAllCategories
+      description: "Retrieve a list of categories for the authenticated user in the current workspace.\n\nCategories can be filtered by name and classification.\nResults can be sorted by creation date."
+      parameters:
+        -
+          in: query
+          name: per_page
+          description: 'The number of items per page'
+          example: 15
+          required: false
+          schema:
+            type: integer
+            description: 'The number of items per page'
+            example: 15
+            nullable: false
+        -
+          in: query
+          name: page
+          description: 'The page number'
+          example: 1
+          required: false
+          schema:
+            type: integer
+            description: 'The page number'
+            example: 1
+            nullable: false
+        -
+          in: query
+          name: sort
+          description: 'The field to sort by'
+          example: name
+          required: false
+          schema:
+            type: string
+            description: 'The field to sort by'
+            example: name
+            nullable: false
+            enum:
+              - name
+              - '-name'
+              - created_at
+              - '-created_at'
+        -
+          in: query
+          name: include
+          description: 'The relationships to include'
+          example: parent
+          required: false
+          schema:
+            type: string
+            description: 'The relationships to include'
+            example: parent
+            nullable: false
+            enum:
+              - parent
+        -
+          in: query
+          name: 'filter[name]'
+          description: 'The name of the category'
+          example: Food
+          required: false
+          schema:
+            type: string
+            description: 'The name of the category'
+            example: Food
+            nullable: false
+        -
+          in: query
+          name: 'filter[classification]'
+          description: 'The classification of the category'
+          example: expense
+          required: false
+          schema:
+            type: string
+            description: 'The classification of the category'
+            example: expense
+            nullable: false
+            enum:
+              - income
+              - expense
+              - transfer
+              - savings
+              - other
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Categories
+  '/api/categories/{public_id}':
+    get:
+      summary: 'Retrieve a category'
+      operationId: retrieveACategory
+      description: 'Retrieve a category by its public ID for the authenticated user in the current workspace.'
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Categories
+    parameters:
+      -
+        in: path
+        name: public_id
+        description: 'The ID of the public.'
+        example: cat_21be2d5f8a8948c8a00b7177949a56f2
+        required: true
+        schema:
+          type: string
+  /api/finance/currencies:
+    get:
+      summary: Currencies
+      operationId: currencies
+      description: 'Retrieves a list of all supported currencies available in the system.'
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                example:
+                  - AED
+                  - AFN
+                  - ALL
+                  - AMD
+                  - ANG
+                  - AOA
+                  - ARS
+                  - AUD
+                  - AWG
+                  - AZN
+                  - BAM
+                  - BBD
+                  - BDT
+                  - BGN
+                  - BHD
+                  - BIF
+                  - BMD
+                  - BND
+                  - BOB
+                  - BRL
+                  - BSD
+                  - BTN
+                  - BWP
+                  - BYN
+                  - BZD
+                  - CAD
+                  - CDF
+                  - CHF
+                  - CLP
+                  - CNY
+                  - COP
+                  - CRC
+                  - CUP
+                  - CVE
+                  - CZK
+                  - DJF
+                  - DKK
+                  - DOP
+                  - DZD
+                  - EGP
+                  - ERN
+                  - ETB
+                  - EUR
+                  - FJD
+                  - FKP
+                  - FOK
+                  - GBP
+                  - GEL
+                  - GGP
+                  - GHS
+                  - GIP
+                  - GMD
+                  - GNF
+                  - GTQ
+                  - GYD
+                  - HKD
+                  - HNL
+                  - HRK
+                  - HTG
+                  - HUF
+                  - IDR
+                  - ILS
+                  - IMP
+                  - INR
+                  - IQD
+                  - IRR
+                  - ISK
+                  - JEP
+                  - JMD
+                  - JOD
+                  - JPY
+                  - KES
+                  - KGS
+                  - KHR
+                  - KID
+                  - KMF
+                  - KRW
+                  - KWD
+                  - KYD
+                  - KZT
+                  - LAK
+                  - LBP
+                  - LKR
+                  - LRD
+                  - LSL
+                  - LYD
+                  - MAD
+                  - MDL
+                  - MGA
+                  - MKD
+                  - MMK
+                  - MNT
+                  - MOP
+                  - MRU
+                  - MUR
+                  - MVR
+                  - MWK
+                  - MXN
+                  - MYR
+                  - MZN
+                  - NAD
+                  - NGN
+                  - NIO
+                  - NOK
+                  - NPR
+                  - NZD
+                  - OMR
+                  - PAB
+                  - PEN
+                  - PGK
+                  - PHP
+                  - PKR
+                  - PLN
+                  - PYG
+                  - QAR
+                  - RON
+                  - RSD
+                  - RUB
+                  - RWF
+                  - SAR
+                  - SBD
+                  - SCR
+                  - SDG
+                  - SEK
+                  - SGD
+                  - SHP
+                  - SLE
+                  - SLL
+                  - SOS
+                  - SRD
+                  - SSP
+                  - STN
+                  - SYP
+                  - SZL
+                  - THB
+                  - TJS
+                  - TMT
+                  - TND
+                  - TOP
+                  - TRY
+                  - TTD
+                  - TVD
+                  - TWD
+                  - TZS
+                  - UAH
+                  - UGX
+                  - USD
+                  - UYU
+                  - UZS
+                  - VES
+                  - VND
+                  - VUV
+                  - WST
+                  - XAF
+                  - XCD
+                  - XCG
+                  - XDR
+                  - XOF
+                  - XPF
+                  - YER
+                  - ZAR
+                  - ZMW
+                  - ZWL
+      tags:
+        - Financial
+      security: []
+  /api/finance/institutions:
+    get:
+      summary: Institutions
+      operationId: institutions
+      description: "Search for financial institutions based on a query parameter.\nReturns up to 48 results sorted by popularity in descending order.\nThis endpoint is commonly used to help users find and select their\nbank or financial institution when connecting accounts."
+      parameters:
+        -
+          in: query
+          name: q
+          description: 'The search query to find institutions by name'
+          example: bank
+          required: false
+          schema:
+            type: string
+            description: 'The search query to find institutions by name'
+            example: bank
+            nullable: false
+        -
+          in: query
+          name: limit
+          description: 'The number of results to return'
+          example: 48
+          required: false
+          schema:
+            type: integer
+            description: 'The number of results to return'
+            example: 48
+            nullable: false
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                example:
+                  -
+                    id: bank_of_america
+                    name: 'Bank of America'
+                    logo: 'http://localhost:9000/chronos-herd-et/banks/bank_of_america.png'
+                    countries:
+                      - US
+                    popularity: 98
+                    provider: teller
+                  -
+                    id: bank_ia
+                    name: BANK
+                    logo: 'http://localhost:9000/chronos-herd-et/banks/bank_ia.png'
+                    countries:
+                      - US
+                    popularity: 10
+                    provider: teller
+                  -
+                    id: bank_of_deerfield
+                    name: 'Bank of Deerfield'
+                    logo: 'http://localhost:9000/chronos-herd-et/banks/bank_of_deerfield.png'
+                    countries:
+                      - US
+                    popularity: 10
+                    provider: teller
+                  -
+                    id: bank_of_san_juans
+                    name: 'Bank of San Juans'
+                    logo: 'http://localhost:9000/chronos-herd-et/banks/bank_of_san_juans.png'
+                    countries:
+                      - US
+                    popularity: 10
+                    provider: teller
+                  -
+                    id: bank_of_crockett
+                    name: 'Bank of Crockett'
+                    logo: 'http://localhost:9000/chronos-herd-et/banks/bank_of_crockett.png'
+                    countries:
+                      - US
+                    popularity: 10
+                    provider: teller
+                  -
+                    id: bank_of_lindsay
+                    name: 'Bank of Lindsay'
+                    logo: 'http://localhost:9000/chronos-herd-et/banks/bank_of_lindsay.png'
+                    countries:
+                      - US
+                    popularity: 10
+                    provider: teller
+                  -
+                    id: bank_florida
+                    name: 'Bank Florida'
+                    logo: 'http://localhost:9000/chronos-herd-et/banks/bank_florida.png'
+                    countries:
+                      - US
+                    popularity: 10
+                    provider: teller
+                  -
+                    id: bank_of_lafayette
+                    name: 'The Bank of LaFayette'
+                    logo: 'http://localhost:9000/chronos-herd-et/banks/bank_of_lafayette.png'
+                    countries:
+                      - US
+                    popularity: 10
+                    provider: teller
+                  -
+                    id: bank_of_o_fallon
+                    name: "Bank of O'Fallon"
+                    logo: 'http://localhost:9000/chronos-herd-et/banks/bank_of_o_fallon.png'
+                    countries:
+                      - US
+                    popularity: 10
+                    provider: teller
+                  -
+                    id: bank_ri
+                    name: BankRI
+                    logo: 'http://localhost:9000/chronos-herd-et/banks/bank_ri.png'
+                    countries:
+                      - US
+                    popularity: 10
+                    provider: teller
+                  -
+                    id: bank_forward
+                    name: 'Bank Forward'
+                    logo: 'http://localhost:9000/chronos-herd-et/banks/bank_forward.png'
+                    countries:
+                      - US
+                    popularity: 10
+                    provider: teller
+                  -
+                    id: bank_of_stockton
+                    name: 'Bank of Stockton'
+                    logo: 'http://localhost:9000/chronos-herd-et/banks/bank_of_stockton.png'
+                    countries:
+                      - US
+                    popularity: 10
+                    provider: teller
+                  -
+                    id: bank_of_kilmichael
+                    name: 'Bank of Kilmichael'
+                    logo: 'http://localhost:9000/chronos-herd-et/banks/bank_of_kilmichael.png'
+                    countries:
+                      - US
+                    popularity: 10
+                    provider: teller
+                  -
+                    id: bank_of_commerce_chelsea_ok
+                    name: 'Bank of Commerce (Chelsea, OK)'
+                    logo: 'http://localhost:9000/chronos-herd-et/banks/bank_of_commerce_chelsea_ok.png'
+                    countries:
+                      - US
+                    popularity: 10
+                    provider: teller
+                  -
+                    id: bank_cbc_business
+                    name: 'BankCBC Business'
+                    logo: 'http://localhost:9000/chronos-herd-et/banks/bank_cbc_business.png'
+                    countries:
+                      - US
+                    popularity: 10
+                    provider: teller
+                  -
+                    id: bank_of_sun_prairie
+                    name: 'Bank of Sun Prairie'
+                    logo: 'http://localhost:9000/chronos-herd-et/banks/bank_of_sun_prairie.png'
+                    countries:
+                      - US
+                    popularity: 10
+                    provider: teller
+                  -
+                    id: bank_leumi
+                    name: 'Bank Leumi, part of Valley National Bank'
+                    logo: 'http://localhost:9000/chronos-herd-et/banks/bank_leumi.png'
+                    countries:
+                      - US
+                    popularity: 10
+                    provider: teller
+                  -
+                    id: bank_of_prairie_du_sac_business
+                    name: 'Bank of Prairie du Sac (Business)'
+                    logo: 'http://localhost:9000/chronos-herd-et/banks/bank_of_prairie_du_sac_business.png'
+                    countries:
+                      - US
+                    popularity: 10
+                    provider: teller
+                  -
+                    id: bank_of_walker_county
+                    name: 'Bank of Walker County'
+                    logo: 'http://localhost:9000/chronos-herd-et/banks/bank_of_walker_county.png'
+                    countries:
+                      - US
+                    popularity: 10
+                    provider: teller
+                  -
+                    id: bank_of_commerce_ok
+                    name: 'Bank of Commerce (OK)'
+                    logo: 'http://localhost:9000/chronos-herd-et/banks/bank_of_commerce_ok.png'
+                    countries:
+                      - US
+                    popularity: 10
+                    provider: teller
+                  -
+                    id: bank_of_hartington
+                    name: 'Bank of Hartington'
+                    logo: 'http://localhost:9000/chronos-herd-et/banks/bank_of_hartington.png'
+                    countries:
+                      - US
+                    popularity: 10
+                    provider: teller
+                  -
+                    id: bank_of_ocean_city
+                    name: 'Bank of Ocean City'
+                    logo: 'http://localhost:9000/chronos-herd-et/banks/bank_of_ocean_city.png'
+                    countries:
+                      - US
+                    popularity: 10
+                    provider: teller
+                  -
+                    id: bank_of_utah
+                    name: 'Bank of Utah'
+                    logo: 'http://localhost:9000/chronos-herd-et/banks/bank_of_utah.png'
+                    countries:
+                      - US
+                    popularity: 10
+                    provider: teller
+                  -
+                    id: bank_of_monticello_mo
+                    name: 'Bank of Monticello MO'
+                    logo: 'http://localhost:9000/chronos-herd-et/banks/bank_of_monticello_mo.png'
+                    countries:
+                      - US
+                    popularity: 10
+                    provider: teller
+                  -
+                    id: bank_hapoalim
+                    name: 'Bank Hapoalim'
+                    logo: 'http://localhost:9000/chronos-herd-et/banks/bank_hapoalim.png'
+                    countries:
+                      - US
+                    popularity: 10
+                    provider: teller
+                  -
+                    id: bank_of_orchard
+                    name: 'Bank of Orchard'
+                    logo: 'http://localhost:9000/chronos-herd-et/banks/bank_of_orchard.png'
+                    countries:
+                      - US
+                    popularity: 10
+                    provider: teller
+                  -
+                    id: bank_of_tennessee
+                    name: 'Bank of Tennessee'
+                    logo: 'http://localhost:9000/chronos-herd-et/banks/bank_of_tennessee.png'
+                    countries:
+                      - US
+                    popularity: 10
+                    provider: teller
+                  -
+                    id: bank_of_evergreen
+                    name: 'Bank of Evergreen'
+                    logo: 'http://localhost:9000/chronos-herd-et/banks/bank_of_evergreen.png'
+                    countries:
+                      - US
+                    popularity: 10
+                    provider: teller
+                  -
+                    id: bank_of_the_west_tx_business
+                    name: 'Bank Of The West (TX) Business'
+                    logo: 'http://localhost:9000/chronos-herd-et/banks/bank_of_the_west_tx_business.png'
+                    countries:
+                      - US
+                    popularity: 10
+                    provider: teller
+                  -
+                    id: bank_of_botetourt
+                    name: 'Bank of Botetourt'
+                    logo: 'http://localhost:9000/chronos-herd-et/banks/bank_of_botetourt.png'
+                    countries:
+                      - US
+                    popularity: 10
+                    provider: teller
+                  -
+                    id: bank_purely
+                    name: BankPurely
+                    logo: 'http://localhost:9000/chronos-herd-et/banks/bank_purely.png'
+                    countries:
+                      - US
+                    popularity: 10
+                    provider: teller
+                  -
+                    id: bank_of_charles_town
+                    name: 'Bank of Charles Town'
+                    logo: 'http://localhost:9000/chronos-herd-et/banks/bank_of_charles_town.png'
+                    countries:
+                      - US
+                    popularity: 10
+                    provider: teller
+                  -
+                    id: bank_of_perry_county
+                    name: 'Bank of Perry County'
+                    logo: 'http://localhost:9000/chronos-herd-et/banks/bank_of_perry_county.png'
+                    countries:
+                      - US
+                    popularity: 10
+                    provider: teller
+                  -
+                    id: bank_of_greene_county
+                    name: 'Bank of Greene County'
+                    logo: 'http://localhost:9000/chronos-herd-et/banks/bank_of_greene_county.png'
+                    countries:
+                      - US
+                    popularity: 10
+                    provider: teller
+                  -
+                    id: bank_7
+                    name: 'Bank 7'
+                    logo: 'http://localhost:9000/chronos-herd-et/banks/bank_7.png'
+                    countries:
+                      - US
+                    popularity: 10
+                    provider: teller
+                  -
+                    id: bank_of_milton
+                    name: 'Bank of Milton'
+                    logo: 'http://localhost:9000/chronos-herd-et/banks/bank_of_milton.png'
+                    countries:
+                      - US
+                    popularity: 10
+                    provider: teller
+                  -
+                    id: bank_of_jamestown
+                    name: 'Bank of Jamestown'
+                    logo: 'http://localhost:9000/chronos-herd-et/banks/bank_of_jamestown.png'
+                    countries:
+                      - US
+                    popularity: 10
+                    provider: teller
+                  -
+                    id: bank_of_labor
+                    name: 'Bank of Labor'
+                    logo: 'http://localhost:9000/chronos-herd-et/banks/bank_of_labor.png'
+                    countries:
+                      - US
+                    popularity: 10
+                    provider: teller
+                  -
+                    id: bank_of_commerce_ms
+                    name: 'Bank of Commerce MS'
+                    logo: 'http://localhost:9000/chronos-herd-et/banks/bank_of_commerce_ms.png'
+                    countries:
+                      - US
+                    popularity: 10
+                    provider: teller
+                  -
+                    id: bank_of_the_flint_hills
+                    name: 'Bank of the Flint Hills'
+                    logo: 'http://localhost:9000/chronos-herd-et/banks/bank_of_the_flint_hills.png'
+                    countries:
+                      - US
+                    popularity: 10
+                    provider: teller
+                  -
+                    id: bank_of_1889
+                    name: 'Bank of 1889'
+                    logo: 'http://localhost:9000/chronos-herd-et/banks/bank_of_1889.png'
+                    countries:
+                      - US
+                    popularity: 10
+                    provider: teller
+                  -
+                    id: bank_of_holly_springs
+                    name: 'Bank of Holly Springs'
+                    logo: 'http://localhost:9000/chronos-herd-et/banks/bank_of_holly_springs.png'
+                    countries:
+                      - US
+                    popularity: 10
+                    provider: teller
+                  -
+                    id: bank_of_bird_in_hand
+                    name: 'Bank of Bird-in-Hand'
+                    logo: 'http://localhost:9000/chronos-herd-et/banks/bank_of_bird_in_hand.png'
+                    countries:
+                      - US
+                    popularity: 10
+                    provider: teller
+                  -
+                    id: bank_of_brookhaven
+                    name: 'Bank of Brookhaven'
+                    logo: 'http://localhost:9000/chronos-herd-et/banks/bank_of_brookhaven.png'
+                    countries:
+                      - US
+                    popularity: 10
+                    provider: teller
+                  -
+                    id: bank_of_southern_ca_retail
+                    name: 'Bank of Southern California Retail'
+                    logo: 'http://localhost:9000/chronos-herd-et/banks/bank_of_southern_ca_retail.png'
+                    countries:
+                      - US
+                    popularity: 10
+                    provider: teller
+                  -
+                    id: bank_of_oak_ridge_la
+                    name: 'Bank of Oak Ridge (LA)'
+                    logo: 'http://localhost:9000/chronos-herd-et/banks/bank_of_oak_ridge_la.png'
+                    countries:
+                      - US
+                    popularity: 10
+                    provider: teller
+                  -
+                    id: bank_northwest
+                    name: 'Bank Northwest'
+                    logo: 'http://localhost:9000/chronos-herd-et/banks/bank_northwest.png'
+                    countries:
+                      - US
+                    popularity: 10
+                    provider: teller
+                  -
+                    id: bank_of_winnfield_and_trust_co
+                    name: 'Bank of Winnfield and Trust Co'
+                    logo: 'http://localhost:9000/chronos-herd-et/banks/bank_of_winnfield_and_trust_co.png'
+                    countries:
+                      - US
+                    popularity: 10
+                    provider: teller
+      tags:
+        - Financial
+      security: []
+  '/api/transactions/{public_id}':
+    get:
+      summary: 'Retrieve a transaction'
+      operationId: retrieveATransaction
+      description: 'Retrieve a transaction by its public ID for the authenticated user in the current workspace.'
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Transactions
+    parameters:
+      -
+        in: path
+        name: public_id
+        description: 'The ID of the public.'
+        example: architecto
+        required: true
+        schema:
+          type: string

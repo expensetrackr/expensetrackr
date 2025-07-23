@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Knuckles\Scribe\Attributes\BodyParam;
 use Knuckles\Scribe\Attributes\Group;
+use Knuckles\Scribe\Attributes\Response as ScribeResponse;
 use Knuckles\Scribe\Attributes\Unauthenticated;
 use Laravel\Fortify\Contracts\FailedPasswordResetLinkRequestResponse;
 use Laravel\Fortify\Contracts\SuccessfulPasswordResetLinkRequestResponse;
@@ -26,6 +27,7 @@ final class PasswordResetLinkController
      */
     #[Unauthenticated]
     #[BodyParam(name: 'email', type: 'string', description: 'The email of the user.', required: true)]
+    #[ScribeResponse(null, 204)]
     public function store(Request $request): Responsable
     {
         $request->validate([Fortify::email() => 'required|email']);

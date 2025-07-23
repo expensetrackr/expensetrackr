@@ -1,0 +1,821 @@
+{
+    "variable": [
+        {
+            "id": "baseUrl",
+            "key": "baseUrl",
+            "type": "string",
+            "name": "string",
+            "value": "https:\/\/expensetrackr.app.test"
+        }
+    ],
+    "info": {
+        "name": "ExpenseTrackr API Documentation",
+        "_postman_id": "fd0af5c1-b717-48fd-8a34-794b1a44afc0",
+        "description": "",
+        "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
+    },
+    "item": [
+        {
+            "name": "Accounts",
+            "description": "",
+            "item": [
+                {
+                    "name": "List all accounts",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/accounts",
+                            "query": [
+                                {
+                                    "key": "per_page",
+                                    "value": "15",
+                                    "description": "The number of items per page",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "page",
+                                    "value": "1",
+                                    "description": "The page number",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "sort",
+                                    "value": "name",
+                                    "description": "The field to sort by",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "include",
+                                    "value": "bankConnection%2Caccountable",
+                                    "description": "The relationships to include",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "filter%5Bq%5D",
+                                    "value": "My+Account",
+                                    "description": "The search query to filter accounts by name",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "filter%5Bname%5D",
+                                    "value": "My+Account",
+                                    "description": "The name of the account",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "filter%5Bcurrency_code%5D",
+                                    "value": "USD",
+                                    "description": "The currency code of the account",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "filter%5Bis_default%5D",
+                                    "value": "1",
+                                    "description": "Whether the account is the default account",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "filter%5Bis_manual%5D",
+                                    "value": "1",
+                                    "description": "Whether the account is manual",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "filter%5Btype%5D",
+                                    "value": "depository",
+                                    "description": "The type of the account",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "filter%5Bbalance_min%5D",
+                                    "value": "100",
+                                    "description": "The minimum balance of the account",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "filter%5Bbalance_max%5D",
+                                    "value": "1000",
+                                    "description": "The maximum balance of the account",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "filter%5Bcreated_from%5D",
+                                    "value": "2021-01-01",
+                                    "description": "The minimum creation date of the account",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "filter%5Bcreated_to%5D",
+                                    "value": "2021-01-01",
+                                    "description": "The maximum creation date of the account",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/accounts?per_page=15&page=1&sort=name&include=bankConnection%2Caccountable&filter%5Bq%5D=My+Account&filter%5Bname%5D=My+Account&filter%5Bcurrency_code%5D=USD&filter%5Bis_default%5D=1&filter%5Bis_manual%5D=1&filter%5Btype%5D=depository&filter%5Bbalance_min%5D=100&filter%5Bbalance_max%5D=1000&filter%5Bcreated_from%5D=2021-01-01&filter%5Bcreated_to%5D=2021-01-01"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Retrieve a list of accounts for the authenticated user in the current workspace."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"id\":\"acct_26d642c5fc684a59a316f215b2714f2a\",\"name\":\"Primary Checking\",\"description\":null,\"type\":\"depository\",\"subtype\":null,\"currencyCode\":\"SOS\",\"baseCurrency\":null,\"currencyRate\":\"5.515960\",\"initialBalance\":\"2302.0618\",\"baseInitialBalance\":\"8654.5255\",\"currentBalance\":\"7584.2777\",\"baseCurrentBalance\":null,\"isDefault\":false,\"isManual\":false,\"externalId\":null,\"createdAt\":\"2025-07-23T21:22:10.000000Z\",\"updatedAt\":\"2025-07-23T21:22:10.000000Z\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Create a new account",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/accounts",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/accounts"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"b\",\"currency_code\":\"n\",\"initial_balance\":84,\"is_default\":false,\"type\":\"architecto\",\"subtype\":\"architecto\",\"available_credit\":39,\"minimum_payment\":84,\"apr\":12,\"annual_fee\":77,\"expires_at\":\"2025-07-23T21:22:10\",\"interest_rate\":8,\"rate_type\":\"architecto\",\"term_months\":22,\"description\":\"Animi quos velit et fugiat.\",\"external_id\":\"d\"}"
+                        },
+                        "description": "Create a new account for the authenticated user in the current workspace."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"id\":\"acct_e3c9b0f8be4640c5b6e276f2cdc79a90\",\"name\":\"Retirement Fund\",\"description\":\"Modi deserunt aut ab provident perspiciatis.\",\"type\":\"crypto\",\"subtype\":null,\"currencyCode\":\"JPY\",\"baseCurrency\":\"KRW\",\"currencyRate\":\"3.732566\",\"initialBalance\":\"6620.3085\",\"baseInitialBalance\":null,\"currentBalance\":\"6052.7915\",\"baseCurrentBalance\":\"1965.0388\",\"isDefault\":false,\"isManual\":true,\"externalId\":null,\"createdAt\":\"2025-07-23T21:22:10.000000Z\",\"updatedAt\":\"2025-07-23T21:22:10.000000Z\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Retrieve an account",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/accounts\/:public_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/accounts\/:public_id",
+                            "variable": [
+                                {
+                                    "id": "public_id",
+                                    "key": "public_id",
+                                    "value": "acct_8dd8351ad4c241cbbc3736f300fd2957",
+                                    "description": "The ID of the public."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Retrieve an account by its public ID for the authenticated user in the current workspace."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"id\":\"acct_1cb21056040542d1846949e774ca94c5\",\"name\":\"Credit Card\",\"description\":\"Qui commodi incidunt iure odit.\",\"type\":\"crypto\",\"subtype\":\"angel\",\"currencyCode\":\"YER\",\"baseCurrency\":null,\"currencyRate\":null,\"initialBalance\":\"5456.5324\",\"baseInitialBalance\":\"7652.8239\",\"currentBalance\":\"4927.8888\",\"baseCurrentBalance\":null,\"isDefault\":false,\"isManual\":true,\"externalId\":\"502eabbf-311f-3542-a47b-b2a14f5de904\",\"createdAt\":\"2025-07-23T21:22:10.000000Z\",\"updatedAt\":\"2025-07-23T21:22:10.000000Z\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Update an account",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/accounts\/:public_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/accounts\/:public_id",
+                            "variable": [
+                                {
+                                    "id": "public_id",
+                                    "key": "public_id",
+                                    "value": "acct_8dd8351ad4c241cbbc3736f300fd2957",
+                                    "description": "The ID of the public."
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"b\",\"description\":\"Et animi quos velit et fugiat.\",\"currency_code\":\"d\",\"is_default\":false,\"subtype\":\"architecto\",\"available_credit\":39,\"minimum_payment\":84,\"apr\":12,\"annual_fee\":77,\"expires_at\":\"2025-07-23T21:22:10\",\"interest_rate\":8,\"rate_type\":\"architecto\",\"term_months\":22,\"external_id\":\"g\"}"
+                        },
+                        "description": "Update an account for the authenticated user in the current workspace."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"id\":\"acct_19262b1b5fbf45c3a7395196f545d5df\",\"name\":\"Credit Card\",\"description\":null,\"type\":\"loan\",\"subtype\":\"none\",\"currencyCode\":\"PGK\",\"baseCurrency\":\"SHP\",\"currencyRate\":\"5.573992\",\"initialBalance\":\"3970.3752\",\"baseInitialBalance\":null,\"currentBalance\":\"6303.2587\",\"baseCurrentBalance\":null,\"isDefault\":false,\"isManual\":true,\"externalId\":\"bfc53181-d647-36b2-9080-f9c2b76006f4\",\"createdAt\":\"2025-07-23T21:22:10.000000Z\",\"updatedAt\":\"2025-07-23T21:22:10.000000Z\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Delete an account",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/accounts\/:public_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/accounts\/:public_id",
+                            "variable": [
+                                {
+                                    "id": "public_id",
+                                    "key": "public_id",
+                                    "value": "acct_8dd8351ad4c241cbbc3736f300fd2957",
+                                    "description": "The ID of the public."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Delete an account for the authenticated user in the current workspace."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 204,
+                            "body": null,
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Get account statistics",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/accounts\/stats",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/accounts\/stats"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Retrieve statistics for all accounts in the current workspace."
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "vary",
+                                    "value": "Origin"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Authentication",
+            "description": "",
+            "item": [
+                {
+                    "name": "Login a user",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/auth\/login",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/auth\/login"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"email\":\"gbailey@example.net\",\"password\":\"|]|{+-\",\"device_name\":\"architecto\"}"
+                        },
+                        "description": "Attempt to authenticate a new session for the authenticated user.",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Reset password",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/auth\/forgot-password",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/auth\/forgot-password"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"email\":\"gbailey@example.net\"}"
+                        },
+                        "description": "Send a password reset link to the user's email.",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 204,
+                            "body": null,
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Register a new user",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/auth\/register",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/auth\/register"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"architecto\",\"email\":\"gbailey@example.net\",\"password\":\"|]|{+-\",\"password_confirmation\":\"architecto\",\"terms\":false,\"device_name\":\"architecto\"}"
+                        },
+                        "description": "Register a new user account.",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Logout a user",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/auth\/logout",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/auth\/logout"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Logout the authenticated user."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 204,
+                            "body": null,
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Categories",
+            "description": "",
+            "item": [
+                {
+                    "name": "List all categories",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/categories",
+                            "query": [
+                                {
+                                    "key": "per_page",
+                                    "value": "15",
+                                    "description": "The number of items per page",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "page",
+                                    "value": "1",
+                                    "description": "The page number",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "sort",
+                                    "value": "name",
+                                    "description": "The field to sort by",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "include",
+                                    "value": "parent",
+                                    "description": "The relationships to include",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "filter%5Bname%5D",
+                                    "value": "Food",
+                                    "description": "The name of the category",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "filter%5Bclassification%5D",
+                                    "value": "expense",
+                                    "description": "The classification of the category",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/categories?per_page=15&page=1&sort=name&include=parent&filter%5Bname%5D=Food&filter%5Bclassification%5D=expense"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Retrieve a list of categories for the authenticated user in the current workspace.\n\nCategories can be filtered by name and classification.\nResults can be sorted by creation date."
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "vary",
+                                    "value": "Origin"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Retrieve a category",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/categories\/:public_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/categories\/:public_id",
+                            "variable": [
+                                {
+                                    "id": "public_id",
+                                    "key": "public_id",
+                                    "value": "cat_21be2d5f8a8948c8a00b7177949a56f2",
+                                    "description": "The ID of the public."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Retrieve a category by its public ID for the authenticated user in the current workspace."
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "vary",
+                                    "value": "Origin"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Financial",
+            "description": "",
+            "item": [
+                {
+                    "name": "Currencies",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/finance\/currencies",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/finance\/currencies"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Retrieves a list of all supported currencies available in the system.",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "vary",
+                                    "value": "Origin"
+                                }
+                            ],
+                            "code": 200,
+                            "body": "[\"AED\",\"AFN\",\"ALL\",\"AMD\",\"ANG\",\"AOA\",\"ARS\",\"AUD\",\"AWG\",\"AZN\",\"BAM\",\"BBD\",\"BDT\",\"BGN\",\"BHD\",\"BIF\",\"BMD\",\"BND\",\"BOB\",\"BRL\",\"BSD\",\"BTN\",\"BWP\",\"BYN\",\"BZD\",\"CAD\",\"CDF\",\"CHF\",\"CLP\",\"CNY\",\"COP\",\"CRC\",\"CUP\",\"CVE\",\"CZK\",\"DJF\",\"DKK\",\"DOP\",\"DZD\",\"EGP\",\"ERN\",\"ETB\",\"EUR\",\"FJD\",\"FKP\",\"FOK\",\"GBP\",\"GEL\",\"GGP\",\"GHS\",\"GIP\",\"GMD\",\"GNF\",\"GTQ\",\"GYD\",\"HKD\",\"HNL\",\"HRK\",\"HTG\",\"HUF\",\"IDR\",\"ILS\",\"IMP\",\"INR\",\"IQD\",\"IRR\",\"ISK\",\"JEP\",\"JMD\",\"JOD\",\"JPY\",\"KES\",\"KGS\",\"KHR\",\"KID\",\"KMF\",\"KRW\",\"KWD\",\"KYD\",\"KZT\",\"LAK\",\"LBP\",\"LKR\",\"LRD\",\"LSL\",\"LYD\",\"MAD\",\"MDL\",\"MGA\",\"MKD\",\"MMK\",\"MNT\",\"MOP\",\"MRU\",\"MUR\",\"MVR\",\"MWK\",\"MXN\",\"MYR\",\"MZN\",\"NAD\",\"NGN\",\"NIO\",\"NOK\",\"NPR\",\"NZD\",\"OMR\",\"PAB\",\"PEN\",\"PGK\",\"PHP\",\"PKR\",\"PLN\",\"PYG\",\"QAR\",\"RON\",\"RSD\",\"RUB\",\"RWF\",\"SAR\",\"SBD\",\"SCR\",\"SDG\",\"SEK\",\"SGD\",\"SHP\",\"SLE\",\"SLL\",\"SOS\",\"SRD\",\"SSP\",\"STN\",\"SYP\",\"SZL\",\"THB\",\"TJS\",\"TMT\",\"TND\",\"TOP\",\"TRY\",\"TTD\",\"TVD\",\"TWD\",\"TZS\",\"UAH\",\"UGX\",\"USD\",\"UYU\",\"UZS\",\"VES\",\"VND\",\"VUV\",\"WST\",\"XAF\",\"XCD\",\"XCG\",\"XDR\",\"XOF\",\"XPF\",\"YER\",\"ZAR\",\"ZMW\",\"ZWL\"]",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Institutions",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/finance\/institutions",
+                            "query": [
+                                {
+                                    "key": "q",
+                                    "value": "bank",
+                                    "description": "The search query to find institutions by name",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "limit",
+                                    "value": "48",
+                                    "description": "The number of results to return",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/finance\/institutions?q=bank&limit=48"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Search for financial institutions based on a query parameter.\nReturns up to 48 results sorted by popularity in descending order.\nThis endpoint is commonly used to help users find and select their\nbank or financial institution when connecting accounts.",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "vary",
+                                    "value": "Origin"
+                                }
+                            ],
+                            "code": 200,
+                            "body": "[{\"id\":\"bank_of_america\",\"name\":\"Bank of America\",\"logo\":\"http:\\\/\\\/localhost:9000\\\/chronos-herd-et\\\/banks\\\/bank_of_america.png\",\"countries\":[\"US\"],\"popularity\":98,\"provider\":\"teller\"},{\"id\":\"bank_ia\",\"name\":\"BANK\",\"logo\":\"http:\\\/\\\/localhost:9000\\\/chronos-herd-et\\\/banks\\\/bank_ia.png\",\"countries\":[\"US\"],\"popularity\":10,\"provider\":\"teller\"},{\"id\":\"bank_of_deerfield\",\"name\":\"Bank of Deerfield\",\"logo\":\"http:\\\/\\\/localhost:9000\\\/chronos-herd-et\\\/banks\\\/bank_of_deerfield.png\",\"countries\":[\"US\"],\"popularity\":10,\"provider\":\"teller\"},{\"id\":\"bank_of_san_juans\",\"name\":\"Bank of San Juans\",\"logo\":\"http:\\\/\\\/localhost:9000\\\/chronos-herd-et\\\/banks\\\/bank_of_san_juans.png\",\"countries\":[\"US\"],\"popularity\":10,\"provider\":\"teller\"},{\"id\":\"bank_of_crockett\",\"name\":\"Bank of Crockett\",\"logo\":\"http:\\\/\\\/localhost:9000\\\/chronos-herd-et\\\/banks\\\/bank_of_crockett.png\",\"countries\":[\"US\"],\"popularity\":10,\"provider\":\"teller\"},{\"id\":\"bank_of_lindsay\",\"name\":\"Bank of Lindsay\",\"logo\":\"http:\\\/\\\/localhost:9000\\\/chronos-herd-et\\\/banks\\\/bank_of_lindsay.png\",\"countries\":[\"US\"],\"popularity\":10,\"provider\":\"teller\"},{\"id\":\"bank_florida\",\"name\":\"Bank Florida\",\"logo\":\"http:\\\/\\\/localhost:9000\\\/chronos-herd-et\\\/banks\\\/bank_florida.png\",\"countries\":[\"US\"],\"popularity\":10,\"provider\":\"teller\"},{\"id\":\"bank_of_lafayette\",\"name\":\"The Bank of LaFayette\",\"logo\":\"http:\\\/\\\/localhost:9000\\\/chronos-herd-et\\\/banks\\\/bank_of_lafayette.png\",\"countries\":[\"US\"],\"popularity\":10,\"provider\":\"teller\"},{\"id\":\"bank_of_o_fallon\",\"name\":\"Bank of O'Fallon\",\"logo\":\"http:\\\/\\\/localhost:9000\\\/chronos-herd-et\\\/banks\\\/bank_of_o_fallon.png\",\"countries\":[\"US\"],\"popularity\":10,\"provider\":\"teller\"},{\"id\":\"bank_ri\",\"name\":\"BankRI\",\"logo\":\"http:\\\/\\\/localhost:9000\\\/chronos-herd-et\\\/banks\\\/bank_ri.png\",\"countries\":[\"US\"],\"popularity\":10,\"provider\":\"teller\"},{\"id\":\"bank_forward\",\"name\":\"Bank Forward\",\"logo\":\"http:\\\/\\\/localhost:9000\\\/chronos-herd-et\\\/banks\\\/bank_forward.png\",\"countries\":[\"US\"],\"popularity\":10,\"provider\":\"teller\"},{\"id\":\"bank_of_stockton\",\"name\":\"Bank of Stockton\",\"logo\":\"http:\\\/\\\/localhost:9000\\\/chronos-herd-et\\\/banks\\\/bank_of_stockton.png\",\"countries\":[\"US\"],\"popularity\":10,\"provider\":\"teller\"},{\"id\":\"bank_of_kilmichael\",\"name\":\"Bank of Kilmichael\",\"logo\":\"http:\\\/\\\/localhost:9000\\\/chronos-herd-et\\\/banks\\\/bank_of_kilmichael.png\",\"countries\":[\"US\"],\"popularity\":10,\"provider\":\"teller\"},{\"id\":\"bank_of_commerce_chelsea_ok\",\"name\":\"Bank of Commerce (Chelsea, OK)\",\"logo\":\"http:\\\/\\\/localhost:9000\\\/chronos-herd-et\\\/banks\\\/bank_of_commerce_chelsea_ok.png\",\"countries\":[\"US\"],\"popularity\":10,\"provider\":\"teller\"},{\"id\":\"bank_cbc_business\",\"name\":\"BankCBC Business\",\"logo\":\"http:\\\/\\\/localhost:9000\\\/chronos-herd-et\\\/banks\\\/bank_cbc_business.png\",\"countries\":[\"US\"],\"popularity\":10,\"provider\":\"teller\"},{\"id\":\"bank_of_sun_prairie\",\"name\":\"Bank of Sun Prairie\",\"logo\":\"http:\\\/\\\/localhost:9000\\\/chronos-herd-et\\\/banks\\\/bank_of_sun_prairie.png\",\"countries\":[\"US\"],\"popularity\":10,\"provider\":\"teller\"},{\"id\":\"bank_leumi\",\"name\":\"Bank Leumi, part of Valley National Bank\",\"logo\":\"http:\\\/\\\/localhost:9000\\\/chronos-herd-et\\\/banks\\\/bank_leumi.png\",\"countries\":[\"US\"],\"popularity\":10,\"provider\":\"teller\"},{\"id\":\"bank_of_prairie_du_sac_business\",\"name\":\"Bank of Prairie du Sac (Business)\",\"logo\":\"http:\\\/\\\/localhost:9000\\\/chronos-herd-et\\\/banks\\\/bank_of_prairie_du_sac_business.png\",\"countries\":[\"US\"],\"popularity\":10,\"provider\":\"teller\"},{\"id\":\"bank_of_walker_county\",\"name\":\"Bank of Walker County\",\"logo\":\"http:\\\/\\\/localhost:9000\\\/chronos-herd-et\\\/banks\\\/bank_of_walker_county.png\",\"countries\":[\"US\"],\"popularity\":10,\"provider\":\"teller\"},{\"id\":\"bank_of_commerce_ok\",\"name\":\"Bank of Commerce (OK)\",\"logo\":\"http:\\\/\\\/localhost:9000\\\/chronos-herd-et\\\/banks\\\/bank_of_commerce_ok.png\",\"countries\":[\"US\"],\"popularity\":10,\"provider\":\"teller\"},{\"id\":\"bank_of_hartington\",\"name\":\"Bank of Hartington\",\"logo\":\"http:\\\/\\\/localhost:9000\\\/chronos-herd-et\\\/banks\\\/bank_of_hartington.png\",\"countries\":[\"US\"],\"popularity\":10,\"provider\":\"teller\"},{\"id\":\"bank_of_ocean_city\",\"name\":\"Bank of Ocean City\",\"logo\":\"http:\\\/\\\/localhost:9000\\\/chronos-herd-et\\\/banks\\\/bank_of_ocean_city.png\",\"countries\":[\"US\"],\"popularity\":10,\"provider\":\"teller\"},{\"id\":\"bank_of_utah\",\"name\":\"Bank of Utah\",\"logo\":\"http:\\\/\\\/localhost:9000\\\/chronos-herd-et\\\/banks\\\/bank_of_utah.png\",\"countries\":[\"US\"],\"popularity\":10,\"provider\":\"teller\"},{\"id\":\"bank_of_monticello_mo\",\"name\":\"Bank of Monticello MO\",\"logo\":\"http:\\\/\\\/localhost:9000\\\/chronos-herd-et\\\/banks\\\/bank_of_monticello_mo.png\",\"countries\":[\"US\"],\"popularity\":10,\"provider\":\"teller\"},{\"id\":\"bank_hapoalim\",\"name\":\"Bank Hapoalim\",\"logo\":\"http:\\\/\\\/localhost:9000\\\/chronos-herd-et\\\/banks\\\/bank_hapoalim.png\",\"countries\":[\"US\"],\"popularity\":10,\"provider\":\"teller\"},{\"id\":\"bank_of_orchard\",\"name\":\"Bank of Orchard\",\"logo\":\"http:\\\/\\\/localhost:9000\\\/chronos-herd-et\\\/banks\\\/bank_of_orchard.png\",\"countries\":[\"US\"],\"popularity\":10,\"provider\":\"teller\"},{\"id\":\"bank_of_tennessee\",\"name\":\"Bank of Tennessee\",\"logo\":\"http:\\\/\\\/localhost:9000\\\/chronos-herd-et\\\/banks\\\/bank_of_tennessee.png\",\"countries\":[\"US\"],\"popularity\":10,\"provider\":\"teller\"},{\"id\":\"bank_of_evergreen\",\"name\":\"Bank of Evergreen\",\"logo\":\"http:\\\/\\\/localhost:9000\\\/chronos-herd-et\\\/banks\\\/bank_of_evergreen.png\",\"countries\":[\"US\"],\"popularity\":10,\"provider\":\"teller\"},{\"id\":\"bank_of_the_west_tx_business\",\"name\":\"Bank Of The West (TX) Business\",\"logo\":\"http:\\\/\\\/localhost:9000\\\/chronos-herd-et\\\/banks\\\/bank_of_the_west_tx_business.png\",\"countries\":[\"US\"],\"popularity\":10,\"provider\":\"teller\"},{\"id\":\"bank_of_botetourt\",\"name\":\"Bank of Botetourt\",\"logo\":\"http:\\\/\\\/localhost:9000\\\/chronos-herd-et\\\/banks\\\/bank_of_botetourt.png\",\"countries\":[\"US\"],\"popularity\":10,\"provider\":\"teller\"},{\"id\":\"bank_purely\",\"name\":\"BankPurely\",\"logo\":\"http:\\\/\\\/localhost:9000\\\/chronos-herd-et\\\/banks\\\/bank_purely.png\",\"countries\":[\"US\"],\"popularity\":10,\"provider\":\"teller\"},{\"id\":\"bank_of_charles_town\",\"name\":\"Bank of Charles Town\",\"logo\":\"http:\\\/\\\/localhost:9000\\\/chronos-herd-et\\\/banks\\\/bank_of_charles_town.png\",\"countries\":[\"US\"],\"popularity\":10,\"provider\":\"teller\"},{\"id\":\"bank_of_perry_county\",\"name\":\"Bank of Perry County\",\"logo\":\"http:\\\/\\\/localhost:9000\\\/chronos-herd-et\\\/banks\\\/bank_of_perry_county.png\",\"countries\":[\"US\"],\"popularity\":10,\"provider\":\"teller\"},{\"id\":\"bank_of_greene_county\",\"name\":\"Bank of Greene County\",\"logo\":\"http:\\\/\\\/localhost:9000\\\/chronos-herd-et\\\/banks\\\/bank_of_greene_county.png\",\"countries\":[\"US\"],\"popularity\":10,\"provider\":\"teller\"},{\"id\":\"bank_7\",\"name\":\"Bank 7\",\"logo\":\"http:\\\/\\\/localhost:9000\\\/chronos-herd-et\\\/banks\\\/bank_7.png\",\"countries\":[\"US\"],\"popularity\":10,\"provider\":\"teller\"},{\"id\":\"bank_of_milton\",\"name\":\"Bank of Milton\",\"logo\":\"http:\\\/\\\/localhost:9000\\\/chronos-herd-et\\\/banks\\\/bank_of_milton.png\",\"countries\":[\"US\"],\"popularity\":10,\"provider\":\"teller\"},{\"id\":\"bank_of_jamestown\",\"name\":\"Bank of Jamestown\",\"logo\":\"http:\\\/\\\/localhost:9000\\\/chronos-herd-et\\\/banks\\\/bank_of_jamestown.png\",\"countries\":[\"US\"],\"popularity\":10,\"provider\":\"teller\"},{\"id\":\"bank_of_labor\",\"name\":\"Bank of Labor\",\"logo\":\"http:\\\/\\\/localhost:9000\\\/chronos-herd-et\\\/banks\\\/bank_of_labor.png\",\"countries\":[\"US\"],\"popularity\":10,\"provider\":\"teller\"},{\"id\":\"bank_of_commerce_ms\",\"name\":\"Bank of Commerce MS\",\"logo\":\"http:\\\/\\\/localhost:9000\\\/chronos-herd-et\\\/banks\\\/bank_of_commerce_ms.png\",\"countries\":[\"US\"],\"popularity\":10,\"provider\":\"teller\"},{\"id\":\"bank_of_the_flint_hills\",\"name\":\"Bank of the Flint Hills\",\"logo\":\"http:\\\/\\\/localhost:9000\\\/chronos-herd-et\\\/banks\\\/bank_of_the_flint_hills.png\",\"countries\":[\"US\"],\"popularity\":10,\"provider\":\"teller\"},{\"id\":\"bank_of_1889\",\"name\":\"Bank of 1889\",\"logo\":\"http:\\\/\\\/localhost:9000\\\/chronos-herd-et\\\/banks\\\/bank_of_1889.png\",\"countries\":[\"US\"],\"popularity\":10,\"provider\":\"teller\"},{\"id\":\"bank_of_holly_springs\",\"name\":\"Bank of Holly Springs\",\"logo\":\"http:\\\/\\\/localhost:9000\\\/chronos-herd-et\\\/banks\\\/bank_of_holly_springs.png\",\"countries\":[\"US\"],\"popularity\":10,\"provider\":\"teller\"},{\"id\":\"bank_of_bird_in_hand\",\"name\":\"Bank of Bird-in-Hand\",\"logo\":\"http:\\\/\\\/localhost:9000\\\/chronos-herd-et\\\/banks\\\/bank_of_bird_in_hand.png\",\"countries\":[\"US\"],\"popularity\":10,\"provider\":\"teller\"},{\"id\":\"bank_of_brookhaven\",\"name\":\"Bank of Brookhaven\",\"logo\":\"http:\\\/\\\/localhost:9000\\\/chronos-herd-et\\\/banks\\\/bank_of_brookhaven.png\",\"countries\":[\"US\"],\"popularity\":10,\"provider\":\"teller\"},{\"id\":\"bank_of_southern_ca_retail\",\"name\":\"Bank of Southern California Retail\",\"logo\":\"http:\\\/\\\/localhost:9000\\\/chronos-herd-et\\\/banks\\\/bank_of_southern_ca_retail.png\",\"countries\":[\"US\"],\"popularity\":10,\"provider\":\"teller\"},{\"id\":\"bank_of_oak_ridge_la\",\"name\":\"Bank of Oak Ridge (LA)\",\"logo\":\"http:\\\/\\\/localhost:9000\\\/chronos-herd-et\\\/banks\\\/bank_of_oak_ridge_la.png\",\"countries\":[\"US\"],\"popularity\":10,\"provider\":\"teller\"},{\"id\":\"bank_northwest\",\"name\":\"Bank Northwest\",\"logo\":\"http:\\\/\\\/localhost:9000\\\/chronos-herd-et\\\/banks\\\/bank_northwest.png\",\"countries\":[\"US\"],\"popularity\":10,\"provider\":\"teller\"},{\"id\":\"bank_of_winnfield_and_trust_co\",\"name\":\"Bank of Winnfield and Trust Co\",\"logo\":\"http:\\\/\\\/localhost:9000\\\/chronos-herd-et\\\/banks\\\/bank_of_winnfield_and_trust_co.png\",\"countries\":[\"US\"],\"popularity\":10,\"provider\":\"teller\"}]",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Transactions",
+            "description": "",
+            "item": [
+                {
+                    "name": "Retrieve a transaction",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/transactions\/:public_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/transactions\/:public_id",
+                            "variable": [
+                                {
+                                    "id": "public_id",
+                                    "key": "public_id",
+                                    "value": "architecto",
+                                    "description": "The ID of the public."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Retrieve a transaction by its public ID for the authenticated user in the current workspace."
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "vary",
+                                    "value": "Origin"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "auth": {
+        "type": "bearer",
+        "bearer": [
+            {
+                "key": "key",
+                "type": "string"
+            }
+        ]
+    }
+}

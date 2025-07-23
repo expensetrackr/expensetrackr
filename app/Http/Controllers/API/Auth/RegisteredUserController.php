@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Knuckles\Scribe\Attributes\BodyParam;
 use Knuckles\Scribe\Attributes\Group;
+use Knuckles\Scribe\Attributes\Response as ScribeResponse;
 use Knuckles\Scribe\Attributes\Unauthenticated;
 use Laravel\Fortify\Fortify;
 
@@ -39,6 +40,7 @@ final readonly class RegisteredUserController
     #[BodyParam(name: 'password_confirmation', type: 'string', description: 'The password confirmation of the user.', required: true)]
     #[BodyParam(name: 'terms', type: 'boolean', description: 'Whether the user has accepted the terms and conditions.', required: true)]
     #[BodyParam(name: 'device_name', type: 'string', description: 'The name of the device.', required: true)]
+    #[ScribeResponse('', 200)]
     public function store(Request $request, CreateNewUser $creator): string
     {
         if (config('fortify.lowercase_usernames') && $request->has(Fortify::username())) {
