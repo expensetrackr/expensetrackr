@@ -7,20 +7,17 @@ namespace App\Http\Controllers\API;
 use App\Actions\BankAccounts\CreateAccount;
 use App\Actions\BankAccounts\DeleteAccount;
 use App\Actions\BankAccounts\UpdateAccount;
-use App\Enums\Finance\AccountType;
 use App\Http\Requests\API\StoreAccountRequest;
 use App\Http\Requests\API\UpdateAccountRequest;
-use App\Http\Resources\AccountCollection;
 use App\Http\Resources\AccountResource;
 use App\Models\Account;
 use App\Services\AccountCacheService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Http\Response;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Knuckles\Scribe\Attributes\Group;
-use Knuckles\Scribe\Attributes\QueryParam;
-use Knuckles\Scribe\Attributes\Response;
-use Knuckles\Scribe\Attributes\ResponseFromApiResource;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 use Throwable;
@@ -46,23 +43,8 @@ final class AccountController extends BaseApiController
      *
      * Retrieve a list of accounts for the authenticated user in the current workspace.
      *
-     * @return ResourceCollection<Account>|JsonResponse
+     * @return LengthAwarePaginator<AccountResource>
      */
-    #[QueryParam(name: 'per_page', type: 'integer', description: 'The number of items per page', example: 15, required: false)]
-    #[QueryParam(name: 'page', type: 'integer', description: 'The page number', example: 1, required: false)]
-    #[QueryParam(name: 'sort', type: 'string', description: 'The field to sort by', example: 'name', required: false, enum: ['name', '-name', 'created_at', '-created_at', 'current_balance', '-current_balance', 'currency_code', '-currency_code', 'is_default', '-is_default'])]
-    #[QueryParam(name: 'include', type: 'string', description: 'The relationships to include', example: 'bankConnection,accountable', required: false, enum: ['bankConnection', 'accountable'])]
-    #[QueryParam(name: 'filter[q]', type: 'string', description: 'The search query to filter accounts by name', example: 'My Account', required: false)]
-    #[QueryParam(name: 'filter[name]', type: 'string', description: 'The name of the account', example: 'My Account', required: false)]
-    #[QueryParam(name: 'filter[currency_code]', type: 'string', description: 'The currency code of the account', example: 'USD', required: false)]
-    #[QueryParam(name: 'filter[is_default]', type: 'boolean', description: 'Whether the account is the default account', example: true, required: false)]
-    #[QueryParam(name: 'filter[is_manual]', type: 'boolean', description: 'Whether the account is manual', example: true, required: false)]
-    #[QueryParam(name: 'filter[type]', type: 'string', description: 'The type of the account', example: 'depository', required: false, enum: AccountType::class)]
-    #[QueryParam(name: 'filter[balance_min]', type: 'number', description: 'The minimum balance of the account', example: 100, required: false)]
-    #[QueryParam(name: 'filter[balance_max]', type: 'number', description: 'The maximum balance of the account', example: 1000, required: false)]
-    #[QueryParam(name: 'filter[created_from]', type: 'date', description: 'The minimum creation date of the account', example: '2021-01-01', required: false)]
-    #[QueryParam(name: 'filter[created_to]', type: 'date', description: 'The maximum creation date of the account', example: '2021-01-01', required: false)]
-    #[ResponseFromApiResource(AccountCollection::class, Account::class, paginate: 15)]
     public function index(Request $request): ResourceCollection|JsonResponse
     {
         try {
@@ -72,17 +54,54 @@ final class AccountController extends BaseApiController
 
             $workspaceId = auth()->user()->current_workspace_id;
 
-            // Create cache key based on request parameters
             $cacheKey = $this->generateCacheKey($request, $workspaceId);
 
-            // Try to get from cache first
             $cachedResult = $this->cacheService->getCachedQuery($cacheKey);
             if ($cachedResult) {
                 return $cachedResult;
             }
 
-            // Use QueryBuilder for flexible, efficient queries
-            $accounts = $this->buildAccountQuery($workspaceId)
+            $accounts = QueryBuilder::for(Account::class)
+                ->where('workspace_id', $workspaceId)
+                ->allowedFilters([
+                    AllowedFilter::partial('name'),
+                    AllowedFilter::exact('currency_code'),
+                    AllowedFilter::exact('is_default'),
+                    AllowedFilter::exact('is_manual'),
+                    AllowedFilter::callback('type', function ($query, $value) {
+                        $modelClass = $this->getModelClassFromType($value);
+                        $query->where('accountable_type', $modelClass);
+                    }),
+                    AllowedFilter::callback('balance_min', function ($query, $value) {
+                        $query->where('current_balance', '>=', $value);
+                    }),
+                    AllowedFilter::callback('balance_max', function ($query, $value) {
+                        $query->where('current_balance', '<=', $value);
+                    }),
+                    AllowedFilter::callback('created_from', function ($query, $value) {
+                        $query->where('created_at', '>=', $value);
+                    }),
+                    AllowedFilter::callback('created_to', function ($query, $value) {
+                        $query->where('created_at', '<=', $value);
+                    }),
+                    AllowedFilter::callback('q', function ($query, $value) {
+                        $query->where('name', 'like', "%$value%");
+                    }),
+                ])
+                ->allowedSorts([
+                    'name',
+                    '-name',
+                    'created_at',
+                    '-created_at',
+                    'current_balance',
+                    '-current_balance',
+                    'currency_code',
+                    '-currency_code',
+                    'is_default',
+                    '-is_default',
+                ])
+                ->allowedIncludes(['bankConnection', 'accountable'])
+                ->defaultSort('-created_at')
                 ->paginate($perPage)
                 ->withQueryString()
                 ->toResourceCollection();
@@ -100,22 +119,13 @@ final class AccountController extends BaseApiController
      *
      * Create a new account for the authenticated user in the current workspace.
      */
-    #[ResponseFromApiResource(AccountResource::class, Account::class)]
-    public function store(StoreAccountRequest $request, CreateAccount $action): JsonResponse
+    public function store(StoreAccountRequest $request, CreateAccount $action): AccountResource
     {
-        try {
-            $account = $action->create($request->validated(), isManual: true);
+        $account = $action->create($request->validated(), isManual: true);
 
-            $this->cacheService->invalidateWorkspaceCache($account->workspace_id);
+        $this->cacheService->invalidateWorkspaceCache($account->workspace_id);
 
-            return $this->successResponse(
-                $account->load(['bankConnection', 'accountable'])->toResource(),
-                'Account created successfully',
-                201
-            );
-        } catch (Throwable $e) {
-            return $this->handleException($e);
-        }
+        return $account->load(['bankConnection', 'accountable'])->toResource();
     }
 
     /**
@@ -123,24 +133,19 @@ final class AccountController extends BaseApiController
      *
      * Retrieve an account by its public ID for the authenticated user in the current workspace.
      */
-    #[ResponseFromApiResource(AccountResource::class, Account::class)]
-    public function show(Account $account): JsonResponse
+    public function show(Account $account): AccountResource
     {
-        try {
-            $this->authorize('view', $account);
+        $this->authorize('view', $account);
 
-            $workspaceId = auth()->user()->current_workspace_id;
+        $workspaceId = auth()->user()->current_workspace_id;
 
-            $cachedAccount = $this->cacheService->getAccount($account->public_id, $workspaceId);
+        $cachedAccount = $this->cacheService->getAccount($account->public_id, $workspaceId);
 
-            if (! $cachedAccount) {
-                return $this->errorResponse('Account not found.', 404);
-            }
-
-            return $this->resourceResponse($cachedAccount->toResource());
-        } catch (Throwable $e) {
-            return $this->handleException($e);
+        if (! $cachedAccount) {
+            abort(404, 'Account not found.');
         }
+
+        return $cachedAccount->toResource();
     }
 
     /**
@@ -148,21 +153,13 @@ final class AccountController extends BaseApiController
      *
      * Update an account for the authenticated user in the current workspace.
      */
-    #[ResponseFromApiResource(AccountResource::class, Account::class)]
-    public function update(UpdateAccountRequest $request, Account $account, UpdateAccount $action): JsonResponse
+    public function update(UpdateAccountRequest $request, Account $account, UpdateAccount $action): AccountResource
     {
-        try {
-            $updatedAccount = $action->handle($account, $request->validated());
+        $updatedAccount = $action->handle($account, $request->validated());
 
-            $this->cacheService->invalidateAccount($updatedAccount);
+        $this->cacheService->invalidateAccount($updatedAccount);
 
-            return $this->successResponse(
-                $updatedAccount->load(['bankConnection', 'accountable'])->toResource(),
-                'Account updated successfully'
-            );
-        } catch (Throwable $e) {
-            return $this->handleException($e);
-        }
+        return $updatedAccount->load(['bankConnection', 'accountable'])->toResource();
     }
 
     /**
@@ -170,20 +167,15 @@ final class AccountController extends BaseApiController
      *
      * Delete an account for the authenticated user in the current workspace.
      */
-    #[Response(null, 204)]
-    public function destroy(Account $account, DeleteAccount $action): JsonResponse
+    public function destroy(Account $account, DeleteAccount $action): Response
     {
-        try {
-            $this->authorize('delete', $account);
+        $this->authorize('delete', $account);
 
-            $this->cacheService->invalidateAccount($account);
+        $this->cacheService->invalidateAccount($account);
 
-            $action->handle($account);
+        $action->handle($account);
 
-            return $this->successResponse(null, 'Account deleted successfully.', 204);
-        } catch (Throwable $e) {
-            return $this->handleException($e);
-        }
+        return response()->noContent();
     }
 
     /**
@@ -222,54 +214,6 @@ final class AccountController extends BaseApiController
         } catch (Throwable $e) {
             return $this->handleException($e);
         }
-    }
-
-    /**
-     * Build the base query for accounts with filters and sorting.
-     */
-    private function buildAccountQuery(int $workspaceId): QueryBuilder
-    {
-        return QueryBuilder::for(Account::class)
-            ->where('workspace_id', $workspaceId)
-            ->allowedFilters([
-                AllowedFilter::partial('name'),
-                AllowedFilter::exact('currency_code'),
-                AllowedFilter::exact('is_default'),
-                AllowedFilter::exact('is_manual'),
-                AllowedFilter::callback('type', function ($query, $value) {
-                    $modelClass = $this->getModelClassFromType($value);
-                    $query->where('accountable_type', $modelClass);
-                }),
-                AllowedFilter::callback('balance_min', function ($query, $value) {
-                    $query->where('current_balance', '>=', $value);
-                }),
-                AllowedFilter::callback('balance_max', function ($query, $value) {
-                    $query->where('current_balance', '<=', $value);
-                }),
-                AllowedFilter::callback('created_from', function ($query, $value) {
-                    $query->where('created_at', '>=', $value);
-                }),
-                AllowedFilter::callback('created_to', function ($query, $value) {
-                    $query->where('created_at', '<=', $value);
-                }),
-                AllowedFilter::callback('q', function ($query, $value) {
-                    $query->where('name', 'like', "%$value%");
-                }),
-            ])
-            ->allowedSorts([
-                'name',
-                '-name',
-                'created_at',
-                '-created_at',
-                'current_balance',
-                '-current_balance',
-                'currency_code',
-                '-currency_code',
-                'is_default',
-                '-is_default',
-            ])
-            ->allowedIncludes(['bankConnection', 'accountable'])
-            ->defaultSort('-created_at');
     }
 
     /**

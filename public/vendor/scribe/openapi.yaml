@@ -222,75 +222,229 @@ paths:
               schema:
                 type: object
                 example:
-                  id: acct_b1b2520d2da147faa4e9d273f428e820
-                  name: 'Business Account'
-                  description: null
-                  type: other_asset
-                  subtype: null
-                  currencyCode: TWD
-                  baseCurrency: UYU
-                  currencyRate: '6.344134'
-                  initialBalance: '4730.4138'
-                  baseInitialBalance: null
-                  currentBalance: '8991.1288'
-                  baseCurrentBalance: null
-                  isDefault: false
-                  isManual: true
-                  externalId: null
-                  createdAt: '2025-07-23T23:10:17.000000Z'
-                  updatedAt: '2025-07-23T23:10:17.000000Z'
+                  data:
+                    -
+                      id: acct_cde444248c804565baa6ff28588945bb
+                      name: 'Emergency Fund'
+                      description: null
+                      type: loan
+                      subtype: null
+                      currencyCode: SDG
+                      baseCurrency: SCR
+                      currencyRate: '8.356897'
+                      initialBalance: '8944.8357'
+                      baseInitialBalance: null
+                      currentBalance: '7553.8389'
+                      baseCurrentBalance: null
+                      isDefault: false
+                      isManual: true
+                      externalId: 596c04a8-c477-3751-9856-893447206c23
+                      createdAt: '2025-07-24T03:05:26.000000Z'
+                      updatedAt: '2025-07-24T03:05:26.000000Z'
+                    -
+                      id: acct_b9d97b548c3746058f819a7e8cd407ee
+                      name: 'Joint Account'
+                      description: null
+                      type: crypto
+                      subtype: brokerage
+                      currencyCode: TRY
+                      baseCurrency: SRD
+                      currencyRate: '6.292632'
+                      initialBalance: '8804.3450'
+                      baseInitialBalance: null
+                      currentBalance: '2212.8057'
+                      baseCurrentBalance: '8601.7367'
+                      isDefault: false
+                      isManual: true
+                      externalId: null
+                      createdAt: '2025-07-24T03:05:27.000000Z'
+                      updatedAt: '2025-07-24T03:05:27.000000Z'
+                  links:
+                    first: '/?page=1'
+                    last: '/?page=1'
+                    prev: null
+                    next: null
+                  meta:
+                    current_page: 1
+                    from: 1
+                    last_page: 1
+                    links:
+                      -
+                        url: null
+                        label: pagination.previous
+                        active: false
+                      -
+                        url: '/?page=1'
+                        label: '1'
+                        active: true
+                      -
+                        url: null
+                        label: pagination.next
+                        active: false
+                    path: /
+                    per_page: 15
+                    to: 2
+                    total: 2
                 properties:
-                  id:
-                    type: string
-                    example: acct_b1b2520d2da147faa4e9d273f428e820
-                  name:
-                    type: string
-                    example: 'Business Account'
-                  description:
-                    type: string
-                    example: null
-                  type:
-                    type: string
-                    example: other_asset
-                  subtype:
-                    type: string
-                    example: null
-                  currencyCode:
-                    type: string
-                    example: TWD
-                  baseCurrency:
-                    type: string
-                    example: UYU
-                  currencyRate:
-                    type: string
-                    example: '6.344134'
-                  initialBalance:
-                    type: string
-                    example: '4730.4138'
-                  baseInitialBalance:
-                    type: string
-                    example: null
-                  currentBalance:
-                    type: string
-                    example: '8991.1288'
-                  baseCurrentBalance:
-                    type: string
-                    example: null
-                  isDefault:
-                    type: boolean
-                    example: false
-                  isManual:
-                    type: boolean
-                    example: true
-                  externalId:
-                    type: string
-                    example: null
-                  createdAt:
-                    type: string
-                    example: '2025-07-23T23:10:17.000000Z'
-                  updatedAt:
-                    type: string
-                    example: '2025-07-23T23:10:17.000000Z'
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: acct_cde444248c804565baa6ff28588945bb
+                        name: 'Emergency Fund'
+                        description: null
+                        type: loan
+                        subtype: null
+                        currencyCode: SDG
+                        baseCurrency: SCR
+                        currencyRate: '8.356897'
+                        initialBalance: '8944.8357'
+                        baseInitialBalance: null
+                        currentBalance: '7553.8389'
+                        baseCurrentBalance: null
+                        isDefault: false
+                        isManual: true
+                        externalId: 596c04a8-c477-3751-9856-893447206c23
+                        createdAt: '2025-07-24T03:05:26.000000Z'
+                        updatedAt: '2025-07-24T03:05:26.000000Z'
+                      -
+                        id: acct_b9d97b548c3746058f819a7e8cd407ee
+                        name: 'Joint Account'
+                        description: null
+                        type: crypto
+                        subtype: brokerage
+                        currencyCode: TRY
+                        baseCurrency: SRD
+                        currencyRate: '6.292632'
+                        initialBalance: '8804.3450'
+                        baseInitialBalance: null
+                        currentBalance: '2212.8057'
+                        baseCurrentBalance: '8601.7367'
+                        isDefault: false
+                        isManual: true
+                        externalId: null
+                        createdAt: '2025-07-24T03:05:27.000000Z'
+                        updatedAt: '2025-07-24T03:05:27.000000Z'
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: acct_cde444248c804565baa6ff28588945bb
+                        name:
+                          type: string
+                          example: 'Emergency Fund'
+                        description:
+                          type: string
+                          example: null
+                        type:
+                          type: string
+                          example: loan
+                        subtype:
+                          type: string
+                          example: null
+                        currencyCode:
+                          type: string
+                          example: SDG
+                        baseCurrency:
+                          type: string
+                          example: SCR
+                        currencyRate:
+                          type: string
+                          example: '8.356897'
+                        initialBalance:
+                          type: string
+                          example: '8944.8357'
+                        baseInitialBalance:
+                          type: string
+                          example: null
+                        currentBalance:
+                          type: string
+                          example: '7553.8389'
+                        baseCurrentBalance:
+                          type: string
+                          example: null
+                        isDefault:
+                          type: boolean
+                          example: false
+                        isManual:
+                          type: boolean
+                          example: true
+                        externalId:
+                          type: string
+                          example: 596c04a8-c477-3751-9856-893447206c23
+                        createdAt:
+                          type: string
+                          example: '2025-07-24T03:05:26.000000Z'
+                        updatedAt:
+                          type: string
+                          example: '2025-07-24T03:05:26.000000Z'
+                  links:
+                    type: object
+                    properties:
+                      first:
+                        type: string
+                        example: '/?page=1'
+                      last:
+                        type: string
+                        example: '/?page=1'
+                      prev:
+                        type: string
+                        example: null
+                      next:
+                        type: string
+                        example: null
+                  meta:
+                    type: object
+                    properties:
+                      current_page:
+                        type: integer
+                        example: 1
+                      from:
+                        type: integer
+                        example: 1
+                      last_page:
+                        type: integer
+                        example: 1
+                      links:
+                        type: array
+                        example:
+                          -
+                            url: null
+                            label: pagination.previous
+                            active: false
+                          -
+                            url: '/?page=1'
+                            label: '1'
+                            active: true
+                          -
+                            url: null
+                            label: pagination.next
+                            active: false
+                        items:
+                          type: object
+                          properties:
+                            url:
+                              type: string
+                              example: null
+                            label:
+                              type: string
+                              example: pagination.previous
+                            active:
+                              type: boolean
+                              example: false
+                      path:
+                        type: string
+                        example: /
+                      per_page:
+                        type: integer
+                        example: 15
+                      to:
+                        type: integer
+                        example: 2
+                      total:
+                        type: integer
+                        example: 2
       tags:
         - Accounts
     post:
@@ -306,7 +460,7 @@ paths:
               schema:
                 type: object
                 example:
-                  id: acct_3dd7150bc64041cbac0ea605cd72e081
+                  id: acct_a1f4bbc9eca04e63a21a99658762bd17
                   name: 'Retirement Fund'
                   description: 'Modi deserunt aut ab provident perspiciatis.'
                   type: crypto
@@ -321,12 +475,12 @@ paths:
                   isDefault: false
                   isManual: true
                   externalId: null
-                  createdAt: '2025-07-23T23:10:17.000000Z'
-                  updatedAt: '2025-07-23T23:10:17.000000Z'
+                  createdAt: '2025-07-24T03:05:27.000000Z'
+                  updatedAt: '2025-07-24T03:05:27.000000Z'
                 properties:
                   id:
                     type: string
-                    example: acct_3dd7150bc64041cbac0ea605cd72e081
+                    example: acct_a1f4bbc9eca04e63a21a99658762bd17
                   name:
                     type: string
                     example: 'Retirement Fund'
@@ -371,10 +525,10 @@ paths:
                     example: null
                   createdAt:
                     type: string
-                    example: '2025-07-23T23:10:17.000000Z'
+                    example: '2025-07-24T03:05:27.000000Z'
                   updatedAt:
                     type: string
-                    example: '2025-07-23T23:10:17.000000Z'
+                    example: '2025-07-24T03:05:27.000000Z'
       tags:
         - Accounts
       requestBody:
@@ -466,7 +620,7 @@ paths:
                 expires_at:
                   type: string
                   description: 'This field is required when <code>type</code> is <code>credit_card</code>. Must be a valid date.'
-                  example: '2025-07-23T23:10:17'
+                  example: '2025-07-24T03:05:27'
                   nullable: false
                 interest_rate:
                   type: number
@@ -516,7 +670,7 @@ paths:
               schema:
                 type: object
                 example:
-                  id: acct_131780d3eb364d5c98f6c96a46016047
+                  id: acct_1b1d1849426f4b2d9639c1792353f4ba
                   name: 'Credit Card'
                   description: 'Qui commodi incidunt iure odit.'
                   type: crypto
@@ -531,12 +685,12 @@ paths:
                   isDefault: false
                   isManual: true
                   externalId: 502eabbf-311f-3542-a47b-b2a14f5de904
-                  createdAt: '2025-07-23T23:10:17.000000Z'
-                  updatedAt: '2025-07-23T23:10:17.000000Z'
+                  createdAt: '2025-07-24T03:05:27.000000Z'
+                  updatedAt: '2025-07-24T03:05:27.000000Z'
                 properties:
                   id:
                     type: string
-                    example: acct_131780d3eb364d5c98f6c96a46016047
+                    example: acct_1b1d1849426f4b2d9639c1792353f4ba
                   name:
                     type: string
                     example: 'Credit Card'
@@ -581,10 +735,10 @@ paths:
                     example: 502eabbf-311f-3542-a47b-b2a14f5de904
                   createdAt:
                     type: string
-                    example: '2025-07-23T23:10:17.000000Z'
+                    example: '2025-07-24T03:05:27.000000Z'
                   updatedAt:
                     type: string
-                    example: '2025-07-23T23:10:17.000000Z'
+                    example: '2025-07-24T03:05:27.000000Z'
       tags:
         - Accounts
     put:
@@ -600,7 +754,7 @@ paths:
               schema:
                 type: object
                 example:
-                  id: acct_e7dfbeddd9c8479aaa60d2b78b24cdcb
+                  id: acct_17673f9df5654c7fadd4c336a3afd6e7
                   name: 'Credit Card'
                   description: null
                   type: loan
@@ -615,12 +769,12 @@ paths:
                   isDefault: false
                   isManual: true
                   externalId: bfc53181-d647-36b2-9080-f9c2b76006f4
-                  createdAt: '2025-07-23T23:10:17.000000Z'
-                  updatedAt: '2025-07-23T23:10:17.000000Z'
+                  createdAt: '2025-07-24T03:05:27.000000Z'
+                  updatedAt: '2025-07-24T03:05:27.000000Z'
                 properties:
                   id:
                     type: string
-                    example: acct_e7dfbeddd9c8479aaa60d2b78b24cdcb
+                    example: acct_17673f9df5654c7fadd4c336a3afd6e7
                   name:
                     type: string
                     example: 'Credit Card'
@@ -665,10 +819,10 @@ paths:
                     example: bfc53181-d647-36b2-9080-f9c2b76006f4
                   createdAt:
                     type: string
-                    example: '2025-07-23T23:10:17.000000Z'
+                    example: '2025-07-24T03:05:27.000000Z'
                   updatedAt:
                     type: string
-                    example: '2025-07-23T23:10:17.000000Z'
+                    example: '2025-07-24T03:05:27.000000Z'
       tags:
         - Accounts
       requestBody:
@@ -696,7 +850,7 @@ paths:
                 is_default:
                   type: boolean
                   description: ''
-                  example: true
+                  example: false
                   nullable: false
                 subtype:
                   type: string
@@ -742,7 +896,7 @@ paths:
                 expires_at:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2025-07-23T23:10:17'
+                  example: '2025-07-24T03:05:27'
                   nullable: false
                 interest_rate:
                   type: number

@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Knuckles\Scribe\Attributes\Group;
 use Knuckles\Scribe\Attributes\QueryParam;
+use Knuckles\Scribe\Attributes\ResponseFromApiResource;
 use Spatie\QueryBuilder\QueryBuilder;
 
 #[Group(name: 'Categories')]
@@ -37,6 +38,7 @@ final class CategoryController extends Controller
     #[QueryParam(name: 'include', type: 'string', description: 'The relationships to include', example: 'parent', required: false, enum: ['parent'])]
     #[QueryParam(name: 'filter[name]', type: 'string', description: 'The name of the category', example: 'Food', required: false)]
     #[QueryParam(name: 'filter[classification]', type: 'string', description: 'The classification of the category', example: 'expense', required: false, enum: CategoryClassification::class)]
+    #[ResponseFromApiResource(CategoryResource::class, Category::class, collection: true, paginate: 15)]
     public function index(): JsonResponse|ResourceCollection
     {
         /** @var int */
@@ -65,6 +67,7 @@ final class CategoryController extends Controller
      *
      * Retrieve a category by its public ID for the authenticated user in the current workspace.
      */
+    #[ResponseFromApiResource(CategoryResource::class, Category::class)]
     public function show(Category $category): CategoryResource
     {
         return $category->toResource();

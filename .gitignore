@@ -384,3 +384,7 @@ resources/js/wayfinder/**/*.ts
 # sitemap
 public/sitemap.xml
 public/docs
+
+public/openapi.json
+public/css/filament
+public/js/filament

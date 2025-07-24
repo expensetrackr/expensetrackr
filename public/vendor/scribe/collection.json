@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "ExpenseTrackr API Documentation",
-        "_postman_id": "e33f5fbf-a938-48d4-b9d2-4d7bbce8a8bc",
+        "_postman_id": "6fb19bd4-5094-4ff6-bd33-b6c2cb9e6156",
         "description": "",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -131,7 +131,7 @@
                         {
                             "header": [],
                             "code": 200,
-                            "body": "{\"id\":\"acct_b1b2520d2da147faa4e9d273f428e820\",\"name\":\"Business Account\",\"description\":null,\"type\":\"other_asset\",\"subtype\":null,\"currencyCode\":\"TWD\",\"baseCurrency\":\"UYU\",\"currencyRate\":\"6.344134\",\"initialBalance\":\"4730.4138\",\"baseInitialBalance\":null,\"currentBalance\":\"8991.1288\",\"baseCurrentBalance\":null,\"isDefault\":false,\"isManual\":true,\"externalId\":null,\"createdAt\":\"2025-07-23T23:10:17.000000Z\",\"updatedAt\":\"2025-07-23T23:10:17.000000Z\"}",
+                            "body": "{\"data\":[{\"id\":\"acct_cde444248c804565baa6ff28588945bb\",\"name\":\"Emergency Fund\",\"description\":null,\"type\":\"loan\",\"subtype\":null,\"currencyCode\":\"SDG\",\"baseCurrency\":\"SCR\",\"currencyRate\":\"8.356897\",\"initialBalance\":\"8944.8357\",\"baseInitialBalance\":null,\"currentBalance\":\"7553.8389\",\"baseCurrentBalance\":null,\"isDefault\":false,\"isManual\":true,\"externalId\":\"596c04a8-c477-3751-9856-893447206c23\",\"createdAt\":\"2025-07-24T03:05:26.000000Z\",\"updatedAt\":\"2025-07-24T03:05:26.000000Z\"},{\"id\":\"acct_b9d97b548c3746058f819a7e8cd407ee\",\"name\":\"Joint Account\",\"description\":null,\"type\":\"crypto\",\"subtype\":\"brokerage\",\"currencyCode\":\"TRY\",\"baseCurrency\":\"SRD\",\"currencyRate\":\"6.292632\",\"initialBalance\":\"8804.3450\",\"baseInitialBalance\":null,\"currentBalance\":\"2212.8057\",\"baseCurrentBalance\":\"8601.7367\",\"isDefault\":false,\"isManual\":true,\"externalId\":null,\"createdAt\":\"2025-07-24T03:05:27.000000Z\",\"updatedAt\":\"2025-07-24T03:05:27.000000Z\"}],\"links\":{\"first\":\"\\\/?page=1\",\"last\":\"\\\/?page=1\",\"prev\":null,\"next\":null},\"meta\":{\"current_page\":1,\"from\":1,\"last_page\":1,\"links\":[{\"url\":null,\"label\":\"pagination.previous\",\"active\":false},{\"url\":\"\\\/?page=1\",\"label\":\"1\",\"active\":true},{\"url\":null,\"label\":\"pagination.next\",\"active\":false}],\"path\":\"\\\/\",\"per_page\":15,\"to\":2,\"total\":2}}",
                             "name": ""
                         }
                     ]
@@ -158,7 +158,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"b\",\"currency_code\":\"n\",\"initial_balance\":84,\"is_default\":false,\"type\":\"architecto\",\"subtype\":\"architecto\",\"available_credit\":39,\"minimum_payment\":84,\"apr\":12,\"annual_fee\":77,\"expires_at\":\"2025-07-23T23:10:17\",\"interest_rate\":8,\"rate_type\":\"architecto\",\"term_months\":22,\"description\":\"Animi quos velit et fugiat.\",\"external_id\":\"d\"}"
+                            "raw": "{\"name\":\"b\",\"currency_code\":\"n\",\"initial_balance\":84,\"is_default\":false,\"type\":\"architecto\",\"subtype\":\"architecto\",\"available_credit\":39,\"minimum_payment\":84,\"apr\":12,\"annual_fee\":77,\"expires_at\":\"2025-07-24T03:05:27\",\"interest_rate\":8,\"rate_type\":\"architecto\",\"term_months\":22,\"description\":\"Animi quos velit et fugiat.\",\"external_id\":\"d\"}"
                         },
                         "description": "Create a new account for the authenticated user in the current workspace."
                     },
@@ -166,7 +166,7 @@
                         {
                             "header": [],
                             "code": 200,
-                            "body": "{\"id\":\"acct_3dd7150bc64041cbac0ea605cd72e081\",\"name\":\"Retirement Fund\",\"description\":\"Modi deserunt aut ab provident perspiciatis.\",\"type\":\"crypto\",\"subtype\":null,\"currencyCode\":\"JPY\",\"baseCurrency\":\"KRW\",\"currencyRate\":\"3.732566\",\"initialBalance\":\"6620.3085\",\"baseInitialBalance\":null,\"currentBalance\":\"6052.7915\",\"baseCurrentBalance\":\"1965.0388\",\"isDefault\":false,\"isManual\":true,\"externalId\":null,\"createdAt\":\"2025-07-23T23:10:17.000000Z\",\"updatedAt\":\"2025-07-23T23:10:17.000000Z\"}",
+                            "body": "{\"id\":\"acct_a1f4bbc9eca04e63a21a99658762bd17\",\"name\":\"Retirement Fund\",\"description\":\"Modi deserunt aut ab provident perspiciatis.\",\"type\":\"crypto\",\"subtype\":null,\"currencyCode\":\"JPY\",\"baseCurrency\":\"KRW\",\"currencyRate\":\"3.732566\",\"initialBalance\":\"6620.3085\",\"baseInitialBalance\":null,\"currentBalance\":\"6052.7915\",\"baseCurrentBalance\":\"1965.0388\",\"isDefault\":false,\"isManual\":true,\"externalId\":null,\"createdAt\":\"2025-07-24T03:05:27.000000Z\",\"updatedAt\":\"2025-07-24T03:05:27.000000Z\"}",
                             "name": ""
                         }
                     ]
@@ -206,7 +206,7 @@
                         {
                             "header": [],
                             "code": 200,
-                            "body": "{\"id\":\"acct_131780d3eb364d5c98f6c96a46016047\",\"name\":\"Credit Card\",\"description\":\"Qui commodi incidunt iure odit.\",\"type\":\"crypto\",\"subtype\":\"angel\",\"currencyCode\":\"YER\",\"baseCurrency\":null,\"currencyRate\":null,\"initialBalance\":\"5456.5324\",\"baseInitialBalance\":\"7652.8239\",\"currentBalance\":\"4927.8888\",\"baseCurrentBalance\":null,\"isDefault\":false,\"isManual\":true,\"externalId\":\"502eabbf-311f-3542-a47b-b2a14f5de904\",\"createdAt\":\"2025-07-23T23:10:17.000000Z\",\"updatedAt\":\"2025-07-23T23:10:17.000000Z\"}",
+                            "body": "{\"id\":\"acct_1b1d1849426f4b2d9639c1792353f4ba\",\"name\":\"Credit Card\",\"description\":\"Qui commodi incidunt iure odit.\",\"type\":\"crypto\",\"subtype\":\"angel\",\"currencyCode\":\"YER\",\"baseCurrency\":null,\"currencyRate\":null,\"initialBalance\":\"5456.5324\",\"baseInitialBalance\":\"7652.8239\",\"currentBalance\":\"4927.8888\",\"baseCurrentBalance\":null,\"isDefault\":false,\"isManual\":true,\"externalId\":\"502eabbf-311f-3542-a47b-b2a14f5de904\",\"createdAt\":\"2025-07-24T03:05:27.000000Z\",\"updatedAt\":\"2025-07-24T03:05:27.000000Z\"}",
                             "name": ""
                         }
                     ]
@@ -241,7 +241,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"b\",\"description\":\"Et animi quos velit et fugiat.\",\"currency_code\":\"d\",\"is_default\":true,\"subtype\":\"architecto\",\"available_credit\":39,\"minimum_payment\":84,\"apr\":12,\"annual_fee\":77,\"expires_at\":\"2025-07-23T23:10:17\",\"interest_rate\":8,\"rate_type\":\"architecto\",\"term_months\":22,\"external_id\":\"g\"}"
+                            "raw": "{\"name\":\"b\",\"description\":\"Et animi quos velit et fugiat.\",\"currency_code\":\"d\",\"is_default\":false,\"subtype\":\"architecto\",\"available_credit\":39,\"minimum_payment\":84,\"apr\":12,\"annual_fee\":77,\"expires_at\":\"2025-07-24T03:05:27\",\"interest_rate\":8,\"rate_type\":\"architecto\",\"term_months\":22,\"external_id\":\"g\"}"
                         },
                         "description": "Update an account for the authenticated user in the current workspace."
                     },
@@ -249,7 +249,7 @@
                         {
                             "header": [],
                             "code": 200,
-                            "body": "{\"id\":\"acct_e7dfbeddd9c8479aaa60d2b78b24cdcb\",\"name\":\"Credit Card\",\"description\":null,\"type\":\"loan\",\"subtype\":\"none\",\"currencyCode\":\"PGK\",\"baseCurrency\":\"SHP\",\"currencyRate\":\"5.573992\",\"initialBalance\":\"3970.3752\",\"baseInitialBalance\":null,\"currentBalance\":\"6303.2587\",\"baseCurrentBalance\":null,\"isDefault\":false,\"isManual\":true,\"externalId\":\"bfc53181-d647-36b2-9080-f9c2b76006f4\",\"createdAt\":\"2025-07-23T23:10:17.000000Z\",\"updatedAt\":\"2025-07-23T23:10:17.000000Z\"}",
+                            "body": "{\"id\":\"acct_17673f9df5654c7fadd4c336a3afd6e7\",\"name\":\"Credit Card\",\"description\":null,\"type\":\"loan\",\"subtype\":\"none\",\"currencyCode\":\"PGK\",\"baseCurrency\":\"SHP\",\"currencyRate\":\"5.573992\",\"initialBalance\":\"3970.3752\",\"baseInitialBalance\":null,\"currentBalance\":\"6303.2587\",\"baseCurrentBalance\":null,\"isDefault\":false,\"isManual\":true,\"externalId\":\"bfc53181-d647-36b2-9080-f9c2b76006f4\",\"createdAt\":\"2025-07-24T03:05:27.000000Z\",\"updatedAt\":\"2025-07-24T03:05:27.000000Z\"}",
                             "name": ""
                         }
                     ]

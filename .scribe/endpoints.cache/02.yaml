@@ -109,13 +109,10 @@ endpoints:
     fileParameters: []
     responses:
       -
-        status: 401
-        content: '{"message":"Unauthenticated."}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          vary: Origin
-        description: null
+        status: 200
+        content: '{"data":[{"id":null,"name":null,"slug":null,"color":null,"description":null,"isSystem":null,"classification":null},{"id":null,"name":null,"slug":null,"color":null,"description":null,"isSystem":null,"classification":null}],"links":{"first":"\/?page=1","last":"\/?page=1","prev":null,"next":null},"meta":{"current_page":1,"from":1,"last_page":1,"links":[{"url":null,"label":"pagination.previous","active":false},{"url":"\/?page=1","label":"1","active":true},{"url":null,"label":"pagination.next","active":false}],"path":"\/","per_page":15,"to":2,"total":2}}'
+        headers: []
+        description: ''
         custom: []
     responseFields: []
     auth:
@@ -163,13 +160,10 @@ endpoints:
     fileParameters: []
     responses:
       -
-        status: 401
-        content: '{"message":"Unauthenticated."}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          vary: Origin
-        description: null
+        status: 200
+        content: '{"id":null,"name":null,"slug":null,"color":null,"description":null,"isSystem":null,"classification":null}'
+        headers: []
+        description: ''
         custom: []
     responseFields: []
     auth:
