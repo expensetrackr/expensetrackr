@@ -33,6 +33,6 @@ php artisan pulse:restart
 
 php artisan make:sitemap
 
-php artisan scribe:generate:docs
+composer run openapi:generate
 
 php artisan up

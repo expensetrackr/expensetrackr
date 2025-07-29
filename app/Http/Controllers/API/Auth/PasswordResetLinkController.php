@@ -4,30 +4,26 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\API\Auth;
 
+use Dedoc\Scramble\Attributes\Group;
 use Illuminate\Contracts\Auth\PasswordBroker;
 use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
-use Knuckles\Scribe\Attributes\BodyParam;
-use Knuckles\Scribe\Attributes\Group;
-use Knuckles\Scribe\Attributes\Response as ScribeResponse;
-use Knuckles\Scribe\Attributes\Unauthenticated;
 use Laravel\Fortify\Contracts\FailedPasswordResetLinkRequestResponse;
 use Laravel\Fortify\Contracts\SuccessfulPasswordResetLinkRequestResponse;
 use Laravel\Fortify\Fortify;
 
-#[Group(name: 'Authentication')]
+#[Group('Authentication')]
 final class PasswordResetLinkController
 {
     /**
      * Reset password
      *
      * Send a password reset link to the user's email.
+     *
+     * @unauthenticated
      */
-    #[Unauthenticated]
-    #[BodyParam(name: 'email', type: 'string', description: 'The email of the user.', required: true)]
-    #[ScribeResponse(null, 204)]
     public function store(Request $request): Responsable
     {
         $request->validate([Fortify::email() => 'required|email']);

@@ -8,18 +8,16 @@ use App\Actions\Webhooks\ValidateTellerWebhookSignature;
 use App\Http\Requests\Webhooks\TellerWebhookRequest;
 use App\Jobs\SyncBankAccounts;
 use App\Models\BankConnection;
+use Dedoc\Scramble\Attributes\ExcludeAllRoutesFromDocs;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
-use Knuckles\Scribe\Attributes\Header;
-use Knuckles\Scribe\Attributes\Unauthenticated;
 
+#[ExcludeAllRoutesFromDocs]
 final class WebhookTellerController extends Controller
 {
     /**
      * Handle incoming Teller webhook events.
      */
-    #[Unauthenticated]
-    #[Header('teller-signature', 'The signature of the Teller webhook.', required: true)]
     public function __invoke(TellerWebhookRequest $request, ValidateTellerWebhookSignature $action): JsonResponse
     {
         // Validate webhook signature

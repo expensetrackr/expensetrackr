@@ -10,13 +10,39 @@ enum AccountType: string
 {
     use InteractWithEnum;
 
+    /**
+     * A depository account is a type of account that holds cash or other liquid assets.
+     */
     case Depository = 'depository';
+
+    /**
+     * An investment account is a type of account that holds stocks, bonds, or other investments.
+     */
     case Investment = 'investment';
+
+    /**
+     * A crypto account is a type of account that holds cryptocurrencies.
+     */
     case Crypto = 'crypto';
+
+    /**
+     * An other asset account is a type of account that holds other assets.
+     */
     case OtherAsset = 'other_asset';
 
+    /**
+     * A credit card account is a type of account that allows you to borrow money from a bank.
+     */
     case CreditCard = 'credit_card';
+
+    /**
+     * A loan account is a type of account that holds a loan.
+     */
     case Loan = 'loan';
+
+    /**
+     * An other liability account is a type of account that holds other liabilities.
+     */
     case OtherLiability = 'other_liability';
 
     /**

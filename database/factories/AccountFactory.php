@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Database\Factories;
 
 use App\Enums\Finance\AccountSubtype;
+use App\Enums\Finance\AccountType;
 use App\Models\Account;
 use App\Models\CreditCard;
 use App\Models\Crypto;
@@ -39,6 +40,21 @@ final class AccountFactory extends Factory
 
         $accountableType = $this->faker->randomElement($accountableTypes);
 
+        /**
+         * Map accountable type to corresponding account type.
+         *
+         * @var array<class-string, AccountType>
+         */
+        $typeMapping = [
+            Depository::class => AccountType::Depository,
+            Investment::class => AccountType::Investment,
+            Crypto::class => AccountType::Crypto,
+            OtherAsset::class => AccountType::OtherAsset,
+            CreditCard::class => AccountType::CreditCard,
+            Loan::class => AccountType::Loan,
+            OtherLiability::class => AccountType::OtherLiability,
+        ];
+
         return [
             'accountable_type' => $accountableType,
             'accountable_id' => $accountableType::factory(),
@@ -53,6 +69,7 @@ final class AccountFactory extends Factory
                 'Retirement Fund',
             ]),
             'description' => $this->faker->optional()->sentence(),
+            'type' => $typeMapping[$accountableType],
             'subtype' => $this->faker->optional()->randomElement(AccountSubtype::cases()),
             'currency_code' => $this->faker->currencyCode(),
             'base_currency' => $this->faker->optional()->currencyCode(),

@@ -9,12 +9,16 @@ use App\Concerns\WorkspaceOwned;
 use App\Enums\Finance\AccountSubtype;
 use App\Enums\Finance\AccountType;
 use App\Observers\AccountObserver;
+use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Eloquent\Scope;
 use InvalidArgumentException;
 use Laravel\Scout\Searchable;
 use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
@@ -25,6 +29,7 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @property int $accountable_id
  * @property string $name
  * @property string|null $description
+ * @property AccountType $type
  * @property AccountSubtype|null $subtype
  * @property string $currency_code
  * @property string|null $base_currency
@@ -40,10 +45,10 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @property string|null $external_id
  * @property int|null $created_by
  * @property int|null $updated_by
- * @property \Carbon\CarbonImmutable|null $created_at
- * @property \Carbon\CarbonImmutable|null $updated_at
+ * @property CarbonImmutable|null $created_at
+ * @property CarbonImmutable|null $updated_at
  * @property int|null $bank_connection_id
- * @property-read Model $accountable
+ * @property-read Model<Depository|Investment|Crypto|OtherAsset|CreditCard|Loan|OtherLiability> $accountable
  * @property-read \Illuminate\Database\Eloquent\Collection<int, AccountBalance> $balances
  * @property-read int|null $balances_count
  * @property-read BankConnection|null $bankConnection
@@ -51,7 +56,7 @@ use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
  * @property-read string|null $prefixed_id
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Transaction> $transactions
  * @property-read int|null $transactions_count
- * @property-read AccountType $type
+
  * @property-read User|null $updatedBy
  * @property-read Workspace $workspace
  *
@@ -180,19 +185,23 @@ final class Account extends Model
 
     /**
      * Get the account type based on the accountable relationship.
+     *
+     * @return Attribute<AccountType, never>
      */
-    public function getTypeAttribute(): AccountType
+    public function type(): Attribute
     {
-        return match ($this->accountable_type) {
-            Depository::class => AccountType::Depository,
-            Investment::class => AccountType::Investment,
-            Crypto::class => AccountType::Crypto,
-            OtherAsset::class => AccountType::OtherAsset,
-            CreditCard::class => AccountType::CreditCard,
-            Loan::class => AccountType::Loan,
-            OtherLiability::class => AccountType::OtherLiability,
-            default => throw new InvalidArgumentException("Unknown accountable type: {$this->accountable_type}"),
-        };
+        return new Attribute(
+            get: fn () => match ($this->accountable_type) {
+                Depository::class => AccountType::Depository,
+                Investment::class => AccountType::Investment,
+                Crypto::class => AccountType::Crypto,
+                OtherAsset::class => AccountType::OtherAsset,
+                CreditCard::class => AccountType::CreditCard,
+                Loan::class => AccountType::Loan,
+                OtherLiability::class => AccountType::OtherLiability,
+                default => throw new InvalidArgumentException("Unknown accountable type: {$this->accountable_type}"),
+            }
+        );
     }
 
     /**
@@ -210,5 +219,66 @@ final class Account extends Model
             'currency_rate' => 'decimal:6',
             'subtype' => AccountSubtype::class,
         ];
+    }
+
+    /**
+     * Scope a query to only include accounts with a current balance greater than or equal to the specified value.
+     *
+     * @param  Builder<covariant $this>  $query
+     * @param  float  $value  The minimum balance value
+     */
+    #[Scope]
+    protected function minBalance(Builder $query, float $value): void
+    {
+        $query->where('current_balance', '>=', $value);
+    }
+
+    /**
+     * Scope a query to only include accounts with a current balance less than or equal to the specified value.
+     *
+     * @param  Builder<covariant $this>  $query
+     * @param  float  $value  The maximum balance value
+     */
+    #[Scope]
+    protected function maxBalance(Builder $query, float $value): void
+    {
+        $query->where('current_balance', '<=', $value);
+    }
+
+    /**
+     * Scope a query to only include accounts with a current balance between the specified values.
+     *
+     * @param  Builder<covariant $this>  $query
+     * @param  float  $min  The minimum balance value
+     * @param  float  $max  The maximum balance value
+     */
+    #[Scope]
+    protected function balanceRange(Builder $query, float $min, float $max): void
+    {
+        $query->whereBetween('current_balance', [$min, $max]);
+    }
+
+    /**
+     * Scope a query to only include accounts created from the specified date onwards.
+     *
+     * @param  Builder<covariant $this>  $query
+     * @param  CarbonImmutable  $date  The date to filter by
+     */
+    #[Scope]
+    protected function createdFrom(Builder $query, CarbonImmutable $date): void
+    {
+        $query->where('created_at', '>=', $date);
+    }
+
+    /**
+     * Scope a query to only include accounts created up to the specified date.
+     *
+     * @param  Builder<covariant $this>  $query
+     * @param  CarbonImmutable  $date  The date to filter by
+     */
+    #[Scope]
+    protected function createdTo(Builder $query, CarbonImmutable $date): void
+    {
+        $query->where('created_at', '<=', $date);
     }
 }

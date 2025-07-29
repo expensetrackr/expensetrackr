@@ -21,7 +21,7 @@ trait AccountValidationRules
      * @param  float|null  $minBalance  Minimum balance requirement
      * @param  bool  $includeDescription  Whether to include description field
      * @param  int|null  $ignoreAccountId  Account ID to ignore for unique validations (for updates)
-     * @return array<string, array<mixed>>
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     protected function getAccountValidationRules(
         ?float $minBalance = 0.01,
@@ -32,19 +32,63 @@ trait AccountValidationRules
             'bank_connection_id' => ['sometimes', 'nullable', 'exists:bank_connections,id'],
             'name' => ['required', 'string', 'max:255'],
             'currency_code' => ['required', 'string', 'max:3'],
-            'initial_balance' => ['required', 'numeric', 'min:'.$minBalance],
+            'initial_balance' => ['required', 'numeric', "min:$minBalance"],
             'is_default' => ['sometimes', 'boolean'],
             'type' => ['required', 'string', Rule::enum(AccountType::class)],
             'subtype' => ['sometimes', 'nullable', 'string', Rule::enum(AccountSubtype::class)],
+
             // Credit Card specific fields
+
+            /**
+             * The total credit limit available on the credit card.
+             * Required when account type is 'credit_card'.
+             */
             'available_credit' => ['required_if:type,credit_card', 'numeric', 'min:0'],
+
+            /**
+             * The minimum payment amount required for the credit card.
+             * Required when account type is 'credit_card'.
+             */
             'minimum_payment' => ['required_if:type,credit_card', 'numeric', 'min:0'],
+
+            /**
+             * Annual Percentage Rate (APR) for the credit card.
+             * Required when account type is 'credit_card'.
+             *
+             * @example {"lat": 50.450001, "long": 30.523333}
+             */
             'apr' => ['required_if:type,credit_card', 'numeric', 'min:0'],
+
+            /**
+             * The annual fee charged for the credit card.
+             * Required when account type is 'credit_card'.
+             */
             'annual_fee' => ['required_if:type,credit_card', 'numeric', 'min:0'],
+
+            /**
+             * The expiration date of the credit card.
+             * Required when account type is 'credit_card'.
+             */
             'expires_at' => ['required_if:type,credit_card', 'date'],
+
             // Loan specific fields
+
+            /**
+             * The interest rate for the loan (as a percentage).
+             * Required when account type is 'loan'.
+             */
             'interest_rate' => ['required_if:type,loan', 'numeric', 'min:0'],
+
+            /**
+             * The type of interest rate (fixed or variable).
+             * Required when account type is 'loan'.
+             */
             'rate_type' => ['required_if:type,loan', 'string', Rule::enum(RateType::class)],
+
+            /**
+             * The loan term duration in months.
+             * Required when account type is 'loan'.
+             */
             'term_months' => ['required_if:type,loan', 'integer', 'min:1'],
         ];
 
@@ -69,7 +113,7 @@ trait AccountValidationRules
      * Get the validation rules for account updates (all fields optional).
      *
      * @param  int|null  $ignoreAccountId  Account ID to ignore for unique validations
-     * @return array<string, array<mixed>>
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     protected function getAccountUpdateValidationRules(?int $ignoreAccountId = null): array
     {
@@ -170,7 +214,7 @@ trait AccountValidationRules
      * @param  float|null  $minBalance  Minimum balance requirement
      * @param  bool  $includeDescription  Whether to include description field
      * @param  int|null  $ignoreAccountId  Account ID to ignore for unique validations
-     * @return array<string, array<mixed>>
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     protected function getEnhancedAccountValidationRules(
         ?float $minBalance = 0.01,

@@ -7,24 +7,26 @@ namespace App\Http\Controllers\API;
 use App\Actions\BankAccounts\CreateAccount;
 use App\Actions\BankAccounts\DeleteAccount;
 use App\Actions\BankAccounts\UpdateAccount;
+use App\Filters\FuzzySearchFilter;
 use App\Http\Requests\API\StoreAccountRequest;
 use App\Http\Requests\API\UpdateAccountRequest;
 use App\Http\Resources\AccountResource;
 use App\Models\Account;
 use App\Services\AccountCacheService;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Http\Response;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Knuckles\Scribe\Attributes\Group;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 use Throwable;
 
-#[Group(name: 'Accounts')]
 final class AccountController extends BaseApiController
 {
+    use AuthorizesRequests;
+
     /**
      * The account cache service.
      */
@@ -45,73 +47,124 @@ final class AccountController extends BaseApiController
      *
      * @return LengthAwarePaginator<AccountResource>
      */
-    public function index(Request $request): ResourceCollection|JsonResponse
+    public function index(Request $request): ResourceCollection
     {
-        try {
-            /** @var int */
-            $perPage = $request->get('per_page', 15);
-            $perPage = min($perPage, 100); // Limit to 100 items per page for performance
+        $perPage = $request->integer('per_page', 15);
+        $perPage = min($perPage, 100); // Limit to 100 items per page for performance
 
-            $workspaceId = auth()->user()->current_workspace_id;
+        $workspaceId = auth()->user()->current_workspace_id;
 
-            $cacheKey = $this->generateCacheKey($request, $workspaceId);
+        $cacheKey = $this->generateCacheKey($request, $workspaceId);
 
-            $cachedResult = $this->cacheService->getCachedQuery($cacheKey);
-            if ($cachedResult) {
-                return $cachedResult;
-            }
-
-            $accounts = QueryBuilder::for(Account::class)
-                ->where('workspace_id', $workspaceId)
-                ->allowedFilters([
-                    AllowedFilter::partial('name'),
-                    AllowedFilter::exact('currency_code'),
-                    AllowedFilter::exact('is_default'),
-                    AllowedFilter::exact('is_manual'),
-                    AllowedFilter::callback('type', function ($query, $value) {
-                        $modelClass = $this->getModelClassFromType($value);
-                        $query->where('accountable_type', $modelClass);
-                    }),
-                    AllowedFilter::callback('balance_min', function ($query, $value) {
-                        $query->where('current_balance', '>=', $value);
-                    }),
-                    AllowedFilter::callback('balance_max', function ($query, $value) {
-                        $query->where('current_balance', '<=', $value);
-                    }),
-                    AllowedFilter::callback('created_from', function ($query, $value) {
-                        $query->where('created_at', '>=', $value);
-                    }),
-                    AllowedFilter::callback('created_to', function ($query, $value) {
-                        $query->where('created_at', '<=', $value);
-                    }),
-                    AllowedFilter::callback('q', function ($query, $value) {
-                        $query->where('name', 'like', "%$value%");
-                    }),
-                ])
-                ->allowedSorts([
-                    'name',
-                    '-name',
-                    'created_at',
-                    '-created_at',
-                    'current_balance',
-                    '-current_balance',
-                    'currency_code',
-                    '-currency_code',
-                    'is_default',
-                    '-is_default',
-                ])
-                ->allowedIncludes(['bankConnection', 'accountable'])
-                ->defaultSort('-created_at')
-                ->paginate($perPage)
-                ->withQueryString()
-                ->toResourceCollection();
-
-            $this->cacheService->cacheQuery($cacheKey, $accounts);
-
-            return $accounts;
-        } catch (Throwable $e) {
-            return $this->handleException($e);
+        $cachedResult = $this->cacheService->getCachedQuery($cacheKey);
+        if ($cachedResult) {
+            return $cachedResult;
         }
+
+        $accounts = QueryBuilder::for(Account::class)
+            ->where('workspace_id', $workspaceId)
+            ->allowedFilters([
+                /**
+                 * Fuzzy search accounts by name, description, accountable.name, and accountable.description
+                 *
+                 * @example 'checking'
+                 */
+                AllowedFilter::custom('search', new FuzzySearchFilter(
+                    'name',
+                    'description',
+                    'accountable.name',
+                    'accountable.description',
+                )),
+                /**
+                 * Filter accounts by partial name match
+                 *
+                 * @example 'Savings'
+                 */
+                AllowedFilter::partial('name'),
+                /**
+                 * Filter accounts by currency code
+                 *
+                 * @example 'USD'
+                 */
+                AllowedFilter::exact('currency_code'),
+                /**
+                 * Filter accounts by default status
+                 *
+                 * @var bool
+                 *
+                 * @example true
+                 */
+                AllowedFilter::exact('is_default'),
+                /**
+                 * Filter accounts by manual entry status
+                 *
+                 * @var bool
+                 *
+                 * @example true
+                 */
+                AllowedFilter::exact('is_manual'),
+                /**
+                 * Filter accounts by type
+                 *
+                 * @var \App\Enums\Finance\AccountType
+                 *
+                 * @example 'depository'
+                 */
+                AllowedFilter::exact('type'),
+                /**
+                 * Filter accounts with balance greater than or equal to specified amount
+                 *
+                 * @var float
+                 *
+                 * @example 1000.00
+                 */
+                AllowedFilter::scope('balance_min', 'minBalance'),
+                /**
+                 * Filter accounts with balance less than or equal to specified amount
+                 *
+                 * @var float
+                 *
+                 * @example 5000.00
+                 */
+                AllowedFilter::scope('balance_max', 'maxBalance'),
+                /**
+                 * Filter accounts created from this date onwards
+                 *
+                 * @format date
+                 *
+                 * @example '2024-01-01'
+                 */
+                AllowedFilter::scope('created_from', 'createdFrom'),
+                /**
+                 * Filter accounts created up to this date
+                 *
+                 * @format date
+                 *
+                 * @example '2024-12-31'
+                 */
+                AllowedFilter::scope('created_to', 'createdTo'),
+            ])
+            ->allowedSorts([
+                'name',
+                '-name',
+                'created_at',
+                '-created_at',
+                'current_balance',
+                '-current_balance',
+                'currency_code',
+                '-currency_code',
+                'is_default',
+                '-is_default',
+            ])
+            ->allowedIncludes('bankConnection', 'accountable')
+            ->defaultSort('-created_at')
+            ->paginate($perPage)
+            ->withQueryString()
+            ->toResourceCollection();
+
+        $this->cacheService->cacheQuery($cacheKey, $accounts);
+
+        return $accounts;
     }
 
     /**

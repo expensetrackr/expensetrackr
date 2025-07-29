@@ -8,7 +8,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-/** @mixin \App\Models\Category */
+/** @mixin Category */
 final class CategoryResource extends JsonResource
 {
     private bool $appendExtraFields = false;
@@ -31,7 +31,9 @@ final class CategoryResource extends JsonResource
             'classification' => $this->classification,
             'parentId' => $this->when($this->appendExtraFields, fn () => $this->parent->public_id ?? null),
             'permissions' => $this->when($this->appendExtraFields, fn (): array => [
+                /** @var bool */
                 'canUpdate' => $request->user()?->can('update', $this->resource),
+                /** @var bool */
                 'canDelete' => $request->user()?->can('delete', $this->resource),
             ]),
             'hasParent' => $this->when($this->appendExtraFields, fn () => $this->parent()->exists()),

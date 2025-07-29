@@ -29,7 +29,7 @@ final class StoreAccountRequest extends FormRequest
     public function rules(): array
     {
         return $this->getAccountValidationRules(
-            minBalance: 0.01,
+            minBalance: 0,
             includeDescription: true
         );
     }

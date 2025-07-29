@@ -5,19 +5,17 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Financial;
 
 use App\Facades\Forex;
+use Dedoc\Scramble\Attributes\Group;
 use Illuminate\Http\JsonResponse;
-use Knuckles\Scribe\Attributes\Group;
-use Knuckles\Scribe\Attributes\Unauthenticated;
 
-#[Group(name: 'Financial')]
+#[Group('Financial')]
 final class CurrencyController
 {
     /**
-     * Currencies
+     * List all supported currencies
      *
      * Retrieves a list of all supported currencies available in the system.
      */
-    #[Unauthenticated]
     public function __invoke(): JsonResponse
     {
         return response()->json(Forex::getSupportedCurrencies() ?? []);

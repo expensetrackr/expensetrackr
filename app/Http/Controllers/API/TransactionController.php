@@ -9,9 +9,7 @@ use App\Models\Transaction;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Knuckles\Scribe\Attributes\Group;
 
-#[Group(name: 'Transactions')]
 final class TransactionController extends Controller
 {
     use AuthorizesRequests;
